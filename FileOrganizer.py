@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""FileOrganizer v4.0 - Context-Aware Classification Engine"""
+"""FileOrganizer v5.0 - Context-Aware Classification Engine + Smart Learning"""
 
-import sys, os, subprocess, re, shutil, json, csv, hashlib, gzip
+import sys, os, subprocess, re, shutil, json, csv, hashlib, gzip, sqlite3, time
 from collections import Counter
 import xml.etree.ElementTree as ET
 
@@ -58,13 +58,193 @@ from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QLineEdit, QPushButton, QComboBox, QTableWidget, QTableWidgetItem,
     QCheckBox, QTextEdit, QHeaderView, QFileDialog, QAbstractItemView,
-    QSlider, QMenu, QTreeWidget, QTreeWidgetItem, QDialog, QDialogButtonBox,
+    QSlider, QMenu, QTreeWidget, QTreeWidgetItem, QDialog, QDialogButtonBox, QSpinBox,
     QListWidget, QListWidgetItem, QInputDialog, QSplitter, QMessageBox
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSettings, QMimeData, QUrl
 from PyQt6.QtGui import QColor, QDragEnterEvent, QDropEvent, QAction
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) if '__file__' in dir() else os.getcwd()
+
+# ── Correction Learning ───────────────────────────────────────────────────────
+_CORRECTIONS_FILE = os.path.join(_SCRIPT_DIR, 'corrections.json')
+
+def load_corrections():
+    """Load user corrections: {folder_name_pattern: category}"""
+    try:
+        with open(_CORRECTIONS_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+def save_correction(folder_name, category):
+    """Save a single correction for future learning."""
+    corrections = load_corrections()
+    # Store the cleaned folder name as key
+    key = re.sub(r'[\d_\-]+$', '', folder_name).strip().lower()
+    if key:
+        corrections[key] = category
+    corrections[folder_name.lower()] = category
+    with open(_CORRECTIONS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(corrections, f, indent=2)
+
+def check_corrections(folder_name):
+    """Check if we have a prior correction for this folder name.
+    Returns category string or None."""
+    corrections = load_corrections()
+    if not corrections:
+        return None
+    name_lower = folder_name.lower()
+    # Exact match
+    if name_lower in corrections:
+        return corrections[name_lower]
+    # Pattern match (cleaned name)
+    key = re.sub(r'[\d_\-]+$', '', folder_name).strip().lower()
+    if key and key in corrections:
+        return corrections[key]
+    # Fuzzy match against correction keys
+    if HAS_RAPIDFUZZ:
+        for ck, cv in corrections.items():
+            if _rfuzz.token_set_ratio(name_lower, ck) >= 90:
+                return cv
+    return None
+
+
+# ── Classification Cache (SQLite) ─────────────────────────────────────────────
+_CACHE_DB = os.path.join(_SCRIPT_DIR, 'classification_cache.db')
+
+def _init_cache_db():
+    """Initialize the cache database."""
+    conn = sqlite3.connect(_CACHE_DB)
+    conn.execute('CREATE TABLE IF NOT EXISTS cache ('
+        'fingerprint TEXT PRIMARY KEY,'
+        'category TEXT,'
+        'confidence REAL,'
+        'cleaned_name TEXT,'
+        'method TEXT,'
+        'detail TEXT,'
+        'topic TEXT,'
+        'created_at TEXT DEFAULT CURRENT_TIMESTAMP'
+    ')')
+    conn.commit()
+    return conn
+
+def _folder_fingerprint(folder_name, folder_path):
+    """Compute a fingerprint based on folder name + file listing."""
+    try:
+        files = sorted(f.name for f in Path(folder_path).iterdir() if f.is_file())[:50]
+    except (PermissionError, OSError):
+        files = []
+    raw = f"{folder_name}|{'|'.join(files)}"
+    return hashlib.md5(raw.encode()).hexdigest()
+
+def cache_lookup(folder_name, folder_path):
+    """Check the cache for a prior classification. Returns dict or None."""
+    try:
+        fp = _folder_fingerprint(folder_name, folder_path)
+        conn = _init_cache_db()
+        row = conn.execute('SELECT category, confidence, cleaned_name, method, detail, topic FROM cache WHERE fingerprint=?', (fp,)).fetchone()
+        conn.close()
+        if row:
+            return {'category': row[0], 'confidence': row[1], 'cleaned_name': row[2],
+                    'method': row[3], 'detail': row[4], 'topic': row[5]}
+    except Exception:
+        pass
+    return None
+
+def cache_store(folder_name, folder_path, result):
+    """Store a classification result in the cache."""
+    try:
+        fp = _folder_fingerprint(folder_name, folder_path)
+        conn = _init_cache_db()
+        conn.execute('INSERT OR REPLACE INTO cache (fingerprint, category, confidence, cleaned_name, method, detail, topic) VALUES (?,?,?,?,?,?,?)',
+                     (fp, result.get('category'), result.get('confidence', 0),
+                      result.get('cleaned_name', ''), result.get('method', ''),
+                      result.get('detail', ''), result.get('topic', '')))
+        conn.commit(); conn.close()
+    except Exception:
+        pass
+
+def cache_clear():
+    """Clear the entire classification cache."""
+    try:
+        conn = _init_cache_db()
+        conn.execute('DELETE FROM cache')
+        conn.commit(); conn.close()
+    except Exception:
+        pass
+
+def cache_count():
+    """Return the number of cached classifications."""
+    try:
+        conn = _init_cache_db()
+        n = conn.execute('SELECT COUNT(*) FROM cache').fetchone()[0]
+        conn.close()
+        return n
+    except Exception:
+        return 0
+
+
+# ── Duplicate Folder Detection ────────────────────────────────────────────────
+def compute_file_fingerprint(folder_path, max_files=20):
+    """Compute a content fingerprint for a folder based on file names and sizes."""
+    try:
+        entries = []
+        for f in sorted(Path(folder_path).iterdir()):
+            if f.is_file():
+                try:
+                    entries.append(f"{f.name}:{f.stat().st_size}")
+                except (PermissionError, OSError):
+                    continue
+            if len(entries) >= max_files:
+                break
+        return hashlib.md5('|'.join(entries).encode()).hexdigest() if entries else None
+    except (PermissionError, OSError):
+        return None
+
+
+# ── Backup Snapshot ───────────────────────────────────────────────────────────
+def create_backup_snapshot(src_dir, items):
+    """Save a directory listing snapshot before apply operations."""
+    ts = datetime.now().strftime('%Y%m%d_%H%M%S')
+    snap_file = os.path.join(_SCRIPT_DIR, f'snapshot_{ts}.txt')
+    try:
+        with open(snap_file, 'w', encoding='utf-8') as f:
+            f.write(f"FileOrganizer Backup Snapshot - {datetime.now().isoformat()}\n")
+            f.write(f"Source: {src_dir}\n")
+            f.write(f"Items: {len(items)}\n")
+            f.write("=" * 80 + "\n\n")
+            for it in items:
+                src = getattr(it, 'full_source_path', getattr(it, 'full_current_path', ''))
+                dst = getattr(it, 'full_dest_path', getattr(it, 'full_new_path', ''))
+                f.write(f"FROM: {src}\n  TO: {dst}\n\n")
+        return snap_file
+    except Exception:
+        return None
+
+
+# ── Export/Import Classification Rules ────────────────────────────────────────
+def export_rules_bundle(filepath):
+    """Export custom categories + corrections as a single JSON bundle."""
+    bundle = {
+        'version': '5.0',
+        'custom_categories': load_custom_categories(),
+        'corrections': load_corrections(),
+    }
+    with open(filepath, 'w', encoding='utf-8') as f:
+        json.dump(bundle, f, indent=2)
+
+def import_rules_bundle(filepath):
+    """Import custom categories + corrections from a JSON bundle."""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        bundle = json.load(f)
+    if 'custom_categories' in bundle:
+        save_custom_categories(bundle['custom_categories'])
+    if 'corrections' in bundle:
+        with open(_CORRECTIONS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(bundle['corrections'], f, indent=2)
+    return bundle
+
 
 # ── Crash handler ──────────────────────────────────────────────────────────────
 def exception_handler(exc_type, exc_value, exc_tb):
@@ -2142,24 +2322,61 @@ class CategorizeItem:
 
 
 # ── Workers ────────────────────────────────────────────────────────────────────
-class ScanAepWorker(QThread):
-    finished = pyqtSignal(list)
-    log = pyqtSignal(str)
+def _collect_scan_folders(root: Path, scan_depth: int = 0) -> list:
+    """Collect folders to process at the specified depth.
+    depth=0: immediate children (default, original behavior)
+    depth=1: grandchildren (subfolders within each top-level folder)
+    depth=2+: deeper nesting levels"""
+    try:
+        top_dirs = sorted([f for f in root.iterdir() if f.is_dir()])
+    except PermissionError:
+        return []
 
-    def __init__(self, root_dir):
+    if scan_depth <= 0:
+        return top_dirs
+
+    # Recurse into deeper levels
+    folders = []
+    for top_dir in top_dirs:
+        try:
+            subs = _collect_scan_folders(top_dir, scan_depth - 1)
+            folders.extend(subs)
+        except (PermissionError, OSError):
+            continue
+    return folders
+
+
+class ScanAepWorker(QThread):
+    result_ready = pyqtSignal(dict)
+    finished = pyqtSignal()
+    log = pyqtSignal(str)
+    progress = pyqtSignal(int, int)
+
+    def __init__(self, root_dir, scan_depth=0):
         super().__init__()
         self.root_dir = root_dir
+        self.scan_depth = scan_depth
+        self._cancelled = False
+
+    def cancel(self):
+        self._cancelled = True
 
     def run(self):
-        results = []
         root = Path(self.root_dir)
-        try:
-            folders = sorted([f for f in root.iterdir() if f.is_dir()])
-        except PermissionError:
-            self.log.emit("ERROR: Permission denied")
-            self.finished.emit([]); return
+        folders = _collect_scan_folders(root, self.scan_depth)
+        if not folders:
+            self.log.emit("ERROR: No folders found or permission denied")
+            self.finished.emit(); return
 
-        for folder in folders:
+        if self.scan_depth > 0:
+            self.log.emit(f"  Deep scan (depth {self.scan_depth}): processing {len(folders)} subfolders")
+
+        total = len(folders)
+        for idx, folder in enumerate(folders):
+            if self._cancelled:
+                self.log.emit(f"  Scan cancelled at {idx}/{total}")
+                break
+            self.progress.emit(idx + 1, total)
             self.log.emit(f"Scanning: {folder.name}")
             aep_files = []
             try:
@@ -2172,18 +2389,19 @@ class ScanAepWorker(QThread):
                 pass
 
             largest = max(aep_files, key=lambda x: x[1]) if aep_files else None
-            results.append({
+            self.result_ready.emit({
                 'folder_name': folder.name,
                 'folder_path': str(folder),
                 'largest_aep': largest[0].name if largest else None,
                 'aep_rel_path': str(largest[0].relative_to(folder)) if largest else None,
                 'aep_size': largest[1] if largest else 0,
             })
-        self.finished.emit(results)
+        self.finished.emit()
 
 
 class ScanCategoryWorker(QThread):
-    finished = pyqtSignal(list)
+    result_ready = pyqtSignal(dict)
+    finished = pyqtSignal()
     log = pyqtSignal(str)
     progress = pyqtSignal(int, int)
 
@@ -2200,10 +2418,16 @@ class ScanCategoryWorker(QThread):
         '.pptx', '.docx', '.xlsx',
     }
 
-    def __init__(self, root_dir, dest_dir):
+    def __init__(self, root_dir, dest_dir, scan_depth=0, use_cache=True):
         super().__init__()
         self.root_dir = root_dir
         self.dest_dir = dest_dir
+        self.scan_depth = scan_depth
+        self.use_cache = use_cache
+        self._cancelled = False
+
+    def cancel(self):
+        self._cancelled = True
 
     def _collect_candidate_names(self, folder: Path, max_depth=4):
         """Walk into a folder to find all candidate names for categorization.
@@ -2315,24 +2539,59 @@ class ScanCategoryWorker(QThread):
         return (None, 0, folder.name, folder.name, 0, '', '', None)
 
     def run(self):
-        results = []
         root = Path(self.root_dir)
-        try:
-            folders = sorted([f for f in root.iterdir() if f.is_dir()])
-        except PermissionError:
-            self.log.emit("ERROR: Permission denied")
-            self.finished.emit([]); return
+        folders = _collect_scan_folders(root, self.scan_depth)
+        if not folders:
+            self.log.emit("ERROR: No folders found or permission denied")
+            self.finished.emit(); return
 
         # Log engine capabilities
         caps = ["keyword"]
         if HAS_RAPIDFUZZ: caps.append("fuzzy")
         if HAS_PSD_TOOLS: caps.append("psd-metadata")
         caps.extend(["extension-map", "prproj-metadata", "content-analysis"])
-        self.log.emit(f"  Engine: tiered v4.0 [{', '.join(caps)}, context-inference]")
+        self.log.emit(f"  Engine: tiered v5.0 [{', '.join(caps)}, context-inference, cache, corrections]")
+        if self.scan_depth > 0:
+            self.log.emit(f"  Deep scan (depth {self.scan_depth}): processing {len(folders)} subfolders")
 
         total = len(folders)
+        t0 = time.time(); cached_hits = 0; correction_hits = 0
         for idx, folder in enumerate(folders):
+            if self._cancelled:
+                self.log.emit(f"  Scan cancelled at {idx}/{total}")
+                break
             self.progress.emit(idx + 1, total)
+
+            # Check corrections first (learned from user overrides)
+            corr_cat = check_corrections(folder.name)
+            if corr_cat:
+                correction_hits += 1
+                self.log.emit(f"  {folder.name}")
+                self.log.emit(f"    -->  {corr_cat}  (100%) [learned]")
+                self.result_ready.emit({
+                    'folder_name': folder.name, 'folder_path': str(folder),
+                    'category': corr_cat, 'confidence': 100,
+                    'cleaned_name': folder.name, 'source_depth': 0,
+                    'method': 'learned', 'detail': 'From user correction history',
+                    'topic': None,
+                })
+                continue
+
+            # Check cache
+            if self.use_cache:
+                cached = cache_lookup(folder.name, str(folder))
+                if cached and cached.get('category'):
+                    cached_hits += 1
+                    self.log.emit(f"  {folder.name}")
+                    self.log.emit(f"    -->  {cached['category']}  ({cached['confidence']:.0f}%) [cached]")
+                    self.result_ready.emit({
+                        'folder_name': folder.name, 'folder_path': str(folder),
+                        'category': cached['category'], 'confidence': cached['confidence'],
+                        'cleaned_name': cached.get('cleaned_name', folder.name), 'source_depth': 0,
+                        'method': f"cached:{cached.get('method', '')}", 'detail': cached.get('detail', ''),
+                        'topic': cached.get('topic'),
+                    })
+                    continue
 
             cat, conf, cleaned, source_name, depth, method, detail, topic = self._best_categorization(folder)
 
@@ -2352,7 +2611,7 @@ class ScanCategoryWorker(QThread):
             else:
                 self.log.emit(f"    -->  [no match]")
 
-            results.append({
+            result_dict = {
                 'folder_name': folder.name,
                 'folder_path': str(folder),
                 'category': cat,
@@ -2362,33 +2621,47 @@ class ScanCategoryWorker(QThread):
                 'method': method,
                 'detail': detail,
                 'topic': topic,
-            })
-        self.finished.emit(results)
+            }
+            self.result_ready.emit(result_dict)
+            # Store in cache for future runs
+            if cat and self.use_cache:
+                cache_store(folder.name, str(folder), result_dict)
+
+        elapsed = time.time() - t0
+        if cached_hits: self.log.emit(f"  Cache hits: {cached_hits}")
+        if correction_hits: self.log.emit(f"  Learned corrections applied: {correction_hits}")
+        if elapsed > 1: self.log.emit(f"  Scan time: {elapsed:.1f}s ({elapsed/max(total,1)*1000:.0f}ms/folder)")
+        self.finished.emit()
 
 
 # ── LLM Classification Worker ─────────────────────────────────────────────────
 class ScanLLMWorker(QThread):
     """Scans folders using Ollama LLM for classification and renaming.
     Processes every folder through the LLM for maximum accuracy."""
-    finished = pyqtSignal(list)
+    result_ready = pyqtSignal(dict)
+    finished = pyqtSignal()
     log = pyqtSignal(str)
     progress = pyqtSignal(int, int)
 
-    def __init__(self, root_dir, dest_dir):
+    def __init__(self, root_dir, dest_dir, scan_depth=0, use_cache=True):
         super().__init__()
         self.root_dir = root_dir
         self.dest_dir = dest_dir
+        self.scan_depth = scan_depth
+        self.use_cache = use_cache
+        self._cancelled = False
+
+    def cancel(self):
+        self._cancelled = True
 
     def run(self):
-        results = []
         root = Path(self.root_dir)
         settings = load_ollama_settings()
 
-        try:
-            folders = sorted([f for f in root.iterdir() if f.is_dir()])
-        except PermissionError:
-            self.log.emit("ERROR: Permission denied")
-            self.finished.emit([]); return
+        folders = _collect_scan_folders(root, self.scan_depth)
+        if not folders:
+            self.log.emit("ERROR: No folders found or permission denied")
+            self.finished.emit(); return
 
         # Verify Ollama connection first
         ok, msg, _ = ollama_test_connection(settings['url'], settings['model'])
@@ -2401,12 +2674,45 @@ class ScanLLMWorker(QThread):
 
         self.log.emit(f"  Engine: LLM via Ollama [{settings['model']}]")
         self.log.emit(f"  Processing {len(folders)} folders through LLM...")
+        if self.scan_depth > 0:
+            self.log.emit(f"  Deep scan (depth {self.scan_depth}): scanning subfolders")
 
         total = len(folders)
         llm_ok = 0; llm_fail = 0
 
+        t0 = time.time(); cached_hits = 0; correction_hits = 0
         for idx, folder in enumerate(folders):
+            if self._cancelled:
+                self.log.emit(f"  Scan cancelled at {idx}/{total}")
+                break
             self.progress.emit(idx + 1, total)
+
+            # Check corrections first
+            corr_cat = check_corrections(folder.name)
+            if corr_cat:
+                correction_hits += 1
+                self.result_ready.emit({
+                    'folder_name': folder.name, 'folder_path': str(folder),
+                    'category': corr_cat, 'confidence': 100,
+                    'cleaned_name': folder.name, 'source_depth': 0,
+                    'method': 'learned', 'detail': 'From correction history',
+                    'topic': None, 'llm_name': None,
+                })
+                continue
+
+            # Check cache
+            if self.use_cache:
+                cached = cache_lookup(folder.name, str(folder))
+                if cached and cached.get('category'):
+                    cached_hits += 1
+                    self.result_ready.emit({
+                        'folder_name': folder.name, 'folder_path': str(folder),
+                        'category': cached['category'], 'confidence': cached['confidence'],
+                        'cleaned_name': cached.get('cleaned_name', folder.name), 'source_depth': 0,
+                        'method': f"cached:{cached.get('method', '')}", 'detail': cached.get('detail', ''),
+                        'topic': cached.get('topic'), 'llm_name': cached.get('cleaned_name'),
+                    })
+                    continue
 
             # Try LLM classification
             llm_result = ollama_classify_folder(
@@ -2421,7 +2727,7 @@ class ScanLLMWorker(QThread):
                     self.log.emit(f"    LLM renamed: \"{clean_name}\"")
                 self.log.emit(f"    -->  {llm_result['category']}  ({llm_result['confidence']}%) [llm]")
 
-                results.append({
+                self.result_ready.emit({
                     'folder_name': folder.name,
                     'folder_path': str(folder),
                     'category': llm_result['category'],
@@ -2448,7 +2754,7 @@ class ScanLLMWorker(QThread):
                 if cat:
                     self.log.emit(f"    -->  {cat}  ({conf:.0f}%) [{method}] (fallback)")
 
-                results.append({
+                self.result_ready.emit({
                     'folder_name': folder.name,
                     'folder_path': str(folder),
                     'category': cat,
@@ -2461,20 +2767,26 @@ class ScanLLMWorker(QThread):
                     'llm_name': None,
                 })
 
+        elapsed = time.time() - t0
         self.log.emit(f"\n  LLM results: {llm_ok} classified, {llm_fail} fell back to rules")
-        self.finished.emit(results)
+        if cached_hits: self.log.emit(f"  Cache hits: {cached_hits}")
+        if correction_hits: self.log.emit(f"  Learned corrections: {correction_hits}")
+        if elapsed > 1: self.log.emit(f"  Scan time: {elapsed:.1f}s")
+        self.finished.emit()
 
     def _fallback_scan(self, folders):
         """Full rule-based fallback if Ollama is unreachable."""
-        results = []
         total = len(folders)
         for idx, folder in enumerate(folders):
+            if self._cancelled:
+                self.log.emit(f"  Scan cancelled at {idx}/{total}")
+                break
             self.progress.emit(idx + 1, total)
             top_result = tiered_classify(folder.name, str(folder))
             cat = top_result['category']
             if cat:
                 self.log.emit(f"  {folder.name}  -->  {cat}  ({top_result['confidence']:.0f}%)")
-            results.append({
+            self.result_ready.emit({
                 'folder_name': folder.name,
                 'folder_path': str(folder),
                 'category': cat,
@@ -2486,7 +2798,7 @@ class ScanLLMWorker(QThread):
                 'topic': top_result.get('topic'),
                 'llm_name': None,
             })
-        self.finished.emit(results)
+        self.finished.emit()
 
 
 # ── Ollama Auto-Setup Worker ──────────────────────────────────────────────────
@@ -2735,6 +3047,13 @@ class ApplyAepWorker(QThread):
             except Exception as e:
                 err += 1
                 self.log.emit(f"  \u274C Error: {e}")
+                # Attempt atomic rollback
+                if os.path.exists(it.full_new_path) and not os.path.exists(it.full_current_path):
+                    try:
+                        os.rename(it.full_new_path, it.full_current_path)
+                        self.log.emit(f"  Rolled back to original location")
+                    except Exception:
+                        pass
                 self.item_done.emit(ri, "Error")
         self.finished.emit(ok, err, undo_ops)
 
@@ -2772,9 +3091,21 @@ class ApplyCatWorker(QThread):
                     'status': 'Done'})
                 self.log.emit(f"  \u2705 Done")
                 self.item_done.emit(ri, "Done")
+                # Store successful classification in cache
+                cache_store(it.folder_name, it.full_source_path,
+                    {'category': it.category, 'confidence': it.confidence,
+                     'cleaned_name': it.cleaned_name, 'method': it.method,
+                     'detail': it.detail, 'topic': it.topic})
             except Exception as e:
                 err += 1
                 self.log.emit(f"  \u274C Error: {e}")
+                # Attempt atomic rollback for this folder
+                if os.path.exists(it.full_dest_path) and not os.path.exists(it.full_source_path):
+                    try:
+                        shutil.move(it.full_dest_path, it.full_source_path)
+                        self.log.emit(f"  Rolled back to original location")
+                    except Exception:
+                        pass
                 self.item_done.emit(ri, "Error")
         self.finished.emit(ok, err, undo_ops)
 
@@ -3018,11 +3349,13 @@ class FileOrganizer(QMainWindow):
         op = self.settings.value("last_op", 0, type=int)
         thresh = self.settings.value("confidence_threshold", 0, type=int)
         use_llm = self.settings.value("use_llm", True, type=bool)
+        scan_depth = self.settings.value("scan_depth", 0, type=int)
         if src: self.txt_src.setText(src)
         if dst: self.txt_dst.setText(dst)
         if op < self.cmb_op.count(): self.cmb_op.setCurrentIndex(op)
         self.sld_conf.setValue(thresh)
         self.chk_llm.setChecked(use_llm)
+        self.spn_depth.setValue(scan_depth)
 
     def _save_settings(self):
         self.settings.setValue("last_source", self.txt_src.text())
@@ -3030,6 +3363,7 @@ class FileOrganizer(QMainWindow):
         self.settings.setValue("last_op", self.cmb_op.currentIndex())
         self.settings.setValue("confidence_threshold", self.sld_conf.value())
         self.settings.setValue("use_llm", self.chk_llm.isChecked())
+        self.settings.setValue("scan_depth", self.spn_depth.value())
 
     def closeEvent(self, event):
         self._save_settings()
@@ -3092,6 +3426,23 @@ class FileOrganizer(QMainWindow):
         self.btn_ollama.setToolTip("Configure Ollama LLM for AI-powered classification and renaming")
         self.btn_ollama.clicked.connect(self._open_ollama_settings)
         row_op.addWidget(self.btn_ollama)
+        # Export/Import rules
+        self.btn_export_rules = QPushButton("Export Rules")
+        self.btn_export_rules.setFixedWidth(95)
+        self.btn_export_rules.setToolTip("Export custom categories + learned corrections as JSON")
+        self.btn_export_rules.clicked.connect(self._export_rules)
+        row_op.addWidget(self.btn_export_rules)
+        self.btn_import_rules = QPushButton("Import Rules")
+        self.btn_import_rules.setFixedWidth(95)
+        self.btn_import_rules.setToolTip("Import custom categories + corrections from JSON")
+        self.btn_import_rules.clicked.connect(self._import_rules)
+        row_op.addWidget(self.btn_import_rules)
+        # Clear cache button
+        self.btn_clear_cache = QPushButton("Clear Cache")
+        self.btn_clear_cache.setFixedWidth(90)
+        self.btn_clear_cache.setToolTip("Clear the classification cache database")
+        self.btn_clear_cache.clicked.connect(self._clear_cache)
+        row_op.addWidget(self.btn_clear_cache)
         root.addLayout(row_op)
 
         # ── Source row ──
@@ -3153,15 +3504,31 @@ class FileOrganizer(QMainWindow):
         self.chk_llm = QCheckBox("Use LLM")
         self.chk_llm.setToolTip("Use Ollama LLM for AI-powered classification and folder name cleanup")
         self.chk_llm.setStyleSheet("QCheckBox { color: #e879f9; font-weight: bold; }")
-        for w in [self.btn_scan, self.btn_apply, self.btn_preview, self.btn_undo,
-                  btn_all, btn_none, btn_inv, self.chk_llm, self.chk_hash]:
+        # Scan depth spinner
+        lbl_depth = QLabel("Depth:")
+        lbl_depth.setStyleSheet("color: #38bdf8; font-weight: bold;")
+        lbl_depth.setToolTip("0 = scan top-level folders only\n1 = scan one level deep (subfolders)\n2-3 = deeper nesting")
+        self.spn_depth = QSpinBox()
+        self.spn_depth.setRange(0, 3); self.spn_depth.setValue(0)
+        self.spn_depth.setFixedWidth(45)
+        self.spn_depth.setToolTip("Scan depth: 0=top-level, 1+=subfolders")
+        self.spn_depth.setStyleSheet("QSpinBox { color: #38bdf8; font-weight: bold; }")
+        # Export plan button
+        self.btn_export = QPushButton("Export Plan")
+        self.btn_export.setFixedWidth(90); self.btn_export.setEnabled(False)
+        self.btn_export.setToolTip("Export the classification plan as CSV (dry-run)")
+        self.btn_export.clicked.connect(self._export_plan)
+        for w in [self.btn_scan, self.btn_apply, self.btn_preview, self.btn_export, self.btn_undo,
+                  btn_all, btn_none, btn_inv, self.chk_llm, lbl_depth, self.spn_depth, self.chk_hash]:
             row_btns.addWidget(w)
         row_btns.addStretch()
         root.addLayout(row_btns)
 
         # ── Table ──
         self.tbl = QTableWidget(); self.tbl.setAlternatingRowColors(True)
+        self.tbl.setSortingEnabled(False)  # Enabled after scan completes
         self.tbl.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.tbl.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.tbl.verticalHeader().setVisible(False)
         self.tbl.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tbl.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
@@ -3201,9 +3568,13 @@ class FileOrganizer(QMainWindow):
         # Open folder in explorer
         act_open = menu.addAction("Open Folder in Explorer")
         # Reassign category (categorize mode only)
-        act_reassign = None
+        act_reassign = None; act_batch = None
         if is_cat and row < len(self.cat_items):
             act_reassign = menu.addAction("Change Category...")
+            # Check for multi-selection
+            sel_rows = list(set(idx.row() for idx in self.tbl.selectedIndexes()))
+            if len(sel_rows) > 1:
+                act_batch = menu.addAction(f"Batch Reassign ({len(sel_rows)} rows)...")
 
         action = menu.exec(self.tbl.viewport().mapToGlobal(pos))
         if action == act_open:
@@ -3218,6 +3589,9 @@ class FileOrganizer(QMainWindow):
                     subprocess.Popen(['xdg-open', path])
         elif action == act_reassign and is_cat and row < len(self.cat_items):
             self._reassign_category(row)
+        elif action == act_batch and is_cat:
+            sel_rows = sorted(set(idx.row() for idx in self.tbl.selectedIndexes()))
+            self._batch_reassign(sel_rows)
 
     def _reassign_category(self, row):
         it = self.cat_items[row]
@@ -3229,17 +3603,43 @@ class FileOrganizer(QMainWindow):
             it.category = new_cat; it.method = 'Manual'; it.detail = 'User override'; it.topic = ''
             dst_dir = self.txt_dst.text()
             it.full_dest_path = os.path.join(dst_dir, new_cat, it.folder_name)
-            # Update table row
-            ci = self.tbl.item(row, 4)
-            if ci: ci.setText(new_cat)
+            # Update dest path column
+            di = self.tbl.item(row, 3)
+            if di: di.setText(it.full_dest_path); di.setForeground(QColor("#38bdf8")); di.setToolTip(it.full_dest_path)
             # Update confidence to show it was manual
-            cfi = self.tbl.item(row, 5)
+            cfi = self.tbl.item(row, 4)
             if cfi: cfi.setText("--"); cfi.setForeground(QColor("#38bdf8"))
             # Update method column
-            mi = self.tbl.item(row, 6)
+            mi = self.tbl.item(row, 5)
             if mi: mi.setText("Manual"); mi.setForeground(QColor("#38bdf8"))
             self._log(f"  Reassigned: {it.folder_name}  ->  {new_cat}")
+            # Save correction for future learning
+            save_correction(it.folder_name, new_cat)
             self._stats_cat()
+
+    def _batch_reassign(self, rows):
+        """Reassign multiple selected rows to a single category."""
+        all_cats = get_all_category_names()
+        new_cat, ok = QInputDialog.getItem(self, "Batch Reassign",
+            f"Select category for {len(rows)} folders:", all_cats, 0, False)
+        if not ok or not new_cat: return
+        dst_dir = self.txt_dst.text()
+        for row in rows:
+            if row >= len(self.cat_items): continue
+            it = self.cat_items[row]
+            it.category = new_cat; it.method = 'Manual'; it.detail = 'Batch user override'; it.topic = ''
+            it.full_dest_path = os.path.join(dst_dir, new_cat, it.folder_name)
+            # Update table cells
+            di = self.tbl.item(row, 3)
+            if di: di.setText(it.full_dest_path); di.setForeground(QColor("#38bdf8")); di.setToolTip(it.full_dest_path)
+            cfi = self.tbl.item(row, 4)
+            if cfi: cfi.setText("--"); cfi.setForeground(QColor("#38bdf8"))
+            mi = self.tbl.item(row, 5)
+            if mi: mi.setText("Manual"); mi.setForeground(QColor("#38bdf8"))
+            # Save correction for learning
+            save_correction(it.folder_name, new_cat)
+        self._log(f"  Batch reassigned {len(rows)} folders  ->  {new_cat}")
+        self._stats_cat()
 
     # ═══ CUSTOM CATEGORIES DIALOG ════════════════════════════════════════════
     def _open_custom_cats(self):
@@ -3348,19 +3748,19 @@ class FileOrganizer(QMainWindow):
 
     def _setup_aep_tbl(self):
         self.tbl.setColumnCount(7)
-        self.tbl.setHorizontalHeaderLabels(["","Current Name","","New Name","AEP File","Size","Status"])
+        self.tbl.setHorizontalHeaderLabels(["","Source Path","\u2192","New Path","AEP File","Size","Status"])
         h = self.tbl.horizontalHeader(); h.setFixedHeight(36)
         for c,m in [(0,"Fixed"),(1,"Stretch"),(2,"Fixed"),(3,"Stretch"),(4,"Stretch"),(5,"Fixed"),(6,"Fixed")]:
             h.setSectionResizeMode(c, getattr(QHeaderView.ResizeMode, m))
-        self.tbl.setColumnWidth(0,40); self.tbl.setColumnWidth(2,36); self.tbl.setColumnWidth(5,80); self.tbl.setColumnWidth(6,80)
+        self.tbl.setColumnWidth(0,40); self.tbl.setColumnWidth(2,30); self.tbl.setColumnWidth(5,80); self.tbl.setColumnWidth(6,80)
 
     def _setup_cat_tbl(self):
-        self.tbl.setColumnCount(8)
-        self.tbl.setHorizontalHeaderLabels(["","Folder Name","Detected As","","Target Category","Conf","Method","Status"])
+        self.tbl.setColumnCount(7)
+        self.tbl.setHorizontalHeaderLabels(["","Source Path","\u2192","Destination Path","Conf","Method","Status"])
         h = self.tbl.horizontalHeader(); h.setFixedHeight(36)
-        for c,m in [(0,"Fixed"),(1,"Stretch"),(2,"Stretch"),(3,"Fixed"),(4,"Stretch"),(5,"Fixed"),(6,"Fixed"),(7,"Fixed")]:
+        for c,m in [(0,"Fixed"),(1,"Stretch"),(2,"Fixed"),(3,"Stretch"),(4,"Fixed"),(5,"Fixed"),(6,"Fixed")]:
             h.setSectionResizeMode(c, getattr(QHeaderView.ResizeMode, m))
-        self.tbl.setColumnWidth(0,40); self.tbl.setColumnWidth(3,36); self.tbl.setColumnWidth(5,55); self.tbl.setColumnWidth(6,80); self.tbl.setColumnWidth(7,70)
+        self.tbl.setColumnWidth(0,40); self.tbl.setColumnWidth(2,30); self.tbl.setColumnWidth(4,55); self.tbl.setColumnWidth(5,80); self.tbl.setColumnWidth(6,70)
 
     def resizeEvent(self, e):
         super().resizeEvent(e)
@@ -3380,17 +3780,55 @@ class FileOrganizer(QMainWindow):
         if d: self.txt_dst.setText(d)
 
     def _on_scan(self):
+        # If already scanning, cancel
+        if getattr(self, '_scanning', False):
+            self._cancel_scan()
+            return
+
         src = self.txt_src.text()
         if not src or not os.path.isdir(src):
             self._log("Invalid source directory"); return
         self.lbl_empty.hide(); self.tbl.setRowCount(0)
-        self.btn_scan.setEnabled(False); self.btn_apply.setEnabled(False); self.btn_preview.setEnabled(False)
+        self._scanning = True
+        self.tbl.setSortingEnabled(False)
+        self.btn_scan.setText("Cancel"); self.btn_scan.setStyleSheet("QPushButton { color: #ef4444; font-weight: bold; }")
+        self.btn_apply.setEnabled(False); self.btn_preview.setEnabled(False); self.btn_export.setEnabled(False)
+        self._scan_start_time = time.time()
         if self.cmb_op.currentIndex() == self.OP_CAT:
             dst = self.txt_dst.text()
-            if not dst: self._log("Set output directory first"); self.btn_scan.setEnabled(True); return
+            if not dst:
+                self._log("Set output directory first")
+                self._reset_scan_ui(); return
             self._scan_cat(src, dst)
         else:
             self._scan_aep(src)
+
+    def _cancel_scan(self):
+        """Signal the worker to stop."""
+        if hasattr(self, 'worker') and self.worker and self.worker.isRunning():
+            self.worker.cancel()
+            self._log("Cancelling scan...")
+
+    def _reset_scan_ui(self):
+        """Restore Scan button and state after scan completes or is cancelled."""
+        self._scanning = False
+        self.btn_scan.setText("Scan"); self.btn_scan.setStyleSheet("")
+        self.btn_scan.setEnabled(True)
+        self.lbl_prog.setText("")
+
+    def _update_progress(self, current, total):
+        """Update progress label with ETA."""
+        elapsed = time.time() - getattr(self, '_scan_start_time', time.time())
+        if current > 1 and elapsed > 0.5:
+            avg = elapsed / current
+            remaining = avg * (total - current)
+            if remaining >= 60:
+                eta = f"~{remaining/60:.0f}m left"
+            else:
+                eta = f"~{remaining:.0f}s left"
+            self.lbl_prog.setText(f"Scanning {current}/{total}... ({eta})")
+        else:
+            self.lbl_prog.setText(f"Scanning {current}/{total}...")
 
     # ═══ TABLE HELPERS ═══════════════════════════════════════════════════════
     def _it(self, text):
@@ -3414,27 +3852,61 @@ class FileOrganizer(QMainWindow):
     def _scan_aep(self, src):
         self._log(f"Scanning for .aep files in: {src}")
         self.aep_items.clear(); self.tbl.setRowCount(0)
-        self.worker = ScanAepWorker(src)
+        self._aep_dest_paths = {}  # collision tracking for AEP renames
+        self.worker = ScanAepWorker(src, scan_depth=self.spn_depth.value())
         self.worker.log.connect(self._log)
-        self.worker.finished.connect(self._aep_done); self.worker.start()
+        self.worker.progress.connect(self._update_progress)
+        self.worker.result_ready.connect(self._on_aep_result)
+        self.worker.finished.connect(self._on_aep_scan_done)
+        self.worker.start()
 
-    def _aep_done(self, results):
-        self.tbl.setRowCount(0); self.aep_items.clear(); shown = 0
-        for r in results:
-            if not r['largest_aep']: continue
-            aep_stem = os.path.splitext(r['largest_aep'])[0]
-            if is_generic_aep(aep_stem): continue
-            new_name = f"{r['folder_name']} - {aep_stem}"
-            if r['folder_name'] in new_name and aep_stem in r['folder_name']: continue
-            it = RenameItem(); it.current_name = r['folder_name']; it.new_name = new_name
-            it.aep_file = r.get('aep_rel_path', r['largest_aep'])
-            it.file_size = format_size(r['aep_size'])
-            it.full_current_path = r['folder_path']
-            it.full_new_path = os.path.join(os.path.dirname(r['folder_path']), new_name)
-            it.status = "Pending"; it.selected = True; shown += 1
-            self.aep_items.append(it); self._add_aep_row(it, len(self.aep_items)-1)
+    def _deduplicate_aep_path(self, dest_path):
+        """Auto-suffix AEP rename paths that collide."""
+        key = dest_path.lower()
+        if key not in self._aep_dest_paths and not os.path.exists(dest_path):
+            self._aep_dest_paths[key] = 1
+            return dest_path
 
-        self.btn_scan.setEnabled(True); self.btn_apply.setEnabled(shown > 0); self.lbl_prog.setText("")
+        parent = os.path.dirname(dest_path)
+        base = os.path.basename(dest_path)
+        n = self._aep_dest_paths.get(key, 1) + 1
+        while True:
+            new_name = f"{base} ({n})"
+            new_path = os.path.join(parent, new_name)
+            new_key = new_path.lower()
+            if new_key not in self._aep_dest_paths and not os.path.exists(new_path):
+                self._aep_dest_paths[key] = n
+                self._aep_dest_paths[new_key] = 1
+                return new_path
+            n += 1
+
+    def _on_aep_result(self, r):
+        """Process a single AEP scan result live."""
+        if not r['largest_aep']: return
+        aep_stem = os.path.splitext(r['largest_aep'])[0]
+        if is_generic_aep(aep_stem): return
+        new_name = f"{r['folder_name']} - {aep_stem}"
+        if r['folder_name'] in new_name and aep_stem in r['folder_name']: return
+        it = RenameItem(); it.current_name = r['folder_name']; it.new_name = new_name
+        it.aep_file = r.get('aep_rel_path', r['largest_aep'])
+        it.file_size = format_size(r['aep_size'])
+        it.full_current_path = r['folder_path']
+        raw_path = os.path.join(os.path.dirname(r['folder_path']), new_name)
+        it.full_new_path = self._deduplicate_aep_path(raw_path)
+        # Update display name if deduped
+        deduped_name = os.path.basename(it.full_new_path)
+        if deduped_name != new_name:
+            it.new_name = deduped_name
+        it.status = "Pending"; it.selected = True
+        self.aep_items.append(it); self._add_aep_row(it, len(self.aep_items)-1)
+
+    def _on_aep_scan_done(self):
+        """Finalize after AEP scan completes."""
+        self._reset_scan_ui()
+        self.tbl.setSortingEnabled(True)
+        shown = len(self.aep_items)
+        self.btn_apply.setEnabled(shown > 0)
+        self.btn_export.setEnabled(shown > 0)
         self._stats_aep()
         self._log(f"Scan complete: {shown} eligible folders found")
         if shown == 0: self.lbl_empty.setText("No eligible folders found"); self.lbl_empty.show()
@@ -3442,9 +3914,14 @@ class FileOrganizer(QMainWindow):
     def _add_aep_row(self, it, idx):
         r = self.tbl.rowCount(); self.tbl.insertRow(r)
         self.tbl.setCellWidget(r, 0, self._make_cb(it.selected, self._aep_cb, idx))
-        self.tbl.setItem(r, 1, self._it(it.current_name))
+        # Col 1: Full source path
+        src_item = self._it(it.full_current_path)
+        src_item.setForeground(QColor("#999")); src_item.setToolTip(it.full_current_path)
+        self.tbl.setItem(r, 1, src_item)
         self.tbl.setItem(r, 2, self._make_arrow())
-        ni = self._it(it.new_name); ni.setForeground(QColor("#4ade80")); f=ni.font(); f.setBold(True); ni.setFont(f); self.tbl.setItem(r, 3, ni)
+        # Col 3: Full new path
+        ni = self._it(it.full_new_path); ni.setForeground(QColor("#4ade80")); ni.setToolTip(it.full_new_path)
+        f=ni.font(); f.setBold(True); ni.setFont(f); self.tbl.setItem(r, 3, ni)
         self.tbl.setItem(r, 4, self._it(it.aep_file))
         si = self._it(it.file_size); si.setTextAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignVCenter); self.tbl.setItem(r, 5, si)
         sti = self._it("Pending"); sti.setTextAlignment(Qt.AlignmentFlag.AlignCenter); sti.setForeground(QColor("#f59e0b")); self.tbl.setItem(r, 6, sti)
@@ -3462,109 +3939,194 @@ class FileOrganizer(QMainWindow):
     def _scan_cat(self, src, dst):
         self._log(f"Scanning & categorizing: {src}")
         self.cat_items.clear(); self.tbl.setRowCount(0)
+        self._cat_unmatched = 0
+        self._cat_context_count = 0
+        self._cat_llm_renamed = 0
+        self._cat_method_counts = Counter()
+        self._cat_dest_paths = {}  # dest_path_lower -> count for collision detection
+        self._cat_fingerprints = {}  # file_fingerprint -> first folder_name for duplicate detection
+        depth = self.spn_depth.value()
 
         if self.chk_llm.isChecked():
             if not self._ollama_ready:
                 self._log("  WARNING: Ollama LLM not ready yet (still setting up or unavailable)")
                 self._log("  Falling back to rule-based classification...")
-                self.worker = ScanCategoryWorker(src, dst)
+                self.worker = ScanCategoryWorker(src, dst, scan_depth=depth)
             else:
                 self._log("  Mode: LLM-powered (all folders processed through Ollama)")
-                self.worker = ScanLLMWorker(src, dst)
+                self.worker = ScanLLMWorker(src, dst, scan_depth=depth)
         else:
-            self.worker = ScanCategoryWorker(src, dst)
+            self.worker = ScanCategoryWorker(src, dst, scan_depth=depth)
 
         self.worker.log.connect(self._log)
-        self.worker.progress.connect(lambda c,t: self.lbl_prog.setText(f"Scanning {c}/{t}..."))
-        self.worker.finished.connect(self._cat_done); self.worker.start()
+        self.worker.progress.connect(self._update_progress)
+        self.worker.result_ready.connect(self._on_cat_result)
+        self.worker.finished.connect(self._on_cat_scan_done)
+        self.worker.start()
 
-    def _cat_done(self, results):
-        self.tbl.setRowCount(0); self.cat_items.clear(); matched = unmatched = 0
+    def _deduplicate_dest_path(self, dest_path):
+        """If dest_path already claimed by another item (or exists on disk),
+        append (2), (3), etc. to the folder name to avoid collisions."""
+        key = dest_path.lower()
+        if key not in self._cat_dest_paths and not os.path.exists(dest_path):
+            self._cat_dest_paths[key] = 1
+            return dest_path
+
+        parent = os.path.dirname(dest_path)
+        base = os.path.basename(dest_path)
+        n = self._cat_dest_paths.get(key, 1) + 1
+        while True:
+            new_name = f"{base} ({n})"
+            new_path = os.path.join(parent, new_name)
+            new_key = new_path.lower()
+            if new_key not in self._cat_dest_paths and not os.path.exists(new_path):
+                self._cat_dest_paths[key] = n
+                self._cat_dest_paths[new_key] = 1
+                return new_path
+            n += 1
+
+    def _on_cat_result(self, r):
+        """Process a single categorization result live into the table."""
         dst = self.txt_dst.text()
         thresh = self.sld_conf.value()
-        method_counts = Counter()
-        context_count = 0; llm_renamed = 0
-        for r in results:
-            if not r['category']: unmatched += 1; continue
-            it = CategorizeItem(); it.folder_name = r['folder_name']; it.category = r['category']
+
+        if not r['category']:
+            self._cat_unmatched += 1
+            # Show uncategorized folders in the table
+            it = CategorizeItem(); it.folder_name = r['folder_name']; it.category = '[Uncategorized]'
             it.cleaned_name = r.get('cleaned_name', r['folder_name'])
-            it.confidence = r['confidence']; it.full_source_path = r['folder_path']
-
-            # Use LLM-cleaned name for dest path if available (rename-on-move)
-            llm_name = r.get('llm_name')
-            dest_folder_name = llm_name if llm_name and llm_name != r['folder_name'] else r['folder_name']
-            it.full_dest_path = os.path.join(dst, r['category'], dest_folder_name)
-
-            it.method = r.get('method', ''); it.detail = r.get('detail', '')
-            it.topic = r.get('topic', '') or ''
-            it.status = "Pending"
-            it.selected = it.confidence >= thresh
-            matched += 1
-            if it.topic:
-                context_count += 1
-            if llm_name and llm_name != r['folder_name']:
-                llm_renamed += 1
-            method_counts[it.method or 'unknown'] += 1
+            it.confidence = 0; it.full_source_path = r['folder_path']
+            it.full_dest_path = ''
+            it.method = ''; it.detail = 'No classification match'; it.topic = ''
+            it.status = "Skip"; it.selected = False
             self.cat_items.append(it); self._add_cat_row(it, len(self.cat_items)-1)
+            self._stats_cat()
+            return
 
-        self.btn_scan.setEnabled(True); self.btn_apply.setEnabled(matched > 0)
+        it = CategorizeItem(); it.folder_name = r['folder_name']; it.category = r['category']
+        it.cleaned_name = r.get('cleaned_name', r['folder_name'])
+        it.confidence = r['confidence']; it.full_source_path = r['folder_path']
+
+        # Use LLM-cleaned name for dest path if available (rename-on-move)
+        llm_name = r.get('llm_name')
+        dest_folder_name = llm_name if llm_name and llm_name != r['folder_name'] else r['folder_name']
+        raw_dest = os.path.join(dst, r['category'], dest_folder_name)
+        it.full_dest_path = self._deduplicate_dest_path(raw_dest)
+
+        it.method = r.get('method', ''); it.detail = r.get('detail', '')
+        it.topic = r.get('topic', '') or ''
+        it.status = "Pending"
+        it.selected = it.confidence >= thresh
+
+        if it.topic:
+            self._cat_context_count += 1
+        if llm_name and llm_name != r['folder_name']:
+            self._cat_llm_renamed += 1
+        self._cat_method_counts[it.method or 'unknown'] += 1
+
+        # Duplicate detection
+        fp = compute_file_fingerprint(r['folder_path'])
+        if fp and fp in self._cat_fingerprints:
+            it.detail = f"Possible duplicate of: {self._cat_fingerprints[fp]}"
+        elif fp:
+            self._cat_fingerprints[fp] = r['folder_name']
+
+        self.cat_items.append(it); self._add_cat_row(it, len(self.cat_items)-1)
+        self._stats_cat()
+
+    def _on_cat_scan_done(self):
+        """Finalize after category scan completes."""
+        self._reset_scan_ui()
+        self.tbl.setSortingEnabled(True)
+        matched = len(self.cat_items)
+        self.btn_apply.setEnabled(matched > 0)
         self.btn_preview.setEnabled(matched > 0)
-        self.lbl_prog.setText("")
-        self._cat_unmatched = unmatched; self._stats_cat()
-        methods_str = ', '.join(f"{k}:{v}" for k, v in method_counts.most_common())
-        self._log(f"Categorization complete: {matched} matched, {unmatched} uncategorized")
-        self._log(f"  Methods used: {methods_str}")
-        if context_count:
-            self._log(f"  Context overrides: {context_count} (topic → asset type)")
-        if llm_renamed:
-            self._log(f"  LLM renamed: {llm_renamed} folders will be renamed on move")
+        self.btn_export.setEnabled(len(self.cat_items) > 0)
+        self._stats_cat()
+        methods_str = ', '.join(f"{k}:{v}" for k, v in self._cat_method_counts.most_common())
+        self._log(f"Categorization complete: {matched} matched, {self._cat_unmatched} uncategorized")
+        if methods_str:
+            self._log(f"  Methods used: {methods_str}")
+        if self._cat_context_count:
+            self._log(f"  Context overrides: {self._cat_context_count} (topic → asset type)")
+        if self._cat_llm_renamed:
+            self._log(f"  LLM renamed: {self._cat_llm_renamed} folders will be renamed on move")
         if matched == 0: self.lbl_empty.setText("No folders could be categorized"); self.lbl_empty.show()
 
     def _add_cat_row(self, it, idx):
         r = self.tbl.rowCount(); self.tbl.insertRow(r)
         self.tbl.setCellWidget(r, 0, self._make_cb(it.selected, self._cat_cb, idx))
-        self.tbl.setItem(r, 1, self._it(it.folder_name))
-        # Show cleaned/detected name - highlight LLM renames and context overrides
-        # Check if dest path has a different folder name (LLM rename-on-move)
+
+        # Col 1: Source Path (full path, dimmed)
+        src_item = self._it(it.full_source_path)
+        src_item.setForeground(QColor("#999"))
+        src_item.setToolTip(it.full_source_path)
+        self.tbl.setItem(r, 1, src_item)
+
+        # Col 2: Arrow
+        self.tbl.setItem(r, 2, self._make_arrow())
+
+        # Col 3: Destination Path (full path, colored by method)
+        dest_item = self._it(it.full_dest_path if it.full_dest_path else '[No match]')
         dest_basename = os.path.basename(it.full_dest_path)
         is_llm_renamed = dest_basename != it.folder_name and it.method == 'llm'
         if is_llm_renamed:
-            det = self._it(f"{dest_basename}")
-            det.setForeground(QColor("#f472b6"))  # pink = LLM renamed
-            det.setToolTip(f"LLM will rename \"{it.folder_name}\" to \"{dest_basename}\" during move")
+            dest_item.setForeground(QColor("#f472b6"))  # pink = LLM renamed
+            dest_item.setToolTip(f"LLM renamed \"{it.folder_name}\" \u2192 \"{dest_basename}\"")
         elif it.topic:
-            det = self._it(f"{it.cleaned_name} [{it.topic}]")
-            det.setForeground(QColor("#e879f9"))  # purple = context override from topic
-            det.setToolTip(f"Topic \"{it.topic}\" overridden to asset type \"{it.category}\" because design files were found")
-        elif it.cleaned_name != it.folder_name:
-            det = self._it(it.cleaned_name)
-            det.setForeground(QColor("#38bdf8"))  # bright blue = source was stripped
+            dest_item.setForeground(QColor("#e879f9"))  # purple = context override
+            dest_item.setToolTip(f"Topic \"{it.topic}\" overridden to \"{it.category}\"")
         else:
-            det = self._it(it.cleaned_name)
-            det.setForeground(QColor("#777"))
-        self.tbl.setItem(r, 2, det)
-        self.tbl.setItem(r, 3, self._make_arrow())
-        ci = self._it(it.category); ci.setForeground(QColor("#4ade80")); f=ci.font(); f.setBold(True); ci.setFont(f); self.tbl.setItem(r, 4, ci)
+            dest_item.setForeground(QColor("#4ade80"))
+            dest_item.setToolTip(it.full_dest_path)
+        f = dest_item.font(); f.setBold(True); dest_item.setFont(f)
+        self.tbl.setItem(r, 3, dest_item)
+
+        # Col 4: Confidence
         clr = "#4ade80" if it.confidence >= 80 else "#f59e0b" if it.confidence >= 50 else "#ef4444"
-        cfi = self._it(f"{it.confidence:.0f}%"); cfi.setForeground(QColor(clr)); cfi.setTextAlignment(Qt.AlignmentFlag.AlignCenter); self.tbl.setItem(r, 5, cfi)
-        # Method column with color coding
+        cfi = self._it(f"{it.confidence:.0f}%"); cfi.setForeground(QColor(clr)); cfi.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.tbl.setItem(r, 4, cfi)
+
+        # Col 5: Method with color coding
         METHOD_COLORS = {'extension': '#a78bfa', 'keyword': '#4ade80', 'fuzzy': '#facc15',
                          'metadata': '#38bdf8', 'metadata+keyword': '#2dd4bf',
                          'keyword_low': '#f97316', 'Manual': '#38bdf8',
                          'envato_api': '#f472b6', 'composition': '#a3e635',
-                         'context': '#e879f9', 'llm': '#f472b6'}
+                         'context': '#e879f9', 'llm': '#f472b6', 'learned': '#06b6d4'}
         method_label = it.method.replace('_', ' ').replace('+', '+') if it.method else ''
         mi = self._it(method_label); mi.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
         mi.setForeground(QColor(METHOD_COLORS.get(it.method, '#888')))
         if it.detail: mi.setToolTip(it.detail)
-        self.tbl.setItem(r, 6, mi)
-        sti = self._it("Pending"); sti.setTextAlignment(Qt.AlignmentFlag.AlignCenter); sti.setForeground(QColor("#f59e0b")); self.tbl.setItem(r, 7, sti)
+        self.tbl.setItem(r, 5, mi)
+
+        # Col 6: Status
+        sti = self._it("Pending"); sti.setTextAlignment(Qt.AlignmentFlag.AlignCenter); sti.setForeground(QColor("#f59e0b"))
+        self.tbl.setItem(r, 6, sti)
+
+        # Row background tinting by confidence
+        if it.category == '[Uncategorized]':
+            bg = QColor(239, 68, 68, 25)  # red tint
+        elif 'Possible duplicate' in (it.detail or ''):
+            bg = QColor(251, 191, 36, 25)  # amber tint
+        elif it.confidence >= 80:
+            bg = QColor(74, 222, 128, 15)  # green tint
+        elif it.confidence >= 50:
+            bg = QColor(245, 158, 11, 15)  # yellow tint
+        else:
+            bg = QColor(239, 68, 68, 15)  # red tint
+        for col in range(self.tbl.columnCount()):
+            item = self.tbl.item(r, col)
+            if item:
+                item.setBackground(bg)
 
     def _cat_cb(self, idx, st):
         if idx < len(self.cat_items):
             self.cat_items[idx].selected = bool(st); self._upd_stats()
 
     def _stats_cat(self):
+        # Count duplicates and uncategorized
+        dupes = sum(1 for it in self.cat_items if 'Possible duplicate' in (it.detail or ''))
+        uncat = sum(1 for it in self.cat_items if it.category == '[Uncategorized]')
         sel = sum(1 for it in self.cat_items if it.selected)
         done = sum(1 for it in self.cat_items if it.status == "Done")
         cats = len(set(it.category for it in self.cat_items))
@@ -3611,6 +4173,9 @@ class FileOrganizer(QMainWindow):
     def _apply_aep(self):
         work = [(i,it) for i,it in enumerate(self.aep_items) if it.selected and it.status=="Pending"]
         if not work: self._log("No items selected"); return
+        # Backup snapshot
+        snap = create_backup_snapshot(self.txt_src.text(), [it for _,it in work])
+        if snap: self._log(f"Backup snapshot saved: {snap}")
         self.btn_apply.setEnabled(False); self.btn_scan.setEnabled(False); self.cmb_op.setEnabled(False)
         self._log(f"Renaming {len(work)} folders...")
         self.apply_worker = ApplyAepWorker(work, check_hashes=self.chk_hash.isChecked())
@@ -3637,6 +4202,9 @@ class FileOrganizer(QMainWindow):
     def _apply_cat(self):
         work = [(i,it) for i,it in enumerate(self.cat_items) if it.selected and it.status=="Pending"]
         if not work: self._log("No items selected"); return
+        # Backup snapshot
+        snap = create_backup_snapshot(self.txt_src.text(), [it for _,it in work])
+        if snap: self._log(f"Backup snapshot saved: {snap}")
         self.btn_apply.setEnabled(False); self.btn_scan.setEnabled(False); self.cmb_op.setEnabled(False)
         self._log(f"Moving {len(work)} folders...")
         self.apply_worker = ApplyCatWorker(work, check_hashes=self.chk_hash.isChecked())
@@ -3649,7 +4217,7 @@ class FileOrganizer(QMainWindow):
     def _on_cat_item_done(self, row_idx, status):
         self.cat_items[row_idx].status = status
         color = "#4ade80" if status == "Done" else "#ef4444"
-        self._set_status(row_idx, status, color, 7)
+        self._set_status(row_idx, status, color, 6)
         self.tbl.scrollToItem(self.tbl.item(row_idx, 1))
 
     def _on_cat_apply_done(self, ok, err, undo_ops):
@@ -3660,6 +4228,62 @@ class FileOrganizer(QMainWindow):
             append_csv_log(undo_ops)
             self._log(f"Undo log and CSV log saved")
 
+
+
+    # ═══ DRY-RUN / EXPORT PLAN ═══════════════════════════════════════════════
+    def _export_plan(self):
+        """Export the current classification plan as CSV (dry-run report)."""
+        items = self.cat_items if self.cmb_op.currentIndex() == self.OP_CAT else self.aep_items
+        if not items: self._log("No items to export"); return
+        path, _ = QFileDialog.getSaveFileName(self, "Export Plan", "", "CSV Files (*.csv)")
+        if not path: return
+        try:
+            with open(path, 'w', newline='', encoding='utf-8') as f:
+                w = csv.writer(f)
+                if self.cmb_op.currentIndex() == self.OP_CAT:
+                    w.writerow(["Selected", "Source Path", "Destination Path", "Category", "Confidence", "Method", "Detail", "Status"])
+                    for it in items:
+                        w.writerow([it.selected, it.full_source_path, it.full_dest_path,
+                                    it.category, f"{it.confidence:.0f}", it.method, it.detail, it.status])
+                else:
+                    w.writerow(["Selected", "Source Path", "New Path", "AEP File", "Size", "Status"])
+                    for it in items:
+                        w.writerow([it.selected, it.full_current_path, it.full_new_path,
+                                    it.aep_file, it.file_size, it.status])
+            self._log(f"Plan exported to: {path}")
+        except Exception as e:
+            self._log(f"Export error: {e}")
+
+    # ═══ EXPORT/IMPORT RULES ═════════════════════════════════════════════════
+    def _export_rules(self):
+        """Export custom categories + corrections as JSON."""
+        path, _ = QFileDialog.getSaveFileName(self, "Export Rules", "fileorganizer_rules.json", "JSON Files (*.json)")
+        if not path: return
+        try:
+            export_rules_bundle(path)
+            corr_count = len(load_corrections())
+            cat_count = len(load_custom_categories())
+            self._log(f"Rules exported: {cat_count} custom categories, {corr_count} corrections -> {path}")
+        except Exception as e:
+            self._log(f"Export error: {e}")
+
+    def _import_rules(self):
+        """Import custom categories + corrections from JSON."""
+        path, _ = QFileDialog.getOpenFileName(self, "Import Rules", "", "JSON Files (*.json)")
+        if not path: return
+        try:
+            bundle = import_rules_bundle(path)
+            cats = len(bundle.get('custom_categories', []))
+            corrs = len(bundle.get('corrections', {}))
+            self._log(f"Rules imported: {cats} custom categories, {corrs} corrections from {path}")
+        except Exception as e:
+            self._log(f"Import error: {e}")
+
+    def _clear_cache(self):
+        """Clear the classification cache."""
+        n = cache_count()
+        cache_clear()
+        self._log(f"Cache cleared ({n} entries removed)")
 
 # ── Entry Point ────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
