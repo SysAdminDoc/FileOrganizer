@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""FileOrganizer v5.0 - Context-Aware Classification Engine + Smart Learning"""
+"""FileOrganizer v5.3 - Context-Aware Classification + Smart Naming + Scan Performance"""
 
-import sys, os, subprocess, re, shutil, json, csv, hashlib, gzip, sqlite3, time
+import sys, os, subprocess, re, shutil, json, csv, hashlib, gzip, sqlite3, time, math
 from collections import Counter
+from functools import lru_cache
 import xml.etree.ElementTree as ET
 
 def _bootstrap():
@@ -10,7 +11,7 @@ def _bootstrap():
     if sys.version_info < (3, 8):
         print("Python 3.8+ required"); sys.exit(1)
     required = ['PyQt6']
-    optional = ['rapidfuzz', 'psd-tools']
+    optional = ['rapidfuzz', 'psd-tools', 'unidecode']
     for pkg in required:
         try:
             __import__(pkg.replace('-', '_').lower())
@@ -51,6 +52,12 @@ try:
 except ImportError:
     HAS_PSD_TOOLS = False
 
+try:
+    from unidecode import unidecode as _unidecode
+    HAS_UNIDECODE = True
+except ImportError:
+    HAS_UNIDECODE = False
+
 import traceback, ctypes
 from datetime import datetime
 from pathlib import Path
@@ -59,7 +66,7 @@ from PyQt6.QtWidgets import (
     QLabel, QLineEdit, QPushButton, QComboBox, QTableWidget, QTableWidgetItem,
     QCheckBox, QTextEdit, QHeaderView, QFileDialog, QAbstractItemView,
     QSlider, QMenu, QTreeWidget, QTreeWidgetItem, QDialog, QDialogButtonBox, QSpinBox,
-    QListWidget, QListWidgetItem, QInputDialog, QSplitter, QMessageBox
+    QListWidget, QListWidgetItem, QInputDialog, QSplitter, QMessageBox, QFrame
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSettings, QMimeData, QUrl
 from PyQt6.QtGui import QColor, QDragEnterEvent, QDropEvent, QAction
@@ -77,6 +84,19 @@ def load_corrections():
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
+# In-memory corrections cache for scan performance (avoids re-reading JSON per folder)
+_corrections_cache = None
+
+def _preload_corrections():
+    """Pre-load corrections into memory. Call once at scan start."""
+    global _corrections_cache
+    _corrections_cache = load_corrections()
+
+def _invalidate_corrections_cache():
+    """Invalidate cache after edits."""
+    global _corrections_cache
+    _corrections_cache = None
+
 def save_correction(folder_name, category):
     """Save a single correction for future learning."""
     corrections = load_corrections()
@@ -87,11 +107,12 @@ def save_correction(folder_name, category):
     corrections[folder_name.lower()] = category
     with open(_CORRECTIONS_FILE, 'w', encoding='utf-8') as f:
         json.dump(corrections, f, indent=2)
+    _invalidate_corrections_cache()
 
 def check_corrections(folder_name):
     """Check if we have a prior correction for this folder name.
-    Returns category string or None."""
-    corrections = load_corrections()
+    Returns category string or None. Uses in-memory cache when available."""
+    corrections = _corrections_cache if _corrections_cache is not None else load_corrections()
     if not corrections:
         return None
     name_lower = folder_name.lower()
@@ -112,22 +133,39 @@ def check_corrections(folder_name):
 
 # ── Classification Cache (SQLite) ─────────────────────────────────────────────
 _CACHE_DB = os.path.join(_SCRIPT_DIR, 'classification_cache.db')
+_cache_conn = None  # Persistent connection for scan performance
+
+def _get_cache_conn():
+    """Get persistent SQLite connection, creating if needed."""
+    global _cache_conn
+    if _cache_conn is None:
+        _cache_conn = sqlite3.connect(_CACHE_DB)
+        _cache_conn.execute('CREATE TABLE IF NOT EXISTS cache ('
+            'fingerprint TEXT PRIMARY KEY,'
+            'category TEXT,'
+            'confidence REAL,'
+            'cleaned_name TEXT,'
+            'method TEXT,'
+            'detail TEXT,'
+            'topic TEXT,'
+            'created_at TEXT DEFAULT CURRENT_TIMESTAMP'
+        ')')
+        _cache_conn.commit()
+    return _cache_conn
+
+def _close_cache_conn():
+    """Close persistent connection (call after scan completes)."""
+    global _cache_conn
+    if _cache_conn:
+        try:
+            _cache_conn.close()
+        except Exception:
+            pass
+        _cache_conn = None
 
 def _init_cache_db():
-    """Initialize the cache database."""
-    conn = sqlite3.connect(_CACHE_DB)
-    conn.execute('CREATE TABLE IF NOT EXISTS cache ('
-        'fingerprint TEXT PRIMARY KEY,'
-        'category TEXT,'
-        'confidence REAL,'
-        'cleaned_name TEXT,'
-        'method TEXT,'
-        'detail TEXT,'
-        'topic TEXT,'
-        'created_at TEXT DEFAULT CURRENT_TIMESTAMP'
-    ')')
-    conn.commit()
-    return conn
+    """Initialize the cache database. Uses persistent connection."""
+    return _get_cache_conn()
 
 def _folder_fingerprint(folder_name, folder_path):
     """Compute a fingerprint based on folder name + file listing."""
@@ -142,9 +180,8 @@ def cache_lookup(folder_name, folder_path):
     """Check the cache for a prior classification. Returns dict or None."""
     try:
         fp = _folder_fingerprint(folder_name, folder_path)
-        conn = _init_cache_db()
+        conn = _get_cache_conn()
         row = conn.execute('SELECT category, confidence, cleaned_name, method, detail, topic FROM cache WHERE fingerprint=?', (fp,)).fetchone()
-        conn.close()
         if row:
             return {'category': row[0], 'confidence': row[1], 'cleaned_name': row[2],
                     'method': row[3], 'detail': row[4], 'topic': row[5]}
@@ -156,30 +193,29 @@ def cache_store(folder_name, folder_path, result):
     """Store a classification result in the cache."""
     try:
         fp = _folder_fingerprint(folder_name, folder_path)
-        conn = _init_cache_db()
+        conn = _get_cache_conn()
         conn.execute('INSERT OR REPLACE INTO cache (fingerprint, category, confidence, cleaned_name, method, detail, topic) VALUES (?,?,?,?,?,?,?)',
                      (fp, result.get('category'), result.get('confidence', 0),
                       result.get('cleaned_name', ''), result.get('method', ''),
                       result.get('detail', ''), result.get('topic', '')))
-        conn.commit(); conn.close()
+        conn.commit()
     except Exception:
         pass
 
 def cache_clear():
     """Clear the entire classification cache."""
     try:
-        conn = _init_cache_db()
+        conn = _get_cache_conn()
         conn.execute('DELETE FROM cache')
-        conn.commit(); conn.close()
+        conn.commit()
     except Exception:
         pass
 
 def cache_count():
     """Return the number of cached classifications."""
     try:
-        conn = _init_cache_db()
+        conn = _get_cache_conn()
         n = conn.execute('SELECT COUNT(*) FROM cache').fetchone()[0]
-        conn.close()
         return n
     except Exception:
         return 0
@@ -261,131 +297,249 @@ sys.excepthook = exception_handler
 # ── Dark Theme ─────────────────────────────────────────────────────────────────
 DARK_STYLE = """
 QMainWindow, QWidget {
-    background-color: #1a1a2e;
-    color: #e0e0e0;
-    font-family: 'Segoe UI', sans-serif;
+    background-color: #0f1923; color: #c5cdd8;
+    font-family: 'Segoe UI', 'SF Pro Display', system-ui, sans-serif; font-size: 13px;
 }
 QPushButton {
-    background-color: #0078D4;
-    color: white;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 12px;
+    background-color: #1b2838; color: #8f98a0;
+    border: 1px solid #2a3f5f; padding: 7px 16px;
+    border-radius: 4px; font-weight: 500; font-size: 12px;
 }
-QPushButton:hover { background-color: #1a8fe0; }
-QPushButton:pressed { background-color: #006abc; }
-QPushButton:disabled { background-color: #333; color: #666; }
-QPushButton[class="secondary"] {
-    background-color: #2a2a40;
-    color: #ccc;
-    font-weight: normal;
+QPushButton:hover { background-color: #1e3a5f; color: #c5cdd8; border-color: #3d6a9e; }
+QPushButton:pressed { background-color: #254a73; }
+QPushButton:disabled { background-color: #141d26; color: #3a4654; border-color: #1b2838; }
+QPushButton[class="primary"] {
+    background-color: #1a6bc4; color: #ffffff; border: none;
+    font-weight: bold; font-size: 13px; padding: 8px 24px;
 }
-QPushButton[class="secondary"]:hover { background-color: #353550; }
+QPushButton[class="primary"]:hover { background-color: #2080e0; }
+QPushButton[class="primary"]:pressed { background-color: #1560b0; }
+QPushButton[class="primary"]:disabled { background-color: #1b2838; color: #3a4654; }
 QPushButton[class="apply"] {
-    background-color: #16a34a;
-    font-size: 13px;
-    padding: 10px 24px;
+    background-color: #1b8553; color: #ffffff; border: none;
+    font-weight: bold; font-size: 13px; padding: 8px 24px;
 }
-QPushButton[class="apply"]:hover { background-color: #22c55e; }
-QPushButton[class="apply"]:disabled { background-color: #333; color: #666; }
+QPushButton[class="apply"]:hover { background-color: #22a366; }
+QPushButton[class="apply"]:pressed { background-color: #167045; }
+QPushButton[class="apply"]:disabled { background-color: #1b2838; color: #3a4654; }
+QPushButton[class="toolbar"] {
+    background-color: transparent; color: #6b7785;
+    border: 1px solid transparent; padding: 5px 12px; font-size: 11px;
+}
+QPushButton[class="toolbar"]:hover { background-color: #1b2838; color: #c5cdd8; border-color: #2a3f5f; }
 QLineEdit {
-    background-color: #252536;
-    color: #e0e0e0;
-    border: 1px solid #3f3f56;
-    border-radius: 4px;
-    padding: 8px 10px;
-    font-size: 13px;
-    selection-background-color: #0078D4;
+    background-color: #141d26; color: #c5cdd8;
+    border: 1px solid #2a3f5f; border-radius: 4px;
+    padding: 8px 12px; font-size: 13px; selection-background-color: #1a6bc4;
 }
-QLineEdit:read-only { color: #999; }
+QLineEdit:focus { border-color: #1a6bc4; }
+QLineEdit:read-only { color: #5a6672; }
 QComboBox {
-    background-color: #252536;
-    color: #e0e0e0;
-    border: 1px solid #3f3f56;
-    border-radius: 4px;
-    padding: 6px 10px;
-    font-size: 12px;
-    min-height: 26px;
+    background-color: #141d26; color: #c5cdd8;
+    border: 1px solid #2a3f5f; border-radius: 4px;
+    padding: 7px 12px; font-size: 13px; min-height: 28px;
 }
-QComboBox::drop-down { border: none; width: 24px; }
+QComboBox:hover { border-color: #3d6a9e; }
+QComboBox::drop-down { border: none; width: 28px; }
 QComboBox::down-arrow {
-    image: none;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #888;
-    margin-right: 8px;
+    image: none; border-left: 5px solid transparent;
+    border-right: 5px solid transparent; border-top: 5px solid #6b7785; margin-right: 10px;
 }
 QComboBox QAbstractItemView {
-    background-color: #252536;
-    color: #e0e0e0;
-    border: 1px solid #3f3f56;
-    selection-background-color: #0078D4;
-    outline: none;
+    background-color: #141d26; color: #c5cdd8; border: 1px solid #2a3f5f;
+    selection-background-color: #1a6bc4; selection-color: #ffffff; outline: none; padding: 4px;
 }
+QSpinBox {
+    background-color: #141d26; color: #c5cdd8;
+    border: 1px solid #2a3f5f; border-radius: 4px; padding: 4px 8px; font-size: 12px;
+}
+QSpinBox:focus { border-color: #1a6bc4; }
 QTableWidget {
-    background-color: #16213e;
-    alternate-background-color: #1a1a30;
-    color: #e0e0e0;
-    border: 1px solid #2a2a4a;
-    border-radius: 6px;
-    gridline-color: #2a2a4a;
-    font-size: 12px;
-    selection-background-color: #1e3a5f;
-    selection-color: #e0e0e0;
+    background-color: #0f1923; alternate-background-color: #121e2b;
+    color: #c5cdd8; border: 1px solid #1b2838; border-radius: 6px;
+    gridline-color: transparent; font-size: 12px;
+    selection-background-color: #1a3a5c; selection-color: #e0e6ec; outline: none;
 }
-QTableWidget::item { padding: 4px 8px; border-bottom: 1px solid #2a2a4a; }
-QTableWidget::item:selected { background-color: #1e3a5f; color: #e0e0e0; }
+QTableWidget::item { padding: 6px 10px; border-bottom: 1px solid #1b2838; }
+QTableWidget::item:selected { background-color: #1a3a5c; }
+QTableWidget::item:hover { background-color: #152535; }
 QHeaderView::section {
-    background-color: #0d1527;
-    color: #aab;
-    font-weight: bold;
-    font-size: 11px;
-    padding: 8px 10px;
-    border: none;
-    border-bottom: 1px solid #2a2a4a;
-    border-right: 1px solid #2a2a4a;
+    background-color: #0a1219; color: #6b7785; font-weight: 600; font-size: 11px;
+    padding: 10px 12px; border: none; border-bottom: 2px solid #1b2838; border-right: 1px solid #1b2838;
 }
+QHeaderView::section:hover { color: #c5cdd8; }
 QTextEdit {
-    background-color: #0d1117;
-    color: #4ade80;
-    border: 1px solid #2a2a4a;
-    border-radius: 4px;
-    font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 11px;
-    padding: 6px;
+    background-color: #0a1219; color: #5cb85c;
+    border: 1px solid #1b2838; border-radius: 4px;
+    font-family: 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 11px; padding: 8px; selection-background-color: #1a6bc4;
 }
-QScrollBar:vertical {
-    background: #16213e; width: 10px; border: none; border-radius: 5px;
-}
-QScrollBar::handle:vertical {
-    background: #3a3a5a; border-radius: 5px; min-height: 30px;
-}
-QScrollBar::handle:vertical:hover { background: #4a4a6a; }
+QScrollBar:vertical { background: transparent; width: 8px; border: none; margin: 4px 0; }
+QScrollBar::handle:vertical { background: #2a3f5f; border-radius: 4px; min-height: 30px; }
+QScrollBar::handle:vertical:hover { background: #3d6a9e; }
 QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: none; }
-QScrollBar:horizontal { background: #16213e; height: 10px; border: none; }
-QScrollBar::handle:horizontal { background: #3a3a5a; border-radius: 5px; min-width: 30px; }
-QScrollBar::handle:horizontal:hover { background: #4a4a6a; }
+QScrollBar:horizontal { background: transparent; height: 8px; border: none; margin: 0 4px; }
+QScrollBar::handle:horizontal { background: #2a3f5f; border-radius: 4px; min-width: 30px; }
+QScrollBar::handle:horizontal:hover { background: #3d6a9e; }
 QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal { width: 0; }
-QCheckBox { spacing: 6px; }
-QCheckBox::indicator {
-    width: 16px; height: 16px; border-radius: 3px;
-    border: 1px solid #555; background: #252536;
-}
-QCheckBox::indicator:checked { background: #0078D4; border-color: #0078D4; }
-QCheckBox::indicator:unchecked:hover { border-color: #888; }
+QCheckBox { spacing: 8px; color: #c5cdd8; }
+QCheckBox::indicator { width: 18px; height: 18px; border-radius: 4px; border: 2px solid #2a3f5f; background: #141d26; }
+QCheckBox::indicator:checked { background: #1a6bc4; border-color: #1a6bc4; }
+QCheckBox::indicator:unchecked:hover { border-color: #3d6a9e; }
+QSlider::groove:horizontal { background: #1b2838; height: 6px; border-radius: 3px; }
+QSlider::handle:horizontal { background: #1a6bc4; width: 16px; height: 16px; margin: -5px 0; border-radius: 8px; }
+QSlider::handle:horizontal:hover { background: #2080e0; }
+QMenuBar { background-color: #0a1219; color: #6b7785; border-bottom: 1px solid #1b2838; padding: 2px 0; font-size: 12px; }
+QMenuBar::item { padding: 6px 14px; border-radius: 4px; }
+QMenuBar::item:selected { background-color: #1b2838; color: #c5cdd8; }
+QMenu { background-color: #141d26; color: #c5cdd8; border: 1px solid #2a3f5f; border-radius: 6px; padding: 6px; }
+QMenu::item { padding: 8px 24px 8px 16px; border-radius: 4px; }
+QMenu::item:selected { background-color: #1a3a5c; }
+QMenu::separator { height: 1px; background: #1b2838; margin: 4px 8px; }
+QGroupBox { background-color: #121a24; border: 1px solid #1b2838; border-radius: 8px; margin-top: 8px; padding: 12px 10px 8px 10px; font-weight: 600; font-size: 11px; color: #6b7785; }
+QGroupBox::title { subcontrol-origin: margin; left: 14px; padding: 0 8px; color: #6b7785; }
+QToolTip { background-color: #1b2838; color: #c5cdd8; border: 1px solid #2a3f5f; border-radius: 4px; padding: 6px 10px; font-size: 12px; }
+QListWidget { background-color: #141d26; color: #c5cdd8; border: 1px solid #1b2838; border-radius: 4px; outline: none; }
+QListWidget::item { padding: 6px 10px; }
+QListWidget::item:selected { background-color: #1a3a5c; }
+QListWidget::item:hover { background-color: #152535; }
+QProgressBar { background-color: #1b2838; border: none; border-radius: 3px; text-align: center; color: #c5cdd8; font-size: 11px; height: 6px; }
+QProgressBar::chunk { background-color: #1a6bc4; border-radius: 3px; }
 """
+
 
 # ── Generic AEP names to exclude ──────────────────────────────────────────────
 GENERIC_AEP_NAMES = {
     'cs6', 'project', '1', 'cc', 'ver_1', '(cs6)',
     'cs5', 'cs5.5', 'cs4', 'cc2014', 'cc2015', 'cc2017', 'cc2018', 'cc2019', 'cc2020',
+    'cc2021', 'cc2022', 'cc2023', 'cc2024', 'cc2025',
+    'main', 'comp', 'comp 1', 'comp1', 'composition', 'final', 'final project',
+    'output', 'render', 'preview', 'thumbnail', 'template', 'source', 'original',
+    'backup', 'copy', 'test', 'temp', 'draft', 'wip', 'new project', 'untitled',
+    'element', 'precomp', 'pre-comp', 'pre comp', 'assets',
+    # Discovered from 23K-folder scan (v5.4)
+    '001', '002', '003', '16', '01',  # Bare numbers used as project names
 }
 
 def is_generic_aep(name: str) -> bool:
     return name.strip().lower() in GENERIC_AEP_NAMES
+
+
+def _score_aep(aep_path, folder_path, folder_name):
+    """Score an AEP file for how likely it is to be the main project file.
+    Higher score = better candidate for naming.
+
+    Scoring signals:
+      +50  base score
+      +30  descriptive name (>8 alpha chars, not generic)
+      +20  name resembles folder name (shared significant words)
+      +15  located at top level of folder (depth 0)
+      +10  not inside an asset subfolder (Footage, Audio, etc.)
+      +5   larger files get a small bonus (tiebreaker, not dominant)
+      -40  generic/version name (project.aep, cs6.aep, comp.aep)
+      -25  inside asset folder like (Footage), Elements, etc.
+      -10  per depth level beyond top
+      -15  very short name (1-3 chars, likely abbreviations)
+    """
+    stem = aep_path.stem  # filename without .aep
+    stem_lower = stem.strip().lower()
+    stem_norm = _normalize(stem)
+    folder_norm = _normalize(folder_name)
+    size = 0
+    try:
+        size = aep_path.stat().st_size
+    except (PermissionError, OSError):
+        pass
+
+    score = 50  # Base score
+
+    # ── Depth: prefer top-level AEPs ──
+    try:
+        rel = aep_path.relative_to(folder_path)
+        depth = len(rel.parts) - 1  # 0 = directly in folder
+    except (ValueError, TypeError):
+        depth = 0
+    score += max(0, 15 - depth * 10)  # +15 at depth 0, +5 at depth 1, -5 at depth 2, etc.
+
+    # ── Asset folder penalty: AEPs inside (Footage), Assets, etc. ──
+    if depth > 0:
+        parent_parts = rel.parts[:-1]  # All parent dirs relative to folder root
+        for part in parent_parts:
+            part_lower = part.lower().strip()
+            part_stripped = re.sub(r'^[\(\[\{]|[\)\]\}]$', '', part_lower).strip()
+            if part_lower in _ASSET_FOLDER_NAMES or part_stripped in _ASSET_FOLDER_NAMES:
+                score -= 25
+                break
+
+    # ── Generic name penalty ──
+    if stem_lower in GENERIC_AEP_NAMES:
+        score -= 40
+    # Also penalize pure version patterns: "v1", "v2", "ver2", number-only
+    elif re.match(r'^(v\d+|ver[_\s]?\d+|\d{1,3})$', stem_lower):
+        score -= 35
+    # Penalize names that are just the AE version: "CC 2020", "After Effects"
+    elif re.match(r'^(cc\s*\d{4}|after\s*effects?)$', stem_lower):
+        score -= 35
+
+    # ── Pre-render / auto-save / copy penalties (from 23K scan) ──
+    # Pre-rendered versions are secondary to the editable project
+    if re.search(r'pre[_\-\s]?render', stem_lower):
+        score -= 20
+    # Auto-save files are never the main project
+    if 'auto-save' in stem_lower or 'auto_save' in stem_lower:
+        score -= 50
+    # "copy" suffix indicates a duplicate
+    if re.search(r'\bcopy\b', stem_lower):
+        score -= 15
+    # "(converted)" suffix from AE version conversion
+    if '(converted)' in stem_lower:
+        score -= 10
+
+    # ── CC version preference (from 23K scan: CS/CC version pairs are most common multi-AEP pattern) ──
+    cc_match = re.search(r'cc[_\s]?(\d{4})', stem_lower)
+    if cc_match:
+        cc_year = int(cc_match.group(1))
+        if cc_year >= 2020:
+            score += 8
+        elif cc_year >= 2018:
+            score += 5
+    elif re.search(r'\bcc\b', stem_lower) and not re.match(r'^cc$', stem_lower):
+        score += 3
+    # CS versions are less preferred than CC
+    if re.search(r'\b(cs[456]|cs5\.5)\b', stem_lower):
+        score -= 8
+    # ── Short name penalty ──
+    alpha_count = sum(1 for c in stem if c.isalpha())
+    if alpha_count <= 3:
+        score -= 15
+    elif alpha_count <= 5:
+        score -= 5
+
+    # ── Descriptive name bonus ──
+    if alpha_count > 8 and stem_lower not in GENERIC_AEP_NAMES:
+        score += 30
+    elif alpha_count > 5 and stem_lower not in GENERIC_AEP_NAMES:
+        score += 15
+
+    # ── Folder name similarity bonus ──
+    if stem_norm and folder_norm:
+        stem_tokens = set(stem_norm.split())
+        folder_tokens = set(folder_norm.split())
+        # Remove noise tokens (numbers, short words)
+        sig_stem = {t for t in stem_tokens if len(t) > 2 and not t.isdigit()}
+        sig_folder = {t for t in folder_tokens if len(t) > 2 and not t.isdigit()}
+        if sig_stem and sig_folder:
+            overlap = sig_stem & sig_folder
+            if overlap:
+                score += min(20, len(overlap) * 10)
+
+    # ── Size bonus (minor tiebreaker: log-scaled, max +8 points) ──
+    if size > 0:
+        # 1MB = +2, 10MB = +4, 100MB = +6, 1GB = +8
+        score += min(8, max(0, int(math.log10(max(size, 1)) - 4)))
+
+    return score, size
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -881,6 +1035,7 @@ def save_custom_categories(custom_cats):
     data = [{'name': name, 'keywords': kws} for name, kws in custom_cats]
     with open(_CUSTOM_CATS_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
+    _CategoryIndex.invalidate()  # Rebuild keyword index on next scan
 
 def get_all_categories():
     """Return built-in + custom categories."""
@@ -889,6 +1044,56 @@ def get_all_categories():
 def get_all_category_names():
     """Return sorted list of all category names."""
     return sorted(set(name for name, _ in get_all_categories()))
+
+
+# ── Pre-computed category keyword index ──────────────────────────────────────
+# Avoids calling _normalize() on every keyword for every folder during scan.
+# Built once on first use, invalidated when custom categories change.
+class _CategoryIndex:
+    """Pre-normalized keyword index for fast category matching."""
+    _instance = None
+    _custom_cats_mtime = None
+
+    def __init__(self):
+        self._build()
+
+    def _build(self):
+        """Build the pre-normalized index from all categories."""
+        all_cats = get_all_categories()
+        # Pre-normalized list: [(cat_name, cat_norm, [(kw, kw_norm, kw_tokens_sig), ...]), ...]
+        self.entries = []
+        for cat_name, keywords in all_cats:
+            cat_norm = _normalize(cat_name)
+            kw_list = []
+            for kw in keywords:
+                kw_norm = _normalize(kw).strip()
+                sig_tokens = frozenset(t for t in kw_norm.split() if len(t) > 2)
+                kw_list.append((kw, kw_norm, sig_tokens))
+            self.entries.append((cat_name, cat_norm, kw_list))
+        try:
+            self._custom_cats_mtime = os.path.getmtime(_CUSTOM_CATS_FILE) if os.path.exists(_CUSTOM_CATS_FILE) else None
+        except OSError:
+            self._custom_cats_mtime = None
+
+    def _is_stale(self):
+        """Check if custom categories file has changed since last build."""
+        try:
+            current = os.path.getmtime(_CUSTOM_CATS_FILE) if os.path.exists(_CUSTOM_CATS_FILE) else None
+        except OSError:
+            current = None
+        return current != self._custom_cats_mtime
+
+    @classmethod
+    def get(cls):
+        """Get the singleton index, rebuilding if stale."""
+        if cls._instance is None or cls._instance._is_stale():
+            cls._instance = cls()
+        return cls._instance
+
+    @classmethod
+    def invalidate(cls):
+        """Force rebuild on next access (call after editing custom categories)."""
+        cls._instance = None
 
 # ── Undo / operation log ──────────────────────────────────────────────────────
 _UNDO_LOG_FILE = os.path.join(_SCRIPT_DIR, 'undo_log.json')
@@ -946,6 +1151,7 @@ MARKETPLACE_PREFIXES = [
     "depositphotos", "dreamstime", "123rf", "pond5", "storyblocks", "videoblocks",
     "audioblocks", "artlist", "artgrid", "epidemic sound", "musicbed",
     "motion array", "motionarray", "mixkit",
+    "motionelements", "motion elements",
     # Design marketplaces
     "creative market", "creativemarket", "creative fabrica", "creativefabrica",
     "design bundles", "designbundles", "design cuts", "designcuts",
@@ -957,10 +1163,14 @@ MARKETPLACE_PREFIXES = [
     "dafont", "fontsquirrel", "font squirrel",
     # Misc
     "pixelsquid", "juicedrops", "99designs", "fiverr", "upwork",
-    "ui8", "craftwork", "ls graphics",
+    "ui8", "craftwork", "ls graphics", "artstation",
     # Common abbreviations - ONLY match with separator + number: VH-12345, GR-9999
     # NOT in prefix list to avoid eating real words (ae->aerial, gr->grand)
 ]
+
+# Pre-computed prefix lookups (actual initialization after _normalize is defined below)
+_SORTED_PREFIXES = sorted(MARKETPLACE_PREFIXES, key=len, reverse=True)
+_LOWER_PREFIX_SET = frozenset(p.lower() for p in MARKETPLACE_PREFIXES)
 
 # Regex patterns for item IDs and noise to strip
 _ID_PATTERNS = [
@@ -980,7 +1190,7 @@ def _strip_source_name(folder_name: str) -> str:
 
     # Remove bracketed source names: [VideoHive], (CreativeMarket), {Envato}
     name = re.sub(r'[\[\(\{](.*?)[\]\)\}]', lambda m: '' if _normalize(m.group(1)) in
-                  [_normalize(p) for p in MARKETPLACE_PREFIXES] else m.group(0), name)
+                  _NORMALIZED_PREFIX_SET else m.group(0), name)
 
     # Strip item ID patterns
     for pat in _ID_PATTERNS:
@@ -994,9 +1204,7 @@ def _strip_source_name(folder_name: str) -> str:
     norm_lower = re.sub(r'\s+', ' ', norm_lower).strip()
 
     # Sort prefixes longest-first so "envato elements" matches before "envato"
-    sorted_prefixes = sorted(MARKETPLACE_PREFIXES, key=len, reverse=True)
-
-    for prefix in sorted_prefixes:
+    for prefix in _SORTED_PREFIXES:
         p_lower = prefix.lower()
         # Check if the normalized name starts with this prefix
         if norm_lower.startswith(p_lower):
@@ -1028,77 +1236,587 @@ def _strip_source_name(folder_name: str) -> str:
     # If result is itself a known marketplace name, it means we can't extract real content
     result_check = norm.lower().replace('-', ' ').replace('_', ' ')
     result_check = re.sub(r'\s+', ' ', result_check).strip()
-    if result_check in [p.lower() for p in MARKETPLACE_PREFIXES]:
+    if result_check in _LOWER_PREFIX_SET:
         return folder_name
 
     return norm if len(norm) > 2 else folder_name
 
+
+# ── International text support ───────────────────────────────────────────────
+# Detect non-Latin scripts and transliterate to ASCII for keyword matching and naming.
+
+import unicodedata
+
+def _has_non_latin(text: str) -> bool:
+    """Check if text contains significant non-Latin characters (CJK, Cyrillic, Arabic, etc.).
+    Returns True if >25% of alpha characters are non-Latin."""
+    if not text:
+        return False
+    alpha = [c for c in text if c.isalpha()]
+    if not alpha:
+        return False
+    non_latin = sum(1 for c in alpha if ord(c) > 0x024F)  # Beyond Latin Extended-B
+    return non_latin / len(alpha) > 0.25
+
+
+def _detect_scripts(text: str) -> set:
+    """Detect which Unicode script blocks are present in text.
+    Returns set of script names: 'latin', 'cjk', 'cyrillic', 'arabic', 'thai', 'hangul', etc."""
+    scripts = set()
+    for c in text:
+        cp = ord(c)
+        if c.isspace() or not c.isalpha():
+            continue
+        if cp <= 0x024F:
+            scripts.add('latin')
+        elif 0x0400 <= cp <= 0x04FF or 0x0500 <= cp <= 0x052F:
+            scripts.add('cyrillic')
+        elif (0x4E00 <= cp <= 0x9FFF or 0x3400 <= cp <= 0x4DBF or
+              0x20000 <= cp <= 0x2A6DF or 0xF900 <= cp <= 0xFAFF):
+            scripts.add('cjk')
+        elif 0x3040 <= cp <= 0x309F or 0x30A0 <= cp <= 0x30FF:
+            scripts.add('japanese')
+        elif 0xAC00 <= cp <= 0xD7AF or 0x1100 <= cp <= 0x11FF:
+            scripts.add('hangul')
+        elif 0x0600 <= cp <= 0x06FF or 0x0750 <= cp <= 0x077F:
+            scripts.add('arabic')
+        elif 0x0E00 <= cp <= 0x0E7F:
+            scripts.add('thai')
+        elif 0x0900 <= cp <= 0x097F:
+            scripts.add('devanagari')
+        else:
+            scripts.add('other')
+    return scripts
+
+
+# Fallback Cyrillic→Latin transliteration table (when unidecode unavailable)
+_CYRILLIC_MAP = str.maketrans({
+    'а':'a', 'б':'b', 'в':'v', 'г':'g', 'д':'d', 'е':'e', 'ё':'yo', 'ж':'zh',
+    'з':'z', 'и':'i', 'й':'y', 'к':'k', 'л':'l', 'м':'m', 'н':'n', 'о':'o',
+    'п':'p', 'р':'r', 'с':'s', 'т':'t', 'у':'u', 'ф':'f', 'х':'kh', 'ц':'ts',
+    'ч':'ch', 'ш':'sh', 'щ':'shch', 'ъ':'', 'ы':'y', 'ь':'', 'э':'e', 'ю':'yu',
+    'я':'ya',
+    'А':'A', 'Б':'B', 'В':'V', 'Г':'G', 'Д':'D', 'Е':'E', 'Ё':'Yo', 'Ж':'Zh',
+    'З':'Z', 'И':'I', 'Й':'Y', 'К':'K', 'Л':'L', 'М':'M', 'Н':'N', 'О':'O',
+    'П':'P', 'Р':'R', 'С':'S', 'Т':'T', 'У':'U', 'Ф':'F', 'Х':'Kh', 'Ц':'Ts',
+    'Ч':'Ch', 'Ш':'Sh', 'Щ':'Shch', 'Ъ':'', 'Ы':'Y', 'Ь':'', 'Э':'E', 'Ю':'Yu',
+    'Я':'Ya',
+})
+
+
+def _transliterate(text: str) -> str:
+    """Transliterate non-Latin text to ASCII/Latin characters.
+    Uses unidecode if available (best quality), falls back to Cyrillic table.
+    Returns the original text if no transliteration is possible (e.g. CJK without unidecode)."""
+    if not text or not _has_non_latin(text):
+        return text
+
+    if HAS_UNIDECODE:
+        result = _unidecode(text)
+        # Clean up: unidecode can produce brackets and junk for some chars
+        result = re.sub(r'\[.*?\]', '', result)
+        result = re.sub(r'\s+', ' ', result).strip()
+        return result if result else text
+
+    # Fallback: handle Cyrillic manually
+    scripts = _detect_scripts(text)
+    if 'cyrillic' in scripts:
+        result = text.translate(_CYRILLIC_MAP)
+        # Strip any remaining non-Latin after transliteration
+        result = re.sub(r'[^\x00-\x7F]+', ' ', result)
+        result = re.sub(r'\s+', ' ', result).strip()
+        return result if result else text
+
+    # CJK/Arabic/Thai without unidecode — can't transliterate meaningfully
+    return text
+
+
+@lru_cache(maxsize=4096)
 def _normalize(text: str) -> str:
     t = text.lower()
+    # Transliterate non-Latin characters to ASCII before stripping
+    if _has_non_latin(t):
+        t = _transliterate(t).lower()
     t = t.replace('-', ' ').replace('_', ' ').replace('.', ' ')
     t = re.sub(r'[^a-z0-9\s]', ' ', t)
     t = re.sub(r'\s+', ' ', t).strip()
     return t
 
+
+# Now that _normalize is defined, build the normalized prefix set
+_NORMALIZED_PREFIX_SET = frozenset(_normalize(p) for p in MARKETPLACE_PREFIXES)
+
+
+# ── Name beautification pipeline ────────────────────────────────────────────
+# Transforms raw marketplace folder names into clean, readable titles.
+# Used as the non-LLM fallback for destination folder names.
+
+# Words to strip entirely (noise that adds no meaning to the folder name)
+_NOISE_WORDS = {
+    # Version/quality tags
+    'v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'hq', 'hd', '4k', '1080p', '720p', 'uhd', '2k',
+    # Status words
+    'final', 'updated', 'new', 'free', 'premium', 'preview', 'sample', 'pro', 'lite',
+    # File/format noise
+    'psd', 'ai', 'eps', 'svg', 'aep', 'prproj', 'mogrt', 'indd', 'idml',
+    'download', 'zip', 'rar',
+    # License noise
+    'personal use', 'commercial license', 'royalty free', 'rf',
+}
+
+# Common short marketplace prefix codes (2-3 letter + separator, no digits required)
+_SHORT_PREFIX_PATTERN = re.compile(
+    r'^(?:CM|EE|GR|VH|AJ|TF|CC|PD|CF|DF)[\s\-_]+',
+    re.IGNORECASE
+)
+
+# Title case exceptions (stay lowercase unless first word)
+_TITLE_LOWER = {'a', 'an', 'the', 'and', 'or', 'but', 'nor', 'for', 'of', 'in',
+                'on', 'at', 'to', 'by', 'up', 'as', 'is', 'it', 'if', 'vs', 'via', 'with'}
+
+
+def _beautify_name(folder_name: str) -> str:
+    """Full name beautification pipeline for folder names.
+    Strips marketplace noise, IDs, junk suffixes, normalizes separators,
+    splits CamelCase, deduplicates tokens, and applies Title Case.
+
+    '553035-Advertisment-Company-Flyer-Template' → 'Advertisement Company Flyer Template'
+    'CM_NightClub-Party-Flyer-v2-PSD' → 'Night Club Party Flyer'
+    'VH-22832058-Christmas-Slideshow-FINAL' → 'Christmas Slideshow'
+    """
+    name = folder_name
+
+    # Step 0: Transliterate non-Latin text (Cyrillic, CJK, etc.) to ASCII
+    if _has_non_latin(name):
+        name = _transliterate(name)
+        # If transliteration produced nothing useful, return the original as-is
+        alpha_count = sum(1 for c in name if c.isalpha())
+        if alpha_count < 2:
+            return folder_name
+
+    # Step 1: Strip marketplace prefixes and IDs (reuse existing function)
+    name = _strip_source_name(name)
+
+    # Step 1.5: Second-pass prefix strip on space-normalized name
+    # Catches hyphenated multi-word prefixes like "envato-elements-..." where
+    # _strip_source_name only partially strips (it matches "envato" but misses "envato elements")
+    # Check both the original folder name and the stripped result
+    for candidate in (folder_name, name):
+        name_spaced = candidate.replace('-', ' ').replace('_', ' ')
+        name_spaced = re.sub(r'\s+', ' ', name_spaced).strip()
+        name_spaced_lower = name_spaced.lower()
+        for prefix in _SORTED_PREFIXES:
+            p_lower = prefix.lower()
+            if name_spaced_lower.startswith(p_lower):
+                remainder = name_spaced[len(p_lower):].strip()
+                if len(remainder) > 2:
+                    name = remainder
+                    break
+        else:
+            continue  # No prefix matched this candidate, try next
+        break  # Prefix matched and stripped, done
+
+    # Step 2: Strip short marketplace prefix codes (CM_, EE_, GR_, VH_, etc)
+    name = _SHORT_PREFIX_PATTERN.sub('', name).strip()
+
+    # Step 3: Split CamelCase before normalizing separators
+    # 'NightClubParty' → 'Night Club Party'
+    name = re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', name)
+    name = re.sub(r'(?<=[A-Z])(?=[A-Z][a-z])', ' ', name)  # 'HTMLParser' → 'HTML Parser'
+
+    # Step 4: Normalize separators to spaces
+    name = name.replace('-', ' ').replace('_', ' ').replace('.', ' ')
+    name = re.sub(r'\s+', ' ', name).strip()
+
+    # Step 5: Strip noise words and version patterns
+    tokens = name.split()
+    cleaned_tokens = []
+    for t in tokens:
+        t_lower = t.lower()
+        # Skip noise words
+        if t_lower in _NOISE_WORDS:
+            continue
+        # Skip standalone version patterns: v1, v2.1, V3
+        if re.match(r'^v\d+(\.\d+)?$', t_lower):
+            continue
+        # Skip bare large numbers (leftover IDs)
+        if re.match(r'^\d{5,}$', t):
+            continue
+        # Skip dimension patterns like 300x250, 1920x1080
+        if re.match(r'^\d{2,4}x\d{2,4}$', t_lower):
+            continue
+        cleaned_tokens.append(t)
+
+    # Step 6: Deduplicate consecutive repeated tokens
+    # 'Flyer Flyer Template' → 'Flyer Template'
+    deduped = []
+    for t in cleaned_tokens:
+        if not deduped or t.lower() != deduped[-1].lower():
+            deduped.append(t)
+
+    # Step 7: Apply Title Case
+    result_tokens = []
+    for i, t in enumerate(deduped):
+        if i == 0:
+            # First word always capitalized
+            result_tokens.append(t.capitalize() if t.islower() or t.isupper() else t)
+        elif t.lower() in _TITLE_LOWER and len(t) <= 4:
+            result_tokens.append(t.lower())
+        elif t.isupper() and len(t) > 1:
+            # ALL CAPS → Title Case (but preserve short acronyms like 'DJ', 'FX')
+            if len(t) <= 3:
+                result_tokens.append(t.upper())
+            else:
+                result_tokens.append(t.capitalize())
+        else:
+            result_tokens.append(t.capitalize() if t.islower() else t)
+
+    result = ' '.join(result_tokens).strip()
+
+    # Safety: if we stripped everything, return the _strip_source_name result
+    if len(result) < 3:
+        result = _strip_source_name(folder_name)
+        # At minimum, normalize separators
+        result = result.replace('-', ' ').replace('_', ' ')
+        result = re.sub(r'\s+', ' ', result).strip()
+
+    return result
+
+
+# Generic asset-type names that indicate the LLM stripped too aggressively.
+# These are meaningless as folder names because the category already conveys this.
+_GENERIC_ASSET_NAMES = {
+    _normalize(n) for n in [
+        'Flyer', 'Flyer Template', 'Flyers', 'Template', 'Templates',
+        'Business Card', 'Business Card Template', 'Business Cards',
+        'Poster', 'Poster Template', 'Posters',
+        'Brochure', 'Brochure Template', 'Brochures',
+        'Slideshow', 'Slideshow Template', 'Presentation', 'Presentation Template',
+        'Logo', 'Logo Template', 'Logo Design',
+        'Mockup', 'Mockup Template', 'Mockup PSD',
+        'Resume', 'Resume Template', 'CV Template',
+        'Certificate', 'Certificate Template',
+        'Invitation', 'Invitation Template',
+        'Banner', 'Banner Template', 'Web Banner',
+        'Social Media', 'Social Media Template', 'Social Media Post',
+        'Intro', 'Outro', 'Opener', 'Title', 'Titles',
+        'Lower Third', 'Lower Thirds', 'Transition', 'Transitions',
+        'After Effects Template', 'Premiere Template', 'Photoshop Template',
+        'Project', 'Design', 'Asset', 'Pack', 'Bundle', 'Kit', 'Set',
+    ]
+}
+
+
+def _is_generic_name(name: str, category: str) -> bool:
+    """Check if a cleaned name is just a generic asset type that restates the category.
+    Returns True if the name should be rejected in favor of a rule-based fallback."""
+    norm = _normalize(name)
+    if not norm or len(norm) < 3:
+        return True
+    # Direct match against known generic names
+    if norm in _GENERIC_ASSET_NAMES:
+        return True
+    # Check if the name is just the category name or a substring of it
+    cat_norm = _normalize(category)
+    if norm == cat_norm:
+        return True
+    # Name is a subset of category words (e.g., "Templates" for "After Effects - Templates")
+    name_tokens = set(norm.split())
+    cat_tokens = set(cat_norm.split())
+    if name_tokens and name_tokens.issubset(cat_tokens):
+        return True
+    return False
+
+
+# ── Project name hint extraction ─────────────────────────────────────────────
+# Scans folder contents for AEP/project file names and meaningful subfolders
+# to discover the real project name when the folder name is generic or noisy.
+
+# Asset/utility folder names that should NEVER be used as project name sources.
+# Matches both plain ("footage") and parenthesized ("(Footage)") variants.
+_ASSET_FOLDER_NAMES = frozenset({
+    # Generic asset/resource folders
+    'assets', 'asset', 'source', 'src', 'dist', 'build', 'output',
+    'export', 'render', 'renders', 'preview', 'previews', 'temp',
+    'tmp', 'cache', '__macosx', '.ds_store', 'footage', 'fonts',
+    'images', 'img', 'audio', 'video', 'music', 'sound', 'sounds',
+    'textures', 'materials', 'elements', 'components', 'layers',
+    'compositions', 'comps', 'precomps', 'help', 'docs', 'documentation',
+    'readme', 'license', 'licenses', 'media', 'resources', 'data',
+    'backup', 'backups', 'old', 'original', 'originals', 'raw',
+    'final', 'finals', 'versions', 'archive', 'archives',
+    'screenshots', 'thumbs', 'thumbnails', 'icons', 'sprites',
+    'overlays', 'transitions', 'effects', 'fx', 'sfx', 'luts',
+    'presets', 'scripts', 'expressions', 'plugins', 'extras',
+    # Web/dev project structure folders
+    'themes', 'ui', 'animations', 'demo', 'bootstrap', 'bootstrap-colorpick',
+    'js', 'css', 'code', 'pages', 'includes', 'helpers', 'modules',
+    'examples', 'integration', 'styling', 'lib', 'workflows',
+    # Font/link/doc folders
+    'font', 'font link', 'links', 'demo link', 'logo',
+    # Media/music folders
+    'soundtrack', 'manual', 'github',
+    # ── Discovered from 23K-folder library scan (v5.4) ──
+    # App/format named folders (contain project files, not project names)
+    'after effects', 'aftereffects', 'after effect', 'ae',
+    'photoshop', 'psd', 'ai', 'eps', 'pdf', 'word', 'ms word',
+    'jpg', 'jpeg', 'jpegs', 'png', 'html', 'scss',
+    # Container/wrapper folders
+    'main', 'main file', 'main files', 'mainfile', 'main 1',
+    'project', 'project file', 'project files',
+    'file', 'files', 'misc', 'other', 'bonus',
+    # Numbered project containers (common Envato pattern)
+    '01. project file', '01. project', '02. project',
+    '01 - help files', '02 project files',
+    '01. help', '00. help', '00_help',
+    '03. assets', '03. others',
+    # Tutorial/help folders
+    'tutorial', 'tutorials', 'video tutorial', 'videotutorial',
+    'help file', 'help files', 'help documentation',
+    'user guide', 'read me', '00_read_me_first',
+    '01_watch_video_tutorials',
+    # Color space / size variant folders
+    'cmyk', 'cmyk-psd', 'a4', 'us letter', 'us letter size', 'letter',
+    # Media subfolders
+    'photo', 'footages', 'loops', 'element', '3d',
+    'free font', 'audio link',
+    # Marketing spam folders
+    '~get your graphic files',
+    # Photoshop source folders
+    '01_photoshop_files', 'psd files', 'flyer-sourcefiles',
+})
+
+# Project file extensions whose filenames are most likely to contain the real project name
+_PROJECT_NAME_EXTS = {'.aep', '.aet', '.prproj', '.psd', '.psb', '.mogrt', '.ai', '.indd'}
+
+# Generic project filenames to skip (the file itself has no useful name)
+_GENERIC_PROJECT_NAMES = frozenset({
+    'main', 'project', 'comp', 'composition', 'untitled', 'new project',
+    'final', 'final project', 'edit', 'master', 'output', 'render',
+    'preview', 'thumbnail', 'template', 'source', 'original', 'backup',
+    'copy', 'test', 'temp', 'draft', 'wip', 'v1', 'v2', 'v3',
+    # Chinese generic names (discovered from 23K scan)
+    '\u5de5\u7a0b\u6587\u4ef6',  # "project file" in Chinese
+    '\u6587\u4ef6',        # "file" in Chinese
+    '\u6a21\u677f',        # "template" in Chinese
+})
+
+
+def _extract_name_hints(folder_path: str) -> list:
+    """Scan a folder for project file names and meaningful subfolder names.
+    Returns a list of (name_hint, source, priority) sorted best-first.
+
+    Sources: 'aep', 'prproj', 'psd', 'mogrt', 'subfolder'
+    Priority: higher = better quality hint (0-100)
+
+    Example: folder contains 'Christmas_Slideshow.aep' and subfolder '(Footage)'
+    Returns: [('Christmas Slideshow', 'aep', 90)]
+    """
+    hints = []
+    if not folder_path or not os.path.isdir(folder_path):
+        return hints
+
+    try:
+        for root, dirs, files in os.walk(folder_path):
+            rel = os.path.relpath(root, folder_path)
+            depth = 0 if rel == '.' else rel.count(os.sep) + 1
+            if depth > 2:
+                dirs.clear(); continue
+
+            # ── Collect project file name hints ──
+            for f in files:
+                ext = os.path.splitext(f)[1].lower()
+                if ext not in _PROJECT_NAME_EXTS:
+                    continue
+
+                # Clean the filename (strip extension, separators, IDs)
+                raw_name = os.path.splitext(f)[0]
+                # Strip leading/trailing noise
+                clean = re.sub(r'^\d{5,}[\s\-_]*', '', raw_name)  # Leading IDs
+                clean = re.sub(r'[\s\-_]*\d{5,}$', '', clean)     # Trailing IDs
+                clean = clean.replace('-', ' ').replace('_', ' ').replace('.', ' ')
+                clean = re.sub(r'\s+', ' ', clean).strip()
+
+                # Transliterate non-Latin characters (Chinese, Russian, etc.)
+                if _has_non_latin(clean):
+                    clean = _transliterate(clean)
+                    clean = re.sub(r'\s+', ' ', clean).strip()
+
+                if len(clean) < 3:
+                    continue
+                if clean.lower() in _GENERIC_PROJECT_NAMES:
+                    continue
+                # Skip if it's just the marketplace prefix
+                if _normalize(clean) in _NORMALIZED_PREFIX_SET:
+                    continue
+
+                # Priority based on file type (AEP/PRPROJ are strongest signals)
+                if ext in ('.aep', '.aet'):
+                    priority = 90
+                elif ext == '.prproj':
+                    priority = 88
+                elif ext == '.mogrt':
+                    priority = 85
+                elif ext in ('.psd', '.psb'):
+                    priority = 75  # PSD names can be generic layer exports
+                elif ext == '.ai':
+                    priority = 72
+                elif ext in ('.indd',):
+                    priority = 70
+                else:
+                    priority = 60
+
+                # Depth penalty (deeper = less likely to be the main project)
+                priority -= depth * 8
+
+                hints.append((clean, ext.lstrip('.'), priority))
+
+            # ── Collect meaningful subfolder name hints (depth 0 only) ──
+            if depth == 0:
+                for d in dirs:
+                    d_lower = d.lower().strip()
+                    d_stripped = re.sub(r'^[\(\[\{]|[\)\]\}]$', '', d_lower).strip()
+                    if d_stripped in _ASSET_FOLDER_NAMES or d_lower in _ASSET_FOLDER_NAMES:
+                        continue
+                    if len(d_stripped) < 3:
+                        continue
+                    # Only use subfolders that look like project names (not generic)
+                    d_clean = d.replace('-', ' ').replace('_', ' ')
+                    d_clean = re.sub(r'\s+', ' ', d_clean).strip()
+                    if _normalize(d_clean) not in _GENERIC_PROJECT_NAMES:
+                        hints.append((d_clean, 'subfolder', 50))
+
+    except (PermissionError, OSError):
+        pass
+
+    # Sort by priority (highest first), deduplicate by normalized name
+    hints.sort(key=lambda x: -x[2])
+    seen = set()
+    unique = []
+    for name, source, priority in hints:
+        norm = _normalize(name)
+        if norm not in seen:
+            seen.add(norm)
+            unique.append((name, source, priority))
+    return unique[:10]  # Cap at 10 hints
+
+
+def _smart_name(folder_name: str, folder_path: str = None, category: str = None) -> str:
+    """Intelligent project naming using folder name + project file/subfolder hints.
+    Falls back to _beautify_name() when no better name is found.
+
+    Logic:
+    1. Beautify the folder name
+    2. If the result is generic, noisy, or mostly numeric — look for AEP/project file hints
+    3. Pick the best hint and beautify it
+    4. If the hint is also generic, fall back to the beautified folder name
+    """
+    beautified = _beautify_name(folder_name)
+
+    # Check if the beautified name needs improvement
+    needs_hints = False
+
+    # Case 1: Name is a generic asset type that restates the category
+    if category and _is_generic_name(beautified, category):
+        needs_hints = True
+
+    # Case 2: Name is mostly numeric (leftover IDs not fully stripped)
+    if not needs_hints:
+        alpha_chars = sum(1 for c in beautified if c.isalpha())
+        digit_chars = sum(1 for c in beautified if c.isdigit())
+        if digit_chars > alpha_chars:
+            needs_hints = True
+
+    # Case 3: Name is very short (likely just abbreviations/codes)
+    if not needs_hints and len(beautified.replace(' ', '')) <= 4:
+        needs_hints = True
+
+    # Case 4: Name is a known marketplace prefix that survived stripping
+    if not needs_hints and _normalize(beautified) in _NORMALIZED_PREFIX_SET:
+        needs_hints = True
+
+    # Case 5: Original folder name contains non-Latin characters (Chinese, Russian, etc.)
+    # Transliteration may produce awkward results, so try project file hints first
+    if not needs_hints and _has_non_latin(folder_name):
+        needs_hints = True
+
+    if not needs_hints:
+        return beautified
+
+    # Folder name was inadequate — try to find a better name from project files
+    if not folder_path:
+        return beautified
+
+    hints = _extract_name_hints(folder_path)
+    if not hints:
+        return beautified
+
+    # Try each hint, pick the first non-generic one
+    for name, source, priority in hints:
+        hint_beautified = _beautify_name(name)
+        if len(hint_beautified) >= 3:
+            if not category or not _is_generic_name(hint_beautified, category):
+                return hint_beautified
+
+    return beautified
+
 def categorize_folder(folder_name: str) -> tuple:
     """Match folder name against categories. Returns (category, score, cleaned_name) or (None, 0, cleaned).
-    Strips marketplace prefixes and item IDs before matching."""
+    Strips marketplace prefixes and item IDs before matching.
+    Uses pre-computed keyword index for speed."""
     cleaned = _strip_source_name(folder_name)
 
     # If the folder IS a bare marketplace name (nothing was stripped), skip categorization
     name_check = _normalize(folder_name)
-    if name_check in [_normalize(p) for p in MARKETPLACE_PREFIXES]:
+    if name_check in _NORMALIZED_PREFIX_SET:
         return (None, 0, cleaned)
 
     norm = _normalize(cleaned)
-    norm_loose = cleaned.lower().replace('-', ' ').replace('_', ' ').replace('.', ' ')
-    norm_loose = re.sub(r'\s+', ' ', norm_loose).strip()
+    norm_loose = _normalize(cleaned.lower().replace('-', ' ').replace('_', ' ').replace('.', ' '))
     tokens = set(norm.split())
     best_cat = None
     best_score = 0
 
-    for cat_name, keywords in get_all_categories():
+    index = _CategoryIndex.get()
+
+    for cat_name, cat_norm, kw_list in index.entries:
         score = 0
 
         # Auto-match: folder name matches category name itself
-        cat_norm = _normalize(cat_name)
         if norm == cat_norm:
-            score = 100
+            return (cat_name, 100, cleaned)  # Perfect match, early exit
         elif len(norm) > 3 and norm in cat_norm:
-            # Folder name is a substring of category name: "Chill" in "Music - Ambient & Chill"
             score = max(score, 50 + len(norm) * 2)
 
-        for kw in keywords:
-            kw_norm = _normalize(kw)
-            kw_stripped = kw_norm.strip()
-
+        for kw, kw_norm, sig_tokens in kw_list:
             # Exact full match
-            if norm == kw_stripped:
-                score = max(score, 100)
+            if norm == kw_norm:
+                score = 100
+                break  # Can't do better than 100, exit keyword loop
             # Short keywords (<=4 chars) must be exact token matches
-            elif len(kw_stripped) <= 4 and kw_stripped in tokens:
-                score = max(score, 50 + len(kw_stripped) * 2)
+            elif len(kw_norm) <= 4 and kw_norm in tokens:
+                score = max(score, 50 + len(kw_norm) * 2)
             # Longer phrase found in folder name
-            elif len(kw_stripped) > 4 and kw_stripped in norm:
-                score = max(score, 50 + len(kw_stripped) * 2)
+            elif len(kw_norm) > 4 and kw_norm in norm:
+                score = max(score, 50 + len(kw_norm) * 2)
             # Folder name found within keyword (reverse: "chill" inside "chill music")
-            elif len(norm) > 3 and norm in kw_stripped:
+            elif len(norm) > 3 and norm in kw_norm:
                 score = max(score, 50 + len(norm) * 2)
             # Phrase found in loose name
-            elif len(kw_stripped) > 4 and kw_stripped in _normalize(norm_loose):
-                score = max(score, 45 + len(kw_stripped) * 2)
+            elif len(kw_norm) > 4 and kw_norm in norm_loose:
+                score = max(score, 45 + len(kw_norm) * 2)
             else:
-                # Token overlap
-                kw_tokens = set(kw_stripped.split())
-                sig_kw = {t for t in kw_tokens if len(t) > 2}
-                if sig_kw:
-                    matching = sig_kw & tokens
+                # Token overlap (using pre-computed significant tokens)
+                if sig_tokens:
+                    matching = sig_tokens & tokens
                     if matching:
-                        token_score = (len(matching) / len(sig_kw)) * 40
+                        token_score = (len(matching) / len(sig_tokens)) * 40
                         if len(matching) > 1:
                             token_score += len(matching) * 5
                         score = max(score, token_score)
 
+        if score >= 100:
+            return (cat_name, 100, cleaned)  # Early exit on perfect match
         if score > best_score:
             best_score = score
             best_cat = cat_name
@@ -1761,10 +2479,45 @@ def _build_llm_system_prompt() -> str:
         "You are a design asset file organizer specializing in creative marketplace content "
         "(Envato, Creative Market, Freepik, etc).\n\n"
         "Your job:\n"
-        "1. CLEAN the folder name: remove marketplace IDs, item codes, numeric suffixes, "
-        "version numbers, site names (GraphicRiver, CreativeMarket, CM_, Envato, etc), "
-        "dashes/underscores used as separators, and any junk. Keep ONLY the meaningful "
-        "project title in clean Title Case.\n"
+        "1. CLEAN the folder name: remove ONLY true noise — marketplace IDs, item codes "
+        "(numeric strings like 553035, 22832058), version numbers (v1, v2.1), "
+        "site names (GraphicRiver, CreativeMarket, CM_, Envato, VideoHive, VH-, etc), "
+        "and replace dashes/underscores with spaces. Convert to clean Title Case.\n\n"
+        "CRITICAL NAME CLEANING RULES:\n"
+        "- PRESERVE the subject, topic, and descriptive words. These describe WHAT the design "
+        "is about and are the most important part of the name.\n"
+        "- The category already tells the user what TYPE of asset it is, so the cleaned name "
+        "should focus on the SUBJECT/THEME. For example:\n"
+        "  '553035-Advertisement-Company-Flyer-Template' → 'Advertisement Company Flyer Template'\n"
+        "  'VH-22832058-Christmas-Slideshow' → 'Christmas Slideshow'\n"
+        "  'Night-Club-Party-Flyer-PSD' → 'Night Club Party Flyer'\n"
+        "  'CM_Jetstyle_Corporate-Business-Card' → 'Corporate Business Card'\n"
+        "- NEVER return just a generic asset type like 'Flyer Template', 'Business Card', "
+        "'Slideshow', 'Logo' etc. The name MUST include the specific subject/theme.\n"
+        "- If the original name IS only a generic type after removing noise, keep it as-is.\n\n"
+        "NAMING FROM PROJECT FILES (IMPORTANT):\n"
+        "- If the folder name is mostly numeric IDs or marketplace noise, look at the .aep, "
+        ".prproj, .psd, and .mogrt filenames inside the folder. These often contain the REAL "
+        "project name.\n"
+        "- Example: folder '22832058-VH' contains 'Epic_Corporate_Slideshow.aep' → name should "
+        "be 'Epic Corporate Slideshow', NOT a guess based on the folder name.\n"
+        "- .aep and .prproj filenames are the strongest signal for the true project name.\n"
+        "- Ignore generic project filenames like 'main.aep', 'project.aep', 'comp.aep', "
+        "'final.aep', 'preview.aep'.\n"
+        "- Ignore subfolder names that are just asset containers: Footage, (Footage), Audio, "
+        "Media, Elements, Preview, etc.\n\n"
+        "NON-ENGLISH CONTENT:\n"
+        "- Folder names, subfolders, and project files may be in Chinese, Russian, Korean, "
+        "Arabic, Japanese, Thai, or other languages.\n"
+        "- You MUST translate the name to English. The cleaned name in your response must "
+        "ALWAYS be in English.\n"
+        "- Translate the MEANING, not just transliterate. "
+        "For example: '圣诞节幻灯片' → 'Christmas Slideshow', "
+        "'Рождественское слайдшоу' → 'Christmas Slideshow', "
+        "'企业宣传片' → 'Corporate Promo'.\n"
+        "- If the name mixes languages (e.g. '22832058-圣诞节-Template'), extract the meaning "
+        "from all parts and produce a clean English name.\n"
+        "- Category assignment should still be based on the content type regardless of language.\n\n"
         "2. CATEGORIZE the folder into the single best category from the list below, "
         "based on the folder name AND the actual files inside it.\n\n"
         "IMPORTANT: Look at the filenames to determine what TYPE of design this is. "
@@ -1807,13 +2560,43 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
             pass
 
         if files:
-            # Limit to 40 most relevant files (skip generic previews/thumbs)
-            shown = [f for f in files[:80] if not f.lower().startswith('__macosx')][:40]
-            context_lines.append(f"Files inside ({len(files)} total, showing {len(shown)}):")
-            for f in shown:
-                context_lines.append(f"  {f}")
+            # Separate project files (strong naming signals) from other files
+            project_exts = {'.aep', '.aet', '.prproj', '.psd', '.psb', '.mogrt', '.ai', '.indd'}
+            project_files = []
+            other_files = []
+            for f in files[:80]:
+                if f.lower().startswith('__macosx'):
+                    continue
+                ext = os.path.splitext(f)[1].lower()
+                if ext in project_exts:
+                    project_files.append(f)
+                else:
+                    other_files.append(f)
+
+            # Show project files first with a clear label (these are the naming signals)
+            if project_files:
+                context_lines.append(f"PROJECT FILES (use these names for the project title):")
+                for f in project_files[:15]:
+                    context_lines.append(f"  ** {f}")
+            if other_files:
+                shown = other_files[:max(25, 40 - len(project_files))]
+                context_lines.append(f"Other files ({len(files)} total, showing {len(shown) + len(project_files)}):")
+                for f in shown:
+                    context_lines.append(f"  {f}")
         if subdirs:
-            context_lines.append(f"Subfolders: {', '.join(subdirs[:20])}")
+            # Filter out asset/utility folders — they're never the project name
+            meaningful = []
+            for d in subdirs[:20]:
+                d_lower = d.lower().strip()
+                d_stripped = re.sub(r'^[\(\[\{]|[\)\]\}]$', '', d_lower).strip()
+                if d_stripped not in _ASSET_FOLDER_NAMES and d_lower not in _ASSET_FOLDER_NAMES:
+                    meaningful.append(d)
+            if meaningful:
+                context_lines.append(f"Subfolders: {', '.join(meaningful)}")
+            # Note asset folders separately so the LLM knows they exist but ignores them for naming
+            asset_dirs = [d for d in subdirs[:20] if d not in meaningful]
+            if asset_dirs:
+                context_lines.append(f"Asset folders (ignore for naming): {', '.join(asset_dirs)}")
 
     prompt = '\n'.join(context_lines)
 
@@ -1864,6 +2647,17 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
             result['category'] = category
             result['confidence'] = min(max(confidence, 30), 95)
             result['detail'] = f"llm:{load_ollama_settings().get('model', '?')}→{category}"
+
+            # ── Post-validation: reject over-stripped names ──
+            # If the LLM returned a name that's just the category or a generic asset type,
+            # fall back to rule-based cleaning which preserves subject/topic words
+            if clean_name:
+                _rejected = _is_generic_name(clean_name, category)
+                if _rejected:
+                    # LLM stripped too aggressively — use smart naming (AEP/project hints)
+                    fallback_name = _smart_name(folder_name, folder_path, category)
+                    result['name'] = fallback_name
+                    result['detail'] += f" (name_override:{clean_name}→{fallback_name})"
         else:
             result['detail'] = f"llm:invalid_category:\"{parsed.get('category', '')}\" not found"
 
@@ -2137,6 +2931,311 @@ def infer_asset_type(initial_category: str, initial_confidence: float,
 
 # ── Tiered Classification Orchestrator ────────────────────────────────────────
 
+# File extensions to exclude from "project file" counts
+_NOISE_EXTS = {'.txt', '.html', '.htm', '.url', '.ini', '.log',
+               '.md', '.json', '.xml', '.csv', '.rtf', '.nfo',
+               '.ds_store', '.zip', '.rar', '.7z'}
+
+def _scan_folder_once(folder_path: str) -> dict:
+    """Single-pass folder scan that collects ALL data needed by every classification level.
+    Eliminates the 3-4 redundant os.walk() calls per folder.
+
+    Returns dict with:
+        ext_counts: Counter of ALL extensions
+        project_ext_counts: Counter excluding noise extensions
+        total_project_files: int
+        subfolder_names: list[str]  (lowercase)
+        total_size: int
+        file_count: int
+        all_filenames_clean: list[str]  (cleaned for keyword matching)
+        design_file_count: int
+        video_template_count: int
+        has_design_files: bool
+        has_video_templates: bool
+        has_footage/has_audio/has_preview: bool
+        project_files: list[tuple[str, str]]  (filepath, ext) for metadata extraction
+    """
+    ext_counts = Counter()
+    project_ext_counts = Counter()
+    total_project_files = 0
+    subfolder_names = []
+    total_size = 0
+    file_count = 0
+    all_filenames_clean = []
+    design_count = 0
+    video_count = 0
+    project_files = []  # Files to extract metadata from
+
+    try:
+        for root, dirs, files in os.walk(folder_path):
+            rel = os.path.relpath(root, folder_path)
+            depth = 0 if rel == '.' else rel.count(os.sep) + 1
+            if depth == 0:
+                subfolder_names = [d.lower() for d in dirs]
+            if depth > 3:
+                dirs.clear(); continue
+            for f in files:
+                ext = os.path.splitext(f)[1].lower()
+                if not ext:
+                    continue
+                ext_counts[ext] += 1
+                file_count += 1
+                try:
+                    total_size += os.path.getsize(os.path.join(root, f))
+                except OSError:
+                    pass
+
+                # Project file counts (exclude noise)
+                if ext not in _NOISE_EXTS:
+                    project_ext_counts[ext] += 1
+                    total_project_files += 1
+
+                # Design/video template tracking
+                if ext in DESIGN_TEMPLATE_EXTS:
+                    design_count += 1
+                if ext in VIDEO_TEMPLATE_EXTS:
+                    video_count += 1
+
+                # Collect project files for metadata extraction
+                if ext in ('.prproj', '.psd', '.psb', '.aep', '.aet', '.mogrt'):
+                    project_files.append((os.path.join(root, f), ext))
+
+                # Collect cleaned filenames for keyword matching
+                name_clean = os.path.splitext(f)[0].lower()
+                name_clean = name_clean.replace('-', ' ').replace('_', ' ').replace('.', ' ')
+                name_clean = re.sub(r'\s+', ' ', name_clean).strip()
+                if len(name_clean) > 2:
+                    all_filenames_clean.append(name_clean)
+    except (PermissionError, OSError):
+        pass
+
+    # Also add subfolder names as search candidates
+    for d in subfolder_names:
+        d_clean = d.replace('-', ' ').replace('_', ' ')
+        if len(d_clean) > 2:
+            all_filenames_clean.append(d_clean)
+
+    return {
+        'ext_counts': ext_counts,
+        'project_ext_counts': project_ext_counts,
+        'total_project_files': total_project_files,
+        'subfolder_names': subfolder_names,
+        'total_size': total_size,
+        'file_count': file_count,
+        'all_filenames_clean': all_filenames_clean,
+        'design_file_count': design_count,
+        'video_template_count': video_count,
+        'has_design_files': design_count > 0,
+        'has_video_templates': video_count > 0,
+        'has_footage': any(d in subfolder_names for d in ['footage', 'video', 'media', 'clips']),
+        'has_audio': any(d in subfolder_names for d in ['audio', 'music', 'sound', 'sfx']),
+        'has_preview': any(d in subfolder_names for d in ['preview', 'previews', 'thumbnail', 'thumbnails']),
+        'project_files': project_files,
+    }
+
+
+def _classify_ext_from_scan(scan: dict) -> tuple:
+    """Level 1 extension classification using pre-scanned data (no os.walk)."""
+    ext_counts = scan['project_ext_counts']
+    total_project_files = scan['total_project_files']
+    if total_project_files == 0:
+        return (None, 0, '')
+
+    best = (None, 0, '')
+    for ext_set, category, base_conf in EXTENSION_CATEGORY_MAP:
+        matching = sum(ext_counts.get(e, 0) for e in ext_set)
+        if matching == 0:
+            continue
+        ratio = matching / total_project_files
+        if ratio >= 0.7:     conf = base_conf
+        elif ratio >= 0.4:   conf = base_conf - 10
+        elif ratio >= 0.15:  conf = base_conf - 20
+        elif matching >= 2:  conf = base_conf - 30
+        else: continue
+        if matching >= 10:
+            conf = min(conf + 5, 100)
+        ext_list = ', '.join(f"{e}({ext_counts[e]})" for e in ext_set if ext_counts.get(e, 0) > 0)
+        if conf > best[1]:
+            best = (category, conf, f"ext:{ext_list} ({ratio:.0%} of {total_project_files} files)")
+    return best
+
+
+def _classify_composition_from_scan(scan: dict) -> tuple:
+    """Level 4 composition classification using pre-scanned data (no os.walk)."""
+    ext = scan['ext_counts']
+    total = scan['file_count']
+    if total == 0:
+        return (None, 0, '')
+
+    video_exts = sum(ext.get(e, 0) for e in ['.mp4', '.mov', '.avi', '.mkv', '.wmv', '.webm', '.m4v'])
+    audio_exts = sum(ext.get(e, 0) for e in ['.mp3', '.wav', '.aac', '.flac', '.ogg', '.m4a', '.aif', '.aiff'])
+    image_exts = sum(ext.get(e, 0) for e in ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp', '.psd', '.psb'])
+    vector_exts = sum(ext.get(e, 0) for e in ['.svg', '.eps', '.ai'])
+    font_exts = sum(ext.get(e, 0) for e in ['.ttf', '.otf', '.woff', '.woff2'])
+    doc_exts = sum(ext.get(e, 0) for e in ['.pdf', '.pptx', '.docx', '.xlsx', '.indd', '.idml'])
+
+    if ext.get('.aep', 0) >= 1 and scan['has_footage']:
+        return ('After Effects - Templates', 72, f"composition:.aep+/footage/ subfolder")
+    if ext.get('.aep', 0) >= 1 and scan['has_audio']:
+        return ('After Effects - Templates', 68, f"composition:.aep+/audio/ subfolder")
+    if video_exts >= 5 and video_exts / total >= 0.5:
+        return ('Stock Footage - General', 75, f"composition:{video_exts} video files ({video_exts/total:.0%})")
+    if audio_exts >= 5 and audio_exts / total >= 0.5:
+        return ('Stock Music & Audio', 75, f"composition:{audio_exts} audio files ({audio_exts/total:.0%})")
+    if image_exts >= 10 and image_exts / total >= 0.7:
+        return ('Stock Photos - General', 65, f"composition:{image_exts} images ({image_exts/total:.0%})")
+    if vector_exts >= 3 and vector_exts / total >= 0.3:
+        return ('Vectors & SVG', 65, f"composition:{vector_exts} vectors ({vector_exts/total:.0%})")
+    if font_exts >= 2 and font_exts / total >= 0.3:
+        return ('Fonts & Typography', 65, f"composition:{font_exts} font files ({font_exts/total:.0%})")
+    if doc_exts >= 2 and doc_exts / total >= 0.3:
+        if ext.get('.pptx', 0) >= 1:
+            return ('Presentations & PowerPoint', 60, f"composition:{doc_exts} docs (pptx found)")
+        if ext.get('.indd', 0) >= 1 or ext.get('.idml', 0) >= 1:
+            return ('InDesign - Templates & Layouts', 65, f"composition:InDesign files found")
+        return ('Forms & Documents', 55, f"composition:{doc_exts} document files")
+    if image_exts >= 8 and not any(ext.get(e, 0) for e in ['.aep', '.psd', '.prproj', '.ai']):
+        return ('Backgrounds & Textures', 55, f"composition:{image_exts} images, no project files")
+    return (None, 0, '')
+
+
+def _asset_clues_from_scan(scan: dict, folder_path: str) -> dict:
+    """Asset type clue detection using pre-scanned data (no os.walk)."""
+    result = {
+        'asset_type': None, 'asset_confidence': 0, 'asset_detail': '',
+        'design_file_count': scan['design_file_count'],
+        'video_template_count': scan['video_template_count'],
+        'has_design_files': scan['has_design_files'],
+        'has_video_templates': scan['has_video_templates'],
+        'filename_hints': []
+    }
+    if not scan['all_filenames_clean']:
+        return result
+
+    combined = ' | '.join(scan['all_filenames_clean'])
+    best_cat = None
+    best_priority = 0
+    best_keyword = ''
+
+    for keywords, category, priority in FILENAME_ASSET_MAP:
+        for kw in keywords:
+            if kw in combined:
+                if priority > best_priority:
+                    best_cat = category
+                    best_priority = priority
+                    best_keyword = kw
+                result['filename_hints'].append((kw, category))
+                break
+    if best_cat:
+        result['asset_type'] = best_cat
+        result['asset_confidence'] = best_priority
+        result['asset_detail'] = f"filename:\"{best_keyword}\"→{best_cat}"
+    return result
+
+
+def _extract_metadata_from_scan(scan: dict, folder_name: str, log_cb=None) -> dict:
+    """Metadata extraction using pre-scanned project file list (no rglob)."""
+    metadata = {
+        'keywords': [], 'project_names': [],
+        'envato_id': detect_envato_item_code(folder_name),
+        'primary_app': '',
+        'has_aep': False, 'has_prproj': False, 'has_psd': False, 'has_mogrt': False,
+    }
+    scanned = 0
+    max_scan = 10
+
+    for filepath, ext in scan['project_files']:
+        if ext in ('.aep', '.aet'):
+            metadata['has_aep'] = True
+            metadata['primary_app'] = metadata['primary_app'] or 'After Effects'
+        elif ext == '.prproj':
+            metadata['has_prproj'] = True
+            metadata['primary_app'] = metadata['primary_app'] or 'Premiere Pro'
+            if scanned < max_scan:
+                names = extract_prproj_metadata(filepath)
+                metadata['project_names'].extend(names)
+                scanned += 1
+        elif ext in ('.psd', '.psb'):
+            metadata['has_psd'] = True
+            metadata['primary_app'] = metadata['primary_app'] or 'Photoshop'
+            if scanned < max_scan and HAS_PSD_TOOLS:
+                names = extract_psd_metadata(filepath)
+                metadata['keywords'].extend(names)
+                scanned += 1
+        elif ext == '.mogrt':
+            metadata['has_mogrt'] = True
+            metadata['primary_app'] = metadata['primary_app'] or 'After Effects'
+        if scanned >= max_scan:
+            break
+    return metadata
+
+
+def _apply_context_from_scan(result: dict, scan: dict, folder_path: str,
+                              folder_name: str, log_cb=None) -> dict:
+    """Post-processing using pre-scanned data (no os.walk in infer_asset_type)."""
+    if not result['category']:
+        return result
+
+    initial_category = result['category']
+    should_check = (initial_category in TOPIC_CATEGORIES or
+                    initial_category in _GENERIC_DESIGN_CATEGORIES)
+    if not should_check:
+        return result
+
+    clues = _asset_clues_from_scan(scan, folder_path)
+
+    # If video template files dominate, don't override
+    if clues['has_video_templates'] and clues['video_template_count'] >= clues['design_file_count']:
+        return result
+    if not clues['has_design_files']:
+        return result
+
+    # Priority 1: Filenames explicitly name the asset type
+    if clues['asset_type']:
+        conf = min(clues['asset_confidence'], 92)
+        detail = f"context:{initial_category}+{clues['asset_detail']}"
+        if log_cb:
+            log_cb(f"    Context: {initial_category} + filename \"{clues['asset_detail'].split('\"')[1]}\" → {clues['asset_type']}")
+        result['topic'] = result['category']
+        result['category'] = clues['asset_type']
+        result['confidence'] = conf
+        result['method'] = 'context'
+        result['detail'] = detail
+        return result
+
+    # Priority 2: Folder name hints
+    folder_norm = _normalize(folder_name)
+    for keywords, category, priority in FILENAME_ASSET_MAP:
+        for kw in keywords:
+            if kw in folder_norm:
+                conf = min(priority - 5, 88)
+                detail = f"context:name_hint:\"{kw}\"→{category}"
+                if log_cb:
+                    log_cb(f"    Context: folder name hint \"{kw}\" + design files → {category}")
+                result['topic'] = result['category']
+                result['category'] = category
+                result['confidence'] = conf
+                result['method'] = 'context'
+                result['detail'] = detail
+                return result
+
+    # Priority 3: Generic design categories — keep as-is
+    if initial_category in _GENERIC_DESIGN_CATEGORIES:
+        return result
+
+    # Priority 4: Default topic + design files → Flyers & Print
+    conf = 72
+    detail = f"context:design({clues['design_file_count']})+topic:{initial_category}→Flyers & Print"
+    if log_cb:
+        log_cb(f"    Context: {clues['design_file_count']} design files + topic \"{initial_category}\" → Flyers & Print (default)")
+    result['topic'] = result['category']
+    result['category'] = 'Flyers & Print'
+    result['confidence'] = conf
+    result['method'] = 'context'
+    result['detail'] = detail
+    return result
+
+
 def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> dict:
     """Run the full tiered classification pipeline on a folder.
 
@@ -2154,21 +3253,34 @@ def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> d
         'method': '', 'detail': '', 'metadata': {}, 'topic': None
     }
 
-    # ── Pre-scan: Cache I/O-heavy results once for reuse across levels ──
+    # ── Single-pass folder scan: collect ALL data once for all levels ──
     has_folder = folder_path and os.path.isdir(folder_path)
-    ext_result = (None, 0, '')  # Cached L1 result
+    scan = None
     if has_folder:
-        ext_result = classify_by_extensions(folder_path)
+        scan = _scan_folder_once(folder_path)
 
     # ── Level 1: Extension-based classification ──
-    ext_cat, ext_conf, ext_detail = ext_result
+    if scan:
+        ext_cat, ext_conf, ext_detail = _classify_ext_from_scan(scan)
+    else:
+        ext_cat, ext_conf, ext_detail = (None, 0, '')
+
     if ext_cat and ext_conf >= 80:
             result.update(category=ext_cat, confidence=ext_conf,
                           method='extension', detail=ext_detail)
             if log_cb:
                 log_cb(f"    L1 Extension: {ext_cat} ({ext_conf:.0f}%) [{ext_detail}]")
-            # Don't return yet — still apply context post-processing below
-            return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+            if scan:
+                return _apply_context_from_scan(result, scan, folder_path, folder_name, log_cb)
+            return result
+
+    # Helper: context application using scan data when available
+    def _ctx(r):
+        if scan:
+            return _apply_context_from_scan(r, scan, folder_path, folder_name, log_cb)
+        elif has_folder:
+            return _apply_context(r, folder_path, folder_name, has_folder, log_cb)
+        return r
 
     # ── Level 2: Keyword matching (primary engine) ──
     cat, conf, cleaned = categorize_folder(folder_name)
@@ -2179,7 +3291,7 @@ def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> d
                       detail=f"keyword:\"{cleaned}\"→{cat}")
         if log_cb:
             log_cb(f"    L2 Keyword: {cat} ({conf:.0f}%)")
-        return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+        return _ctx(result)
 
     # Store lower-confidence keyword result as fallback
     keyword_fallback = (cat, conf) if cat else (None, 0)
@@ -2192,29 +3304,27 @@ def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> d
                           detail=fz_detail)
             if log_cb:
                 log_cb(f"    L2.5 Fuzzy: {fz_cat} ({fz_conf:.0f}%) [{fz_detail}]")
-            return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+            return _ctx(result)
 
     # ── Level 3: Metadata extraction + re-classification ──
-    if has_folder:
-        meta = extract_folder_metadata(folder_path, log_cb)
+    if scan:
+        meta = _extract_metadata_from_scan(scan, folder_name, log_cb)
         result['metadata'] = meta
 
         # Use extracted metadata to attempt classification
         meta_keywords = meta.get('project_names', []) + meta.get('keywords', [])
 
         if meta_keywords:
-            # Try classifying using extracted metadata names
             for mk in meta_keywords[:10]:
                 m_cat, m_conf, m_cleaned = categorize_folder(mk)
                 if m_cat and m_conf >= 40:
-                    # Metadata-enriched classification - boost confidence slightly
                     adj_conf = min(m_conf + 10, 90)
                     result.update(category=m_cat, confidence=adj_conf,
                                   method='metadata+keyword',
                                   detail=f"meta:\"{mk}\"→{m_cat}")
                     if log_cb:
                         log_cb(f"    L3 Metadata: {m_cat} ({adj_conf:.0f}%) from \"{mk}\"")
-                    return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+                    return _ctx(result)
 
         # Use primary_app detection as last resort from metadata
         if meta.get('primary_app') and not keyword_fallback[0]:
@@ -2229,7 +3339,7 @@ def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> d
                               method='metadata', detail=f"app_detect:{app}")
                 if log_cb:
                     log_cb(f"    L3 App detect: {app_map[app]} (55%) [{app} files found]")
-                return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+                return _ctx(result)
 
         # ── Level 3.5: Envato API enrichment ──
         envato_id = meta.get('envato_id', '')
@@ -2240,32 +3350,31 @@ def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> d
                               method='envato_api', detail=api_detail)
                 if log_cb:
                     log_cb(f"    L3.5 Envato API: {api_cat} ({api_conf:.0f}%) [{api_detail}]")
-                return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+                return _ctx(result)
 
-    # ── Level 4: Folder composition heuristics (reuses folder walk) ──
-    if has_folder:
-        comp = analyze_folder_composition(folder_path)
-        comp_cat, comp_conf, comp_detail = _classify_by_composition(comp)
+    # ── Level 4: Folder composition heuristics (uses pre-scanned data) ──
+    if scan:
+        comp_cat, comp_conf, comp_detail = _classify_composition_from_scan(scan)
         if comp_cat and comp_conf >= 50:
             result.update(category=comp_cat, confidence=comp_conf,
                           method='composition', detail=comp_detail)
             if log_cb:
                 log_cb(f"    L4 Composition: {comp_cat} ({comp_conf:.0f}%) [{comp_detail}]")
-            return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+            return _ctx(result)
 
-    # ── Level 1 low-confidence fallback (uses cached ext_result) ──
+    # ── Level 1 low-confidence fallback ──
     if ext_cat and ext_conf >= 50:
         result.update(category=ext_cat, confidence=ext_conf,
                       method='extension', detail=ext_detail)
         if log_cb:
             log_cb(f"    L1 Extension (fallback): {ext_cat} ({ext_conf:.0f}%)")
-        return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+        return _ctx(result)
 
     # ── Return best low-confidence result if any ──
     if keyword_fallback[0] and keyword_fallback[1] >= 15:
         result.update(category=keyword_fallback[0], confidence=keyword_fallback[1],
                       method='keyword_low', detail=f"keyword_low:\"{cleaned}\"")
-        return _apply_context(result, folder_path, folder_name, has_folder, log_cb)
+        return _ctx(result)
 
     return result
 
@@ -2382,19 +3491,29 @@ class ScanAepWorker(QThread):
             try:
                 for aep in folder.rglob("*.aep"):
                     try:
-                        aep_files.append((aep, aep.stat().st_size))
+                        aep_files.append(aep)
                     except (PermissionError, OSError):
                         continue
             except (PermissionError, OSError):
                 pass
 
-            largest = max(aep_files, key=lambda x: x[1]) if aep_files else None
+            # Score each AEP and pick the best candidate for naming
+            best_aep = None
+            best_score = -999
+            best_size = 0
+            for aep in aep_files:
+                aep_score, aep_size = _score_aep(aep, folder, folder.name)
+                if aep_score > best_score or (aep_score == best_score and aep_size > best_size):
+                    best_aep = aep
+                    best_score = aep_score
+                    best_size = aep_size
+
             self.result_ready.emit({
                 'folder_name': folder.name,
                 'folder_path': str(folder),
-                'largest_aep': largest[0].name if largest else None,
-                'aep_rel_path': str(largest[0].relative_to(folder)) if largest else None,
-                'aep_size': largest[1] if largest else 0,
+                'largest_aep': best_aep.name if best_aep else None,
+                'aep_rel_path': str(best_aep.relative_to(folder)) if best_aep else None,
+                'aep_size': best_size,
             })
         self.finished.emit()
 
@@ -2467,15 +3586,11 @@ class ScanCategoryWorker(QThread):
             except (PermissionError, OSError):
                 pass
 
-            # Skip generic/junk folder names
-            skip_names = {'assets', 'asset', 'source', 'src', 'dist', 'build', 'output',
-                          'export', 'render', 'renders', 'preview', 'previews', 'temp',
-                          'tmp', 'cache', '__macosx', '.ds_store', 'footage', 'fonts',
-                          'images', 'img', 'audio', 'video', 'music', 'sound', 'sounds',
-                          'textures', 'materials', 'elements', 'components', 'layers',
-                          'compositions', 'comps', 'precomps', 'help', 'docs', 'documentation',
-                          'readme', 'license', 'licenses'}
-            if sub.name.lower() not in skip_names:
+            # Skip generic/junk folder names (asset folders, not project names)
+            sub_lower = sub.name.lower().strip()
+            # Strip parentheses for matching: "(Footage)" → "footage"
+            sub_stripped = re.sub(r'^[\(\[\{]|[\)\]\}]$', '', sub_lower).strip()
+            if sub_lower not in _ASSET_FOLDER_NAMES and sub_stripped not in _ASSET_FOLDER_NAMES:
                 candidates.append((sub.name, depth, has_files))
 
             # If this is a single-subfolder wrapper, always go deeper
@@ -2545,12 +3660,16 @@ class ScanCategoryWorker(QThread):
             self.log.emit("ERROR: No folders found or permission denied")
             self.finished.emit(); return
 
+        # ── Pre-load caches for scan performance ──
+        _preload_corrections()
+        _CategoryIndex.get()  # Build keyword index once
+
         # Log engine capabilities
         caps = ["keyword"]
         if HAS_RAPIDFUZZ: caps.append("fuzzy")
         if HAS_PSD_TOOLS: caps.append("psd-metadata")
         caps.extend(["extension-map", "prproj-metadata", "content-analysis"])
-        self.log.emit(f"  Engine: tiered v5.0 [{', '.join(caps)}, context-inference, cache, corrections]")
+        self.log.emit(f"  Engine: tiered v5.3 [{', '.join(caps)}, context-inference, cache, corrections, smart-naming]")
         if self.scan_depth > 0:
             self.log.emit(f"  Deep scan (depth {self.scan_depth}): processing {len(folders)} subfolders")
 
@@ -2631,6 +3750,7 @@ class ScanCategoryWorker(QThread):
         if cached_hits: self.log.emit(f"  Cache hits: {cached_hits}")
         if correction_hits: self.log.emit(f"  Learned corrections applied: {correction_hits}")
         if elapsed > 1: self.log.emit(f"  Scan time: {elapsed:.1f}s ({elapsed/max(total,1)*1000:.0f}ms/folder)")
+        _close_cache_conn()  # Release persistent DB connection
         self.finished.emit()
 
 
@@ -2662,6 +3782,10 @@ class ScanLLMWorker(QThread):
         if not folders:
             self.log.emit("ERROR: No folders found or permission denied")
             self.finished.emit(); return
+
+        # ── Pre-load caches for scan performance ──
+        _preload_corrections()
+        _CategoryIndex.get()
 
         # Verify Ollama connection first
         ok, msg, _ = ollama_test_connection(settings['url'], settings['model'])
@@ -2772,6 +3896,7 @@ class ScanLLMWorker(QThread):
         if cached_hits: self.log.emit(f"  Cache hits: {cached_hits}")
         if correction_hits: self.log.emit(f"  Learned corrections: {correction_hits}")
         if elapsed > 1: self.log.emit(f"  Scan time: {elapsed:.1f}s")
+        _close_cache_conn()
         self.finished.emit()
 
     def _fallback_scan(self, folders):
@@ -2798,6 +3923,7 @@ class ScanLLMWorker(QThread):
                 'topic': top_result.get('topic'),
                 'llm_name': None,
             })
+        _close_cache_conn()
         self.finished.emit()
 
 
@@ -3305,13 +4431,14 @@ class OllamaSettingsDialog(QDialog):
         self.accept()
 
 
+
 class FileOrganizer(QMainWindow):
     OP_AEP = 0
     OP_CAT = 1
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("FileOrganizer v4.0")
+        self.setWindowTitle("FileOrganizer v5.4")
         self.setMinimumSize(1050, 700)
         self.aep_items = []
         self.cat_items = []
@@ -3399,164 +4526,235 @@ class FileOrganizer(QMainWindow):
             self._log("Ollama LLM: not available (rule-based engine will be used)")
 
     # ═══ BUILD UI ═════════════════════════════════════════════════════════════
-    def _build_ui(self):
-        cw = QWidget(); self.setCentralWidget(cw); root = QVBoxLayout(cw); root.setSpacing(6)
 
-        # ── Operation selector row ──
-        row_op = QHBoxLayout()
-        row_op.addWidget(QLabel("Operation:"))
+    def _build_ui(self):
+        cw = QWidget(); self.setCentralWidget(cw)
+        root = QVBoxLayout(cw)
+        root.setSpacing(0)
+        root.setContentsMargins(0, 0, 0, 0)
+
+        # Menu bar - moves config buttons out of the cramped toolbar
+        mbar = self.menuBar()
+        menu_tools = mbar.addMenu("Settings")
+        menu_tools.addAction("Edit Categories", self._open_custom_cats)
+        menu_tools.addAction("Envato API Key", self._set_envato_key)
+        menu_tools.addAction("Ollama LLM", self._open_ollama_settings)
+        menu_tools.addSeparator()
+        menu_tools.addAction("Import Rules", self._import_rules)
+        menu_tools.addAction("Export Rules", self._export_rules)
+        menu_tools.addSeparator()
+        menu_tools.addAction("Clear Cache", self._clear_cache)
+
+        # Header bar
+        header = QWidget()
+        header.setFixedHeight(44)
+        header.setStyleSheet("background-color: #0a1219; border-bottom: 1px solid #1b2838;")
+        h_lay = QHBoxLayout(header)
+        h_lay.setContentsMargins(20, 0, 20, 0)
+        lbl_brand = QLabel("FileOrganizer")
+        lbl_brand.setStyleSheet("color: #c5cdd8; font-size: 16px; font-weight: 700; letter-spacing: -0.5px;")
+        h_lay.addWidget(lbl_brand)
+        lbl_ver = QLabel("v5.4")
+        lbl_ver.setStyleSheet("color: #3d6a9e; font-size: 11px; font-weight: 600; padding-top: 3px;")
+        h_lay.addWidget(lbl_ver)
+        h_lay.addStretch()
+        self.lbl_llm_status = QLabel("LLM: checking...")
+        self.lbl_llm_status.setStyleSheet("color: #f59e0b; font-size: 11px;")
+        h_lay.addWidget(self.lbl_llm_status)
+        root.addWidget(header)
+
+        # Main content area
+        body = QWidget()
+        main = QVBoxLayout(body)
+        main.setSpacing(10)
+        main.setContentsMargins(16, 14, 16, 10)
+
+        # Mode selector
+        row_op = QHBoxLayout(); row_op.setSpacing(10)
+        lbl_op = QLabel("MODE")
+        lbl_op.setStyleSheet("color: #6b7785; font-weight: 600; font-size: 11px;")
+        lbl_op.setFixedWidth(42)
+        row_op.addWidget(lbl_op)
         self.cmb_op = QComboBox()
-        self.cmb_op.addItems(["Rename Folders by Largest .aep File", "Categorize Folders into Groups"])
+        self.cmb_op.addItems(["Rename Folders by Best .aep File", "Categorize Folders into Groups"])
         self.cmb_op.currentIndexChanged.connect(self._on_op_changed)
         row_op.addWidget(self.cmb_op, 1)
-        # Custom categories button
-        self.btn_custom_cats = QPushButton("Edit Categories")
-        self.btn_custom_cats.setFixedWidth(120)
-        self.btn_custom_cats.clicked.connect(self._open_custom_cats)
-        row_op.addWidget(self.btn_custom_cats)
-        # Envato API key button
-        self.btn_envato = QPushButton("Envato API")
-        self.btn_envato.setFixedWidth(90)
-        self.btn_envato.setToolTip("Set Envato API key for marketplace metadata enrichment")
-        self.btn_envato.clicked.connect(self._set_envato_key)
-        row_op.addWidget(self.btn_envato)
-        # Ollama LLM settings button
-        self.btn_ollama = QPushButton("Ollama LLM")
-        self.btn_ollama.setFixedWidth(90)
-        self.btn_ollama.setToolTip("Configure Ollama LLM for AI-powered classification and renaming")
-        self.btn_ollama.clicked.connect(self._open_ollama_settings)
-        row_op.addWidget(self.btn_ollama)
-        # Export/Import rules
-        self.btn_export_rules = QPushButton("Export Rules")
-        self.btn_export_rules.setFixedWidth(95)
-        self.btn_export_rules.setToolTip("Export custom categories + learned corrections as JSON")
-        self.btn_export_rules.clicked.connect(self._export_rules)
-        row_op.addWidget(self.btn_export_rules)
-        self.btn_import_rules = QPushButton("Import Rules")
-        self.btn_import_rules.setFixedWidth(95)
-        self.btn_import_rules.setToolTip("Import custom categories + corrections from JSON")
-        self.btn_import_rules.clicked.connect(self._import_rules)
-        row_op.addWidget(self.btn_import_rules)
-        # Clear cache button
-        self.btn_clear_cache = QPushButton("Clear Cache")
-        self.btn_clear_cache.setFixedWidth(90)
-        self.btn_clear_cache.setToolTip("Clear the classification cache database")
-        self.btn_clear_cache.clicked.connect(self._clear_cache)
-        row_op.addWidget(self.btn_clear_cache)
-        root.addLayout(row_op)
+        main.addLayout(row_op)
 
-        # ── Source row ──
-        row_src = QHBoxLayout()
-        row_src.addWidget(QLabel("Source:"))
-        self.txt_src = QLineEdit(); self.txt_src.setPlaceholderText("Folder containing subfolders to organize...")
+        # Source path
+        row_src = QHBoxLayout(); row_src.setSpacing(8)
+        lbl_src = QLabel("SOURCE")
+        lbl_src.setStyleSheet("color: #6b7785; font-weight: 600; font-size: 11px;")
+        lbl_src.setFixedWidth(55)
+        row_src.addWidget(lbl_src)
+        self.txt_src = QLineEdit()
+        self.txt_src.setPlaceholderText("Drag a folder here or click Browse...")
         row_src.addWidget(self.txt_src, 1)
-        btn_src = QPushButton("Browse..."); btn_src.setFixedWidth(80); btn_src.clicked.connect(self._browse_src)
+        btn_src = QPushButton("Browse"); btn_src.setFixedWidth(75)
+        btn_src.clicked.connect(self._browse_src)
         row_src.addWidget(btn_src)
-        root.addLayout(row_src)
+        main.addLayout(row_src)
 
-        # ── Destination row (categorize mode) ──
+        # Destination path (categorize mode)
         self.row_dst_w = QWidget()
-        row_dst = QHBoxLayout(self.row_dst_w); row_dst.setContentsMargins(0,0,0,0)
-        row_dst.addWidget(QLabel("Output:"))
-        self.txt_dst = QLineEdit(); self.txt_dst.setPlaceholderText("Destination root for category folders...")
+        row_dst = QHBoxLayout(self.row_dst_w)
+        row_dst.setContentsMargins(0, 0, 0, 0); row_dst.setSpacing(8)
+        lbl_dst = QLabel("OUTPUT")
+        lbl_dst.setStyleSheet("color: #6b7785; font-weight: 600; font-size: 11px;")
+        lbl_dst.setFixedWidth(55)
+        row_dst.addWidget(lbl_dst)
+        self.txt_dst = QLineEdit()
+        self.txt_dst.setPlaceholderText("Destination root for category folders...")
         row_dst.addWidget(self.txt_dst, 1)
-        btn_dst = QPushButton("Browse..."); btn_dst.setFixedWidth(80); btn_dst.clicked.connect(self._browse_dst)
+        btn_dst = QPushButton("Browse"); btn_dst.setFixedWidth(75)
+        btn_dst.clicked.connect(self._browse_dst)
         row_dst.addWidget(btn_dst)
         self.row_dst_w.hide()
-        root.addWidget(self.row_dst_w)
+        main.addWidget(self.row_dst_w)
 
-        # ── Search bar + Confidence slider row ──
-        row_filter = QHBoxLayout()
-        row_filter.addWidget(QLabel("Filter:"))
-        self.txt_search = QLineEdit(); self.txt_search.setPlaceholderText("Type to filter table results...")
+        # Action toolbar
+        toolbar = QHBoxLayout(); toolbar.setSpacing(6)
+
+        self.btn_scan = QPushButton("  Scan  ")
+        self.btn_scan.setProperty("class", "primary")
+        self.btn_scan.setFixedHeight(34)
+        self.btn_scan.clicked.connect(self._on_scan)
+        toolbar.addWidget(self.btn_scan)
+
+        self.btn_apply = QPushButton("  Apply  ")
+        self.btn_apply.setProperty("class", "apply")
+        self.btn_apply.setFixedHeight(34)
+        self.btn_apply.setEnabled(False)
+        self.btn_apply.clicked.connect(self._on_apply)
+        toolbar.addWidget(self.btn_apply)
+
+        self.btn_preview = QPushButton("Preview")
+        self.btn_preview.setFixedHeight(34)
+        self.btn_preview.clicked.connect(self._show_preview)
+        self.btn_preview.setEnabled(False)
+        toolbar.addWidget(self.btn_preview)
+
+        self.btn_export = QPushButton("Export Plan")
+        self.btn_export.setFixedHeight(34); self.btn_export.setEnabled(False)
+        self.btn_export.setToolTip("Export the classification plan as CSV")
+        self.btn_export.clicked.connect(self._export_plan)
+        toolbar.addWidget(self.btn_export)
+
+        self.btn_undo = QPushButton("Undo")
+        self.btn_undo.setFixedHeight(34)
+        self.btn_undo.clicked.connect(self._on_undo)
+        self.btn_undo.setEnabled(bool(load_undo_log()))
+        toolbar.addWidget(self.btn_undo)
+
+        sep = QFrame(); sep.setFrameShape(QFrame.Shape.VLine)
+        sep.setStyleSheet("color: #1b2838;"); sep.setFixedHeight(22)
+        toolbar.addWidget(sep)
+
+        for text, slot in [("All", self._sel_all), ("None", self._sel_none), ("Invert", self._sel_inv)]:
+            b = QPushButton(text); b.setProperty("class", "toolbar")
+            b.clicked.connect(slot); toolbar.addWidget(b)
+
+        btn_chk = QPushButton("\u2611 Check"); btn_chk.setProperty("class", "toolbar")
+        btn_chk.setToolTip("Check highlighted rows"); btn_chk.clicked.connect(self._check_selected)
+        toolbar.addWidget(btn_chk)
+        btn_uchk = QPushButton("\u2610 Uncheck"); btn_uchk.setProperty("class", "toolbar")
+        btn_uchk.setToolTip("Uncheck highlighted rows"); btn_uchk.clicked.connect(self._uncheck_selected)
+        toolbar.addWidget(btn_uchk)
+
+        toolbar.addStretch()
+
+        self.chk_llm = QCheckBox("LLM")
+        self.chk_llm.setToolTip("Use Ollama LLM for AI-powered classification")
+        self.chk_llm.setStyleSheet("QCheckBox { color: #bb86fc; font-weight: bold; font-size: 12px; }")
+        toolbar.addWidget(self.chk_llm)
+
+        self.chk_hash = QCheckBox("Dedup")
+        self.chk_hash.setToolTip("Skip identical files (MD5 hash)")
+        toolbar.addWidget(self.chk_hash)
+
+        lbl_depth = QLabel("Depth:")
+        lbl_depth.setStyleSheet("color: #4fc3f7; font-weight: bold; font-size: 12px;")
+        toolbar.addWidget(lbl_depth)
+        self.spn_depth = QSpinBox()
+        self.spn_depth.setRange(0, 3); self.spn_depth.setValue(0)
+        self.spn_depth.setFixedWidth(48)
+        self.spn_depth.setToolTip("Scan depth: 0=top-level, 1+=subfolders")
+        toolbar.addWidget(self.spn_depth)
+
+        main.addLayout(toolbar)
+
+        # Filter bar
+        row_filter = QHBoxLayout(); row_filter.setSpacing(8)
+        self.txt_search = QLineEdit()
+        self.txt_search.setPlaceholderText("\U0001f50d  Filter results...")
         self.txt_search.textChanged.connect(self._apply_filter)
         row_filter.addWidget(self.txt_search, 1)
-
-        row_filter.addWidget(QLabel("Min Confidence:"))
+        lbl_cf = QLabel("Confidence:")
+        lbl_cf.setStyleSheet("color: #6b7785; font-size: 11px;")
+        row_filter.addWidget(lbl_cf)
         self.sld_conf = QSlider(Qt.Orientation.Horizontal)
         self.sld_conf.setRange(0, 100); self.sld_conf.setValue(0)
         self.sld_conf.setFixedWidth(120)
         self.sld_conf.valueChanged.connect(self._on_conf_changed)
         row_filter.addWidget(self.sld_conf)
         self.lbl_conf = QLabel("0%"); self.lbl_conf.setFixedWidth(35)
+        self.lbl_conf.setStyleSheet("color: #6b7785; font-size: 12px;")
         row_filter.addWidget(self.lbl_conf)
-        root.addLayout(row_filter)
+        main.addLayout(row_filter)
 
-        # ── Button row ──
-        row_btns = QHBoxLayout()
-        self.btn_scan = QPushButton("Scan"); self.btn_scan.setFixedWidth(80); self.btn_scan.clicked.connect(self._on_scan)
-        self.btn_apply = QPushButton("Apply"); self.btn_apply.setFixedWidth(80); self.btn_apply.setEnabled(False)
-        self.btn_apply.clicked.connect(self._on_apply)
-        # Preview tree
-        self.btn_preview = QPushButton("Preview"); self.btn_preview.setFixedWidth(80)
-        self.btn_preview.clicked.connect(self._show_preview); self.btn_preview.setEnabled(False)
-        # Undo
-        self.btn_undo = QPushButton("Undo Last"); self.btn_undo.setFixedWidth(90)
-        self.btn_undo.clicked.connect(self._on_undo); self.btn_undo.setEnabled(bool(load_undo_log()))
-        # Selection
-        btn_all = QPushButton("Select All"); btn_all.setFixedWidth(80); btn_all.clicked.connect(self._sel_all)
-        btn_none = QPushButton("Deselect All"); btn_none.setFixedWidth(90); btn_none.clicked.connect(self._sel_none)
-        btn_inv = QPushButton("Invert"); btn_inv.setFixedWidth(60); btn_inv.clicked.connect(self._sel_inv)
-        # Checkbox for hash checking
-        self.chk_hash = QCheckBox("Deduplicate")
-        self.chk_hash.setToolTip("Skip identical files (MD5 hash) instead of overwriting")
-        # LLM checkbox
-        self.chk_llm = QCheckBox("Use LLM")
-        self.chk_llm.setToolTip("Use Ollama LLM for AI-powered classification and folder name cleanup")
-        self.chk_llm.setStyleSheet("QCheckBox { color: #e879f9; font-weight: bold; }")
-        # Scan depth spinner
-        lbl_depth = QLabel("Depth:")
-        lbl_depth.setStyleSheet("color: #38bdf8; font-weight: bold;")
-        lbl_depth.setToolTip("0 = scan top-level folders only\n1 = scan one level deep (subfolders)\n2-3 = deeper nesting")
-        self.spn_depth = QSpinBox()
-        self.spn_depth.setRange(0, 3); self.spn_depth.setValue(0)
-        self.spn_depth.setFixedWidth(45)
-        self.spn_depth.setToolTip("Scan depth: 0=top-level, 1+=subfolders")
-        self.spn_depth.setStyleSheet("QSpinBox { color: #38bdf8; font-weight: bold; }")
-        # Export plan button
-        self.btn_export = QPushButton("Export Plan")
-        self.btn_export.setFixedWidth(90); self.btn_export.setEnabled(False)
-        self.btn_export.setToolTip("Export the classification plan as CSV (dry-run)")
-        self.btn_export.clicked.connect(self._export_plan)
-        for w in [self.btn_scan, self.btn_apply, self.btn_preview, self.btn_export, self.btn_undo,
-                  btn_all, btn_none, btn_inv, self.chk_llm, lbl_depth, self.spn_depth, self.chk_hash]:
-            row_btns.addWidget(w)
-        row_btns.addStretch()
-        root.addLayout(row_btns)
-
-        # ── Table ──
-        self.tbl = QTableWidget(); self.tbl.setAlternatingRowColors(True)
-        self.tbl.setSortingEnabled(False)  # Enabled after scan completes
+        # Table
+        self.tbl = QTableWidget()
+        self.tbl.setAlternatingRowColors(True)
+        self.tbl.setSortingEnabled(False)
         self.tbl.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self.tbl.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
         self.tbl.verticalHeader().setVisible(False)
         self.tbl.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.tbl.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.tbl.customContextMenuRequested.connect(self._context_menu)
+        self.tbl.setShowGrid(False)
         self._setup_aep_tbl()
-        root.addWidget(self.tbl, 1)
+        main.addWidget(self.tbl, 1)
 
-        # ── Empty state label ──
-        self.lbl_empty = QLabel("Select source folder and click Scan")
+        # Empty state
+        self.lbl_empty = QLabel("Drop a folder here or click Browse, then Scan")
         self.lbl_empty.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.lbl_empty.setStyleSheet("color:#666; font-size:14px; padding:40px;")
-        root.addWidget(self.lbl_empty)
+        self.lbl_empty.setStyleSheet("color: #2a3f5f; font-size: 15px; padding: 50px; font-weight: 500;")
+        main.addWidget(self.lbl_empty)
 
-        # ── Stats bar ──
-        self.lbl_stats = QLabel(""); root.addWidget(self.lbl_stats)
+        # Stats
+        self.lbl_stats = QLabel("")
+        self.lbl_stats.setStyleSheet("color: #6b7785; font-size: 12px; padding: 4px 0;")
+        main.addWidget(self.lbl_stats)
 
-        # ── Log panel ──
-        self.txt_log = QTextEdit(); self.txt_log.setReadOnly(True); self.txt_log.setMaximumHeight(150)
-        root.addWidget(self.txt_log)
+        # Log console
+        self.txt_log = QTextEdit()
+        self.txt_log.setReadOnly(True); self.txt_log.setMaximumHeight(130)
+        main.addWidget(self.txt_log)
 
-        # ── Progress label ──
-        row_bottom = QHBoxLayout()
-        self.lbl_prog = QLabel(""); row_bottom.addWidget(self.lbl_prog)
-        row_bottom.addStretch()
-        self.lbl_llm_status = QLabel("LLM: checking...")
-        self.lbl_llm_status.setStyleSheet("color: #f59e0b; font-size: 11px;")
-        row_bottom.addWidget(self.lbl_llm_status)
-        root.addLayout(row_bottom)
+        root.addWidget(body, 1)
+
+        # Status bar
+        status = QWidget()
+        status.setFixedHeight(30)
+        status.setStyleSheet("background-color: #0a1219; border-top: 1px solid #1b2838;")
+        s_lay = QHBoxLayout(status)
+        s_lay.setContentsMargins(16, 0, 16, 0)
+        self.lbl_prog = QLabel("")
+        self.lbl_prog.setStyleSheet("color: #6b7785; font-size: 11px;")
+        s_lay.addWidget(self.lbl_prog)
+        s_lay.addStretch()
+        root.addWidget(status)
+
+        self.setStyleSheet(DARK_STYLE)
+
+        # Backward compat refs (moved to menu bar)
+        self.btn_custom_cats = None
+        self.btn_envato = None
+        self.btn_ollama = None
+        self.btn_export_rules = None
+        self.btn_import_rules = None
+        self.btn_clear_cache = None
 
     # ═══ CONTEXT MENU (RIGHT-CLICK) ══════════════════════════════════════════
     def _context_menu(self, pos):
@@ -3565,19 +4763,29 @@ class FileOrganizer(QMainWindow):
         menu = QMenu(self)
         is_cat = self.cmb_op.currentIndex() == self.OP_CAT
 
+        # Check/uncheck selected rows
+        sel_rows = sorted(set(idx.row() for idx in self.tbl.selectionModel().selectedRows()))
+        act_check = act_uncheck = None
+        if len(sel_rows) > 1:
+            act_check = menu.addAction(f"\u2611 Check {len(sel_rows)} Rows")
+            act_uncheck = menu.addAction(f"\u2610 Uncheck {len(sel_rows)} Rows")
+            menu.addSeparator()
+
         # Open folder in explorer
         act_open = menu.addAction("Open Folder in Explorer")
         # Reassign category (categorize mode only)
         act_reassign = None; act_batch = None
         if is_cat and row < len(self.cat_items):
             act_reassign = menu.addAction("Change Category...")
-            # Check for multi-selection
-            sel_rows = list(set(idx.row() for idx in self.tbl.selectedIndexes()))
             if len(sel_rows) > 1:
                 act_batch = menu.addAction(f"Batch Reassign ({len(sel_rows)} rows)...")
 
         action = menu.exec(self.tbl.viewport().mapToGlobal(pos))
-        if action == act_open:
+        if action == act_check:
+            self._check_selected()
+        elif action == act_uncheck:
+            self._uncheck_selected()
+        elif action == act_open:
             items = self.cat_items if is_cat else self.aep_items
             if row < len(items):
                 path = items[row].full_source_path if is_cat else items[row].full_current_path
@@ -3590,7 +4798,6 @@ class FileOrganizer(QMainWindow):
         elif action == act_reassign and is_cat and row < len(self.cat_items):
             self._reassign_category(row)
         elif action == act_batch and is_cat:
-            sel_rows = sorted(set(idx.row() for idx in self.tbl.selectedIndexes()))
             self._batch_reassign(sel_rows)
 
     def _reassign_category(self, row):
@@ -4009,7 +5216,11 @@ class FileOrganizer(QMainWindow):
 
         # Use LLM-cleaned name for dest path if available (rename-on-move)
         llm_name = r.get('llm_name')
-        dest_folder_name = llm_name if llm_name and llm_name != r['folder_name'] else r['folder_name']
+        if llm_name and llm_name != r['folder_name']:
+            dest_folder_name = llm_name
+        else:
+            # No LLM name available — use smart naming (checks AEP/project files + subfolders)
+            dest_folder_name = _smart_name(r['folder_name'], r.get('folder_path'), r.get('category'))
         raw_dest = os.path.join(dst, r['category'], dest_folder_name)
         it.full_dest_path = self._deduplicate_dest_path(raw_dest)
 
@@ -4164,6 +5375,32 @@ class FileOrganizer(QMainWindow):
             if cb:
                 inner = cb.findChild(QCheckBox)
                 if inner: inner.blockSignals(True); inner.setChecked(it.selected); inner.blockSignals(False)
+        self._upd_stats()
+
+    def _check_selected(self):
+        """Check (tick) only the highlighted/selected rows in the table."""
+        self._set_highlighted_check(True)
+
+    def _uncheck_selected(self):
+        """Uncheck (untick) only the highlighted/selected rows in the table."""
+        self._set_highlighted_check(False)
+
+    def _set_highlighted_check(self, checked: bool):
+        """Toggle checkboxes for all currently highlighted rows."""
+        rows = sorted(set(idx.row() for idx in self.tbl.selectionModel().selectedRows()))
+        if not rows:
+            return
+        items = self._items()
+        for r in rows:
+            if r < len(items):
+                items[r].selected = checked
+                cb = self.tbl.cellWidget(r, 0)
+                if cb:
+                    inner = cb.findChild(QCheckBox)
+                    if inner:
+                        inner.blockSignals(True)
+                        inner.setChecked(checked)
+                        inner.blockSignals(False)
         self._upd_stats()
 
     # ═══ APPLY ════════════════════════════════════════════════════════════════
