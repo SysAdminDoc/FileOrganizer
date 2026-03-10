@@ -232,6 +232,15 @@ python -m fileorganizer                           # Alternative launch
 
 **How do I add categories?** — Settings > Edit Categories. Add categories with keywords. Saved to JSON and available immediately.
 
+## Related Tools
+
+| Tool | Best For |
+|------|----------|
+| **FileOrganizer** (this repo) | Focused file organization — AI classification, cleanup, duplicates, photo management |
+| [UniFile](https://github.com/SysAdminDoc/UniFile) | Everything in FileOrganizer plus a tag-based file library (TagStudio-style), movie/TV metadata lookup (TMDb/TVMaze), and Nexa vision AI backend |
+
+If you want tag-based organization with hierarchical tags, TMDb/TVMaze metadata, or LLaVA vision classification, see [UniFile](https://github.com/SysAdminDoc/UniFile) — the all-in-one successor built on this project's foundation.
+
 ## Contributing
 
 Issues and PRs welcome. The codebase is modular — categories in `categories.py`, classification in `classifier.py`, UI in `main_window.py` and `dialogs.py`.
