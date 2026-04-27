@@ -1,7 +1,8 @@
 """FileOrganizer dialogs subpackage — re-exports all dialog classes for backward compatibility."""
 
 from fileorganizer.dialogs.settings import (
-    OllamaSettingsDialog, PhotoSettingsDialog, FaceManagerDialog, ModelManagerDialog
+    OllamaSettingsDialog, PhotoSettingsDialog, FaceManagerDialog, ModelManagerDialog,
+    AIProviderSettingsDialog, DesignWorkflowSettingsDialog,
 )
 from fileorganizer.dialogs.editors import (
     CustomCategoriesDialog, DestTreeDialog, PCCategoryEditorDialog,
@@ -24,6 +25,7 @@ from fileorganizer.dialogs.theme import (
 
 __all__ = [
     'OllamaSettingsDialog', 'PhotoSettingsDialog', 'FaceManagerDialog', 'ModelManagerDialog',
+    'AIProviderSettingsDialog', 'DesignWorkflowSettingsDialog',
     'CustomCategoriesDialog', 'DestTreeDialog', 'PCCategoryEditorDialog',
     'TemplateBuilderWidget', '_FileBrowserDialog', 'RuleEditorDialog',
     '_CleanupScanWorker', 'CleanupToolsDialog', 'CleanupPanel',

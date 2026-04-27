@@ -568,3 +568,47 @@ _CUSTOM_CATS_FILE = os.path.join(_APP_DATA_DIR, 'custom_categories.json')
 _FACE_DB_FILE = os.path.join(_APP_DATA_DIR, 'face_db.json')
 
 _PC_SCAN_CACHE_DB = os.path.join(_APP_DATA_DIR, 'scan_cache.db')
+
+# ── Design Workflow Settings ──────────────────────────────────────────────────
+_DESIGN_SETTINGS_FILE = os.path.join(_APP_DATA_DIR, 'design_settings.json')
+
+_DESIGN_DEFAULTS = {
+    'primary_dest':        r'I:\Organized',
+    'overflow_dest':       r'G:\\',
+    'overflow_threshold_gb': 50,     # Switch to overflow when primary has < N GB free
+    'extract_archives':    True,     # Unpack ZIP/RAR/7z before organizing
+    'catalog_lookup':      True,     # Use DeepSeek to identify marketplace items
+    'dynamic_categories':  True,     # Allow AI to propose new categories
+    'confirm_duplicates':  True,     # Hash-verify before marking as duplicate
+    'delete_archives_after_extract': False,  # Keep original archives after extraction
+}
+
+def load_design_settings() -> dict:
+    try:
+        with open(_DESIGN_SETTINGS_FILE, 'r', encoding='utf-8') as f:
+            s = json.load(f)
+        return {**_DESIGN_DEFAULTS, **s}
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        return dict(_DESIGN_DEFAULTS)
+
+def save_design_settings(settings: dict):
+    try:
+        with open(_DESIGN_SETTINGS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(settings, f, indent=2)
+    except OSError:
+        pass
+
+def get_dest_path(item_size_bytes: int = 0) -> str:
+    """Return primary destination path, falling back to overflow when low on space."""
+    s = load_design_settings()
+    primary = s.get('primary_dest', r'I:\Organized')
+    overflow = s.get('overflow_dest', r'G:\\')
+    threshold_bytes = int(s.get('overflow_threshold_gb', 50)) * 1_073_741_824
+    try:
+        import shutil as _shutil
+        free = _shutil.disk_usage(primary).free if os.path.exists(os.path.splitdrive(primary)[0] + '\\') else 0
+        if free - item_size_bytes < threshold_bytes:
+            return overflow
+    except Exception:
+        pass
+    return primary

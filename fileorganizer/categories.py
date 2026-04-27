@@ -763,6 +763,44 @@ def save_custom_categories(custom_cats):
         json.dump(data, f, indent=2, ensure_ascii=False)
     _CategoryIndex.invalidate()  # Rebuild keyword index on next scan
 
+
+def add_dynamic_category(name: str, keywords: list = None) -> bool:
+    """Add a new category if it doesn't already exist.
+
+    Called by the AI pipeline when DeepSeek/Claude proposes a category not
+    in the current 384-entry built-in list. Returns True if added, False if
+    it was already present.
+    """
+    name = name.strip()
+    if not name:
+        return False
+    existing = {n.lower() for n, _ in get_all_categories()}
+    if name.lower() in existing:
+        return False  # Already exists
+    custom = load_custom_categories()
+    kws = keywords or [name.lower()]
+    custom.append((name, kws))
+    save_custom_categories(custom)
+    return True
+
+
+def get_or_create_category(name: str, keywords: list = None) -> str:
+    """Return the category name, creating it dynamically if it doesn't exist.
+
+    Normalizes the name to Title Case and deduplicates against existing
+    categories using a case-insensitive comparison.
+    """
+    name = name.strip()
+    if not name:
+        return 'Uncategorized'
+    # Exact case-insensitive match against existing
+    for cat_name, _ in get_all_categories():
+        if cat_name.lower() == name.lower():
+            return cat_name
+    # Not found — create it
+    add_dynamic_category(name, keywords)
+    return name
+
 def get_all_categories():
     """Return built-in + custom categories."""
     return BUILTIN_CATEGORIES + load_custom_categories()
