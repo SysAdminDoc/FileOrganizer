@@ -55,6 +55,7 @@ from fileorganizer.workers import (
 from fileorganizer.dialogs import (
     CustomCategoriesDialog, DestTreeDialog, OllamaSettingsDialog,
     PhotoSettingsDialog, FaceManagerDialog, ModelManagerDialog,
+    AIProviderSettingsDialog, DesignWorkflowSettingsDialog,
     TemplateBuilderWidget, PCCategoryEditorDialog, _FileBrowserDialog,
     UndoBatchDialog, BeforeAfterDialog, DuplicateCompareDialog,
     EventGroupDialog, RuleEditorDialog, ScheduleDialog,
@@ -119,7 +120,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("FileOrganizer v7.5.0")
+        self.setWindowTitle("FileOrganizer v8.0.0")
         self.setMinimumSize(1050, 700)
         self.aep_items  = []
         self.cat_items  = []
@@ -407,6 +408,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         menu_tools.addAction("Edit Categories", self._open_custom_cats)
         menu_tools.addAction("Envato API Key", self._set_envato_key)
         menu_tools.addAction("Ollama LLM", self._open_ollama_settings)
+        menu_tools.addAction("AI Providers...", self._open_ai_provider_settings)
+        menu_tools.addAction("Design Workflow...", self._open_design_workflow_settings)
         menu_tools.addSeparator()
         menu_tools.addAction("Import Rules", self._import_rules)
         menu_tools.addAction("Export Rules", self._export_rules)
@@ -1453,6 +1456,16 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         dlg = OllamaSettingsDialog(self)
         if dlg.exec():
             self._log(f"Ollama settings saved: {dlg.settings['url']} / {dlg.settings['model']}")
+
+    def _open_ai_provider_settings(self):
+        dlg = AIProviderSettingsDialog(self)
+        if dlg.exec():
+            self._log("AI provider settings saved.")
+
+    def _open_design_workflow_settings(self):
+        dlg = DesignWorkflowSettingsDialog(self)
+        if dlg.exec():
+            self._log("Design workflow settings saved.")
 
     # ═══ DESTINATION TREE PREVIEW ════════════════════════════════════════════
     def _show_preview(self):

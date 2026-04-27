@@ -2447,3 +2447,176 @@ class ScanFilesLLMWorker(QThread):
 # TEMPLATE BUILDER WIDGET — Visual token palette for rename templates
 # ══════════════════════════════════════════════════════════════════════════════
 
+
+# ══════════════════════════════════════════════════════════════════════════════
+# CATALOG LOOKUP WORKER — DeepSeek marketplace identification
+# ══════════════════════════════════════════════════════════════════════════════
+
+class CatalogLookupWorker(QThread):
+    """Batch catalog lookup via the AI provider system (DeepSeek preferred).
+
+    Takes a list of FileItem-like objects, runs them through the catalog
+    lookup pipeline, and emits updated results with display_name + category.
+    """
+    result_ready  = pyqtSignal(dict)   # {index, display_name, category, marketplace, confidence}
+    finished      = pyqtSignal()
+    log           = pyqtSignal(str)
+    progress      = pyqtSignal(int, int)
+
+    def __init__(self, items: list, batch_size: int = 20):
+        super().__init__()
+        self.items = items
+        self.batch_size = batch_size
+        self._cancelled = False
+
+    def cancel(self):
+        self._cancelled = True
+
+    def run(self):
+        try:
+            from fileorganizer.providers import get_router
+            from fileorganizer.catalog import lookup_batch
+        except ImportError as e:
+            self.log.emit(f"ERROR: Could not load catalog module: {e}")
+            self.finished.emit()
+            return
+
+        router = get_router()
+        provider = router.get_provider_for('catalog')
+
+        if provider:
+            self.log.emit(f"  Catalog lookup: {len(self.items)} items via {provider.name} ...")
+        else:
+            self.log.emit("  No AI provider available — using heuristic catalog lookup")
+
+        total = len(self.items)
+
+        def _progress(done, tot):
+            self.progress.emit(done, tot)
+
+        # Run batch lookup
+        pairs = []
+        for item in self.items:
+            name = getattr(item, 'folder_name', None) or getattr(item, 'name', str(item))
+            path = getattr(item, 'full_source_path', None) or getattr(item, 'full_src', '')
+            pairs.append((name, path))
+
+        results = lookup_batch(
+            pairs,
+            provider=provider,
+            batch_size=self.batch_size,
+            progress_cb=_progress,
+        )
+
+        for i, res in enumerate(results):
+            if self._cancelled:
+                self.log.emit(f"  Catalog lookup cancelled at {i}/{total}")
+                break
+            self.result_ready.emit({
+                'index': i,
+                'display_name': res.get('display_name', ''),
+                'category':     res.get('category', ''),
+                'marketplace':  res.get('marketplace', 'Unknown'),
+                'asset_type':   res.get('asset_type', 'Other'),
+                'confidence':   res.get('confidence', 0),
+                'source':       res.get('source', 'heuristic'),
+            })
+
+        source_counts = {}
+        for r in results:
+            s = r.get('source', 'heuristic')
+            source_counts[s] = source_counts.get(s, 0) + 1
+
+        parts = [f"{v} {k}" for k, v in source_counts.items()]
+        self.log.emit(f"  Catalog done: {total} items ({', '.join(parts)})")
+        self.finished.emit()
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# ARCHIVE EXTRACTION WORKER — Extract design archives before organizing
+# ══════════════════════════════════════════════════════════════════════════════
+
+class ArchiveExtractionWorker(QThread):
+    """Scan a directory for design archives and extract them.
+
+    After extraction, the caller should re-scan the extraction destination
+    to classify the newly extracted files.
+    """
+    result_ready = pyqtSignal(dict)   # {archive_path, dest_dir, extracted_files}
+    finished     = pyqtSignal()
+    log          = pyqtSignal(str)
+    progress     = pyqtSignal(int, int)
+
+    def __init__(self, source_dir: str, extract_dest: str = '',
+                 delete_after: bool = False, recursive: bool = True):
+        super().__init__()
+        self.source_dir   = source_dir
+        self.extract_dest = extract_dest  # Empty = extract beside archive
+        self.delete_after = delete_after
+        self.recursive    = recursive
+        self._cancelled   = False
+
+    def cancel(self):
+        self._cancelled = True
+
+    def run(self):
+        try:
+            from fileorganizer.archive_extractor import (
+                scan_archives_in_dir, extract_archive, get_archive_display_name
+            )
+        except ImportError as e:
+            self.log.emit(f"ERROR: archive_extractor not available: {e}")
+            self.finished.emit()
+            return
+
+        self.log.emit(f"  Scanning for design archives in: {self.source_dir}")
+        archives = scan_archives_in_dir(self.source_dir, recursive=self.recursive)
+
+        if not archives:
+            self.log.emit("  No design archives found.")
+            self.finished.emit()
+            return
+
+        self.log.emit(f"  Found {len(archives)} design archive(s)")
+        total = len(archives)
+
+        for i, arc in enumerate(archives):
+            if self._cancelled:
+                self.log.emit(f"  Extraction cancelled at {i}/{total}")
+                break
+
+            self.progress.emit(i + 1, total)
+            arch_path = arc['path']
+            display   = get_archive_display_name(arch_path)
+            self.log.emit(f"  Extracting [{i+1}/{total}]: {display}")
+
+            # Destination: use explicit dest or create folder beside archive
+            if self.extract_dest:
+                dest = os.path.join(self.extract_dest, display)
+            else:
+                dest = os.path.join(os.path.dirname(arch_path), display)
+
+            def _log_cb(msg):
+                self.log.emit(msg)
+
+            extracted = extract_archive(arch_path, dest, log_cb=_log_cb)
+            self.log.emit(f"    {len(extracted)} file(s) extracted to: {dest}")
+
+            if self.delete_after and extracted and os.path.isfile(arch_path):
+                try:
+                    os.remove(arch_path)
+                    self.log.emit(f"    Removed archive: {os.path.basename(arch_path)}")
+                except OSError as e:
+                    self.log.emit(f"    Could not remove archive: {e}")
+
+            self.result_ready.emit({
+                'archive_path':   arch_path,
+                'dest_dir':       dest,
+                'extracted_files': extracted,
+                'display_name':   display,
+            })
+
+        self.log.emit("  Archive extraction complete.")
+        self.finished.emit()
+
+

@@ -3,3 +3,4 @@ importlib.util
 mimetypes
 PyQt6
 xml.etree.ElementTree
+openai
