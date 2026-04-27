@@ -1009,3 +1009,308 @@ class ModelManagerDialog(QDialog):
                 w = self.tree.itemWidget(child, 3)
                 if w:
                     w.setEnabled(enabled)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# AI PROVIDER SETTINGS DIALOG — GitHub Models + DeepSeek configuration
+# ══════════════════════════════════════════════════════════════════════════════
+
+class AIProviderSettingsDialog(QDialog):
+    """Configure GitHub Models (Claude) and DeepSeek API credentials and routing."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("AI Provider Settings")
+        self.setMinimumSize(540, 480)
+        self.setStyleSheet(get_active_stylesheet())
+        self._build_ui()
+
+    def _build_ui(self):
+        from PyQt6.QtWidgets import QTabWidget
+        _t = get_active_theme()
+        layout = QVBoxLayout(self)
+        layout.setSpacing(10)
+
+        try:
+            from fileorganizer.providers import load_provider_settings, save_provider_settings
+            self._load_fn  = load_provider_settings
+            self._save_fn  = save_provider_settings
+            self._settings = load_provider_settings()
+        except ImportError:
+            self._load_fn  = lambda: {}
+            self._save_fn  = lambda s: None
+            self._settings = {}
+
+        tabs = QTabWidget()
+
+        # ── GitHub Models tab ────────────────────────────────────────────────
+        gh_tab = QWidget()
+        gh_lay = QVBoxLayout(gh_tab)
+        gh_lay.setSpacing(8)
+
+        gh_lay.addWidget(QLabel("GitHub Token (GITHUB_TOKEN env var or paste):"))
+        self.txt_gh_token = QLineEdit(self._settings.get('github_token', ''))
+        self.txt_gh_token.setPlaceholderText("ghp_... or set GITHUB_TOKEN env var")
+        self.txt_gh_token.setEchoMode(QLineEdit.EchoMode.Password)
+        gh_lay.addWidget(self.txt_gh_token)
+
+        gh_lay.addWidget(QLabel("Model:"))
+        self.cmb_gh_model = QComboBox()
+        gh_models = [
+            'gpt-4.1', 'gpt-4.1-mini', 'gpt-4o', 'gpt-4o-mini',
+            'claude-opus-4-5', 'claude-sonnet-4-5', 'claude-haiku-4-5',
+            'Codestral-2501', 'Mistral-Large-2411',
+        ]
+        self.cmb_gh_model.addItems(gh_models)
+        cur_gh = self._settings.get('github_model', 'claude-sonnet-4-5')
+        idx = self.cmb_gh_model.findText(cur_gh)
+        if idx >= 0:
+            self.cmb_gh_model.setCurrentIndex(idx)
+        else:
+            self.cmb_gh_model.insertItem(0, cur_gh)
+            self.cmb_gh_model.setCurrentIndex(0)
+        gh_lay.addWidget(self.cmb_gh_model)
+
+        self.lbl_gh_status = QLabel("")
+        self.lbl_gh_status.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        btn_gh_test = QPushButton("Test GitHub Models")
+        btn_gh_test.clicked.connect(self._test_github)
+        row_gh = QHBoxLayout()
+        row_gh.addWidget(btn_gh_test)
+        row_gh.addWidget(self.lbl_gh_status, 1)
+        gh_lay.addLayout(row_gh)
+        gh_lay.addStretch()
+        tabs.addTab(gh_tab, "GitHub Models")
+
+        # ── DeepSeek tab ─────────────────────────────────────────────────────
+        ds_tab = QWidget()
+        ds_lay = QVBoxLayout(ds_tab)
+        ds_lay.setSpacing(8)
+
+        ds_lay.addWidget(QLabel("DeepSeek API Key (DEEPSEEK_API_KEY env var or paste):"))
+        self.txt_ds_key = QLineEdit(self._settings.get('deepseek_api_key', ''))
+        self.txt_ds_key.setPlaceholderText("sk-... or set DEEPSEEK_API_KEY env var")
+        self.txt_ds_key.setEchoMode(QLineEdit.EchoMode.Password)
+        ds_lay.addWidget(self.txt_ds_key)
+
+        ds_lay.addWidget(QLabel("Model:"))
+        self.cmb_ds_model = QComboBox()
+        ds_models = ['deepseek-chat', 'deepseek-reasoner']
+        self.cmb_ds_model.addItems(ds_models)
+        cur_ds = self._settings.get('deepseek_model', 'deepseek-chat')
+        idx_ds = self.cmb_ds_model.findText(cur_ds)
+        if idx_ds >= 0:
+            self.cmb_ds_model.setCurrentIndex(idx_ds)
+        ds_lay.addWidget(self.cmb_ds_model)
+
+        self.lbl_ds_status = QLabel("")
+        self.lbl_ds_status.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        btn_ds_test = QPushButton("Test DeepSeek")
+        btn_ds_test.clicked.connect(self._test_deepseek)
+        row_ds = QHBoxLayout()
+        row_ds.addWidget(btn_ds_test)
+        row_ds.addWidget(self.lbl_ds_status, 1)
+        ds_lay.addLayout(row_ds)
+        ds_lay.addStretch()
+        tabs.addTab(ds_tab, "DeepSeek")
+
+        # ── Routing tab ──────────────────────────────────────────────────────
+        rt_tab = QWidget()
+        rt_lay = QVBoxLayout(rt_tab)
+        rt_lay.setSpacing(8)
+
+        rt_lay.addWidget(QLabel("Task routing — which provider handles each task type:"))
+
+        routing = self._settings.get('routing', {})
+        providers_choices = ['github', 'deepseek', 'ollama', 'auto']
+
+        def _make_row(label, key, default):
+            row = QHBoxLayout()
+            row.addWidget(QLabel(f"{label}:"))
+            cmb = QComboBox()
+            cmb.addItems(providers_choices)
+            v = routing.get(key, default)
+            idx_v = cmb.findText(v)
+            if idx_v >= 0:
+                cmb.setCurrentIndex(idx_v)
+            row.addWidget(cmb, 1)
+            rt_lay.addLayout(row)
+            return cmb
+
+        self.cmb_route_lightweight = _make_row("Lightweight (name cleanup)", "lightweight", "github")
+        self.cmb_route_heavy       = _make_row("Heavy classification",       "heavy",        "deepseek")
+        self.cmb_route_catalog     = _make_row("Catalog lookup",             "catalog",      "deepseek")
+        self.cmb_route_refine      = _make_row("Refinement / review",        "refine",       "github")
+        self.cmb_route_fallback    = _make_row("Fallback",                   "fallback",     "ollama")
+
+        rt_lay.addStretch()
+        tabs.addTab(rt_tab, "Routing")
+
+        layout.addWidget(tabs)
+
+        row_btns = QHBoxLayout()
+        btn_save   = QPushButton("Save")
+        btn_save.clicked.connect(self._save)
+        btn_cancel = QPushButton("Cancel")
+        btn_cancel.clicked.connect(self.reject)
+        row_btns.addStretch()
+        row_btns.addWidget(btn_save)
+        row_btns.addWidget(btn_cancel)
+        layout.addLayout(row_btns)
+
+    def _test_github(self):
+        self.lbl_gh_status.setText("Testing...")
+        self.lbl_gh_status.repaint()
+        token = self.txt_gh_token.text().strip() or None
+        model = self.cmb_gh_model.currentText()
+        try:
+            from fileorganizer.providers import GitHubModelsProvider
+            p = GitHubModelsProvider(api_key=token, model=model)
+            ok, msg = p.test_connection()
+        except Exception as e:
+            ok, msg = False, str(e)
+        _t = get_active_theme()
+        self.lbl_gh_status.setText(msg)
+        self.lbl_gh_status.setStyleSheet(f"color:{'#4ade80' if ok else '#ef4444'};font-size:11px;")
+
+    def _test_deepseek(self):
+        self.lbl_ds_status.setText("Testing...")
+        self.lbl_ds_status.repaint()
+        key   = self.txt_ds_key.text().strip() or None
+        model = self.cmb_ds_model.currentText()
+        try:
+            from fileorganizer.providers import DeepSeekProvider
+            p = DeepSeekProvider(api_key=key, model=model)
+            ok, msg = p.test_connection()
+        except Exception as e:
+            ok, msg = False, str(e)
+        self.lbl_ds_status.setText(msg)
+        self.lbl_ds_status.setStyleSheet(f"color:{'#4ade80' if ok else '#ef4444'};font-size:11px;")
+
+    def _save(self):
+        s = self._settings
+        gh_token = self.txt_gh_token.text().strip()
+        ds_key   = self.txt_ds_key.text().strip()
+        if gh_token:
+            s['github_token'] = gh_token
+        if ds_key:
+            s['deepseek_api_key'] = ds_key
+        s['github_model']   = self.cmb_gh_model.currentText()
+        s['deepseek_model'] = self.cmb_ds_model.currentText()
+        s['routing'] = {
+            'lightweight': self.cmb_route_lightweight.currentText(),
+            'heavy':       self.cmb_route_heavy.currentText(),
+            'catalog':     self.cmb_route_catalog.currentText(),
+            'refine':      self.cmb_route_refine.currentText(),
+            'fallback':    self.cmb_route_fallback.currentText(),
+        }
+        self._save_fn(s)
+        # Reset global router so it picks up new settings
+        try:
+            from fileorganizer.providers import reset_router
+            reset_router()
+        except Exception:
+            pass
+        self.accept()
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# DESIGN WORKFLOW SETTINGS DIALOG — destination paths + pipeline toggles
+# ══════════════════════════════════════════════════════════════════════════════
+
+class DesignWorkflowSettingsDialog(QDialog):
+    """Configure where organized files go and which pipeline features are active."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Design Workflow Settings")
+        self.setMinimumSize(480, 380)
+        self.setStyleSheet(get_active_stylesheet())
+        try:
+            from fileorganizer.config import load_design_settings, save_design_settings
+            self._load_fn  = load_design_settings
+            self._save_fn  = save_design_settings
+            self._settings = load_design_settings()
+        except ImportError:
+            self._load_fn  = lambda: {}
+            self._save_fn  = lambda s: None
+            self._settings = {}
+        self._build_ui()
+
+    def _build_ui(self):
+        _t = get_active_theme()
+        layout = QVBoxLayout(self)
+        layout.setSpacing(10)
+
+        def _path_row(label, key):
+            row = QHBoxLayout()
+            row.addWidget(QLabel(label))
+            txt = QLineEdit(self._settings.get(key, ''))
+            row.addWidget(txt, 1)
+            btn = QPushButton("Browse")
+            btn.setFixedWidth(70)
+
+            def _browse(t=txt):
+                from PyQt6.QtWidgets import QFileDialog
+                d = QFileDialog.getExistingDirectory(self, "Select Folder", t.text())
+                if d:
+                    t.setText(d)
+
+            btn.clicked.connect(_browse)
+            row.addWidget(btn)
+            layout.addLayout(row)
+            return txt
+
+        self.txt_primary  = _path_row("Primary destination:", "primary_dest")
+        self.txt_overflow = _path_row("Overflow destination:", "overflow_dest")
+
+        row_thresh = QHBoxLayout()
+        row_thresh.addWidget(QLabel("Switch to overflow when primary has less than:"))
+        self.spn_thresh = QSpinBox()
+        self.spn_thresh.setRange(5, 500)
+        self.spn_thresh.setValue(int(self._settings.get('overflow_threshold_gb', 50)))
+        self.spn_thresh.setSuffix(" GB")
+        row_thresh.addWidget(self.spn_thresh)
+        row_thresh.addStretch()
+        layout.addLayout(row_thresh)
+
+        sep = QFrame(); sep.setFrameShape(QFrame.Shape.HLine)
+        sep.setStyleSheet(f"QFrame{{background:{_t['border']};max-height:1px;}}"); layout.addWidget(sep)
+        layout.addWidget(QLabel("Pipeline features:"))
+
+        def _chk(label, key):
+            c = QCheckBox(label)
+            c.setChecked(bool(self._settings.get(key, True)))
+            layout.addWidget(c)
+            return c
+
+        self.chk_extract   = _chk("Extract archives before organizing (ZIP/RAR/7z)", "extract_archives")
+        self.chk_catalog   = _chk("Use DeepSeek to identify marketplace items",        "catalog_lookup")
+        self.chk_dynamic   = _chk("Allow AI to propose new categories",                "dynamic_categories")
+        self.chk_confirm   = _chk("Require hash verification before marking duplicates","confirm_duplicates")
+        self.chk_del_after = _chk("Delete original archives after successful extraction","delete_archives_after_extract")
+
+        layout.addStretch()
+
+        row_btns = QHBoxLayout()
+        btn_save   = QPushButton("Save")
+        btn_save.clicked.connect(self._save)
+        btn_cancel = QPushButton("Cancel")
+        btn_cancel.clicked.connect(self.reject)
+        row_btns.addStretch()
+        row_btns.addWidget(btn_save)
+        row_btns.addWidget(btn_cancel)
+        layout.addLayout(row_btns)
+
+    def _save(self):
+        s = self._settings
+        s['primary_dest']        = self.txt_primary.text().strip()
+        s['overflow_dest']       = self.txt_overflow.text().strip()
+        s['overflow_threshold_gb'] = self.spn_thresh.value()
+        s['extract_archives']    = self.chk_extract.isChecked()
+        s['catalog_lookup']      = self.chk_catalog.isChecked()
+        s['dynamic_categories']  = self.chk_dynamic.isChecked()
+        s['confirm_duplicates']  = self.chk_confirm.isChecked()
+        s['delete_archives_after_extract'] = self.chk_del_after.isChecked()
+        self._save_fn(s)
+        self.accept()
