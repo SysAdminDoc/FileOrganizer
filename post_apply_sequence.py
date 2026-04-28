@@ -6,11 +6,13 @@ Runs the cleanup pipeline in the correct order after AE apply (PID 22500) exits.
 Safe to run: each step checks for its own prerequisites and skips gracefully if not ready.
 
 Steps (run in order):
+  0. Merge variant category directories (e.g., "Titles & Typography" → "Title & Typography")
   1. organize_run.py --retry-errors --source ae     (stale errors auto-skipped, real ones retried)
-  2. reclassify_unorg.py --analyze                  (re-classify 88 I:\Unorganized items)
+  2. reclassify_unorg.py --analyze                  (re-classify I:\Unorganized items)
   3. reclassify_unorg.py --apply                    (move to correct categories)
-  4. fix_duplicates.py --apply                      (merge 563 collision pairs in G:\Organized)
-  5. fix_stock_ae_items.py --scan --analyze --apply  (ONLY if merge_stock has exited)
+  4. organize_run.py --apply --source loose_files   (run ONLY when classify reaches 326/326)
+  5. fix_duplicates.py --apply                      (merge all (N) suffix collision pairs)
+  6. fix_stock_ae_items.py --scan --analyze --apply  (ONLY if merge_stock has exited)
 
 Usage:
     python post_apply_sequence.py              # run all steps
@@ -29,9 +31,11 @@ REPO = Path(__file__).parent
 AE_APPLY_PID    = 22500  # Python ae apply (PID confirmed from WMI, robocopy child is 17596)
 PYTHON          = sys.executable
 ORGANIZED       = Path(r'G:\Organized')
+LOOSE_INDEX     = REPO / 'loose_files_index.json'
+LOOSE_RESULTS   = REPO / 'classification_results'
+TOTAL_LOOSE_BATCHES = 326
 
 # Category directories that should be merged into canonical names.
-# These arise from AI naming variants (plural vs singular, word order, etc.)
 CATEGORY_MERGES = [
     ('After Effects - Titles & Typography', 'After Effects - Title & Typography'),
 ]
@@ -138,8 +142,9 @@ def main():
         1: ('Retry AE errors',         [PYTHON, 'organize_run.py', '--retry-errors', '--source', 'ae']),
         2: ('Reclassify Unorg analyze', [PYTHON, 'reclassify_unorg.py', '--analyze']),
         3: ('Reclassify Unorg apply',   [PYTHON, 'reclassify_unorg.py', '--apply']),
-        4: ('Fix duplicates',           [PYTHON, 'fix_duplicates.py', '--apply']),
-        5: ('Fix stock AE items',       None),  # conditional — checked below
+        4: ('Loose files apply',        None),  # conditional — waits for 326/326 classify batches
+        5: ('Fix duplicates',           [PYTHON, 'fix_duplicates.py', '--apply']),
+        6: ('Fix stock AE items',       None),  # conditional — requires merge_stock done
     }
 
     selected = [args.step] if args.step is not None and args.step > 0 else sorted(steps.keys())
@@ -149,9 +154,32 @@ def main():
     for step_n in selected:
         label, cmd = steps[step_n]
 
-        if step_n == 5:
+        if step_n == 4:
+            # Wait until loose_files classify is fully complete (326/326 batches)
+            done = sum(1 for p in LOOSE_RESULTS.glob('loose_batch_*.json')
+                       if p.is_file())
+            if done < TOTAL_LOOSE_BATCHES:
+                print(f'\n  [Step 4] Loose files classify: {done}/{TOTAL_LOOSE_BATCHES} batches done.')
+                print(f'  Waiting for classify to finish before applying...')
+                while True:
+                    done = sum(1 for p in LOOSE_RESULTS.glob('loose_batch_*.json')
+                               if p.is_file())
+                    if done >= TOTAL_LOOSE_BATCHES:
+                        break
+                    print(f'  [{done}/{TOTAL_LOOSE_BATCHES}] classify still running... (sleeping 60s)')
+                    time.sleep(60)
+                print(f'  Classify complete. Starting loose_files apply.')
+            else:
+                print(f'\n  [Step 4] Loose files classify already complete ({done}/{TOTAL_LOOSE_BATCHES}).')
+            ok = run(label, [PYTHON, 'organize_run.py', '--apply', '--quiet', '--source', 'loose_files'],
+                     dry_run=args.dry_run)
+            if not ok:
+                print(f'  Loose files apply returned non-zero; continuing anyway.')
+            continue
+
+        if step_n == 6:
             if not is_merge_stock_done():
-                print('\n  [SKIP] Step 5: merge_stock still running. Run manually after it exits:')
+                print('\n  [SKIP] Step 6: merge_stock still running. Run manually after it exits:')
                 print('    python fix_stock_ae_items.py --scan')
                 print('    python fix_stock_ae_items.py --analyze')
                 print('    python fix_stock_ae_items.py --apply')
@@ -163,7 +191,7 @@ def main():
                 ('Fix stock AE apply',   [PYTHON, 'fix_stock_ae_items.py', '--apply']),
             ]:
                 if not run(sub_label, sub_cmd, dry_run=args.dry_run):
-                    print(f'  Step 5 sub-step {sub_label} failed, stopping.')
+                    print(f'  Step 6 sub-step {sub_label} failed, stopping.')
                     break
             continue
 
@@ -171,7 +199,7 @@ def main():
             continue
 
         ok = run(label, cmd, dry_run=args.dry_run)
-        if not ok and step_n in (1, 4):
+        if not ok and step_n in (1, 5):
             # Non-critical steps can fail without stopping sequence
             print(f'  Continuing despite step {step_n} non-zero exit.')
         elif not ok:
@@ -180,7 +208,9 @@ def main():
 
     print('\n' + '='*62)
     print('  Post-apply sequence complete.')
-    print('  Next: run status.py to verify, then loose_files apply when classify reaches 326/326.')
+    print('  Next: python verify_organized.py --summary')
+    print('        python verify_organized.py --collisions')
+    print('        python verify_organized.py --review')
     print('='*62)
 
 
