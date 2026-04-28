@@ -185,20 +185,20 @@ All notable changes to FileOrganizer will be documented in this file.
   Design Elements has files at level 2, not directories — so depth=2 produced 0 items). Replaced with
   dedicated `build_design_elements_index()` that correctly treats level-1 subfolders as items.
 
-### Known Issues (as of 2026-04-28)
+### Known Issues (as of 2026-04-28, session 2)
 - 5 trailing-space/long-path errors in `organize_errors_ae.json` — all 5 source paths now GONE from I:\;
   pending `--retry-errors --source ae` after AE apply (PID 22500) completes (will auto-skip + clear).
-- AE apply (PID 22500): `fast-typography-promo-25863265` (263-char path) and `light-streaks-logo-reveal`
-  will fail with old robocopy code; both will land in errors file; fixed via `--retry-errors` with _lp().
-- `_Review\After Effects - Other\` 5 remaining (keep-in-review): `Unknown LP Video 2`, `Unknown VH Template`,
-  `Unknown VH Template (2)`, `Unknown VH Template 2 (1)`, `Unknown VH Template 3` — insufficient context.
-- `_Review\Orphaned Documentation\` — 4 detached doc items, no parent packages.
-- loose_files classify: 152/326 batches done — pipeline still running (PID 22848).
+- AE apply (PID 22500): still running — robocopy-ing `I:\Unorganized\Social Media` (39K files, 175 GB).
+  Progress: ~65% by size as of last check. `post_apply_sequence.py` (PID 14644) watching for exit.
 - I:\Unorganized reclassification: 88 stock/design items routed into AE categories by AE pipeline;
-  `reclassify_unorg.py --analyze` + `--apply` ready to run after AE apply (PID 22500) exits.
-- merge_stock (PID 23164): copying `Stock_Footage` folder (358 GB at ~63 MB/s, ~95 min remaining).
+  `reclassify_unorg.py --analyze` + `--apply` blocked until AE apply exits.
+- merge_stock (PID 11432): copying `G:\Stock\Stock Footage & Photos` (robocopy PID 23164). Not yet done.
   2 Videohive AE items (VH-6185510, Parallax Footage Reel) in G:\Stock\Stock Footage & Photos will be
   moved by merge_stock; may land in Stock Footage category — verify post-apply.
+- loose_files classify: 238/326 batches done (72.4%) — pipeline running (PID 22848). Apply blocked.
+- `_Review\After Effects - Other\` 5 remaining: `Unknown LP Video 2`, `Unknown VH Template`,
+  `Unknown VH Template (2)`, `Unknown VH Template 2 (1)`, `Unknown VH Template 3` — insufficient context.
+- `_Review\Orphaned Documentation\` — 4 detached doc items, no parent packages.
 
 ### Added (session 2026-04-28 resumed — deduplication & tooling)
 - `fix_stock_ae_items.py` — Post-apply scanner for AE templates misrouted to non-AE categories.
@@ -221,7 +221,7 @@ All notable changes to FileOrganizer will be documented in this file.
   - `--scan`, `--analyze`, `--apply [--dry-run]` CLI flags.
   - Blocked: do NOT run while AE apply (PID 22500) is actively writing. Run after apply + retry-errors exits.
 
-### Fixed (session 2026-04-28 resumed)
+### Fixed (session 2026-04-28 resumed — deduplication & tooling)
 - `reclassify_unorg.py` — SQL LIKE double-backslash bug: `"I:\\\\Unorganized%"` produced SQL pattern
   `I:\\Unorganized%` (double backslash) matching 0 rows. Fixed to single-backslash Python string
   `"I:\\Unorganized%"` → SQL pattern `I:\Unorganized%` → matches 56 rows correctly.
@@ -229,6 +229,40 @@ All notable changes to FileOrganizer will be documented in this file.
   Prevents items already journaled in the DB from being re-processed across sessions. This eliminates
   future collision duplicates at the source level. Retroactive fix for 563 existing collision pairs:
   use `fix_duplicates.py --apply` after all active apply processes have exited.
+
+### Added (session 2026-04-28 continued — post-apply tooling)
+
+- `post_apply_sequence.py` — Automated cleanup orchestrator for when AE apply exits.
+  Waits for Python AE apply PID, then runs in sequence: retry-errors, reclassify_unorg, fix_duplicates,
+  fix_stock_ae_items (if merge_stock done). Flags: `--dry-run`, `--step N`, `--skip N`, `--no-wait`.
+
+- `verify_organized.py` — Post-apply library health reporter.
+  - `--summary`: fast 2-level shallow scan of all 108 category dirs (current: 41,815 files).
+  - `--collisions`: lists remaining `Name (N)` suffix files by category.
+  - `--missing`: DB entries whose destination file no longer exists on disk.
+  - `--orphans`: category dirs with no corresponding DB entries.
+  - `--review`: `_Review` breakdown with remediation suggestions.
+  - `--export FILE`: saves report as Markdown.
+
+### Fixed (session 2026-04-28 continued)
+
+- `status.py` — WMIC CSV field order bug: code unpacked `(node, cmd, pid, ppid)` but wmic
+  `/format:csv` outputs fields alphabetically `(CommandLine, ParentProcessId, ProcessId)`,
+  so `pid` was actually the parent PID and `ppid` was the process's own PID.
+  Result: dashboard showed parent PIDs (20864, 4984, 23868) instead of real process PIDs
+  (22500, 22848, 11432). Fixed: `_, cmd, _ppid, pid = parts`.
+
+- `organize_run.py` — file-mode (loose_files) destination filename was using AI `clean_name`
+  instead of original disk filename stem. This caused 213 files to share `clean_name = 'psd template'`
+  (plus 58 sharing `'photoshop template'`, 22 `'vector asset'`, etc.) → would have created
+  floods of `(N)` collision suffixes on apply. Fix: file-mode now uses `sanitize(Path(disk_name).stem)`
+  as destination filename stem; `clean_name` is still used for folder-mode (directory moves).
+
+- `organize_run.py` — `log()` UnicodeEncodeError for garbled-encoding filenames on Windows
+  cp1252 consoles. Fix: `line.encode('cp1252', errors='replace').decode('cp1252')` before print.
+  Log file still written with full UTF-8.
+
+
 
 
 
