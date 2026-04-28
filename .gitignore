@@ -15,6 +15,9 @@ design_unorg_index.json
 design_org_index.json
 loose_files_index.json
 
+# Session handoff notes (local only)
+SESSION_HANDOFF.md
+
 # Runtime/session artifacts
 organize_moves.db
 organize_run.log
