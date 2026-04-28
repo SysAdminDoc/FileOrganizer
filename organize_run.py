@@ -123,6 +123,26 @@ def journal_record(src: str, dest: str, disk_name: str,
     con.commit()
     con.close()
 
+def journal_src_exists(src: str) -> bool:
+    """Return True if this source path is already recorded as moved (not undone)."""
+    if not os.path.exists(JOURNAL_FILE):
+        return False
+    con = _journal_conn()
+    row = con.execute(
+        "SELECT 1 FROM moves WHERE src = ? AND undone_at IS NULL LIMIT 1", (src,)
+    ).fetchone()
+    con.close()
+    return row is not None
+
+def journal_src_set() -> set:
+    """Return a set of all src paths already moved (not undone) — for bulk skip checks."""
+    if not os.path.exists(JOURNAL_FILE):
+        return set()
+    con = _journal_conn()
+    rows = con.execute("SELECT src FROM moves WHERE undone_at IS NULL").fetchall()
+    con.close()
+    return {r[0] for r in rows}
+
 def undo_moves(last_n: int = 0, dry_run: bool = False) -> dict:
     """
     Reverse moves recorded in the journal.
@@ -489,6 +509,9 @@ def apply_moves(pairs: list, source_override: str,
     not_found  = []
     error_log  = []   # written to source-specific errors file on completion
 
+    # Preload already-moved src paths so we can skip duplicates without per-item DB hits
+    already_moved = journal_src_set()
+
     for item, org_entry in pairs:
         clean    = (item.get('clean_name') or item.get('name', '')).strip()
         category = normalize_category(item.get('category', 'After Effects - Other').strip())
@@ -513,7 +536,10 @@ def apply_moves(pairs: list, source_override: str,
             skipped += 1
             continue
 
-        # Low confidence → Review subfolder
+        # Skip if already journaled in DB — prevents duplicate moves across sessions
+        if src in already_moved:
+            skipped += 1
+            continue
         if conf < MIN_CONFIDENCE:
             eff_category = os.path.join(REVIEW_SUBDIR, category)
             low_conf += 1
