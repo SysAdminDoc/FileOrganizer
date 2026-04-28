@@ -273,18 +273,41 @@ All notable changes to FileOrganizer will be documented in this file.
   Fix: extracted the 5-line body out of `category_quick_counts()` and wrapped it in a proper
   `def detect_issues(path: Path) -> list[str]:` definition after that function.
 
+### Added (session 3 — I:\\ overflow support)
+
+- `organize_run.py` — `DEST_OVERFLOW = r'I:\Organized'` constant added. `get_dest_root()` now actually
+  uses the overflow: when `shutil.disk_usage('G:\\')` free space drops below `MIN_FREE_GB` (50 GB),
+  returns `I:\Organized` instead of `G:\Organized`. Also creates `I:\Organized` if it doesn't exist yet.
+  Previous implementation was a stub that always returned `DEST_PRIMARY` regardless of free space.
+- `organize_run.py` — `dest_root = get_dest_root()` moved from once-per-run to **per-item** inside the
+  `apply_moves()` loop. Logs `[OVERFLOW]` message on first transition. This allows a single long-running
+  apply process to automatically redirect mid-run when G:\\ hits the threshold — previously the dest_root
+  was fixed for the entire run even if disk filled up partway through.
+- `organize_run.py` — `retry_errors()` now recomputes destination using current `get_dest_root()` +
+  stored `category` / `clean_name` from error log, instead of reusing the stored `dest` path from the
+  failed attempt. This ensures disk-full retries automatically redirect to `I:\Organized` when G:\\ is
+  still below the threshold.
+- `verify_organized.py` — `ORGANIZED_OVERFLOW = Path(r'I:\Organized')` + `all_org_roots()` helper added.
+  All scan functions updated to iterate over both roots: `walk_organized()`, `category_quick_counts()`,
+  `report_summary()`, `report_collisions()`, `report_empty_categories()`. `category_quick_counts()` now
+  uses `+=` to accumulate across roots (same category name on both drives merged in the counter).
+  `report_collisions()` resolves category from whichever root the file belongs to.
+- `fix_stock_ae_items.py` — `ORGANIZED_OVERFLOW` + `_overflow_scan_dirs()` helper added. `DEFAULT_SCAN_DIRS`
+  automatically appends matching I:\\Organized subdirs (Stock Footage, Stock Photos, Print) when they exist.
+- `post_apply_sequence.py` — `ORGANIZED_OVERFLOW` + `all_org_roots()` added. Step 0 category merge now
+  iterates all roots — both `G:\Organized` and `I:\Organized` will have variant dirs merged to canonical names.
+
 ### Known Issues (as of session 3)
 
-- AE apply (PID 22500): still running — processing `I:\Unorganized` items (Sports + ~27 more folders).
-  Orchestrator (PID 18092) watching; steps 0–6 trigger automatically on exit.
-- loose_files classify: 277/326 batches (84.9%), PID 22848 still running.
-  Orchestrator step 4 polls for 326/326 before triggering apply.
-- merge_stock (PID 23164): copying `G:\Stock\Stock Footage & Photos` → `G:\Organized\Stock Footage - General`.
-  Orchestrator step 6 (fix_stock_ae_items) conditional on this exiting.
-- fix_duplicates / reclassify_unorg / loose_files apply: all blocked pending AE apply exit (handled by orchestrator).
-- `_Review\After Effects - Other\` 5 remaining items: insufficient context for automated resolution.
-- `_Review\Orphaned Documentation\` — 4 detached doc items, no parent packages.
-- 2 VH AE items (VH-6185510, Parallax Footage Reel) in G:\Stock may land in Stock Footage after merge_stock; verify post-apply with fix_stock_ae_items.
+- AE apply (PID 22500): **still running** — robocopy for `I:\Unorganized\Wedding` (223 GB, ~53 MB/s).
+  G:\\ free: ~342 GB and dropping. Will overflow to I:\Organized automatically around the Text Effects /
+  Social Media items (when G:\\ drops to 50 GB). Overflow items go to `organize_errors_ae.json` for the
+  *current* PID (old code loaded in memory); re-run `--retry-errors` after to redirect via new overflow.
+- loose_files classify: **100% complete** — 326/326 batches done. Orchestrator step 4 polls; apply pending.
+- merge_stock (PID 23164): still copying G:\\Stock → G:\\Organized\\Stock Footage - General.
+- fix_duplicates / reclassify_unorg / loose_files apply: all blocked pending AE apply exit (orchestrator).
+- `_Review\\After Effects - Other\\` 5 remaining items: insufficient context for automated resolution.
+- `_Review\\Orphaned Documentation\\` — 4 detached doc items, no parent packages.
 
 
 ### Added
