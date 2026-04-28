@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Computer Service Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Computer Service Flyer",
+    "confidence": 90,
+    "notes": "Flyer .psd file",
+    "_source_name": "Computer Service Flyer",
+    "_batch_index": 11160
+  },
+  {
+    "name": "CONCRET",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Concrete",
+    "confidence": 70,
+    "notes": ".psd file, likely a template or mockup",
+    "_source_name": "CONCRET",
+    "_batch_index": 11161
+  },
+  {
+    "name": "Concrete",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Concrete",
+    "confidence": 70,
+    "notes": ".psd file, likely a template or mockup",
+    "_source_name": "Concrete",
+    "_batch_index": 11162
+  },
+  {
+    "name": "Confetti Invitation Template 4x6",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Confetti Invitation Template 4x6",
+    "confidence": 95,
+    "notes": "Invitation template .psd",
+    "_source_name": "Confetti Invitation Template 4x6",
+    "_batch_index": 11163
+  },
+  {
+    "name": "Confetti Invitation Template 5x7",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Confetti Invitation Template 5x7",
+    "confidence": 95,
+    "notes": "Invitation template .psd",
+    "_source_name": "Confetti Invitation Template 5x7",
+    "_batch_index": 11164
+  },
+  {
+    "name": "Confetti",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Confetti",
+    "confidence": 70,
+    "notes": ".psd file, likely a template or overlay",
+    "_source_name": "Confetti",
+    "_batch_index": 11165
+  },
+  {
+    "name": "Construction_main",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Construction Main",
+    "confidence": 70,
+    "notes": ".psd file, likely a template",
+    "_source_name": "Construction_main",
+    "_batch_index": 11166
+  },
+  {
+    "name": "Contact Me #1",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact Me #1",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "Contact Me #1",
+    "_batch_index": 11167
+  },
+  {
+    "name": "Contact Me #2",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact Me #2",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "Contact Me #2",
+    "_batch_index": 11168
+  },
+  {
+    "name": "Contact Me #3",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact Me #3",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "Contact Me #3",
+    "_batch_index": 11169
+  },
+  {
+    "name": "Contact Us #1",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact Us #1",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "Contact Us #1",
+    "_batch_index": 11170
+  },
+  {
+    "name": "Contact Us #2",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact Us #2",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "Contact Us #2",
+    "_batch_index": 11171
+  },
+  {
+    "name": "Contact Us #3",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact Us #3",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "Contact Us #3",
+    "_batch_index": 11172
+  },
+  {
+    "name": "Contact-Us",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact Us",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "Contact-Us",
+    "_batch_index": 11173
+  },
+  {
+    "name": "contact",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "contact",
+    "_batch_index": 11174
+  },
+  {
+    "name": "Contact_2",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contact 2",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "Contact_2",
+    "_batch_index": 11175
+  },
+  {
+    "name": "contacts",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contacts",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "contacts",
+    "_batch_index": 11176
+  },
+  {
+    "name": "contacts_2",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Contacts 2",
+    "confidence": 75,
+    "notes": ".psd file, likely a social media graphic",
+    "_source_name": "contacts_2",
+    "_batch_index": 11177
+  },
+  {
+    "name": "Contemporary Portrait 02 - 01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 01",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 01",
+    "_batch_index": 11178
+  },
+  {
+    "name": "Contemporary Portrait 02 - 02",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 02",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 02",
+    "_batch_index": 11179
+  },
+  {
+    "name": "Contemporary Portrait 02 - 03",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 03",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 03",
+    "_batch_index": 11180
+  },
+  {
+    "name": "Contemporary Portrait 02 - 04",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 04",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 04",
+    "_batch_index": 11181
+  },
+  {
+    "name": "Contemporary Portrait 02 - 05",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 05",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 05",
+    "_batch_index": 11182
+  },
+  {
+    "name": "Contemporary Portrait 02 - 06",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 06",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 06",
+    "_batch_index": 11183
+  },
+  {
+    "name": "Contemporary Portrait 02 - 07",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 07",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 07",
+    "_batch_index": 11184
+  },
+  {
+    "name": "Contemporary Portrait 02 - 08",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 08",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 08",
+    "_batch_index": 11185
+  },
+  {
+    "name": "Contemporary Portrait 02 - 09",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 09",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 09",
+    "_batch_index": 11186
+  },
+  {
+    "name": "Contemporary Portrait 02 - 10",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contemporary Portrait 02 - 10",
+    "confidence": 80,
+    "notes": ".psd file, likely a portrait template or mockup",
+    "_source_name": "Contemporary Portrait 02 - 10",
+    "_batch_index": 11187
+  },
+  {
+    "name": "content(10)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Content 10",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "content(10)",
+    "_batch_index": 11188
+  },
+  {
+    "name": "content(6)(1)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Content 6 (1)",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "content(6)(1)",
+    "_batch_index": 11189
+  },
+  {
+    "name": "content(6)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Content 6",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "content(6)",
+    "_batch_index": 11190
+  },
+  {
+    "name": "contourmapping_idkit_2_envelope_back_8.5x 4.13",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Contour Mapping ID Kit 2 Envelope Back",
+    "confidence": 95,
+    "notes": "Envelope mockup .psd",
+    "_source_name": "contourmapping_idkit_2_envelope_back_8.5x 4.13",
+    "_batch_index": 11191
+  },
+  {
+    "name": "contourmapping_idkit_2_envelope_front_9.5x 4.13",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Contour Mapping ID Kit 2 Envelope Front",
+    "confidence": 95,
+    "notes": "Envelope mockup .psd",
+    "_source_name": "contourmapping_idkit_2_envelope_front_9.5x 4.13",
+    "_batch_index": 11192
+  },
+  {
+    "name": "contourmapping_idkit_2_letterhead_back_8.5x11",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Contour Mapping ID Kit 2 Letterhead Back",
+    "confidence": 95,
+    "notes": "Letterhead mockup .psd",
+    "_source_name": "contourmapping_idkit_2_letterhead_back_8.5x11",
+    "_batch_index": 11193
+  },
+  {
+    "name": "contourmapping_idkit_2_letterhead_front_8.5x11",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Contour Mapping ID Kit 2 Letterhead Front",
+    "confidence": 95,
+    "notes": "Letterhead mockup .psd",
+    "_source_name": "contourmapping_idkit_2_letterhead_front_8.5x11",
+    "_batch_index": 11194
+  },
+  {
+    "name": "Contractors_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contractors 2",
+    "confidence": 70,
+    "notes": ".psd file, likely a template",
+    "_source_name": "Contractors_2",
+    "_batch_index": 11195
+  },
+  {
+    "name": "copyriter_1",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Copywriter 1",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "copyriter_1",
+    "_batch_index": 11196
+  },
+  {
+    "name": "Corner-PSD-Shapes",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Corner PSD Shapes",
+    "confidence": 75,
+    "notes": "Shapes likely used as brushes or overlays in .psd",
+    "_source_name": "Corner-PSD-Shapes",
+    "_batch_index": 11197
+  },
+  {
+    "name": "Coroana cu trandafiri 14590",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Crown with Roses 14590",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "Coroana cu trandafiri 14590",
+    "_batch_index": 11198
+  },
+  {
+    "name": "Coroana cu trandafiri 14592",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Crown with Roses 14592",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "Coroana cu trandafiri 14592",
+    "_batch_index": 11199
+  },
+  {
+    "name": "Coroana cu trandafiri 14595",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Crown with Roses 14595",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "Coroana cu trandafiri 14595",
+    "_batch_index": 11200
+  },
+  {
+    "name": "Coroana cu trandafiri 14596",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Crown with Roses 14596",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "Coroana cu trandafiri 14596",
+    "_batch_index": 11201
+  },
+  {
+    "name": "Coroana cu trandafiri 14597",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Crown with Roses 14597",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "Coroana cu trandafiri 14597",
+    "_batch_index": 11202
+  },
+  {
+    "name": "Corona virus 2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Corona Virus 2",
+    "confidence": 70,
+    "notes": ".psd file, likely a template or graphic",
+    "_source_name": "Corona virus 2",
+    "_batch_index": 11203
+  },
+  {
+    "name": "Corona Virus 3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Corona Virus 3",
+    "confidence": 70,
+    "notes": ".psd file, likely a template or graphic",
+    "_source_name": "Corona Virus 3",
+    "_batch_index": 11204
+  },
+  {
+    "name": "Corona Virus 4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Corona Virus 4",
+    "confidence": 70,
+    "notes": ".psd file, likely a template or graphic",
+    "_source_name": "Corona Virus 4",
+    "_batch_index": 11205
+  },
+  {
+    "name": "Corona Virus 7",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Corona Virus 7",
+    "confidence": 70,
+    "notes": ".psd file, likely a template or graphic",
+    "_source_name": "Corona Virus 7",
+    "_batch_index": 11206
+  },
+  {
+    "name": "Corporate Business Flyer (Purple color)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Business Flyer Purple",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Business Flyer (Purple color)",
+    "_batch_index": 11207
+  },
+  {
+    "name": "Corporate Business Flyer (Sky color)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Business Flyer Sky",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Business Flyer (Sky color)",
+    "_batch_index": 11208
+  },
+  {
+    "name": "Corporate Business Flyer (Yellow color)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Business Flyer Yellow",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Business Flyer (Yellow color)",
+    "_batch_index": 11209
+  },
+  {
+    "name": "Corporate Flyer 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer 1",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer 1",
+    "_batch_index": 11210
+  },
+  {
+    "name": "Corporate Flyer 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer 2",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer 2",
+    "_batch_index": 11211
+  },
+  {
+    "name": "Corporate Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer",
+    "_batch_index": 11212
+  },
+  {
+    "name": "Corporate Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer 2",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer_2",
+    "_batch_index": 11213
+  },
+  {
+    "name": "Corporate Flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer 3",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer_3",
+    "_batch_index": 11214
+  },
+  {
+    "name": "Corporate Flyer_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer 4",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer_4",
+    "_batch_index": 11215
+  },
+  {
+    "name": "Corporate Flyer_5",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer 5",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer_5",
+    "_batch_index": 11216
+  },
+  {
+    "name": "Corporate Flyer_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer 6",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer_6",
+    "_batch_index": 11217
+  },
+  {
+    "name": "Corporate Flyer_7",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer 7",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer_7",
+    "_batch_index": 11218
+  },
+  {
+    "name": "Corporate Flyer_Blue",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer Blue",
+    "confidence": 95,
+    "notes": "Flyer .psd file",
+    "_source_name": "Corporate Flyer_Blue",
+    "_batch_index": 11219
+  }
+]

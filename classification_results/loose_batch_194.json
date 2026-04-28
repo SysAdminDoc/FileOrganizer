@@ -1,0 +1,542 @@
+[
+  {
+    "name": "creative psd flyer template cm_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Creative PSD Flyer Template",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "creative psd flyer template cm_2",
+    "_batch_index": 11580
+  },
+  {
+    "name": "Creative_Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Creative Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Creative_Flyer",
+    "_batch_index": 11581
+  },
+  {
+    "name": "CreativeMarket - 10 Bright Film Lightroom Presets 5857426",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "10 Bright Film Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate files",
+    "_source_name": "CreativeMarket - 10 Bright Film Lightroom Presets 5857426",
+    "_batch_index": 11582
+  },
+  {
+    "name": "CreativeMarket - 10 Clean Film Lightroom Presets 5857420",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "10 Clean Film Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate files",
+    "_source_name": "CreativeMarket - 10 Clean Film Lightroom Presets 5857420",
+    "_batch_index": 11583
+  },
+  {
+    "name": "CreativeMarket - 10 Film Look Lightroom Presets 5857419",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "10 Film Look Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate files",
+    "_source_name": "CreativeMarket - 10 Film Look Lightroom Presets 5857419",
+    "_batch_index": 11584
+  },
+  {
+    "name": "CreativeMarket - 10 Food Lightroom Presets 5808533",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "10 Food Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate files",
+    "_source_name": "CreativeMarket - 10 Food Lightroom Presets 5808533",
+    "_batch_index": 11585
+  },
+  {
+    "name": "CreativeMarket - 10 Matte Film Lightroom Presets 5857413",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "10 Matte Film Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate files",
+    "_source_name": "CreativeMarket - 10 Matte Film Lightroom Presets 5857413",
+    "_batch_index": 11586
+  },
+  {
+    "name": "CreativeMarket - 10 Retro Film Lightroom Presets 5787567",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "10 Retro Film Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate files",
+    "_source_name": "CreativeMarket - 10 Retro Film Lightroom Presets 5787567",
+    "_batch_index": 11587
+  },
+  {
+    "name": "CreativeMarket - 103. Almost HDR Presets 5158965",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "103 Almost HDR Presets",
+    "confidence": 95,
+    "notes": "Contains .dng and .xmp presets",
+    "_source_name": "CreativeMarket - 103. Almost HDR Presets 5158965",
+    "_batch_index": 11588
+  },
+  {
+    "name": "CreativeMarket - 12 x Lightroom Minimalistic Nude 5962624",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "12 x Lightroom Minimalistic Nude",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate and .xmp",
+    "_source_name": "CreativeMarket - 12 x Lightroom Minimalistic Nude 5962624",
+    "_batch_index": 11589
+  },
+  {
+    "name": "CreativeMarket - 12 x Lightroom Presets Wild And Free 5962700",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "12 x Lightroom Presets Wild And Free",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate and .xmp",
+    "_source_name": "CreativeMarket - 12 x Lightroom Presets Wild And Free 5962700",
+    "_batch_index": 11590
+  },
+  {
+    "name": "CreativeMarket - 30 x Lightroom Presets, Iceland 5962569",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "30 x Lightroom Presets Iceland",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate",
+    "_source_name": "CreativeMarket - 30 x Lightroom Presets, Iceland 5962569",
+    "_batch_index": 11591
+  },
+  {
+    "name": "CreativeMarket - 4 x Lightroom Presets Rustic Newborn 5962692",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "4 x Lightroom Presets Rustic Newborn",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate and .xmp",
+    "_source_name": "CreativeMarket - 4 x Lightroom Presets Rustic Newborn 5962692",
+    "_batch_index": 11592
+  },
+  {
+    "name": "CreativeMarket - 5 Disney Lifestyle Presets 5804393",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "5 Disney Lifestyle Presets",
+    "confidence": 95,
+    "notes": "Contains .dng and .xmp",
+    "_source_name": "CreativeMarket - 5 Disney Lifestyle Presets 5804393",
+    "_batch_index": 11593
+  },
+  {
+    "name": "CreativeMarket - 81 Ultimate Tune Lightroom Presets 5758211",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "81 Ultimate Tune Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .dng and .xmp",
+    "_source_name": "CreativeMarket - 81 Ultimate Tune Lightroom Presets 5758211",
+    "_batch_index": 11594
+  },
+  {
+    "name": "CreativeMarket - Art Canvas Painting Photoshop Action 5758027",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Art Canvas Painting Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn, .abr, .pat",
+    "_source_name": "CreativeMarket - Art Canvas Painting Photoshop Action 5758027",
+    "_batch_index": 11595
+  },
+  {
+    "name": "CreativeMarket - Ballpoint Pen Sketch Photo Effect 5988452",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Ballpoint Pen Sketch Photo Effect",
+    "confidence": 90,
+    "notes": "PSD effect file",
+    "_source_name": "CreativeMarket - Ballpoint Pen Sketch Photo Effect 5988452",
+    "_batch_index": 11596
+  },
+  {
+    "name": "CreativeMarket - Black Lightroom Preset Collection 5832681",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Black Lightroom Preset Collection",
+    "confidence": 95,
+    "notes": "Contains .dng and .xmp",
+    "_source_name": "CreativeMarket - Black Lightroom Preset Collection 5832681",
+    "_batch_index": 11597
+  },
+  {
+    "name": "CreativeMarket - Button Pins PSD Mockups Set 5922799",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Button Pins PSD Mockups Set",
+    "confidence": 90,
+    "notes": "PSD mockup set for pins",
+    "_source_name": "CreativeMarket - Button Pins PSD Mockups Set 5922799",
+    "_batch_index": 11598
+  },
+  {
+    "name": "CreativeMarket - Color Splash Effect Photoshop Action 5417413",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Color Splash Effect Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn, .abr, .pat",
+    "_source_name": "CreativeMarket - Color Splash Effect Photoshop Action 5417413",
+    "_batch_index": 11599
+  },
+  {
+    "name": "CreativeMarket - Creative Sketch Photoshop Action 5192355",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Creative Sketch Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn",
+    "_source_name": "CreativeMarket - Creative Sketch Photoshop Action 5192355",
+    "_batch_index": 11600
+  },
+  {
+    "name": "CreativeMarket - Dental Floss Box Mockup Set 6005000",
+    "category": "Mockups - Packaging",
+    "clean_name": "Dental Floss Box Mockup Set",
+    "confidence": 95,
+    "notes": "PSD mockup for packaging",
+    "_source_name": "CreativeMarket - Dental Floss Box Mockup Set 6005000",
+    "_batch_index": 11601
+  },
+  {
+    "name": "CreativeMarket - Digital Mix Art Photoshop Action 5794990",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Digital Mix Art Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn, .pat",
+    "_source_name": "CreativeMarket - Digital Mix Art Photoshop Action 5794990",
+    "_batch_index": 11602
+  },
+  {
+    "name": "CreativeMarket - Dot Effect Photoshop Action 5417408",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Dot Effect Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn, .pat",
+    "_source_name": "CreativeMarket - Dot Effect Photoshop Action 5417408",
+    "_batch_index": 11603
+  },
+  {
+    "name": "CreativeMarket - ENDURE MOBILE Lightroom Presets 5933009",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "ENDURE MOBILE Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .dng",
+    "_source_name": "CreativeMarket - ENDURE MOBILE Lightroom Presets 5933009",
+    "_batch_index": 11604
+  },
+  {
+    "name": "CreativeMarket - Espresso Presets, Photoshop actions 5689572",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Espresso Presets Photoshop actions",
+    "confidence": 90,
+    "notes": "Contains .cube LUTs and .atn actions",
+    "_source_name": "CreativeMarket - Espresso Presets, Photoshop actions 5689572",
+    "_batch_index": 11605
+  },
+  {
+    "name": "CreativeMarket - Evergreen Lightroom Mobile Presets 5017153",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Evergreen Lightroom Mobile Presets",
+    "confidence": 95,
+    "notes": "Contains .dng",
+    "_source_name": "CreativeMarket - Evergreen Lightroom Mobile Presets 5017153",
+    "_batch_index": 11606
+  },
+  {
+    "name": "CreativeMarket - EVERGREEN Lightroom Presets 5756318",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "EVERGREEN Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .dng, .lrtemplate",
+    "_source_name": "CreativeMarket - EVERGREEN Lightroom Presets 5756318",
+    "_batch_index": 11607
+  },
+  {
+    "name": "CreativeMarket - FASHION Lightroom Presets 5925770",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "FASHION Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate, .xmp, .cube",
+    "_source_name": "CreativeMarket - FASHION Lightroom Presets 5925770",
+    "_batch_index": 11608
+  },
+  {
+    "name": "CreativeMarket - Gentle Tones Actions for Photoshop 4848118",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Gentle Tones Actions for Photoshop",
+    "confidence": 95,
+    "notes": "Contains .atn",
+    "_source_name": "CreativeMarket - Gentle Tones Actions for Photoshop 4848118",
+    "_batch_index": 11609
+  },
+  {
+    "name": "CreativeMarket - Golden Lightroom Presets 5805936",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Golden Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .xmp",
+    "_source_name": "CreativeMarket - Golden Lightroom Presets 5805936",
+    "_batch_index": 11610
+  },
+  {
+    "name": "CreativeMarket - Hand Sketch Drawing Photoshop Action 5928727",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Hand Sketch Drawing Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn, .pat",
+    "_source_name": "CreativeMarket - Hand Sketch Drawing Photoshop Action 5928727",
+    "_batch_index": 11611
+  },
+  {
+    "name": "CreativeMarket - Juice Bottle Mockup 5734868",
+    "category": "Mockups - Packaging",
+    "clean_name": "Juice Bottle Mockup",
+    "confidence": 95,
+    "notes": "PSD mockup for bottle packaging",
+    "_source_name": "CreativeMarket - Juice Bottle Mockup 5734868",
+    "_batch_index": 11612
+  },
+  {
+    "name": "CreativeMarket - Kids Socks with Label Mockup Set 5909806",
+    "category": "Mockups - Apparel",
+    "clean_name": "Kids Socks with Label Mockup Set",
+    "confidence": 95,
+    "notes": "PSD mockup for apparel",
+    "_source_name": "CreativeMarket - Kids Socks with Label Mockup Set 5909806",
+    "_batch_index": 11613
+  },
+  {
+    "name": "CreativeMarket - Matte Fax Paper Roll Mockup Set 6005199",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Matte Fax Paper Roll Mockup Set",
+    "confidence": 90,
+    "notes": "PSD mockup for paper/print",
+    "_source_name": "CreativeMarket - Matte Fax Paper Roll Mockup Set 6005199",
+    "_batch_index": 11614
+  },
+  {
+    "name": "CreativeMarket - Metallic Statues Photoshop Action 5930706",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Metallic Statues Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn",
+    "_source_name": "CreativeMarket - Metallic Statues Photoshop Action 5930706",
+    "_batch_index": 11615
+  },
+  {
+    "name": "CreativeMarket - Moody Lifestyle Lightroom presets 5953558",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Moody Lifestyle Lightroom presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate, .xmp",
+    "_source_name": "CreativeMarket - Moody Lifestyle Lightroom presets 5953558",
+    "_batch_index": 11616
+  },
+  {
+    "name": "CreativeMarket - Moody Pet Photography Kit Presets 5822617",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Moody Pet Photography Kit Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate, .xmp",
+    "_source_name": "CreativeMarket - Moody Pet Photography Kit Presets 5822617",
+    "_batch_index": 11617
+  },
+  {
+    "name": "CreativeMarket - Mother Mobile - PC Lightroom Presets 5925668",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Mother Mobile PC Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .dng, .lrtemplate",
+    "_source_name": "CreativeMarket - Mother Mobile - PC Lightroom Presets 5925668",
+    "_batch_index": 11618
+  },
+  {
+    "name": "Creativemarket - MultiDup - Batch Duplication in PS",
+    "category": "Plugins & Extensions",
+    "clean_name": "MultiDup Batch Duplication in PS",
+    "confidence": 85,
+    "notes": "Likely a Photoshop plugin/script",
+    "_source_name": "Creativemarket - MultiDup - Batch Duplication in PS",
+    "_batch_index": 11619
+  },
+  {
+    "name": "CreativeMarket - Neutral Film Grain Lightroom Presets 5778808",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Neutral Film Grain Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate, .xmp",
+    "_source_name": "CreativeMarket - Neutral Film Grain Lightroom Presets 5778808",
+    "_batch_index": 11620
+  },
+  {
+    "name": "CreativeMarket - Orange Light Presets 5698212",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Orange Light Presets",
+    "confidence": 90,
+    "notes": "Contains .cube LUTs and .atn actions",
+    "_source_name": "CreativeMarket - Orange Light Presets 5698212",
+    "_batch_index": 11621
+  },
+  {
+    "name": "CreativeMarket - Orange Peach Presets 5698213",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Orange Peach Presets",
+    "confidence": 90,
+    "notes": "Contains .cube LUTs and .atn actions",
+    "_source_name": "CreativeMarket - Orange Peach Presets 5698213",
+    "_batch_index": 11622
+  },
+  {
+    "name": "CreativeMarket - PARADISE Mobile Lightroom Presets 5712593",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "PARADISE Mobile Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .dng",
+    "_source_name": "CreativeMarket - PARADISE Mobile Lightroom Presets 5712593",
+    "_batch_index": 11623
+  },
+  {
+    "name": "CreativeMarket - Paris Lightroom Presets 5953568",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Paris Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate, .xmp",
+    "_source_name": "CreativeMarket - Paris Lightroom Presets 5953568",
+    "_batch_index": 11624
+  },
+  {
+    "name": "CreativeMarket - Peach & Gold - Lightroom Presets 5928057",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Peach & Gold Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .dng",
+    "_source_name": "CreativeMarket - Peach & Gold - Lightroom Presets 5928057",
+    "_batch_index": 11625
+  },
+  {
+    "name": "CreativeMarket - Pentax Digital Filters 5773069",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Pentax Digital Filters",
+    "confidence": 90,
+    "notes": "Contains .xmp presets",
+    "_source_name": "CreativeMarket - Pentax Digital Filters 5773069",
+    "_batch_index": 11626
+  },
+  {
+    "name": "CreativeMarket - Pets Lightroom Presets 5953585",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Pets Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate, .xmp",
+    "_source_name": "CreativeMarket - Pets Lightroom Presets 5953585",
+    "_batch_index": 11627
+  },
+  {
+    "name": "CreativeMarket - Pop Art Photoshop Template 5790110",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pop Art Photoshop Template",
+    "confidence": 90,
+    "notes": "PSD template",
+    "_source_name": "CreativeMarket - Pop Art Photoshop Template 5790110",
+    "_batch_index": 11628
+  },
+  {
+    "name": "CreativeMarket - Professional HDR Actions for Ps 4845232",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Professional HDR Actions for Ps",
+    "confidence": 95,
+    "notes": "Contains .atn",
+    "_source_name": "CreativeMarket - Professional HDR Actions for Ps 4845232",
+    "_batch_index": 11629
+  },
+  {
+    "name": "CreativeMarket - Reusable Water Bottle MockUp 5750685",
+    "category": "Mockups - Packaging",
+    "clean_name": "Reusable Water Bottle MockUp",
+    "confidence": 95,
+    "notes": "PSD mockup for bottle packaging",
+    "_source_name": "CreativeMarket - Reusable Water Bottle MockUp 5750685",
+    "_batch_index": 11630
+  },
+  {
+    "name": "CreativeMarket - Rich Moody Lightroom Presets 5953836",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Rich Moody Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate, .xmp",
+    "_source_name": "CreativeMarket - Rich Moody Lightroom Presets 5953836",
+    "_batch_index": 11631
+  },
+  {
+    "name": "CreativeMarket - Romantic Cinema Action for Photoshop 4842757",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Romantic Cinema Action for Photoshop",
+    "confidence": 95,
+    "notes": "Contains .atn",
+    "_source_name": "CreativeMarket - Romantic Cinema Action for Photoshop 4842757",
+    "_batch_index": 11632
+  },
+  {
+    "name": "CreativeMarket - ROSE GOLD Mobile Lightroom Preset 5832792",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "ROSE GOLD Mobile Lightroom Preset",
+    "confidence": 95,
+    "notes": "Contains .dng",
+    "_source_name": "CreativeMarket - ROSE GOLD Mobile Lightroom Preset 5832792",
+    "_batch_index": 11633
+  },
+  {
+    "name": "CreativeMarket - SACHET Mockup 5422480",
+    "category": "Mockups - Packaging",
+    "clean_name": "SACHET Mockup",
+    "confidence": 95,
+    "notes": "PSD mockup for sachet packaging",
+    "_source_name": "CreativeMarket - SACHET Mockup 5422480",
+    "_batch_index": 11634
+  },
+  {
+    "name": "CreativeMarket - Sketching Drawing Photoshop Action 5737073",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Sketching Drawing Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn, .abr, .pat",
+    "_source_name": "CreativeMarket - Sketching Drawing Photoshop Action 5737073",
+    "_batch_index": 11635
+  },
+  {
+    "name": "CreativeMarket - SO MATTE - Lightroom Presets 5769101",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "SO MATTE Lightroom Presets",
+    "confidence": 95,
+    "notes": "Contains .lrtemplate, .xmp",
+    "_source_name": "CreativeMarket - SO MATTE - Lightroom Presets 5769101",
+    "_batch_index": 11636
+  },
+  {
+    "name": "CreativeMarket - Super Art Photoshop Action 5922257",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Super Art Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn, .pat",
+    "_source_name": "CreativeMarket - Super Art Photoshop Action 5922257",
+    "_batch_index": 11637
+  },
+  {
+    "name": "CreativeMarket - Ultra Realistic Tattoo Photoshop Act 5830201",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Ultra Realistic Tattoo Photoshop Action",
+    "confidence": 95,
+    "notes": "Contains .atn",
+    "_source_name": "CreativeMarket - Ultra Realistic Tattoo Photoshop Act 5830201",
+    "_batch_index": 11638
+  },
+  {
+    "name": "CreativeMarket - Vienna Lightroom Preset Pack 5759980",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Vienna Lightroom Preset Pack",
+    "confidence": 95,
+    "notes": "Contains .dng, .xmp",
+    "_source_name": "CreativeMarket - Vienna Lightroom Preset Pack 5759980",
+    "_batch_index": 11639
+  }
+]
