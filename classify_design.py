@@ -574,6 +574,35 @@ def cmd_show_cats():
     for c in CATEGORIES:
         print(f"  {c}")
 
+def _try_marketplace_enrich(batch_items: list[dict]) -> dict[int, dict]:
+    """Pre-classify items that have a known marketplace ID.
+
+    Returns {position_in_batch: enriched_result_dict} for items that were
+    resolved with confidence >= 95.  Items not in the returned dict still need
+    AI classification.
+    """
+    try:
+        from marketplace_enrich import enrich as _enrich
+    except ImportError:
+        return {}
+
+    pre: dict[int, dict] = {}
+    for idx, item in enumerate(batch_items):
+        name = item.get('name', '')
+        result = _enrich(name)
+        if result and result.get('category') and result.get('confidence', 0) >= 95:
+            pre[idx] = {
+                'name':             name,
+                'category':         result['category'],
+                'clean_name':       result.get('title', name),
+                'confidence':       result['confidence'],
+                'notes':            (f'marketplace_enrich: {result["platform"]}:{result["item_id"]}'),
+                '_source_name':     name,
+                '_marketplace_id':  f'{result["platform"]}:{result["item_id"]}',
+            }
+    return pre
+
+
 def cmd_run(index: list[dict], only_batch: int = 0):
     if not DEEPSEEK_API_KEY:
         print("ERROR: DEEPSEEK_API_KEY not set in environment.")
@@ -595,28 +624,43 @@ def cmd_run(index: list[dict], only_batch: int = 0):
         ts = datetime.now().strftime('%H:%M:%S')
         print(f"[{ts}] Batch {n:03d}/{num_batches}  items {start+1}-{end}  ({len(batch_items)} items)")
 
-        prompt = build_prompt(batch_items)
+        # Stage 2: marketplace ID pre-classification (zero AI cost for known items)
+        pre_enriched = _try_marketplace_enrich(batch_items)
+        if pre_enriched:
+            print(f"  Marketplace pre-classified {len(pre_enriched)} item(s) — skipping AI for those")
 
-        try:
-            results = call_deepseek(prompt)
-        except Exception as e:
-            print(f"  ERROR calling DeepSeek: {e}")
-            print("  Saving partial error marker and continuing...")
-            batch_file(n).write_text(
-                json.dumps([{"error": str(e), "batch": n}], indent=2),
-                encoding='utf-8'
-            )
-            continue
+        # Build AI prompt only for items NOT pre-enriched
+        ai_items  = [(i, it) for i, it in enumerate(batch_items) if i not in pre_enriched]
+        ai_results: list[dict] = []
+        if ai_items:
+            ai_only_batch = [it for _, it in ai_items]
+            prompt = build_prompt(ai_only_batch)
+            try:
+                ai_results = call_deepseek(prompt)
+            except Exception as e:
+                print(f"  ERROR calling DeepSeek: {e}")
+                print("  Saving partial error marker and continuing...")
+                batch_file(n).write_text(
+                    json.dumps([{"error": str(e), "batch": n}], indent=2),
+                    encoding='utf-8'
+                )
+                continue
 
-        # Validate count
-        if len(results) != len(batch_items):
-            print(f"  WARNING: expected {len(batch_items)} results, got {len(results)}")
+            if len(ai_results) != len(ai_items):
+                print(f"  WARNING: expected {len(ai_items)} AI results, got {len(ai_results)}")
 
-        # Annotate with source name for audit
-        for i, res in enumerate(results):
-            if i < len(batch_items):
-                res['_source_name'] = batch_items[i]['name']
-                res['_batch_index'] = start + i
+        # Merge back in original order, maintaining position-based index mapping
+        results: list[dict] = []
+        ai_cursor = 0
+        for idx, item in enumerate(batch_items):
+            if idx in pre_enriched:
+                res = dict(pre_enriched[idx])
+            else:
+                res = ai_results[ai_cursor] if ai_cursor < len(ai_results) else {}
+                ai_cursor += 1
+            res['_source_name'] = item['name']
+            res['_batch_index'] = start + idx
+            results.append(res)
 
         batch_file(n).write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding='utf-8')
         print(f"  Saved {batch_file(n).name}")
@@ -626,7 +670,8 @@ def cmd_run(index: list[dict], only_batch: int = 0):
             cat = res.get('category', '?')
             nm = res.get('clean_name', res.get('name', '?'))
             conf = res.get('confidence', '?')
-            print(f"    [{conf}%] {nm}  ->  {cat}")
+            src = res.get('_marketplace_id', '')
+            print(f"    [{conf}%] {nm}  ->  {cat}{' [MKT]' if src else ''}")
 
     print("\nAll done.")
     cmd_stats(index)
