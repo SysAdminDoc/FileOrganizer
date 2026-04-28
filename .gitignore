@@ -18,6 +18,8 @@ loose_files_index.json
 # Runtime/session artifacts
 organize_moves.db
 organize_run.log
+organize_plans/
+organize_reports/
 organize_errors.json
 organize_errors_*.json
 marketplace_cache.json
