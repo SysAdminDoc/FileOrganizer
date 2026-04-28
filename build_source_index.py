@@ -5,14 +5,16 @@ build_source_index.py — Build index files for new classification sources.
 Usage:
     python build_source_index.py --source design_org
     python build_source_index.py --source loose_files
+    python build_source_index.py --source design_elements
 """
 import os, sys, json, argparse
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent
 
-DESIGN_ORG_ROOT  = r'G:\Design Organized'
-LOOSE_FILES_ROOT = r'G:\Design Unorganized'
+DESIGN_ORG_ROOT     = r'G:\Design Organized'
+LOOSE_FILES_ROOT    = r'G:\Design Unorganized'
+DESIGN_ELEMENTS_ROOT = r'G:\Design Organized\Design Elements'
 
 LOOSE_EXTS = frozenset([
     '.psd', '.psb', '.ai', '.eps', '.aep', '.prproj', '.mogrt',
@@ -26,8 +28,8 @@ LOOSE_EXTS = frozenset([
 # depth=2 means subdirs-of-subdirs are asset dirs (subcats sit at depth 1)
 BRANCHES = {
     'After Effects Organized': {'depth': 1, 'legacy': 'After Effects Organized'},
-    'Design Elements':         {'depth': 2, 'legacy': None},   # subcat name used
     'Flyers':                  {'depth': 1, 'legacy': 'Flyers'},
+    # Design Elements excluded here — handled by build_design_elements_index()
 }
 
 
@@ -95,9 +97,58 @@ def build_loose_files_index() -> list[dict]:
     return items
 
 
+def build_design_elements_index() -> list[dict]:
+    """Index G:\\Design Organized\\Design Elements\\ as directory items.
+
+    Each non-empty first-level subfolder becomes one index entry.  Files inside
+    each subfolder are profiled (extension counts) so classify_design.py can use
+    them as classification signals alongside the subfolder name.
+
+    Empty subfolders are skipped.  The subfolder name is stored as legacy_category
+    so the classifier receives a strong domain hint identical to design_org items.
+    """
+    root = Path(DESIGN_ELEMENTS_ROOT)
+    if not root.exists():
+        print(f"ERROR: {DESIGN_ELEMENTS_ROOT!r} not found.")
+        sys.exit(1)
+
+    from collections import Counter
+
+    items = []
+    for cat_dir in sorted(root.iterdir()):
+        if not cat_dir.is_dir():
+            continue
+        # Profile files in this subfolder (non-recursive for speed)
+        ext_counts: Counter = Counter()
+        file_count = 0
+        for f in cat_dir.iterdir():
+            if f.is_file():
+                ext_counts[f.suffix.lower()] += 1
+                file_count += 1
+
+        if file_count == 0:
+            print(f"  [SKIP EMPTY] {cat_dir.name}")
+            continue
+
+        dominant = ext_counts.most_common(1)[0][0] if ext_counts else ''
+        items.append({
+            'name':            cat_dir.name,
+            'path':            str(cat_dir),
+            'legacy_category': cat_dir.name,   # strong category hint
+            'file_count':      file_count,
+            'dominant_ext':    dominant,
+            'ext_profile':     dict(ext_counts.most_common(5)),
+            'is_file_batch':   True,            # flag: contains loose files, not subdirs
+        })
+        print(f"  {cat_dir.name}: {file_count} files  (dominant: {dominant})")
+
+    return items
+
+
 def main():
     ap = argparse.ArgumentParser(description='Build index files for classification sources')
-    ap.add_argument('--source', required=True, choices=['design_org', 'loose_files'],
+    ap.add_argument('--source', required=True,
+                    choices=['design_org', 'loose_files', 'design_elements'],
                     help='Which source to index')
     args = ap.parse_args()
 
@@ -115,6 +166,14 @@ def main():
         out_path.write_text(json.dumps(items, indent=2, ensure_ascii=False), encoding='utf-8')
         print(f"loose_files_index.json: {len(items)} items saved to {out_path}")
 
+    elif args.source == 'design_elements':
+        print(f"Scanning {DESIGN_ELEMENTS_ROOT} ...")
+        items = build_design_elements_index()
+        out_path = SCRIPT_DIR / 'design_elements_index.json'
+        out_path.write_text(json.dumps(items, indent=2, ensure_ascii=False), encoding='utf-8')
+        print(f"design_elements_index.json: {len(items)} items saved to {out_path}")
+
 
 if __name__ == '__main__':
     main()
+
