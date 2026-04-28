@@ -1,0 +1,542 @@
+[
+  {
+    "name": "only the brave teach",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Only the Brave Teach",
+    "confidence": 90,
+    "notes": ".eps file, vector asset",
+    "_source_name": "only the brave teach",
+    "_batch_index": 15720
+  },
+  {
+    "name": "only_men",
+    "category": "Photoshop - Other",
+    "clean_name": "Only Men",
+    "confidence": 70,
+    "notes": ".psd file, no specific subcategory indicated",
+    "_source_name": "only_men",
+    "_batch_index": 15721
+  },
+  {
+    "name": "Ontrack Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Ontrack Flyer Template",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Ontrack Flyer Template",
+    "_batch_index": 15722
+  },
+  {
+    "name": "OohKillem",
+    "category": "Photoshop - Other",
+    "clean_name": "OohKillem",
+    "confidence": 70,
+    "notes": ".psd file, no clear subcategory",
+    "_source_name": "OohKillem",
+    "_batch_index": 15723
+  },
+  {
+    "name": "OohKillemv2",
+    "category": "Photoshop - Other",
+    "clean_name": "OohKillem v2",
+    "confidence": 70,
+    "notes": ".psd file, no clear subcategory",
+    "_source_name": "OohKillemv2",
+    "_batch_index": 15724
+  },
+  {
+    "name": "Open Bottle Flyer Template CMYK",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Open Bottle Flyer Template CMYK",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Open Bottle Flyer Template CMYK",
+    "_batch_index": 15725
+  },
+  {
+    "name": "Open Bottle Flyer Template RGB File",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Open Bottle Flyer Template RGB",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Open Bottle Flyer Template RGB File",
+    "_batch_index": 15726
+  },
+  {
+    "name": "Open Mic Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Open Mic Flyer Template",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Open Mic Flyer Template",
+    "_batch_index": 15727
+  },
+  {
+    "name": "Open_House",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Open House",
+    "confidence": 85,
+    "notes": ".psd likely a flyer for open house",
+    "_source_name": "Open_House",
+    "_batch_index": 15728
+  },
+  {
+    "name": "Open_House_ Flyer 6x4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Open House Flyer 6x4",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Open_House_ Flyer 6x4",
+    "_batch_index": 15729
+  },
+  {
+    "name": "Open_House_ Flyer Full Page",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Open House Flyer Full Page",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Open_House_ Flyer Full Page",
+    "_batch_index": 15730
+  },
+  {
+    "name": "Option_01",
+    "category": "Photoshop - Other",
+    "clean_name": "Option 01",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Option_01",
+    "_batch_index": 15731
+  },
+  {
+    "name": "Option_02",
+    "category": "Photoshop - Other",
+    "clean_name": "Option 02",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Option_02",
+    "_batch_index": 15732
+  },
+  {
+    "name": "Option_03",
+    "category": "Photoshop - Other",
+    "clean_name": "Option 03",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Option_03",
+    "_batch_index": 15733
+  },
+  {
+    "name": "Option_04",
+    "category": "Photoshop - Other",
+    "clean_name": "Option 04",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Option_04",
+    "_batch_index": 15734
+  },
+  {
+    "name": "Orange- Multipurpose Flyer PSD Template Set",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Orange Multipurpose Flyer PSD Template Set",
+    "confidence": 95,
+    "notes": "Flyer template set in .psd",
+    "_source_name": "Orange- Multipurpose Flyer PSD Template Set",
+    "_batch_index": 15735
+  },
+  {
+    "name": "Orange",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Orange",
+    "_batch_index": 15736
+  },
+  {
+    "name": "orange_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange 2",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "orange_2",
+    "_batch_index": 15737
+  },
+  {
+    "name": "orange_3",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange 3",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "orange_3",
+    "_batch_index": 15738
+  },
+  {
+    "name": "orange_4",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange 4",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "orange_4",
+    "_batch_index": 15739
+  },
+  {
+    "name": "Orange_BG_4",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange BG 4",
+    "confidence": 60,
+    "notes": ".psd file, likely background",
+    "_source_name": "Orange_BG_4",
+    "_batch_index": 15740
+  },
+  {
+    "name": "Orchid Flyer Template Horizontal",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Orchid Flyer Template Horizontal",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Orchid Flyer Template Horizontal",
+    "_batch_index": 15741
+  },
+  {
+    "name": "Orchid Flyer Template Vertical",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Orchid Flyer Template Vertical",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Orchid Flyer Template Vertical",
+    "_batch_index": 15742
+  },
+  {
+    "name": "Order now",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Order Now",
+    "confidence": 80,
+    "notes": ".psd likely a promotional flyer",
+    "_source_name": "Order now",
+    "_batch_index": 15743
+  },
+  {
+    "name": "Organic Flat-Finance-Finance Consultant Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Organic Flat Finance Consultant Flyer",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Organic Flat-Finance-Finance Consultant Flyer",
+    "_batch_index": 15744
+  },
+  {
+    "name": "Organic Flat-Finance-Finance Consultant Flyer_Back Page",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Organic Flat Finance Consultant Flyer Back Page",
+    "confidence": 95,
+    "notes": "Flyer back page in .psd",
+    "_source_name": "Organic Flat-Finance-Finance Consultant Flyer_Back Page",
+    "_batch_index": 15745
+  },
+  {
+    "name": "Organic Flat-Finance-Finance Consultant Flyer_Front Page",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Organic Flat Finance Consultant Flyer Front Page",
+    "confidence": 95,
+    "notes": "Flyer front page in .psd",
+    "_source_name": "Organic Flat-Finance-Finance Consultant Flyer_Front Page",
+    "_batch_index": 15746
+  },
+  {
+    "name": "Oriental geofilters",
+    "category": "Photoshop - Other",
+    "clean_name": "Oriental Geofilters",
+    "confidence": 75,
+    "notes": ".psd file, geofilter design",
+    "_source_name": "Oriental geofilters",
+    "_batch_index": 15747
+  },
+  {
+    "name": "original",
+    "category": "Photoshop - Other",
+    "clean_name": "Original",
+    "confidence": 50,
+    "notes": ".psd file, generic name",
+    "_source_name": "original",
+    "_batch_index": 15748
+  },
+  {
+    "name": "Our Approach #1",
+    "category": "Photoshop - Other",
+    "clean_name": "Our Approach #1",
+    "confidence": 70,
+    "notes": ".psd file, likely a presentation element",
+    "_source_name": "Our Approach #1",
+    "_batch_index": 15749
+  },
+  {
+    "name": "Our Approach #2",
+    "category": "Photoshop - Other",
+    "clean_name": "Our Approach #2",
+    "confidence": 70,
+    "notes": ".psd file, likely a presentation element",
+    "_source_name": "Our Approach #2",
+    "_batch_index": 15750
+  },
+  {
+    "name": "Our Clients #1",
+    "category": "Photoshop - Other",
+    "clean_name": "Our Clients #1",
+    "confidence": 70,
+    "notes": ".psd file, likely a presentation element",
+    "_source_name": "Our Clients #1",
+    "_batch_index": 15751
+  },
+  {
+    "name": "Our Clients #2",
+    "category": "Photoshop - Other",
+    "clean_name": "Our Clients #2",
+    "confidence": 70,
+    "notes": ".psd file, likely a presentation element",
+    "_source_name": "Our Clients #2",
+    "_batch_index": 15752
+  },
+  {
+    "name": "Our Office #1",
+    "category": "Photoshop - Other",
+    "clean_name": "Our Office #1",
+    "confidence": 70,
+    "notes": ".psd file, likely a presentation element",
+    "_source_name": "Our Office #1",
+    "_batch_index": 15753
+  },
+  {
+    "name": "Our Process #1",
+    "category": "Photoshop - Other",
+    "clean_name": "Our Process #1",
+    "confidence": 70,
+    "notes": ".psd file, likely a presentation element",
+    "_source_name": "Our Process #1",
+    "_batch_index": 15754
+  },
+  {
+    "name": "Our Work #1",
+    "category": "Photoshop - Other",
+    "clean_name": "Our Work #1",
+    "confidence": 70,
+    "notes": ".psd file, likely a presentation element",
+    "_source_name": "Our Work #1",
+    "_batch_index": 15755
+  },
+  {
+    "name": "out way of my i got my sassy pants on",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Out Way of My I Got My Sassy Pants On",
+    "confidence": 90,
+    "notes": ".eps file, vector asset",
+    "_source_name": "out way of my i got my sassy pants on",
+    "_batch_index": 15756
+  },
+  {
+    "name": "Outlet",
+    "category": "Photoshop - Other",
+    "clean_name": "Outlet",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outlet",
+    "_batch_index": 15757
+  },
+  {
+    "name": "Outside (4)",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside (4)",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside (4)",
+    "_batch_index": 15758
+  },
+  {
+    "name": "Outside (5)",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside (5)",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside (5)",
+    "_batch_index": 15759
+  },
+  {
+    "name": "Outside_10",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 10",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_10",
+    "_batch_index": 15760
+  },
+  {
+    "name": "Outside_11",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 11",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_11",
+    "_batch_index": 15761
+  },
+  {
+    "name": "Outside_12",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 12",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_12",
+    "_batch_index": 15762
+  },
+  {
+    "name": "Outside_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 2",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_2",
+    "_batch_index": 15763
+  },
+  {
+    "name": "Outside_3",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 3",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_3",
+    "_batch_index": 15764
+  },
+  {
+    "name": "Outside_4",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 4",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_4",
+    "_batch_index": 15765
+  },
+  {
+    "name": "Outside_5",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 5",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_5",
+    "_batch_index": 15766
+  },
+  {
+    "name": "Outside_6",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 6",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_6",
+    "_batch_index": 15767
+  },
+  {
+    "name": "Outside_7",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 7",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_7",
+    "_batch_index": 15768
+  },
+  {
+    "name": "Outside_8",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside 8",
+    "confidence": 60,
+    "notes": ".psd file, generic name",
+    "_source_name": "Outside_8",
+    "_batch_index": 15769
+  },
+  {
+    "name": "oval_stickers_1",
+    "category": "Print - Other",
+    "clean_name": "Oval Stickers 1",
+    "confidence": 80,
+    "notes": ".psd file, sticker design",
+    "_source_name": "oval_stickers_1",
+    "_batch_index": 15770
+  },
+  {
+    "name": "oval_stickers_2",
+    "category": "Print - Other",
+    "clean_name": "Oval Stickers 2",
+    "confidence": 80,
+    "notes": ".psd file, sticker design",
+    "_source_name": "oval_stickers_2",
+    "_batch_index": 15771
+  },
+  {
+    "name": "oval_stickers_3",
+    "category": "Print - Other",
+    "clean_name": "Oval Stickers 3",
+    "confidence": 80,
+    "notes": ".psd file, sticker design",
+    "_source_name": "oval_stickers_3",
+    "_batch_index": 15772
+  },
+  {
+    "name": "over galaxy psd flyer template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Over Galaxy PSD Flyer Template",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "over galaxy psd flyer template",
+    "_batch_index": 15773
+  },
+  {
+    "name": "Overlaping Flyer Poster",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Overlapping Flyer Poster",
+    "confidence": 95,
+    "notes": "Flyer/poster in .psd",
+    "_source_name": "Overlaping Flyer Poster",
+    "_batch_index": 15774
+  },
+  {
+    "name": "Overlay",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Overlay",
+    "confidence": 80,
+    "notes": ".psd file, likely an overlay effect",
+    "_source_name": "Overlay",
+    "_batch_index": 15775
+  },
+  {
+    "name": "Overlay_10",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Overlay 10",
+    "confidence": 80,
+    "notes": ".psd file, likely an overlay effect",
+    "_source_name": "Overlay_10",
+    "_batch_index": 15776
+  },
+  {
+    "name": "Overlay_11",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Overlay 11",
+    "confidence": 80,
+    "notes": ".psd file, likely an overlay effect",
+    "_source_name": "Overlay_11",
+    "_batch_index": 15777
+  },
+  {
+    "name": "Overlay_12",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Overlay 12",
+    "confidence": 80,
+    "notes": ".psd file, likely an overlay effect",
+    "_source_name": "Overlay_12",
+    "_batch_index": 15778
+  },
+  {
+    "name": "overlay_13",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Overlay 13",
+    "confidence": 80,
+    "notes": ".psd file, likely an overlay effect",
+    "_source_name": "overlay_13",
+    "_batch_index": 15779
+  }
+]
