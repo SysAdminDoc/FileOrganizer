@@ -1,0 +1,542 @@
+[
+  {
+    "name": "agency flyer 1_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Agency Flyer 1",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "agency flyer 1_2",
+    "_batch_index": 9540
+  },
+  {
+    "name": "agency flyer 2_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Agency Flyer 2",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "agency flyer 2_3",
+    "_batch_index": 9541
+  },
+  {
+    "name": "agency flyer 2_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Agency Flyer 2",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "agency flyer 2_4",
+    "_batch_index": 9542
+  },
+  {
+    "name": "agency flyer 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Agency Flyer 3",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "agency flyer 3",
+    "_batch_index": 9543
+  },
+  {
+    "name": "agency flyer 3_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Agency Flyer 3",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "agency flyer 3_4",
+    "_batch_index": 9544
+  },
+  {
+    "name": "agency-blog_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Agency Blog",
+    "confidence": 80,
+    "notes": "PSD file, likely a web template",
+    "_source_name": "agency-blog_2",
+    "_batch_index": 9545
+  },
+  {
+    "name": "agency-home_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Agency Home",
+    "confidence": 80,
+    "notes": "PSD file, likely a web template",
+    "_source_name": "agency-home_2",
+    "_batch_index": 9546
+  },
+  {
+    "name": "agency-work-1-col_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Agency Work 1 Column",
+    "confidence": 80,
+    "notes": "PSD file, likely a web template",
+    "_source_name": "agency-work-1-col_2",
+    "_batch_index": 9547
+  },
+  {
+    "name": "agency-work-2-col_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Agency Work 2 Column",
+    "confidence": 80,
+    "notes": "PSD file, likely a web template",
+    "_source_name": "agency-work-2-col_2",
+    "_batch_index": 9548
+  },
+  {
+    "name": "agency-work-single_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Agency Work Single",
+    "confidence": 80,
+    "notes": "PSD file, likely a web template",
+    "_source_name": "agency-work-single_2",
+    "_batch_index": 9549
+  },
+  {
+    "name": "AGENCY",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Agency",
+    "confidence": 70,
+    "notes": "PSD file, generic name",
+    "_source_name": "AGENCY",
+    "_batch_index": 9550
+  },
+  {
+    "name": "Agency_profile_Bi-Fold_Brochure_lic",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Agency Profile Bi-Fold Brochure",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Brochure'",
+    "_source_name": "Agency_profile_Bi-Fold_Brochure_lic",
+    "_batch_index": 9551
+  },
+  {
+    "name": "Agency_profile_Bi-Fold_Brochure_ob",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Agency Profile Bi-Fold Brochure",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Brochure'",
+    "_source_name": "Agency_profile_Bi-Fold_Brochure_ob",
+    "_batch_index": 9552
+  },
+  {
+    "name": "Ain't No Bunny Got Time For dan",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Ain't No Bunny Got Time For Dan",
+    "confidence": 85,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "Ain't No Bunny Got Time For dan",
+    "_batch_index": 9553
+  },
+  {
+    "name": "ain't nobody got time naps",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Ain't Nobody Got Time Naps",
+    "confidence": 85,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "ain't nobody got time naps",
+    "_batch_index": 9554
+  },
+  {
+    "name": "ain't nothing but snacks",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Ain't Nothing But Snacks",
+    "confidence": 85,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "ain't nothing but snacks",
+    "_batch_index": 9555
+  },
+  {
+    "name": "ajustment",
+    "category": "Photoshop - Other",
+    "clean_name": "Adjustment",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "ajustment",
+    "_batch_index": 9556
+  },
+  {
+    "name": "AKV-Bundle-Preset-For-Premiere-Pro-ShareAE.com",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "AKV Bundle Preset For Premiere Pro",
+    "confidence": 90,
+    "notes": "Contains 'Action Transition Preset Pack'",
+    "_source_name": "AKV-Bundle-Preset-For-Premiere-Pro-ShareAE.com",
+    "_batch_index": 9557
+  },
+  {
+    "name": "Alaska Stylized Abstract Typeface",
+    "category": "Fonts & Typography",
+    "clean_name": "Alaska Stylized Abstract Typeface",
+    "confidence": 95,
+    "notes": "Contains .ttf files",
+    "_source_name": "Alaska Stylized Abstract Typeface",
+    "_batch_index": 9558
+  },
+  {
+    "name": "albums",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Albums",
+    "confidence": 70,
+    "notes": "PSD file, likely photo album template",
+    "_source_name": "albums",
+    "_batch_index": 9559
+  },
+  {
+    "name": "albums_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Albums",
+    "confidence": 70,
+    "notes": "PSD file, likely photo album template",
+    "_source_name": "albums_2",
+    "_batch_index": 9560
+  },
+  {
+    "name": "alerts",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Alerts",
+    "confidence": 70,
+    "notes": "PSD file, likely UI elements",
+    "_source_name": "alerts",
+    "_batch_index": 9561
+  },
+  {
+    "name": "alien",
+    "category": "Photoshop - Other",
+    "clean_name": "Alien",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "alien",
+    "_batch_index": 9562
+  },
+  {
+    "name": "ALL (2)",
+    "category": "Photoshop - Other",
+    "clean_name": "All",
+    "confidence": 50,
+    "notes": "PSD file, generic name",
+    "_source_name": "ALL (2)",
+    "_batch_index": 9563
+  },
+  {
+    "name": "all guests must be approved by the dog",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "All Guests Must Be Approved By The Dog",
+    "confidence": 85,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "all guests must be approved by the dog",
+    "_batch_index": 9564
+  },
+  {
+    "name": "All I Care About Are Cats Cat Love 3 people",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "All I Care About Are Cats Cat Love",
+    "confidence": 85,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "All I Care About Are Cats Cat Love 3 people",
+    "_batch_index": 9565
+  },
+  {
+    "name": "ALL in ONE_Vintage surfing and camping adventure symbols-01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vintage Surfing and Camping Adventure Symbols",
+    "confidence": 85,
+    "notes": "PSD file, likely vector symbols",
+    "_source_name": "ALL in ONE_Vintage surfing and camping adventure symbols-01",
+    "_batch_index": 9566
+  },
+  {
+    "name": "All Saints Day Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "All Saints Day Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "All Saints Day Flyer",
+    "_batch_index": 9567
+  },
+  {
+    "name": "All Saints' Day_psd_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "All Saints' Day Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "All Saints' Day_psd_flyer",
+    "_batch_index": 9568
+  },
+  {
+    "name": "All Star Weekend RGB",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "All Star Weekend Flyer",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer",
+    "_source_name": "All Star Weekend RGB",
+    "_batch_index": 9569
+  },
+  {
+    "name": "All Star Weekend V2 RGB_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "All Star Weekend V2 Flyer",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer",
+    "_source_name": "All Star Weekend V2 RGB_2",
+    "_batch_index": 9570
+  },
+  {
+    "name": "All Star Weekend V2_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "All Star Weekend V2 Flyer",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer",
+    "_source_name": "All Star Weekend V2_2",
+    "_batch_index": 9571
+  },
+  {
+    "name": "All Star Weekend",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "All Star Weekend Flyer",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer",
+    "_source_name": "All Star Weekend",
+    "_batch_index": 9572
+  },
+  {
+    "name": "all tools",
+    "category": "Photoshop - Other",
+    "clean_name": "All Tools",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "all tools",
+    "_batch_index": 9573
+  },
+  {
+    "name": "all you need is love and cupcakes",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "All You Need Is Love And Cupcakes",
+    "confidence": 85,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "all you need is love and cupcakes",
+    "_batch_index": 9574
+  },
+  {
+    "name": "ALL(1)",
+    "category": "Photoshop - Other",
+    "clean_name": "All",
+    "confidence": 50,
+    "notes": "PSD file, generic name",
+    "_source_name": "ALL(1)",
+    "_batch_index": 9575
+  },
+  {
+    "name": "all-elements",
+    "category": "Photoshop - Other",
+    "clean_name": "All Elements",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "all-elements",
+    "_batch_index": 9576
+  },
+  {
+    "name": "ALL",
+    "category": "Photoshop - Other",
+    "clean_name": "All",
+    "confidence": 50,
+    "notes": "PSD file, generic name",
+    "_source_name": "ALL",
+    "_batch_index": 9577
+  },
+  {
+    "name": "ALL_2",
+    "category": "Photoshop - Other",
+    "clean_name": "All",
+    "confidence": 50,
+    "notes": "PSD file, generic name",
+    "_source_name": "ALL_2",
+    "_batch_index": 9578
+  },
+  {
+    "name": "all_black_everything",
+    "category": "Photoshop - Other",
+    "clean_name": "All Black Everything",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "all_black_everything",
+    "_batch_index": 9579
+  },
+  {
+    "name": "all_panels",
+    "category": "Photoshop - Other",
+    "clean_name": "All Panels",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "all_panels",
+    "_batch_index": 9580
+  },
+  {
+    "name": "Alone In The Space Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Alone In The Space Flyer Template",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "Alone In The Space Flyer Template",
+    "_batch_index": 9581
+  },
+  {
+    "name": "Alpha and digits light FX",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Alpha and Digits Light FX",
+    "confidence": 80,
+    "notes": "PSD file, likely light effects",
+    "_source_name": "Alpha and digits light FX",
+    "_batch_index": 9582
+  },
+  {
+    "name": "Alphabet blue",
+    "category": "Photoshop - Other",
+    "clean_name": "Alphabet Blue",
+    "confidence": 70,
+    "notes": "PSD file, alphabet graphic",
+    "_source_name": "Alphabet blue",
+    "_batch_index": 9583
+  },
+  {
+    "name": "Alphabet green",
+    "category": "Photoshop - Other",
+    "clean_name": "Alphabet Green",
+    "confidence": 70,
+    "notes": "PSD file, alphabet graphic",
+    "_source_name": "Alphabet green",
+    "_batch_index": 9584
+  },
+  {
+    "name": "Alphabet red",
+    "category": "Photoshop - Other",
+    "clean_name": "Alphabet Red",
+    "confidence": 70,
+    "notes": "PSD file, alphabet graphic",
+    "_source_name": "Alphabet red",
+    "_batch_index": 9585
+  },
+  {
+    "name": "Alphabet white",
+    "category": "Photoshop - Other",
+    "clean_name": "Alphabet White",
+    "confidence": 70,
+    "notes": "PSD file, alphabet graphic",
+    "_source_name": "Alphabet white",
+    "_batch_index": 9586
+  },
+  {
+    "name": "Alphabet yellow",
+    "category": "Photoshop - Other",
+    "clean_name": "Alphabet Yellow",
+    "confidence": 70,
+    "notes": "PSD file, alphabet graphic",
+    "_source_name": "Alphabet yellow",
+    "_batch_index": 9587
+  },
+  {
+    "name": "alphabet_yellow",
+    "category": "Photoshop - Other",
+    "clean_name": "Alphabet Yellow",
+    "confidence": 70,
+    "notes": "PSD file, alphabet graphic",
+    "_source_name": "alphabet_yellow",
+    "_batch_index": 9588
+  },
+  {
+    "name": "AlreadyFamousFlyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Already Famous Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "AlreadyFamousFlyer",
+    "_batch_index": 9589
+  },
+  {
+    "name": "Alternative Flyer Template 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Alternative Flyer Template 1",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "Alternative Flyer Template 1",
+    "_batch_index": 9590
+  },
+  {
+    "name": "Alternative Flyer Template 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Alternative Flyer Template 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "Alternative Flyer Template 2",
+    "_batch_index": 9591
+  },
+  {
+    "name": "Alternative sessions Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Alternative Sessions Flyer Template",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "Alternative sessions Flyer Template",
+    "_batch_index": 9592
+  },
+  {
+    "name": "Alternative_Flyer_Vol.1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Alternative Flyer Vol. 1",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "Alternative_Flyer_Vol.1",
+    "_batch_index": 9593
+  },
+  {
+    "name": "Alternative_Flyer_vol2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Alternative Flyer Vol. 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "Alternative_Flyer_vol2",
+    "_batch_index": 9594
+  },
+  {
+    "name": "Alternative_Flyer_Vol3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Alternative Flyer Vol. 3",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "Alternative_Flyer_Vol3",
+    "_batch_index": 9595
+  },
+  {
+    "name": "AlternativeGrungeFlyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Alternative Grunge Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "AlternativeGrungeFlyer",
+    "_batch_index": 9596
+  },
+  {
+    "name": "Always Classe Never Trashy  some times alitlebit sassy",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Always Classy Never Trashy Sometimes a Little Bit Sassy",
+    "confidence": 85,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "Always Classe Never Trashy  some times alitlebit sassy",
+    "_batch_index": 9597
+  },
+  {
+    "name": "Always Look On The Bright side of life",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Always Look On The Bright Side of Life",
+    "confidence": 85,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "Always Look On The Bright side of life",
+    "_batch_index": 9598
+  },
+  {
+    "name": "always",
+    "category": "Photoshop - Other",
+    "clean_name": "Always",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "always",
+    "_batch_index": 9599
+  }
+]
