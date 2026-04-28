@@ -1,0 +1,542 @@
+[
+  {
+    "name": "01_splash_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Splash Template 3",
+    "confidence": 80,
+    "notes": "PSD file, likely a splash screen template",
+    "_source_name": "01_splash_3",
+    "_batch_index": 420
+  },
+  {
+    "name": "01_splash_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Splash Template 4",
+    "confidence": 80,
+    "notes": "PSD file, likely a splash screen template",
+    "_source_name": "01_splash_4",
+    "_batch_index": 421
+  },
+  {
+    "name": "01_splash_5",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Splash Template 5",
+    "confidence": 80,
+    "notes": "PSD file, likely a splash screen template",
+    "_source_name": "01_splash_5",
+    "_batch_index": 422
+  },
+  {
+    "name": "01_splash_6",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Splash Template 6",
+    "confidence": 80,
+    "notes": "PSD file, likely a splash screen template",
+    "_source_name": "01_splash_6",
+    "_batch_index": 423
+  },
+  {
+    "name": "01_splash_7",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Splash Template 7",
+    "confidence": 80,
+    "notes": "PSD file, likely a splash screen template",
+    "_source_name": "01_splash_7",
+    "_batch_index": 424
+  },
+  {
+    "name": "01_Timeline Cover_PSD",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Timeline Cover PSD",
+    "confidence": 85,
+    "notes": "PSD file, timeline cover template",
+    "_source_name": "01_Timeline Cover_PSD",
+    "_batch_index": 425
+  },
+  {
+    "name": "01_User_Dashboard_Design",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "User Dashboard Design",
+    "confidence": 85,
+    "notes": "PSD file, UI dashboard design",
+    "_source_name": "01_User_Dashboard_Design",
+    "_batch_index": 426
+  },
+  {
+    "name": "01_VintageEvent_Chalk Flyers",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Vintage Event Chalk Flyers",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01_VintageEvent_Chalk Flyers",
+    "_batch_index": 427
+  },
+  {
+    "name": "01_Walpaper_PSD",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Wallpaper PSD",
+    "confidence": 80,
+    "notes": "PSD wallpaper design",
+    "_source_name": "01_Walpaper_PSD",
+    "_batch_index": 428
+  },
+  {
+    "name": "01_White Flyer_PSD",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "White Flyer PSD",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01_White Flyer_PSD",
+    "_batch_index": 429
+  },
+  {
+    "name": "01Apps-store_flyer (1)_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Apps Store Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Apps-store_flyer (1)_2",
+    "_batch_index": 430
+  },
+  {
+    "name": "01Business_flyer (1)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Business Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Business_flyer (1)",
+    "_batch_index": 431
+  },
+  {
+    "name": "01Business_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Business Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Business_flyer",
+    "_batch_index": 432
+  },
+  {
+    "name": "01Business_flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Business Flyer 2",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Business_flyer_2",
+    "_batch_index": 433
+  },
+  {
+    "name": "01Corporate_flyer (1)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Corporate_flyer (1)",
+    "_batch_index": 434
+  },
+  {
+    "name": "01Education_flyer (1)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Education Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Education_flyer (1)",
+    "_batch_index": 435
+  },
+  {
+    "name": "01Energy_flyer (1)_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Energy Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Energy_flyer (1)_3",
+    "_batch_index": 436
+  },
+  {
+    "name": "01mobileapps_flyer (1)_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile Apps Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01mobileapps_flyer (1)_2",
+    "_batch_index": 437
+  },
+  {
+    "name": "01PremiumCERTIFICATE",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Premium Certificate",
+    "confidence": 85,
+    "notes": "EPS file, certificate template",
+    "_source_name": "01PremiumCERTIFICATE",
+    "_batch_index": 438
+  },
+  {
+    "name": "01Transport_flyer (1)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Transport Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Transport_flyer (1)",
+    "_batch_index": 439
+  },
+  {
+    "name": "01Transport_flyer (1)_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Transport Flyer 2",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "01Transport_flyer (1)_2",
+    "_batch_index": 440
+  },
+  {
+    "name": "02 - Back",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Back Template",
+    "confidence": 75,
+    "notes": "PSD file, likely a back cover or back design",
+    "_source_name": "02 - Back",
+    "_batch_index": 441
+  },
+  {
+    "name": "02 - Landscape",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Landscape",
+    "confidence": 75,
+    "notes": "PSD file, landscape image or texture",
+    "_source_name": "02 - Landscape",
+    "_batch_index": 442
+  },
+  {
+    "name": "02 - Light Wood Streaks",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Light Wood Streaks",
+    "confidence": 85,
+    "notes": "PSD texture/pattern",
+    "_source_name": "02 - Light Wood Streaks",
+    "_batch_index": 443
+  },
+  {
+    "name": "02 ABCD Creative Collection Instastories",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "ABCD Creative Collection Instastories",
+    "confidence": 85,
+    "notes": "PSD file, Instagram story templates",
+    "_source_name": "02 ABCD Creative Collection Instastories",
+    "_batch_index": 444
+  },
+  {
+    "name": "02 Podcast Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Podcast Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "02 Podcast Flyer",
+    "_batch_index": 445
+  },
+  {
+    "name": "02 Podcast Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Podcast Flyer 2",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "02 Podcast Flyer_2",
+    "_batch_index": 446
+  },
+  {
+    "name": "02 Torn Paper Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Torn Paper Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "02 Torn Paper Flyer",
+    "_batch_index": 447
+  },
+  {
+    "name": "02 Vintage Dusty Streaks",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Vintage Dusty Streaks",
+    "confidence": 85,
+    "notes": "PSD overlay/effect",
+    "_source_name": "02 Vintage Dusty Streaks",
+    "_batch_index": 448
+  },
+  {
+    "name": "02 Your Photo Template",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Your Photo Template",
+    "confidence": 85,
+    "notes": "PSD photo template",
+    "_source_name": "02 Your Photo Template",
+    "_batch_index": 449
+  },
+  {
+    "name": "02-01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Template 02-01",
+    "confidence": 70,
+    "notes": "PSD file, generic numbered template",
+    "_source_name": "02-01",
+    "_batch_index": 450
+  },
+  {
+    "name": "02-02",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Template 02-02",
+    "confidence": 70,
+    "notes": "PSD file, generic numbered template",
+    "_source_name": "02-02",
+    "_batch_index": 451
+  },
+  {
+    "name": "02-03",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Template 02-03",
+    "confidence": 70,
+    "notes": "PSD file, generic numbered template",
+    "_source_name": "02-03",
+    "_batch_index": 452
+  },
+  {
+    "name": "02-Blog",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Blog Template",
+    "confidence": 80,
+    "notes": "PSD blog design template",
+    "_source_name": "02-Blog",
+    "_batch_index": 453
+  },
+  {
+    "name": "02-Charity Fundraisers Flyer PSD",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Charity Fundraisers Flyer PSD",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "02-Charity Fundraisers Flyer PSD",
+    "_batch_index": 454
+  },
+  {
+    "name": "02-Cleaning Service Flyer PSD",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cleaning Service Flyer PSD",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "02-Cleaning Service Flyer PSD",
+    "_batch_index": 455
+  },
+  {
+    "name": "02-Courier-and-Logistics-Service-Flyer-PSD",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Courier and Logistics Service Flyer PSD",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "02-Courier-and-Logistics-Service-Flyer-PSD",
+    "_batch_index": 456
+  },
+  {
+    "name": "02-Home-01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Home Template 01",
+    "confidence": 80,
+    "notes": "PSD home page template",
+    "_source_name": "02-Home-01",
+    "_batch_index": 457
+  },
+  {
+    "name": "02-Homepage-01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Homepage 01",
+    "confidence": 80,
+    "notes": "PSD homepage template",
+    "_source_name": "02-Homepage-01",
+    "_batch_index": 458
+  },
+  {
+    "name": "02-Homepage-02",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Homepage 02",
+    "confidence": 80,
+    "notes": "PSD homepage template",
+    "_source_name": "02-Homepage-02",
+    "_batch_index": 459
+  },
+  {
+    "name": "02-Homepage-02_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Homepage 02 v2",
+    "confidence": 80,
+    "notes": "PSD homepage template",
+    "_source_name": "02-Homepage-02_2",
+    "_batch_index": 460
+  },
+  {
+    "name": "02-Modern A4 Size Invoice Template PSD",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Modern A4 Invoice Template PSD",
+    "confidence": 90,
+    "notes": "PSD invoice template",
+    "_source_name": "02-Modern A4 Size Invoice Template PSD",
+    "_batch_index": 461
+  },
+  {
+    "name": "02-Real Estate Business Flyer PSD",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Real Estate Business Flyer PSD",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "02-Real Estate Business Flyer PSD",
+    "_batch_index": 462
+  },
+  {
+    "name": "02. Button",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Button",
+    "confidence": 80,
+    "notes": "PSD button UI element",
+    "_source_name": "02. Button",
+    "_batch_index": 463
+  },
+  {
+    "name": "02",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Template 02",
+    "confidence": 70,
+    "notes": "PSD file, generic numbered template",
+    "_source_name": "02",
+    "_batch_index": 464
+  },
+  {
+    "name": "020-Flip Clock",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Flip Clock",
+    "confidence": 80,
+    "notes": "PSD flip clock design",
+    "_source_name": "020-Flip Clock",
+    "_batch_index": 465
+  },
+  {
+    "name": "022-iWatch",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "iWatch Mockup",
+    "confidence": 85,
+    "notes": "PSD iWatch mockup",
+    "_source_name": "022-iWatch",
+    "_batch_index": 466
+  },
+  {
+    "name": "023-Light timer bygrafpedia",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Light Timer",
+    "confidence": 80,
+    "notes": "PSD timer design",
+    "_source_name": "023-Light timer bygrafpedia",
+    "_batch_index": 467
+  },
+  {
+    "name": "024-Minimal clock free",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Minimal Clock Free",
+    "confidence": 80,
+    "notes": "PSD clock design",
+    "_source_name": "024-Minimal clock free",
+    "_batch_index": 468
+  },
+  {
+    "name": "025 - Postcard Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Postcard Template",
+    "confidence": 85,
+    "notes": "PSD postcard template",
+    "_source_name": "025 - Postcard Template",
+    "_batch_index": 469
+  },
+  {
+    "name": "025-Minimal timer",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Minimal Timer",
+    "confidence": 80,
+    "notes": "PSD timer design",
+    "_source_name": "025-Minimal timer",
+    "_batch_index": 470
+  },
+  {
+    "name": "028-Retro clock",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Retro Clock",
+    "confidence": 80,
+    "notes": "PSD retro clock design",
+    "_source_name": "028-Retro clock",
+    "_batch_index": 471
+  },
+  {
+    "name": "029-Retro Flip Clock",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Retro Flip Clock",
+    "confidence": 80,
+    "notes": "PSD retro flip clock design",
+    "_source_name": "029-Retro Flip Clock",
+    "_batch_index": 472
+  },
+  {
+    "name": "02_ 4x3 Ratio Full Page",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "4x3 Ratio Full Page",
+    "confidence": 80,
+    "notes": "PSD full page template",
+    "_source_name": "02_ 4x3 Ratio Full Page",
+    "_batch_index": 473
+  },
+  {
+    "name": "02_ Folder_Orange",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Orange Folder",
+    "confidence": 80,
+    "notes": "PSD folder design",
+    "_source_name": "02_ Folder_Orange",
+    "_batch_index": 474
+  },
+  {
+    "name": "02_ Folder_Orange_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Orange Folder 2",
+    "confidence": 80,
+    "notes": "PSD folder design",
+    "_source_name": "02_ Folder_Orange_2",
+    "_batch_index": 475
+  },
+  {
+    "name": "02_01_Portfolio_01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Portfolio 01",
+    "confidence": 85,
+    "notes": "PSD portfolio template",
+    "_source_name": "02_01_Portfolio_01",
+    "_batch_index": 476
+  },
+  {
+    "name": "02_01_Portfolio_02",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Portfolio 02",
+    "confidence": 85,
+    "notes": "PSD portfolio template",
+    "_source_name": "02_01_Portfolio_02",
+    "_batch_index": 477
+  },
+  {
+    "name": "02_01_Portfolio_03",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Portfolio 03",
+    "confidence": 85,
+    "notes": "PSD portfolio template",
+    "_source_name": "02_01_Portfolio_03",
+    "_batch_index": 478
+  },
+  {
+    "name": "02_01_Portfolio_04",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Portfolio 04",
+    "confidence": 85,
+    "notes": "PSD portfolio template",
+    "_source_name": "02_01_Portfolio_04",
+    "_batch_index": 479
+  }
+]

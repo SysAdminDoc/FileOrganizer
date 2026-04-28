@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Fast Food 1",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Fast Food 1",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Fast Food 1",
+    "_batch_index": 780
+  },
+  {
+    "name": "Fast Food 2",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Fast Food 2",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Fast Food 2",
+    "_batch_index": 781
+  },
+  {
+    "name": "Food 1",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Food 1",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Food 1",
+    "_batch_index": 782
+  },
+  {
+    "name": "Food 2",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Food 2",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Food 2",
+    "_batch_index": 783
+  },
+  {
+    "name": "Food 3",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Food 3",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Food 3",
+    "_batch_index": 784
+  },
+  {
+    "name": "Food 4",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Food 4",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Food 4",
+    "_batch_index": 785
+  },
+  {
+    "name": "Food 5",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Food 5",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Food 5",
+    "_batch_index": 786
+  },
+  {
+    "name": "Olives 1",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Olives 1",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Olives 1",
+    "_batch_index": 787
+  },
+  {
+    "name": "Olives 2",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Olives 2",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Olives 2",
+    "_batch_index": 788
+  },
+  {
+    "name": "Paper 1",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Paper 1",
+    "confidence": 85,
+    "notes": "PNG files, legacy category 'Isolated Food Items' suggests food-related paper items",
+    "_source_name": "Paper 1",
+    "_batch_index": 789
+  },
+  {
+    "name": "Paper 2",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Paper 2",
+    "confidence": 85,
+    "notes": "PNG files, legacy category 'Isolated Food Items' suggests food-related paper items",
+    "_source_name": "Paper 2",
+    "_batch_index": 790
+  },
+  {
+    "name": "Paper 3",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Paper 3",
+    "confidence": 85,
+    "notes": "PNG files, legacy category 'Isolated Food Items' suggests food-related paper items",
+    "_source_name": "Paper 3",
+    "_batch_index": 791
+  },
+  {
+    "name": "Pickles 1",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Pickles 1",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Pickles 1",
+    "_batch_index": 792
+  },
+  {
+    "name": "Pickles 2",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Pickles 2",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Pickles 2",
+    "_batch_index": 793
+  },
+  {
+    "name": "Pizza 1",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Pizza 1",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Pizza 1",
+    "_batch_index": 794
+  },
+  {
+    "name": "Pizza 2",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Pizza 2",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Pizza 2",
+    "_batch_index": 795
+  },
+  {
+    "name": "Pizza 3",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Pizza 3",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Pizza 3",
+    "_batch_index": 796
+  },
+  {
+    "name": "Pizza 4",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Pizza 4",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Pizza 4",
+    "_batch_index": 797
+  },
+  {
+    "name": "Pizza 5",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Pizza 5",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Pizza 5",
+    "_batch_index": 798
+  },
+  {
+    "name": "Pizza 6",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Pizza 6",
+    "confidence": 90,
+    "notes": "PNG files of isolated food items",
+    "_source_name": "Pizza 6",
+    "_batch_index": 799
+  },
+  {
+    "name": "A Popup Pointer Dynamic Labels",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Popup Pointer Dynamic Labels",
+    "confidence": 85,
+    "notes": "Contains .aep file, name suggests label/popup animation for lower thirds",
+    "_source_name": "A Popup Pointer Dynamic Labels",
+    "_batch_index": 800
+  },
+  {
+    "name": "Apparel_Label_Design_Template",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Apparel Label Design Template",
+    "confidence": 90,
+    "notes": "Contains .ai file, label design template",
+    "_source_name": "Apparel_Label_Design_Template",
+    "_batch_index": 801
+  },
+  {
+    "name": "Beard oil label Template-id",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Beard Oil Label Template",
+    "confidence": 85,
+    "notes": "Contains .psd, label template for branding",
+    "_source_name": "Beard oil label Template-id",
+    "_batch_index": 802
+  },
+  {
+    "name": "Beard-Oil-Label-",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Beard Oil Label",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label design",
+    "_source_name": "Beard-Oil-Label-",
+    "_batch_index": 803
+  },
+  {
+    "name": "Candle Label ID",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Candle Label ID",
+    "confidence": 85,
+    "notes": "Contains .psd, label mockup/template",
+    "_source_name": "Candle Label ID",
+    "_batch_index": 804
+  },
+  {
+    "name": "Creative CD Label Template-",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Creative CD Label Template",
+    "confidence": 85,
+    "notes": "Label template for CD, likely mockup",
+    "_source_name": "Creative CD Label Template-",
+    "_batch_index": 805
+  },
+  {
+    "name": "Creative_CD_Label_Template-",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Creative CD Label Template",
+    "confidence": 85,
+    "notes": "Label template for CD, likely mockup",
+    "_source_name": "Creative_CD_Label_Template-",
+    "_batch_index": 806
+  },
+  {
+    "name": "elements-strawberry-jam-sticker-label-design-TNVHZDU-2020-04-10",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Strawberry Jam Sticker Label Design",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label design",
+    "_source_name": "elements-strawberry-jam-sticker-label-design-TNVHZDU-2020-04-10",
+    "_batch_index": 807
+  },
+  {
+    "name": "elements-yogurt-bottle-label-design-FSP8LCB-2020-04-10",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Yogurt Bottle Label Design",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label design",
+    "_source_name": "elements-yogurt-bottle-label-design-FSP8LCB-2020-04-10",
+    "_batch_index": 808
+  },
+  {
+    "name": "elements-yogurt-bottle-label-design-WVS2JK6-2020-04-10",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Yogurt Bottle Label Design",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label design",
+    "_source_name": "elements-yogurt-bottle-label-design-WVS2JK6-2020-04-10",
+    "_batch_index": 809
+  },
+  {
+    "name": "Graphicriver - 9 Whiskey Brands Label V2 22310769",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "9 Whiskey Brands Label V2",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label set",
+    "_source_name": "Graphicriver - 9 Whiskey Brands Label V2 22310769",
+    "_batch_index": 810
+  },
+  {
+    "name": "GraphicRiver Branding Label 6171787",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Branding Label",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label design",
+    "_source_name": "GraphicRiver Branding Label 6171787",
+    "_batch_index": 811
+  },
+  {
+    "name": "Graphicriver_-_9_Whiskey_Brands_Label_V2_22310769",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "9 Whiskey Brands Label V2",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label set",
+    "_source_name": "Graphicriver_-_9_Whiskey_Brands_Label_V2_22310769",
+    "_batch_index": 812
+  },
+  {
+    "name": "Label sponsor and retro emblem design collection",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Label Sponsor and Retro Emblem Design Collection",
+    "confidence": 90,
+    "notes": "Contains .eps, vector label/emblem collection",
+    "_source_name": "Label sponsor and retro emblem design collection",
+    "_batch_index": 813
+  },
+  {
+    "name": "lavender Label id08",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Lavender Label id08",
+    "confidence": 85,
+    "notes": "Contains .psd, label template/mockup",
+    "_source_name": "lavender Label id08",
+    "_batch_index": 814
+  },
+  {
+    "name": "Outdoor-Vintage-Labels-Logos-Set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Outdoor Vintage Labels Logos Set",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label and logo set",
+    "_source_name": "Outdoor-Vintage-Labels-Logos-Set",
+    "_batch_index": 815
+  },
+  {
+    "name": "Product_Label_Template-ID18",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Label Template ID18",
+    "confidence": 85,
+    "notes": "Contains .psd, label template/mockup",
+    "_source_name": "Product_Label_Template-ID18",
+    "_batch_index": 816
+  },
+  {
+    "name": "Skincare_Label_Template_ID50",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Skincare Label Template ID50",
+    "confidence": 85,
+    "notes": "Contains .psd, label template/mockup",
+    "_source_name": "Skincare_Label_Template_ID50",
+    "_batch_index": 817
+  },
+  {
+    "name": "SNAP-Price-Tags-Labels-29438112-110x75",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "SNAP Price Tags Labels",
+    "confidence": 80,
+    "notes": "JPG images of price tags/labels, likely mockup",
+    "_source_name": "SNAP-Price-Tags-Labels-29438112-110x75",
+    "_batch_index": 818
+  },
+  {
+    "name": "Soap label template id48",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Soap Label Template id48",
+    "confidence": 85,
+    "notes": "Contains .docx, label template",
+    "_source_name": "Soap label template id48",
+    "_batch_index": 819
+  },
+  {
+    "name": "Soap_label_design_template_psd_",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Soap Label Design Template PSD",
+    "confidence": 90,
+    "notes": "Contains .psd, label template/mockup",
+    "_source_name": "Soap_label_design_template_psd_",
+    "_batch_index": 820
+  },
+  {
+    "name": "Soap_Label_ID22",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Soap Label ID22",
+    "confidence": 85,
+    "notes": "Contains .psd, label template/mockup",
+    "_source_name": "Soap_Label_ID22",
+    "_batch_index": 821
+  },
+  {
+    "name": "Whiskey Brands Label",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Whiskey Brands Label",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label design",
+    "_source_name": "Whiskey Brands Label",
+    "_batch_index": 822
+  },
+  {
+    "name": "Winter Sports & Camping Labels Set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Winter Sports & Camping Labels Set",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector label set",
+    "_source_name": "Winter Sports & Camping Labels Set",
+    "_batch_index": 823
+  },
+  {
+    "name": "ArtDeco Frames & A-Z Letters",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "ArtDeco Frames & A-Z Letters",
+    "confidence": 85,
+    "notes": "Contains vector files, decorative frames and letters",
+    "_source_name": "ArtDeco Frames & A-Z Letters",
+    "_batch_index": 824
+  },
+  {
+    "name": "CM - Neon Light Lettering Kit 2878511",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Neon Light Lettering Kit",
+    "confidence": 80,
+    "notes": "Lettering kit, likely vector-based",
+    "_source_name": "CM - Neon Light Lettering Kit 2878511",
+    "_batch_index": 825
+  },
+  {
+    "name": "CM - Nutty Nuts - 3D Lettering 2196013",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Nutty Nuts 3D Lettering",
+    "confidence": 80,
+    "notes": "3D lettering, likely vector/illustrator",
+    "_source_name": "CM - Nutty Nuts - 3D Lettering 2196013",
+    "_batch_index": 826
+  },
+  {
+    "name": "CM - Thank You Calligraphy Lettering Set 2121610",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Thank You Calligraphy Lettering Set",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector lettering set",
+    "_source_name": "CM - Thank You Calligraphy Lettering Set 2121610",
+    "_batch_index": 827
+  },
+  {
+    "name": "CreativeMarket Tron Futuro 3D Lettering 2659321",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Tron Futuro 3D Lettering",
+    "confidence": 75,
+    "notes": "PNG and txt files, likely vector lettering previews",
+    "_source_name": "CreativeMarket Tron Futuro 3D Lettering 2659321",
+    "_batch_index": 828
+  },
+  {
+    "name": "DesignOptimal.com - 3D Letters Toolkit for Procreate 4904895",
+    "category": "Procreate - Brushes & Stamps",
+    "clean_name": "3D Letters Toolkit for Procreate",
+    "confidence": 90,
+    "notes": "Procreate toolkit for 3D letters",
+    "_source_name": "DesignOptimal.com - 3D Letters Toolkit for Procreate 4904895",
+    "_batch_index": 829
+  },
+  {
+    "name": "DesignOptimal.com - Candy cane alphabetical letters",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Candy Cane Alphabetical Letters",
+    "confidence": 90,
+    "notes": "Contains .ai and .eps, vector letters",
+    "_source_name": "DesignOptimal.com - Candy cane alphabetical letters",
+    "_batch_index": 830
+  },
+  {
+    "name": "elements-artist-portfolio-a4-us-letter-28-pgs-5FWVWG9-2019-12-18",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Artist Portfolio A4 US Letter 28 Pages",
+    "confidence": 85,
+    "notes": "Portfolio template, likely print-ready",
+    "_source_name": "elements-artist-portfolio-a4-us-letter-28-pgs-5FWVWG9-2019-12-18",
+    "_batch_index": 831
+  },
+  {
+    "name": "elements-marquee-light-bulbs-chaos-11-gray-white-letters-BXJUE9-2018-01-30",
+    "category": "Stock Photos - General",
+    "clean_name": "Marquee Light Bulbs Chaos Gray White Letters",
+    "confidence": 80,
+    "notes": "ZIP file, likely stock photo of marquee letters",
+    "_source_name": "elements-marquee-light-bulbs-chaos-11-gray-white-letters-BXJUE9-2018-01-30",
+    "_batch_index": 832
+  },
+  {
+    "name": "elements-marquee-light-bulbs-chaos-13-green-pool-letters-SRM7AV-2018-01-30",
+    "category": "Stock Photos - General",
+    "clean_name": "Marquee Light Bulbs Chaos Green Pool Letters",
+    "confidence": 85,
+    "notes": "PNG files, stock photo of marquee letters",
+    "_source_name": "elements-marquee-light-bulbs-chaos-13-green-pool-letters-SRM7AV-2018-01-30",
+    "_batch_index": 833
+  },
+  {
+    "name": "elements-tender-alphabet-letters-clipart-set-MACWPW8-2020-01-12",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Tender Alphabet Letters Clipart Set",
+    "confidence": 90,
+    "notes": "Clipart set, likely vector format",
+    "_source_name": "elements-tender-alphabet-letters-clipart-set-MACWPW8-2020-01-12",
+    "_batch_index": 834
+  },
+  {
+    "name": "Funny-Furry-3D-Lettering-4188856",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Funny Furry 3D Lettering",
+    "confidence": 75,
+    "notes": "TXT file, likely vector lettering",
+    "_source_name": "Funny-Furry-3D-Lettering-4188856",
+    "_batch_index": 835
+  },
+  {
+    "name": "GR Folded Letters 4200175",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Folded Letters",
+    "confidence": 85,
+    "notes": "Contains .psd, folded letters template",
+    "_source_name": "GR Folded Letters 4200175",
+    "_batch_index": 836
+  },
+  {
+    "name": "Mercury-3D-Lettering-4274977",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Mercury 3D Lettering",
+    "confidence": 75,
+    "notes": "TXT file, likely vector lettering",
+    "_source_name": "Mercury-3D-Lettering-4274977",
+    "_batch_index": 837
+  },
+  {
+    "name": "Ombre-3D-Lettering-4275323",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Ombre 3D Lettering",
+    "confidence": 75,
+    "notes": "TXT file, likely vector lettering",
+    "_source_name": "Ombre-3D-Lettering-4275323",
+    "_batch_index": 838
+  },
+  {
+    "name": "Pixelo-3D-Lettering-4276198",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Pixelo 3D Lettering",
+    "confidence": 75,
+    "notes": "TXT file, likely vector lettering",
+    "_source_name": "Pixelo-3D-Lettering-4276198",
+    "_batch_index": 839
+  }
+]

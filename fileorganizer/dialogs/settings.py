@@ -1161,26 +1161,31 @@ class AIProviderSettingsDialog(QDialog):
     def _test_github(self):
         self.lbl_gh_status.setText("Testing...")
         self.lbl_gh_status.repaint()
-        token = self.txt_gh_token.text().strip() or None
-        model = self.cmb_gh_model.currentText()
         try:
             from fileorganizer.providers import GitHubModelsProvider
-            p = GitHubModelsProvider(api_key=token, model=model)
+            s = dict(self._settings)
+            tok = self.txt_gh_token.text().strip()
+            if tok:
+                s['github_token'] = tok
+            s['github_model'] = self.cmb_gh_model.currentText()
+            p = GitHubModelsProvider(s)
             ok, msg = p.test_connection()
         except Exception as e:
             ok, msg = False, str(e)
-        _t = get_active_theme()
         self.lbl_gh_status.setText(msg)
         self.lbl_gh_status.setStyleSheet(f"color:{'#4ade80' if ok else '#ef4444'};font-size:11px;")
 
     def _test_deepseek(self):
         self.lbl_ds_status.setText("Testing...")
         self.lbl_ds_status.repaint()
-        key   = self.txt_ds_key.text().strip() or None
-        model = self.cmb_ds_model.currentText()
         try:
             from fileorganizer.providers import DeepSeekProvider
-            p = DeepSeekProvider(api_key=key, model=model)
+            s = dict(self._settings)
+            key = self.txt_ds_key.text().strip()
+            if key:
+                s['deepseek_api_key'] = key
+            s['deepseek_model'] = self.cmb_ds_model.currentText()
+            p = DeepSeekProvider(s)
             ok, msg = p.test_connection()
         except Exception as e:
             ok, msg = False, str(e)

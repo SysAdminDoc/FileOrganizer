@@ -1,0 +1,542 @@
+[
+  {
+    "name": "flyerpost-card-template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Post Card Template",
+    "confidence": 85,
+    "notes": "Legacy category 'Cards' and .jpg files suggest print flyer/postcard.",
+    "_source_name": "flyerpost-card-template",
+    "_batch_index": 360
+  },
+  {
+    "name": "flyerpost-card-template-100845",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Post Card Template",
+    "confidence": 90,
+    "notes": "Contains .psd and .txt; legacy 'Cards' and 'flyerTemplate' hint.",
+    "_source_name": "flyerpost-card-template-100845",
+    "_batch_index": 361
+  },
+  {
+    "name": "flyerpost-card-template-100845-GFXTRA.COM-ARSENIC",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Post Card Template",
+    "confidence": 90,
+    "notes": "Same as above with GFXTRA suffix.",
+    "_source_name": "flyerpost-card-template-100845-GFXTRA.COM-ARSENIC",
+    "_batch_index": 362
+  },
+  {
+    "name": "Folded Graduation Card Template",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Folded Graduation Card Template",
+    "confidence": 90,
+    "notes": "Graduation card, legacy 'Cards', event-specific.",
+    "_source_name": "Folded Graduation Card Template",
+    "_batch_index": 363
+  },
+  {
+    "name": "gfxtra-vintage-business-card-12082018",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Vintage Business Card",
+    "confidence": 95,
+    "notes": "Business card with .psd and .pdf.",
+    "_source_name": "gfxtra-vintage-business-card-12082018",
+    "_batch_index": 364
+  },
+  {
+    "name": "Global Star International Card",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Global Star International Card",
+    "confidence": 85,
+    "notes": "Legacy 'Cards', .ai and .eps files suggest vector business card.",
+    "_source_name": "Global Star International Card",
+    "_batch_index": 365
+  },
+  {
+    "name": "Gold royal vintage cards with ribbons",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Gold Royal Vintage Cards with Ribbons",
+    "confidence": 80,
+    "notes": "Legacy 'Cards', .eps and .png, likely business or invitation card.",
+    "_source_name": "Gold royal vintage cards with ribbons",
+    "_batch_index": 366
+  },
+  {
+    "name": "Golden Style VIP Pass Card",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Golden Style VIP Pass Card",
+    "confidence": 85,
+    "notes": "VIP pass card, .psd file, legacy 'Cards'.",
+    "_source_name": "Golden Style VIP Pass Card",
+    "_batch_index": 367
+  },
+  {
+    "name": "GR 56 Classic Playing Cards 6635594",
+    "category": "Print - Other",
+    "clean_name": "56 Classic Playing Cards",
+    "confidence": 80,
+    "notes": "Playing cards, not standard print category, but print product.",
+    "_source_name": "GR 56 Classic Playing Cards 6635594",
+    "_batch_index": 368
+  },
+  {
+    "name": "GR Atractiva Gift Card 3619668",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Atractiva Gift Card",
+    "confidence": 85,
+    "notes": "Gift card template, legacy 'Cards'.",
+    "_source_name": "GR Atractiva Gift Card 3619668",
+    "_batch_index": 369
+  },
+  {
+    "name": "GR Dad Superhero Greeting Card 4879672",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Dad Superhero Greeting Card",
+    "confidence": 85,
+    "notes": "Greeting card, event-specific (Father's Day).",
+    "_source_name": "GR Dad Superhero Greeting Card 4879672",
+    "_batch_index": 370
+  },
+  {
+    "name": "GR Flyer Postcard Template 102747",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Postcard Template",
+    "confidence": 90,
+    "notes": "Flyer/postcard template, legacy 'Cards'.",
+    "_source_name": "GR Flyer Postcard Template 102747",
+    "_batch_index": 371
+  },
+  {
+    "name": "GR Game Cards Design Kit 1223481",
+    "category": "Print - Other",
+    "clean_name": "Game Cards Design Kit",
+    "confidence": 80,
+    "notes": "Game cards, print product.",
+    "_source_name": "GR Game Cards Design Kit 1223481",
+    "_batch_index": 372
+  },
+  {
+    "name": "GR Modern Architechture Bussines Card Template 2703860",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Modern Architecture Business Card Template",
+    "confidence": 95,
+    "notes": "Business card template.",
+    "_source_name": "GR Modern Architechture Bussines Card Template 2703860",
+    "_batch_index": 373
+  },
+  {
+    "name": "GR TCG Fantasy Trading Card Game Kit in Medieval 2337095",
+    "category": "Print - Other",
+    "clean_name": "Fantasy Trading Card Game Kit",
+    "confidence": 80,
+    "notes": "Trading cards, print product.",
+    "_source_name": "GR TCG Fantasy Trading Card Game Kit in Medieval 2337095",
+    "_batch_index": 374
+  },
+  {
+    "name": "GR Testaurante Menu Card 698273",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Restaurant Menu Card",
+    "confidence": 85,
+    "notes": "Menu card, likely print flyer/poster.",
+    "_source_name": "GR Testaurante Menu Card 698273",
+    "_batch_index": 375
+  },
+  {
+    "name": "Graduation Card 2018 She did it-2389570",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Card 2018 She Did It",
+    "confidence": 90,
+    "notes": "Graduation card, event-specific.",
+    "_source_name": "Graduation Card 2018 She did it-2389570",
+    "_batch_index": 376
+  },
+  {
+    "name": "Graduation Card PSD Class of 2018 2389629",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Card PSD Class of 2018",
+    "confidence": 90,
+    "notes": "Graduation card template.",
+    "_source_name": "Graduation Card PSD Class of 2018 2389629",
+    "_batch_index": 377
+  },
+  {
+    "name": "Graduation Card PSD Class of 2018-2389630",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Card PSD Class of 2018",
+    "confidence": 90,
+    "notes": "Graduation card template.",
+    "_source_name": "Graduation Card PSD Class of 2018-2389630",
+    "_batch_index": 378
+  },
+  {
+    "name": "Graduation Card Template 2334609",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Card Template",
+    "confidence": 90,
+    "notes": "Graduation card template.",
+    "_source_name": "Graduation Card Template 2334609",
+    "_batch_index": 379
+  },
+  {
+    "name": "Graduation Card Template 2334643",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Card Template",
+    "confidence": 90,
+    "notes": "Graduation card template.",
+    "_source_name": "Graduation Card Template 2334643",
+    "_batch_index": 380
+  },
+  {
+    "name": "Graduation Card Template 2334720",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Card Template",
+    "confidence": 90,
+    "notes": "Graduation card template.",
+    "_source_name": "Graduation Card Template 2334720",
+    "_batch_index": 381
+  },
+  {
+    "name": "Graduation Card Template Bundle",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Card Template Bundle",
+    "confidence": 90,
+    "notes": "Bundle of graduation cards.",
+    "_source_name": "Graduation Card Template Bundle",
+    "_batch_index": 382
+  },
+  {
+    "name": "Graduation Card Template-2334732",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Card Template",
+    "confidence": 90,
+    "notes": "Graduation card template.",
+    "_source_name": "Graduation Card Template-2334732",
+    "_batch_index": 383
+  },
+  {
+    "name": "graduation-party-thank-you-card-template Psd",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Party Thank You Card Template",
+    "confidence": 90,
+    "notes": "Graduation thank you card.",
+    "_source_name": "graduation-party-thank-you-card-template Psd",
+    "_batch_index": 384
+  },
+  {
+    "name": "Graduation-Postcard-Invitation-Template Psd",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Postcard Invitation Template",
+    "confidence": 90,
+    "notes": "Graduation invitation postcard.",
+    "_source_name": "Graduation-Postcard-Invitation-Template Psd",
+    "_batch_index": 385
+  },
+  {
+    "name": "graduation-thank-you-card-template Psd",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Graduation Thank You Card Template",
+    "confidence": 90,
+    "notes": "Graduation thank you card.",
+    "_source_name": "graduation-thank-you-card-template Psd",
+    "_batch_index": 386
+  },
+  {
+    "name": "Graphicriver - Complimentary Compliment Slip Template Compliment Card Design Template 20766250",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Compliment Slip Template",
+    "confidence": 85,
+    "notes": "Compliment card, stationery.",
+    "_source_name": "Graphicriver - Complimentary Compliment Slip Template Compliment Card Design Template 20766250",
+    "_batch_index": 387
+  },
+  {
+    "name": "Graphicriver - Elegant Save the Date Post Card 18607514",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Elegant Save the Date Post Card",
+    "confidence": 90,
+    "notes": "Save the date card, event-specific.",
+    "_source_name": "Graphicriver - Elegant Save the Date Post Card 18607514",
+    "_batch_index": 388
+  },
+  {
+    "name": "Graphicriver - Golden Gift Cards 8677620",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Golden Gift Cards",
+    "confidence": 85,
+    "notes": "Gift card template.",
+    "_source_name": "Graphicriver - Golden Gift Cards 8677620",
+    "_batch_index": 389
+  },
+  {
+    "name": "Graphicriver - Interior Design Rack Card 10497187",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Interior Design Rack Card",
+    "confidence": 85,
+    "notes": "Rack card, print flyer.",
+    "_source_name": "Graphicriver - Interior Design Rack Card 10497187",
+    "_batch_index": 390
+  },
+  {
+    "name": "Graphicriver - Multipurpose Greeting Card for Women 17587161",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Multipurpose Greeting Card for Women",
+    "confidence": 85,
+    "notes": "Greeting card.",
+    "_source_name": "Graphicriver - Multipurpose Greeting Card for Women 17587161",
+    "_batch_index": 391
+  },
+  {
+    "name": "Graphicriver - Save the Date Post Card 18299259",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date Post Card",
+    "confidence": 90,
+    "notes": "Save the date card.",
+    "_source_name": "Graphicriver - Save the Date Post Card 18299259",
+    "_batch_index": 392
+  },
+  {
+    "name": "Graphicriver - Save the Date Post Card 19337197",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date Post Card",
+    "confidence": 90,
+    "notes": "Save the date card.",
+    "_source_name": "Graphicriver - Save the Date Post Card 19337197",
+    "_batch_index": 393
+  },
+  {
+    "name": "Graphicriver - Save the Date Post Card 19349474",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date Post Card",
+    "confidence": 90,
+    "notes": "Save the date card.",
+    "_source_name": "Graphicriver - Save the Date Post Card 19349474",
+    "_batch_index": 394
+  },
+  {
+    "name": "Graphicriver - Wedding Planner Rack Card 15894397",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wedding Planner Rack Card",
+    "confidence": 85,
+    "notes": "Rack card for wedding planner.",
+    "_source_name": "Graphicriver - Wedding Planner Rack Card 15894397",
+    "_batch_index": 395
+  },
+  {
+    "name": "GraphicRiver Hipster Vintage Invitation Card 17755022",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Hipster Vintage Invitation Card",
+    "confidence": 90,
+    "notes": "Invitation card.",
+    "_source_name": "GraphicRiver Hipster Vintage Invitation Card 17755022",
+    "_batch_index": 396
+  },
+  {
+    "name": "graphicriver-22301720-electronics-business-card",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Electronics Business Card",
+    "confidence": 95,
+    "notes": "Business card.",
+    "_source_name": "graphicriver-22301720-electronics-business-card",
+    "_batch_index": 397
+  },
+  {
+    "name": "ID CARD 2348345",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template.",
+    "_source_name": "ID CARD 2348345",
+    "_batch_index": 398
+  },
+  {
+    "name": "ID CARD 2348361",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template.",
+    "_source_name": "ID CARD 2348361",
+    "_batch_index": 399
+  },
+  {
+    "name": "ID Card 2348364",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template.",
+    "_source_name": "ID Card 2348364",
+    "_batch_index": 400
+  },
+  {
+    "name": "ID Card Layout with Orange Accents 335387570",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Layout with Orange Accents",
+    "confidence": 85,
+    "notes": "ID card layout.",
+    "_source_name": "ID Card Layout with Orange Accents 335387570",
+    "_batch_index": 401
+  },
+  {
+    "name": "ID Card Pack",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Pack",
+    "confidence": 85,
+    "notes": "ID card pack.",
+    "_source_name": "ID Card Pack",
+    "_batch_index": 402
+  },
+  {
+    "name": "ID Card Template",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Template",
+    "confidence": 85,
+    "notes": "ID card template.",
+    "_source_name": "ID Card Template",
+    "_batch_index": 403
+  },
+  {
+    "name": "ID Card Template 2",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Template 2",
+    "confidence": 85,
+    "notes": "ID card template.",
+    "_source_name": "ID Card Template 2",
+    "_batch_index": 404
+  },
+  {
+    "name": "Id Card Vol 1",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Vol 1",
+    "confidence": 85,
+    "notes": "ID card volume.",
+    "_source_name": "Id Card Vol 1",
+    "_batch_index": 405
+  },
+  {
+    "name": "ID CARD-2348381",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template.",
+    "_source_name": "ID CARD-2348381",
+    "_batch_index": 406
+  },
+  {
+    "name": "ID Card-2506051",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template.",
+    "_source_name": "ID Card-2506051",
+    "_batch_index": 407
+  },
+  {
+    "name": "Invitation Card",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Invitation Card",
+    "confidence": 90,
+    "notes": "Invitation card.",
+    "_source_name": "Invitation Card",
+    "_batch_index": 408
+  },
+  {
+    "name": "Invitation Post Card",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Invitation Post Card",
+    "confidence": 90,
+    "notes": "Invitation postcard.",
+    "_source_name": "Invitation Post Card",
+    "_batch_index": 409
+  },
+  {
+    "name": "invitation-card-V3",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Invitation Card V3",
+    "confidence": 85,
+    "notes": "Invitation card, though contains brochure hint.",
+    "_source_name": "invitation-card-V3",
+    "_batch_index": 410
+  },
+  {
+    "name": "isolated male hand holding credit card GFXTRA",
+    "category": "Stock Photos - General",
+    "clean_name": "Isolated Male Hand Holding Credit Card",
+    "confidence": 90,
+    "notes": "Stock photo of hand holding credit card.",
+    "_source_name": "isolated male hand holding credit card GFXTRA",
+    "_batch_index": 411
+  },
+  {
+    "name": "Jellyfish Constellation Card id49 2167704",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Jellyfish Constellation Card",
+    "confidence": 85,
+    "notes": "Namecard design.",
+    "_source_name": "Jellyfish Constellation Card id49 2167704",
+    "_batch_index": 412
+  },
+  {
+    "name": "Job Fair Postcard Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Job Fair Postcard Template",
+    "confidence": 85,
+    "notes": "Postcard for job fair.",
+    "_source_name": "Job Fair Postcard Template",
+    "_batch_index": 413
+  },
+  {
+    "name": "Luxury VIP Pass Card 2072993",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Luxury VIP Pass Card",
+    "confidence": 85,
+    "notes": "VIP pass card.",
+    "_source_name": "Luxury VIP Pass Card 2072993",
+    "_batch_index": 414
+  },
+  {
+    "name": "Mall-ID-Card-Template Psd",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Mall ID Card Template",
+    "confidence": 85,
+    "notes": "Mall ID card template.",
+    "_source_name": "Mall-ID-Card-Template Psd",
+    "_batch_index": 415
+  },
+  {
+    "name": "Marketing Postcard Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing Postcard Template",
+    "confidence": 85,
+    "notes": "Marketing postcard.",
+    "_source_name": "Marketing Postcard Template",
+    "_batch_index": 416
+  },
+  {
+    "name": "Merry christmas and happy new year card with decorative elements, christmas toys, bells, snowflakes and stars",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Merry Christmas and Happy New Year Card",
+    "confidence": 90,
+    "notes": "Christmas card, event-specific.",
+    "_source_name": "Merry christmas and happy new year card with decorative elements, christmas toys, bells, snowflakes and stars",
+    "_batch_index": 417
+  },
+  {
+    "name": "Minimal Name card Template",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Minimal Name Card Template",
+    "confidence": 95,
+    "notes": "Name card (business card).",
+    "_source_name": "Minimal Name card Template",
+    "_batch_index": 418
+  },
+  {
+    "name": "Mobile App DL Card Template 1902835",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App DL Card Template",
+    "confidence": 80,
+    "notes": "Download card for mobile app, likely print.",
+    "_source_name": "Mobile App DL Card Template 1902835",
+    "_batch_index": 419
+  }
+]

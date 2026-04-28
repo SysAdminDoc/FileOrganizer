@@ -1,0 +1,542 @@
+[
+  {
+    "name": "01-cover_8",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cover 8",
+    "confidence": 90,
+    "notes": "PSD file, likely a cover template",
+    "_source_name": "01-cover_8",
+    "_batch_index": 60
+  },
+  {
+    "name": "01-cover_9",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cover 9",
+    "confidence": 90,
+    "notes": "PSD file, likely a cover template",
+    "_source_name": "01-cover_9",
+    "_batch_index": 61
+  },
+  {
+    "name": "01-Home",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Home",
+    "confidence": 85,
+    "notes": "PSD file, likely a homepage design template",
+    "_source_name": "01-Home",
+    "_batch_index": 62
+  },
+  {
+    "name": "01-Homepage-01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Homepage 01",
+    "confidence": 85,
+    "notes": "PSD file, homepage template",
+    "_source_name": "01-Homepage-01",
+    "_batch_index": 63
+  },
+  {
+    "name": "01-Homepage-01_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Homepage 01 v2",
+    "confidence": 85,
+    "notes": "PSD file, homepage template variant",
+    "_source_name": "01-Homepage-01_2",
+    "_batch_index": 64
+  },
+  {
+    "name": "01-Modern A4 Size Invoice Template PSD",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Modern A4 Invoice Template",
+    "confidence": 95,
+    "notes": "PSD invoice template, business stationery",
+    "_source_name": "01-Modern A4 Size Invoice Template PSD",
+    "_batch_index": 65
+  },
+  {
+    "name": "01-Real Estate Business Flyer PSD",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Real Estate Business Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template for real estate",
+    "_source_name": "01-Real Estate Business Flyer PSD",
+    "_batch_index": 66
+  },
+  {
+    "name": "010-Clock colored",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Clock Colored",
+    "confidence": 80,
+    "notes": "PSD clock design element",
+    "_source_name": "010-Clock colored",
+    "_batch_index": 67
+  },
+  {
+    "name": "010-Navigation knob",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Navigation Knob",
+    "confidence": 80,
+    "notes": "PSD UI knob element",
+    "_source_name": "010-Navigation knob",
+    "_batch_index": 68
+  },
+  {
+    "name": "010",
+    "category": "Photoshop - Other",
+    "clean_name": "010",
+    "confidence": 60,
+    "notes": "PSD file, generic numbered asset",
+    "_source_name": "010",
+    "_batch_index": 69
+  },
+  {
+    "name": "011-Clock",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Clock",
+    "confidence": 80,
+    "notes": "PSD clock design",
+    "_source_name": "011-Clock",
+    "_batch_index": 70
+  },
+  {
+    "name": "012-My Clock",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "My Clock",
+    "confidence": 80,
+    "notes": "PSD clock design",
+    "_source_name": "012-My Clock",
+    "_batch_index": 71
+  },
+  {
+    "name": "012-PSD volume knobs",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "PSD Volume Knobs",
+    "confidence": 85,
+    "notes": "PSD volume knob UI elements",
+    "_source_name": "012-PSD volume knobs",
+    "_batch_index": 72
+  },
+  {
+    "name": "013-Coming Soon Counter",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Coming Soon Counter",
+    "confidence": 85,
+    "notes": "PSD countdown/coming soon template",
+    "_source_name": "013-Coming Soon Counter",
+    "_batch_index": 73
+  },
+  {
+    "name": "013-realistic metal knob",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Realistic Metal Knob",
+    "confidence": 85,
+    "notes": "PSD realistic knob design",
+    "_source_name": "013-realistic metal knob",
+    "_batch_index": 74
+  },
+  {
+    "name": "013",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "013",
+    "confidence": 80,
+    "notes": "EPS vector file",
+    "_source_name": "013",
+    "_batch_index": 75
+  },
+  {
+    "name": "014-Countdown",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Countdown",
+    "confidence": 85,
+    "notes": "PSD countdown template",
+    "_source_name": "014-Countdown",
+    "_batch_index": 76
+  },
+  {
+    "name": "014-Simple color selector",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Simple Color Selector",
+    "confidence": 85,
+    "notes": "PSD color selector UI element",
+    "_source_name": "014-Simple color selector",
+    "_batch_index": 77
+  },
+  {
+    "name": "014",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "014",
+    "confidence": 80,
+    "notes": "EPS vector file",
+    "_source_name": "014",
+    "_batch_index": 78
+  },
+  {
+    "name": "014_701",
+    "category": "Photoshop - Other",
+    "clean_name": "014_701",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_701",
+    "_batch_index": 79
+  },
+  {
+    "name": "014_702",
+    "category": "Photoshop - Other",
+    "clean_name": "014_702",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_702",
+    "_batch_index": 80
+  },
+  {
+    "name": "014_703",
+    "category": "Photoshop - Other",
+    "clean_name": "014_703",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_703",
+    "_batch_index": 81
+  },
+  {
+    "name": "014_704",
+    "category": "Photoshop - Other",
+    "clean_name": "014_704",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_704",
+    "_batch_index": 82
+  },
+  {
+    "name": "014_705",
+    "category": "Photoshop - Other",
+    "clean_name": "014_705",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_705",
+    "_batch_index": 83
+  },
+  {
+    "name": "014_706",
+    "category": "Photoshop - Other",
+    "clean_name": "014_706",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_706",
+    "_batch_index": 84
+  },
+  {
+    "name": "014_707",
+    "category": "Photoshop - Other",
+    "clean_name": "014_707",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_707",
+    "_batch_index": 85
+  },
+  {
+    "name": "014_708",
+    "category": "Photoshop - Other",
+    "clean_name": "014_708",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_708",
+    "_batch_index": 86
+  },
+  {
+    "name": "014_709",
+    "category": "Photoshop - Other",
+    "clean_name": "014_709",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_709",
+    "_batch_index": 87
+  },
+  {
+    "name": "014_710",
+    "category": "Photoshop - Other",
+    "clean_name": "014_710",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_710",
+    "_batch_index": 88
+  },
+  {
+    "name": "014_711",
+    "category": "Photoshop - Other",
+    "clean_name": "014_711",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_711",
+    "_batch_index": 89
+  },
+  {
+    "name": "014_712",
+    "category": "Photoshop - Other",
+    "clean_name": "014_712",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_712",
+    "_batch_index": 90
+  },
+  {
+    "name": "014_713",
+    "category": "Photoshop - Other",
+    "clean_name": "014_713",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_713",
+    "_batch_index": 91
+  },
+  {
+    "name": "014_714",
+    "category": "Photoshop - Other",
+    "clean_name": "014_714",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_714",
+    "_batch_index": 92
+  },
+  {
+    "name": "014_715",
+    "category": "Photoshop - Other",
+    "clean_name": "014_715",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_715",
+    "_batch_index": 93
+  },
+  {
+    "name": "014_716",
+    "category": "Photoshop - Other",
+    "clean_name": "014_716",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_716",
+    "_batch_index": 94
+  },
+  {
+    "name": "014_717",
+    "category": "Photoshop - Other",
+    "clean_name": "014_717",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_717",
+    "_batch_index": 95
+  },
+  {
+    "name": "014_718",
+    "category": "Photoshop - Other",
+    "clean_name": "014_718",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_718",
+    "_batch_index": 96
+  },
+  {
+    "name": "014_719",
+    "category": "Photoshop - Other",
+    "clean_name": "014_719",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_719",
+    "_batch_index": 97
+  },
+  {
+    "name": "014_720",
+    "category": "Photoshop - Other",
+    "clean_name": "014_720",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_720",
+    "_batch_index": 98
+  },
+  {
+    "name": "014_721",
+    "category": "Photoshop - Other",
+    "clean_name": "014_721",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_721",
+    "_batch_index": 99
+  },
+  {
+    "name": "014_722",
+    "category": "Photoshop - Other",
+    "clean_name": "014_722",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_722",
+    "_batch_index": 100
+  },
+  {
+    "name": "014_723",
+    "category": "Photoshop - Other",
+    "clean_name": "014_723",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_723",
+    "_batch_index": 101
+  },
+  {
+    "name": "014_724",
+    "category": "Photoshop - Other",
+    "clean_name": "014_724",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_724",
+    "_batch_index": 102
+  },
+  {
+    "name": "014_725",
+    "category": "Photoshop - Other",
+    "clean_name": "014_725",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_725",
+    "_batch_index": 103
+  },
+  {
+    "name": "014_726",
+    "category": "Photoshop - Other",
+    "clean_name": "014_726",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_726",
+    "_batch_index": 104
+  },
+  {
+    "name": "014_727",
+    "category": "Photoshop - Other",
+    "clean_name": "014_727",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_727",
+    "_batch_index": 105
+  },
+  {
+    "name": "014_728",
+    "category": "Photoshop - Other",
+    "clean_name": "014_728",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_728",
+    "_batch_index": 106
+  },
+  {
+    "name": "014_729",
+    "category": "Photoshop - Other",
+    "clean_name": "014_729",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_729",
+    "_batch_index": 107
+  },
+  {
+    "name": "014_730",
+    "category": "Photoshop - Other",
+    "clean_name": "014_730",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_730",
+    "_batch_index": 108
+  },
+  {
+    "name": "014_731",
+    "category": "Photoshop - Other",
+    "clean_name": "014_731",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_731",
+    "_batch_index": 109
+  },
+  {
+    "name": "014_732",
+    "category": "Photoshop - Other",
+    "clean_name": "014_732",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_732",
+    "_batch_index": 110
+  },
+  {
+    "name": "014_733",
+    "category": "Photoshop - Other",
+    "clean_name": "014_733",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_733",
+    "_batch_index": 111
+  },
+  {
+    "name": "014_734",
+    "category": "Photoshop - Other",
+    "clean_name": "014_734",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_734",
+    "_batch_index": 112
+  },
+  {
+    "name": "014_735",
+    "category": "Photoshop - Other",
+    "clean_name": "014_735",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_735",
+    "_batch_index": 113
+  },
+  {
+    "name": "014_736",
+    "category": "Photoshop - Other",
+    "clean_name": "014_736",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_736",
+    "_batch_index": 114
+  },
+  {
+    "name": "014_737",
+    "category": "Photoshop - Other",
+    "clean_name": "014_737",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_737",
+    "_batch_index": 115
+  },
+  {
+    "name": "014_738",
+    "category": "Photoshop - Other",
+    "clean_name": "014_738",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_738",
+    "_batch_index": 116
+  },
+  {
+    "name": "014_739",
+    "category": "Photoshop - Other",
+    "clean_name": "014_739",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_739",
+    "_batch_index": 117
+  },
+  {
+    "name": "014_740",
+    "category": "Photoshop - Other",
+    "clean_name": "014_740",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_740",
+    "_batch_index": 118
+  },
+  {
+    "name": "014_741",
+    "category": "Photoshop - Other",
+    "clean_name": "014_741",
+    "confidence": 60,
+    "notes": "PSD file, numbered asset series",
+    "_source_name": "014_741",
+    "_batch_index": 119
+  }
+]

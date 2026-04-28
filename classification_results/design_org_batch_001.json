@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Christmas",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas",
+    "confidence": 90,
+    "notes": "Legacy category suggests AE, name implies holiday theme",
+    "_source_name": "Christmas",
+    "_batch_index": 0
+  },
+  {
+    "name": "CINEPUNCH.V20",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "CINEPUNCH V20",
+    "confidence": 85,
+    "notes": "Contains .aep and tutorials, cinematic name",
+    "_source_name": "CINEPUNCH.V20",
+    "_batch_index": 1
+  },
+  {
+    "name": "Logo Reveal",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Logo Reveal",
+    "confidence": 95,
+    "notes": "Legacy category AE, name directly matches category",
+    "_source_name": "Logo Reveal",
+    "_batch_index": 2
+  },
+  {
+    "name": "10-Sand-Blur-Watercolor-Backgrounds-10JPG 180318",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Sand Blur Watercolor Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy category Backgrounds, JPG images suitable as textures",
+    "_source_name": "10-Sand-Blur-Watercolor-Backgrounds-10JPG 180318",
+    "_batch_index": 3
+  },
+  {
+    "name": "1000 High Resolution RF Stock Images with No Backgrounds GFXTRA",
+    "category": "Stock Photos - General",
+    "clean_name": "1000 High Resolution RF Stock Images",
+    "confidence": 90,
+    "notes": "PNG stock images with no backgrounds",
+    "_source_name": "1000 High Resolution RF Stock Images with No Backgrounds GFXTRA",
+    "_batch_index": 4
+  },
+  {
+    "name": "10357 Ribbons Background psd Template-08082018",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Ribbons Background PSD Template",
+    "confidence": 85,
+    "notes": "PSD template file",
+    "_source_name": "10357 Ribbons Background psd Template-08082018",
+    "_batch_index": 5
+  },
+  {
+    "name": "11370056-4k-plexus-backgrounds-project",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "4K Plexus Backgrounds Project",
+    "confidence": 80,
+    "notes": "VideoHive project, likely AE motion graphics",
+    "_source_name": "11370056-4k-plexus-backgrounds-project",
+    "_batch_index": 6
+  },
+  {
+    "name": "15-ultrahigh-res-abstract-backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Ultra High Res Abstract Backgrounds",
+    "confidence": 85,
+    "notes": "PNG/PSD backgrounds, legacy Backgrounds",
+    "_source_name": "15-ultrahigh-res-abstract-backgrounds",
+    "_batch_index": 7
+  },
+  {
+    "name": "3 Abstract Art Background vector designs",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Abstract Art Background Vector Designs",
+    "confidence": 90,
+    "notes": "AI/EPS vector files",
+    "_source_name": "3 Abstract Art Background vector designs",
+    "_batch_index": 8
+  },
+  {
+    "name": "30 Glitch Textures Backgrounds Collection",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Glitch Textures Backgrounds Collection",
+    "confidence": 80,
+    "notes": "Glitch textures, likely overlays",
+    "_source_name": "30 Glitch Textures Backgrounds Collection",
+    "_batch_index": 9
+  },
+  {
+    "name": "30-satin-curtain-backgrounds-29294",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Satin Curtain Backgrounds",
+    "confidence": 85,
+    "notes": "PSD backgrounds, legacy Backgrounds",
+    "_source_name": "30-satin-curtain-backgrounds-29294",
+    "_batch_index": 10
+  },
+  {
+    "name": "30-satin-curtain-backgrounds-29294-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Satin Curtain Backgrounds",
+    "confidence": 85,
+    "notes": "Duplicate with GFXTRA suffix, same content",
+    "_source_name": "30-satin-curtain-backgrounds-29294-GFXTRA.COM-ARSENIC",
+    "_batch_index": 11
+  },
+  {
+    "name": "3d-black-backgrounds-139832",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "3D Black Backgrounds",
+    "confidence": 80,
+    "notes": "Legacy Backgrounds, likely textures",
+    "_source_name": "3d-black-backgrounds-139832",
+    "_batch_index": 12
+  },
+  {
+    "name": "3d-black-backgrounds-139832 -GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "3D Black Backgrounds",
+    "confidence": 80,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "3d-black-backgrounds-139832 -GFXTRA.COM-ARSENIC",
+    "_batch_index": 13
+  },
+  {
+    "name": "3d-showcase-line-backgrounds-x10",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "3D Showcase Line Backgrounds",
+    "confidence": 80,
+    "notes": "Legacy Backgrounds, line backgrounds",
+    "_source_name": "3d-showcase-line-backgrounds-x10",
+    "_batch_index": 14
+  },
+  {
+    "name": "5-perforated-metal-grid-backgrounds-84152",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Perforated Metal Grid Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, metal grid textures",
+    "_source_name": "5-perforated-metal-grid-backgrounds-84152",
+    "_batch_index": 15
+  },
+  {
+    "name": "5-perforated-metal-grid-backgrounds-84152-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Perforated Metal Grid Backgrounds",
+    "confidence": 85,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "5-perforated-metal-grid-backgrounds-84152-GFXTRA.COM-ARSENIC",
+    "_batch_index": 16
+  },
+  {
+    "name": "6-clean-floor-reflect-backgrounds-118555",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Clean Floor Reflect Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, floor textures",
+    "_source_name": "6-clean-floor-reflect-backgrounds-118555",
+    "_batch_index": 17
+  },
+  {
+    "name": "6-clean-floor-reflect-backgrounds-118555-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Clean Floor Reflect Backgrounds",
+    "confidence": 85,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "6-clean-floor-reflect-backgrounds-118555-GFXTRA.COM-ARSENIC",
+    "_batch_index": 18
+  },
+  {
+    "name": "72 Spotlight Backgrounds 418704",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Spotlight Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, spotlight textures",
+    "_source_name": "72 Spotlight Backgrounds 418704",
+    "_batch_index": 19
+  },
+  {
+    "name": "7Vintage_Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Vintage Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, vintage textures",
+    "_source_name": "7Vintage_Backgrounds",
+    "_batch_index": 20
+  },
+  {
+    "name": "8-grunge-backgrounds-2000x15008-1445",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Grunge Backgrounds",
+    "confidence": 85,
+    "notes": "JPG grunge backgrounds, legacy Backgrounds",
+    "_source_name": "8-grunge-backgrounds-2000x15008-1445",
+    "_batch_index": 21
+  },
+  {
+    "name": "8-grunge-backgrounds-2000x15008-1445-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Grunge Backgrounds",
+    "confidence": 85,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "8-grunge-backgrounds-2000x15008-1445-GFXTRA.COM-ARSENIC",
+    "_batch_index": 22
+  },
+  {
+    "name": "Abstract Colorful Backgrounds",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Abstract Colorful Backgrounds",
+    "confidence": 85,
+    "notes": "EPS vector files",
+    "_source_name": "Abstract Colorful Backgrounds",
+    "_batch_index": 23
+  },
+  {
+    "name": "abstract-background-137530",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Abstract Background",
+    "confidence": 80,
+    "notes": "Legacy Backgrounds, likely textures",
+    "_source_name": "abstract-background-137530",
+    "_batch_index": 24
+  },
+  {
+    "name": "abstract-background-137530-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Abstract Background",
+    "confidence": 80,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "abstract-background-137530-GFXTRA.COM-ARSENIC",
+    "_batch_index": 25
+  },
+  {
+    "name": "abstract-design-background-for-website-63423",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Abstract Design Background for Website",
+    "confidence": 80,
+    "notes": "Legacy Backgrounds, web backgrounds",
+    "_source_name": "abstract-design-background-for-website-63423",
+    "_batch_index": 26
+  },
+  {
+    "name": "abstract-design-background-for-website-63423-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Abstract Design Background for Website",
+    "confidence": 80,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "abstract-design-background-for-website-63423-GFXTRA.COM-ARSENIC",
+    "_batch_index": 27
+  },
+  {
+    "name": "aloe vera isolated transparency background-GFXTRA",
+    "category": "Stock Photos - General",
+    "clean_name": "Aloe Vera Isolated Transparency Background",
+    "confidence": 85,
+    "notes": "Isolated subject on transparent background, stock photo",
+    "_source_name": "aloe vera isolated transparency background-GFXTRA",
+    "_batch_index": 28
+  },
+  {
+    "name": "autumn_backgrounds2",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Autumn Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, seasonal textures",
+    "_source_name": "autumn_backgrounds2",
+    "_batch_index": 29
+  },
+  {
+    "name": "background-2a-151815",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Background 2A",
+    "confidence": 80,
+    "notes": "Legacy Backgrounds, generic background",
+    "_source_name": "background-2a-151815",
+    "_batch_index": 30
+  },
+  {
+    "name": "background-2a-151815-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Background 2A",
+    "confidence": 80,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "background-2a-151815-GFXTRA.COM-ARSENIC",
+    "_batch_index": 31
+  },
+  {
+    "name": "background-creator",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Background Creator",
+    "confidence": 75,
+    "notes": "Legacy Backgrounds, likely texture creation tool",
+    "_source_name": "background-creator",
+    "_batch_index": 32
+  },
+  {
+    "name": "background-graphics-121464",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Background Graphics",
+    "confidence": 80,
+    "notes": "Legacy Backgrounds, generic graphics",
+    "_source_name": "background-graphics-121464",
+    "_batch_index": 33
+  },
+  {
+    "name": "background-graphics-121464-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Background Graphics",
+    "confidence": 80,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "background-graphics-121464-GFXTRA.COM-ARSENIC",
+    "_batch_index": 34
+  },
+  {
+    "name": "backgrounds-for-blog-dates-32668",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Backgrounds for Blog Dates",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, blog date backgrounds",
+    "_source_name": "backgrounds-for-blog-dates-32668",
+    "_batch_index": 35
+  },
+  {
+    "name": "backgrounds-for-blog-dates-32668-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Backgrounds for Blog Dates",
+    "confidence": 85,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "backgrounds-for-blog-dates-32668-GFXTRA.COM-ARSENIC",
+    "_batch_index": 36
+  },
+  {
+    "name": "Backgrounds-Textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Backgrounds Textures",
+    "confidence": 95,
+    "notes": "Legacy Backgrounds, contains abstract backgrounds",
+    "_source_name": "Backgrounds-Textures",
+    "_batch_index": 37
+  },
+  {
+    "name": "Backgrounds-Textures-2",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Backgrounds Textures 2",
+    "confidence": 95,
+    "notes": "Legacy Backgrounds, cosmic bundle",
+    "_source_name": "Backgrounds-Textures-2",
+    "_batch_index": 38
+  },
+  {
+    "name": "Backgrounds-Textures-3",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Backgrounds Textures 3",
+    "confidence": 95,
+    "notes": "Legacy Backgrounds, agate collection",
+    "_source_name": "Backgrounds-Textures-3",
+    "_batch_index": 39
+  },
+  {
+    "name": "Backgrounds-Textures-4",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Backgrounds Textures 4",
+    "confidence": 95,
+    "notes": "Legacy Backgrounds, agate collection",
+    "_source_name": "Backgrounds-Textures-4",
+    "_batch_index": 40
+  },
+  {
+    "name": "Backgrounds-Textures-5",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Backgrounds Textures 5",
+    "confidence": 95,
+    "notes": "Legacy Backgrounds, agate mockups",
+    "_source_name": "Backgrounds-Textures-5",
+    "_batch_index": 41
+  },
+  {
+    "name": "Bike on a transparent background",
+    "category": "Stock Photos - General",
+    "clean_name": "Bike on Transparent Background",
+    "confidence": 85,
+    "notes": "Isolated subject, stock photo",
+    "_source_name": "Bike on a transparent background",
+    "_batch_index": 42
+  },
+  {
+    "name": "Black History Month Event Flyer Layout with Abstract Background 317318625",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Black History Month Event Flyer",
+    "confidence": 90,
+    "notes": "Flyer layout, print category",
+    "_source_name": "Black History Month Event Flyer Layout with Abstract Background 317318625",
+    "_batch_index": 43
+  },
+  {
+    "name": "blur-gradient-background",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Blur Gradient Background",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, gradient backgrounds",
+    "_source_name": "blur-gradient-background",
+    "_batch_index": 44
+  },
+  {
+    "name": "blur-gradient-backgrounds-iphone-ipad",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Blur Gradient Backgrounds iPhone iPad",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, mobile backgrounds",
+    "_source_name": "blur-gradient-backgrounds-iphone-ipad",
+    "_batch_index": 45
+  },
+  {
+    "name": "Bubbly-Abstract-Background-Pack-GraphicRiver",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Bubbly Abstract Background Pack",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, abstract pack",
+    "_source_name": "Bubbly-Abstract-Background-Pack-GraphicRiver",
+    "_batch_index": 46
+  },
+  {
+    "name": "Chocolates on a transparent background",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Chocolates on Transparent Background",
+    "confidence": 90,
+    "notes": "Isolated food item, stock photo",
+    "_source_name": "Chocolates on a transparent background",
+    "_batch_index": 47
+  },
+  {
+    "name": "city-at-night-backgrounds-140888",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "City at Night Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, city textures",
+    "_source_name": "city-at-night-backgrounds-140888",
+    "_batch_index": 48
+  },
+  {
+    "name": "city-at-night-backgrounds-140888-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "City at Night Backgrounds",
+    "confidence": 85,
+    "notes": "Duplicate with GFXTRA suffix",
+    "_source_name": "city-at-night-backgrounds-140888-GFXTRA.COM-ARSENIC",
+    "_batch_index": 49
+  },
+  {
+    "name": "Clean Infinite Layered Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Clean Infinite Layered Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, layered textures",
+    "_source_name": "Clean Infinite Layered Backgrounds",
+    "_batch_index": 50
+  },
+  {
+    "name": "Clipart on a transparent background trees in PSD",
+    "category": "Stock Photos - General",
+    "clean_name": "Clipart Trees on Transparent Background",
+    "confidence": 85,
+    "notes": "PSD clipart with transparent background",
+    "_source_name": "Clipart on a transparent background trees in PSD",
+    "_batch_index": 51
+  },
+  {
+    "name": "Cloudy Skies-Backgrounds Overlays",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Cloudy Skies Backgrounds Overlays",
+    "confidence": 90,
+    "notes": "Overlays for sky effects",
+    "_source_name": "Cloudy Skies-Backgrounds Overlays",
+    "_batch_index": 52
+  },
+  {
+    "name": "CM - Background Scene Creator 2184657",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Background Scene Creator",
+    "confidence": 80,
+    "notes": "Scene creator, likely PSD template",
+    "_source_name": "CM - Background Scene Creator 2184657",
+    "_batch_index": 53
+  },
+  {
+    "name": "CM - Digital-Art Geometric Backgrounds 2167591",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Digital Art Geometric Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, geometric textures",
+    "_source_name": "CM - Digital-Art Geometric Backgrounds 2167591",
+    "_batch_index": 54
+  },
+  {
+    "name": "color-splash-background",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color Splash Background",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, color splash textures",
+    "_source_name": "color-splash-background",
+    "_batch_index": 55
+  },
+  {
+    "name": "Colorful Abstract Backgrounds Pack",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Colorful Abstract Backgrounds Pack",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, abstract pack",
+    "_source_name": "Colorful Abstract Backgrounds Pack",
+    "_batch_index": 56
+  },
+  {
+    "name": "Colorful Abstract Backgrounds Pack 3",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Colorful Abstract Backgrounds Pack 3",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, abstract pack",
+    "_source_name": "Colorful Abstract Backgrounds Pack 3",
+    "_batch_index": 57
+  },
+  {
+    "name": "Colorful background",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Colorful Background",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, colorful texture",
+    "_source_name": "Colorful background",
+    "_batch_index": 58
+  },
+  {
+    "name": "Colorful Backgrounds Pack",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Colorful Backgrounds Pack",
+    "confidence": 85,
+    "notes": "Legacy Backgrounds, colorful pack",
+    "_source_name": "Colorful Backgrounds Pack",
+    "_batch_index": 59
+  }
+]
