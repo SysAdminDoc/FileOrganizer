@@ -28,12 +28,25 @@ REMAP = {
     "After Effects Organized": None,    # walk subdirs instead
 }
 
-# Remap for subdirs inside "After Effects Organized"
+# Remap for subdirs inside "After Effects Organized" — every entry MUST
+# resolve to a category in classify_design.CATEGORIES. Anything not in this
+# map falls back to "After Effects - Other" (NOT a synthesized
+# "After Effects - <subdir>" name, which produces phantom categories).
 AE_ORGANIZED_REMAP = {
     "Christmas":     "After Effects - Christmas & Holiday",
     "Logo Reveal":   "After Effects - Logo Reveal",
-    "CINEPUNCH.V20": "After Effects - Motion Graphics Pack",   # production bundle
+    "Logo Reveals":  "After Effects - Logo Reveal",
+    "CINEPUNCH.V20": "After Effects - Motion Graphics Pack",
+    "Photo Slideshow": "After Effects - Slideshow",
+    "Slideshows":    "After Effects - Slideshow",
+    "Slideshow":     "After Effects - Slideshow",
+    "Intros & Openers": "After Effects - Intro & Opener",
+    "Intro & Opener":   "After Effects - Intro & Opener",
+    "Transitions":      "After Effects - Transition Pack",
+    "Wedding & Events": "After Effects - Wedding & Romance",
+    "Templates":        "After Effects - Other",
 }
+AE_ORGANIZED_FALLBACK = "After Effects - Other"
 
 SOURCES = {
     "stock": Path(r"G:\Stock"),
@@ -93,7 +106,7 @@ def merge_source(source_root: Path, source_key: str, dry_run: bool):
                     print(f"  -> Walking subdirs of {name}")
                     for sub in sorted(item.iterdir()):
                         if sub.is_dir():
-                            dest_name = AE_ORGANIZED_REMAP.get(sub.name, f"After Effects - {sub.name}")
+                            dest_name = AE_ORGANIZED_REMAP.get(sub.name, AE_ORGANIZED_FALLBACK)
                             dest = DEST_ROOT / dest_name
                             if robocopy_move(sub, dest, dry_run):
                                 moved += 1
