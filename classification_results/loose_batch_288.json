@@ -1,0 +1,542 @@
+[
+  {
+    "name": "sexy_rich",
+    "category": "Photoshop - Other",
+    "clean_name": "Sexy Rich",
+    "confidence": 70,
+    "notes": "Single .psd file, no further context",
+    "_source_name": "sexy_rich",
+    "_batch_index": 17220
+  },
+  {
+    "name": "Shadows Composition Transparent PNG Collection",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Shadows Composition Transparent PNG Collection",
+    "confidence": 90,
+    "notes": "Transparent PNG shadows, likely overlays for Photoshop",
+    "_source_name": "Shadows Composition Transparent PNG Collection",
+    "_batch_index": 17221
+  },
+  {
+    "name": "Shagg Rug",
+    "category": "Photoshop - Other",
+    "clean_name": "Shagg Rug",
+    "confidence": 70,
+    "notes": "Single .psd file, likely a texture or mockup but unclear",
+    "_source_name": "Shagg Rug",
+    "_batch_index": 17222
+  },
+  {
+    "name": "Shake Your Bunny Tail 2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Shake Your Bunny Tail 2",
+    "confidence": 85,
+    "notes": ".eps vector file",
+    "_source_name": "Shake Your Bunny Tail 2",
+    "_batch_index": 17223
+  },
+  {
+    "name": "Shake Your Bunny Tail",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Shake Your Bunny Tail",
+    "confidence": 85,
+    "notes": ".eps vector file",
+    "_source_name": "Shake Your Bunny Tail",
+    "_batch_index": 17224
+  },
+  {
+    "name": "ShakeitTemplate",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Shake It Template",
+    "confidence": 80,
+    "notes": ".psd template file",
+    "_source_name": "ShakeitTemplate",
+    "_batch_index": 17225
+  },
+  {
+    "name": "Shapes_part1_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Shapes Part 1",
+    "confidence": 70,
+    "notes": ".psd file, likely shape assets",
+    "_source_name": "Shapes_part1_2",
+    "_batch_index": 17226
+  },
+  {
+    "name": "Shapes_part2_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Shapes Part 2",
+    "confidence": 70,
+    "notes": ".psd file, likely shape assets",
+    "_source_name": "Shapes_part2_2",
+    "_batch_index": 17227
+  },
+  {
+    "name": "sharegfx.net (1)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "ShareGFX Vector 1",
+    "confidence": 75,
+    "notes": ".ai vector file from sharegfx",
+    "_source_name": "sharegfx.net (1)",
+    "_batch_index": 17228
+  },
+  {
+    "name": "sharegfx.net (1)",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 1",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (1)",
+    "_batch_index": 17229
+  },
+  {
+    "name": "sharegfx.net (1)_2",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 1_2",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (1)_2",
+    "_batch_index": 17230
+  },
+  {
+    "name": "sharegfx.net (1)_3",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 1_3",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (1)_3",
+    "_batch_index": 17231
+  },
+  {
+    "name": "sharegfx.net (1)_4",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 1_4",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (1)_4",
+    "_batch_index": 17232
+  },
+  {
+    "name": "sharegfx.net (1)_5",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 1_5",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (1)_5",
+    "_batch_index": 17233
+  },
+  {
+    "name": "sharegfx.net (1)_6",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 1_6",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (1)_6",
+    "_batch_index": 17234
+  },
+  {
+    "name": "sharegfx.net (1)_7",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 1_7",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (1)_7",
+    "_batch_index": 17235
+  },
+  {
+    "name": "sharegfx.net (1)_9",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 1_9",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (1)_9",
+    "_batch_index": 17236
+  },
+  {
+    "name": "sharegfx.net (10)",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)",
+    "_batch_index": 17237
+  },
+  {
+    "name": "sharegfx.net (10)_2",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10_2",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)_2",
+    "_batch_index": 17238
+  },
+  {
+    "name": "sharegfx.net (10)_3",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10_3",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)_3",
+    "_batch_index": 17239
+  },
+  {
+    "name": "sharegfx.net (10)_4",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10_4",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)_4",
+    "_batch_index": 17240
+  },
+  {
+    "name": "sharegfx.net (10)_5",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10_5",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)_5",
+    "_batch_index": 17241
+  },
+  {
+    "name": "sharegfx.net (10)_6",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10_6",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)_6",
+    "_batch_index": 17242
+  },
+  {
+    "name": "sharegfx.net (10)_7",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10_7",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)_7",
+    "_batch_index": 17243
+  },
+  {
+    "name": "sharegfx.net (10)_8",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10_8",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)_8",
+    "_batch_index": 17244
+  },
+  {
+    "name": "sharegfx.net (10)_9",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 10_9",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (10)_9",
+    "_batch_index": 17245
+  },
+  {
+    "name": "sharegfx.net (11)",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)",
+    "_batch_index": 17246
+  },
+  {
+    "name": "sharegfx.net (11)_2",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11_2",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)_2",
+    "_batch_index": 17247
+  },
+  {
+    "name": "sharegfx.net (11)_3",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11_3",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)_3",
+    "_batch_index": 17248
+  },
+  {
+    "name": "sharegfx.net (11)_4",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11_4",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)_4",
+    "_batch_index": 17249
+  },
+  {
+    "name": "sharegfx.net (11)_5",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11_5",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)_5",
+    "_batch_index": 17250
+  },
+  {
+    "name": "sharegfx.net (11)_6",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11_6",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)_6",
+    "_batch_index": 17251
+  },
+  {
+    "name": "sharegfx.net (11)_7",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11_7",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)_7",
+    "_batch_index": 17252
+  },
+  {
+    "name": "sharegfx.net (11)_8",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11_8",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)_8",
+    "_batch_index": 17253
+  },
+  {
+    "name": "sharegfx.net (11)_9",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 11_9",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (11)_9",
+    "_batch_index": 17254
+  },
+  {
+    "name": "sharegfx.net (12)",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)",
+    "_batch_index": 17255
+  },
+  {
+    "name": "sharegfx.net (12)_2",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12_2",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)_2",
+    "_batch_index": 17256
+  },
+  {
+    "name": "sharegfx.net (12)_3",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12_3",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)_3",
+    "_batch_index": 17257
+  },
+  {
+    "name": "sharegfx.net (12)_4",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12_4",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)_4",
+    "_batch_index": 17258
+  },
+  {
+    "name": "sharegfx.net (12)_5",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12_5",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)_5",
+    "_batch_index": 17259
+  },
+  {
+    "name": "sharegfx.net (12)_6",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12_6",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)_6",
+    "_batch_index": 17260
+  },
+  {
+    "name": "sharegfx.net (12)_7",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12_7",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)_7",
+    "_batch_index": 17261
+  },
+  {
+    "name": "sharegfx.net (12)_8",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12_8",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)_8",
+    "_batch_index": 17262
+  },
+  {
+    "name": "sharegfx.net (12)_9",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 12_9",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (12)_9",
+    "_batch_index": 17263
+  },
+  {
+    "name": "sharegfx.net (13)",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)",
+    "_batch_index": 17264
+  },
+  {
+    "name": "sharegfx.net (13)_2",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13_2",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)_2",
+    "_batch_index": 17265
+  },
+  {
+    "name": "sharegfx.net (13)_3",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13_3",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)_3",
+    "_batch_index": 17266
+  },
+  {
+    "name": "sharegfx.net (13)_4",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13_4",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)_4",
+    "_batch_index": 17267
+  },
+  {
+    "name": "sharegfx.net (13)_5",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13_5",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)_5",
+    "_batch_index": 17268
+  },
+  {
+    "name": "sharegfx.net (13)_6",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13_6",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)_6",
+    "_batch_index": 17269
+  },
+  {
+    "name": "sharegfx.net (13)_7",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13_7",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)_7",
+    "_batch_index": 17270
+  },
+  {
+    "name": "sharegfx.net (13)_8",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13_8",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)_8",
+    "_batch_index": 17271
+  },
+  {
+    "name": "sharegfx.net (13)_9",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 13_9",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (13)_9",
+    "_batch_index": 17272
+  },
+  {
+    "name": "sharegfx.net (14)",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 14",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (14)",
+    "_batch_index": 17273
+  },
+  {
+    "name": "sharegfx.net (14)_2",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 14_2",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (14)_2",
+    "_batch_index": 17274
+  },
+  {
+    "name": "sharegfx.net (14)_4",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 14_4",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (14)_4",
+    "_batch_index": 17275
+  },
+  {
+    "name": "sharegfx.net (14)_5",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 14_5",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (14)_5",
+    "_batch_index": 17276
+  },
+  {
+    "name": "sharegfx.net (14)_6",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 14_6",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (14)_6",
+    "_batch_index": 17277
+  },
+  {
+    "name": "sharegfx.net (14)_7",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 14_7",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (14)_7",
+    "_batch_index": 17278
+  },
+  {
+    "name": "sharegfx.net (14)_8",
+    "category": "Photoshop - Other",
+    "clean_name": "ShareGFX PSD 14_8",
+    "confidence": 75,
+    "notes": ".psd file from sharegfx",
+    "_source_name": "sharegfx.net (14)_8",
+    "_batch_index": 17279
+  }
+]

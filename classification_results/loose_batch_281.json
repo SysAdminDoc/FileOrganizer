@@ -1,0 +1,549 @@
+[
+  {
+    "name": "RGB Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "RGB Flyer",
+    "_batch_index": 16800
+  },
+  {
+    "name": "RGB Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB Flyer 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "RGB Flyer_2",
+    "_batch_index": 16801
+  },
+  {
+    "name": "RGB-Back",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB Back",
+    "confidence": 80,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "RGB-Back",
+    "_batch_index": 16802
+  },
+  {
+    "name": "RGB-Front",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB Front",
+    "confidence": 80,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "RGB-Front",
+    "_batch_index": 16803
+  },
+  {
+    "name": "RGB",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB",
+    "confidence": 70,
+    "notes": "PSD file, likely part of flyer set",
+    "_source_name": "RGB",
+    "_batch_index": 16804
+  },
+  {
+    "name": "RGB_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB 2",
+    "confidence": 70,
+    "notes": "PSD file, likely part of flyer set",
+    "_source_name": "RGB_2",
+    "_batch_index": 16805
+  },
+  {
+    "name": "RGB_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB 3",
+    "confidence": 70,
+    "notes": "PSD file, likely part of flyer set",
+    "_source_name": "RGB_3",
+    "_batch_index": 16806
+  },
+  {
+    "name": "RGB_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB 4",
+    "confidence": 70,
+    "notes": "PSD file, likely part of flyer set",
+    "_source_name": "RGB_4",
+    "_batch_index": 16807
+  },
+  {
+    "name": "RGB_Front",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB Front",
+    "confidence": 80,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "RGB_Front",
+    "_batch_index": 16808
+  },
+  {
+    "name": "RGB_Inside",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RGB Inside",
+    "confidence": 80,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "RGB_Inside",
+    "_batch_index": 16809
+  },
+  {
+    "name": "Rhythmic Mix",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rhythmic Mix",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer/poster for an event",
+    "_source_name": "Rhythmic Mix",
+    "_batch_index": 16810
+  },
+  {
+    "name": "right side",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Right Side",
+    "confidence": 70,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "right side",
+    "_batch_index": 16811
+  },
+  {
+    "name": "Right Splatter Dispersion Photo Template",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Right Splatter Dispersion Photo Template",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'Template' and 'Photo'",
+    "_source_name": "Right Splatter Dispersion Photo Template",
+    "_batch_index": 16812
+  },
+  {
+    "name": "Rise above & beyond",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rise Above & Beyond",
+    "confidence": 80,
+    "notes": "EPS file, likely a vector flyer/poster",
+    "_source_name": "Rise above & beyond",
+    "_batch_index": 16813
+  },
+  {
+    "name": "Risen flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Risen Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "Risen flyer",
+    "_batch_index": 16814
+  },
+  {
+    "name": "Risky_Overhead_ONE",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Risky Overhead One",
+    "confidence": 70,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "Risky_Overhead_ONE",
+    "_batch_index": 16815
+  },
+  {
+    "name": "Risky_Overhead_TWO",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Risky Overhead Two",
+    "confidence": 70,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "Risky_Overhead_TWO",
+    "_batch_index": 16816
+  },
+  {
+    "name": "ritualsounds",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Ritual Sounds",
+    "confidence": 80,
+    "notes": "PSD file, likely an event flyer",
+    "_source_name": "ritualsounds",
+    "_batch_index": 16817
+  },
+  {
+    "name": "River_Partylicious_Party_Flyer.3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "River Partylicious Party Flyer 3",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Party Flyer'",
+    "_source_name": "River_Partylicious_Party_Flyer.3",
+    "_batch_index": 16818
+  },
+  {
+    "name": "River_Partylicious_Party_Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "River Partylicious Party Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Party Flyer'",
+    "_source_name": "River_Partylicious_Party_Flyer",
+    "_batch_index": 16819
+  },
+  {
+    "name": "river_rafting_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "River Rafting Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "river_rafting_flyer",
+    "_batch_index": 16820
+  },
+  {
+    "name": "roar",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Roar",
+    "confidence": 70,
+    "notes": "PSD file, likely a flyer/poster",
+    "_source_name": "roar",
+    "_batch_index": 16821
+  },
+  {
+    "name": "roaring_twenties",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Roaring Twenties",
+    "confidence": 80,
+    "notes": "PSD file, likely an event flyer",
+    "_source_name": "roaring_twenties",
+    "_batch_index": 16822
+  },
+  {
+    "name": "Robot 404 Error Page",
+    "category": "Web Template",
+    "clean_name": "Robot 404 Error Page",
+    "confidence": 90,
+    "notes": "PSD file, name indicates a web error page template",
+    "_source_name": "Robot 404 Error Page",
+    "_batch_index": 16823
+  },
+  {
+    "name": "robotic_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Robotic 2",
+    "confidence": 70,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "robotic_2",
+    "_batch_index": 16824
+  },
+  {
+    "name": "robotic_scrambled_set_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Robotic Scrambled Set 2",
+    "confidence": 70,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "robotic_scrambled_set_2",
+    "_batch_index": 16825
+  },
+  {
+    "name": "robotic_seperated_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Robotic Separated 2",
+    "confidence": 70,
+    "notes": "PSD file, likely part of a flyer set",
+    "_source_name": "robotic_seperated_2",
+    "_batch_index": 16826
+  },
+  {
+    "name": "Rock Babes Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rock Babes Flyer Template",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "Rock Babes Flyer Template",
+    "_batch_index": 16827
+  },
+  {
+    "name": "Rolled Paper Flower Templates Vector Bundle",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Rolled Paper Flower Templates Vector Bundle",
+    "confidence": 90,
+    "notes": "ZIP with AI/EPS/SVG, vector bundle",
+    "_source_name": "Rolled Paper Flower Templates Vector Bundle",
+    "_batch_index": 16828
+  },
+  {
+    "name": "Rollup 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup 1",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup 1",
+    "_batch_index": 16829
+  },
+  {
+    "name": "Rollup 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup 2",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup 2",
+    "_batch_index": 16830
+  },
+  {
+    "name": "Rollup 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup 3",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup 3",
+    "_batch_index": 16831
+  },
+  {
+    "name": "Rollup vol 10 1 cyan",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 1 Cyan",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 1 cyan",
+    "_batch_index": 16832
+  },
+  {
+    "name": "Rollup vol 10 1 lilac",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 1 Lilac",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 1 lilac",
+    "_batch_index": 16833
+  },
+  {
+    "name": "Rollup vol 10 1 magenta",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 1 Magenta",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 1 magenta",
+    "_batch_index": 16834
+  },
+  {
+    "name": "Rollup vol 10 1 pink",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 1 Pink",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 1 pink",
+    "_batch_index": 16835
+  },
+  {
+    "name": "Rollup vol 10 2 cyan",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 2 Cyan",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 2 cyan",
+    "_batch_index": 16836
+  },
+  {
+    "name": "Rollup vol 10 2 lilac",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 2 Lilac",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 2 lilac",
+    "_batch_index": 16837
+  },
+  {
+    "name": "Rollup vol 10 2 magenta",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 2 Magenta",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 2 magenta",
+    "_batch_index": 16838
+  },
+  {
+    "name": "Rollup vol 10 2 pink",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 2 Pink",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 2 pink",
+    "_batch_index": 16839
+  },
+  {
+    "name": "Rollup vol 10 3 cyan",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 3 Cyan",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 3 cyan",
+    "_batch_index": 16840
+  },
+  {
+    "name": "Rollup vol 10 3 lilac",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 3 Lilac",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 3 lilac",
+    "_batch_index": 16841
+  },
+  {
+    "name": "Rollup vol 10 3 magenta",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 3 Magenta",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 3 magenta",
+    "_batch_index": 16842
+  },
+  {
+    "name": "Rollup vol 10 3 pink",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 10 3 Pink",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 10 3 pink",
+    "_batch_index": 16843
+  },
+  {
+    "name": "Rollup vol 11 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 11 1",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 11 1",
+    "_batch_index": 16844
+  },
+  {
+    "name": "Rollup vol 11 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 11 2",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 11 2",
+    "_batch_index": 16845
+  },
+  {
+    "name": "Rollup vol 11 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 11 3",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 11 3",
+    "_batch_index": 16846
+  },
+  {
+    "name": "Rollup vol 2 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 2 1",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 2 1",
+    "_batch_index": 16847
+  },
+  {
+    "name": "Rollup vol 2 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 2 2",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 2 2",
+    "_batch_index": 16848
+  },
+  {
+    "name": "Rollup vol 2 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 2 3",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 2 3",
+    "_batch_index": 16849
+  },
+  {
+    "name": "Rollup vol 3 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 3 2",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 3 2",
+    "_batch_index": 16850
+  },
+  {
+    "name": "Rollup vol 3 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 3 3",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 3 3",
+    "_batch_index": 16851
+  },
+  {
+    "name": "Rollup vol 4 1 orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 4 1 Orange",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 4 1 orange",
+    "_batch_index": 16852
+  },
+  {
+    "name": "Rollup vol 4 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 4 1",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 4 1",
+    "_batch_index": 16853
+  },
+  {
+    "name": "Rollup vol 4 2 orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 4 2 Orange",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 4 2 orange",
+    "_batch_index": 16854
+  },
+  {
+    "name": "Rollup vol 4 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 4 2",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 4 2",
+    "_batch_index": 16855
+  },
+  {
+    "name": "Rollup vol 4 3 orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 4 3 Orange",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 4 3 orange",
+    "_batch_index": 16856
+  },
+  {
+    "name": "Rollup vol 4 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 4 3",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 4 3",
+    "_batch_index": 16857
+  },
+  {
+    "name": "Rollup vol 5 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 5 1",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 5 1",
+    "_batch_index": 16858
+  },
+  {
+    "name": "Rollup vol 5 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 5 2",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner",
+    "_source_name": "Rollup vol 5 2",
+    "_batch_index": 16859
+  },
+  {
+    "name": "Rollup vol 5 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Vol 5 3",
+    "confidence": 85,
+    "notes": "PSD file, 'Rollup' likely refers to a roll-up banner"
+  }
+]

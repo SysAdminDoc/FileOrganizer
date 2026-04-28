@@ -1,0 +1,542 @@
+[
+  {
+    "name": "SW-022",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-022",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-022",
+    "_batch_index": 18660
+  },
+  {
+    "name": "SW-023",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-023",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-023",
+    "_batch_index": 18661
+  },
+  {
+    "name": "SW-024",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-024",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-024",
+    "_batch_index": 18662
+  },
+  {
+    "name": "SW-025",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-025",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-025",
+    "_batch_index": 18663
+  },
+  {
+    "name": "SW-026",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-026",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-026",
+    "_batch_index": 18664
+  },
+  {
+    "name": "SW-027",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-027",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-027",
+    "_batch_index": 18665
+  },
+  {
+    "name": "SW-028",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-028",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-028",
+    "_batch_index": 18666
+  },
+  {
+    "name": "SW-029",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-029",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-029",
+    "_batch_index": 18667
+  },
+  {
+    "name": "SW-030",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-030",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-030",
+    "_batch_index": 18668
+  },
+  {
+    "name": "SW-031",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-031",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-031",
+    "_batch_index": 18669
+  },
+  {
+    "name": "SW-032",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-032",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-032",
+    "_batch_index": 18670
+  },
+  {
+    "name": "SW-033",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-033",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-033",
+    "_batch_index": 18671
+  },
+  {
+    "name": "SW-034",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-034",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-034",
+    "_batch_index": 18672
+  },
+  {
+    "name": "SW-035",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-035",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-035",
+    "_batch_index": 18673
+  },
+  {
+    "name": "SW-036",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-036",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-036",
+    "_batch_index": 18674
+  },
+  {
+    "name": "SW-037",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-037",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-037",
+    "_batch_index": 18675
+  },
+  {
+    "name": "SW-038",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-038",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-038",
+    "_batch_index": 18676
+  },
+  {
+    "name": "SW-039",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-039",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-039",
+    "_batch_index": 18677
+  },
+  {
+    "name": "SW-040",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW-040",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template",
+    "_source_name": "SW-040",
+    "_batch_index": 18678
+  },
+  {
+    "name": "SW_black",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW Black",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template variant",
+    "_source_name": "SW_black",
+    "_batch_index": 18679
+  },
+  {
+    "name": "SW_blue",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW Blue",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template variant",
+    "_source_name": "SW_blue",
+    "_batch_index": 18680
+  },
+  {
+    "name": "SW_green",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW Green",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template variant",
+    "_source_name": "SW_green",
+    "_batch_index": 18681
+  },
+  {
+    "name": "SW_red",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW Red",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template variant",
+    "_source_name": "SW_red",
+    "_batch_index": 18682
+  },
+  {
+    "name": "SW_white",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SW White",
+    "confidence": 85,
+    "notes": "PSD file, likely a smart object template variant",
+    "_source_name": "SW_white",
+    "_batch_index": 18683
+  },
+  {
+    "name": "Swag-Bash-Flyer-Template-Awesomeflyer-com",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Swag Bash Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Swag-Bash-Flyer-Template-Awesomeflyer-com",
+    "_batch_index": 18684
+  },
+  {
+    "name": "sweet & sassy",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sweet & Sassy",
+    "confidence": 85,
+    "notes": "EPS vector file",
+    "_source_name": "sweet & sassy",
+    "_batch_index": 18685
+  },
+  {
+    "name": "Sweet 16",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Sweet 16",
+    "confidence": 80,
+    "notes": "PSD file, likely an invitation template",
+    "_source_name": "Sweet 16",
+    "_batch_index": 18686
+  },
+  {
+    "name": "Sweet Flower Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sweet Flower Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Sweet Flower Flyer",
+    "_batch_index": 18687
+  },
+  {
+    "name": "sweet land of liberty",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sweet Land of Liberty",
+    "confidence": 85,
+    "notes": "EPS vector file",
+    "_source_name": "sweet land of liberty",
+    "_batch_index": 18688
+  },
+  {
+    "name": "sweet-candy-vol3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Sweet Candy Vol 3",
+    "confidence": 75,
+    "notes": "PSD file, likely a template or overlay",
+    "_source_name": "sweet-candy-vol3",
+    "_batch_index": 18689
+  },
+  {
+    "name": "Swing&SyncFlyerTemplate",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Swing & Sync Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Swing&SyncFlyerTemplate",
+    "_batch_index": 18690
+  },
+  {
+    "name": "SymmetryH",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Symmetry Horizontal",
+    "confidence": 70,
+    "notes": "PSD file, likely a pattern or texture",
+    "_source_name": "SymmetryH",
+    "_batch_index": 18691
+  },
+  {
+    "name": "SymmetryR",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Symmetry Radial",
+    "confidence": 70,
+    "notes": "PSD file, likely a pattern or texture",
+    "_source_name": "SymmetryR",
+    "_batch_index": 18692
+  },
+  {
+    "name": "SymmetryV",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Symmetry Vertical",
+    "confidence": 70,
+    "notes": "PSD file, likely a pattern or texture",
+    "_source_name": "SymmetryV",
+    "_batch_index": 18693
+  },
+  {
+    "name": "t-shirt",
+    "category": "Mockups - Apparel",
+    "clean_name": "T-Shirt",
+    "confidence": 90,
+    "notes": "PSD mockup file",
+    "_source_name": "t-shirt",
+    "_batch_index": 18694
+  },
+  {
+    "name": "T",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "T",
+    "confidence": 60,
+    "notes": "PSD file, ambiguous but likely a template",
+    "_source_name": "T",
+    "_batch_index": 18695
+  },
+  {
+    "name": "T1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "T1",
+    "confidence": 60,
+    "notes": "PSD file, ambiguous but likely a template",
+    "_source_name": "T1",
+    "_batch_index": 18696
+  },
+  {
+    "name": "t1_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "T1_2",
+    "confidence": 60,
+    "notes": "PSD file, ambiguous but likely a template",
+    "_source_name": "t1_2",
+    "_batch_index": 18697
+  },
+  {
+    "name": "T2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "T2",
+    "confidence": 60,
+    "notes": "PSD file, ambiguous but likely a template",
+    "_source_name": "T2",
+    "_batch_index": 18698
+  },
+  {
+    "name": "t2_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "T2_2",
+    "confidence": 60,
+    "notes": "PSD file, ambiguous but likely a template",
+    "_source_name": "t2_2",
+    "_batch_index": 18699
+  },
+  {
+    "name": "Tab Menus",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Tab Menus",
+    "confidence": 80,
+    "notes": "PSD file, UI template",
+    "_source_name": "Tab Menus",
+    "_batch_index": 18700
+  },
+  {
+    "name": "Table number",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Table Number",
+    "confidence": 90,
+    "notes": "PSD file, event table number template",
+    "_source_name": "Table number",
+    "_batch_index": 18701
+  },
+  {
+    "name": "table number_2",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Table Number 2",
+    "confidence": 90,
+    "notes": "PSD file, event table number template",
+    "_source_name": "table number_2",
+    "_batch_index": 18702
+  },
+  {
+    "name": "Table Tennis_1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Table Tennis 1",
+    "confidence": 80,
+    "notes": "PSD file, likely a sports poster/flyer",
+    "_source_name": "Table Tennis_1",
+    "_batch_index": 18703
+  },
+  {
+    "name": "Table Tennis_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Table Tennis 2",
+    "confidence": 80,
+    "notes": "PSD file, likely a sports poster/flyer",
+    "_source_name": "Table Tennis_2",
+    "_batch_index": 18704
+  },
+  {
+    "name": "Table Tennis_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Table Tennis 3",
+    "confidence": 80,
+    "notes": "PSD file, likely a sports poster/flyer",
+    "_source_name": "Table Tennis_3",
+    "_batch_index": 18705
+  },
+  {
+    "name": "Table Tennis_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Table Tennis 4",
+    "confidence": 80,
+    "notes": "PSD file, likely a sports poster/flyer",
+    "_source_name": "Table Tennis_4",
+    "_batch_index": 18706
+  },
+  {
+    "name": "table",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Table",
+    "confidence": 70,
+    "notes": "PSD file, ambiguous but likely a template",
+    "_source_name": "table",
+    "_batch_index": 18707
+  },
+  {
+    "name": "tablenumber",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Table Number",
+    "confidence": 90,
+    "notes": "PSD file, event table number template",
+    "_source_name": "tablenumber",
+    "_batch_index": 18708
+  },
+  {
+    "name": "Tablet Mini",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Tablet Mini",
+    "confidence": 95,
+    "notes": "AEP file, device mockup",
+    "_source_name": "Tablet Mini",
+    "_batch_index": 18709
+  },
+  {
+    "name": "Tablet-1-Dark",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Tablet 1 Dark",
+    "confidence": 95,
+    "notes": "PSD device mockup",
+    "_source_name": "Tablet-1-Dark",
+    "_batch_index": 18710
+  },
+  {
+    "name": "Tablet-2-Dark",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Tablet 2 Dark",
+    "confidence": 95,
+    "notes": "PSD device mockup",
+    "_source_name": "Tablet-2-Dark",
+    "_batch_index": 18711
+  },
+  {
+    "name": "tablet",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Tablet",
+    "confidence": 90,
+    "notes": "PSD device mockup",
+    "_source_name": "tablet",
+    "_batch_index": 18712
+  },
+  {
+    "name": "tablet_2",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Tablet 2",
+    "confidence": 90,
+    "notes": "PSD device mockup",
+    "_source_name": "tablet_2",
+    "_batch_index": 18713
+  },
+  {
+    "name": "tabletProSetV3",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Tablet Pro Set V3",
+    "confidence": 95,
+    "notes": "PSD device mockup set",
+    "_source_name": "tabletProSetV3",
+    "_batch_index": 18714
+  },
+  {
+    "name": "tabletProSetV4",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Tablet Pro Set V4",
+    "confidence": 95,
+    "notes": "PSD device mockup set",
+    "_source_name": "tabletProSetV4",
+    "_batch_index": 18715
+  },
+  {
+    "name": "Tabloid_Drinks_Page",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Tabloid Drinks Page",
+    "confidence": 90,
+    "notes": "PSD print layout for drinks",
+    "_source_name": "Tabloid_Drinks_Page",
+    "_batch_index": 18716
+  },
+  {
+    "name": "Tabs Horizontal and Vertical",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Tabs Horizontal and Vertical",
+    "confidence": 80,
+    "notes": "PSD UI template",
+    "_source_name": "Tabs Horizontal and Vertical",
+    "_batch_index": 18717
+  },
+  {
+    "name": "tabslider",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Tab Slider",
+    "confidence": 80,
+    "notes": "PSD UI template",
+    "_source_name": "tabslider",
+    "_batch_index": 18718
+  },
+  {
+    "name": "Taco Bout cute",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Taco Bout Cute",
+    "confidence": 85,
+    "notes": "EPS vector file",
+    "_source_name": "Taco Bout cute",
+    "_batch_index": 18719
+  }
+]

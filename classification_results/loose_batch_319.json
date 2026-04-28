@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Tutoring Academy Flyer Yellow",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Tutoring Academy Flyer Yellow",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Tutoring Academy Flyer Yellow",
+    "_batch_index": 19080
+  },
+  {
+    "name": "TV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "TV",
+    "confidence": 65,
+    "notes": "PSD file, likely a mockup or template",
+    "_source_name": "TV",
+    "_batch_index": 19081
+  },
+  {
+    "name": "twerk_battle",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Twerk Battle",
+    "confidence": 80,
+    "notes": "PSD flyer for event",
+    "_source_name": "twerk_battle",
+    "_batch_index": 19082
+  },
+  {
+    "name": "twerk_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Twerk Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer",
+    "_source_name": "twerk_flyer",
+    "_batch_index": 19083
+  },
+  {
+    "name": "TwistTemplate",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Twist Template",
+    "confidence": 75,
+    "notes": "PSD template",
+    "_source_name": "TwistTemplate",
+    "_batch_index": 19084
+  },
+  {
+    "name": "two",
+    "category": "Photoshop - Other",
+    "clean_name": "Two",
+    "confidence": 60,
+    "notes": "Generic PSD file",
+    "_source_name": "two",
+    "_batch_index": 19085
+  },
+  {
+    "name": "two_dollars_tuesday",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Two Dollars Tuesday",
+    "confidence": 80,
+    "notes": "PSD flyer for promotion",
+    "_source_name": "two_dollars_tuesday",
+    "_batch_index": 19086
+  },
+  {
+    "name": "TypeWriter Animator",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "TypeWriter Animator",
+    "confidence": 95,
+    "notes": ".mogrt file",
+    "_source_name": "TypeWriter Animator",
+    "_batch_index": 19087
+  },
+  {
+    "name": "Typhography Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Typography Flyer Template",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Typhography Flyer Template",
+    "_batch_index": 19088
+  },
+  {
+    "name": "Typography Gig Poster 4 No 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Typography Gig Poster 4 No 1",
+    "confidence": 90,
+    "notes": "PSD poster",
+    "_source_name": "Typography Gig Poster 4 No 1",
+    "_batch_index": 19089
+  },
+  {
+    "name": "Typography Gig Poster 4 No 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Typography Gig Poster 4 No 2",
+    "confidence": 90,
+    "notes": "PSD poster",
+    "_source_name": "Typography Gig Poster 4 No 2",
+    "_batch_index": 19090
+  },
+  {
+    "name": "Typography Text Effect PSD Template",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Typography Text Effect PSD Template",
+    "confidence": 85,
+    "notes": "PSD text effect template",
+    "_source_name": "Typography Text Effect PSD Template",
+    "_batch_index": 19091
+  },
+  {
+    "name": "typography_colors",
+    "category": "Photoshop - Other",
+    "clean_name": "Typography Colors",
+    "confidence": 70,
+    "notes": "PSD file, likely color swatches or design",
+    "_source_name": "typography_colors",
+    "_batch_index": 19092
+  },
+  {
+    "name": "typography_colors_dark",
+    "category": "Photoshop - Other",
+    "clean_name": "Typography Colors Dark",
+    "confidence": 70,
+    "notes": "PSD file, likely color swatches or design",
+    "_source_name": "typography_colors_dark",
+    "_batch_index": 19093
+  },
+  {
+    "name": "U",
+    "category": "Photoshop - Other",
+    "clean_name": "U",
+    "confidence": 60,
+    "notes": "Generic PSD file",
+    "_source_name": "U",
+    "_batch_index": 19094
+  },
+  {
+    "name": "U1",
+    "category": "Photoshop - Other",
+    "clean_name": "U1",
+    "confidence": 60,
+    "notes": "Generic PSD file",
+    "_source_name": "U1",
+    "_batch_index": 19095
+  },
+  {
+    "name": "u1_2",
+    "category": "Photoshop - Other",
+    "clean_name": "U1_2",
+    "confidence": 60,
+    "notes": "Generic PSD file",
+    "_source_name": "u1_2",
+    "_batch_index": 19096
+  },
+  {
+    "name": "U2",
+    "category": "Photoshop - Other",
+    "clean_name": "U2",
+    "confidence": 60,
+    "notes": "Generic PSD file",
+    "_source_name": "U2",
+    "_batch_index": 19097
+  },
+  {
+    "name": "u2_2",
+    "category": "Photoshop - Other",
+    "clean_name": "U2_2",
+    "confidence": 60,
+    "notes": "Generic PSD file",
+    "_source_name": "u2_2",
+    "_batch_index": 19098
+  },
+  {
+    "name": "U4e8c#U3002",
+    "category": "Photoshop - Other",
+    "clean_name": "U4e8c#U3002",
+    "confidence": 60,
+    "notes": "Unicode-encoded PSD file",
+    "_source_name": "U4e8c#U3002",
+    "_batch_index": 19099
+  },
+  {
+    "name": "U4e8c",
+    "category": "Photoshop - Other",
+    "clean_name": "U4e8c",
+    "confidence": 60,
+    "notes": "Unicode-encoded PSD file",
+    "_source_name": "U4e8c",
+    "_batch_index": 19100
+  },
+  {
+    "name": "U4f01#U4e1a#U5ba3#U4f20#U5355#U6b63",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Enterprise Flyer",
+    "confidence": 80,
+    "notes": "Unicode suggests flyer, PSD file",
+    "_source_name": "U4f01#U4e1a#U5ba3#U4f20#U5355#U6b63",
+    "_batch_index": 19101
+  },
+  {
+    "name": "U4f01#U4e1a#U7b80#U4ecb",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Enterprise Introduction",
+    "confidence": 80,
+    "notes": "Unicode suggests brochure/intro, PSD file",
+    "_source_name": "U4f01#U4e1a#U7b80#U4ecb",
+    "_batch_index": 19102
+  },
+  {
+    "name": "U513f#U7ae5#U753b#U518c",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Children's Picture Book",
+    "confidence": 80,
+    "notes": "Unicode suggests children's book, PSD file",
+    "_source_name": "U513f#U7ae5#U753b#U518c",
+    "_batch_index": 19103
+  },
+  {
+    "name": "U513f#U7ae5#U753b#U518c2",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Children's Picture Book 2",
+    "confidence": 80,
+    "notes": "Unicode suggests children's book, PSD file",
+    "_source_name": "U513f#U7ae5#U753b#U518c2",
+    "_batch_index": 19104
+  },
+  {
+    "name": "U5305#U88c59",
+    "category": "Mockups - Packaging",
+    "clean_name": "Packaging",
+    "confidence": 85,
+    "notes": "Unicode suggests packaging, PSD file",
+    "_source_name": "U5305#U88c59",
+    "_batch_index": 19105
+  },
+  {
+    "name": "U5316#U5986#U54c16",
+    "category": "Mockups - Packaging",
+    "clean_name": "Cosmetics",
+    "confidence": 80,
+    "notes": "Unicode suggests cosmetics, PSD file",
+    "_source_name": "U5316#U5986#U54c16",
+    "_batch_index": 19106
+  },
+  {
+    "name": "U53cd",
+    "category": "Photoshop - Other",
+    "clean_name": "U53cd",
+    "confidence": 60,
+    "notes": "Unicode-encoded PSD file",
+    "_source_name": "U53cd        ",
+    "_batch_index": 19107
+  },
+  {
+    "name": "U53e3#U7ea2-1",
+    "category": "Mockups - Packaging",
+    "clean_name": "Lipstick-1",
+    "confidence": 80,
+    "notes": "Unicode suggests lipstick, PSD file",
+    "_source_name": "U53e3#U7ea2-1",
+    "_batch_index": 19108
+  },
+  {
+    "name": "U590d#U4ef6 2",
+    "category": "Photoshop - Other",
+    "clean_name": "Copy 2",
+    "confidence": 60,
+    "notes": "Unicode suggests copy, PSD file",
+    "_source_name": "U590d#U4ef6 2",
+    "_batch_index": 19109
+  },
+  {
+    "name": "U590f#U5b63#U98ce#U5c1a",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Summer Fashion",
+    "confidence": 80,
+    "notes": "Unicode suggests summer fashion, PSD file",
+    "_source_name": "U590f#U5b63#U98ce#U5c1a",
+    "_batch_index": 19110
+  },
+  {
+    "name": "U5b8c#U6574",
+    "category": "Photoshop - Other",
+    "clean_name": "Complete",
+    "confidence": 60,
+    "notes": "Unicode-encoded PSD file",
+    "_source_name": "U5b8c#U6574",
+    "_batch_index": 19111
+  },
+  {
+    "name": "U5c01#U76ae",
+    "category": "Photoshop - Other",
+    "clean_name": "Cover",
+    "confidence": 70,
+    "notes": "Unicode suggests cover, PSD file",
+    "_source_name": "U5c01#U76ae",
+    "_batch_index": 19112
+  },
+  {
+    "name": "U5c01#U9762",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cover",
+    "confidence": 70,
+    "notes": "Unicode suggests cover, PSD file",
+    "_source_name": "U5c01#U9762",
+    "_batch_index": 19113
+  },
+  {
+    "name": "U5c01#U9762_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cover_2",
+    "confidence": 70,
+    "notes": "Unicode suggests cover, PSD file",
+    "_source_name": "U5c01#U9762_2",
+    "_batch_index": 19114
+  },
+  {
+    "name": "U5c01#U9762_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cover_3",
+    "confidence": 70,
+    "notes": "Unicode suggests cover, PSD file",
+    "_source_name": "U5c01#U9762_3",
+    "_batch_index": 19115
+  },
+  {
+    "name": "U5c01#U9762_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cover_4",
+    "confidence": 70,
+    "notes": "Unicode suggests cover, PSD file",
+    "_source_name": "U5c01#U9762_4",
+    "_batch_index": 19116
+  },
+  {
+    "name": "U5c01#U9762_5",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cover_5",
+    "confidence": 70,
+    "notes": "Unicode suggests cover, PSD file",
+    "_source_name": "U5c01#U9762_5",
+    "_batch_index": 19117
+  },
+  {
+    "name": "U5c01#U9762_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cover_6",
+    "confidence": 70,
+    "notes": "Unicode suggests cover, PSD file",
+    "_source_name": "U5c01#U9762_6",
+    "_batch_index": 19118
+  },
+  {
+    "name": "U603b",
+    "category": "Photoshop - Other",
+    "clean_name": "U603b",
+    "confidence": 60,
+    "notes": "Unicode-encoded PSD file",
+    "_source_name": "U603b",
+    "_batch_index": 19119
+  },
+  {
+    "name": "U624b#U63d0#U888b",
+    "category": "Mockups - Packaging",
+    "clean_name": "Handbag",
+    "confidence": 85,
+    "notes": "Unicode suggests handbag, PSD file",
+    "_source_name": "U624b#U63d0#U888b",
+    "_batch_index": 19120
+  },
+  {
+    "name": "U67e0#U6aac",
+    "category": "Mockups - Packaging",
+    "clean_name": "Lemon",
+    "confidence": 80,
+    "notes": "Unicode suggests lemon, PSD file",
+    "_source_name": "U67e0#U6aac",
+    "_batch_index": 19121
+  },
+  {
+    "name": "U67e0#U6aac1",
+    "category": "Mockups - Packaging",
+    "clean_name": "Lemon1",
+    "confidence": 80,
+    "notes": "Unicode suggests lemon, PSD file",
+    "_source_name": "U67e0#U6aac1",
+    "_batch_index": 19122
+  },
+  {
+    "name": "U71c3#U70e7#U5361#U8def#U91cc",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Burning Calories",
+    "confidence": 80,
+    "notes": "Unicode suggests burning calories, PSD file",
+    "_source_name": "U71c3#U70e7#U5361#U8def#U91cc",
+    "_batch_index": 19123
+  },
+  {
+    "name": "U73a9#U8f6c#U6691#U671f",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Summer Vacation",
+    "confidence": 80,
+    "notes": "Unicode suggests summer vacation, PSD file",
+    "_source_name": "U73a9#U8f6c#U6691#U671f",
+    "_batch_index": 19124
+  },
+  {
+    "name": "U767d#U6843",
+    "category": "Mockups - Packaging",
+    "clean_name": "White Peach",
+    "confidence": 80,
+    "notes": "Unicode suggests white peach, PSD file",
+    "_source_name": "U767d#U6843",
+    "_batch_index": 19125
+  },
+  {
+    "name": "U767d#U68432",
+    "category": "Mockups - Packaging",
+    "clean_name": "White Peach 2",
+    "confidence": 80,
+    "notes": "Unicode suggests white peach, PSD file",
+    "_source_name": "U767d#U68432",
+    "_batch_index": 19126
+  },
+  {
+    "name": "U767d#U8336",
+    "category": "Mockups - Packaging",
+    "clean_name": "White Tea",
+    "confidence": 80,
+    "notes": "Unicode suggests white tea, PSD file",
+    "_source_name": "U767d#U8336",
+    "_batch_index": 19127
+  },
+  {
+    "name": "U76ee#U5f55",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Table of Contents",
+    "confidence": 80,
+    "notes": "Unicode suggests table of contents, PSD file",
+    "_source_name": "U76ee#U5f55",
+    "_batch_index": 19128
+  },
+  {
+    "name": "U81f4#U9752#U6625#U5c01#U9762",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "To Youth Cover",
+    "confidence": 80,
+    "notes": "Unicode suggests cover, PSD file",
+    "_source_name": "U81f4#U9752#U6625#U5c01#U9762",
+    "_batch_index": 19129
+  },
+  {
+    "name": "U8292#U679c",
+    "category": "Mockups - Packaging",
+    "clean_name": "Mango",
+    "confidence": 80,
+    "notes": "Unicode suggests mango, PSD file",
+    "_source_name": "U8292#U679c",
+    "_batch_index": 19130
+  },
+  {
+    "name": "U8292#U679c2",
+    "category": "Mockups - Packaging",
+    "clean_name": "Mango 2",
+    "confidence": 80,
+    "notes": "Unicode suggests mango, PSD file",
+    "_source_name": "U8292#U679c2",
+    "_batch_index": 19131
+  },
+  {
+    "name": "U8309#U8389#U82b1#U8336",
+    "category": "Mockups - Packaging",
+    "clean_name": "Jasmine Tea",
+    "confidence": 80,
+    "notes": "Unicode suggests jasmine tea, PSD file",
+    "_source_name": "U8309#U8389#U82b1#U8336",
+    "_batch_index": 19132
+  },
+  {
+    "name": "U8309#U8389#U82b1#U83361",
+    "category": "Mockups - Packaging",
+    "clean_name": "Jasmine Tea 1",
+    "confidence": 80,
+    "notes": "Unicode suggests jasmine tea, PSD file",
+    "_source_name": "U8309#U8389#U82b1#U83361",
+    "_batch_index": 19133
+  },
+  {
+    "name": "U8349#U8393",
+    "category": "Mockups - Packaging",
+    "clean_name": "Strawberry",
+    "confidence": 80,
+    "notes": "Unicode suggests strawberry, PSD file",
+    "_source_name": "U8349#U8393",
+    "_batch_index": 19134
+  },
+  {
+    "name": "U8349#U83932",
+    "category": "Mockups - Packaging",
+    "clean_name": "Strawberry 2",
+    "confidence": 80,
+    "notes": "Unicode suggests strawberry, PSD file",
+    "_source_name": "U8349#U83932",
+    "_batch_index": 19135
+  },
+  {
+    "name": "U8461#U8404",
+    "category": "Mockups - Packaging",
+    "clean_name": "Grape",
+    "confidence": 80,
+    "notes": "Unicode suggests grape, PSD file",
+    "_source_name": "U8461#U8404",
+    "_batch_index": 19136
+  },
+  {
+    "name": "U8461#U84042",
+    "category": "Mockups - Packaging",
+    "clean_name": "Grape 2",
+    "confidence": 80,
+    "notes": "Unicode suggests grape, PSD file",
+    "_source_name": "U8461#U84042",
+    "_batch_index": 19137
+  },
+  {
+    "name": "U8f66",
+    "category": "Photoshop - Other",
+    "clean_name": "Car",
+    "confidence": 70,
+    "notes": "Unicode suggests car, PSD file",
+    "_source_name": "U8f66",
+    "_batch_index": 19138
+  },
+  {
+    "name": "U8fd0#U52a8#U5065#U8eab",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sports Fitness",
+    "confidence": 80,
+    "notes": "Unicode suggests sports fitness, PSD file",
+    "_source_name": "U8fd0#U52a8#U5065#U8eab",
+    "_batch_index": 19139
+  }
+]
