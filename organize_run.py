@@ -5,6 +5,9 @@ Usage:
     python organize_run.py --preview            # dry run all batches
     python organize_run.py --apply              # apply all batches
     python organize_run.py --preview --load F   # dry run single file
+    python organize_run.py --preview --plan-out plan.json
+    python organize_run.py --apply-plan plan.json
+    python organize_run.py --report RUN_ID --output report.md
     python organize_run.py --validate           # pre-flight: find trailing spaces + long paths
     python organize_run.py --stats              # show batch progress
     python organize_run.py --summary            # category breakdown
@@ -17,12 +20,13 @@ Known edge cases handled:
     - Deep Unicode paths >260 chars (WinError 3) → robocopy with /256 long-path support
     - Cross-drive moves use robocopy for reliability; os.rename for same-drive
     - shutil.move NEVER deletes source on copy failure (safe), but leaves partial dests
-    - Every successful move is journaled to organize_moves.db for full undo support
+    - Every planned/applied move is journaled to organize_moves.db for full undo support
     - Errors logged to organize_errors.json for retry/audit
 """
 import os, sys, json, shutil, re, argparse, subprocess, sqlite3
 from pathlib import Path
 from collections import defaultdict
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -45,6 +49,9 @@ LOG_FILE         = os.path.join(os.path.dirname(__file__), 'organize_run.log')
 ERRORS_FILE      = os.path.join(os.path.dirname(__file__), 'organize_errors.json')  # legacy path
 JOURNAL_FILE     = os.path.join(os.path.dirname(__file__), 'organize_moves.db')
 RESULTS_DIR      = os.path.join(os.path.dirname(__file__), 'classification_results')
+PLANS_DIR        = os.path.join(os.path.dirname(__file__), 'organize_plans')
+REPORTS_DIR      = os.path.join(os.path.dirname(__file__), 'organize_reports')
+PLAN_SCHEMA_VERSION = 1
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 def errors_file(source_mode: str) -> str:
@@ -105,27 +112,82 @@ CREATE TABLE IF NOT EXISTS moves (
     category    TEXT,
     confidence  INTEGER,
     moved_at    TEXT NOT NULL,
-    undone_at   TEXT
+    undone_at   TEXT,
+    plan_id     TEXT,
+    plan_item_id TEXT,
+    run_id      TEXT,
+    status      TEXT DEFAULT 'done',
+    error       TEXT,
+    planned_at  TEXT,
+    updated_at  TEXT,
+    partial_dest_exists INTEGER DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_moves_moved_at ON moves(moved_at);
 CREATE INDEX IF NOT EXISTS idx_moves_undone   ON moves(undone_at);
 """
 
+_JOURNAL_MIGRATIONS = {
+    'plan_id': "ALTER TABLE moves ADD COLUMN plan_id TEXT",
+    'plan_item_id': "ALTER TABLE moves ADD COLUMN plan_item_id TEXT",
+    'run_id': "ALTER TABLE moves ADD COLUMN run_id TEXT",
+    'status': "ALTER TABLE moves ADD COLUMN status TEXT DEFAULT 'done'",
+    'error': "ALTER TABLE moves ADD COLUMN error TEXT",
+    'planned_at': "ALTER TABLE moves ADD COLUMN planned_at TEXT",
+    'updated_at': "ALTER TABLE moves ADD COLUMN updated_at TEXT",
+    'partial_dest_exists': "ALTER TABLE moves ADD COLUMN partial_dest_exists INTEGER DEFAULT 0",
+}
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+def _compact_timestamp() -> str:
+    return datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+
+def _ensure_journal_columns(con: sqlite3.Connection):
+    existing = {row[1] for row in con.execute("PRAGMA table_info(moves)").fetchall()}
+    for column, sql in _JOURNAL_MIGRATIONS.items():
+        if column not in existing:
+            con.execute(sql)
+    con.execute("UPDATE moves SET status='done' WHERE status IS NULL OR status=''")
+    con.execute("CREATE INDEX IF NOT EXISTS idx_moves_status ON moves(status)")
+    con.execute("CREATE INDEX IF NOT EXISTS idx_moves_plan_id ON moves(plan_id)")
+    con.execute("CREATE INDEX IF NOT EXISTS idx_moves_run_id ON moves(run_id)")
+
 def _journal_conn() -> sqlite3.Connection:
     con = sqlite3.connect(JOURNAL_FILE)
     con.row_factory = sqlite3.Row
     con.executescript(_JOURNAL_SCHEMA)
+    _ensure_journal_columns(con)
+    con.commit()
     return con
 
 def journal_record(src: str, dest: str, disk_name: str,
-                   clean_name: str, category: str, confidence: int):
-    """Record a completed move in the SQLite journal."""
+                   clean_name: str, category: str, confidence: int,
+                   status: str = 'done', plan_id: str = '',
+                   plan_item_id: str = '', run_id: str = '',
+                   error: str = '', partial_dest_exists: bool = False) -> int:
+    """Record a planned/completed move in the SQLite journal and return its row id."""
+    now = _utc_now()
+    con = _journal_conn()
+    cur = con.execute(
+        "INSERT INTO moves (src, dest, disk_name, clean_name, category, confidence, moved_at, "
+        "plan_id, plan_item_id, run_id, status, error, planned_at, updated_at, partial_dest_exists) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        (src, dest, disk_name, clean_name, category, confidence, now,
+         plan_id, plan_item_id, run_id, status, error, now, now, int(partial_dest_exists))
+    )
+    con.commit()
+    row_id = cur.lastrowid
+    con.close()
+    return row_id
+
+def journal_update(move_id: int, status: str, error: str = '',
+                   partial_dest_exists: bool = False):
+    """Update a journal row status after a plan item succeeds or fails."""
     con = _journal_conn()
     con.execute(
-        "INSERT INTO moves (src, dest, disk_name, clean_name, category, confidence, moved_at) "
-        "VALUES (?,?,?,?,?,?,?)",
-        (src, dest, disk_name, clean_name, category, confidence,
-         datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'))
+        "UPDATE moves SET status=?, error=?, updated_at=?, partial_dest_exists=? WHERE id=?",
+        (status, error, _utc_now(), int(partial_dest_exists), move_id)
     )
     con.commit()
     con.close()
@@ -136,7 +198,8 @@ def journal_src_exists(src: str) -> bool:
         return False
     con = _journal_conn()
     row = con.execute(
-        "SELECT 1 FROM moves WHERE src = ? AND undone_at IS NULL LIMIT 1", (src,)
+        "SELECT 1 FROM moves WHERE src = ? AND undone_at IS NULL "
+        "AND COALESCE(status, 'done') IN ('pending', 'done') LIMIT 1", (src,)
     ).fetchone()
     con.close()
     return row is not None
@@ -146,7 +209,10 @@ def journal_src_set() -> set:
     if not os.path.exists(JOURNAL_FILE):
         return set()
     con = _journal_conn()
-    rows = con.execute("SELECT src FROM moves WHERE undone_at IS NULL").fetchall()
+    rows = con.execute(
+        "SELECT src FROM moves WHERE undone_at IS NULL "
+        "AND COALESCE(status, 'done') IN ('pending', 'done')"
+    ).fetchall()
     con.close()
     return {r[0] for r in rows}
 
@@ -163,11 +229,13 @@ def undo_moves(last_n: int = 0, dry_run: bool = False) -> dict:
     con = _journal_conn()
     if last_n:
         rows = con.execute(
-            "SELECT * FROM moves WHERE undone_at IS NULL ORDER BY id DESC LIMIT ?", (last_n,)
+            "SELECT * FROM moves WHERE undone_at IS NULL "
+            "AND COALESCE(status, 'done')='done' ORDER BY id DESC LIMIT ?", (last_n,)
         ).fetchall()
     else:
         rows = con.execute(
-            "SELECT * FROM moves WHERE undone_at IS NULL ORDER BY id DESC"
+            "SELECT * FROM moves WHERE undone_at IS NULL "
+            "AND COALESCE(status, 'done')='done' ORDER BY id DESC"
         ).fetchall()
 
     total = len(rows)
@@ -199,8 +267,8 @@ def undo_moves(last_n: int = 0, dry_run: bool = False) -> dict:
                 os.makedirs(os.path.dirname(dest), exist_ok=True)
                 robust_move(src, dest)
                 con.execute(
-                    "UPDATE moves SET undone_at=? WHERE id=?",
-                    (datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), row['id'])
+                    "UPDATE moves SET undone_at=?, status=?, updated_at=? WHERE id=?",
+                    (_utc_now(), 'undone', _utc_now(), row['id'])
                 )
                 con.commit()
                 reversed_n += 1
@@ -488,152 +556,300 @@ def _cat_path(dest_root: str, category: str) -> str:
     parts = [p for p in category.replace('\\', '/').split('/') if p]
     return os.path.join(dest_root, *[sanitize(p) for p in parts])
 
-def safe_dest_path(dest_root: str, category: str, clean_name: str) -> str:
+def _path_key(path: str) -> str:
+    return os.path.normcase(os.path.abspath(path))
+
+def _path_taken(path: str, reserved: set | None = None) -> bool:
+    return os.path.exists(path) or (reserved is not None and _path_key(path) in reserved)
+
+def safe_dest_path(dest_root: str, category: str, clean_name: str,
+                   reserved: set | None = None) -> str:
     dest = os.path.join(_cat_path(dest_root, category), sanitize(clean_name))
-    if os.path.exists(dest):
+    if _path_taken(dest, reserved):
         base, i = dest, 1
-        while os.path.exists(dest):
+        while _path_taken(dest, reserved):
             dest = f"{base} ({i})"
             i += 1
     return dest
 
-def safe_dest_path_file(dest_root: str, category: str, clean_name: str, ext: str) -> str:
+def safe_dest_path_file(dest_root: str, category: str, clean_name: str, ext: str,
+                        reserved: set | None = None) -> str:
     """Build collision-safe destination path for a flat file (not a directory)."""
     cat_dir = _cat_path(dest_root, category)
     stem    = sanitize(clean_name)
     dest    = os.path.join(cat_dir, f"{stem}{ext}")
-    if os.path.exists(dest):
+    if _path_taken(dest, reserved):
         i = 1
-        while os.path.exists(dest):
+        while _path_taken(dest, reserved):
             dest = os.path.join(cat_dir, f"{stem} ({i}){ext}")
             i += 1
     return dest
 
-# ── Core move logic ───────────────────────────────────────────────────────────
-def apply_moves(pairs: list, source_override: str,
-                dry_run: bool = True, verbose: bool = True):
-    dest_root  = get_dest_root()
-    moved = skipped = errors = low_conf = 0
-    category_counts = defaultdict(int)
-    not_found  = []
-    error_log  = []   # written to source-specific errors file on completion
-    _last_dest_root = None  # track overflow transitions for logging
+# ── Move plans ────────────────────────────────────────────────────────────────
+@dataclass
+class MovePlanItem:
+    id: str
+    source_mode: str
+    src: str
+    dest: str
+    disk_name: str
+    clean_name: str
+    category: str
+    effective_category: str
+    confidence: int
+    is_file_item: bool = False
+    file_ext: str = ''
+    low_confidence: bool = False
+    status: str = 'planned'
+    reason: str = ''
+    error: str = ''
 
-    # Preload already-moved src paths so we can skip duplicates without per-item DB hits
+@dataclass
+class MovePlan:
+    schema_version: int
+    plan_id: str
+    created_at: str
+    source_mode: str
+    dest_root: str
+    min_confidence: int
+    item_count: int
+    category_counts: dict = field(default_factory=dict)
+    skipped: list = field(default_factory=list)
+    items: list = field(default_factory=list)
+
+def _default_plan_path(plan_id: str) -> str:
+    return os.path.join(PLANS_DIR, f"{plan_id}.json")
+
+def _default_report_path(report_id: str) -> str:
+    return os.path.join(REPORTS_DIR, f"{report_id}.md")
+
+def _plan_dict(plan: MovePlan | dict) -> dict:
+    return asdict(plan) if isinstance(plan, MovePlan) else plan
+
+def write_move_plan(plan: MovePlan | dict, path: str = '') -> str:
+    plan_data = _plan_dict(plan)
+    out = path or _default_plan_path(plan_data['plan_id'])
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, 'w', encoding='utf-8') as f:
+        json.dump(plan_data, f, indent=2, ensure_ascii=False)
+        f.write('\n')
+    return out
+
+def read_move_plan(path: str) -> dict:
+    with open(path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    if int(data.get('schema_version', 0)) != PLAN_SCHEMA_VERSION:
+        raise ValueError(f"Unsupported plan schema: {data.get('schema_version')!r}")
+    if not isinstance(data.get('items'), list):
+        raise ValueError("Move plan missing items list")
+    return data
+
+def build_move_plan(pairs: list, source_override: str = '',
+                    source_mode: str = 'ae', plan_id: str = '') -> MovePlan:
+    """Convert classified/index pairs into an editable, collision-safe move plan."""
+    plan_id = plan_id or f"plan-{_compact_timestamp()}"
+    created_at = _utc_now()
+    first_dest_root = get_dest_root()
+    planned = []
+    skipped = []
+    category_counts = defaultdict(int)
+    reserved_dests = set()
     already_moved = journal_src_set()
+    last_dest_root = first_dest_root
 
     for item, org_entry in pairs:
-        # Re-evaluate dest_root each item so overflow kicks in mid-run if G:\ fills
         dest_root = get_dest_root()
-        if dest_root != _last_dest_root:
-            if _last_dest_root is not None:
-                log(f"  [OVERFLOW] G:\\ free < {MIN_FREE_GB} GB — redirecting remaining writes to {dest_root}")
-            _last_dest_root = dest_root
-        clean    = (item.get('clean_name') or item.get('name', '')).strip()
+        last_dest_root = dest_root
+        raw_name = item.get('name', '?')
         category = normalize_category(item.get('category', 'After Effects - Other').strip())
-        conf     = int(item.get('confidence', 0))
+        try:
+            conf = int(item.get('confidence', 0))
+        except (TypeError, ValueError):
+            conf = 0
 
         if not org_entry:
-            not_found.append(item.get('name', '?'))
-            skipped += 1
+            skipped.append({'name': raw_name, 'reason': 'not_in_index'})
             continue
 
-        # Determine source path — new index formats use 'path' directly
         is_file_item = bool(org_entry.get('is_file'))
         if 'path' in org_entry:
-            src       = org_entry['path']
+            src = org_entry['path']
             disk_name = os.path.basename(src)
         else:
-            src_dir   = source_override or org_entry['folder']
+            src_dir = source_override or org_entry['folder']
             disk_name = org_entry['name']
-            src       = os.path.join(src_dir, disk_name)
+            src = os.path.join(src_dir, disk_name)
+
+        clean = (item.get('clean_name') or raw_name or '').strip()
+        if not clean:
+            clean = Path(disk_name).stem or disk_name or 'Unnamed Asset'
 
         if not os.path.exists(src):
-            skipped += 1
+            skipped.append({'name': disk_name, 'src': src, 'reason': 'missing_source'})
+            continue
+        if src in already_moved:
+            skipped.append({'name': disk_name, 'src': src, 'reason': 'already_moved'})
             continue
 
-        # Skip if already journaled in DB — prevents duplicate moves across sessions
+        low_conf = conf < MIN_CONFIDENCE
+        eff_category = os.path.join(REVIEW_SUBDIR, category) if low_conf else category
+
+        if is_file_item:
+            file_ext = org_entry.get('file_ext', Path(src).suffix.lower())
+            disk_stem = sanitize(Path(disk_name).stem)
+            dest_stem = disk_stem if disk_stem else clean
+            dest = safe_dest_path_file(dest_root, eff_category, dest_stem, file_ext, reserved_dests)
+        else:
+            file_ext = ''
+            dest = safe_dest_path(dest_root, eff_category, clean, reserved_dests)
+
+        reserved_dests.add(_path_key(dest))
+        category_counts[category] += 1
+        planned.append(asdict(MovePlanItem(
+            id=f"{source_mode}-{len(planned) + 1:06d}",
+            source_mode=source_mode,
+            src=src,
+            dest=dest,
+            disk_name=disk_name,
+            clean_name=clean,
+            category=category,
+            effective_category=eff_category,
+            confidence=conf,
+            is_file_item=is_file_item,
+            file_ext=file_ext,
+            low_confidence=low_conf,
+        )))
+
+    return MovePlan(
+        schema_version=PLAN_SCHEMA_VERSION,
+        plan_id=plan_id,
+        created_at=created_at,
+        source_mode=source_mode,
+        dest_root=last_dest_root,
+        min_confidence=MIN_CONFIDENCE,
+        item_count=len(planned),
+        category_counts=dict(sorted(category_counts.items())),
+        skipped=skipped,
+        items=planned,
+    )
+
+def _move_plan_item(item: dict):
+    src = item['src']
+    dest = item['dest']
+    if os.path.exists(dest):
+        raise FileExistsError(f"Destination already exists: {dest}")
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    if item.get('is_file_item'):
+        try:
+            os.rename(src, dest)
+        except OSError:
+            shutil.move(src, dest)
+    else:
+        renamed = strip_trailing_spaces(src)
+        if renamed:
+            log(f"    Pre-sanitized {len(renamed)} name(s) with trailing spaces in {item['disk_name']!r}")
+        robust_move(src, dest)
+
+def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
+                    verbose: bool = True) -> dict:
+    """Apply an editable move plan and journal pending/done/failed transitions."""
+    plan_data = _plan_dict(plan)
+    source_mode = plan_data.get('source_mode', 'ae')
+    plan_id = plan_data.get('plan_id') or f"plan-{_compact_timestamp()}"
+    run_id = f"{plan_id}-run-{_compact_timestamp()}"
+    moved = skipped = errors = 0
+    low_conf = sum(1 for item in plan_data.get('items', []) if item.get('low_confidence'))
+    category_counts = defaultdict(int)
+    error_log = []
+    already_moved = journal_src_set()
+
+    for item in plan_data.get('items', []):
+        src = item['src']
+        dest = item['dest']
+        disk_name = item.get('disk_name', os.path.basename(src))
+        category = item.get('category', 'Unknown')
+        category_counts[category] += 1
+
         if src in already_moved:
             skipped += 1
             continue
-        if conf < MIN_CONFIDENCE:
-            eff_category = os.path.join(REVIEW_SUBDIR, category)
-            low_conf += 1
-        else:
-            eff_category = category
-
-        # Build destination path
-        if is_file_item:
-            file_ext = org_entry.get('file_ext', Path(src).suffix.lower())
-            # File-mode: use original filename stem for uniqueness.
-            # clean_name from AI is optimised for directory names (full project titles);
-            # individual files already have unique disk names, so preserve them.
-            # Fall back to clean only if disk stem would be empty after sanitize.
-            disk_stem = sanitize(Path(disk_name).stem)
-            dest_stem = disk_stem if disk_stem else clean
-            dest = safe_dest_path_file(dest_root, eff_category, dest_stem, file_ext)
-        else:
-            dest = safe_dest_path(dest_root, eff_category, clean)
-
-        category_counts[category] += 1
 
         if verbose:
-            tag  = '[DRY]' if dry_run else '[MOVE]'
-            flag = f'  *** LOW CONF={conf}' if conf < MIN_CONFIDENCE else ''
+            tag = '[DRY-PLAN]' if dry_run else '[MOVE]'
+            flag = f"  *** LOW CONF={item.get('confidence', 0)}" if item.get('low_confidence') else ''
             log(f"  {tag} {disk_name!r}")
-            log(f"    -> {dest}  [{conf}]{flag}", also_print=verbose)
+            log(f"    -> {dest}  [{item.get('confidence', 0)}]{flag}", also_print=verbose)
 
-        if not dry_run:
-            try:
-                os.makedirs(os.path.dirname(dest), exist_ok=True)
-
-                if is_file_item:
-                    # File move: try os.rename first, fall back to shutil.move
-                    try:
-                        os.rename(src, dest)
-                    except OSError:
-                        shutil.move(src, dest)
-                else:
-                    # Directory move: pre-sanitize trailing spaces then robust_move
-                    renamed = strip_trailing_spaces(src)
-                    if renamed:
-                        log(f"    Pre-sanitized {len(renamed)} name(s) with trailing spaces in {disk_name!r}")
-                    robust_move(src, dest)
-
-                journal_record(src, dest, disk_name, clean, category, conf)
-                moved += 1
-            except Exception as e:
-                err_msg = str(e)
-                log(f"    ERROR moving {disk_name!r}: {err_msg}")
-                errors += 1
-                error_log.append({
-                    'disk_name': disk_name,
-                    'src': src,
-                    'dest': dest,
-                    'category': category,
-                    'clean_name': clean,
-                    'confidence': conf,
-                    'error': err_msg,
-                    'partial_dest_exists': os.path.exists(dest),
-                })
-        else:
+        if dry_run:
             moved += 1
+            continue
 
-    tag = 'DRY RUN' if dry_run else 'APPLIED'
-    log(f"\n{tag}: {moved} moved, {skipped} skipped (not on disk), "
-        f"{errors} errors, {low_conf} low-conf routed to {REVIEW_SUBDIR}/")
-    if not_found:
-        log(f"\nNot in index ({len(not_found)} items):")
-        for n in not_found[:10]:
-            log(f"  - {n}")
+        move_id = journal_record(
+            src, dest, disk_name, item.get('clean_name', ''), category,
+            int(item.get('confidence', 0)), status='pending',
+            plan_id=plan_id, plan_item_id=item.get('id', ''), run_id=run_id,
+        )
+
+        try:
+            if not os.path.exists(src):
+                raise FileNotFoundError(f"Source missing: {src}")
+            _move_plan_item(item)
+            journal_update(move_id, 'done')
+            already_moved.add(src)
+            moved += 1
+        except Exception as e:
+            err_msg = str(e)
+            partial = os.path.exists(dest)
+            journal_update(move_id, 'failed', err_msg, partial_dest_exists=partial)
+            log(f"    ERROR moving {disk_name!r}: {err_msg}")
+            errors += 1
+            error_log.append({
+                'disk_name': disk_name,
+                'src': src,
+                'dest': dest,
+                'category': category,
+                'clean_name': item.get('clean_name', ''),
+                'confidence': int(item.get('confidence', 0)),
+                'error': err_msg,
+                'partial_dest_exists': partial,
+                'plan_id': plan_id,
+                'plan_item_id': item.get('id', ''),
+                'run_id': run_id,
+            })
+
+    tag = 'DRY PLAN' if dry_run else 'APPLIED PLAN'
+    log(f"\n{tag}: {moved} moved, {skipped} skipped, {errors} errors, "
+        f"{low_conf} low-conf routed to {REVIEW_SUBDIR}/")
+    if plan_data.get('skipped'):
+        by_reason = defaultdict(int)
+        for item in plan_data['skipped']:
+            by_reason[item.get('reason', 'unknown')] += 1
+        reason_text = ', '.join(f"{reason}={count}" for reason, count in sorted(by_reason.items()))
+        log(f"Plan skipped {len(plan_data['skipped'])} item(s): {reason_text}")
 
     if not dry_run and error_log:
-        efile = errors_file(source_override or 'ae')
+        efile = errors_file(source_mode)
         with open(efile, 'w', encoding='utf-8') as f:
             json.dump(error_log, f, indent=2, ensure_ascii=False)
-        log(f"\nErrors written to {efile} — run --retry-errors --source {source_override or 'ae'} to attempt fixes")
+        log(f"\nErrors written to {efile} — run --retry-errors --source {source_mode} to attempt fixes")
 
-    return moved, skipped, errors, category_counts
+    return {
+        'plan_id': plan_id,
+        'run_id': run_id,
+        'moved': moved,
+        'skipped': skipped,
+        'errors': errors,
+        'low_confidence': low_conf,
+        'category_counts': dict(category_counts),
+    }
+
+def apply_moves(pairs: list, source_override: str,
+                dry_run: bool = True, verbose: bool = True,
+                source_mode: str = 'ae'):
+    """Compatibility wrapper: build a move plan, then dry-run or apply it."""
+    plan = build_move_plan(pairs, source_override, source_mode)
+    result = apply_move_plan(plan, dry_run=dry_run, verbose=verbose)
+    return result['moved'], result['skipped'], result['errors'], result['category_counts']
 
 # ── CLI ───────────────────────────────────────────────────────────────────────
 def retry_errors(source_mode: str = 'ae'):
@@ -725,10 +941,130 @@ def cmd_validate(pairs: list, source_override: str = ''):
     else:
         print("Run --apply anyway (auto-remediates both issues via robocopy + pre-sanitize)")
 
+def _md_cell(value) -> str:
+    text = str(value if value is not None else '')
+    return text.replace('\\', '\\\\').replace('|', '\\|').replace('\r', ' ').replace('\n', ' ')
+
+def _report_name(identifier: str) -> str:
+    return sanitize(identifier.replace(os.sep, '-'), 100) or f"report-{_compact_timestamp()}"
+
+def generate_report(identifier: str, output: str = '') -> str:
+    """Generate a Markdown report from a run id, plan id, or plan JSON path."""
+    generated_at = _utc_now()
+    rows = []
+    skipped = []
+    report_title = identifier
+
+    if os.path.exists(identifier):
+        plan = read_move_plan(identifier)
+        report_title = plan.get('plan_id', identifier)
+        rows = [
+            {
+                'status': item.get('status', 'planned'),
+                'src': item.get('src', ''),
+                'dest': item.get('dest', ''),
+                'disk_name': item.get('disk_name', ''),
+                'clean_name': item.get('clean_name', ''),
+                'category': item.get('category', ''),
+                'confidence': item.get('confidence', 0),
+                'error': item.get('error', ''),
+                'partial_dest_exists': 0,
+            }
+            for item in plan.get('items', [])
+        ]
+        skipped = plan.get('skipped', [])
+    else:
+        con = _journal_conn()
+        found = con.execute(
+            "SELECT * FROM moves WHERE run_id=? OR plan_id=? ORDER BY id",
+            (identifier, identifier)
+        ).fetchall()
+        con.close()
+        rows = [dict(row) for row in found]
+        if not rows:
+            raise RuntimeError(f"No journal entries found for report id: {identifier}")
+
+    status_counts = defaultdict(int)
+    category_counts = defaultdict(int)
+    low_conf = 0
+    for row in rows:
+        status_counts[row.get('status') or 'unknown'] += 1
+        category_counts[row.get('category') or 'Unknown'] += 1
+        try:
+            if int(row.get('confidence') or 0) < MIN_CONFIDENCE:
+                low_conf += 1
+        except (TypeError, ValueError):
+            pass
+
+    out = output or _default_report_path(_report_name(report_title))
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    lines = [
+        '# FileOrganizer Move Report',
+        '',
+        f'- Report id: `{_md_cell(report_title)}`',
+        f'- Generated: `{generated_at}`',
+        f'- Items: `{len(rows)}`',
+        f'- Low confidence: `{low_conf}`',
+        f'- Skipped before planning: `{len(skipped)}`',
+        '',
+        '## Status Summary',
+        '',
+        '| Status | Count |',
+        '|---|---:|',
+    ]
+    for status, count in sorted(status_counts.items()):
+        lines.append(f"| {_md_cell(status)} | {count} |")
+
+    lines.extend(['', '## Category Summary', '', '| Category | Count |', '|---|---:|'])
+    for category, count in sorted(category_counts.items(), key=lambda x: (-x[1], x[0])):
+        lines.append(f"| {_md_cell(category)} | {count} |")
+
+    failures = [row for row in rows if (row.get('status') == 'failed' or row.get('error'))]
+    if failures:
+        lines.extend(['', '## Failures', '', '| Item | Error | Partial Dest |', '|---|---|---:|'])
+        for row in failures:
+            lines.append(
+                f"| {_md_cell(row.get('disk_name') or row.get('clean_name'))} "
+                f"| {_md_cell(row.get('error'))} "
+                f"| {int(bool(row.get('partial_dest_exists')))} |"
+            )
+
+    if skipped:
+        lines.extend(['', '## Skipped Before Planning', '', '| Item | Reason | Source |', '|---|---|---|'])
+        for row in skipped:
+            lines.append(
+                f"| {_md_cell(row.get('name', ''))} | {_md_cell(row.get('reason', ''))} "
+                f"| {_md_cell(row.get('src', ''))} |"
+            )
+
+    lines.extend([
+        '',
+        '## Items',
+        '',
+        '| Status | Confidence | Category | Source | Destination |',
+        '|---|---:|---|---|---|',
+    ])
+    for row in rows:
+        lines.append(
+            f"| {_md_cell(row.get('status', 'planned'))} "
+            f"| {_md_cell(row.get('confidence', 0))} "
+            f"| {_md_cell(row.get('category', ''))} "
+            f"| `{_md_cell(row.get('src', ''))}` "
+            f"| `{_md_cell(row.get('dest', ''))}` |"
+        )
+
+    with open(out, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(lines) + '\n')
+    return out
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--preview',       action='store_true', help='Dry run (default)')
     ap.add_argument('--apply',         action='store_true', help='Apply moves')
+    ap.add_argument('--plan-out',      type=str,            help='Write generated move plan to this JSON path')
+    ap.add_argument('--apply-plan',    type=str,            help='Apply a previously generated move plan JSON')
+    ap.add_argument('--report',        type=str,            help='Generate Markdown report for a run id, plan id, or plan JSON path')
+    ap.add_argument('--output',        type=str,            help='Output path for --report')
     ap.add_argument('--validate',      action='store_true', help='Pre-flight: scan for WinError 2/3 sources')
     ap.add_argument('--retry-errors',  action='store_true', help='Retry items in organize_errors.json')
     ap.add_argument('--undo-last',     type=int, metavar='N', help='Reverse last N moves from journal')
@@ -741,6 +1077,19 @@ def main():
     ap.add_argument('--summary',       action='store_true', help='Category/marketplace breakdown')
     ap.add_argument('--quiet',         action='store_true', help='Suppress per-item output')
     args = ap.parse_args()
+
+    if args.report:
+        out = generate_report(args.report, args.output or '')
+        print(f"Report written: {out}")
+        return
+
+    if args.apply_plan:
+        plan = read_move_plan(args.apply_plan)
+        result = apply_move_plan(plan, dry_run=(args.preview and not args.apply), verbose=not args.quiet)
+        print(f"Plan id: {result['plan_id']}")
+        print(f"Run id: {result['run_id']}")
+        print(f"Moved={result['moved']} skipped={result['skipped']} errors={result['errors']}")
+        return
 
     if args.retry_errors:
         retry_errors(args.source)
@@ -768,10 +1117,20 @@ def main():
         print(f"\n  Total: {total} items across {len(files)} files")
         if os.path.exists(JOURNAL_FILE):
             con = _journal_conn()
-            n_moved  = con.execute("SELECT COUNT(*) FROM moves WHERE undone_at IS NULL").fetchone()[0]
-            n_undone = con.execute("SELECT COUNT(*) FROM moves WHERE undone_at IS NOT NULL").fetchone()[0]
+            n_moved  = con.execute(
+                "SELECT COUNT(*) FROM moves WHERE undone_at IS NULL AND COALESCE(status, 'done')='done'"
+            ).fetchone()[0]
+            n_pending = con.execute(
+                "SELECT COUNT(*) FROM moves WHERE undone_at IS NULL AND COALESCE(status, 'done')='pending'"
+            ).fetchone()[0]
+            n_failed = con.execute(
+                "SELECT COUNT(*) FROM moves WHERE undone_at IS NULL AND COALESCE(status, 'done')='failed'"
+            ).fetchone()[0]
+            n_undone = con.execute(
+                "SELECT COUNT(*) FROM moves WHERE undone_at IS NOT NULL OR COALESCE(status, 'done')='undone'"
+            ).fetchone()[0]
             con.close()
-            print(f"\n  Moves journal: {n_moved} active moves, {n_undone} undone")
+            print(f"\n  Moves journal: {n_moved} done, {n_pending} pending, {n_failed} failed, {n_undone} undone")
         return
 
     if args.load:
@@ -819,7 +1178,13 @@ def main():
 
     dry     = not args.apply
     verbose = not args.quiet
-    apply_moves(pairs, source_dir_override, dry_run=dry, verbose=verbose)
+    plan = build_move_plan(pairs, source_dir_override, source_mode)
+    plan_path = write_move_plan(plan, args.plan_out or '')
+    log(f"Move plan written: {plan_path}")
+    result = apply_move_plan(plan, dry_run=dry, verbose=verbose)
+    if not dry:
+        log(f"Plan id: {result['plan_id']}")
+        log(f"Run id: {result['run_id']}")
 
 if __name__ == '__main__':
     main()

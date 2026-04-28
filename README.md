@@ -190,6 +190,11 @@ python organize_run.py --retry-errors             # Retry failed items
 python organize_run.py --source design --preview --quiet
 python organize_run.py --source design --apply --quiet
 
+# Plan-first apply flow
+python organize_run.py --source design --preview --plan-out plan.json
+python organize_run.py --apply-plan plan.json
+python organize_run.py --report <RUN_ID> --output report.md
+
 # Undo support
 python organize_run.py --undo-last 10             # Reverse last 10 moves
 python organize_run.py --undo-all                 # Reverse everything
