@@ -17,6 +17,7 @@ Usage:
     python fix_flagged_misclassifications.py --apply [--dry-run]
 """
 import argparse
+import os
 import sqlite3
 import subprocess
 import sys
@@ -30,18 +31,18 @@ from organize_run import _lp, robust_move  # noqa: E402
 DB = REPO / "organize_moves.db"
 
 # (current_path, target_canonical_category, clean_name)
+# At apply time the items had landed on G:\Organized (not I:\ as the original
+# session handoff suggested); confirmed by `os.path.exists` probe.
 FIXES = [
     (Path(r"I:\Organized\After Effects - Christmas & Holiday\Wedding"),
      "After Effects - Wedding & Romance", "Wedding"),
-    (Path(r"I:\Organized\After Effects - Christmas & Holiday\Summer & Tropical"),
+    (Path(r"G:\Organized\After Effects - Christmas & Holiday\Summer & Tropical"),
      "Stock Footage - Nature & Landscape", "Summer & Tropical"),
-    (Path(r"I:\Organized\Plugins & Extensions\TV & Broadcast"),
+    (Path(r"G:\Organized\Plugins & Extensions\TV & Broadcast"),
      "After Effects - News & Broadcast", "TV & Broadcast"),
-    (Path(r"I:\Organized\Plugins & Extensions\Text Effects & Styles"),
+    (Path(r"G:\Organized\Plugins & Extensions\Text Effects & Styles"),
      "Photoshop - Styles & Layer Effects", "Text Effects & Styles"),
 ]
-
-ORG_ROOT = Path(r"I:\Organized")  # All four sources live on I:\
 
 
 def journal_correction(src: str, dst: str, clean: str, category: str) -> None:
@@ -88,7 +89,9 @@ def main() -> None:
             print(f"  [SKIP] {src} — not on disk")
             skipped += 1
             continue
-        target_dir = ORG_ROOT / target_cat
+        # Target stays on the same drive as the source (avoids cross-drive copy)
+        org_root = Path(os.path.splitdrive(str(src))[0] + r"\Organized")
+        target_dir = org_root / target_cat
         dest = safe_dest(target_dir, clean)
         files = sum(1 for _ in src.rglob("*") if _.is_file())
         tag = "[SCAN]" if args.scan else ("[DRY]" if args.dry_run else "[APPLY]")

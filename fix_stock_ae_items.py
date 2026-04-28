@@ -31,22 +31,46 @@ ORGANIZED_OVERFLOW = Path(r'I:\Organized')   # overflow destination when G:\ is 
 JOURNAL_FILE  = Path(__file__).parent / 'organize_moves.db'
 RESULTS_FILE  = Path(__file__).parent / 'fix_stock_ae_results.json'
 
-def _overflow_scan_dirs() -> list[Path]:
-    """Extra scan dirs from I:\\Organized if the overflow root exists."""
-    if not ORGANIZED_OVERFLOW.exists():
+# Every non-AE category that could plausibly hide AE template folders.
+# Keep this list canonical-only (matches classify_design.CATEGORIES); a missing
+# subcategory here means we'd silently leave AE templates in stock dirs forever
+# (audit 2026-04-28 found ~46 misplaced tutorials/templates because the prior
+# list only covered 5 of the 12 stock subcategories).
+_NON_AE_SCAN_NAMES = [
+    'Stock Footage - General',
+    'Stock Footage - Abstract & VFX',
+    'Stock Footage - Aerial & Drone',
+    'Stock Footage - Green Screen',
+    'Stock Footage - Nature & Landscape',
+    'Stock Footage - People & Lifestyle',
+    'Stock Footage - Timelapse',
+    'Stock Photos - General',
+    'Stock Photos - Food & Drink',
+    'Stock Photos - Nature & Outdoors',
+    'Stock Music & Audio',
+    'Sound Effects & SFX',
+    'Print - Other',
+    'Print - Flyers & Posters',
+    'Print - Brochures & Books',
+    'Print - Business Cards & Stationery',
+    'Print - Invitations & Events',
+    'Print - Social Media Graphics',
+    'Plugins & Extensions',
+    'Cinematic FX & Overlays',
+    'Color Grading & LUTs',
+]
+
+def _scan_dirs_for_root(root: Path) -> list[Path]:
+    if not root.exists():
         return []
-    names = ['Stock Footage - General', 'Stock Photos - General',
-             'Stock Music & Audio', 'Print - Other', 'Print - Flyers & Posters']
-    return [ORGANIZED_OVERFLOW / n for n in names if (ORGANIZED_OVERFLOW / n).exists()]
+    return [root / n for n in _NON_AE_SCAN_NAMES if (root / n).exists()]
+
+def _overflow_scan_dirs() -> list[Path]:
+    """Backwards-compat alias retained so external callers keep working."""
+    return _scan_dirs_for_root(ORGANIZED_OVERFLOW)
 
 # Non-AE destination directories to scan for misplaced AE templates
-DEFAULT_SCAN_DIRS = [
-    ORGANIZED / 'Stock Footage - General',
-    ORGANIZED / 'Stock Photos - General',
-    ORGANIZED / 'Stock Music & Audio',
-    ORGANIZED / 'Print - Other',
-    ORGANIZED / 'Print - Flyers & Posters',
-] + _overflow_scan_dirs()
+DEFAULT_SCAN_DIRS = _scan_dirs_for_root(ORGANIZED) + _scan_dirs_for_root(ORGANIZED_OVERFLOW)
 
 AE_EXTENSIONS = {'.aep', '.aet', '.ffx', '.mogrt', '.aex'}
 
@@ -55,12 +79,16 @@ DEEPSEEK_URL     = 'https://api.deepseek.com/v1/chat/completions'
 DEEPSEEK_MODEL   = 'deepseek-chat'
 
 # ── AE keyword → subcategory rules ────────────────────────────────────────────
-# Evaluated in order; first match wins
+# Evaluated in order; first match wins. Expanded 2026-04-28 audit to cover
+# common misses: social media variants, light-flare/overlay packs, quote
+# templates, weather/nature themes, etc.
 AE_KEYWORD_RULES: list[tuple[list[str], str]] = [
     (['lower third', 'lower-third'],                           'After Effects - Lower Thirds'),
     (['logo reveal', 'logo sting', 'logo opener'],             'After Effects - Logo Reveal'),
-    (['wedding', 'romance', 'love story', 'invitation'],       'After Effects - Wedding & Romance'),
-    (['slideshow', 'photo slide', 'photo album'],              'After Effects - Slideshow'),
+    (['wedding', 'romance', 'love story', 'invitation',
+      'love quote', 'love stories'],                           'After Effects - Wedding & Romance'),
+    (['slideshow', 'photo slide', 'photo album',
+      'memories', 'photo memories'],                           'After Effects - Slideshow'),
     (['parallax', 'photo gallery', 'gallery'],                 'After Effects - Photo Album & Gallery'),
     (['lyric', 'lyrics', 'music video'],                       'After Effects - Lyric & Music Video'),
     (['audio visual', 'visualizer', 'equalizer', 'waveform'],  'After Effects - Music & Audio Visualizer'),
@@ -68,22 +96,38 @@ AE_KEYWORD_RULES: list[tuple[list[str], str]] = [
     (['infographic', 'data viz', 'chart', 'statistic'],        'After Effects - Infographic & Data Viz'),
     (['3d', 'particle', 'particles'],                          'After Effects - 3D & Particle'),
     (['glitch', 'distortion', 'noise', 'vhs', 'retro'],        'After Effects - VHS & Retro'),
+    # Light leaks, optical flares, fire, smoke, weather FX → Cinematic FX & Overlays
+    (['light leak', 'lightleak', 'lens flare', 'optical flare',
+      'optical evolution', 'eyes flare', 'natural light',
+      'fire wall', 'fire & brimstone', 'fire pack',
+      'smoke pack', 'dust pack', 'film grain', 'film burn',
+      'film burns', 'cinematic effect', 'overlays pack'],      'Cinematic FX & Overlays'),
     (['christmas', 'holiday', 'new year', 'halloween',
       'thanksgiving', 'easter', 'valentine'],                  'After Effects - Christmas & Holiday'),
     (['sport', 'action', 'soccer', 'football', 'basketball'],  'After Effects - Sport & Action'),
     (['kids', 'cartoon', 'child', 'education'],                'After Effects - Kids & Cartoons'),
     (['real estate', 'realty', 'property', 'mortgage'],        'After Effects - Real Estate'),
-    (['map', 'location', 'travel route', 'navigate'],          'After Effects - Map & Location'),
+    (['map', 'location', 'travel route', 'navigate',
+      'national park'],                                        'After Effects - Map & Location'),
     (['mockup', 'device', 'phone', 'screen'],                  'After Effects - Mockup & Device'),
     (['event', 'party', 'celebration', 'concert', 'festival'], 'After Effects - Event & Party'),
+    # Social media: stories, quotes, subscribe buttons, all platforms
     (['social media', 'instagram', 'facebook', 'twitter',
-      'youtube thumbnail', 'tiktok'],                          'After Effects - Social Media'),
+      'youtube thumbnail', 'tiktok', 'snapchat',
+      'instastories', 'insta story', 'insta stories',
+      'modern stories', 'story', 'stories',
+      'quote', 'quotes', 'testimonial', 'testimonials',
+      'review and testimonial', 'subscribe button',
+      'social life', 'pinterest', 'twitch', 'streaming'],      'After Effects - Social Media'),
     (['product promo', 'product showcase', 'e-commerce',
-      'promo', 'advertising', 'ad '],                          'After Effects - Product Promo'),
+      'promo', 'advertising', 'ad ',
+      'coronavirus', 'covid'],                                 'After Effects - Product Promo'),
     (['trailer', 'teaser', 'coming soon'],                     'After Effects - Trailer & Teaser'),
-    (['cinematic', 'film', 'movie', 'blockbuster'],            'After Effects - Cinematic & Film'),
+    (['cinematic', 'film', 'movie', 'blockbuster',
+      'documentary', 'wild nature', 'nature documentary'],     'After Effects - Cinematic & Film'),
     (['corporate', 'business', 'company', 'presentation',
-      'professional', 'office'],                               'After Effects - Corporate & Business'),
+      'professional', 'office', 'idea',
+      'invention', 'discovery', 'innovation'],                 'After Effects - Corporate & Business'),
     (['transition', 'motion pack', 'fx pack'],                 'After Effects - Transition Pack'),
     (['broadcast', 'package', 'promo package'],                'After Effects - Broadcast Package'),
     (['character', 'explainer', 'animation', 'mascot'],        'After Effects - Character & Explainer'),
@@ -92,6 +136,11 @@ AE_KEYWORD_RULES: list[tuple[list[str], str]] = [
     (['title', 'typography', 'text', 'kinetic', 'headline'],   'After Effects - Title & Typography'),
     (['motion graphic', 'motion pack'],                        'After Effects - Motion Graphics Pack'),
     (['preset', 'presets', 'plugin', 'script'],                'After Effects - Preset Pack'),
+    # Weather / nature
+    (['weather', 'rain', 'snow pack', 'thunderstorm',
+      'wild nature'],                                          'After Effects - Other'),
+    # Animated icons (still AE templates, no specific cat)
+    (['animated weather icons', 'animated icon'],              'After Effects - Other'),
 ]
 
 
@@ -259,8 +308,13 @@ def cmd_scan(scan_dirs: list[Path]) -> None:
         print('Nothing to do.')
 
 
-def cmd_analyze(scan_dirs: list[Path]) -> None:
-    """Classify all misplaced AE items."""
+def cmd_analyze(scan_dirs: list[Path], no_ai: bool = False) -> None:
+    """Classify all misplaced AE items.
+
+    --no-ai mode skips the DeepSeek fallback for items that have no keyword
+    match; those items are written to the results file with a `manual_review`
+    method so a human (or a separate hand-curation script) can classify them.
+    """
     print('Analyzing misplaced AE template folders...\n')
     results = []
     needs_ai = []
@@ -296,7 +350,22 @@ def cmd_analyze(scan_dirs: list[Path]) -> None:
                     'ext_summary':  str(profile['counts']),
                 })
 
-    if needs_ai:
+    if needs_ai and no_ai:
+        print(f'\n[--no-ai] Skipping AI classification for {len(needs_ai)} unmatched items.')
+        print('Writing them to results with method="manual_review" — hand-classify and re-run --apply.')
+        for it in needs_ai:
+            results.append({
+                'folder_name':   it['folder_name'],
+                'source_dir':    it['source_dir'],
+                'current_path':  it['current_path'],
+                'new_category':  None,            # left for a human to fill in
+                'clean_name':    it['folder_name'],
+                'confidence':    0,
+                'method':        'manual_review',
+                'ext_summary':   it['ext_summary'],
+            })
+            print(f'  [MANUAL] {it["folder_name"]}')
+    elif needs_ai:
         print(f'\nCalling DeepSeek for {len(needs_ai)} unmatched items...')
         for i in range(0, len(needs_ai), 10):
             batch = deepseek_classify_ae(needs_ai[i:i+10])
@@ -340,16 +409,30 @@ def cmd_apply(dry_run: bool = False) -> None:
     moved = skipped = errors = 0
     for r in results:
         src       = Path(r['current_path'])
-        new_cat   = r.get('new_category', 'After Effects - Other')
+        new_cat   = r.get('new_category')
         clean_nm  = r.get('clean_name', src.name)
         confidence = r.get('confidence', 70)
+
+        # Skip items without a category (--no-ai placeholders awaiting human review)
+        if not new_cat or r.get('method') == 'manual_review':
+            print(f'  [HOLD] {src.name} — needs manual category (method={r.get("method")})')
+            skipped += 1
+            continue
 
         if not src.exists():
             print(f'  [SKIP] {src.name} — not at expected path')
             skipped += 1
             continue
 
-        cat_dir = ORGANIZED / new_cat
+        # Keep the move on the source drive when possible. G:\ is the primary
+        # canonical root, but the I:\ overflow is mirrored under the same
+        # category names — moving G: → G: or I: → I: avoids cross-drive copy.
+        src_drive = os.path.splitdrive(str(src))[0].upper()
+        if src_drive == 'I:' and ORGANIZED_OVERFLOW.exists():
+            cat_root = ORGANIZED_OVERFLOW
+        else:
+            cat_root = ORGANIZED
+        cat_dir = cat_root / new_cat
         dest    = safe_dest(cat_dir, clean_nm)
         print(f'  {tag} {src.name!r}')
         print(f'       {src.parent.name}/ -> {new_cat}/{clean_nm}')
@@ -382,8 +465,11 @@ def main():
     ap.add_argument('--analyze',   action='store_true', help='Classify misplaced AE items')
     ap.add_argument('--apply',     action='store_true', help='Apply moves to correct AE categories')
     ap.add_argument('--dry-run',   action='store_true', help='Preview without moving')
+    ap.add_argument('--no-ai',     action='store_true',
+                    help='--analyze only: skip DeepSeek for unmatched items '
+                         '(write them to results with method="manual_review")')
     ap.add_argument('--scan-dirs', nargs='+', metavar='DIR',
-                    help='Override directories to scan (default: Stock Footage + Stock Photos + ...)')
+                    help='Override directories to scan (default: every non-AE category)')
     args = ap.parse_args()
 
     scan_dirs = [Path(d) for d in args.scan_dirs] if args.scan_dirs else DEFAULT_SCAN_DIRS
@@ -391,7 +477,7 @@ def main():
     if args.scan:
         cmd_scan(scan_dirs)
     elif args.analyze:
-        cmd_analyze(scan_dirs)
+        cmd_analyze(scan_dirs, no_ai=args.no_ai)
     elif args.apply:
         cmd_apply(dry_run=args.dry_run)
     else:
