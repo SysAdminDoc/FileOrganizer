@@ -1,0 +1,542 @@
+[
+  {
+    "name": "555",
+    "category": "After Effects - Other",
+    "clean_name": "555",
+    "confidence": 65,
+    "notes": "Only .aep file, no descriptive name",
+    "_source_name": "555",
+    "_batch_index": 6720
+  },
+  {
+    "name": "556_U1MyLTAx",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "556_U1MyLTAx",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "556_U1MyLTAx",
+    "_batch_index": 6721
+  },
+  {
+    "name": "557934.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "557934.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "557934.RW",
+    "_batch_index": 6722
+  },
+  {
+    "name": "557_U1MzLTAx",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "557_U1MzLTAx",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "557_U1MzLTAx",
+    "_batch_index": 6723
+  },
+  {
+    "name": "558",
+    "category": "Photoshop - Other",
+    "clean_name": "558",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "558",
+    "_batch_index": 6724
+  },
+  {
+    "name": "55_2",
+    "category": "Photoshop - Other",
+    "clean_name": "55_2",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "55_2",
+    "_batch_index": 6725
+  },
+  {
+    "name": "55_3",
+    "category": "Photoshop - Other",
+    "clean_name": "55_3",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "55_3",
+    "_batch_index": 6726
+  },
+  {
+    "name": "55_4",
+    "category": "Photoshop - Other",
+    "clean_name": "55_4",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "55_4",
+    "_batch_index": 6727
+  },
+  {
+    "name": "55_5",
+    "category": "Photoshop - Other",
+    "clean_name": "55_5",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "55_5",
+    "_batch_index": 6728
+  },
+  {
+    "name": "56 Timeline 6",
+    "category": "Photoshop - Other",
+    "clean_name": "56 Timeline 6",
+    "confidence": 70,
+    "notes": ".psd file, 'Timeline' suggests a timeline graphic but unclear",
+    "_source_name": "56 Timeline 6",
+    "_batch_index": 6729
+  },
+  {
+    "name": "56",
+    "category": "Photoshop - Other",
+    "clean_name": "56",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "56",
+    "_batch_index": 6730
+  },
+  {
+    "name": "560049.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "560049.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "560049.RW",
+    "_batch_index": 6731
+  },
+  {
+    "name": "560996.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "560996.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "560996.RW",
+    "_batch_index": 6732
+  },
+  {
+    "name": "561026.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "561026.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "561026.RW",
+    "_batch_index": 6733
+  },
+  {
+    "name": "561071.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "561071.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "561071.RW",
+    "_batch_index": 6734
+  },
+  {
+    "name": "561326.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "561326.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "561326.RW",
+    "_batch_index": 6735
+  },
+  {
+    "name": "564355.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564355.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564355.RW",
+    "_batch_index": 6736
+  },
+  {
+    "name": "564363.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564363.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564363.RW",
+    "_batch_index": 6737
+  },
+  {
+    "name": "564378.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564378.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564378.RW",
+    "_batch_index": 6738
+  },
+  {
+    "name": "564383.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564383.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564383.RW",
+    "_batch_index": 6739
+  },
+  {
+    "name": "564387.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564387.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564387.RW",
+    "_batch_index": 6740
+  },
+  {
+    "name": "564396.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564396.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564396.RW",
+    "_batch_index": 6741
+  },
+  {
+    "name": "564398.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564398.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564398.RW",
+    "_batch_index": 6742
+  },
+  {
+    "name": "564400.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564400.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564400.RW",
+    "_batch_index": 6743
+  },
+  {
+    "name": "564402.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564402.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564402.RW",
+    "_batch_index": 6744
+  },
+  {
+    "name": "564414.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564414.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564414.RW",
+    "_batch_index": 6745
+  },
+  {
+    "name": "564415.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564415.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564415.RW",
+    "_batch_index": 6746
+  },
+  {
+    "name": "564420.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564420.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564420.RW",
+    "_batch_index": 6747
+  },
+  {
+    "name": "564421.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564421.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564421.RW",
+    "_batch_index": 6748
+  },
+  {
+    "name": "564423.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "564423.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "564423.RW",
+    "_batch_index": 6749
+  },
+  {
+    "name": "56_2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_2",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_2",
+    "_batch_index": 6750
+  },
+  {
+    "name": "56_2",
+    "category": "Photoshop - Other",
+    "clean_name": "56_2",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "56_2",
+    "_batch_index": 6751
+  },
+  {
+    "name": "56_MTExMS0wMTE5OTE5cDE",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_MTExMS0wMTE5OTE5cDE",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_MTExMS0wMTE5OTE5cDE",
+    "_batch_index": 6752
+  },
+  {
+    "name": "56_MTExMS0wMTE5OTE5cDE4MQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_MTExMS0wMTE5OTE5cDE4MQ",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_MTExMS0wMTE5OTE5cDE4MQ",
+    "_batch_index": 6753
+  },
+  {
+    "name": "56_MTExMS0wMTE5OTE5cDE4MTY",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_MTExMS0wMTE5OTE5cDE4MTY",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_MTExMS0wMTE5OTE5cDE4MTY",
+    "_batch_index": 6754
+  },
+  {
+    "name": "56_MTExMS0wMTE5OTE5cDE4MTYxMW8",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_MTExMS0wMTE5OTE5cDE4MTYxMW8",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_MTExMS0wMTE5OTE5cDE4MTYxMW8",
+    "_batch_index": 6755
+  },
+  {
+    "name": "56_MTExMS0wMTE5OTE5cDEx",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_MTExMS0wMTE5OTE5cDEx",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_MTExMS0wMTE5OTE5cDEx",
+    "_batch_index": 6756
+  },
+  {
+    "name": "56_NTE",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_NTE",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_NTE",
+    "_batch_index": 6757
+  },
+  {
+    "name": "56_NTg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_NTg",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_NTg",
+    "_batch_index": 6758
+  },
+  {
+    "name": "56_NTI",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_NTI",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_NTI",
+    "_batch_index": 6759
+  },
+  {
+    "name": "56_NTU",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_NTU",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_NTU",
+    "_batch_index": 6760
+  },
+  {
+    "name": "56_NTY",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_NTY",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_NTY",
+    "_batch_index": 6761
+  },
+  {
+    "name": "56_Y29ybmVyZGVjb3IxLTAxMTkxMTkxODEyMQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "56_Y29ybmVyZGVjb3IxLTAxMTkxMTkxODEyMQ",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "56_Y29ybmVyZGVjb3IxLTAxMTkxMTkxODEyMQ",
+    "_batch_index": 6762
+  },
+  {
+    "name": "57 Timeline 7",
+    "category": "Photoshop - Other",
+    "clean_name": "57 Timeline 7",
+    "confidence": 70,
+    "notes": ".psd file, 'Timeline' suggests a timeline graphic but unclear",
+    "_source_name": "57 Timeline 7",
+    "_batch_index": 6763
+  },
+  {
+    "name": "57",
+    "category": "Photoshop - Other",
+    "clean_name": "57",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "57",
+    "_batch_index": 6764
+  },
+  {
+    "name": "579ab5324ab11",
+    "category": "Photoshop - Other",
+    "clean_name": "579ab5324ab11",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "579ab5324ab11",
+    "_batch_index": 6765
+  },
+  {
+    "name": "579ffa1edbf0b",
+    "category": "Photoshop - Other",
+    "clean_name": "579ffa1edbf0b",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "579ffa1edbf0b",
+    "_batch_index": 6766
+  },
+  {
+    "name": "57_2",
+    "category": "Photoshop - Other",
+    "clean_name": "57_2",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "57_2",
+    "_batch_index": 6767
+  },
+  {
+    "name": "57a8584896072",
+    "category": "Photoshop - Other",
+    "clean_name": "57a8584896072",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "57a8584896072",
+    "_batch_index": 6768
+  },
+  {
+    "name": "57f11665eca3f",
+    "category": "Photoshop - Other",
+    "clean_name": "57f11665eca3f",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "57f11665eca3f",
+    "_batch_index": 6769
+  },
+  {
+    "name": "57f8671f72c43",
+    "category": "Photoshop - Other",
+    "clean_name": "57f8671f72c43",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "57f8671f72c43",
+    "_batch_index": 6770
+  },
+  {
+    "name": "57fe0673e0638",
+    "category": "Photoshop - Other",
+    "clean_name": "57fe0673e0638",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "57fe0673e0638",
+    "_batch_index": 6771
+  },
+  {
+    "name": "58 Timeline 8",
+    "category": "Photoshop - Other",
+    "clean_name": "58 Timeline 8",
+    "confidence": 70,
+    "notes": ".psd file, 'Timeline' suggests a timeline graphic but unclear",
+    "_source_name": "58 Timeline 8",
+    "_batch_index": 6772
+  },
+  {
+    "name": "58-1",
+    "category": "Photoshop - Other",
+    "clean_name": "58-1",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "58-1",
+    "_batch_index": 6773
+  },
+  {
+    "name": "58",
+    "category": "Photoshop - Other",
+    "clean_name": "58",
+    "confidence": 65,
+    "notes": ".psd file, no descriptive name",
+    "_source_name": "58",
+    "_batch_index": 6774
+  },
+  {
+    "name": "580544.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "580544.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "580544.RW",
+    "_batch_index": 6775
+  },
+  {
+    "name": "580547.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "580547.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "580547.RW",
+    "_batch_index": 6776
+  },
+  {
+    "name": "580548.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "580548.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "580548.RW",
+    "_batch_index": 6777
+  },
+  {
+    "name": "580550.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "580550.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "580550.RW",
+    "_batch_index": 6778
+  },
+  {
+    "name": "580552.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "580552.RW",
+    "confidence": 65,
+    "notes": ".psd file, no further context",
+    "_source_name": "580552.RW",
+    "_batch_index": 6779
+  }
+]

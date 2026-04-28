@@ -1,0 +1,542 @@
+[
+  {
+    "name": "927",
+    "category": "Photoshop - Other",
+    "clean_name": "927",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "927",
+    "_batch_index": 8700
+  },
+  {
+    "name": "929",
+    "category": "Photoshop - Other",
+    "clean_name": "929",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "929",
+    "_batch_index": 8701
+  },
+  {
+    "name": "9293500_MotionElements_your-airlines-aep",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Your Airlines",
+    "confidence": 85,
+    "notes": "Contains .aep, name suggests airline corporate branding",
+    "_source_name": "9293500_MotionElements_your-airlines-aep",
+    "_batch_index": 8702
+  },
+  {
+    "name": "93",
+    "category": "Photoshop - Other",
+    "clean_name": "93",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "93",
+    "_batch_index": 8703
+  },
+  {
+    "name": "932",
+    "category": "Photoshop - Other",
+    "clean_name": "932",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "932",
+    "_batch_index": 8704
+  },
+  {
+    "name": "934",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "934",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "934",
+    "_batch_index": 8705
+  },
+  {
+    "name": "935075.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935075.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935075.RW",
+    "_batch_index": 8706
+  },
+  {
+    "name": "935103.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935103.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935103.RW",
+    "_batch_index": 8707
+  },
+  {
+    "name": "935106.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935106.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935106.RW",
+    "_batch_index": 8708
+  },
+  {
+    "name": "935119.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935119.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935119.RW",
+    "_batch_index": 8709
+  },
+  {
+    "name": "935121.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935121.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935121.RW",
+    "_batch_index": 8710
+  },
+  {
+    "name": "935130.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935130.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935130.RW",
+    "_batch_index": 8711
+  },
+  {
+    "name": "935133.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935133.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935133.RW",
+    "_batch_index": 8712
+  },
+  {
+    "name": "935148.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935148.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935148.RW",
+    "_batch_index": 8713
+  },
+  {
+    "name": "935156.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935156.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935156.RW",
+    "_batch_index": 8714
+  },
+  {
+    "name": "935167.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935167.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935167.RW",
+    "_batch_index": 8715
+  },
+  {
+    "name": "935181.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935181.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935181.RW",
+    "_batch_index": 8716
+  },
+  {
+    "name": "935183.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935183.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935183.RW",
+    "_batch_index": 8717
+  },
+  {
+    "name": "935186.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935186.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935186.RW",
+    "_batch_index": 8718
+  },
+  {
+    "name": "935198.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935198.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935198.RW",
+    "_batch_index": 8719
+  },
+  {
+    "name": "935209.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935209.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935209.RW",
+    "_batch_index": 8720
+  },
+  {
+    "name": "935211.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935211.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935211.RW",
+    "_batch_index": 8721
+  },
+  {
+    "name": "935213.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935213.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935213.RW",
+    "_batch_index": 8722
+  },
+  {
+    "name": "935577.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935577.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935577.RW",
+    "_batch_index": 8723
+  },
+  {
+    "name": "935653.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935653.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935653.RW",
+    "_batch_index": 8724
+  },
+  {
+    "name": "935663.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935663.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935663.RW",
+    "_batch_index": 8725
+  },
+  {
+    "name": "935664.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935664.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935664.RW",
+    "_batch_index": 8726
+  },
+  {
+    "name": "935665.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935665.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935665.RW",
+    "_batch_index": 8727
+  },
+  {
+    "name": "935667.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935667.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935667.RW",
+    "_batch_index": 8728
+  },
+  {
+    "name": "935675.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935675.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935675.RW",
+    "_batch_index": 8729
+  },
+  {
+    "name": "935677.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935677.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935677.RW",
+    "_batch_index": 8730
+  },
+  {
+    "name": "935679.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935679.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935679.RW",
+    "_batch_index": 8731
+  },
+  {
+    "name": "935680.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935680.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935680.RW",
+    "_batch_index": 8732
+  },
+  {
+    "name": "935683.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935683.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935683.RW",
+    "_batch_index": 8733
+  },
+  {
+    "name": "935684.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935684.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935684.RW",
+    "_batch_index": 8734
+  },
+  {
+    "name": "935688.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935688.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935688.RW",
+    "_batch_index": 8735
+  },
+  {
+    "name": "935691.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935691.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935691.RW",
+    "_batch_index": 8736
+  },
+  {
+    "name": "935692.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935692.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935692.RW",
+    "_batch_index": 8737
+  },
+  {
+    "name": "935694.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "935694.RW",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "935694.RW",
+    "_batch_index": 8738
+  },
+  {
+    "name": "94",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "94",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "94",
+    "_batch_index": 8739
+  },
+  {
+    "name": "94",
+    "category": "Photoshop - Other",
+    "clean_name": "94",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "94",
+    "_batch_index": 8740
+  },
+  {
+    "name": "95",
+    "category": "Photoshop - Other",
+    "clean_name": "95",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "95",
+    "_batch_index": 8741
+  },
+  {
+    "name": "953",
+    "category": "Photoshop - Other",
+    "clean_name": "953",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "953",
+    "_batch_index": 8742
+  },
+  {
+    "name": "9536419_MotionElements_4k-realistic-snow-36-aep",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "4K Realistic Snow",
+    "confidence": 90,
+    "notes": "Contains .aep, snow effect suitable for holiday",
+    "_source_name": "9536419_MotionElements_4k-realistic-snow-36-aep",
+    "_batch_index": 8743
+  },
+  {
+    "name": "9537712_MotionElements_4k-shiny-particles-aep",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "4K Shiny Particles Transition",
+    "confidence": 90,
+    "notes": "Contains .aep, shiny particles transition",
+    "_source_name": "9537712_MotionElements_4k-shiny-particles-aep",
+    "_batch_index": 8744
+  },
+  {
+    "name": "956_Q2hyaXN0bWFzRXZlMDgxMTE4MDE",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "956 Christmas Event",
+    "confidence": 80,
+    "notes": ".eps file, Christmas event vector",
+    "_source_name": "956_Q2hyaXN0bWFzRXZlMDgxMTE4MDE",
+    "_batch_index": 8745
+  },
+  {
+    "name": "956_Q2hyaXN0bWFzRXZlMDgxMTE4MDI",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "956 Christmas Event",
+    "confidence": 80,
+    "notes": ".eps file, Christmas event vector",
+    "_source_name": "956_Q2hyaXN0bWFzRXZlMDgxMTE4MDI",
+    "_batch_index": 8746
+  },
+  {
+    "name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MDc",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "957 Christmas Event",
+    "confidence": 80,
+    "notes": ".eps file, Christmas event vector",
+    "_source_name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MDc",
+    "_batch_index": 8747
+  },
+  {
+    "name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MDg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "957 Christmas Event",
+    "confidence": 80,
+    "notes": ".eps file, Christmas event vector",
+    "_source_name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MDg",
+    "_batch_index": 8748
+  },
+  {
+    "name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MDk",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "957 Christmas Event",
+    "confidence": 80,
+    "notes": ".eps file, Christmas event vector",
+    "_source_name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MDk",
+    "_batch_index": 8749
+  },
+  {
+    "name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MDY",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "957 Christmas Event",
+    "confidence": 80,
+    "notes": ".eps file, Christmas event vector",
+    "_source_name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MDY",
+    "_batch_index": 8750
+  },
+  {
+    "name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MTE",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "957 Christmas Event",
+    "confidence": 80,
+    "notes": ".eps file, Christmas event vector",
+    "_source_name": "957_Q2hyaXN0bWFzRXZlMTIxMTE4MTE",
+    "_batch_index": 8751
+  },
+  {
+    "name": "967",
+    "category": "Photoshop - Other",
+    "clean_name": "967",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "967",
+    "_batch_index": 8752
+  },
+  {
+    "name": "97",
+    "category": "Photoshop - Other",
+    "clean_name": "97",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "97",
+    "_batch_index": 8753
+  },
+  {
+    "name": "970x250",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "970x250 Banner",
+    "confidence": 80,
+    "notes": "Standard ad banner size .psd, likely template",
+    "_source_name": "970x250",
+    "_batch_index": 8754
+  },
+  {
+    "name": "970x90",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "970x90 Banner",
+    "confidence": 80,
+    "notes": "Standard ad banner size .psd, likely template",
+    "_source_name": "970x90",
+    "_batch_index": 8755
+  },
+  {
+    "name": "98",
+    "category": "Photoshop - Other",
+    "clean_name": "98",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "98",
+    "_batch_index": 8756
+  },
+  {
+    "name": "9984",
+    "category": "Photoshop - Other",
+    "clean_name": "9984",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "9984",
+    "_batch_index": 8757
+  },
+  {
+    "name": "9_10 Branding Identitny Mockup 2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "9_10 Branding Identity Mockup 2",
+    "confidence": 95,
+    "notes": "Name says 'Branding Identitny Mockup', .psd file",
+    "_source_name": "9_10 Branding Identitny Mockup 2",
+    "_batch_index": 8758
+  },
+  {
+    "name": "9_10",
+    "category": "Photoshop - Other",
+    "clean_name": "9_10",
+    "confidence": 65,
+    "notes": "Only .psd file, no other context",
+    "_source_name": "9_10",
+    "_batch_index": 8759
+  }
+]
