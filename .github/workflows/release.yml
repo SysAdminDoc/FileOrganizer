@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (e.g. 8.1.0 — no v prefix)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: Build EXE (PyInstaller)
+        run: |
+          pyinstaller --onefile --windowed --name FileOrganizer `
+            --icon icon.png `
+            --add-data "icon.png;." `
+            fileorganizer/__main__.py
+
+      - name: Package CLI tools
+        shell: pwsh
+        run: |
+          $zip = "FileOrganizer-CLI-v${{ github.event.inputs.version }}.zip"
+          Compress-Archive -Path organize_run.py, classify_design.py, asset_db.py, requirements.txt -DestinationPath $zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          name: FileOrganizer v${{ github.event.inputs.version }}
+          draft: false
+          prerelease: false
+          files: |
+            dist/FileOrganizer.exe
+            FileOrganizer-CLI-v${{ github.event.inputs.version }}.zip
+          body: |
+            ## FileOrganizer v${{ github.event.inputs.version }}
+
+            See [CHANGELOG.md](CHANGELOG.md) for full details.
+
+            ### Downloads
+            | File | Description |
+            |------|-------------|
+            | `FileOrganizer.exe` | Standalone GUI (Windows, no Python required) |
+            | `FileOrganizer-CLI-v*.zip` | CLI batch runner tools: `organize_run.py`, `classify_design.py`, `asset_db.py` |
+
+            ### CLI Quick Start
+            ```bash
+            pip install -r requirements.txt
+            python organize_run.py --stats
+            python organize_run.py --apply --quiet
+            ```
