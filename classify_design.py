@@ -232,11 +232,25 @@ def peek_extensions(folder_path: str, max_files: int = 40) -> tuple[list[str], l
     return sorted(exts)[:12], filenames[:4]  # cap both
 
 
+_PIRACY_DOMAIN_RE = re.compile(
+    r'(?:aidownload|freegfx|graphicux|downloadfree|softarchive|'
+    r'graphicriver|nitroflare|uploadgig|grafixfather|cgpersia|'
+    r'cgpeers|motionarray|envato|videohive|audiojungle)\.(?:net|com|org)',
+    re.IGNORECASE
+)
+
 def looks_generic(name: str) -> bool:
-    """Return True if the folder name provides no classification clue."""
-    return bool(re.match(r'^[0-9_\-]+$', name) or
-                re.match(r'^\d+(?:[-_]\d+)+$', name) or
-                re.match(r'^\d{5,}-INTRO-HD\.NET$', name, re.IGNORECASE))
+    """Return True if the folder name provides no classification clue on its own.
+    When True, the prompt builder will inject filename hints from inside the folder."""
+    return bool(
+        re.match(r'^[0-9_\-]+$', name) or           # all digits/separators: "0000-3", "1111-22"
+        re.match(r'^\d+(?:[-_]\d+)+$', name) or      # digit-separator-digit sequences
+        re.match(r'^\d{5,}-INTRO-HD\.NET$', name, re.IGNORECASE) or  # INTRO-HD.NET IDs
+        re.match(r'^[A-Za-z]\d+$', name) or           # single-letter labels: A4, A10, B3, a21
+        re.match(r'^[A-Za-z]{1,2}$', name) or         # 1-2 pure letters: "A", "AB"
+        len(name.strip()) <= 3 or                      # very short: "9", "10", "AB"
+        _PIRACY_DOMAIN_RE.search(name)                 # piracy/distribution site domains in name
+    )
 
 def build_prompt(batch_items: list[dict]) -> str:
     lines = []
@@ -247,8 +261,17 @@ def build_prompt(batch_items: list[dict]) -> str:
         hints = []
         if exts:
             hints.append(f"files: {', '.join(exts)}")
-        if filenames and (looks_generic(name) or not exts):
-            hints.append(f"contains: {' | '.join(filenames)}")
+        # Include filename hints when: folder name is generic, OR filenames are clearly
+        # more informative (significantly longer than the folder name), OR no ext hint
+        use_filenames = (
+            filenames and (
+                looks_generic(name) or
+                not exts or
+                any(len(f) > len(name) + 10 for f in filenames)
+            )
+        )
+        if use_filenames:
+            hints.append(f"contains: {' | '.join(filenames[:3])}")
         hint_str = f"  [{'; '.join(hints)}]" if hints else ''
         lines.append(f"{i}. {name}{hint_str}")
 
@@ -264,8 +287,9 @@ RULES:
 2. .cube/.3dl/.look = "Color Grading & LUTs"
 3. .mogrt = "Premiere Pro - Motion Graphics (.mogrt)" unless name clearly says AE
 4. .zxp/.jsx/.jsxbin/.aex = "Plugins & Extensions"
-5. "tutorial" / "course" in name = "Tutorial & Education"
-6. Folder with only a .txt, .pdf, or .rar/.zip (single archive, no content clue) = "_Review"
+5. "tutorial" / "course" / "masterclass" / "class" in name or contains-hint = "Tutorial & Education"
+   OR if the "contains:" hint shows a course/class/tutorial RAR name → "Tutorial & Education"
+6. Folder with only a .rar/.zip (single archive, no content clue after checking hint) = "_Review"
 7. ".part2" / ".part3" fragment archives, empty folders = "_Skip"
 8. If name strongly implies After Effects and has .aep files → pick the matching AE subcategory
 9. If name implies Photoshop (has .psd) → Photoshop subcategory; Illustrator (.ai/.eps) → Illustrator subcategory
@@ -416,7 +440,7 @@ def cmd_run(index: list[dict], only_batch: int = 0):
             cat = res.get('category', '?')
             nm = res.get('clean_name', res.get('name', '?'))
             conf = res.get('confidence', '?')
-            print(f"    [{conf}%] {nm}  →  {cat}")
+            print(f"    [{conf}%] {nm}  ->  {cat}")
 
     print("\nAll done.")
     cmd_stats(index)
