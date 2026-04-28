@@ -1,0 +1,422 @@
+[
+  {
+    "name": "special-events-photo-aep",
+    "clean_name": "Special Events Photo Gallery",
+    "category": "After Effects - Photo Album & Gallery",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "wedding-memories-aep",
+    "clean_name": "Wedding Memories",
+    "category": "After Effects - Wedding & Romance",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "the-wedding-aep",
+    "clean_name": "The Wedding",
+    "category": "After Effects - Wedding & Romance",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "awesome-mixtape-cassette-aep",
+    "clean_name": "Awesome Mixtape Cassette Logo Stinger",
+    "category": "After Effects - Logo Reveal",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "cybersphere-hi-tech-aep",
+    "clean_name": "Cybersphere Hi-Tech Logo Stinger",
+    "category": "After Effects - Logo Reveal",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "scorching-fiery-sparks-aep",
+    "clean_name": "Scorching Fiery Sparks Logo Revealer",
+    "category": "After Effects - Logo Reveal",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "mobsters-inc-mafia-aep",
+    "clean_name": "Mobsters Inc Mafia Logo Stinger",
+    "category": "After Effects - Logo Reveal",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "glitch-fx-effect-template-aep",
+    "clean_name": "Glitch FX Effect Template",
+    "category": "After Effects - Glitch & Distortion",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "the-crime-scene-crime-aep",
+    "clean_name": "The Crime Scene Logo Stinger",
+    "category": "After Effects - Logo Reveal",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "bulk-smash-explosive-aep",
+    "clean_name": "Bulk Smash Explosive Logo Stinger",
+    "category": "After Effects - Logo Reveal",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "abstract-images-aep",
+    "clean_name": "Abstract Images",
+    "category": "After Effects - Photo Album & Gallery",
+    "marketplace": "MotionElements",
+    "confidence": 90
+  },
+  {
+    "name": "simple-float-aep",
+    "clean_name": "Simple Float",
+    "category": "After Effects - Other",
+    "marketplace": "MotionElements",
+    "confidence": 80
+  },
+  {
+    "name": "corporate-grid-presentation-aep",
+    "clean_name": "Corporate Grid Presentation",
+    "category": "After Effects - Corporate & Business",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "bright-moments-slideshow-aep",
+    "clean_name": "Bright Moments Slideshow",
+    "category": "After Effects - Slideshow",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "flying-gallery-aep",
+    "clean_name": "Flying Gallery",
+    "category": "After Effects - Photo Album & Gallery",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "ultimate-flash-fx-toolkit-aep",
+    "clean_name": "Ultimate Flash FX Toolkit",
+    "category": "After Effects - Motion Graphics Pack",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "300-flash-fx-elements-aep",
+    "clean_name": "300 Flash FX Elements",
+    "category": "After Effects - Motion Graphics Pack",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "web-design-explainer-ae-share.com",
+    "clean_name": "Web Design Explainer",
+    "category": "After Effects - Character & Explainer",
+    "marketplace": "Unknown",
+    "confidence": 85
+  },
+  {
+    "name": "laptop-30s-commercial-aep",
+    "clean_name": "Laptop 30s Commercial",
+    "category": "After Effects - Product Promo",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "newspaper-opener-aep",
+    "clean_name": "Newspaper Opener",
+    "category": "After Effects - Opener & Intro",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "the-cinematic-intro-aep",
+    "clean_name": "The Cinematic Intro",
+    "category": "After Effects - Cinematic & Film",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "cubes-in-motion-aep",
+    "clean_name": "Cubes In Motion Intro",
+    "category": "After Effects - 3D & Particle",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "iphone-app-commercial-aep",
+    "clean_name": "iPhone App Commercial",
+    "category": "After Effects - Product Promo",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "wedding-at-the-moment-aep",
+    "clean_name": "Wedding At The Moment",
+    "category": "After Effects - Wedding & Romance",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "summer-travel-advert-aep",
+    "clean_name": "Summer Travel Advert",
+    "category": "After Effects - Product Promo",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "uplifting-summer-slideshow-aep",
+    "clean_name": "Uplifting Summer Slideshow",
+    "category": "After Effects - Slideshow",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "gallery-on-the-boards-aep",
+    "clean_name": "Gallery On The Boards",
+    "category": "After Effects - Photo Album & Gallery",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "corporate-inspiration-aep",
+    "clean_name": "Corporate Inspiration Slideshow",
+    "category": "After Effects - Corporate & Business",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "team-a-vs-team-b-aep",
+    "clean_name": "Team A vs Team B",
+    "category": "After Effects - Sport & Action",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "natural-opener-version-2-aep",
+    "clean_name": "Natural Opener Version 2",
+    "category": "After Effects - Opener & Intro",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "painted-in-watercolor-aep",
+    "clean_name": "Painted In Watercolor Christmas Card",
+    "category": "After Effects - Christmas & Holiday",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "corporate-slideshow-aep",
+    "clean_name": "Corporate Colorful Slideshow",
+    "category": "After Effects - Corporate & Business",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "media-station-light-aep",
+    "clean_name": "Media Station Light Edition",
+    "category": "After Effects - News & Broadcast",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "race-zone-title-design-aep",
+    "clean_name": "Race Zone Title Design",
+    "category": "After Effects - Sport & Action",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "flying-bats-pack-aep",
+    "clean_name": "Flying Bats Pack",
+    "category": "After Effects - Motion Graphics Pack",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "curtain-reveal-opener-aep",
+    "clean_name": "Curtain Reveal Opener",
+    "category": "After Effects - Opener & Intro",
+    "marketplace": "MotionElements",
+    "confidence": 95
+  },
+  {
+    "name": "Aescripts AutoFill v1.1.1 for After Effects (MAC)",
+    "clean_name": "AutoFill Presets",
+    "category": "After Effects - Plugin & Script",
+    "marketplace": "Aescripts",
+    "confidence": 100
+  },
+  {
+    "name": "Aescripts Deep Glow v1.4.4 for After Effects (Win)",
+    "clean_name": "Deep Glow",
+    "category": "After Effects - Plugin & Script",
+    "marketplace": "Aescripts",
+    "confidence": 100
+  },
+  {
+    "name": "Aescripts Lockdown v2.0.0 for After Effects (WIN)",
+    "clean_name": "Lockdown",
+    "category": "After Effects - Plugin & Script",
+    "marketplace": "Aescripts",
+    "confidence": 100
+  },
+  {
+    "name": "Aescripts Sunny Day v.1.0 for After Effects (WIN)",
+    "clean_name": "Sunny Day",
+    "category": "After Effects - Plugin & Script",
+    "marketplace": "Aescripts",
+    "confidence": 100
+  },
+  {
+    "name": "Aescripts TextBox 2 v1.2.2 for After Effects (Win)",
+    "clean_name": "TextBox 2",
+    "category": "After Effects - Plugin & Script",
+    "marketplace": "Aescripts",
+    "confidence": 100
+  },
+  {
+    "name": "Elegant_Night_V7",
+    "clean_name": "Elegant Night",
+    "category": "After Effects - Slideshow",
+    "marketplace": "Videohive",
+    "confidence": 90
+  },
+  {
+    "name": "Fast-opener-Videohive",
+    "clean_name": "Fast Opener",
+    "category": "After Effects - Opener & Intro",
+    "marketplace": "Videohive",
+    "confidence": 95
+  },
+  {
+    "name": "Happy_New_Year_V107",
+    "clean_name": "Happy New Year",
+    "category": "After Effects - Christmas & Holiday",
+    "marketplace": "Videohive",
+    "confidence": 95
+  },
+  {
+    "name": "LP-video-13141",
+    "clean_name": "Chinese Wedding Slideshow",
+    "category": "After Effects - Wedding & Romance",
+    "marketplace": "Unknown",
+    "confidence": 90
+  },
+  {
+    "name": "LP-video-13329",
+    "clean_name": "Unknown LP Video",
+    "category": "After Effects - Other",
+    "marketplace": "Unknown",
+    "confidence": 50
+  },
+  {
+    "name": "LP-video-13510",
+    "clean_name": "Chinese Fast Cut Photo Album",
+    "category": "After Effects - Photo Album & Gallery",
+    "marketplace": "Unknown",
+    "confidence": 90
+  },
+  {
+    "name": "LP-video-13531",
+    "clean_name": "Winter SlideShow",
+    "category": "After Effects - Slideshow",
+    "marketplace": "Unknown",
+    "confidence": 90
+  },
+  {
+    "name": "LP-video-14591",
+    "clean_name": "Chinese Corporate Title",
+    "category": "After Effects - Corporate & Business",
+    "marketplace": "Unknown",
+    "confidence": 90
+  },
+  {
+    "name": "LP-video-16640",
+    "clean_name": "Chinese Wedding Template",
+    "category": "After Effects - Wedding & Romance",
+    "marketplace": "Unknown",
+    "confidence": 90
+  },
+  {
+    "name": "LP-video-18663",
+    "clean_name": "Chinese Wedding Template 2",
+    "category": "After Effects - Wedding & Romance",
+    "marketplace": "Unknown",
+    "confidence": 90
+  },
+  {
+    "name": "LP-video-19830",
+    "clean_name": "Render Project 1920x1080",
+    "category": "After Effects - Other",
+    "marketplace": "Unknown",
+    "confidence": 60
+  },
+  {
+    "name": "LP-video-19936",
+    "clean_name": "Final Render Project",
+    "category": "After Effects - Other",
+    "marketplace": "Unknown",
+    "confidence": 60
+  },
+  {
+    "name": "LP-video-19958",
+    "clean_name": "Main 10 Images Project",
+    "category": "After Effects - Photo Album & Gallery",
+    "marketplace": "Unknown",
+    "confidence": 80
+  },
+  {
+    "name": "LP-video-20049",
+    "clean_name": "Chinese Metal 2017 Template",
+    "category": "After Effects - Other",
+    "marketplace": "Unknown",
+    "confidence": 80
+  },
+  {
+    "name": "LP-video-20203",
+    "clean_name": "Chinese Fashion Corporate",
+    "category": "After Effects - Corporate & Business",
+    "marketplace": "Unknown",
+    "confidence": 90
+  },
+  {
+    "name": "LP-video-20377",
+    "clean_name": "Summer Holiday Photo Gallery",
+    "category": "After Effects - Photo Album & Gallery",
+    "marketplace": "Unknown",
+    "confidence": 95
+  },
+  {
+    "name": "LP-video-20627",
+    "clean_name": "Main Composition Project",
+    "category": "After Effects - Other",
+    "marketplace": "Unknown",
+    "confidence": 60
+  },
+  {
+    "name": "LP-video-20730",
+    "clean_name": "Luxury Awards Promo",
+    "category": "After Effects - Event & Party",
+    "marketplace": "Unknown",
+    "confidence": 90
+  },
+  {
+    "name": "LP-video-21192",
+    "clean_name": "Hand Drawn Slideshow",
+    "category": "After Effects - Slideshow",
+    "marketplace": "Unknown",
+    "confidence": 95
+  }
+]

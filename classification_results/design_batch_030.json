@@ -1,0 +1,543 @@
+[
+  {
+    "name": "breaking-news-35321462",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Breaking News",
+    "confidence": 70,
+    "notes": "Name suggests news broadcast, .zip likely contains AE project",
+    "_source_name": "breaking-news-35321462",
+    "_batch_index": 1740
+  },
+  {
+    "name": "breaking-news-intro-36719551",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Breaking News Intro",
+    "confidence": 70,
+    "notes": "Name suggests news intro, .zip likely AE",
+    "_source_name": "breaking-news-intro-36719551",
+    "_batch_index": 1741
+  },
+  {
+    "name": "breaking-pack-11159912",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Breaking Pack",
+    "confidence": 70,
+    "notes": "Name suggests news broadcast pack",
+    "_source_name": "breaking-pack-11159912",
+    "_batch_index": 1742
+  },
+  {
+    "name": "breaking-world-news-36492570",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Breaking World News",
+    "confidence": 70,
+    "notes": "Name suggests news broadcast",
+    "_source_name": "breaking-world-news-36492570",
+    "_batch_index": 1743
+  },
+  {
+    "name": "Breeze_v1.0",
+    "category": "Software & Utilities",
+    "clean_name": "Breeze",
+    "confidence": 90,
+    "notes": "Only .rar, no content clue",
+    "_source_name": "Breeze_v1.0",
+    "_batch_index": 1744,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "briefs-mockup-57XDNQS",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Briefs Mockup",
+    "confidence": 85,
+    "notes": "Name includes mockup, likely branding/stationery",
+    "_source_name": "briefs-mockup-57XDNQS",
+    "_batch_index": 1745
+  },
+  {
+    "name": "bright-cinematic-food-video-luts-pack-48332294",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Bright Cinematic Food Video LUTs Pack",
+    "confidence": 95,
+    "notes": "Name includes LUTs pack",
+    "_source_name": "bright-cinematic-food-video-luts-pack-48332294",
+    "_batch_index": 1746
+  },
+  {
+    "name": "bright-memories-slideshow-51443149",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Bright Memories Slideshow",
+    "confidence": 75,
+    "notes": "Slideshow name, likely AE project",
+    "_source_name": "bright-memories-slideshow-51443149",
+    "_batch_index": 1747
+  },
+  {
+    "name": "bright-modern-slideshow-3-in-136439047",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Bright Modern Slideshow 3 in 1",
+    "confidence": 75,
+    "notes": "Slideshow name, likely AE",
+    "_source_name": "bright-modern-slideshow-3-in-136439047",
+    "_batch_index": 1748
+  },
+  {
+    "name": "broadcast-cooking-package-essential-graphics-mog",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Broadcast Cooking Package Essential Graphics",
+    "confidence": 90,
+    "notes": "Contains .prproj, mog in name suggests mogrt",
+    "_source_name": "broadcast-cooking-package-essential-graphics-mog",
+    "_batch_index": 1749
+  },
+  {
+    "name": "broadcast-design-complete-news-package-2-2452976",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Broadcast Design Complete News Package 2",
+    "confidence": 80,
+    "notes": "Name suggests broadcast news package",
+    "_source_name": "broadcast-design-complete-news-package-2-2452976",
+    "_batch_index": 1750
+  },
+  {
+    "name": "broadcast-design-news-package-14558488",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Broadcast Design News Package",
+    "confidence": 80,
+    "notes": "Name suggests broadcast news package",
+    "_source_name": "broadcast-design-news-package-14558488",
+    "_batch_index": 1751
+  },
+  {
+    "name": "broadcast-fashion-tv-package-5089078",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Broadcast Fashion TV Package",
+    "confidence": 80,
+    "notes": "Broadcast package for fashion TV",
+    "_source_name": "broadcast-fashion-tv-package-5089078",
+    "_batch_index": 1752
+  },
+  {
+    "name": "broadcast-opener-11098668",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Broadcast Opener",
+    "confidence": 80,
+    "notes": "Opener for broadcast",
+    "_source_name": "broadcast-opener-11098668",
+    "_batch_index": 1753
+  },
+  {
+    "name": "broadcast-opener-19886564",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Broadcast Opener",
+    "confidence": 80,
+    "notes": "Opener for broadcast",
+    "_source_name": "broadcast-opener-19886564",
+    "_batch_index": 1754
+  },
+  {
+    "name": "broadcast-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Broadcast Slideshow",
+    "confidence": 70,
+    "notes": "Slideshow likely AE",
+    "_source_name": "broadcast-slideshow",
+    "_batch_index": 1755
+  },
+  {
+    "name": "broadcast-soccer-id-package",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Broadcast Soccer ID Package",
+    "confidence": 85,
+    "notes": "Contains .aep, soccer sport theme",
+    "_source_name": "broadcast-soccer-id-package",
+    "_batch_index": 1756
+  },
+  {
+    "name": "broadcast-titles-39545171%20",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Broadcast Titles",
+    "confidence": 75,
+    "notes": "Titles for broadcast",
+    "_source_name": "broadcast-titles-39545171%20",
+    "_batch_index": 1757
+  },
+  {
+    "name": "Brochure – Resume Tri-Fold",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure Resume Tri-Fold",
+    "confidence": 90,
+    "notes": "Brochure name, print category",
+    "_source_name": "Brochure – Resume Tri-Fold",
+    "_batch_index": 1758
+  },
+  {
+    "name": "Brochure_-_Trifold_3362062",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure Trifold",
+    "confidence": 90,
+    "notes": "Brochure trifold",
+    "_source_name": "Brochure_-_Trifold_3362062",
+    "_batch_index": 1759
+  },
+  {
+    "name": "Brochure_2020",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure 2020",
+    "confidence": 85,
+    "notes": "Brochure name",
+    "_source_name": "Brochure_2020",
+    "_batch_index": 1760
+  },
+  {
+    "name": "Brochure_3748277",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure",
+    "confidence": 85,
+    "notes": "Brochure name",
+    "_source_name": "Brochure_3748277",
+    "_batch_index": 1761
+  },
+  {
+    "name": "Brochure_3758981",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure",
+    "confidence": 85,
+    "notes": "Brochure name",
+    "_source_name": "Brochure_3758981",
+    "_batch_index": 1762
+  },
+  {
+    "name": "Brochure_4110608",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure",
+    "confidence": 85,
+    "notes": "Brochure name",
+    "_source_name": "Brochure_4110608",
+    "_batch_index": 1763
+  },
+  {
+    "name": "Brochure_Bundle_4054583",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure Bundle",
+    "confidence": 85,
+    "notes": "Brochure bundle",
+    "_source_name": "Brochure_Bundle_4054583",
+    "_batch_index": 1764
+  },
+  {
+    "name": "Brochure_Catalog_4172526",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure Catalog",
+    "confidence": 85,
+    "notes": "Brochure catalog",
+    "_source_name": "Brochure_Catalog_4172526",
+    "_batch_index": 1765
+  },
+  {
+    "name": "Brochure_Corporate_Multipurpose-4604835",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Brochure Corporate Multipurpose",
+    "confidence": 85,
+    "notes": "Corporate brochure",
+    "_source_name": "Brochure_Corporate_Multipurpose-4604835",
+    "_batch_index": 1766
+  },
+  {
+    "name": "Brochure_Magazine_Mockups_4589122",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Brochure Magazine Mockups",
+    "confidence": 90,
+    "notes": "Contains .psd, mockup name",
+    "_source_name": "Brochure_Magazine_Mockups_4589122",
+    "_batch_index": 1767
+  },
+  {
+    "name": "Broken_Glass_Kaleidoscope_Photo_Effect_34968816-AIDOWNLOAD.NET",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Broken Glass Kaleidoscope Photo Effect",
+    "confidence": 80,
+    "notes": "Photo effect likely Photoshop",
+    "_source_name": "Broken_Glass_Kaleidoscope_Photo_Effect_34968816-AIDOWNLOAD.NET",
+    "_batch_index": 1768
+  },
+  {
+    "name": "broken-glass-epic-trailer-45166237",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Broken Glass Epic Trailer",
+    "confidence": 75,
+    "notes": "Trailer name, likely AE",
+    "_source_name": "broken-glass-epic-trailer-45166237",
+    "_batch_index": 1769
+  },
+  {
+    "name": "broken-glass-transition-39847905",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Broken Glass Transition",
+    "confidence": 70,
+    "notes": "Transition, likely AE",
+    "_source_name": "broken-glass-transition-39847905",
+    "_batch_index": 1770
+  },
+  {
+    "name": "broken-text-photoshop-effect-RQAV362",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Broken Text Photoshop Effect",
+    "confidence": 90,
+    "notes": "Name says photoshop effect",
+    "_source_name": "broken-text-photoshop-effect-RQAV362",
+    "_batch_index": 1771
+  },
+  {
+    "name": "bronx-effects-fashion-intro-47638801",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Bronx Effects Fashion Intro",
+    "confidence": 75,
+    "notes": "Fashion intro, likely AE",
+    "_source_name": "bronx-effects-fashion-intro-47638801",
+    "_batch_index": 1772
+  },
+  {
+    "name": "brush-animated-font-31366550",
+    "category": "Fonts & Typography",
+    "clean_name": "Brush Animated Font",
+    "confidence": 80,
+    "notes": "Contains .aep but name says font, likely font pack",
+    "_source_name": "brush-animated-font-31366550",
+    "_batch_index": 1773
+  },
+  {
+    "name": "brush-historical-slideshow-39949180",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Brush Historical Slideshow",
+    "confidence": 75,
+    "notes": "Slideshow, likely AE",
+    "_source_name": "brush-historical-slideshow-39949180",
+    "_batch_index": 1774
+  },
+  {
+    "name": "brush-memories-paintbrush-slideshow-22715308",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Brush Memories Paintbrush Slideshow",
+    "confidence": 75,
+    "notes": "Slideshow, likely AE",
+    "_source_name": "brush-memories-paintbrush-slideshow-22715308",
+    "_batch_index": 1775
+  },
+  {
+    "name": "brush-memories-slideshow-39146890",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Brush Memories Slideshow",
+    "confidence": 75,
+    "notes": "Slideshow, likely AE",
+    "_source_name": "brush-memories-slideshow-39146890",
+    "_batch_index": 1776
+  },
+  {
+    "name": "brush-memories-slideshow-mogrt-40071911",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Brush Memories Slideshow Mogrt",
+    "confidence": 90,
+    "notes": "Name includes mogrt",
+    "_source_name": "brush-memories-slideshow-mogrt-40071911",
+    "_batch_index": 1777
+  },
+  {
+    "name": "brush-photo-slideshow-51079696",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Brush Photo Slideshow",
+    "confidence": 75,
+    "notes": "Slideshow, likely AE",
+    "_source_name": "brush-photo-slideshow-51079696",
+    "_batch_index": 1778
+  },
+  {
+    "name": "brush-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Brush Slideshow",
+    "confidence": 70,
+    "notes": "Slideshow, likely AE",
+    "_source_name": "brush-slideshow",
+    "_batch_index": 1779
+  },
+  {
+    "name": "brush-slideshow-for-after-effects-38316889",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Brush Slideshow for After Effects",
+    "confidence": 90,
+    "notes": "Explicitly for After Effects",
+    "_source_name": "brush-slideshow-for-after-effects-38316889",
+    "_batch_index": 1780
+  },
+  {
+    "name": "brush-transitions-43133372",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Brush Transitions",
+    "confidence": 85,
+    "notes": "Contains .aep, transitions",
+    "_source_name": "brush-transitions-43133372",
+    "_batch_index": 1781
+  },
+  {
+    "name": "brush-transitions-elements-ae-36381612",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Brush Transitions Elements AE",
+    "confidence": 85,
+    "notes": "AE transitions",
+    "_source_name": "brush-transitions-elements-ae-36381612",
+    "_batch_index": 1782
+  },
+  {
+    "name": "brush-urban-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Brush Urban Opener",
+    "confidence": 75,
+    "notes": "Opener, likely AE",
+    "_source_name": "brush-urban-opener",
+    "_batch_index": 1783
+  },
+  {
+    "name": "brushes-travel-intro-35904052",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Brushes Travel Intro",
+    "confidence": 75,
+    "notes": "Intro, likely AE",
+    "_source_name": "brushes-travel-intro-35904052",
+    "_batch_index": 1784
+  },
+  {
+    "name": "brutal-wood-branding-mock-up-psd-RPEUCA",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Brutal Wood Branding Mockup PSD",
+    "confidence": 95,
+    "notes": "Name includes mock-up and psd",
+    "_source_name": "brutal-wood-branding-mock-up-psd-RPEUCA",
+    "_batch_index": 1785
+  },
+  {
+    "name": "Bryan Delimata – CRT PRESET PACK",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Bryan Delimata CRT Preset Pack",
+    "confidence": 80,
+    "notes": "Preset pack likely for AE",
+    "_source_name": "Bryan Delimata – CRT PRESET PACK",
+    "_batch_index": 1786
+  },
+  {
+    "name": "Bryan Delimata – ENERGY PRESETS",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Bryan Delimata Energy Presets",
+    "confidence": 80,
+    "notes": "Preset pack likely for AE",
+    "_source_name": "Bryan Delimata – ENERGY PRESETS",
+    "_batch_index": 1787
+  },
+  {
+    "name": "Bryan Delimata – ESSENTIAL SOUND FX",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Bryan Delimata Essential Sound FX",
+    "confidence": 95,
+    "notes": "Sound FX pack",
+    "_source_name": "Bryan Delimata – ESSENTIAL SOUND FX",
+    "_batch_index": 1788
+  },
+  {
+    "name": "Bryan Delimata – LIQUID EXPLOSION PRESETS",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Bryan Delimata Liquid Explosion Presets",
+    "confidence": 80,
+    "notes": "Preset pack likely for AE",
+    "_source_name": "Bryan Delimata – LIQUID EXPLOSION PRESETS",
+    "_batch_index": 1789
+  },
+  {
+    "name": "Bryan Delimata – MOTION WARP PRESETS",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Bryan Delimata Motion Warp Presets",
+    "confidence": 80,
+    "notes": "Preset pack likely for AE",
+    "_source_name": "Bryan Delimata – MOTION WARP PRESETS",
+    "_batch_index": 1790
+  },
+  {
+    "name": "Bryan Delimata – THERMAL PRESET PACK",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Bryan Delimata Thermal Preset Pack",
+    "confidence": 80,
+    "notes": "Preset pack likely for AE",
+    "_source_name": "Bryan Delimata – THERMAL PRESET PACK",
+    "_batch_index": 1791
+  },
+  {
+    "name": "Bryan Delimata Shake Sauce",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Bryan Delimata Shake Sauce",
+    "confidence": 70,
+    "notes": "Contains .rar, likely preset pack",
+    "_source_name": "Bryan Delimata Shake Sauce",
+    "_batch_index": 1792
+  },
+  {
+    "name": "Bryan Delimata Workflow",
+    "category": "Tutorial & Education",
+    "clean_name": "Bryan Delimata Workflow",
+    "confidence": 60,
+    "notes": "Workflow could be tutorial, uncertain",
+    "_source_name": "Bryan Delimata Workflow",
+    "_batch_index": 1793
+  },
+  {
+    "name": "bryandelimata_OPIUM_sapphire_uni_bank",
+    "category": "Plugins & Extensions",
+    "clean_name": "Bryandelimata Opium Sapphire Uni Bank",
+    "confidence": 70,
+    "notes": "Sapphire suggests plugin bank",
+    "_source_name": "bryandelimata_OPIUM_sapphire_uni_bank",
+    "_batch_index": 1794
+  },
+  {
+    "name": "bubble-slideshow-after-effects-37260176",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Bubble Slideshow After Effects",
+    "confidence": 90,
+    "notes": "Explicitly for After Effects",
+    "_source_name": "bubble-slideshow-after-effects-37260176",
+    "_batch_index": 1795
+  },
+  {
+    "name": "Buena Depth Cue v2.5.8",
+    "category": "Plugins & Extensions",
+    "clean_name": "Buena Depth Cue v2.5.8",
+    "confidence": 70,
+    "notes": "Depth cue likely plugin, but only .jpg",
+    "_source_name": "Buena Depth Cue v2.5.8",
+    "_batch_index": 1796
+  },
+  {
+    "name": "BUFFNERDS MEDIA LOOKS - Tropic Colour",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Buffnerds Media Looks - Tropic Colour",
+    "confidence": 80,
+    "notes": "Looks suggests LUTs/color grading",
+    "_source_name": "BUFFNERDS MEDIA LOOKS - Tropic Colour",
+    "_batch_index": 1797
+  },
+  {
+    "name": "bullet-hole-title-52273876",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Bullet Hole Title",
+    "confidence": 75,
+    "notes": "Title effect, likely AE",
+    "_source_name": "bullet-hole-title-52273876",
+    "_batch_index": 1798
+  },
+  {
+    "name": "BUNDLE__15_in_1_Oil_Painting_Effect-6631435",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Bundle 15 in 1 Oil Painting Effect",
+    "confidence": 80,
+    "notes": "Oil painting effect likely Photoshop",
+    "_source_name": "BUNDLE__15_in_1_Oil_Painting_Effect-6631435",
+    "_batch_index": 1799
+  }
+]

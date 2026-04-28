@@ -1,0 +1,542 @@
+[
+  {
+    "name": "15 PSD Template",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "15 PSD Template",
+    "confidence": 90,
+    "notes": "Contains .psd files, likely templates.",
+    "_source_name": "15 PSD Template",
+    "_batch_index": 120
+  },
+  {
+    "name": "15-city-hunter-lightroom-presets-MR2784S",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "15 City Hunter Lightroom Presets",
+    "confidence": 95,
+    "notes": "Name includes 'lightroom-presets'.",
+    "_source_name": "15-city-hunter-lightroom-presets-MR2784S",
+    "_batch_index": 121
+  },
+  {
+    "name": "150-elegant-transitions-36322000",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "150 Elegant Transitions",
+    "confidence": 80,
+    "notes": "Name suggests transitions, likely for After Effects.",
+    "_source_name": "150-elegant-transitions-36322000",
+    "_batch_index": 122
+  },
+  {
+    "name": "150-photo-gallery-52498928",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "150 Photo Gallery",
+    "confidence": 80,
+    "notes": "Name suggests photo gallery slideshow.",
+    "_source_name": "150-photo-gallery-52498928",
+    "_batch_index": 123
+  },
+  {
+    "name": "1500+ Photoshop Brushes Bundle",
+    "category": "Photoshop - Brushes",
+    "clean_name": "1500+ Photoshop Brushes Bundle",
+    "confidence": 95,
+    "notes": "Contains .abr brush files.",
+    "_source_name": "1500+ Photoshop Brushes Bundle",
+    "_batch_index": 124
+  },
+  {
+    "name": "15089658-INTRO-HD.NET",
+    "category": "After Effects - Real Estate",
+    "clean_name": "Real Estate Gallery",
+    "confidence": 85,
+    "notes": "Contains hint reveals real estate gallery.",
+    "_source_name": "15089658-INTRO-HD.NET",
+    "_batch_index": 125
+  },
+  {
+    "name": "15093869-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Rewind Project",
+    "confidence": 70,
+    "notes": "Contains hint 'rewind-project', unclear subcategory.",
+    "_source_name": "15093869-INTRO-HD.NET",
+    "_batch_index": 126
+  },
+  {
+    "name": "15130586-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "15130586",
+    "confidence": 65,
+    "notes": "No files or hint, numeric ID only.",
+    "_source_name": "15130586-INTRO-HD.NET",
+    "_batch_index": 127
+  },
+  {
+    "name": "15218209-mrmrs-explainer-INTRO-HD.NET",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "MrMrs Explainer",
+    "confidence": 90,
+    "notes": "Name includes 'explainer'.",
+    "_source_name": "15218209-mrmrs-explainer-INTRO-HD.NET",
+    "_batch_index": 128
+  },
+  {
+    "name": "15288957-INTRO-HD.NET",
+    "category": "After Effects - Music & Audio Visualizer",
+    "clean_name": "Hand Drawn Audio Spectrum Music Visualizer",
+    "confidence": 95,
+    "notes": "Contains hint 'hand-drawn-audio-spectrum-music-visualizer'.",
+    "_source_name": "15288957-INTRO-HD.NET",
+    "_batch_index": 129
+  },
+  {
+    "name": "15381683-immersion-artistic-parallax-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Immersion Artistic Parallax Slideshow",
+    "confidence": 90,
+    "notes": "Name includes 'slideshow'.",
+    "_source_name": "15381683-immersion-artistic-parallax-slideshow",
+    "_batch_index": 130
+  },
+  {
+    "name": "15396002-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "15396002",
+    "confidence": 65,
+    "notes": "No files or hint, numeric ID only.",
+    "_source_name": "15396002-INTRO-HD.NET",
+    "_batch_index": 131
+  },
+  {
+    "name": "15401188-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Embossed Logo Blue",
+    "confidence": 80,
+    "notes": "Contains hint 'EmbossedLogo_Blue2_CS5.5', likely logo reveal.",
+    "_source_name": "15401188-INTRO-HD.NET",
+    "_batch_index": 132
+  },
+  {
+    "name": "15487605-cinematic-trailer-titles-v4-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer Titles v4",
+    "confidence": 90,
+    "notes": "Name includes 'cinematic-trailer-titles'.",
+    "_source_name": "15487605-cinematic-trailer-titles-v4-INTRO-HD.NET",
+    "_batch_index": 133
+  },
+  {
+    "name": "15540864-double-exposure-generator-v4-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Double Exposure Generator v4",
+    "confidence": 75,
+    "notes": "Double exposure effect, not a standard AE subcategory.",
+    "_source_name": "15540864-double-exposure-generator-v4-INTRO-HD.NET",
+    "_batch_index": 134
+  },
+  {
+    "name": "15619052-INTRO-HD.NET",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Glitch Party Promo",
+    "confidence": 85,
+    "notes": "Contains hint 'glitch-party-promo'.",
+    "_source_name": "15619052-INTRO-HD.NET",
+    "_batch_index": 135
+  },
+  {
+    "name": "15664855-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Fire Circle Slideshow",
+    "confidence": 90,
+    "notes": "Contains hint 'fire-circle-slideshow'.",
+    "_source_name": "15664855-INTRO-HD.NET",
+    "_batch_index": 136
+  },
+  {
+    "name": "15688723-author-effects-master-ffx-INTRO-HD.NET",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Author Effects Master FFX",
+    "confidence": 85,
+    "notes": "FFX indicates After Effects presets.",
+    "_source_name": "15688723-author-effects-master-ffx-INTRO-HD.NET",
+    "_batch_index": 137
+  },
+  {
+    "name": "157-bursts-shapes-lottie-pack-47706880",
+    "category": "Motion Graphics - Multi-Tool Pack",
+    "clean_name": "157 Bursts Shapes Lottie Pack",
+    "confidence": 80,
+    "notes": "Lottie format, multi-tool motion graphics.",
+    "_source_name": "157-bursts-shapes-lottie-pack-47706880",
+    "_batch_index": 138
+  },
+  {
+    "name": "15712155-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Fresh Titles",
+    "confidence": 85,
+    "notes": "Contains hint 'FreshTitles_CC2014_2K'.",
+    "_source_name": "15712155-INTRO-HD.NET",
+    "_batch_index": 139
+  },
+  {
+    "name": "15794754-vintage-labels-INTRO-HD.NET",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vintage Labels",
+    "confidence": 80,
+    "notes": "Labels likely vector assets.",
+    "_source_name": "15794754-vintage-labels-INTRO-HD.NET",
+    "_batch_index": 140
+  },
+  {
+    "name": "15799501-photo-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Photo Opener",
+    "confidence": 90,
+    "notes": "Name includes 'photo-opener'.",
+    "_source_name": "15799501-photo-opener-INTRO-HD.NET",
+    "_batch_index": 141
+  },
+  {
+    "name": "15837415-photography-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photography Slideshow",
+    "confidence": 90,
+    "notes": "Name includes 'photography-slideshow'.",
+    "_source_name": "15837415-photography-slideshow-INTRO-HD.NET",
+    "_batch_index": 142
+  },
+  {
+    "name": "1585011 - Creative Business Card",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Creative Business Card",
+    "confidence": 85,
+    "notes": "Business card design.",
+    "_source_name": "1585011 - Creative Business Card",
+    "_batch_index": 143
+  },
+  {
+    "name": "15874307-logo-arcade-game-8-bit-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Logo Arcade Game 8 Bit",
+    "confidence": 85,
+    "notes": "Name suggests logo reveal with 8-bit style.",
+    "_source_name": "15874307-logo-arcade-game-8-bit-INTRO-HD.NET",
+    "_batch_index": 144
+  },
+  {
+    "name": "15882500-epic-slideshow-inspiring-modern-opener-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Epic Slideshow Inspiring Modern Opener",
+    "confidence": 90,
+    "notes": "Name includes 'slideshow'.",
+    "_source_name": "15882500-epic-slideshow-inspiring-modern-opener-INTRO-HD.NET",
+    "_batch_index": 145
+  },
+  {
+    "name": "15937828-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Loading Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains hint 'loading-logo-reveal'.",
+    "_source_name": "15937828-INTRO-HD.NET",
+    "_batch_index": 146
+  },
+  {
+    "name": "160-beach-luts-color-grading-35493238",
+    "category": "Color Grading & LUTs",
+    "clean_name": "160 Beach LUTs Color Grading",
+    "confidence": 95,
+    "notes": "Name includes 'luts-color-grading'.",
+    "_source_name": "160-beach-luts-color-grading-35493238",
+    "_batch_index": 147
+  },
+  {
+    "name": "16085414-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "16085414",
+    "confidence": 65,
+    "notes": "No hint, numeric ID only.",
+    "_source_name": "16085414-INTRO-HD.NET",
+    "_batch_index": 148
+  },
+  {
+    "name": "16151304-cartoon-sketch-explainer-toolkit-INTRO-HD.NET",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Cartoon Sketch Explainer Toolkit",
+    "confidence": 90,
+    "notes": "Name includes 'explainer'.",
+    "_source_name": "16151304-cartoon-sketch-explainer-toolkit-INTRO-HD.NET",
+    "_batch_index": 149
+  },
+  {
+    "name": "16155592-simple-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Simple Slideshow",
+    "confidence": 90,
+    "notes": "Name includes 'slideshow'.",
+    "_source_name": "16155592-simple-slideshow",
+    "_batch_index": 150
+  },
+  {
+    "name": "16173097-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "16173097",
+    "confidence": 65,
+    "notes": "No files or hint, numeric ID only.",
+    "_source_name": "16173097-INTRO-HD.NET",
+    "_batch_index": 151
+  },
+  {
+    "name": "16205916-quick-instagram-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Quick Instagram",
+    "confidence": 90,
+    "notes": "Name includes 'instagram'.",
+    "_source_name": "16205916-quick-instagram-INTRO-HD.NET",
+    "_batch_index": 152
+  },
+  {
+    "name": "16325226-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Cinema Logo Intro",
+    "confidence": 90,
+    "notes": "Contains hint 'cinema-logo-intro'.",
+    "_source_name": "16325226-INTRO-HD.NET",
+    "_batch_index": 153
+  },
+  {
+    "name": "16490971-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Modern Video Glitch Reel",
+    "confidence": 90,
+    "notes": "Contains hint 'modern-video-glitch-reel'.",
+    "_source_name": "16490971-INTRO-HD.NET",
+    "_batch_index": 154
+  },
+  {
+    "name": "16514774-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "16514774",
+    "confidence": 65,
+    "notes": "No hint, numeric ID only.",
+    "_source_name": "16514774-INTRO-HD.NET",
+    "_batch_index": 155
+  },
+  {
+    "name": "16538077-presentation-with-jason-doctor-coat",
+    "category": "After Effects - Other",
+    "clean_name": "Presentation with Jason Doctor Coat",
+    "confidence": 70,
+    "notes": "Unclear format, likely a template.",
+    "_source_name": "16538077-presentation-with-jason-doctor-coat",
+    "_batch_index": 156
+  },
+  {
+    "name": "16603402-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "16603402",
+    "confidence": 65,
+    "notes": "No files or hint, numeric ID only.",
+    "_source_name": "16603402-INTRO-HD.NET",
+    "_batch_index": 157
+  },
+  {
+    "name": "16693735-platinum-fashion-promo-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Platinum Fashion Promo",
+    "confidence": 80,
+    "notes": "Fashion promo, likely corporate style.",
+    "_source_name": "16693735-platinum-fashion-promo-INTRO-HD.NET",
+    "_batch_index": 158
+  },
+  {
+    "name": "16711931-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Clean Corporate Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains hint 'clean-corporate-logo-reveal'.",
+    "_source_name": "16711931-INTRO-HD.NET",
+    "_batch_index": 159
+  },
+  {
+    "name": "16716059-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Text Animator",
+    "confidence": 85,
+    "notes": "Contains hint 'Text_Animator_02_CS5.5'.",
+    "_source_name": "16716059-INTRO-HD.NET",
+    "_batch_index": 160
+  },
+  {
+    "name": "16732031-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "16732031",
+    "confidence": 65,
+    "notes": "No hint, numeric ID only.",
+    "_source_name": "16732031-INTRO-HD.NET",
+    "_batch_index": 161
+  },
+  {
+    "name": "16791524-INTRO-HD.NET",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Colors of Festival",
+    "confidence": 85,
+    "notes": "Contains hint 'colors-of-festival'.",
+    "_source_name": "16791524-INTRO-HD.NET",
+    "_batch_index": 162
+  },
+  {
+    "name": "16885200-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Soccer Intro II",
+    "confidence": 90,
+    "notes": "Contains hint 'soccer-intro-ii'.",
+    "_source_name": "16885200-INTRO-HD.NET",
+    "_batch_index": 163
+  },
+  {
+    "name": "16mm-film-aesthetic-overlays-51251648",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "16mm Film Aesthetic Overlays",
+    "confidence": 85,
+    "notes": "Film overlays, likely stock footage.",
+    "_source_name": "16mm-film-aesthetic-overlays-51251648",
+    "_batch_index": 164
+  },
+  {
+    "name": "16mm-movie-effects-800321",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "16mm Movie Effects",
+    "confidence": 85,
+    "notes": "Movie effects overlays.",
+    "_source_name": "16mm-movie-effects-800321",
+    "_batch_index": 165
+  },
+  {
+    "name": "17",
+    "category": "After Effects - Other",
+    "clean_name": "Bigfilms SCI-FI Infinity Pack",
+    "confidence": 75,
+    "notes": "Contains hint 'Bigfilms – SCI-FI Infinity Pack', likely AE pack.",
+    "_source_name": "17",
+    "_batch_index": 166
+  },
+  {
+    "name": "17-Creative-Scene-Generator-52-PSD-Mockups",
+    "category": "Photoshop - Mockups",
+    "clean_name": "17 Creative Scene Generator 52 PSD Mockups",
+    "confidence": 95,
+    "notes": "Name includes 'PSD Mockups'.",
+    "_source_name": "17-Creative-Scene-Generator-52-PSD-Mockups",
+    "_batch_index": 167
+  },
+  {
+    "name": "170__Final_Cut_Pro_X_Transitions_38524672",
+    "category": "Video Editing - General",
+    "clean_name": "170 Final Cut Pro X Transitions",
+    "confidence": 85,
+    "notes": "Final Cut Pro transitions.",
+    "_source_name": "170__Final_Cut_Pro_X_Transitions_38524672",
+    "_batch_index": 168
+  },
+  {
+    "name": "17110677-modern-promo-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Promo Slideshow",
+    "confidence": 90,
+    "notes": "Name includes 'slideshow'.",
+    "_source_name": "17110677-modern-promo-slideshow-INTRO-HD.NET",
+    "_batch_index": 169
+  },
+  {
+    "name": "17210247-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "17210247",
+    "confidence": 65,
+    "notes": "No files or hint, numeric ID only.",
+    "_source_name": "17210247-INTRO-HD.NET",
+    "_batch_index": 170
+  },
+  {
+    "name": "17220020-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "45 Simple Titles Special Edition",
+    "confidence": 85,
+    "notes": "Contains hint '45 Simple Titles (Special Edition)'.",
+    "_source_name": "17220020-INTRO-HD.NET",
+    "_batch_index": 171
+  },
+  {
+    "name": "17334356-glitter-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Glitter Opener",
+    "confidence": 90,
+    "notes": "Name includes 'opener'.",
+    "_source_name": "17334356-glitter-opener-INTRO-HD.NET",
+    "_batch_index": 172
+  },
+  {
+    "name": "17392783-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Action Trailer 5",
+    "confidence": 85,
+    "notes": "Contains hint 'Action Trailer 5'.",
+    "_source_name": "17392783-INTRO-HD.NET",
+    "_batch_index": 173
+  },
+  {
+    "name": "17442245-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Cinematic Glitch Opener",
+    "confidence": 90,
+    "notes": "Contains hint 'cinematic-glitch-opener'.",
+    "_source_name": "17442245-INTRO-HD.NET",
+    "_batch_index": 174
+  },
+  {
+    "name": "17517301-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "17517301",
+    "confidence": 65,
+    "notes": "No files or hint, numeric ID only.",
+    "_source_name": "17517301-INTRO-HD.NET",
+    "_batch_index": 175
+  },
+  {
+    "name": "17522904-hitech-hud-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "HiTech HUD Logo Reveal",
+    "confidence": 90,
+    "notes": "Name includes 'logo-reveal'.",
+    "_source_name": "17522904-hitech-hud-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 176
+  },
+  {
+    "name": "17777522-urban-destruction-INTRO-HD.NET",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Urban Destruction",
+    "confidence": 80,
+    "notes": "Urban destruction effects, cinematic style.",
+    "_source_name": "17777522-urban-destruction-INTRO-HD.NET",
+    "_batch_index": 177
+  },
+  {
+    "name": "17913816-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "17913816",
+    "confidence": 65,
+    "notes": "No files or hint, numeric ID only.",
+    "_source_name": "17913816-INTRO-HD.NET",
+    "_batch_index": 178
+  },
+  {
+    "name": "17920536-electric-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Electric Logo Reveal",
+    "confidence": 90,
+    "notes": "Name includes 'logo-reveal'.",
+    "_source_name": "17920536-electric-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 179
+  }
+]

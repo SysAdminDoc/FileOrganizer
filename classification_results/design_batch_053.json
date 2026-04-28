@@ -1,0 +1,542 @@
+[
+  {
+    "name": "G4ASX25-Aidownload.net",
+    "category": "After Effects - Other",
+    "clean_name": "G4ASX25",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name hint",
+    "_source_name": "G4ASX25-Aidownload.net",
+    "_batch_index": 3120
+  },
+  {
+    "name": "Galaxy_Alcohol_Ink_Brushset-5997008",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Galaxy Alcohol Ink Brushset",
+    "confidence": 90,
+    "notes": "Brushset name implies Photoshop brushes",
+    "_source_name": "Galaxy_Alcohol_Ink_Brushset-5997008",
+    "_batch_index": 3121
+  },
+  {
+    "name": "galaxy-abstract-face-photoshop-action-WHR7BD2",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Galaxy Abstract Face Photoshop Action",
+    "confidence": 95,
+    "notes": "Explicitly says photoshop action",
+    "_source_name": "galaxy-abstract-face-photoshop-action-WHR7BD2",
+    "_batch_index": 3122
+  },
+  {
+    "name": "gallery-of-dreams-parallax-slideshow-20751808",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Gallery of Dreams Parallax Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow name, likely AE template",
+    "_source_name": "gallery-of-dreams-parallax-slideshow-20751808",
+    "_batch_index": 3123
+  },
+  {
+    "name": "gallery-of-memories-slideshow-22730476",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Gallery of Memories Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow name, .jpg files suggest preview",
+    "_source_name": "gallery-of-memories-slideshow-22730476",
+    "_batch_index": 3124
+  },
+  {
+    "name": "gallery-slideshow-51168756",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Gallery Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow name, .zip likely AE project",
+    "_source_name": "gallery-slideshow-51168756",
+    "_batch_index": 3125
+  },
+  {
+    "name": "Game Makers Sound Effects Kit",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Game Makers Sound Effects Kit",
+    "confidence": 95,
+    "notes": "Explicitly sound effects kit",
+    "_source_name": "Game Makers Sound Effects Kit",
+    "_batch_index": 3126
+  },
+  {
+    "name": "game-of-shadows-seamless-ink-transitions-38389563",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Game of Shadows Seamless Ink Transitions",
+    "confidence": 85,
+    "notes": "Transitions name, likely AE",
+    "_source_name": "game-of-shadows-seamless-ink-transitions-38389563",
+    "_batch_index": 3127
+  },
+  {
+    "name": "game-youtube-thumbnail-template-G9867KK",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Game YouTube Thumbnail Template",
+    "confidence": 80,
+    "notes": "Thumbnail template for social media",
+    "_source_name": "game-youtube-thumbnail-template-G9867KK",
+    "_batch_index": 3128
+  },
+  {
+    "name": "gamer-youtube-thumbnails-template-B3GSBF4",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gamer YouTube Thumbnails Template",
+    "confidence": 80,
+    "notes": "Thumbnail template for social media",
+    "_source_name": "gamer-youtube-thumbnails-template-B3GSBF4",
+    "_batch_index": 3129
+  },
+  {
+    "name": "gamers-youtube-channel-art-header-6SBSSZW",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gamers YouTube Channel Art Header",
+    "confidence": 80,
+    "notes": "Channel art for social media",
+    "_source_name": "gamers-youtube-channel-art-header-6SBSSZW",
+    "_batch_index": 3130
+  },
+  {
+    "name": "Games_2024_Athletics",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Games 2024 Athletics",
+    "confidence": 85,
+    "notes": "Contains .aep, athletics theme",
+    "_source_name": "Games_2024_Athletics",
+    "_batch_index": 3131
+  },
+  {
+    "name": "Games_2024_v1",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Games 2024 v1",
+    "confidence": 80,
+    "notes": "Contains .aep, likely sports related",
+    "_source_name": "Games_2024_v1",
+    "_batch_index": 3132
+  },
+  {
+    "name": "gaming-channel-opener-38384826",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gaming Channel Opener",
+    "confidence": 90,
+    "notes": "Opener name, likely AE",
+    "_source_name": "gaming-channel-opener-38384826",
+    "_batch_index": 3133
+  },
+  {
+    "name": "gaming-intro-35492186",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gaming Intro",
+    "confidence": 90,
+    "notes": "Intro name, likely AE",
+    "_source_name": "gaming-intro-35492186",
+    "_batch_index": 3134
+  },
+  {
+    "name": "gaming-intro-50695823",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gaming Intro",
+    "confidence": 70,
+    "notes": "Only .jpg, but name suggests AE intro",
+    "_source_name": "gaming-intro-50695823",
+    "_batch_index": 3135
+  },
+  {
+    "name": "gaming-intro-gamer-channel-opener-davinci-resolv-35478244",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gaming Intro Gamer Channel Opener",
+    "confidence": 80,
+    "notes": "Opener name, zip likely AE",
+    "_source_name": "gaming-intro-gamer-channel-opener-davinci-resolv-35478244",
+    "_batch_index": 3136
+  },
+  {
+    "name": "gaming-intro-l-gaming-channel-opener-l-youtube-vl-39785718",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gaming Intro Gaming Channel Opener",
+    "confidence": 80,
+    "notes": "Opener name, zip likely AE",
+    "_source_name": "gaming-intro-l-gaming-channel-opener-l-youtube-vl-39785718",
+    "_batch_index": 3137
+  },
+  {
+    "name": "gaming-intro-v2-40157125",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gaming Intro v2",
+    "confidence": 80,
+    "notes": "Intro name, zip likely AE",
+    "_source_name": "gaming-intro-v2-40157125",
+    "_batch_index": 3138
+  },
+  {
+    "name": "gaming-pixel-opener-37651128",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gaming Pixel Opener",
+    "confidence": 85,
+    "notes": "Opener name, likely AE",
+    "_source_name": "gaming-pixel-opener-37651128",
+    "_batch_index": 3139
+  },
+  {
+    "name": "Gaming-setup-opener-1350761",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gaming Setup Opener",
+    "confidence": 70,
+    "notes": "Only .jpg, but name suggests AE opener",
+    "_source_name": "Gaming-setup-opener-1350761",
+    "_batch_index": 3140
+  },
+  {
+    "name": "gaming-stream-twitch-templates-X66LDD2",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Stream Twitch Templates",
+    "confidence": 80,
+    "notes": "Twitch templates for social media",
+    "_source_name": "gaming-stream-twitch-templates-X66LDD2",
+    "_batch_index": 3141
+  },
+  {
+    "name": "gaming-twitter-headers-pack-02-KCHEN72",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 02",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-02-KCHEN72",
+    "_batch_index": 3142
+  },
+  {
+    "name": "gaming-twitter-headers-pack-03-8ZZTDXC",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 03",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-03-8ZZTDXC",
+    "_batch_index": 3143
+  },
+  {
+    "name": "gaming-twitter-headers-pack-04-T9GTB79",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 04",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-04-T9GTB79",
+    "_batch_index": 3144
+  },
+  {
+    "name": "gaming-twitter-headers-pack-05-NPQ86T2",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 05",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-05-NPQ86T2",
+    "_batch_index": 3145
+  },
+  {
+    "name": "gaming-twitter-headers-pack-06-A94LJ7T",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 06",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-06-A94LJ7T",
+    "_batch_index": 3146
+  },
+  {
+    "name": "gaming-twitter-headers-pack-07-JAKXTU7",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 07",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-07-JAKXTU7",
+    "_batch_index": 3147
+  },
+  {
+    "name": "gaming-twitter-headers-pack-08-HYFVSSK",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 08",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-08-HYFVSSK",
+    "_batch_index": 3148
+  },
+  {
+    "name": "gaming-twitter-headers-pack-09-V5JN7RV",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 09",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-09-V5JN7RV",
+    "_batch_index": 3149
+  },
+  {
+    "name": "gaming-twitter-headers-pack-10-6DCSAFQ",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 10",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-10-6DCSAFQ",
+    "_batch_index": 3150
+  },
+  {
+    "name": "gaming-twitter-headers-pack-11-5H6DT3W",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 11",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-11-5H6DT3W",
+    "_batch_index": 3151
+  },
+  {
+    "name": "gaming-twitter-headers-pack-12-V6NDFU8",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 12",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-12-V6NDFU8",
+    "_batch_index": 3152
+  },
+  {
+    "name": "gaming-twitter-headers-pack-13-ZNPF4HD",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 13",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-13-ZNPF4HD",
+    "_batch_index": 3153
+  },
+  {
+    "name": "gaming-twitter-headers-pack-14-96EBP74",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 14",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-14-96EBP74",
+    "_batch_index": 3154
+  },
+  {
+    "name": "gaming-twitter-headers-pack-15-RV2TG25",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 15",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-15-RV2TG25",
+    "_batch_index": 3155
+  },
+  {
+    "name": "gaming-twitter-headers-pack-16-3NPNLFH",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 16",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-16-3NPNLFH",
+    "_batch_index": 3156
+  },
+  {
+    "name": "gaming-twitter-headers-pack-17-EMG8XZ4",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming Twitter Headers Pack 17",
+    "confidence": 85,
+    "notes": "Twitter headers for social media",
+    "_source_name": "gaming-twitter-headers-pack-17-EMG8XZ4",
+    "_batch_index": 3157
+  },
+  {
+    "name": "gaming-youtube-thumbnail-QVXCLX8",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnail",
+    "confidence": 80,
+    "notes": "Thumbnail for social media",
+    "_source_name": "gaming-youtube-thumbnail-QVXCLX8",
+    "_batch_index": 3158
+  },
+  {
+    "name": "gaming-youtube-thumbnail-template-FALLH54",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnail Template",
+    "confidence": 80,
+    "notes": "Thumbnail template for social media",
+    "_source_name": "gaming-youtube-thumbnail-template-FALLH54",
+    "_batch_index": 3159
+  },
+  {
+    "name": "gaming-youtube-thumbnail-template-P5US3Q9",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnail Template",
+    "confidence": 80,
+    "notes": "Thumbnail template for social media",
+    "_source_name": "gaming-youtube-thumbnail-template-P5US3Q9",
+    "_batch_index": 3160
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-01-72PR3ZA",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 01",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-01-72PR3ZA",
+    "_batch_index": 3161
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-06-GWEHD2M",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 06",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-06-GWEHD2M",
+    "_batch_index": 3162
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-07-RAK4QTC",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 07",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-07-RAK4QTC",
+    "_batch_index": 3163
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-09-3B7JGYL",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 09",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-09-3B7JGYL",
+    "_batch_index": 3164
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-10-ATQPDET",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 10",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-10-ATQPDET",
+    "_batch_index": 3165
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-11-U8LNHRM",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 11",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-11-U8LNHRM",
+    "_batch_index": 3166
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-12-68KUQW6",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 12",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-12-68KUQW6",
+    "_batch_index": 3167
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-13-76AK6JV",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 13",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-13-76AK6JV",
+    "_batch_index": 3168
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-15-H6S5WSQ",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 15",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-15-H6S5WSQ",
+    "_batch_index": 3169
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-16-AE2MBMW",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 16",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-16-AE2MBMW",
+    "_batch_index": 3170
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-17-W5XXG3U",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 17",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-17-W5XXG3U",
+    "_batch_index": 3171
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-18-W7MHCJA",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 18",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-18-W7MHCJA",
+    "_batch_index": 3172
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-19-G6TSTDN",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 19",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-19-G6TSTDN",
+    "_batch_index": 3173
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-20-CJNE3SA",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 20",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-20-CJNE3SA",
+    "_batch_index": 3174
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-21-QBBF3GK",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 21",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-21-QBBF3GK",
+    "_batch_index": 3175
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-22-659GQDN",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 22",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-22-659GQDN",
+    "_batch_index": 3176
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-23-CR5DYQ6",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 23",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-23-CR5DYQ6",
+    "_batch_index": 3177
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-24-DCV5JBE",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 24",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-24-DCV5JBE",
+    "_batch_index": 3178
+  },
+  {
+    "name": "gaming-youtube-thumbnails-pack-25-5E936SL",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Gaming YouTube Thumbnails Pack 25",
+    "confidence": 85,
+    "notes": "Thumbnails pack for social media",
+    "_source_name": "gaming-youtube-thumbnails-pack-25-5E936SL",
+    "_batch_index": 3179
+  }
+]

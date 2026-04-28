@@ -1,0 +1,550 @@
+[
+  {
+    "name": "urban-vlog-opener-36351158",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Vlog Opener",
+    "confidence": 85,
+    "notes": "Name suggests opener, .zip likely contains .aep",
+    "_source_name": "urban-vlog-opener-36351158",
+    "_batch_index": 6240
+  },
+  {
+    "name": "UV Toolkit v2.1.2",
+    "category": "Software & Utilities",
+    "clean_name": "UV Toolkit v2.1.2",
+    "confidence": 95,
+    "notes": "Only .txt file, unclear content",
+    "_source_name": "UV Toolkit v2.1.2",
+    "_batch_index": 6241,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "v-log-cinematic-tones-and-standard-color-luts-51379261",
+    "category": "Color Grading & LUTs",
+    "clean_name": "V-Log Cinematic Tones and Standard Color LUTs",
+    "confidence": 95,
+    "notes": "Name contains 'color luts'",
+    "_source_name": "v-log-cinematic-tones-and-standard-color-luts-51379261",
+    "_batch_index": 6242
+  },
+  {
+    "name": "v-log-documentary-and-standard-luts-51434313",
+    "category": "Color Grading & LUTs",
+    "clean_name": "V-Log Documentary and Standard LUTs",
+    "confidence": 95,
+    "notes": "Name contains 'luts'",
+    "_source_name": "v-log-documentary-and-standard-luts-51434313",
+    "_batch_index": 6243
+  },
+  {
+    "name": "v-log-moody-forest-and-standard-luts-51433971",
+    "category": "Color Grading & LUTs",
+    "clean_name": "V-Log Moody Forest and Standard LUTs",
+    "confidence": 95,
+    "notes": "Name contains 'luts'",
+    "_source_name": "v-log-moody-forest-and-standard-luts-51433971",
+    "_batch_index": 6244
+  },
+  {
+    "name": "Valdays Everyday Lut Pack",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Valdays Everyday Lut Pack",
+    "confidence": 95,
+    "notes": "Name contains 'Lut Pack'",
+    "_source_name": "Valdays Everyday Lut Pack",
+    "_batch_index": 6245
+  },
+  {
+    "name": "Vanished Cinematic Titles",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Vanished Cinematic Titles",
+    "confidence": 90,
+    "notes": "Contains .mogrt file",
+    "_source_name": "Vanished Cinematic Titles",
+    "_batch_index": 6246
+  },
+  {
+    "name": "VariFont v2.0.1",
+    "category": "Fonts & Typography",
+    "clean_name": "VariFont v2.0.1",
+    "confidence": 70,
+    "notes": "Name suggests font tool, .pkg likely font installer",
+    "_source_name": "VariFont v2.0.1",
+    "_batch_index": 6247
+  },
+  {
+    "name": "Various Files-nitroflare.com",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Various Files",
+    "confidence": 75,
+    "notes": "Mixed file types, no clear theme",
+    "_source_name": "Various Files-nitroflare.com",
+    "_batch_index": 6248,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Various-Breeds-of-Puppies-Collection-19463839",
+    "category": "Stock Photos - General",
+    "clean_name": "Various Breeds of Puppies Collection",
+    "confidence": 80,
+    "notes": "Likely stock photos of puppies",
+    "_source_name": "Various-Breeds-of-Puppies-Collection-19463839",
+    "_batch_index": 6249
+  },
+  {
+    "name": "VC Color Vibrance 1.0.7_2022.1 Win-Mac",
+    "category": "Color Grading & LUTs",
+    "clean_name": "VC Color Vibrance",
+    "confidence": 85,
+    "notes": "Name suggests color grading tool",
+    "_source_name": "VC Color Vibrance 1.0.7_2022.1 Win-Mac",
+    "_batch_index": 6250
+  },
+  {
+    "name": "VCR Vintones",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "VCR Vintones",
+    "confidence": 80,
+    "notes": "Name suggests retro/VHS style",
+    "_source_name": "VCR Vintones",
+    "_batch_index": 6251
+  },
+  {
+    "name": "VDJH5KG-Aidownload.net",
+    "category": "_Skip",
+    "clean_name": "VDJH5KG",
+    "confidence": 100,
+    "notes": "Random string, likely spam",
+    "_source_name": "VDJH5KG-Aidownload.net",
+    "_batch_index": 6252
+  },
+  {
+    "name": "vecteezy_2350-paper-textures-bundle_4338615",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper Textures Bundle",
+    "confidence": 85,
+    "notes": "Paper textures, .jpg files",
+    "_source_name": "vecteezy_2350-paper-textures-bundle_4338615",
+    "_batch_index": 6253
+  },
+  {
+    "name": "vector-art-engraved-photo-effect-ZZPPAG4",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Vector Art Engraved Photo Effect",
+    "confidence": 80,
+    "notes": "Photo effect likely for Photoshop",
+    "_source_name": "vector-art-engraved-photo-effect-ZZPPAG4",
+    "_batch_index": 6254
+  },
+  {
+    "name": "Veres Deni Alex Super 8mm Home Film Emulation Power Grades",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Super 8mm Home Film Emulation Power Grades",
+    "confidence": 90,
+    "notes": "Color grading for film emulation",
+    "_source_name": "Veres Deni Alex Super 8mm Home Film Emulation Power Grades",
+    "_batch_index": 6255
+  },
+  {
+    "name": "Vertex Tool v1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Vertex Tool v1.1",
+    "confidence": 70,
+    "notes": "Tool name suggests plugin/extension",
+    "_source_name": "Vertex Tool v1.1",
+    "_batch_index": 6256
+  },
+  {
+    "name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1080",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1080",
+    "confidence": 95,
+    "notes": "Contains .mogrt",
+    "_source_name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1080",
+    "_batch_index": 6257
+  },
+  {
+    "name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1350",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1350",
+    "confidence": 95,
+    "notes": "Contains .mogrt",
+    "_source_name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1350",
+    "_batch_index": 6258
+  },
+  {
+    "name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1920",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1920",
+    "confidence": 95,
+    "notes": "Contains .mogrt",
+    "_source_name": "Vertical Multiscreen Transition - 3 Split Screen 1080x1920",
+    "_batch_index": 6259
+  },
+  {
+    "name": "vertical-burn-transitions-tiktok-shorts-reels",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Vertical Burn Transitions TikTok Shorts Reels",
+    "confidence": 85,
+    "notes": "Transitions for vertical video",
+    "_source_name": "vertical-burn-transitions-tiktok-shorts-reels",
+    "_batch_index": 6260
+  },
+  {
+    "name": "vertical-extreme-trap-transitions-51972650",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Vertical Extreme Trap Transitions",
+    "confidence": 85,
+    "notes": "Transitions pack",
+    "_source_name": "vertical-extreme-trap-transitions-51972650",
+    "_batch_index": 6261
+  },
+  {
+    "name": "vertical-film-frame-collage-transitions-mogrt-50979954",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Vertical Film Frame Collage Transitions",
+    "confidence": 90,
+    "notes": "Name contains .mogrt",
+    "_source_name": "vertical-film-frame-collage-transitions-mogrt-50979954",
+    "_batch_index": 6262
+  },
+  {
+    "name": "vertical-graphics-pack-37560193",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Vertical Graphics Pack",
+    "confidence": 80,
+    "notes": "Graphics pack for vertical format",
+    "_source_name": "vertical-graphics-pack-37560193",
+    "_batch_index": 6263
+  },
+  {
+    "name": "vertical-mixed-media-paper-transitions-mogrt-51972377",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Vertical Mixed Media Paper Transitions",
+    "confidence": 90,
+    "notes": "Name contains .mogrt",
+    "_source_name": "vertical-mixed-media-paper-transitions-mogrt-51972377",
+    "_batch_index": 6264
+  },
+  {
+    "name": "vertical-ripped-paper-transitions-51410081",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Vertical Ripped Paper Transitions",
+    "confidence": 85,
+    "notes": "Transitions pack",
+    "_source_name": "vertical-ripped-paper-transitions-51410081",
+    "_batch_index": 6265
+  },
+  {
+    "name": "vertical-seamless-transitions-vol-2",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Vertical Seamless Transitions Vol. 2",
+    "confidence": 85,
+    "notes": "Transitions pack",
+    "_source_name": "vertical-seamless-transitions-vol-2",
+    "_batch_index": 6266
+  },
+  {
+    "name": "vertical-transitions-instagram-stories-reels-t-50745375",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Vertical Transitions Instagram Stories Reels",
+    "confidence": 85,
+    "notes": "Transitions for social media",
+    "_source_name": "vertical-transitions-instagram-stories-reels-t-50745375",
+    "_batch_index": 6267
+  },
+  {
+    "name": "vertical-vintage-film-transitions-tiktok-shorts",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Vertical Vintage Film Transitions TikTok Shorts",
+    "confidence": 85,
+    "notes": "Transitions pack",
+    "_source_name": "vertical-vintage-film-transitions-tiktok-shorts",
+    "_batch_index": 6268
+  },
+  {
+    "name": "vet-clinic-pet-veterinary-hospital-intro-19675404",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Vet Clinic Pet Veterinary Hospital Intro",
+    "confidence": 85,
+    "notes": "Name suggests intro/opener",
+    "_source_name": "vet-clinic-pet-veterinary-hospital-intro-19675404",
+    "_batch_index": 6269
+  },
+  {
+    "name": "vfx-motion-transitions-for-after-effects-38615003",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "VFX Motion Transitions for After Effects",
+    "confidence": 90,
+    "notes": "Transitions for After Effects",
+    "_source_name": "vfx-motion-transitions-for-after-effects-38615003",
+    "_batch_index": 6270
+  },
+  {
+    "name": "VFXCental-Fireworks-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "VFXCental Fireworks Intro",
+    "confidence": 80,
+    "notes": "Name suggests intro with fireworks",
+    "_source_name": "VFXCental-Fireworks-INTRO-HD.NET",
+    "_batch_index": 6271
+  },
+  {
+    "name": "VH - Summer Vacations Slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Summer Vacations Slideshow",
+    "confidence": 90,
+    "notes": "Contains .aep, slideshow theme",
+    "_source_name": "VH - Summer Vacations Slideshow",
+    "_batch_index": 6272
+  },
+  {
+    "name": "vh-1",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "CINEPUNCH Premiere Pro Effects Pack",
+    "confidence": 90,
+    "notes": "Mixed file types, unclear purpose",
+    "_source_name": "vh-1",
+    "_batch_index": 6273,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-10354880-V3.8.3-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-10354880",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name",
+    "_source_name": "VH-10354880-V3.8.3-INTRO-HD.NET",
+    "_batch_index": 6274
+  },
+  {
+    "name": "VH-11094370-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-11094370",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name",
+    "_source_name": "VH-11094370-INTRO-HD.NET",
+    "_batch_index": 6275
+  },
+  {
+    "name": "VH-14231959-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-14231959",
+    "confidence": 65,
+    "notes": "Numeric ID only, .jpg file",
+    "_source_name": "VH-14231959-INTRO-HD.NET",
+    "_batch_index": 6276
+  },
+  {
+    "name": "VH-18604194-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-18604194",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-18604194-INTRO-HD.NET",
+    "_batch_index": 6277
+  },
+  {
+    "name": "VH-18944613-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-18944613",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-18944613-INTRO-HD.NET",
+    "_batch_index": 6278
+  },
+  {
+    "name": "VH-18967340-V9-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-18967340",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-18967340-V9-INTRO-HD.NET",
+    "_batch_index": 6279
+  },
+  {
+    "name": "VH-19415107-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-19415107",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-19415107-INTRO-HD.NET",
+    "_batch_index": 6280
+  },
+  {
+    "name": "VH-19731957-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-19731957",
+    "confidence": 65,
+    "notes": "Numeric ID only, contains .aep",
+    "_source_name": "VH-19731957-INTRO-HD.NET",
+    "_batch_index": 6281
+  },
+  {
+    "name": "VH-19981614-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-19981614",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-19981614-INTRO-HD.NET",
+    "_batch_index": 6282
+  },
+  {
+    "name": "VH-20392107-V3-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-20392107",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-20392107-V3-INTRO-HD.NET",
+    "_batch_index": 6283
+  },
+  {
+    "name": "VH-20681372-V6",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Essential Titles And Lower Thirds v6.1",
+    "confidence": 85,
+    "notes": "Only .jpg and .txt, unclear",
+    "_source_name": "VH-20681372-V6",
+    "_batch_index": 6284,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-21059280-V3-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitch Transitions",
+    "confidence": 90,
+    "notes": "Only .txt and .url, no content",
+    "_source_name": "VH-21059280-V3-INTRO-HD.NET",
+    "_batch_index": 6285,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-21100353-V3-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Line OF After Effects Project",
+    "confidence": 80,
+    "notes": "Multiple archives, unclear content",
+    "_source_name": "VH-21100353-V3-INTRO-HD.NET",
+    "_batch_index": 6286,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-21296840-v1.2.1-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-21296840",
+    "confidence": 65,
+    "notes": "Numeric ID only, contains .aep",
+    "_source_name": "VH-21296840-v1.2.1-INTRO-HD.NET",
+    "_batch_index": 6287
+  },
+  {
+    "name": "VH-21860786-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-21860786",
+    "confidence": 65,
+    "notes": "Numeric ID only, .rar file",
+    "_source_name": "VH-21860786-INTRO-HD.NET",
+    "_batch_index": 6288
+  },
+  {
+    "name": "VH-21861548-V3-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Change Resolution Tutorial",
+    "confidence": 70,
+    "notes": "Only .txt and .url",
+    "_source_name": "VH-21861548-V3-INTRO-HD.NET",
+    "_batch_index": 6289,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-21932974-V3.1 PRO",
+    "category": "After Effects - Other",
+    "clean_name": "VH-21932974",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-21932974-V3.1 PRO",
+    "_batch_index": 6290
+  },
+  {
+    "name": "VH-22106233-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-22106233",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-22106233-INTRO-HD.NET",
+    "_batch_index": 6291
+  },
+  {
+    "name": "VH-22162105-V2",
+    "category": "After Effects - Other",
+    "clean_name": "VH-22162105",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-22162105-V2",
+    "_batch_index": 6292
+  },
+  {
+    "name": "VH-22183653",
+    "category": "After Effects - Slideshow",
+    "clean_name": "35 Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .jpg, unclear",
+    "_source_name": "VH-22183653",
+    "_batch_index": 6293,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-22271860-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-22271860",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-22271860-INTRO-HD.NET",
+    "_batch_index": 6294
+  },
+  {
+    "name": "VH-22541654-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-22541654",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-22541654-INTRO-HD.NET",
+    "_batch_index": 6295
+  },
+  {
+    "name": "VH-22856286-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-22856286",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-22856286-INTRO-HD.NET",
+    "_batch_index": 6296
+  },
+  {
+    "name": "VH-23057493-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-23057493",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-23057493-INTRO-HD.NET",
+    "_batch_index": 6297
+  },
+  {
+    "name": "VH-23091522-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-23091522",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-23091522-INTRO-HD.NET",
+    "_batch_index": 6298
+  },
+  {
+    "name": "VH-23347243-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "VH-23347243",
+    "confidence": 65,
+    "notes": "Numeric ID only",
+    "_source_name": "VH-23347243-INTRO-HD.NET",
+    "_batch_index": 6299
+  }
+]

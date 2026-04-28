@@ -1,0 +1,547 @@
+[
+  {
+    "name": "premium-overlays-retro-gaming-39930865",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Premium Overlays Retro Gaming",
+    "confidence": 75,
+    "notes": "Name suggests overlays for retro gaming, likely stock footage/VFX overlays.",
+    "_source_name": "premium-overlays-retro-gaming-39930865",
+    "_batch_index": 5160
+  },
+  {
+    "name": "PremiumBuilder 2023",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "PremiumBuilder Packs Collection 2023",
+    "confidence": 90,
+    "notes": "Only .rar archive, no content clue.",
+    "_source_name": "PremiumBuilder 2023",
+    "_batch_index": 5161,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "PremiumBuilder Photo Effects Animator V.11 37693478 (AE PR)",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "PremiumBuilder Photo Effects Animator V.11",
+    "confidence": 85,
+    "notes": "Only .pdf and .txt files, no actual asset files.",
+    "_source_name": "PremiumBuilder Photo Effects Animator V.11 37693478 (AE PR)",
+    "_batch_index": 5162,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "presentation-bundle",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Presentation Bundle",
+    "confidence": 65,
+    "notes": "Name suggests presentation/slideshow, likely AE slideshow template.",
+    "_source_name": "presentation-bundle",
+    "_batch_index": 5163
+  },
+  {
+    "name": "presentation-with-cathy-office-uniform-10611291",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Presentation with Cathy Office Uniform",
+    "confidence": 80,
+    "notes": "Has .aep files, office uniform suggests corporate presentation.",
+    "_source_name": "presentation-with-cathy-office-uniform-10611291",
+    "_batch_index": 5164
+  },
+  {
+    "name": "presentation-with-jason-jeans",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Presentation with Jason Jeans",
+    "confidence": 75,
+    "notes": "Has .aep files, presentation style likely corporate.",
+    "_source_name": "presentation-with-jason-jeans",
+    "_batch_index": 5165
+  },
+  {
+    "name": "presentation-with-kyle-worker-style",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Presentation with Kyle Worker Style",
+    "confidence": 75,
+    "notes": "Has .aep files, worker style suggests corporate/business.",
+    "_source_name": "presentation-with-kyle-worker-style",
+    "_batch_index": 5166
+  },
+  {
+    "name": "President Election Intro folder",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "President Election Intro",
+    "confidence": 85,
+    "notes": "Name says intro, has .aep files.",
+    "_source_name": "President Election Intro folder",
+    "_batch_index": 5167
+  },
+  {
+    "name": "press-pack",
+    "category": "Stock Photos - General",
+    "clean_name": "Press Pack",
+    "confidence": 75,
+    "notes": "Only .pdf file, no asset files to classify.",
+    "_source_name": "press-pack",
+    "_batch_index": 5168,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Pretty Sweet - 2D Animation Toolkit 18421392",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Pretty Sweet - 2D Animation Toolkit",
+    "confidence": 80,
+    "notes": "2D animation toolkit likely for explainer/character animation.",
+    "_source_name": "Pretty Sweet - 2D Animation Toolkit 18421392",
+    "_batch_index": 5169
+  },
+  {
+    "name": "Preview Image Set",
+    "category": "_Skip",
+    "clean_name": "Preview Image Set",
+    "confidence": 90,
+    "notes": "Only .jpg preview images, not a usable asset pack.",
+    "_source_name": "Preview Image Set",
+    "_batch_index": 5170
+  },
+  {
+    "name": "pride_flyer_G",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Pride Flyer G",
+    "confidence": 85,
+    "notes": "Has .psd, .pdf, .jpg, .png; flyer design.",
+    "_source_name": "pride_flyer_G",
+    "_batch_index": 5171
+  },
+  {
+    "name": "Prima Cinematic Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Prima Cinematic Titles",
+    "confidence": 90,
+    "notes": "Has .aep files, name says cinematic titles.",
+    "_source_name": "Prima Cinematic Titles",
+    "_batch_index": 5172
+  },
+  {
+    "name": "prismatic-effects-44744430",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Prismatic Effects",
+    "confidence": 70,
+    "notes": "Prismatic suggests light/color effects, possibly glitch/distortion.",
+    "_source_name": "prismatic-effects-44744430",
+    "_batch_index": 5173
+  },
+  {
+    "name": "PRM",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "PRM",
+    "confidence": 70,
+    "notes": "Has .prproj and .mp4, likely Premiere Pro template.",
+    "_source_name": "PRM",
+    "_batch_index": 5174
+  },
+  {
+    "name": "Pro Light Bundle",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Pro Light Bundle",
+    "confidence": 70,
+    "notes": "Has .aep, light bundle suggests cinematic lighting effects.",
+    "_source_name": "Pro Light Bundle",
+    "_batch_index": 5175
+  },
+  {
+    "name": "Pro Sound Effects Gators",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Pro Sound Effects Gators",
+    "confidence": 90,
+    "notes": "Has .wav files, name says sound effects.",
+    "_source_name": "Pro Sound Effects Gators",
+    "_batch_index": 5176
+  },
+  {
+    "name": "pro-io-2.17.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Pro IO 2.17.0",
+    "confidence": 80,
+    "notes": "Name suggests a plugin/extension, likely for video software.",
+    "_source_name": "pro-io-2.17.0",
+    "_batch_index": 5177
+  },
+  {
+    "name": "pro-portrait-photoshop-action-2Y8Y7NV",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Pro Portrait Photoshop Action",
+    "confidence": 95,
+    "notes": "Name says photoshop action.",
+    "_source_name": "pro-portrait-photoshop-action-2Y8Y7NV",
+    "_batch_index": 5178
+  },
+  {
+    "name": "pro-presets-v-01-photoshop-lightroom-6AKLLQH",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Pro Presets V 01 Photoshop Lightroom",
+    "confidence": 90,
+    "notes": "Name says photoshop lightroom presets.",
+    "_source_name": "pro-presets-v-01-photoshop-lightroom-6AKLLQH",
+    "_batch_index": 5179
+  },
+  {
+    "name": "pro-presets-v-03-photoshop-lightroom-89ZL7PA",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Pro Presets V 03 Photoshop Lightroom",
+    "confidence": 90,
+    "notes": "Name says photoshop lightroom presets.",
+    "_source_name": "pro-presets-v-03-photoshop-lightroom-89ZL7PA",
+    "_batch_index": 5180
+  },
+  {
+    "name": "pro-presets-v-60-photoshop-lightroom-ZQ49NTM",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Pro Presets V 60 Photoshop Lightroom",
+    "confidence": 90,
+    "notes": "Name says photoshop lightroom presets.",
+    "_source_name": "pro-presets-v-60-photoshop-lightroom-ZQ49NTM",
+    "_batch_index": 5181
+  },
+  {
+    "name": "pro-presets-v-73-photoshop-lightroom-E9KBCXN",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Pro Presets V 73 Photoshop Lightroom",
+    "confidence": 90,
+    "notes": "Name says photoshop lightroom presets.",
+    "_source_name": "pro-presets-v-73-photoshop-lightroom-E9KBCXN",
+    "_batch_index": 5182
+  },
+  {
+    "name": "pro-presets-v-75-photoshop-lightroom-HSFN35D",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Pro Presets V 75 Photoshop Lightroom",
+    "confidence": 90,
+    "notes": "Name says photoshop lightroom presets.",
+    "_source_name": "pro-presets-v-75-photoshop-lightroom-HSFN35D",
+    "_batch_index": 5183
+  },
+  {
+    "name": "Pro-Shaders-for-Cinema-4D",
+    "category": "3D - Materials & Textures",
+    "clean_name": "Pro Shaders for Cinema 4D",
+    "confidence": 95,
+    "notes": "Name says shaders for Cinema 4D, which are materials/textures.",
+    "_source_name": "Pro-Shaders-for-Cinema-4D",
+    "_batch_index": 5184
+  },
+  {
+    "name": "pro-titles-library-cinematic-titles-fx-for-pre-44014314",
+    "category": "Premiere Pro - Title & Typography",
+    "clean_name": "Pro Titles Library Cinematic Titles FX for Premiere Pro",
+    "confidence": 85,
+    "notes": "Name says for Premiere Pro, cinematic titles.",
+    "_source_name": "pro-titles-library-cinematic-titles-fx-for-pre-44014314",
+    "_batch_index": 5185
+  },
+  {
+    "name": "pro-vision-ar-46510017",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Pro Vision AR",
+    "confidence": 70,
+    "notes": "Has .aep, AR vision likely corporate presentation.",
+    "_source_name": "pro-vision-ar-46510017",
+    "_batch_index": 5186
+  },
+  {
+    "name": "procreate-abstract-liquid-brushes-BVZPNS2",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Abstract Liquid Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes, but no Procreate category; closest is Photoshop Brushes.",
+    "_source_name": "procreate-abstract-liquid-brushes-BVZPNS2",
+    "_batch_index": 5187
+  },
+  {
+    "name": "Procreate-Cosmic-Brushes-19249037",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Cosmic Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes, classified as Photoshop Brushes.",
+    "_source_name": "Procreate-Cosmic-Brushes-19249037",
+    "_batch_index": 5188
+  },
+  {
+    "name": "procreate-cosmic-space-brushes-9BFY3G7",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Cosmic Space Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes.",
+    "_source_name": "procreate-cosmic-space-brushes-9BFY3G7",
+    "_batch_index": 5189
+  },
+  {
+    "name": "procreate-galactic-space-brushes-GUKWHXY",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Galactic Space Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes.",
+    "_source_name": "procreate-galactic-space-brushes-GUKWHXY",
+    "_batch_index": 5190
+  },
+  {
+    "name": "procreate-galaxy-space-brushes-BQ82AV8",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Galaxy Space Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes.",
+    "_source_name": "procreate-galaxy-space-brushes-BQ82AV8",
+    "_batch_index": 5191
+  },
+  {
+    "name": "procreate-glitter-toolbox-brush-kit",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Glitter Toolbox Brush Kit",
+    "confidence": 85,
+    "notes": "Procreate brush kit.",
+    "_source_name": "procreate-glitter-toolbox-brush-kit",
+    "_batch_index": 5192
+  },
+  {
+    "name": "procreate-lightning-brushes-ZGYXXGN",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Lightning Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes.",
+    "_source_name": "procreate-lightning-brushes-ZGYXXGN",
+    "_batch_index": 5193
+  },
+  {
+    "name": "procreate-liquid-brushes-SMD37MU",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Liquid Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes.",
+    "_source_name": "procreate-liquid-brushes-SMD37MU",
+    "_batch_index": 5194
+  },
+  {
+    "name": "procreate-nebula-space-brushes-GJZTRHD",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Nebula Space Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes.",
+    "_source_name": "procreate-nebula-space-brushes-GJZTRHD",
+    "_batch_index": 5195
+  },
+  {
+    "name": "procreate-universe-brushes-SK949NQ",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Procreate Universe Brushes",
+    "confidence": 85,
+    "notes": "Procreate brushes.",
+    "_source_name": "procreate-universe-brushes-SK949NQ",
+    "_batch_index": 5196
+  },
+  {
+    "name": "Product Flyer-YK5DSJW",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Product Flyer",
+    "confidence": 85,
+    "notes": "Name says product flyer.",
+    "_source_name": "Product Flyer-YK5DSJW",
+    "_batch_index": 5197
+  },
+  {
+    "name": "product-boxes-25098107",
+    "category": "Mockups - Packaging",
+    "clean_name": "Product Boxes",
+    "confidence": 90,
+    "notes": "Name says product boxes, likely packaging mockups.",
+    "_source_name": "product-boxes-25098107",
+    "_batch_index": 5198
+  },
+  {
+    "name": "product-interior-version-05-36843678",
+    "category": "Mockups - Packaging",
+    "clean_name": "Product Interior Version 05",
+    "confidence": 80,
+    "notes": "Product interior suggests packaging mockup.",
+    "_source_name": "product-interior-version-05-36843678",
+    "_batch_index": 5199
+  },
+  {
+    "name": "Production Crate Missiles",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Production Crate Missiles",
+    "confidence": 75,
+    "notes": "Production Crate is known for VFX stock footage.",
+    "_source_name": "Production Crate Missiles",
+    "_batch_index": 5200
+  },
+  {
+    "name": "professional collection",
+    "category": "Stock Photos - General",
+    "clean_name": "Professional Collection",
+    "confidence": 70,
+    "notes": "Only .rar archive, no content clue.",
+    "_source_name": "professional collection",
+    "_batch_index": 5201,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Professional Songs",
+    "category": "Stock Music & Audio",
+    "clean_name": "Professional Songs",
+    "confidence": 90,
+    "notes": "Name says songs, likely stock music.",
+    "_source_name": "Professional Songs",
+    "_batch_index": 5202
+  },
+  {
+    "name": "professional-gamer-52001760",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Professional Gamer",
+    "confidence": 70,
+    "notes": "Gamer intro likely an opener template.",
+    "_source_name": "professional-gamer-52001760",
+    "_batch_index": 5203
+  },
+  {
+    "name": "profile-person-brief-introduction-36212594",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Profile Person Brief Introduction",
+    "confidence": 75,
+    "notes": "Profile introduction likely corporate.",
+    "_source_name": "profile-person-brief-introduction-36212594",
+    "_batch_index": 5204
+  },
+  {
+    "name": "Project",
+    "category": "After Effects - Other",
+    "clean_name": "Project",
+    "confidence": 60,
+    "notes": "Only .aep, generic name, cannot determine subcategory.",
+    "_source_name": "Project",
+    "_batch_index": 5205
+  },
+  {
+    "name": "Project File",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Project File",
+    "confidence": 80,
+    "notes": "Has .mogrt file, so Premiere Pro motion graphics.",
+    "_source_name": "Project File",
+    "_batch_index": 5206
+  },
+  {
+    "name": "Project_file",
+    "category": "After Effects - Other",
+    "clean_name": "Project File",
+    "confidence": 60,
+    "notes": "Only .aep, generic name.",
+    "_source_name": "Project_file",
+    "_batch_index": 5207
+  },
+  {
+    "name": "protein-bar-snack-packaging-686EP82",
+    "category": "Mockups - Packaging",
+    "clean_name": "Protein Bar Snack Packaging",
+    "confidence": 95,
+    "notes": "Name says packaging.",
+    "_source_name": "protein-bar-snack-packaging-686EP82",
+    "_batch_index": 5208
+  },
+  {
+    "name": "protein-bar-snack-packaging-PGRSSZF",
+    "category": "Mockups - Packaging",
+    "clean_name": "Protein Bar Snack Packaging",
+    "confidence": 95,
+    "notes": "Name says packaging.",
+    "_source_name": "protein-bar-snack-packaging-PGRSSZF",
+    "_batch_index": 5209
+  },
+  {
+    "name": "PS-Hanging-WomensFlowyTank",
+    "category": "Mockups - Apparel",
+    "clean_name": "PS Hanging Womens Flowy Tank",
+    "confidence": 90,
+    "notes": "PS likely Photoshop, hanging apparel mockup.",
+    "_source_name": "PS-Hanging-WomensFlowyTank",
+    "_batch_index": 5210
+  },
+  {
+    "name": "PS-Hanging-WomensVNeck",
+    "category": "Mockups - Apparel",
+    "clean_name": "PS Hanging Womens VNeck",
+    "confidence": 90,
+    "notes": "Apparel mockup.",
+    "_source_name": "PS-Hanging-WomensVNeck",
+    "_batch_index": 5211
+  },
+  {
+    "name": "PS-Hanging-ZipUpHoodie",
+    "category": "Mockups - Apparel",
+    "clean_name": "PS Hanging Zip Up Hoodie",
+    "confidence": 90,
+    "notes": "Apparel mockup.",
+    "_source_name": "PS-Hanging-ZipUpHoodie",
+    "_batch_index": 5212
+  },
+  {
+    "name": "PSD",
+    "category": "Photoshop - Other",
+    "clean_name": "PSD",
+    "confidence": 60,
+    "notes": "Only .psd, generic name.",
+    "_source_name": "PSD",
+    "_batch_index": 5213
+  },
+  {
+    "name": "PSD happy diwali festival of lights template design",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "PSD Happy Diwali Festival of Lights Template Design",
+    "confidence": 85,
+    "notes": "Has .psd and .jpg, Diwali festival flyer/poster.",
+    "_source_name": "PSD happy diwali festival of lights template design",
+    "_batch_index": 5214
+  },
+  {
+    "name": "PSD happy diwali template design poster flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "PSD Happy Diwali Template Design Poster Flyer",
+    "confidence": 90,
+    "notes": "Name says poster flyer.",
+    "_source_name": "PSD happy diwali template design poster flyer",
+    "_batch_index": 5215
+  },
+  {
+    "name": "Pseudo Effect Maker v3.1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Pseudo Effect Maker v3.1.0",
+    "confidence": 80,
+    "notes": "Effect maker suggests plugin/extension.",
+    "_source_name": "Pseudo Effect Maker v3.1.0",
+    "_batch_index": 5216
+  },
+  {
+    "name": "Pseudo Effect Maker V3.1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Pseudo Effect Maker V3.1.1",
+    "confidence": 80,
+    "notes": "Effect maker suggests plugin/extension.",
+    "_source_name": "Pseudo Effect Maker V3.1.1",
+    "_batch_index": 5217
+  },
+  {
+    "name": "Psycho-1011252",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Psycho Sneaker Logo",
+    "confidence": 80,
+    "notes": "Only .zip, no content clue.",
+    "_source_name": "Psycho-1011252",
+    "_batch_index": 5218,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "pt_ImportSubtitles v1.71",
+    "category": "Plugins & Extensions",
+    "clean_name": "pt ImportSubtitles v1.71",
+    "confidence": 90,
+    "notes": "Import subtitles is a plugin/extension for video editing.",
+    "_source_name": "pt_ImportSubtitles v1.71",
+    "_batch_index": 5219
+  }
+]
