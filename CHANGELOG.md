@@ -71,14 +71,32 @@ All notable changes to FileOrganizer will be documented in this file.
   - `_Review-After Effects - Sport & Action` (1 dir) → `G:\Organized\_Review\After Effects - Sport & Action\`
 - `deepseek_research.py` SyntaxWarning: confirmed already resolved (double-backslash in docstring
   is valid; no warning emitted by Python 3.12)
+- `organize_run.py` — source-specific errors files: `organize_errors_{source}.json` per source
+  instead of a single `organize_errors.json`; prevents concurrent apply runs from clobbering each
+  other's error records. `retry_errors(source_mode)` and `errors_file(source_mode)` added.
+  Legacy `organize_errors.json` migrated to `organize_errors_ae.json`.
+
+### Added (session 2026-04-28)
+- `resolve_review_items.py` — manual curator script for `_Review\_Review` items. Moves 9 items
+  that were AI-classified as `_Review` (conf 30-40) but manually identified via archive inspection:
+  - cm_4804020 → `Photoshop - Overlays & FX\Film Dust Textures (20 JPG)` (identified via PDF)
+  - cm_4840406 → `Photoshop - Patterns & Textures\Roller Textures (17 JPG)` (from zip contents)
+  - cm_7116381 → `Stock Photos - General\CM Stock Pack (53 JPG)` (53 numbered JPGs, no metadata)
+  - cm_7119925 → `Photoshop - Overlays & FX\Light Flare Overlays (PNG)` (from RAR filename)
+  - c4 (Video Copilot Collection) → `After Effects - Plugin & Script\Video Copilot Full Collection`
+  - Help File - Avelina Studio, Main Print, Read Me (GraphixTree), readme
+    → `_Review\Orphaned Documentation\` (detached doc files, no parent packages)
+  Updates organize_moves.db with corrected destinations.
 
 ### Known Issues (as of 2026-04-28)
-- 5 trailing-space/long-path errors in `organize_errors.json` — pending `--retry-errors --source ae`
-  after current AE apply run (PID 22500) completes
-- `G:\Organized\_Review\After Effects - Other\` (35 dirs): detached AE project subfolders —
-  need manual parent-matching; cannot blindly re-classify as standalone templates
-- loose_files classify: ~43/326 batches done — overnight run in progress (PID 22848)
-- design_org classify: 14/44 batches done — resumed (PID 13488)
+- 5 trailing-space/long-path errors in `organize_errors_ae.json` — pending
+  `--retry-errors --source ae` after current AE apply run (PID 22500) completes.
+  Note: all 5 sources are GONE from I:\; destinations exist in G:\Organized. Retry will
+  auto-skip them ("src gone") and clear the error file.
+- `G:\Organized\_Review\After Effects - Other\` (35 dirs): 32 untracked detached AE project
+  subfolders (no DB records) + 3 VH templates (low confidence). Need parent-matching pass.
+- loose_files classify: ~73/326 batches — overnight run in progress (PID 22848)
+- design_org classify: 32/44 batches — nearly complete (PID 13488)
 
 
 

@@ -41,10 +41,14 @@ DESIGN_BATCH_SIZE = 60
 DESIGN_INDEX_FILE = os.path.join(os.path.dirname(__file__), 'design_unorg_index.json')
 
 LOG_FILE         = os.path.join(os.path.dirname(__file__), 'organize_run.log')
-ERRORS_FILE      = os.path.join(os.path.dirname(__file__), 'organize_errors.json')
+ERRORS_FILE      = os.path.join(os.path.dirname(__file__), 'organize_errors.json')  # legacy path
 JOURNAL_FILE     = os.path.join(os.path.dirname(__file__), 'organize_moves.db')
 RESULTS_DIR      = os.path.join(os.path.dirname(__file__), 'classification_results')
 os.makedirs(RESULTS_DIR, exist_ok=True)
+
+def errors_file(source_mode: str) -> str:
+    """Return source-specific errors file path so concurrent apply runs don't clobber each other."""
+    return os.path.join(os.path.dirname(__file__), f'organize_errors_{source_mode}.json')
 
 # ── Category name normalization ──────────────────────────────────────────────
 # Canonical names (right-hand side).  Any batch that returns a left-hand key
@@ -458,7 +462,7 @@ def apply_moves(pairs: list, source_override: str,
     moved = skipped = errors = low_conf = 0
     category_counts = defaultdict(int)
     not_found  = []
-    error_log  = []   # written to ERRORS_FILE on completion
+    error_log  = []   # written to source-specific errors file on completion
 
     for item, org_entry in pairs:
         clean    = (item.get('clean_name') or item.get('name', '')).strip()
@@ -551,21 +555,26 @@ def apply_moves(pairs: list, source_override: str,
             log(f"  - {n}")
 
     if not dry_run and error_log:
-        with open(ERRORS_FILE, 'w', encoding='utf-8') as f:
+        efile = errors_file(source_override or 'ae')
+        with open(efile, 'w', encoding='utf-8') as f:
             json.dump(error_log, f, indent=2, ensure_ascii=False)
-        log(f"\nErrors written to {ERRORS_FILE} — run --retry-errors to attempt fixes")
+        log(f"\nErrors written to {efile} — run --retry-errors --source {source_override or 'ae'} to attempt fixes")
 
     return moved, skipped, errors, category_counts
 
 # ── CLI ───────────────────────────────────────────────────────────────────────
-def retry_errors():
-    """Re-attempt items from organize_errors.json using the robust move pipeline."""
-    if not os.path.exists(ERRORS_FILE):
-        print(f"No errors file found at {ERRORS_FILE}")
+def retry_errors(source_mode: str = 'ae'):
+    """Re-attempt items from the source-specific errors file."""
+    efile = errors_file(source_mode)
+    # Fall back to legacy path if source-specific file doesn't exist yet
+    if not os.path.exists(efile) and os.path.exists(ERRORS_FILE):
+        efile = ERRORS_FILE
+    if not os.path.exists(efile):
+        print(f"No errors file found at {efile}")
         return
-    with open(ERRORS_FILE, 'r', encoding='utf-8') as f:
+    with open(efile, 'r', encoding='utf-8') as f:
         errors = json.load(f)
-    log(f"Retrying {len(errors)} errored items...")
+    log(f"Retrying {len(errors)} errored items (source={source_mode})...")
     retried = fixed = still_failed = 0
     remaining = []
     for e in errors:
@@ -597,11 +606,11 @@ def retry_errors():
         retried += 1
     log(f"\nRetry complete: {fixed} fixed, {still_failed} still failing")
     if remaining:
-        with open(ERRORS_FILE, 'w', encoding='utf-8') as f:
+        with open(efile, 'w', encoding='utf-8') as f:
             json.dump(remaining, f, indent=2, ensure_ascii=False)
-        log(f"Remaining errors saved to {ERRORS_FILE}")
+        log(f"Remaining errors saved to {efile}")
     else:
-        os.remove(ERRORS_FILE)
+        os.remove(efile)
         log("All errors resolved — errors file removed")
 
 def cmd_validate(pairs: list, source_override: str = ''):
@@ -649,7 +658,7 @@ def main():
     args = ap.parse_args()
 
     if args.retry_errors:
-        retry_errors()
+        retry_errors(args.source)
         return
 
     if args.undo_last:
