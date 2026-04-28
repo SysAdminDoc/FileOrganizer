@@ -1,6 +1,23 @@
-fileorganizer
-importlib.util
-mimetypes
+# Core GUI/runtime dependencies.
 PyQt6
-xml.etree.ElementTree
 openai
+requests
+rapidfuzz
+Pillow
+psd-tools
+Unidecode
+
+# Optional feature modules used when available. The app also bootstraps these
+# at runtime, but keeping them installable here makes release builds and fresh
+# developer environments deterministic.
+pillow-heif
+exifread
+mutagen
+pypdf
+python-docx
+openpyxl
+python-pptx
+reverse_geocoder
+send2trash
+rarfile
+py7zr
