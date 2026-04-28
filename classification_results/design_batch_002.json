@@ -1,0 +1,542 @@
+[
+  {
+    "name": "1111-18",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "BusyBoxx V48 Magic Spells",
+    "confidence": 90,
+    "notes": "Contains stock footage of magic spells",
+    "_source_name": "1111-18",
+    "_batch_index": 60
+  },
+  {
+    "name": "1111-2",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Nerd Or Die Complete Stream Package",
+    "confidence": 85,
+    "notes": "Stream package likely includes broadcast graphics",
+    "_source_name": "1111-2",
+    "_batch_index": 61
+  },
+  {
+    "name": "1111-6",
+    "category": "VFX & Compositing",
+    "clean_name": "Big Films Destruction Pack",
+    "confidence": 85,
+    "notes": "Destruction pack for VFX/compositing",
+    "_source_name": "1111-6",
+    "_batch_index": 62
+  },
+  {
+    "name": "11111-1",
+    "category": "Stock Footage - General",
+    "clean_name": "Tropic Colour LA Film Stock Footage",
+    "confidence": 90,
+    "notes": "Stock footage pack",
+    "_source_name": "11111-1",
+    "_batch_index": 63
+  },
+  {
+    "name": "11111-11",
+    "category": "After Effects - Other",
+    "clean_name": "VideoHive Effects Pro",
+    "confidence": 70,
+    "notes": "Generic effects pack, likely AE",
+    "_source_name": "11111-11",
+    "_batch_index": 64
+  },
+  {
+    "name": "11111538-callout-titles-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Callout Titles",
+    "confidence": 85,
+    "notes": "Callout titles for After Effects",
+    "_source_name": "11111538-callout-titles-INTRO-HD.NET",
+    "_batch_index": 65
+  },
+  {
+    "name": "11393-Milk-Powder-Can",
+    "category": "Mockups - Packaging",
+    "clean_name": "Milk Powder Can Mockup",
+    "confidence": 80,
+    "notes": "Can mockup, likely packaging",
+    "_source_name": "11393-Milk-Powder-Can",
+    "_batch_index": 66
+  },
+  {
+    "name": "11465879-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Bali Inspire",
+    "confidence": 85,
+    "notes": "Intro/opener from VideoHive",
+    "_source_name": "11465879-INTRO-HD.NET",
+    "_batch_index": 67
+  },
+  {
+    "name": "11499436-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Grace Titles Opener",
+    "confidence": 85,
+    "notes": "Title opener",
+    "_source_name": "11499436-INTRO-HD.NET",
+    "_batch_index": 68
+  },
+  {
+    "name": "11686436-vintage-photos-logo-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Vintage Photos Logo",
+    "confidence": 85,
+    "notes": "Logo reveal with vintage photos",
+    "_source_name": "11686436-vintage-photos-logo-INTRO-HD.NET",
+    "_batch_index": 69
+  },
+  {
+    "name": "11769696-INTRO-HD.NET",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Clean Glitch Lower Third",
+    "confidence": 90,
+    "notes": "Lower thirds with glitch style",
+    "_source_name": "11769696-INTRO-HD.NET",
+    "_batch_index": 70
+  },
+  {
+    "name": "11827191-grunge-broadcast-package-INTRO-HD.NET",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Grunge Broadcast Package",
+    "confidence": 90,
+    "notes": "Broadcast package with grunge style",
+    "_source_name": "11827191-grunge-broadcast-package-INTRO-HD.NET",
+    "_batch_index": 71
+  },
+  {
+    "name": "11881699-news-time-INTRO-HD.NET",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "News Time",
+    "confidence": 90,
+    "notes": "News broadcast template",
+    "_source_name": "11881699-news-time-INTRO-HD.NET",
+    "_batch_index": 72
+  },
+  {
+    "name": "11917564-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "11917564",
+    "confidence": 65,
+    "notes": "Numeric ID only, no content hint",
+    "_source_name": "11917564-INTRO-HD.NET",
+    "_batch_index": 73
+  },
+  {
+    "name": "11934574-INTRO-HD.NET",
+    "category": "After Effects - Music & Audio Visualizer",
+    "clean_name": "Audio React Tunnel 01",
+    "confidence": 85,
+    "notes": "Audio reactive tunnel visualizer",
+    "_source_name": "11934574-INTRO-HD.NET",
+    "_batch_index": 74
+  },
+  {
+    "name": "11939845-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Glitch Logo Reveal",
+    "confidence": 90,
+    "notes": "Glitch logo reveal",
+    "_source_name": "11939845-INTRO-HD.NET",
+    "_batch_index": 75
+  },
+  {
+    "name": "11959020-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "The Ruler of Rome Cinematic Trailer",
+    "confidence": 90,
+    "notes": "Cinematic trailer",
+    "_source_name": "11959020-INTRO-HD.NET",
+    "_batch_index": 76
+  },
+  {
+    "name": "11967294-epic-trailer-darkness-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Epic Trailer Darkness",
+    "confidence": 90,
+    "notes": "Epic trailer",
+    "_source_name": "11967294-epic-trailer-darkness-INTRO-HD.NET",
+    "_batch_index": 77
+  },
+  {
+    "name": "11973492-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Fisherman Logo Intro",
+    "confidence": 85,
+    "notes": "Logo intro",
+    "_source_name": "11973492-INTRO-HD.NET",
+    "_batch_index": 78
+  },
+  {
+    "name": "12",
+    "category": "Color Grading & LUTs",
+    "clean_name": "RS3027 Lucent Warm",
+    "confidence": 85,
+    "notes": "LUT pack",
+    "_source_name": "12",
+    "_batch_index": 79
+  },
+  {
+    "name": "12 Clean Quotes Text Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "12 Clean Quotes Text Titles",
+    "confidence": 90,
+    "notes": "Text titles for quotes",
+    "_source_name": "12 Clean Quotes Text Titles",
+    "_batch_index": 80
+  },
+  {
+    "name": "12-IN-1_Creative_PowerPoint_Bundle",
+    "category": "Web Template",
+    "clean_name": "12-in-1 Creative PowerPoint Bundle",
+    "confidence": 85,
+    "notes": "PowerPoint templates",
+    "_source_name": "12-IN-1_Creative_PowerPoint_Bundle",
+    "_batch_index": 81
+  },
+  {
+    "name": "120-LUTs-Pack-Color-Grad-103567-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "120 LUTs Pack Color Grad",
+    "confidence": 95,
+    "notes": "LUT pack",
+    "_source_name": "120-LUTs-Pack-Color-Grad-103567-INTRO-HD.NET",
+    "_batch_index": 82
+  },
+  {
+    "name": "12000 Emojis Creator Pack",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "12000 Emojis Creator Pack",
+    "confidence": 80,
+    "notes": "Emoji icons pack",
+    "_source_name": "12000 Emojis Creator Pack",
+    "_batch_index": 83
+  },
+  {
+    "name": "12002012-shapes-elements-graphic-pack-V18",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Shapes Elements Graphic Pack",
+    "confidence": 80,
+    "notes": "Vector shapes and elements",
+    "_source_name": "12002012-shapes-elements-graphic-pack-V18",
+    "_batch_index": 84
+  },
+  {
+    "name": "1207-Vintage-Badge-Objects-Graphics-330814",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vintage Badge Objects Graphics",
+    "confidence": 85,
+    "notes": "Vector badges with AI and EPS",
+    "_source_name": "1207-Vintage-Badge-Objects-Graphics-330814",
+    "_batch_index": 85
+  },
+  {
+    "name": "12094601-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Galaxy Logo Reveal",
+    "confidence": 90,
+    "notes": "Galaxy logo reveal",
+    "_source_name": "12094601-INTRO-HD.NET",
+    "_batch_index": 86
+  },
+  {
+    "name": "12178036-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Video Podcast Intro",
+    "confidence": 85,
+    "notes": "Podcast intro",
+    "_source_name": "12178036-INTRO-HD.NET",
+    "_batch_index": 87
+  },
+  {
+    "name": "12374865-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Tear Logo Reveal II",
+    "confidence": 90,
+    "notes": "Tear logo reveal",
+    "_source_name": "12374865-INTRO-HD.NET",
+    "_batch_index": 88
+  },
+  {
+    "name": "12530413-logo-reveal-pack-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Logo Reveal Pack",
+    "confidence": 85,
+    "notes": "Logo reveal pack",
+    "_source_name": "12530413-logo-reveal-pack-INTRO-HD.NET",
+    "_batch_index": 89
+  },
+  {
+    "name": "12991000-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Unique Promo V1 Corporate Presentation",
+    "confidence": 90,
+    "notes": "Corporate presentation",
+    "_source_name": "12991000-INTRO-HD.NET",
+    "_batch_index": 90
+  },
+  {
+    "name": "130_Interior_Design_PS-6850344-AIDOWNLOAD.NET",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Interior Design PS Mockup",
+    "confidence": 85,
+    "notes": "Interior design mockup",
+    "_source_name": "130_Interior_Design_PS-6850344-AIDOWNLOAD.NET",
+    "_batch_index": 91
+  },
+  {
+    "name": "13341312-sunny-day-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Sunny Day Titles",
+    "confidence": 85,
+    "notes": "Title template",
+    "_source_name": "13341312-sunny-day-titles",
+    "_batch_index": 92
+  },
+  {
+    "name": "13398143-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Color of Smoke Logo Reveal",
+    "confidence": 90,
+    "notes": "Smoke logo reveal",
+    "_source_name": "13398143-INTRO-HD.NET",
+    "_batch_index": 93
+  },
+  {
+    "name": "13444004-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "13444004",
+    "confidence": 65,
+    "notes": "Numeric ID only, no content hint",
+    "_source_name": "13444004-INTRO-HD.NET",
+    "_batch_index": 94
+  },
+  {
+    "name": "13552742-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Minimal Logo 01",
+    "confidence": 85,
+    "notes": "Minimal logo reveal",
+    "_source_name": "13552742-INTRO-HD.NET",
+    "_batch_index": 95
+  },
+  {
+    "name": "13578707-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Golden Flower Logo Reveal",
+    "confidence": 90,
+    "notes": "Golden flower logo reveal",
+    "_source_name": "13578707-INTRO-HD.NET",
+    "_batch_index": 96
+  },
+  {
+    "name": "13615021-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Sunshine Slideshow",
+    "confidence": 90,
+    "notes": "Slideshow template",
+    "_source_name": "13615021-INTRO-HD.NET",
+    "_batch_index": 97
+  },
+  {
+    "name": "13623328-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Ultra Realistic Ocean Logo",
+    "confidence": 85,
+    "notes": "Ocean logo reveal",
+    "_source_name": "13623328-INTRO-HD.NET",
+    "_batch_index": 98
+  },
+  {
+    "name": "13627459-christmas-card-cartoon-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas Card Cartoon",
+    "confidence": 90,
+    "notes": "Christmas card template",
+    "_source_name": "13627459-christmas-card-cartoon-INTRO-HD.NET",
+    "_batch_index": 99
+  },
+  {
+    "name": "13652771-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "YouTube Action Intro",
+    "confidence": 85,
+    "notes": "YouTube intro",
+    "_source_name": "13652771-INTRO-HD.NET",
+    "_batch_index": 100
+  },
+  {
+    "name": "13692117-modern-christmas-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Modern Christmas",
+    "confidence": 90,
+    "notes": "Christmas template",
+    "_source_name": "13692117-modern-christmas-INTRO-HD.NET",
+    "_batch_index": 101
+  },
+  {
+    "name": "13737764-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "IntoTheLayers v2",
+    "confidence": 70,
+    "notes": "Unclear purpose, likely AE",
+    "_source_name": "13737764-INTRO-HD.NET",
+    "_batch_index": 102
+  },
+  {
+    "name": "13842275-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Rock Dynamic Slideshow",
+    "confidence": 90,
+    "notes": "Dynamic slideshow",
+    "_source_name": "13842275-INTRO-HD.NET",
+    "_batch_index": 103
+  },
+  {
+    "name": "13863870-christmas-joy-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas Joy",
+    "confidence": 90,
+    "notes": "Christmas template",
+    "_source_name": "13863870-christmas-joy-INTRO-HD.NET",
+    "_batch_index": 104
+  },
+  {
+    "name": "140-noise-textures-pack-20872522",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Noise Textures Pack",
+    "confidence": 85,
+    "notes": "Noise textures for overlays",
+    "_source_name": "140-noise-textures-pack-20872522",
+    "_batch_index": 105
+  },
+  {
+    "name": "14040935-sketch-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Sketch Logo Reveal",
+    "confidence": 90,
+    "notes": "Sketch logo reveal",
+    "_source_name": "14040935-sketch-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 106
+  },
+  {
+    "name": "14342086-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Intense Fire Burn Logo Reveal",
+    "confidence": 90,
+    "notes": "Fire logo reveal",
+    "_source_name": "14342086-INTRO-HD.NET",
+    "_batch_index": 107
+  },
+  {
+    "name": "14346825-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "14346825",
+    "confidence": 65,
+    "notes": "Numeric ID only, no content hint",
+    "_source_name": "14346825-INTRO-HD.NET",
+    "_batch_index": 108
+  },
+  {
+    "name": "14391750-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Title Inside Photo",
+    "confidence": 85,
+    "notes": "Title inside photo template",
+    "_source_name": "14391750-INTRO-HD.NET",
+    "_batch_index": 109
+  },
+  {
+    "name": "14440022-cinematic-sky-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Cinematic Sky Opener",
+    "confidence": 90,
+    "notes": "Cinematic opener",
+    "_source_name": "14440022-cinematic-sky-opener-INTRO-HD.NET",
+    "_batch_index": 110
+  },
+  {
+    "name": "14440926-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Lion Spirit Logo",
+    "confidence": 85,
+    "notes": "Lion logo reveal",
+    "_source_name": "14440926-INTRO-HD.NET",
+    "_batch_index": 111
+  },
+  {
+    "name": "14450061-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Epic Glitch Trailer",
+    "confidence": 90,
+    "notes": "Epic glitch trailer",
+    "_source_name": "14450061-INTRO-HD.NET",
+    "_batch_index": 112
+  },
+  {
+    "name": "14506206-throne-games-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Throne Games Titles",
+    "confidence": 85,
+    "notes": "Game of Thrones style titles",
+    "_source_name": "14506206-throne-games-titles",
+    "_batch_index": 113
+  },
+  {
+    "name": "14577267-wedding-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Wedding",
+    "confidence": 90,
+    "notes": "Wedding template",
+    "_source_name": "14577267-wedding-INTRO-HD.NET",
+    "_batch_index": 114
+  },
+  {
+    "name": "14698660-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "The Last Action Hero",
+    "confidence": 85,
+    "notes": "Action hero trailer",
+    "_source_name": "14698660-INTRO-HD.NET",
+    "_batch_index": 115
+  },
+  {
+    "name": "14714849-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Speed Logo Reveal",
+    "confidence": 90,
+    "notes": "Speed logo reveal",
+    "_source_name": "14714849-INTRO-HD.NET",
+    "_batch_index": 116
+  },
+  {
+    "name": "14730335",
+    "category": "Stock Footage - General",
+    "clean_name": "14730335",
+    "confidence": 70,
+    "notes": "Single MP4 file, likely stock footage",
+    "_source_name": "14730335",
+    "_batch_index": 117
+  },
+  {
+    "name": "14817886-fashion-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Fashion Slideshow",
+    "confidence": 90,
+    "notes": "Fashion slideshow",
+    "_source_name": "14817886-fashion-slideshow-INTRO-HD.NET",
+    "_batch_index": 118
+  },
+  {
+    "name": "14824123-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Minimal Slides",
+    "confidence": 90,
+    "notes": "Minimal slideshow",
+    "_source_name": "14824123-INTRO-HD.NET",
+    "_batch_index": 119
+  }
+]

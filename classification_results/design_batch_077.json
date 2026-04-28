@@ -1,0 +1,542 @@
+[
+  {
+    "name": "motion-v4.0.3.4187",
+    "category": "Motion Graphics - Multi-Tool Pack",
+    "clean_name": "Motion v4.0.3",
+    "confidence": 70,
+    "notes": "Name suggests motion graphics tool, likely a multi-tool pack.",
+    "_source_name": "motion-v4.0.3.4187",
+    "_batch_index": 4560
+  },
+  {
+    "name": "MotionArray_6in1_Awards_Bundle_1",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "MotionArray 6in1 Awards Bundle",
+    "confidence": 75,
+    "notes": "Bundle likely includes award show broadcast graphics.",
+    "_source_name": "MotionArray_6in1_Awards_Bundle_1",
+    "_batch_index": 4561
+  },
+  {
+    "name": "MotionMonkey v1.03",
+    "category": "Plugins & Extensions",
+    "clean_name": "MotionMonkey v1.03",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, likely a script/plugin for After Effects.",
+    "_source_name": "MotionMonkey v1.03",
+    "_batch_index": 4562
+  },
+  {
+    "name": "motionmosh_v1.0.0",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Motion Mosh v1.0.0",
+    "confidence": 85,
+    "notes": "Name implies glitch/mosh effect, likely for After Effects.",
+    "_source_name": "motionmosh_v1.0.0",
+    "_batch_index": 4563
+  },
+  {
+    "name": "motionmosh_v1.0.2",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Motion Mosh v1.0.2",
+    "confidence": 85,
+    "notes": "Name implies glitch/mosh effect, likely for After Effects.",
+    "_source_name": "motionmosh_v1.0.2",
+    "_batch_index": 4564
+  },
+  {
+    "name": "motionmosh_v1.2.1",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Motion Mosh v1.2.1",
+    "confidence": 85,
+    "notes": "Name implies glitch/mosh effect, likely for After Effects.",
+    "_source_name": "motionmosh_v1.2.1",
+    "_batch_index": 4565
+  },
+  {
+    "name": "MotionVFX - mTitle Film",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "MotionVFX mTitle Film",
+    "confidence": 90,
+    "notes": "mTitle series from MotionVFX, title templates.",
+    "_source_name": "MotionVFX - mTitle Film",
+    "_batch_index": 4566
+  },
+  {
+    "name": "MotionVFX - mTransition Quake",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "MotionVFX mTransition Quake",
+    "confidence": 90,
+    "notes": "mTransition series, transition effects.",
+    "_source_name": "MotionVFX - mTransition Quake",
+    "_batch_index": 4567
+  },
+  {
+    "name": "MotionVFX - mWedding",
+    "category": "Color Grading & LUTs",
+    "clean_name": "MotionVFX mWedding",
+    "confidence": 95,
+    "notes": "Contains .cube files, color grading LUTs.",
+    "_source_name": "MotionVFX - mWedding",
+    "_batch_index": 4568
+  },
+  {
+    "name": "MotionVFX – mTransition Kinetic",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "MotionVFX mTransition Kinetic",
+    "confidence": 90,
+    "notes": "mTransition series, transition effects.",
+    "_source_name": "MotionVFX – mTransition Kinetic",
+    "_batch_index": 4569
+  },
+  {
+    "name": "MotionVFX – mWedding 2",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "MotionVFX mWedding 2",
+    "confidence": 80,
+    "notes": "Wedding themed, likely After Effects template.",
+    "_source_name": "MotionVFX – mWedding 2",
+    "_batch_index": 4570
+  },
+  {
+    "name": "MotionVFX m16mm - Retro Film Effects Plugin for Final Cut Pro",
+    "category": "Plugins & Extensions",
+    "clean_name": "MotionVFX m16mm Retro Film Effects Plugin",
+    "confidence": 95,
+    "notes": "Plugin for Final Cut Pro, retro film effects.",
+    "_source_name": "MotionVFX m16mm - Retro Film Effects Plugin for Final Cut Pro",
+    "_batch_index": 4571
+  },
+  {
+    "name": "MotionVFX mDocumentary",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "MotionVFX mDocumentary",
+    "confidence": 80,
+    "notes": "Documentary style, likely cinematic template.",
+    "_source_name": "MotionVFX mDocumentary",
+    "_batch_index": 4572
+  },
+  {
+    "name": "MotionVFX mMUSIC VIDEO 2",
+    "category": "After Effects - Lyric & Music Video",
+    "clean_name": "MotionVFX mMUSIC VIDEO 2",
+    "confidence": 90,
+    "notes": "Music video themed template.",
+    "_source_name": "MotionVFX mMUSIC VIDEO 2",
+    "_batch_index": 4573
+  },
+  {
+    "name": "MotionVFX_-_mKBHD_F_X_Plugin",
+    "category": "Plugins & Extensions",
+    "clean_name": "MotionVFX mKBHD FX Plugin",
+    "confidence": 95,
+    "notes": "Plugin for video effects.",
+    "_source_name": "MotionVFX_-_mKBHD_F_X_Plugin",
+    "_batch_index": 4574
+  },
+  {
+    "name": "MotionVFX-mLUT.Film.3",
+    "category": "Color Grading & LUTs",
+    "clean_name": "MotionVFX mLUT Film 3",
+    "confidence": 95,
+    "notes": "LUT pack for color grading.",
+    "_source_name": "MotionVFX-mLUT.Film.3",
+    "_batch_index": 4575
+  },
+  {
+    "name": "motivational-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Motivational Titles",
+    "confidence": 90,
+    "notes": "Contains .aep, title templates.",
+    "_source_name": "motivational-titles",
+    "_batch_index": 4576
+  },
+  {
+    "name": "motorcycle-reveal",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Motorcycle Reveal",
+    "confidence": 75,
+    "notes": "Likely a logo reveal or intro with motorcycle theme.",
+    "_source_name": "motorcycle-reveal",
+    "_batch_index": 4577
+  },
+  {
+    "name": "mountains-slideshow-48322284",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Mountains Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow template with mountain theme.",
+    "_source_name": "mountains-slideshow-48322284",
+    "_batch_index": 4578
+  },
+  {
+    "name": "mouse-cursor-swipe-transitions-52917022",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Mouse Cursor Swipe Transitions",
+    "confidence": 85,
+    "notes": "Transition pack using mouse cursor swipes.",
+    "_source_name": "mouse-cursor-swipe-transitions-52917022",
+    "_batch_index": 4579
+  },
+  {
+    "name": "mouse-cursor-transitions-45636330",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Mouse Cursor Transitions",
+    "confidence": 85,
+    "notes": "Transition pack using mouse cursor.",
+    "_source_name": "mouse-cursor-transitions-45636330",
+    "_batch_index": 4580
+  },
+  {
+    "name": "MoveAnchorPoint-4.1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Move Anchor Point 4.1.1",
+    "confidence": 95,
+    "notes": "Script/plugin for moving anchor points in After Effects.",
+    "_source_name": "MoveAnchorPoint-4.1.1",
+    "_batch_index": 4581
+  },
+  {
+    "name": "movie-intro-22087368",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Movie Intro",
+    "confidence": 85,
+    "notes": "Movie intro template.",
+    "_source_name": "movie-intro-22087368",
+    "_batch_index": 4582
+  },
+  {
+    "name": "movie-pack-01-33944194",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Movie Pack 01",
+    "confidence": 80,
+    "notes": "Pack of cinematic movie elements.",
+    "_source_name": "movie-pack-01-33944194",
+    "_batch_index": 4583
+  },
+  {
+    "name": "movie-titles-51333504",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Movie Titles",
+    "confidence": 85,
+    "notes": "Movie title templates.",
+    "_source_name": "movie-titles-51333504",
+    "_batch_index": 4584
+  },
+  {
+    "name": "movie-trailer-action-fire-trailer-32756246",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Movie Trailer Action Fire Trailer",
+    "confidence": 90,
+    "notes": "Action fire trailer template.",
+    "_source_name": "movie-trailer-action-fire-trailer-32756246",
+    "_batch_index": 4585
+  },
+  {
+    "name": "MQKZ7QT-Aidownload.net",
+    "category": "After Effects - Other",
+    "clean_name": "MQKZ7QT",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name.",
+    "_source_name": "MQKZ7QT-Aidownload.net",
+    "_batch_index": 4586
+  },
+  {
+    "name": "MQWMYX3-Aidownload.net",
+    "category": "After Effects - Other",
+    "clean_name": "MQWMYX3",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name.",
+    "_source_name": "MQWMYX3-Aidownload.net",
+    "_batch_index": 4587
+  },
+  {
+    "name": "mRestyle - F_X",
+    "category": "Plugins & Extensions",
+    "clean_name": "mRestyle FX",
+    "confidence": 80,
+    "notes": "Likely a plugin or effect pack.",
+    "_source_name": "mRestyle - F_X",
+    "_batch_index": 4588
+  },
+  {
+    "name": "ms_liquids_1.0",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "MS Liquids 1.0",
+    "confidence": 90,
+    "notes": "Liquid/fluid effects for After Effects.",
+    "_source_name": "ms_liquids_1.0",
+    "_batch_index": 4589
+  },
+  {
+    "name": "mStoryboard",
+    "category": "After Effects - Other",
+    "clean_name": "mStoryboard",
+    "confidence": 70,
+    "notes": "Storyboard tool or template, unclear category.",
+    "_source_name": "mStoryboard",
+    "_batch_index": 4590
+  },
+  {
+    "name": "Mt Mograph Wander v1.13.1.4537",
+    "category": "Motion Graphics - Multi-Tool Pack",
+    "clean_name": "Mt Mograph Wander v1.13.1",
+    "confidence": 75,
+    "notes": "Motion graphics tool from Mt Mograph.",
+    "_source_name": "Mt Mograph Wander v1.13.1.4537",
+    "_batch_index": 4591
+  },
+  {
+    "name": "Mt._Mograph_-_Motion_v4.0.3",
+    "category": "Motion Graphics - Multi-Tool Pack",
+    "clean_name": "Mt Mograph Motion v4.0.3",
+    "confidence": 75,
+    "notes": "Motion graphics tool from Mt Mograph.",
+    "_source_name": "Mt._Mograph_-_Motion_v4.0.3",
+    "_batch_index": 4592
+  },
+  {
+    "name": "mTitle Cyberpunk",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "mTitle Cyberpunk",
+    "confidence": 90,
+    "notes": "Cyberpunk themed title template.",
+    "_source_name": "mTitle Cyberpunk",
+    "_batch_index": 4593
+  },
+  {
+    "name": "mTitle_Cinematic_2",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "mTitle Cinematic 2",
+    "confidence": 90,
+    "notes": "Cinematic title template.",
+    "_source_name": "mTitle_Cinematic_2",
+    "_batch_index": 4594
+  },
+  {
+    "name": "mTitle_Hype",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "mTitle Hype",
+    "confidence": 90,
+    "notes": "Hype style title template.",
+    "_source_name": "mTitle_Hype",
+    "_batch_index": 4595
+  },
+  {
+    "name": "mTransition Film Roll",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "mTransition Film Roll",
+    "confidence": 90,
+    "notes": "Film roll transition effect.",
+    "_source_name": "mTransition Film Roll",
+    "_batch_index": 4596
+  },
+  {
+    "name": "mTransition Paper Rip",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "mTransition Paper Rip",
+    "confidence": 90,
+    "notes": "Paper rip transition effect.",
+    "_source_name": "mTransition Paper Rip",
+    "_batch_index": 4597
+  },
+  {
+    "name": "mTransition_Datamosh",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "mTransition Datamosh",
+    "confidence": 90,
+    "notes": "Datamosh glitch transition.",
+    "_source_name": "mTransition_Datamosh",
+    "_batch_index": 4598
+  },
+  {
+    "name": "mTransition_Distortion",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "mTransition Distortion",
+    "confidence": 85,
+    "notes": "Distortion transition effect.",
+    "_source_name": "mTransition_Distortion",
+    "_batch_index": 4599
+  },
+  {
+    "name": "mTransition_Noise",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "mTransition Noise",
+    "confidence": 85,
+    "notes": "Noise transition effect.",
+    "_source_name": "mTransition_Noise",
+    "_batch_index": 4600
+  },
+  {
+    "name": "mTransition-Scrub",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "mTransition Scrub",
+    "confidence": 85,
+    "notes": "Scrub transition effect.",
+    "_source_name": "mTransition-Scrub",
+    "_batch_index": 4601
+  },
+  {
+    "name": "mTuber_3",
+    "category": "After Effects - Social Media",
+    "clean_name": "mTuber 3",
+    "confidence": 80,
+    "notes": "YouTube/social media template pack.",
+    "_source_name": "mTuber_3",
+    "_batch_index": 4602
+  },
+  {
+    "name": "mTutorial",
+    "category": "Tutorial & Education",
+    "clean_name": "mTutorial",
+    "confidence": 95,
+    "notes": "Name clearly indicates tutorial.",
+    "_source_name": "mTutorial",
+    "_batch_index": 4603
+  },
+  {
+    "name": "Mubarak Opener 593177",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Mubarak Opener",
+    "confidence": 85,
+    "notes": "Opener template for Mubarak/celebration.",
+    "_source_name": "Mubarak Opener 593177",
+    "_batch_index": 4604
+  },
+  {
+    "name": "Multi Replacer v1.03",
+    "category": "Plugins & Extensions",
+    "clean_name": "Multi Replacer v1.03",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, script for batch replacement.",
+    "_source_name": "Multi Replacer v1.03",
+    "_batch_index": 4605
+  },
+  {
+    "name": "Multi-Purpose Slideshow II - VideoHive",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Multi-Purpose Slideshow II",
+    "confidence": 90,
+    "notes": "Contains .aep, slideshow template.",
+    "_source_name": "Multi-Purpose Slideshow II - VideoHive",
+    "_batch_index": 4606
+  },
+  {
+    "name": "multi-screen-frames-library-2-frames-39216160",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Multi-Screen Frames Library 2",
+    "confidence": 80,
+    "notes": "Multi-screen frame graphics pack.",
+    "_source_name": "multi-screen-frames-library-2-frames-39216160",
+    "_batch_index": 4607
+  },
+  {
+    "name": "multi-screen-opener 36105248",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Multi-Screen Opener",
+    "confidence": 85,
+    "notes": "Multi-screen opener template.",
+    "_source_name": "multi-screen-opener 36105248",
+    "_batch_index": 4608
+  },
+  {
+    "name": "multi-screen-opener-37941463",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Multi-Screen Opener",
+    "confidence": 85,
+    "notes": "Multi-screen opener template.",
+    "_source_name": "multi-screen-opener-37941463",
+    "_batch_index": 4609
+  },
+  {
+    "name": "multi-screen-slideshow-opener-36289845",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Multi-Screen Slideshow Opener",
+    "confidence": 85,
+    "notes": "Multi-screen slideshow opener.",
+    "_source_name": "multi-screen-slideshow-opener-36289845",
+    "_batch_index": 4610
+  },
+  {
+    "name": "multi-slides-of-romantic-story-42891751",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Multi Slides of Romantic Story",
+    "confidence": 90,
+    "notes": "Romantic slideshow template.",
+    "_source_name": "multi-slides-of-romantic-story-42891751",
+    "_batch_index": 4611
+  },
+  {
+    "name": "multipurpose-slideshow-dynamic-opener-positive",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Multipurpose Slideshow Dynamic Opener Positive",
+    "confidence": 85,
+    "notes": "Dynamic slideshow opener.",
+    "_source_name": "multipurpose-slideshow-dynamic-opener-positive",
+    "_batch_index": 4612
+  },
+  {
+    "name": "multiscreen-opener-split-screen-intro-dynamic-45309602",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Multiscreen Opener Split Screen Intro Dynamic",
+    "confidence": 85,
+    "notes": "Split screen intro opener.",
+    "_source_name": "multiscreen-opener-split-screen-intro-dynamic-45309602",
+    "_batch_index": 4613
+  },
+  {
+    "name": "murder-mystery-suspense-trailer-32935501",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Murder Mystery Suspense Trailer",
+    "confidence": 90,
+    "notes": "Suspense trailer template.",
+    "_source_name": "murder-mystery-suspense-trailer-32935501",
+    "_batch_index": 4614
+  },
+  {
+    "name": "Music Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Music Titles",
+    "confidence": 70,
+    "notes": "Contains .mp4 and .txt, likely title examples.",
+    "_source_name": "Music Titles",
+    "_batch_index": 4615
+  },
+  {
+    "name": "MUSIC VIDEO COLOR PACK",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Music Video Color Pack",
+    "confidence": 90,
+    "notes": "Color grading pack for music videos.",
+    "_source_name": "MUSIC VIDEO COLOR PACK",
+    "_batch_index": 4616
+  },
+  {
+    "name": "music-dj-slideshow-opener-38234434",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Music DJ Slideshow Opener",
+    "confidence": 85,
+    "notes": "DJ music slideshow opener.",
+    "_source_name": "music-dj-slideshow-opener-38234434",
+    "_batch_index": 4617
+  },
+  {
+    "name": "music-event-16275889",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Music Event",
+    "confidence": 85,
+    "notes": "Music event template.",
+    "_source_name": "music-event-16275889",
+    "_batch_index": 4618
+  },
+  {
+    "name": "music-event-big-poster-design1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Music Event Big Poster Design",
+    "confidence": 90,
+    "notes": "Contains .pdf, poster design for music event.",
+    "_source_name": "music-event-big-poster-design1",
+    "_batch_index": 4619
+  }
+]

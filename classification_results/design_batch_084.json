@@ -1,0 +1,596 @@
+[
+  {
+    "name": "photo-gallery-dreamy-muse",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Dreamy Muse",
+    "confidence": 90,
+    "notes": "Contains .aep file, name suggests photo gallery slideshow",
+    "_source_name": "photo-gallery-dreamy-muse",
+    "_batch_index": 4980
+  },
+  {
+    "name": "photo-gallery-falling-photos",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Falling Photos",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-gallery-falling-photos",
+    "_batch_index": 4981,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-gallery-in-forest-17545293",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery in Forest",
+    "confidence": 90,
+    "notes": "Contains .aep file, photo gallery theme",
+    "_source_name": "photo-gallery-in-forest-17545293",
+    "_batch_index": 4982
+  },
+  {
+    "name": "photo-gallery-lovely-slideshow-26439179",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Gallery Lovely Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-gallery-lovely-slideshow-26439179",
+    "_batch_index": 4983,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-gallery-memories-slideshow-23020524",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-gallery-memories-slideshow-23020524",
+    "_batch_index": 4984,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-gallery-pack-our-beautiful-moments",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Our Beautiful Moments",
+    "confidence": 88,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-gallery-pack-our-beautiful-moments",
+    "_batch_index": 4985,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-gallery-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Gallery Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-gallery-slideshow",
+    "_batch_index": 4986,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-gallery-slideshow-31744386",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Photo Gallery Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-gallery-slideshow-31744386",
+    "_batch_index": 4987,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-gallery-slideshow-32426225",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Gallery Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-gallery-slideshow-32426225",
+    "_batch_index": 4988,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-gallery-slideshow-memories-slideshow-mogr-51698816",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Gallery Memories Slideshow",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-gallery-slideshow-memories-slideshow-mogr-51698816",
+    "_batch_index": 4989,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-gallery-spring-garden",
+    "category": "Stock Footage - General",
+    "clean_name": "Photo Gallery Spring Garden",
+    "confidence": 75,
+    "notes": "Contains .mp4 video, likely stock footage",
+    "_source_name": "photo-gallery-spring-garden",
+    "_batch_index": 4990
+  },
+  {
+    "name": "photo-gallery-summer-garden",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Summer Garden",
+    "confidence": 90,
+    "notes": "Contains .aep file, photo gallery theme",
+    "_source_name": "photo-gallery-summer-garden",
+    "_batch_index": 4991
+  },
+  {
+    "name": "photo-history-slideshow-48422770",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo History Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-history-slideshow-48422770",
+    "_batch_index": 4992,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-inkdrops-animator-37483564",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo InkDrops Animator",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-inkdrops-animator-37483564",
+    "_batch_index": 4993,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-matrix-animator-38020367",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Matrix Animator",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-matrix-animator-38020367",
+    "_batch_index": 4994,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Photo-memories-gallery-1072684",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Memories Gallery",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "Photo-memories-gallery-1072684",
+    "_batch_index": 4995,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-memories-slideshow-37120317",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Memories Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-memories-slideshow-37120317",
+    "_batch_index": 4996,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-memories-slideshow-42008849",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Memories Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-memories-slideshow-42008849",
+    "_batch_index": 4997,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-memories-slideshow-46994363",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Memories Slideshow",
+    "confidence": 85,
+    "notes": "Only .jpg file, insufficient info",
+    "_source_name": "photo-memories-slideshow-46994363",
+    "_batch_index": 4998,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-memories-slideshow-51338635",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Memories Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-memories-slideshow-51338635",
+    "_batch_index": 4999,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-pile-collage-video-template-53263873",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Pile Collage Video Template",
+    "confidence": 87,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-pile-collage-video-template-53263873",
+    "_batch_index": 5000,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slide-opener-11004491",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Photo Slide Opener",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slide-opener-11004491",
+    "_batch_index": 5001,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow",
+    "_batch_index": 5002,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-02-45956740",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow 02",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-02-45956740",
+    "_batch_index": 5003,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-02-46150813",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Slideshow 02",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-02-46150813",
+    "_batch_index": 5004,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-03-45917902",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow 03",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-03-45917902",
+    "_batch_index": 5005,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Photo-slideshow-138381 [source]",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "Photo-slideshow-138381 [source]",
+    "_batch_index": 5006,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-22412516",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow 20",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-22412516",
+    "_batch_index": 5007,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-22460453",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-22460453",
+    "_batch_index": 5008,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-23229513",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-23229513",
+    "_batch_index": 5009,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-32723883",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-32723883",
+    "_batch_index": 5010,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-36769612",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-36769612",
+    "_batch_index": 5011,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-38373157",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-38373157",
+    "_batch_index": 5012,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-39192113",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-39192113",
+    "_batch_index": 5013,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-42355737",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-42355737",
+    "_batch_index": 5014,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-42842936",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-42842936",
+    "_batch_index": 5015,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-45238266",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-45238266",
+    "_batch_index": 5016,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-45389009",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-45389009",
+    "_batch_index": 5017,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-45812262",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .jpg file, insufficient info",
+    "_source_name": "photo-slideshow-45812262",
+    "_batch_index": 5018,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-46029072",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-46029072",
+    "_batch_index": 5019,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-46124704",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-46124704",
+    "_batch_index": 5020,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-46154843",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-46154843",
+    "_batch_index": 5021,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-46241473",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-46241473",
+    "_batch_index": 5022,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-46623142",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-46623142",
+    "_batch_index": 5023,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-49236507",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-49236507",
+    "_batch_index": 5024,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-50153253",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-50153253",
+    "_batch_index": 5025,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-50487020",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-50487020",
+    "_batch_index": 5026,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-50728205",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-50728205",
+    "_batch_index": 5027,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-50827226",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-50827226",
+    "_batch_index": 5028,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-51188524",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-51188524",
+    "_batch_index": 5029,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-51406138",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-51406138",
+    "_batch_index": 5030,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-51690875",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-51690875",
+    "_batch_index": 5031,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-52504418",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-52504418",
+    "_batch_index": 5032,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-52611517",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-52611517",
+    "_batch_index": 5033,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-brush-slideshow-45504091",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Brush Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-brush-slideshow-45504091",
+    "_batch_index": 5034,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-brush-slideshow-51768758",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Brush Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-brush-slideshow-51768758",
+    "_batch_index": 5035,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-emotional-slideshow",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Emotional Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-emotional-slideshow",
+    "_batch_index": 5036,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "photo-slideshow-film-projector-23330946",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Slideshow Film Projector",
+    "confidence": 90,
+    "notes": "Contains .aep file, film projector slideshow theme",
+    "_source_name": "photo-slideshow-film-projector-23330946",
+    "_batch_index": 5037
+  },
+  {
+    "name": "photo-slideshow-film-projector-24174300",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Photo Slideshow Film Projector",
+    "confidence": 85,
+    "notes": "Contains .prproj file, Premiere Pro template",
+    "_source_name": "photo-slideshow-film-projector-24174300",
+    "_batch_index": 5038
+  },
+  {
+    "name": "photo-slideshow-flying-slideshow",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Flying Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "photo-slideshow-flying-slideshow",
+    "_batch_index": 5039,
+    "resolved_by": "review_resolver"
+  }
+]

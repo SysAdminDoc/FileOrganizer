@@ -1,0 +1,544 @@
+[
+  {
+    "name": "old-damaged-film-looks-overlay-effect-48457779",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Old Damaged Film Looks Overlay Effect",
+    "confidence": 90,
+    "notes": "Name suggests film damage overlays, likely VFX overlays.",
+    "_source_name": "old-damaged-film-looks-overlay-effect-48457779",
+    "_batch_index": 4800
+  },
+  {
+    "name": "old-film-effect-51742052",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Old Film Effect",
+    "confidence": 85,
+    "notes": "Old film effect overlay or preset.",
+    "_source_name": "old-film-effect-51742052",
+    "_batch_index": 4801
+  },
+  {
+    "name": "old-film-effect-52037706",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Old Film Effect",
+    "confidence": 85,
+    "notes": "Old film effect overlay or preset.",
+    "_source_name": "old-film-effect-52037706",
+    "_batch_index": 4802
+  },
+  {
+    "name": "old-film-fx-f_x-effect-presets",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Old Film FX Effect Presets",
+    "confidence": 85,
+    "notes": "Film effect presets, likely overlays.",
+    "_source_name": "old-film-fx-f_x-effect-presets",
+    "_batch_index": 4803
+  },
+  {
+    "name": "old-film-intro-41976485",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old Film Intro",
+    "confidence": 80,
+    "notes": "Intro opener with old film style.",
+    "_source_name": "old-film-intro-41976485",
+    "_batch_index": 4804
+  },
+  {
+    "name": "old-film-presets-51064988",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Old Film Presets",
+    "confidence": 80,
+    "notes": "Presets for old film look.",
+    "_source_name": "old-film-presets-51064988",
+    "_batch_index": 4805
+  },
+  {
+    "name": "old-film-projector-style-intro-opener-38381843",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old Film Projector Style Intro Opener",
+    "confidence": 90,
+    "notes": "Explicitly an intro opener.",
+    "_source_name": "old-film-projector-style-intro-opener-38381843",
+    "_batch_index": 4806
+  },
+  {
+    "name": "old-film-transitions-52986025",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Old Film Transitions",
+    "confidence": 85,
+    "notes": "Transitions with old film style.",
+    "_source_name": "old-film-transitions-52986025",
+    "_batch_index": 4807
+  },
+  {
+    "name": "old-film-transitions-f_x",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Old Film Transitions FX",
+    "confidence": 80,
+    "notes": "Transitions, likely for After Effects.",
+    "_source_name": "old-film-transitions-f_x",
+    "_batch_index": 4808
+  },
+  {
+    "name": "old-history-project",
+    "category": "After Effects - Other",
+    "clean_name": "Old History Project",
+    "confidence": 60,
+    "notes": "Generic name, no clear subcategory.",
+    "_source_name": "old-history-project",
+    "_batch_index": 4809
+  },
+  {
+    "name": "old-history-project-44769217",
+    "category": "After Effects - Other",
+    "clean_name": "Old History Project",
+    "confidence": 60,
+    "notes": "Generic name, no clear subcategory.",
+    "_source_name": "old-history-project-44769217",
+    "_batch_index": 4810
+  },
+  {
+    "name": "Old-letters-memory-timeline-opener-1113772",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old Letters Memory Timeline Opener",
+    "confidence": 90,
+    "notes": "Opener with letters and timeline.",
+    "_source_name": "Old-letters-memory-timeline-opener-1113772",
+    "_batch_index": 4811
+  },
+  {
+    "name": "old-letters-memory-timeline-opener-36229417",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old Letters Memory Timeline Opener",
+    "confidence": 90,
+    "notes": "Opener with letters and timeline.",
+    "_source_name": "old-letters-memory-timeline-opener-36229417",
+    "_batch_index": 4812
+  },
+  {
+    "name": "old-radio-opener-36777673",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old Radio Opener",
+    "confidence": 85,
+    "notes": "Opener themed around old radio.",
+    "_source_name": "old-radio-opener-36777673",
+    "_batch_index": 4813
+  },
+  {
+    "name": "old-tv-42669953",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old TV",
+    "confidence": 70,
+    "notes": "Likely an opener or effect for old TV style.",
+    "_source_name": "old-tv-42669953",
+    "_batch_index": 4814
+  },
+  {
+    "name": "old-tv-documentary-51988004",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old TV Documentary",
+    "confidence": 80,
+    "notes": "Documentary opener with old TV style.",
+    "_source_name": "old-tv-documentary-51988004",
+    "_batch_index": 4815
+  },
+  {
+    "name": "old-tv-historical-opener-46054605",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old TV Historical Opener",
+    "confidence": 90,
+    "notes": "Historical opener with old TV style.",
+    "_source_name": "old-tv-historical-opener-46054605",
+    "_batch_index": 4816
+  },
+  {
+    "name": "old-tv-intro-51596154",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old TV Intro",
+    "confidence": 85,
+    "notes": "Intro with old TV style.",
+    "_source_name": "old-tv-intro-51596154",
+    "_batch_index": 4817
+  },
+  {
+    "name": "old-tv-mogrt-51583770",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Old TV Mogrt",
+    "confidence": 90,
+    "notes": "Name includes mogrt, Premiere Pro motion graphic.",
+    "_source_name": "old-tv-mogrt-51583770",
+    "_batch_index": 4818
+  },
+  {
+    "name": "Old-tv-opener-1296382",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old TV Opener",
+    "confidence": 90,
+    "notes": "Opener with old TV style.",
+    "_source_name": "Old-tv-opener-1296382",
+    "_batch_index": 4819
+  },
+  {
+    "name": "old-tv-opener-51523602",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old TV Opener",
+    "confidence": 90,
+    "notes": "Opener with old TV style.",
+    "_source_name": "old-tv-opener-51523602",
+    "_batch_index": 4820
+  },
+  {
+    "name": "old-tv-screen-mockup-48269229",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Old TV Screen Mockup",
+    "confidence": 95,
+    "notes": "Mockup of an old TV screen.",
+    "_source_name": "old-tv-screen-mockup-48269229",
+    "_batch_index": 4821
+  },
+  {
+    "name": "old-vintage-photo-frame-templates-AVHR53H",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Old Vintage Photo Frame Templates",
+    "confidence": 80,
+    "notes": "Photo frame templates, likely for Photoshop.",
+    "_source_name": "old-vintage-photo-frame-templates-AVHR53H",
+    "_batch_index": 4822
+  },
+  {
+    "name": "Olive Oil Bottle Mockup",
+    "category": "Mockups - Packaging",
+    "clean_name": "Olive Oil Bottle Mockup",
+    "confidence": 95,
+    "notes": "Bottle mockup for packaging.",
+    "_source_name": "Olive Oil Bottle Mockup",
+    "_batch_index": 4823
+  },
+  {
+    "name": "Olive Oil Minimalist Package Mockup",
+    "category": "Mockups - Packaging",
+    "clean_name": "Olive Oil Minimalist Package Mockup",
+    "confidence": 95,
+    "notes": "Package mockup for olive oil.",
+    "_source_name": "Olive Oil Minimalist Package Mockup",
+    "_batch_index": 4824
+  },
+  {
+    "name": "Olive Oil Package Mockup Set",
+    "category": "Mockups - Packaging",
+    "clean_name": "Olive Oil Package Mockup Set",
+    "confidence": 95,
+    "notes": "Set of package mockups.",
+    "_source_name": "Olive Oil Package Mockup Set",
+    "_batch_index": 4825
+  },
+  {
+    "name": "Olive Oil Package Mockup Vol 1",
+    "category": "Mockups - Packaging",
+    "clean_name": "Olive Oil Package Mockup Vol 1",
+    "confidence": 95,
+    "notes": "Package mockup volume.",
+    "_source_name": "Olive Oil Package Mockup Vol 1",
+    "_batch_index": 4826
+  },
+  {
+    "name": "olive-oil-package-mockup-vol-2-LXCRMAQ",
+    "category": "Mockups - Packaging",
+    "clean_name": "Olive Oil Package Mockup Vol 2",
+    "confidence": 95,
+    "notes": "Package mockup volume.",
+    "_source_name": "olive-oil-package-mockup-vol-2-LXCRMAQ",
+    "_batch_index": 4827
+  },
+  {
+    "name": "Omega Cinematic Title",
+    "category": "Premiere Pro - Title & Typography",
+    "clean_name": "Omega Cinematic Title",
+    "confidence": 85,
+    "notes": "Contains .mogrt file, Premiere Pro title.",
+    "_source_name": "Omega Cinematic Title",
+    "_batch_index": 4828
+  },
+  {
+    "name": "on-air-broadcast-rebrand",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "On Air Broadcast Rebrand",
+    "confidence": 85,
+    "notes": "Broadcast rebrand package.",
+    "_source_name": "on-air-broadcast-rebrand",
+    "_batch_index": 4829
+  },
+  {
+    "name": "one-day-860185",
+    "category": "After Effects - Other",
+    "clean_name": "One Day",
+    "confidence": 60,
+    "notes": "Generic name, unclear content.",
+    "_source_name": "one-day-860185",
+    "_batch_index": 4830
+  },
+  {
+    "name": "OneDrive-2023-10-03",
+    "category": "_Skip",
+    "clean_name": "OneDrive Backup",
+    "confidence": 95,
+    "notes": "Backup folder with system files, not design assets.",
+    "_source_name": "OneDrive-2023-10-03",
+    "_batch_index": 4831
+  },
+  {
+    "name": "oniric visions folder",
+    "category": "After Effects - Other",
+    "clean_name": "Oniric Visions",
+    "confidence": 70,
+    "notes": "Contains .aep, but subcategory unclear.",
+    "_source_name": "oniric visions folder",
+    "_batch_index": 4832
+  },
+  {
+    "name": "online-broadcast-package-webinar-online-confer-28757031",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Online Broadcast Package Webinar",
+    "confidence": 90,
+    "notes": "Broadcast package for online conferencing.",
+    "_source_name": "online-broadcast-package-webinar-online-confer-28757031",
+    "_batch_index": 4833
+  },
+  {
+    "name": "online-broadcast-package-webinar-online-confer-28757031 [source]",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Online Broadcast Package Webinar Source",
+    "confidence": 90,
+    "notes": "Duplicate with source tag, same content.",
+    "_source_name": "online-broadcast-package-webinar-online-confer-28757031 [source]",
+    "_batch_index": 4834
+  },
+  {
+    "name": "online-education-slideshow-36570915",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Online Education Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow for education.",
+    "_source_name": "online-education-slideshow-36570915",
+    "_batch_index": 4835
+  },
+  {
+    "name": "online-grocery-delivery-30020132",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Online Grocery Delivery",
+    "confidence": 80,
+    "notes": "Corporate/business themed animation.",
+    "_source_name": "online-grocery-delivery-30020132",
+    "_batch_index": 4836
+  },
+  {
+    "name": "online-store-and-delivery-23898893",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Online Store and Delivery",
+    "confidence": 80,
+    "notes": "Corporate/business themed animation.",
+    "_source_name": "online-store-and-delivery-23898893",
+    "_batch_index": 4837
+  },
+  {
+    "name": "online-stream-package-webinar-online-conferenc-30365380",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Online Stream Package Webinar",
+    "confidence": 90,
+    "notes": "Broadcast package for streaming.",
+    "_source_name": "online-stream-package-webinar-online-conferenc-30365380",
+    "_batch_index": 4838
+  },
+  {
+    "name": "opener-22038377",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Opener",
+    "confidence": 80,
+    "notes": "Generic opener.",
+    "_source_name": "opener-22038377",
+    "_batch_index": 4839
+  },
+  {
+    "name": "opener-collage-51942087",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Opener Collage",
+    "confidence": 85,
+    "notes": "Collage style opener.",
+    "_source_name": "opener-collage-51942087",
+    "_batch_index": 4840
+  },
+  {
+    "name": "opener-collage-mogrt-52005323",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Opener Collage Mogrt",
+    "confidence": 90,
+    "notes": "Mogrt file for Premiere Pro.",
+    "_source_name": "opener-collage-mogrt-52005323",
+    "_batch_index": 4841
+  },
+  {
+    "name": "opener-credits-cinematic-38309749",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Opener Credits Cinematic",
+    "confidence": 85,
+    "notes": "Cinematic opener with credits.",
+    "_source_name": "opener-credits-cinematic-38309749",
+    "_batch_index": 4842
+  },
+  {
+    "name": "Optical Flow Creator Essentials Bundle",
+    "category": "Plugins & Extensions",
+    "clean_name": "Optical Flow Creator Essentials Bundle",
+    "confidence": 80,
+    "notes": "Bundle likely includes plugins/scripts for optical flow.",
+    "_source_name": "Optical Flow Creator Essentials Bundle",
+    "_batch_index": 4843
+  },
+  {
+    "name": "optical-light-inspiring-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Optical Light Inspiring Titles",
+    "confidence": 85,
+    "notes": "Title animation with optical light effects.",
+    "_source_name": "optical-light-inspiring-titles",
+    "_batch_index": 4844
+  },
+  {
+    "name": "orange-tones-action-lightrom-presets-PJ74JBJ",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Orange Tones Action Lightroom Presets",
+    "confidence": 95,
+    "notes": "Lightroom presets for orange tones.",
+    "_source_name": "orange-tones-action-lightrom-presets-PJ74JBJ",
+    "_batch_index": 4845
+  },
+  {
+    "name": "Organic Flares- Alexandru Don",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Organic Flares",
+    "confidence": 80,
+    "notes": "Flares stock footage or VFX.",
+    "_source_name": "Organic Flares- Alexandru Don",
+    "_batch_index": 4846
+  },
+  {
+    "name": "organic-product-intro",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Organic Product Intro",
+    "confidence": 85,
+    "notes": "Intro for organic product, contains .aep.",
+    "_source_name": "organic-product-intro",
+    "_batch_index": 4847
+  },
+  {
+    "name": "organic-slideshow-for-after-effects-36542793",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Organic Slideshow for After Effects",
+    "confidence": 95,
+    "notes": "Slideshow specifically for After Effects.",
+    "_source_name": "organic-slideshow-for-after-effects-36542793",
+    "_batch_index": 4848
+  },
+  {
+    "name": "Origami v1.4.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Origami v1.4.0",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, likely a script/plugin.",
+    "_source_name": "Origami v1.4.0",
+    "_batch_index": 4849
+  },
+  {
+    "name": "Original AE Project",
+    "category": "After Effects - Other",
+    "clean_name": "Original AE Project",
+    "confidence": 70,
+    "notes": "Generic AE project, subcategory unclear.",
+    "_source_name": "Original AE Project",
+    "_batch_index": 4850
+  },
+  {
+    "name": "original-particles-slideshow-44603942",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Original Particles Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow with particle effects.",
+    "_source_name": "original-particles-slideshow-44603942",
+    "_batch_index": 4851
+  },
+  {
+    "name": "original-text-styles-mini-kit-42314734",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Original Text Styles Mini Kit",
+    "confidence": 85,
+    "notes": "Text styles kit for typography.",
+    "_source_name": "original-text-styles-mini-kit-42314734",
+    "_batch_index": 4852
+  },
+  {
+    "name": "OSLO-Phone Mockup Graphics Pack",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "OSLO Phone Mockup Graphics Pack",
+    "confidence": 95,
+    "notes": "Phone mockup pack.",
+    "_source_name": "OSLO-Phone Mockup Graphics Pack",
+    "_batch_index": 4853
+  },
+  {
+    "name": "our-restaurant-foods-36720624",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Our Restaurant Foods",
+    "confidence": 80,
+    "notes": "Restaurant food promo animation.",
+    "_source_name": "our-restaurant-foods-36720624",
+    "_batch_index": 4854
+  },
+  {
+    "name": "outline-character-explainer-toolkit",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Outline Character Explainer Toolkit",
+    "confidence": 90,
+    "notes": "Character explainer toolkit.",
+    "_source_name": "outline-character-explainer-toolkit",
+    "_batch_index": 4855
+  },
+  {
+    "name": "overlay-twitch-panels-template-01-UDD4M5Q",
+    "category": "After Effects - Social Media",
+    "clean_name": "Overlay Twitch Panels Template",
+    "confidence": 85,
+    "notes": "Twitch overlay panels for social media/streaming.",
+    "_source_name": "overlay-twitch-panels-template-01-UDD4M5Q",
+    "_batch_index": 4856
+  },
+  {
+    "name": "overlays-grunge-37315766",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Overlays Grunge",
+    "confidence": 85,
+    "notes": "Grunge overlays.",
+    "_source_name": "overlays-grunge-37315766",
+    "_batch_index": 4857
+  },
+  {
+    "name": "P-7854reaCP",
+    "category": "Software & Utilities",
+    "clean_name": "reaConverter Pro 7.854 Portable",
+    "confidence": 99,
+    "notes": "Unclear name, single .rar archive, needs review.",
+    "_source_name": "P-7854reaCP",
+    "_batch_index": 4858,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "P6NEKJ6-Aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "Quisking",
+    "confidence": 95,
+    "notes": "Unclear name, single .zip archive, needs review.",
+    "_source_name": "P6NEKJ6-Aidownload.net",
+    "_batch_index": 4859,
+    "resolved_by": "review_resolver"
+  }
+]

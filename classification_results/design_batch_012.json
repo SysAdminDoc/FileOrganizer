@@ -1,0 +1,542 @@
+[
+  {
+    "name": "23212381-youtube-titles-collection-for-final-cut-pro-x",
+    "category": "Premiere Pro - Title & Typography",
+    "clean_name": "YouTube Titles Collection for Final Cut Pro X",
+    "confidence": 85,
+    "notes": "Name indicates Final Cut Pro X titles, but no .mogrt or .aep; likely title templates for video editing.",
+    "_source_name": "23212381-youtube-titles-collection-for-final-cut-pro-x",
+    "_batch_index": 660
+  },
+  {
+    "name": "23214057-world-travel-maps-south-america",
+    "category": "After Effects - Map & Location",
+    "clean_name": "World Travel Maps South America",
+    "confidence": 90,
+    "notes": "Name suggests map animation, typical AE map category.",
+    "_source_name": "23214057-world-travel-maps-south-america",
+    "_batch_index": 661
+  },
+  {
+    "name": "23215865-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Valentine Day",
+    "confidence": 80,
+    "notes": "Contains 'valentine-day' hint, suggests romantic theme.",
+    "_source_name": "23215865-INTRO-HD.NET",
+    "_batch_index": 662
+  },
+  {
+    "name": "23215948-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Global Conference Promo",
+    "confidence": 85,
+    "notes": "Contains 'global-conference-promo' hint, corporate event.",
+    "_source_name": "23215948-INTRO-HD.NET",
+    "_batch_index": 663
+  },
+  {
+    "name": "23216213-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "23216213",
+    "confidence": 65,
+    "notes": "No informative hint, numeric ID only.",
+    "_source_name": "23216213-INTRO-HD.NET",
+    "_batch_index": 664
+  },
+  {
+    "name": "23223503-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Instagram Stories Pack No 1",
+    "confidence": 90,
+    "notes": "Contains 'instagram-stories-pack' hint.",
+    "_source_name": "23223503-INTRO-HD.NET",
+    "_batch_index": 665
+  },
+  {
+    "name": "23228079-instagram-stories-package-2-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Instagram Stories Package 2",
+    "confidence": 90,
+    "notes": "Name clearly indicates Instagram stories.",
+    "_source_name": "23228079-instagram-stories-package-2-INTRO-HD.NET",
+    "_batch_index": 666
+  },
+  {
+    "name": "23228684-3d-plates-logo-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "3D Plates Logo",
+    "confidence": 85,
+    "notes": "Name suggests 3D logo reveal.",
+    "_source_name": "23228684-3d-plates-logo-INTRO-HD.NET",
+    "_batch_index": 667
+  },
+  {
+    "name": "23246932-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Cooking Classes",
+    "confidence": 80,
+    "notes": "Contains 'cooking-classes' hint, no specific AE subcategory fits well.",
+    "_source_name": "23246932-INTRO-HD.NET",
+    "_batch_index": 668
+  },
+  {
+    "name": "23247702-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Travel Memory",
+    "confidence": 85,
+    "notes": "Contains 'travel-memory' hint, likely slideshow/gallery.",
+    "_source_name": "23247702-INTRO-HD.NET",
+    "_batch_index": 669
+  },
+  {
+    "name": "23260671-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Simple Logo Reveal 1",
+    "confidence": 90,
+    "notes": "Contains 'simple-logo-reveal' hint.",
+    "_source_name": "23260671-INTRO-HD.NET",
+    "_batch_index": 670
+  },
+  {
+    "name": "23261869-news-library-broadcast-pack-INTRO-HD.NET",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "News Library Broadcast Pack",
+    "confidence": 95,
+    "notes": "Name clearly indicates news broadcast.",
+    "_source_name": "23261869-news-library-broadcast-pack-INTRO-HD.NET",
+    "_batch_index": 671
+  },
+  {
+    "name": "23261958-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Cyber Glitch Logo",
+    "confidence": 90,
+    "notes": "Contains 'cyber-glitch-logo' hint.",
+    "_source_name": "23261958-INTRO-HD.NET",
+    "_batch_index": 672
+  },
+  {
+    "name": "23266605-vlog-pack-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Vlog Pack",
+    "confidence": 85,
+    "notes": "Vlog pack likely for social media/YouTube.",
+    "_source_name": "23266605-vlog-pack-INTRO-HD.NET",
+    "_batch_index": 673
+  },
+  {
+    "name": "23280312-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitchy Human Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains 'glitchy-human-logo-reveal' hint.",
+    "_source_name": "23280312-INTRO-HD.NET",
+    "_batch_index": 674
+  },
+  {
+    "name": "23291881-filmmaking-library-biggest-editing-package-v3-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Filmmaking Library Biggest Editing Package v3",
+    "confidence": 70,
+    "notes": "Generic editing package, no specific subcategory.",
+    "_source_name": "23291881-filmmaking-library-biggest-editing-package-v3-INTRO-HD.NET",
+    "_batch_index": 675
+  },
+  {
+    "name": "23294966-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "YouTube Subscribe Pack",
+    "confidence": 90,
+    "notes": "Contains 'youtube-subscribe-pack' hint.",
+    "_source_name": "23294966-INTRO-HD.NET",
+    "_batch_index": 676
+  },
+  {
+    "name": "23300017-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitch Transform Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains 'glitch-transform-logo-reveal' hint.",
+    "_source_name": "23300017-INTRO-HD.NET",
+    "_batch_index": 677
+  },
+  {
+    "name": "23307228-crumpled-paper-heart-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Crumpled Paper Heart",
+    "confidence": 85,
+    "notes": "Heart theme suggests romance.",
+    "_source_name": "23307228-crumpled-paper-heart-INTRO-HD.NET",
+    "_batch_index": 678
+  },
+  {
+    "name": "23307233-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains 'logo-reveal' hint.",
+    "_source_name": "23307233-INTRO-HD.NET",
+    "_batch_index": 679
+  },
+  {
+    "name": "23309405-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitch Code Logo",
+    "confidence": 90,
+    "notes": "Contains 'glitch-code-logo' hint.",
+    "_source_name": "23309405-INTRO-HD.NET",
+    "_batch_index": 680
+  },
+  {
+    "name": "23309842-liquid-transitions-big-pack-INTRO-HD.NET",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Liquid Transitions Big Pack",
+    "confidence": 95,
+    "notes": "Name clearly indicates liquid transitions.",
+    "_source_name": "23309842-liquid-transitions-big-pack-INTRO-HD.NET",
+    "_batch_index": 681
+  },
+  {
+    "name": "23320414-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Sketch Logo",
+    "confidence": 85,
+    "notes": "Contains 'sketch-logo' hint.",
+    "_source_name": "23320414-INTRO-HD.NET",
+    "_batch_index": 682
+  },
+  {
+    "name": "23329694-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typographic Opener",
+    "confidence": 90,
+    "notes": "Contains 'typographic-opener' hint.",
+    "_source_name": "23329694-INTRO-HD.NET",
+    "_batch_index": 683
+  },
+  {
+    "name": "23343324-silvergold-logo-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Silver Gold Logo",
+    "confidence": 85,
+    "notes": "Name suggests metallic logo reveal.",
+    "_source_name": "23343324-silvergold-logo-INTRO-HD.NET",
+    "_batch_index": 684
+  },
+  {
+    "name": "23344857-planet-earth-INTRO-HD.NET",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Planet Earth",
+    "confidence": 85,
+    "notes": "Planet Earth suggests map/globe animation.",
+    "_source_name": "23344857-planet-earth-INTRO-HD.NET",
+    "_batch_index": 685
+  },
+  {
+    "name": "23346567-INTRO-HD.NET",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "News Channel Pack",
+    "confidence": 95,
+    "notes": "Contains 'news-channel-pack' hint.",
+    "_source_name": "23346567-INTRO-HD.NET",
+    "_batch_index": 686
+  },
+  {
+    "name": "23350204-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Future Book",
+    "confidence": 70,
+    "notes": "Ambiguous hint, no clear subcategory.",
+    "_source_name": "23350204-INTRO-HD.NET",
+    "_batch_index": 687
+  },
+  {
+    "name": "23354085-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Ice and Flame Logo",
+    "confidence": 85,
+    "notes": "Contains 'ice-and-flame-logo' hint.",
+    "_source_name": "23354085-INTRO-HD.NET",
+    "_batch_index": 688
+  },
+  {
+    "name": "23355719-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Sports Instagram Stories",
+    "confidence": 90,
+    "notes": "Contains 'sports-instagram-stories' hint.",
+    "_source_name": "23355719-INTRO-HD.NET",
+    "_batch_index": 689
+  },
+  {
+    "name": "23357036-INTRO-HD.NET",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Animation Presets Pack for Final Cut Pro X",
+    "confidence": 85,
+    "notes": "Contains 'animation-presets-pack' hint.",
+    "_source_name": "23357036-INTRO-HD.NET",
+    "_batch_index": 690
+  },
+  {
+    "name": "23359359-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Digital Company Chronicles",
+    "confidence": 80,
+    "notes": "Contains 'digital-company-chronicles' hint, corporate theme.",
+    "_source_name": "23359359-INTRO-HD.NET",
+    "_batch_index": 691
+  },
+  {
+    "name": "23359717-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Mobile Logo Reveal",
+    "confidence": 85,
+    "notes": "Contains 'mobile-logo-reveal' hint.",
+    "_source_name": "23359717-INTRO-HD.NET",
+    "_batch_index": 692
+  },
+  {
+    "name": "23360273-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Instagram Toolkit Pack",
+    "confidence": 90,
+    "notes": "Contains 'instagram-toolkit-pack' hint.",
+    "_source_name": "23360273-INTRO-HD.NET",
+    "_batch_index": 693
+  },
+  {
+    "name": "23365963-modern-corporate",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Modern Corporate",
+    "confidence": 90,
+    "notes": "Name clearly indicates corporate theme.",
+    "_source_name": "23365963-modern-corporate",
+    "_batch_index": 694
+  },
+  {
+    "name": "23369813-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitch Logo",
+    "confidence": 90,
+    "notes": "Contains 'glitch-logo' hint.",
+    "_source_name": "23369813-INTRO-HD.NET",
+    "_batch_index": 695
+  },
+  {
+    "name": "23372526-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "LED Gold Title",
+    "confidence": 85,
+    "notes": "Contains 'led-gold-title' hint.",
+    "_source_name": "23372526-INTRO-HD.NET",
+    "_batch_index": 696
+  },
+  {
+    "name": "23372526-led-gold-title-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "LED Gold Title",
+    "confidence": 90,
+    "notes": "Name clearly indicates gold title.",
+    "_source_name": "23372526-led-gold-title-INTRO-HD.NET",
+    "_batch_index": 697
+  },
+  {
+    "name": "23381906-INTRO-HD.NET",
+    "category": "After Effects - Event & Party",
+    "clean_name": "IGTV Stylish Event Promo Vertical and Square",
+    "confidence": 85,
+    "notes": "Contains 'igtv-stylish-event-promo' hint.",
+    "_source_name": "23381906-INTRO-HD.NET",
+    "_batch_index": 698
+  },
+  {
+    "name": "23382749-parallax-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Parallax Slideshow",
+    "confidence": 95,
+    "notes": "Name clearly indicates parallax slideshow.",
+    "_source_name": "23382749-parallax-slideshow-INTRO-HD.NET",
+    "_batch_index": 699
+  },
+  {
+    "name": "23391865-digital-glitch-intro-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Digital Glitch Intro",
+    "confidence": 95,
+    "notes": "Name clearly indicates glitch intro.",
+    "_source_name": "23391865-digital-glitch-intro-INTRO-HD.NET",
+    "_batch_index": 700
+  },
+  {
+    "name": "23400076-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Simple Logo Reveal 3",
+    "confidence": 90,
+    "notes": "Contains 'simple-logo-reveal-3' hint.",
+    "_source_name": "23400076-INTRO-HD.NET",
+    "_batch_index": 701
+  },
+  {
+    "name": "23404417-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Slides Opener",
+    "confidence": 90,
+    "notes": "Contains 'dynamic-slides-opener' hint.",
+    "_source_name": "23404417-INTRO-HD.NET",
+    "_batch_index": 702
+  },
+  {
+    "name": "23418636-parallax-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Parallax Slideshow",
+    "confidence": 95,
+    "notes": "Name clearly indicates parallax slideshow.",
+    "_source_name": "23418636-parallax-slideshow",
+    "_batch_index": 703
+  },
+  {
+    "name": "23428612-INTRO-HD.NET",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Map Linear Icon Pack",
+    "confidence": 90,
+    "notes": "Contains 'map-linear-icon-pack' hint.",
+    "_source_name": "23428612-INTRO-HD.NET",
+    "_batch_index": 704
+  },
+  {
+    "name": "23437840-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Extreme Festival Action Sport Show",
+    "confidence": 95,
+    "notes": "Contains 'extreme-festival-action-sport-show' hint.",
+    "_source_name": "23437840-INTRO-HD.NET",
+    "_batch_index": 705
+  },
+  {
+    "name": "23448696-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Promo",
+    "confidence": 90,
+    "notes": "Contains 'sport-promo' hint.",
+    "_source_name": "23448696-INTRO-HD.NET",
+    "_batch_index": 706
+  },
+  {
+    "name": "23450034-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "YouTube Subscribe",
+    "confidence": 90,
+    "notes": "Contains 'youtube-subscribe' hint.",
+    "_source_name": "23450034-INTRO-HD.NET",
+    "_batch_index": 707
+  },
+  {
+    "name": "23453479-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fashion Opener",
+    "confidence": 85,
+    "notes": "Contains 'fashion-opener' hint.",
+    "_source_name": "23453479-INTRO-HD.NET",
+    "_batch_index": 708
+  },
+  {
+    "name": "23456042-scribble-elements-INTRO-HD.NET",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Scribble Elements",
+    "confidence": 85,
+    "notes": "Scribble style suggests kids/cartoon theme.",
+    "_source_name": "23456042-scribble-elements-INTRO-HD.NET",
+    "_batch_index": 709
+  },
+  {
+    "name": "23458472-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Instagram Stories",
+    "confidence": 90,
+    "notes": "Contains 'instagram-stories' hint.",
+    "_source_name": "23458472-INTRO-HD.NET",
+    "_batch_index": 710
+  },
+  {
+    "name": "23464532-splash-elements-INTRO-HD.NET",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Splash Elements",
+    "confidence": 90,
+    "notes": "Splash suggests liquid/fluid effects.",
+    "_source_name": "23464532-splash-elements-INTRO-HD.NET",
+    "_batch_index": 711
+  },
+  {
+    "name": "23464915-coffee-time-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Coffee Time",
+    "confidence": 75,
+    "notes": "Coffee theme, no specific subcategory.",
+    "_source_name": "23464915-coffee-time-INTRO-HD.NET",
+    "_batch_index": 712
+  },
+  {
+    "name": "23468199-dynamic-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener",
+    "confidence": 95,
+    "notes": "Name clearly indicates opener.",
+    "_source_name": "23468199-dynamic-opener-INTRO-HD.NET",
+    "_batch_index": 713
+  },
+  {
+    "name": "23469615-colorful-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Colorful Opener",
+    "confidence": 95,
+    "notes": "Name clearly indicates opener.",
+    "_source_name": "23469615-colorful-opener",
+    "_batch_index": 714
+  },
+  {
+    "name": "23470884-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "History Opener",
+    "confidence": 85,
+    "notes": "Contains 'history-opener' hint.",
+    "_source_name": "23470884-INTRO-HD.NET",
+    "_batch_index": 715
+  },
+  {
+    "name": "23472411-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Cinematic Logo II",
+    "confidence": 90,
+    "notes": "Contains 'cinematic-logo-ii' hint.",
+    "_source_name": "23472411-INTRO-HD.NET",
+    "_batch_index": 716
+  },
+  {
+    "name": "23472842-INTRO-HD.NET",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Weather Forecast Icons",
+    "confidence": 90,
+    "notes": "Contains 'weather-forecast-icons' hint.",
+    "_source_name": "23472842-INTRO-HD.NET",
+    "_batch_index": 717
+  },
+  {
+    "name": "23494243-clean-dynamic-cubes-logo-reveals-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Clean Dynamic Cubes Logo Reveals",
+    "confidence": 95,
+    "notes": "Name clearly indicates logo reveals.",
+    "_source_name": "23494243-clean-dynamic-cubes-logo-reveals-INTRO-HD.NET",
+    "_batch_index": 718
+  },
+  {
+    "name": "23499546-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Paint the Logo",
+    "confidence": 85,
+    "notes": "Contains 'paint-the-logo' hint.",
+    "_source_name": "23499546-INTRO-HD.NET",
+    "_batch_index": 719
+  }
+]

@@ -1,0 +1,546 @@
+[
+  {
+    "name": "Videohive News Intro Mogrt 53438564",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "News Intro Mogrt",
+    "confidence": 95,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive News Intro Mogrt 53438564",
+    "_batch_index": 6660,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive News Reporter Premium Vector Animated Instagram Story 47438971",
+    "category": "After Effects - Social Media",
+    "clean_name": "News Reporter Premium Vector Animated Instagram Story",
+    "confidence": 85,
+    "notes": "Has .aep, Instagram Story format",
+    "_source_name": "Videohive News Reporter Premium Vector Animated Instagram Story 47438971",
+    "_batch_index": 6661
+  },
+  {
+    "name": "Videohive Old retro vfx film effect with scratches and grain 35905782",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Old retro vfx film effect with scratches and grain",
+    "confidence": 80,
+    "notes": "Single .zip likely contains video loops",
+    "_source_name": "Videohive Old retro vfx film effect with scratches and grain 35905782",
+    "_batch_index": 6662
+  },
+  {
+    "name": "Videohive Old School Urban Slideshow 35218451",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Old School Urban Slideshow",
+    "confidence": 75,
+    "notes": "Single .zip, name suggests slideshow, likely AE project",
+    "_source_name": "Videohive Old School Urban Slideshow 35218451",
+    "_batch_index": 6663
+  },
+  {
+    "name": "Videohive Online Earning Money Premium Vector Instagram Story 47450607",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Online Earning Money Premium Vector Instagram Story",
+    "confidence": 90,
+    "notes": "Has .mogrt file",
+    "_source_name": "Videohive Online Earning Money Premium Vector Instagram Story 47450607",
+    "_batch_index": 6664
+  },
+  {
+    "name": "Videohive Opener Slideshow 54325082",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Opener Slideshow",
+    "confidence": 85,
+    "notes": "Has .aep, name includes Opener",
+    "_source_name": "Videohive Opener Slideshow 54325082",
+    "_batch_index": 6665
+  },
+  {
+    "name": "Videohive Paper Transitions 54300039",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Paper Transitions",
+    "confidence": 90,
+    "notes": "Has .aep, name indicates transitions",
+    "_source_name": "Videohive Paper Transitions 54300039",
+    "_batch_index": 6666
+  },
+  {
+    "name": "Videohive Party Titles Davinci Resolve 53862897",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Party Titles Davinci Resolve",
+    "confidence": 85,
+    "notes": "Only .pdf, no project file to confirm",
+    "_source_name": "Videohive Party Titles Davinci Resolve 53862897",
+    "_batch_index": 6667,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Pet Lovers Premium Characters Instagram Story 47439345",
+    "category": "After Effects - Social Media",
+    "clean_name": "Pet Lovers Premium Characters Instagram Story",
+    "confidence": 85,
+    "notes": "Has .aep, Instagram Story format",
+    "_source_name": "Videohive Pet Lovers Premium Characters Instagram Story 47439345",
+    "_batch_index": 6668
+  },
+  {
+    "name": "Videohive Pet Lovers Premium Vector Instagram Story 47455522",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Pet Lovers Premium Vector Instagram Story",
+    "confidence": 90,
+    "notes": "Has .mogrt file",
+    "_source_name": "Videohive Pet Lovers Premium Vector Instagram Story 47455522",
+    "_batch_index": 6669
+  },
+  {
+    "name": "Videohive Photo Slideshow 19495761",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 90,
+    "notes": "Has .aep, name indicates slideshow",
+    "_source_name": "Videohive Photo Slideshow 19495761",
+    "_batch_index": 6670
+  },
+  {
+    "name": "Videohive Pixel Party New Branding Package 53848261",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Pixel Party New Branding Package",
+    "confidence": 80,
+    "notes": "Has .prproj, branding package",
+    "_source_name": "Videohive Pixel Party New Branding Package 53848261",
+    "_batch_index": 6671
+  },
+  {
+    "name": "Videohive Plasticine Explosion Elements F_x 53841875",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Plasticine Explosion Elements F_x",
+    "confidence": 75,
+    "notes": "Has .mp4, likely video elements",
+    "_source_name": "Videohive Plasticine Explosion Elements F_x 53841875",
+    "_batch_index": 6672
+  },
+  {
+    "name": "Videohive Podcast Interviewer Premium Vector Instagram Story 47441716",
+    "category": "After Effects - Social Media",
+    "clean_name": "Podcast Interviewer Premium Vector Instagram Story",
+    "confidence": 85,
+    "notes": "Has .aep, Instagram Story format",
+    "_source_name": "Videohive Podcast Interviewer Premium Vector Instagram Story 47441716",
+    "_batch_index": 6673
+  },
+  {
+    "name": "Videohive Podcast Opener Mogrt For Premier Pro 53476109",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Podcast Opener Mogrt For Premier Pro",
+    "confidence": 95,
+    "notes": "Has .mogrt, name says Mogrt",
+    "_source_name": "Videohive Podcast Opener Mogrt For Premier Pro 53476109",
+    "_batch_index": 6674
+  },
+  {
+    "name": "Videohive Premium Golden Hour Video Luts- Elevate Your Footage With Cinematic Hollywood Sunset Effects 50099746",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Premium Golden Hour Video Luts",
+    "confidence": 95,
+    "notes": "Name includes Luts",
+    "_source_name": "Videohive Premium Golden Hour Video Luts- Elevate Your Footage With Cinematic Hollywood Sunset Effects 50099746",
+    "_batch_index": 6675
+  },
+  {
+    "name": "Videohive Premium Lower Thirds 42457088",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Premium Lower Thirds",
+    "confidence": 95,
+    "notes": "Has .aep, name indicates Lower Thirds",
+    "_source_name": "Videohive Premium Lower Thirds 42457088",
+    "_batch_index": 6676
+  },
+  {
+    "name": "Videohive Premium Overlays _m Blur 51987588",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Blur",
+    "confidence": 80,
+    "notes": "Has .aep, overlay type",
+    "_source_name": "Videohive Premium Overlays _m Blur 51987588",
+    "_batch_index": 6677
+  },
+  {
+    "name": "Videohive Premium Overlays Broken Mirror 43242371",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Broken Mirror",
+    "confidence": 80,
+    "notes": "Has .aep, overlay type",
+    "_source_name": "Videohive Premium Overlays Broken Mirror 43242371",
+    "_batch_index": 6678
+  },
+  {
+    "name": "Videohive Premium Overlays Camera Viewfinder 46093184",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Camera Viewfinder",
+    "confidence": 80,
+    "notes": "Has .aep, overlay type",
+    "_source_name": "Videohive Premium Overlays Camera Viewfinder 46093184",
+    "_batch_index": 6679
+  },
+  {
+    "name": "Videohive Premium Overlays Color Particles 51169700",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Premium Overlays Color Particles",
+    "confidence": 80,
+    "notes": "Has .aep, particle overlay",
+    "_source_name": "Videohive Premium Overlays Color Particles 51169700",
+    "_batch_index": 6680
+  },
+  {
+    "name": "Videohive Premium Overlays Comic 51391617",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Comic",
+    "confidence": 80,
+    "notes": "Has .aep, overlay type",
+    "_source_name": "Videohive Premium Overlays Comic 51391617",
+    "_batch_index": 6681
+  },
+  {
+    "name": "Videohive Premium Overlays Distortion 44936057",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Premium Overlays Distortion",
+    "confidence": 85,
+    "notes": "Has .aep, distortion overlay",
+    "_source_name": "Videohive Premium Overlays Distortion 44936057",
+    "_batch_index": 6682
+  },
+  {
+    "name": "Videohive Premium Overlays Duolights 51793848",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Duolights",
+    "confidence": 80,
+    "notes": "Has .aep, overlay type",
+    "_source_name": "Videohive Premium Overlays Duolights 51793848",
+    "_batch_index": 6683
+  },
+  {
+    "name": "Videohive Premium Overlays Film Burn 51326240",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Film Burn",
+    "confidence": 80,
+    "notes": "Has .aep, film burn overlay",
+    "_source_name": "Videohive Premium Overlays Film Burn 51326240",
+    "_batch_index": 6684
+  },
+  {
+    "name": "Videohive Premium Overlays Hud 51186426",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Hud",
+    "confidence": 80,
+    "notes": "Has .aep, HUD overlay",
+    "_source_name": "Videohive Premium Overlays Hud 51186426",
+    "_batch_index": 6685
+  },
+  {
+    "name": "Videohive Premium Overlays Lightnings 49577594",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Lightnings",
+    "confidence": 80,
+    "notes": "Has .aep, lightning overlay",
+    "_source_name": "Videohive Premium Overlays Lightnings 49577594",
+    "_batch_index": 6686
+  },
+  {
+    "name": "Videohive Premium Overlays Matrix 51606153",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Matrix",
+    "confidence": 80,
+    "notes": "Has .aep, matrix overlay",
+    "_source_name": "Videohive Premium Overlays Matrix 51606153",
+    "_batch_index": 6687
+  },
+  {
+    "name": "Videohive Premium Overlays Paper Cut 43362434",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Paper Cut",
+    "confidence": 80,
+    "notes": "Has .aep, paper cut overlay",
+    "_source_name": "Videohive Premium Overlays Paper Cut 43362434",
+    "_batch_index": 6688
+  },
+  {
+    "name": "Videohive Premium Overlays Particles 43215840",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Premium Overlays Particles",
+    "confidence": 85,
+    "notes": "Has .aep, particle overlay",
+    "_source_name": "Videohive Premium Overlays Particles 43215840",
+    "_batch_index": 6689
+  },
+  {
+    "name": "Videohive Premium Overlays Shockwave 46352023",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Premium Overlays Shockwave",
+    "confidence": 80,
+    "notes": "Has .aep, shockwave overlay",
+    "_source_name": "Videohive Premium Overlays Shockwave 46352023",
+    "_batch_index": 6690
+  },
+  {
+    "name": "Videohive Premium Transitions Easy Flip 52889487",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Premium Transitions Easy Flip",
+    "confidence": 90,
+    "notes": "Has .aep, transitions",
+    "_source_name": "Videohive Premium Transitions Easy Flip 52889487",
+    "_batch_index": 6691
+  },
+  {
+    "name": "Videohive Premium Transitions Emoji 53786031",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Premium Transitions Emoji",
+    "confidence": 90,
+    "notes": "Has .aep, transitions",
+    "_source_name": "Videohive Premium Transitions Emoji 53786031",
+    "_batch_index": 6692
+  },
+  {
+    "name": "Videohive Premium Transitions Gestures 50787536",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Premium Transitions Gestures",
+    "confidence": 90,
+    "notes": "Has .aep, transitions",
+    "_source_name": "Videohive Premium Transitions Gestures 50787536",
+    "_batch_index": 6693
+  },
+  {
+    "name": "Videohive Premium Transitions Grid Lines 52939343",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Premium Transitions Grid Lines",
+    "confidence": 90,
+    "notes": "Has .aep, transitions",
+    "_source_name": "Videohive Premium Transitions Grid Lines 52939343",
+    "_batch_index": 6694
+  },
+  {
+    "name": "Videohive Premium Transitions Hands Of Color 50807617",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Premium Transitions Hands Of Color",
+    "confidence": 90,
+    "notes": "Has .aep, transitions",
+    "_source_name": "Videohive Premium Transitions Hands Of Color 50807617",
+    "_batch_index": 6695
+  },
+  {
+    "name": "Videohive Premium Transitions Paging 52923972",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Premium Transitions Paging",
+    "confidence": 90,
+    "notes": "Has .aep, transitions",
+    "_source_name": "Videohive Premium Transitions Paging 52923972",
+    "_batch_index": 6696
+  },
+  {
+    "name": "Videohive Premium Vector Work From Home Instagram Story 47395472",
+    "category": "After Effects - Social Media",
+    "clean_name": "Premium Vector Work From Home Instagram Story",
+    "confidence": 85,
+    "notes": "Has .aep, Instagram Story format",
+    "_source_name": "Videohive Premium Vector Work From Home Instagram Story 47395472",
+    "_batch_index": 6697
+  },
+  {
+    "name": "Videohive President Election Intro 53742754",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "President Election Intro",
+    "confidence": 75,
+    "notes": "No files listed, name suggests intro",
+    "_source_name": "Videohive President Election Intro 53742754",
+    "_batch_index": 6698
+  },
+  {
+    "name": "Videohive Prima Cinematic Titles 54296903",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Prima Cinematic Titles",
+    "confidence": 75,
+    "notes": "No files listed, name suggests titles",
+    "_source_name": "Videohive Prima Cinematic Titles 54296903",
+    "_batch_index": 6699
+  },
+  {
+    "name": "Videohive Pro Light Leaks Bundle For Final Cut Pro X 53904407",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Pro Light Leaks Bundle For Final Cut Pro X",
+    "confidence": 80,
+    "notes": "Has .mp4, light leaks video",
+    "_source_name": "Videohive Pro Light Leaks Bundle For Final Cut Pro X 53904407",
+    "_batch_index": 6700
+  },
+  {
+    "name": "Videohive Professional Fields Flat Color Design 54282179",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Professional Fields Flat Color Design",
+    "confidence": 70,
+    "notes": "No files listed, name suggests corporate style",
+    "_source_name": "Videohive Professional Fields Flat Color Design 54282179",
+    "_batch_index": 6701
+  },
+  {
+    "name": "Videohive Pure Waves Branding Package 54325710",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Pure Waves Branding Package",
+    "confidence": 75,
+    "notes": "No files listed, branding package",
+    "_source_name": "Videohive Pure Waves Branding Package 54325710",
+    "_batch_index": 6702
+  },
+  {
+    "name": "Videohive Retro Style Intro 54317811",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Retro Style Intro",
+    "confidence": 80,
+    "notes": "Has .mp4, .txt, name suggests intro",
+    "_source_name": "Videohive Retro Style Intro 54317811",
+    "_batch_index": 6703
+  },
+  {
+    "name": "Videohive Retro Vintage Grain And Gradient Map Effects Mogrt 53647570",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Retro Vintage Grain And Gradient Map Effects Mogrt",
+    "confidence": 90,
+    "notes": "Has .mogrt",
+    "_source_name": "Videohive Retro Vintage Grain And Gradient Map Effects Mogrt 53647570",
+    "_batch_index": 6704
+  },
+  {
+    "name": "Videohive Rhythmic Multiscreen Opener Mogrt 53944137",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Rhythmic Multiscreen Opener Mogrt",
+    "confidence": 90,
+    "notes": "Has .mogrt",
+    "_source_name": "Videohive Rhythmic Multiscreen Opener Mogrt 53944137",
+    "_batch_index": 6705
+  },
+  {
+    "name": "Videohive Rip Paper Transitions 54289957",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Rip Paper Transitions",
+    "confidence": 75,
+    "notes": "No files listed, name suggests transitions",
+    "_source_name": "Videohive Rip Paper Transitions 54289957",
+    "_batch_index": 6706
+  },
+  {
+    "name": "Videohive Ripped Posters 53846437",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Ripped Posters",
+    "confidence": 85,
+    "notes": "Has .mogrt",
+    "_source_name": "Videohive Ripped Posters 53846437",
+    "_batch_index": 6707
+  },
+  {
+    "name": "Videohive Romatic Gallery Slideshow 54302103",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romatic Gallery Slideshow",
+    "confidence": 90,
+    "notes": "Has .aep, slideshow",
+    "_source_name": "Videohive Romatic Gallery Slideshow 54302103",
+    "_batch_index": 6708
+  },
+  {
+    "name": "Videohive Rythmic Opener Mogrt 53438514",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Rythmic Opener Mogrt",
+    "confidence": 95,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Rythmic Opener Mogrt 53438514",
+    "_batch_index": 6709,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Scratched Film Loop Background 44526675",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Scratched Film Loop Background",
+    "confidence": 80,
+    "notes": "Single .zip likely contains video loop",
+    "_source_name": "Videohive Scratched Film Loop Background 44526675",
+    "_batch_index": 6710
+  },
+  {
+    "name": "Videohive Showreel Opener For F_x 53843535",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Showreel Opener For F_x",
+    "confidence": 75,
+    "notes": "Has .mp4, .pdf, name suggests opener",
+    "_source_name": "Videohive Showreel Opener For F_x 53843535",
+    "_batch_index": 6711
+  },
+  {
+    "name": "Videohive Silver Award Opener For Davinci Resolve 53644054",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Silver Award Opener For Davinci Resolve",
+    "confidence": 80,
+    "notes": "Has .drp, opener",
+    "_source_name": "Videohive Silver Award Opener For Davinci Resolve 53644054",
+    "_batch_index": 6712
+  },
+  {
+    "name": "Videohive Simple Text Animation V2.0 F_x 53498980",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Simple Text Animation V2.0 F_x",
+    "confidence": 75,
+    "notes": "Has .mp4, .txt, text animation",
+    "_source_name": "Videohive Simple Text Animation V2.0 F_x 53498980",
+    "_batch_index": 6713
+  },
+  {
+    "name": "Videohive Sliding Opener Photo Slideshow Mogrt Template 53963541",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Sliding Opener Photo Slideshow Mogrt Template",
+    "confidence": 95,
+    "notes": "Has .mogrt",
+    "_source_name": "Videohive Sliding Opener Photo Slideshow Mogrt Template 53963541",
+    "_batch_index": 6714
+  },
+  {
+    "name": "Videohive Smoke Flowing Shapes Elements Davinci Resolve 53842397",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Smoke Flowing Shapes Elements Davinci Resolve",
+    "confidence": 80,
+    "notes": "Has .drp, smoke elements",
+    "_source_name": "Videohive Smoke Flowing Shapes Elements Davinci Resolve 53842397",
+    "_batch_index": 6715
+  },
+  {
+    "name": "Videohive Sport Stories For Davinci Resolve 53849100",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Stories For Davinci Resolve",
+    "confidence": 85,
+    "notes": "Has .drp, sport theme",
+    "_source_name": "Videohive Sport Stories For Davinci Resolve 53849100",
+    "_batch_index": 6716
+  },
+  {
+    "name": "Videohive Stomp Openers Pack 26056130",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Stomp Openers Pack",
+    "confidence": 75,
+    "notes": "Single .zip, likely AE openers",
+    "_source_name": "Videohive Stomp Openers Pack 26056130",
+    "_batch_index": 6717
+  },
+  {
+    "name": "Videohive Text Animation 2.0 Mogrt 53845423",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Text Animation 2.0 Mogrt",
+    "confidence": 95,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Text Animation 2.0 Mogrt 53845423",
+    "_batch_index": 6718,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Text Animation 54309155",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Text Animation",
+    "confidence": 70,
+    "notes": "No files listed, name suggests text animation",
+    "_source_name": "Videohive Text Animation 54309155",
+    "_batch_index": 6719
+  }
+]

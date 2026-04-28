@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Rise Photoshop Action",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Rise Photoshop Action",
+    "confidence": 90,
+    "notes": "Name indicates Photoshop action, files are .zip likely containing .atn",
+    "_source_name": "Rise Photoshop Action",
+    "_batch_index": 5400
+  },
+  {
+    "name": "rk-splash",
+    "category": "After Effects - Other",
+    "clean_name": "rk-splash",
+    "confidence": 60,
+    "notes": "No clear clues, likely an After Effects project",
+    "_source_name": "rk-splash",
+    "_batch_index": 5401
+  },
+  {
+    "name": "RN_AI_Transitions",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "RN AI Transitions",
+    "confidence": 80,
+    "notes": "Name suggests transitions for After Effects",
+    "_source_name": "RN_AI_Transitions",
+    "_batch_index": 5402
+  },
+  {
+    "name": "RN_Paper_Tear_V2_Transitions",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "RN Paper Tear V2 Transitions",
+    "confidence": 85,
+    "notes": "Paper tear transitions likely for After Effects",
+    "_source_name": "RN_Paper_Tear_V2_Transitions",
+    "_batch_index": 5403
+  },
+  {
+    "name": "road-trip-opener-35497647",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Road Trip Opener",
+    "confidence": 90,
+    "notes": "Name clearly indicates an opener",
+    "_source_name": "road-trip-opener-35497647",
+    "_batch_index": 5404
+  },
+  {
+    "name": "robo-master-t-shirt-design-JCDEW4K",
+    "category": "Mockups - Apparel",
+    "clean_name": "Robo Master T-Shirt Design",
+    "confidence": 85,
+    "notes": "T-shirt design implies apparel mockup",
+    "_source_name": "robo-master-t-shirt-design-JCDEW4K",
+    "_batch_index": 5405
+  },
+  {
+    "name": "robotic-intro-45421978",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Robotic Intro",
+    "confidence": 90,
+    "notes": "Name indicates intro",
+    "_source_name": "robotic-intro-45421978",
+    "_batch_index": 5406
+  },
+  {
+    "name": "Rock The Speakerbox Melee WAV-RYZEN",
+    "category": "Stock Music & Audio",
+    "clean_name": "Rock The Speakerbox Melee WAV",
+    "confidence": 85,
+    "notes": "WAV file indicates audio",
+    "_source_name": "Rock The Speakerbox Melee WAV-RYZEN",
+    "_batch_index": 5407
+  },
+  {
+    "name": "rocket-kid-t-shirt-design-4A2JNVC",
+    "category": "Mockups - Apparel",
+    "clean_name": "Rocket Kid T-Shirt Design",
+    "confidence": 85,
+    "notes": "T-shirt design implies apparel mockup",
+    "_source_name": "rocket-kid-t-shirt-design-4A2JNVC",
+    "_batch_index": 5408
+  },
+  {
+    "name": "rocket-now-t-shirt-design-C9WXZYB",
+    "category": "Mockups - Apparel",
+    "clean_name": "Rocket Now T-Shirt Design",
+    "confidence": 85,
+    "notes": "T-shirt design implies apparel mockup",
+    "_source_name": "rocket-now-t-shirt-design-C9WXZYB",
+    "_batch_index": 5409
+  },
+  {
+    "name": "RocketStock - Mojave 100 Dust Effects - RS3017",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Mojave 100 Dust Effects",
+    "confidence": 90,
+    "notes": "Contains .mp4 dust effects, stock footage",
+    "_source_name": "RocketStock - Mojave 100 Dust Effects - RS3017",
+    "_batch_index": 5410
+  },
+  {
+    "name": "RocketStock-RS1029-Sketchpad",
+    "category": "After Effects - Other",
+    "clean_name": "Sketchpad",
+    "confidence": 70,
+    "notes": "Likely an After Effects project from RocketStock",
+    "_source_name": "RocketStock-RS1029-Sketchpad",
+    "_batch_index": 5411
+  },
+  {
+    "name": "RocketStock-RS1070-Static",
+    "category": "After Effects - Other",
+    "clean_name": "Static",
+    "confidence": 70,
+    "notes": "Likely an After Effects project from RocketStock",
+    "_source_name": "RocketStock-RS1070-Static",
+    "_batch_index": 5412
+  },
+  {
+    "name": "rocky-mountains-slideshow-36459866",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Rocky Mountains Slideshow",
+    "confidence": 90,
+    "notes": "Contains .mogrt file",
+    "_source_name": "rocky-mountains-slideshow-36459866",
+    "_batch_index": 5413
+  },
+  {
+    "name": "romantic-love-story-music-visualizer-43518973",
+    "category": "After Effects - Lyric & Music Video",
+    "clean_name": "Romantic Love Story Music Visualizer",
+    "confidence": 85,
+    "notes": "Name indicates music visualizer",
+    "_source_name": "romantic-love-story-music-visualizer-43518973",
+    "_batch_index": 5414
+  },
+  {
+    "name": "romantic-photo-slideshow-40205177",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Photo Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "romantic-photo-slideshow-40205177",
+    "_batch_index": 5415
+  },
+  {
+    "name": "romantic-photo-story-24544224",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Photo Story",
+    "confidence": 85,
+    "notes": "Name indicates slideshow/story",
+    "_source_name": "romantic-photo-story-24544224",
+    "_batch_index": 5416
+  },
+  {
+    "name": "romantic-photo-video-slideshow-11876116",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Photo Video Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "romantic-photo-video-slideshow-11876116",
+    "_batch_index": 5417
+  },
+  {
+    "name": "romantic-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "romantic-slideshow",
+    "_batch_index": 5418
+  },
+  {
+    "name": "Romantic-slideshow-159002",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "Romantic-slideshow-159002",
+    "_batch_index": 5419
+  },
+  {
+    "name": "romantic-slideshow-36770279",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "romantic-slideshow-36770279",
+    "_batch_index": 5420
+  },
+  {
+    "name": "romantic-slideshow-37434705",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "romantic-slideshow-37434705",
+    "_batch_index": 5421
+  },
+  {
+    "name": "romantic-slideshow-emotional-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Slideshow Emotional Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "romantic-slideshow-emotional-slideshow",
+    "_batch_index": 5422
+  },
+  {
+    "name": "romantic-story-slideshow-for-after-effects-38978500",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Romantic Story Slideshow for After Effects",
+    "confidence": 90,
+    "notes": "Name explicitly says for After Effects and slideshow",
+    "_source_name": "romantic-story-slideshow-for-after-effects-38978500",
+    "_batch_index": 5423
+  },
+  {
+    "name": "Rose-Flower-Watercolor-Colorful-Arts-18906508",
+    "category": "Stock Photos - General",
+    "clean_name": "Rose Flower Watercolor Colorful Arts",
+    "confidence": 80,
+    "notes": "Contains .jpg and .png, likely stock images",
+    "_source_name": "Rose-Flower-Watercolor-Colorful-Arts-18906508",
+    "_batch_index": 5424
+  },
+  {
+    "name": "rotana-mobile-and-desktop-lightroom-presets-THBRJMZ",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Rotana Mobile and Desktop Lightroom Presets",
+    "confidence": 95,
+    "notes": "Name explicitly says Lightroom presets",
+    "_source_name": "rotana-mobile-and-desktop-lightroom-presets-THBRJMZ",
+    "_batch_index": 5425
+  },
+  {
+    "name": "roulette-casino-45434132",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Roulette Casino",
+    "confidence": 80,
+    "notes": "Casino theme likely for events",
+    "_source_name": "roulette-casino-45434132",
+    "_batch_index": 5426
+  },
+  {
+    "name": "Round_Tin_Can_Mockup_Set_6107661",
+    "category": "Mockups - Packaging",
+    "clean_name": "Round Tin Can Mockup Set",
+    "confidence": 95,
+    "notes": "Name says mockup set for tin can packaging",
+    "_source_name": "Round_Tin_Can_Mockup_Set_6107661",
+    "_batch_index": 5427
+  },
+  {
+    "name": "Route-planner-1318723",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Route Planner",
+    "confidence": 85,
+    "notes": "Name suggests map/route animation",
+    "_source_name": "Route-planner-1318723",
+    "_batch_index": 5428
+  },
+  {
+    "name": "Royalty Free Dramatic Music",
+    "category": "Stock Music & Audio",
+    "clean_name": "Royalty Free Dramatic Music",
+    "confidence": 95,
+    "notes": "Contains .wav, royalty free music",
+    "_source_name": "Royalty Free Dramatic Music",
+    "_batch_index": 5429
+  },
+  {
+    "name": "RS-3024",
+    "category": "_Skip",
+    "clean_name": "RS-3024",
+    "confidence": 100,
+    "notes": "Contains only .z01 fragment archive, incomplete",
+    "_source_name": "RS-3024",
+    "_batch_index": 5430
+  },
+  {
+    "name": "rs-sumi-ink-video-transitions",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "RS Sumi Ink Video Transitions",
+    "confidence": 85,
+    "notes": "Name indicates video transitions",
+    "_source_name": "rs-sumi-ink-video-transitions",
+    "_batch_index": 5431
+  },
+  {
+    "name": "RS2086-Interface",
+    "category": "After Effects - Other",
+    "clean_name": "Interface",
+    "confidence": 70,
+    "notes": "Likely an After Effects project from RocketStock",
+    "_source_name": "RS2086-Interface",
+    "_batch_index": 5432
+  },
+  {
+    "name": "RS3014",
+    "category": "_Skip",
+    "clean_name": "RS3014",
+    "confidence": 100,
+    "notes": "Contains only .z01, .z02 fragment archives, incomplete",
+    "_source_name": "RS3014",
+    "_batch_index": 5433
+  },
+  {
+    "name": "RS3019-detonate-explosion-video-effects-INTRO-HD.NET",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Detonate Explosion Video Effects",
+    "confidence": 90,
+    "notes": "Name indicates explosion video effects",
+    "_source_name": "RS3019-detonate-explosion-video-effects-INTRO-HD.NET",
+    "_batch_index": 5434
+  },
+  {
+    "name": "RS3020-Collapse-80-Debris-Effects-INTRO-HD.NET",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Collapse 80 Debris Effects",
+    "confidence": 90,
+    "notes": "Name indicates debris video effects",
+    "_source_name": "RS3020-Collapse-80-Debris-Effects-INTRO-HD.NET",
+    "_batch_index": 5435
+  },
+  {
+    "name": "RS3022",
+    "category": "_Skip",
+    "clean_name": "RS3022",
+    "confidence": 100,
+    "notes": "Contains .z01 fragment archive, incomplete",
+    "_source_name": "RS3022",
+    "_batch_index": 5436
+  },
+  {
+    "name": "RTFX Generator v2.8.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "RTFX Generator",
+    "confidence": 85,
+    "notes": "Name suggests a plugin/generator tool",
+    "_source_name": "RTFX Generator v2.8.1",
+    "_batch_index": 5437
+  },
+  {
+    "name": "Rubberhose 3.1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Rubberhose 3.1.0",
+    "confidence": 90,
+    "notes": "Well-known After Effects plugin for rigging",
+    "_source_name": "Rubberhose 3.1.0",
+    "_batch_index": 5438
+  },
+  {
+    "name": "rubberize_it_v1.08",
+    "category": "Plugins & Extensions",
+    "clean_name": "Rubberize It v1.08",
+    "confidence": 85,
+    "notes": "Name suggests a plugin",
+    "_source_name": "rubberize_it_v1.08",
+    "_batch_index": 5439
+  },
+  {
+    "name": "rubberize_it_v1.09",
+    "category": "Plugins & Extensions",
+    "clean_name": "Rubberize It v1.09",
+    "confidence": 85,
+    "notes": "Name suggests a plugin",
+    "_source_name": "rubberize_it_v1.09",
+    "_batch_index": 5440
+  },
+  {
+    "name": "rusted-impact-war-trailer-38746020",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Rusted Impact War Trailer",
+    "confidence": 85,
+    "notes": "Name indicates trailer",
+    "_source_name": "rusted-impact-war-trailer-38746020",
+    "_batch_index": 5441
+  },
+  {
+    "name": "Rustic Pizza Menu - Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rustic Pizza Menu Flyer",
+    "confidence": 90,
+    "notes": "Name indicates flyer",
+    "_source_name": "Rustic Pizza Menu - Flyer",
+    "_batch_index": 5442
+  },
+  {
+    "name": "rusty-tees-mockup-53408499",
+    "category": "Mockups - Apparel",
+    "clean_name": "Rusty Tees Mockup",
+    "confidence": 95,
+    "notes": "Name says mockup for t-shirts",
+    "_source_name": "rusty-tees-mockup-53408499",
+    "_batch_index": 5443
+  },
+  {
+    "name": "Ryan Nangle Lightning Effect",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Ryan Nangle Lightning Effect",
+    "confidence": 80,
+    "notes": "Lightning effect likely for cinematic use",
+    "_source_name": "Ryan Nangle Lightning Effect",
+    "_batch_index": 5444
+  },
+  {
+    "name": "saber-text-effects-27469607",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Saber Text Effects",
+    "confidence": 85,
+    "notes": "Name indicates text effects",
+    "_source_name": "saber-text-effects-27469607",
+    "_batch_index": 5445
+  },
+  {
+    "name": "Sabinella-3462517",
+    "category": "After Effects - Other",
+    "clean_name": "Sabinella",
+    "confidence": 60,
+    "notes": "Unclear, likely an After Effects project",
+    "_source_name": "Sabinella-3462517",
+    "_batch_index": 5446
+  },
+  {
+    "name": "sachet-mockup-set-P5Z53JH",
+    "category": "Mockups - Packaging",
+    "clean_name": "Sachet Mockup Set",
+    "confidence": 95,
+    "notes": "Name says mockup set for sachet packaging",
+    "_source_name": "sachet-mockup-set-P5Z53JH",
+    "_batch_index": 5447
+  },
+  {
+    "name": "sad-documentary-story-slideshow-32063860",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Sad Documentary Story Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "sad-documentary-story-slideshow-32063860",
+    "_batch_index": 5448
+  },
+  {
+    "name": "sad-memory-slideshow-37738470",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Sad Memory Slideshow",
+    "confidence": 90,
+    "notes": "Contains .mogrt file",
+    "_source_name": "sad-memory-slideshow-37738470",
+    "_batch_index": 5449
+  },
+  {
+    "name": "Sale_Banners_Pack",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Sale Banners Pack",
+    "confidence": 80,
+    "notes": "Contains .prproj file, Premiere Pro project",
+    "_source_name": "Sale_Banners_Pack",
+    "_batch_index": 5450
+  },
+  {
+    "name": "sale-scenes-for-after-effects-36489090",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Sale Scenes for After Effects",
+    "confidence": 85,
+    "notes": "Name says for After Effects, sale theme",
+    "_source_name": "sale-scenes-for-after-effects-36489090",
+    "_batch_index": 5451
+  },
+  {
+    "name": "sales-shop-clean-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Sales Shop Clean Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "sales-shop-clean-slideshow",
+    "_batch_index": 5452
+  },
+  {
+    "name": "Samuel-Silitonga-Jr-Video-LUTs-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Samuel Silitonga Jr Video LUTs",
+    "confidence": 95,
+    "notes": "Name says LUTs",
+    "_source_name": "Samuel-Silitonga-Jr-Video-LUTs-INTRO-HD.NET",
+    "_batch_index": 5453
+  },
+  {
+    "name": "samurai-something-t-shirt-design-M5V83YB",
+    "category": "Mockups - Apparel",
+    "clean_name": "Samurai Something T-Shirt Design",
+    "confidence": 85,
+    "notes": "T-shirt design implies apparel mockup",
+    "_source_name": "samurai-something-t-shirt-design-M5V83YB",
+    "_batch_index": 5454
+  },
+  {
+    "name": "sanfix-typographic-intro-19520275",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Sanfix Typographic Intro",
+    "confidence": 90,
+    "notes": "Name indicates typographic intro",
+    "_source_name": "sanfix-typographic-intro-19520275",
+    "_batch_index": 5455
+  },
+  {
+    "name": "santa-street-magic-42142831",
+    "category": "Stock Footage - General",
+    "clean_name": "Santa Street Magic",
+    "confidence": 80,
+    "notes": "Contains .mp4, likely stock footage",
+    "_source_name": "santa-street-magic-42142831",
+    "_batch_index": 5456
+  },
+  {
+    "name": "Sardine_Fish_Tin_Can_Mockup_Set",
+    "category": "Mockups - Packaging",
+    "clean_name": "Sardine Fish Tin Can Mockup Set",
+    "confidence": 95,
+    "notes": "Name says mockup set for tin can packaging",
+    "_source_name": "Sardine_Fish_Tin_Can_Mockup_Set",
+    "_batch_index": 5457
+  },
+  {
+    "name": "SavageLuts – ALL LUTS PACK",
+    "category": "Color Grading & LUTs",
+    "clean_name": "SavageLuts ALL LUTS PACK",
+    "confidence": 95,
+    "notes": "Name says LUTs",
+    "_source_name": "SavageLuts – ALL LUTS PACK",
+    "_batch_index": 5458
+  },
+  {
+    "name": "Save Actions v1.3",
+    "category": "Plugins & Extensions",
+    "clean_name": "Save Actions v1.3",
+    "confidence": 80,
+    "notes": "Contains .reg file, likely a plugin or script",
+    "_source_name": "Save Actions v1.3",
+    "_batch_index": 5459
+  }
+]

@@ -1,0 +1,553 @@
+[
+  {
+    "name": "davinci-resolve-transition-and-effects-package-34124842",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "DaVinci Resolve Transition and Effects Package",
+    "confidence": 70,
+    "notes": "Name says DaVinci Resolve, but no .drp file; .zip only, likely a transition pack for Resolve, but category list lacks DaVinci-specific; mapped to Premiere Pro - Transitions & FX as closest match.",
+    "_source_name": "davinci-resolve-transition-and-effects-package-34124842",
+    "_batch_index": 2460
+  },
+  {
+    "name": "DAYMOND_JOHN_S_LAUNCH_ACADEMY_ADVANCED_COMPOSITING",
+    "category": "Tutorial & Education",
+    "clean_name": "Daymond John's Launch Academy Advanced Compositing",
+    "confidence": 90,
+    "notes": "Name implies educational course/tutorial.",
+    "_source_name": "DAYMOND_JOHN_S_LAUNCH_ACADEMY_ADVANCED_COMPOSITING",
+    "_batch_index": 2461
+  },
+  {
+    "name": "db_1839764-Aidownload.net",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Dust and Scratches Film Overlays",
+    "confidence": 85,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1839764-Aidownload.net",
+    "_batch_index": 2462,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "db_1839807-ring-lens-flare-overlays-sunlight-overlays-lens",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Ring Lens Flare Overlays Sunlight Overlays Lens",
+    "confidence": 85,
+    "notes": "Lens flare overlays are stock footage/VFX elements.",
+    "_source_name": "db_1839807-ring-lens-flare-overlays-sunlight-overlays-lens",
+    "_batch_index": 2463
+  },
+  {
+    "name": "db_1839836-Aidownload.net",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Film Negative Texture",
+    "confidence": 80,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1839836-Aidownload.net",
+    "_batch_index": 2464,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "db_1888916-Aidownload.net",
+    "category": "_Review",
+    "clean_name": "db_1888916",
+    "confidence": 50,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1888916-Aidownload.net",
+    "_batch_index": 2465
+  },
+  {
+    "name": "db_1888992-Aidownload.net",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "More Glow",
+    "confidence": 65,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1888992-Aidownload.net",
+    "_batch_index": 2466,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "db_1889031-Aidownload.net",
+    "category": "_Review",
+    "clean_name": "db_1889031",
+    "confidence": 50,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1889031-Aidownload.net",
+    "_batch_index": 2467
+  },
+  {
+    "name": "db_1889889-Aidownload.net",
+    "category": "_Review",
+    "clean_name": "db_1889889",
+    "confidence": 50,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1889889-Aidownload.net",
+    "_batch_index": 2468
+  },
+  {
+    "name": "db_1998030-Aidownload.net",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Nature Textures Pack",
+    "confidence": 90,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1998030-Aidownload.net",
+    "_batch_index": 2469,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "db_1998034-Aidownload.net",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "White Feather Photo Overlays",
+    "confidence": 85,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1998034-Aidownload.net",
+    "_batch_index": 2470,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "db_1998040-Aidownload.net",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Black Feather Photo Overlays",
+    "confidence": 85,
+    "notes": "Numeric ID only, no content hint; .zip only.",
+    "_source_name": "db_1998040-Aidownload.net",
+    "_batch_index": 2471,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "db-4785",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Old Film VFX",
+    "confidence": 90,
+    "notes": "Numeric ID only, no content hint; .rar only.",
+    "_source_name": "db-4785",
+    "_batch_index": 2472,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Dealova",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Dealova",
+    "confidence": 87,
+    "notes": "Only .jpg and .pdf, unclear purpose.",
+    "_source_name": "Dealova",
+    "_batch_index": 2473,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "decision-trailer-titles-43982890",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Decision Trailer Titles",
+    "confidence": 80,
+    "notes": "Name suggests trailer titles, likely After Effects project.",
+    "_source_name": "decision-trailer-titles-43982890",
+    "_batch_index": 2474
+  },
+  {
+    "name": "declan-mobile-and-desktop-lightroom-presets-WN23NAN",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Declan Mobile and Desktop Lightroom Presets",
+    "confidence": 95,
+    "notes": "Explicitly Lightroom presets.",
+    "_source_name": "declan-mobile-and-desktop-lightroom-presets-WN23NAN",
+    "_batch_index": 2475
+  },
+  {
+    "name": "Declutter-v1.0.1",
+    "category": "Software & Utilities",
+    "clean_name": "Declutter",
+    "confidence": 95,
+    "notes": "Name ambiguous, no file type hints.",
+    "_source_name": "Declutter-v1.0.1",
+    "_batch_index": 2476,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Deekay Tool v1.1.5",
+    "category": "Plugins & Extensions",
+    "clean_name": "Deekay Tool v1.1.5",
+    "confidence": 80,
+    "notes": "Tool name suggests plugin/extension.",
+    "_source_name": "Deekay Tool v1.1.5",
+    "_batch_index": 2477
+  },
+  {
+    "name": "Deekay Tool v1.1.6",
+    "category": "Plugins & Extensions",
+    "clean_name": "Deekay Tool v1.1.6",
+    "confidence": 80,
+    "notes": "Tool name suggests plugin/extension.",
+    "_source_name": "Deekay Tool v1.1.6",
+    "_batch_index": 2478
+  },
+  {
+    "name": "Deekay Tool v1.1.8",
+    "category": "Plugins & Extensions",
+    "clean_name": "Deekay Tool v1.1.8",
+    "confidence": 80,
+    "notes": "Tool name suggests plugin/extension.",
+    "_source_name": "Deekay Tool v1.1.8",
+    "_batch_index": 2479
+  },
+  {
+    "name": "Deep Glow v1.6 Win-Mac",
+    "category": "Plugins & Extensions",
+    "clean_name": "Deep Glow v1.6",
+    "confidence": 95,
+    "notes": "Contains .aex file, which is an After Effects plugin extension.",
+    "_source_name": "Deep Glow v1.6 Win-Mac",
+    "_batch_index": 2480
+  },
+  {
+    "name": "deep-ambient-inks-photo-slideshow-38326519",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Deep Ambient Inks Photo Slideshow",
+    "confidence": 80,
+    "notes": "Name says photo slideshow, likely After Effects template.",
+    "_source_name": "deep-ambient-inks-photo-slideshow-38326519",
+    "_batch_index": 2481
+  },
+  {
+    "name": "deep-underwater-ecology-ocean-trailer",
+    "category": "Stock Footage - Nature & Landscape",
+    "clean_name": "Deep Underwater Ecology Ocean Trailer",
+    "confidence": 75,
+    "notes": "Contains .mp4 video, likely stock footage of underwater scenes.",
+    "_source_name": "deep-underwater-ecology-ocean-trailer",
+    "_batch_index": 2482
+  },
+  {
+    "name": "Dehancer Pro AePr v2.1.0 CE",
+    "category": "Plugins & Extensions",
+    "clean_name": "Dehancer Pro AePr v2.1.0 CE",
+    "confidence": 90,
+    "notes": "Dehancer is a plugin for color grading, likely .aex or .jsxbin.",
+    "_source_name": "Dehancer Pro AePr v2.1.0 CE",
+    "_batch_index": 2483
+  },
+  {
+    "name": "Dehancer Pro OFX 7.1.0 CE",
+    "category": "Plugins & Extensions",
+    "clean_name": "Dehancer Pro OFX 7.1.0 CE",
+    "confidence": 90,
+    "notes": "OFX plugin for color grading.",
+    "_source_name": "Dehancer Pro OFX 7.1.0 CE",
+    "_batch_index": 2484
+  },
+  {
+    "name": "Dehancer Pro OFX v7.0.1 CE",
+    "category": "Plugins & Extensions",
+    "clean_name": "Dehancer Pro OFX v7.0.1 CE",
+    "confidence": 90,
+    "notes": "OFX plugin for color grading.",
+    "_source_name": "Dehancer Pro OFX v7.0.1 CE",
+    "_batch_index": 2485
+  },
+  {
+    "name": "Dehancer.Film.Ps.Lr.v2.5.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Dehancer Film Ps Lr v2.5.0",
+    "confidence": 90,
+    "notes": "Plugin for Photoshop and Lightroom.",
+    "_source_name": "Dehancer.Film.Ps.Lr.v2.5.0",
+    "_batch_index": 2486
+  },
+  {
+    "name": "Dehancer.Pro.Ae.Pr.v7.1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Dehancer Pro Ae Pr v7.1.1",
+    "confidence": 90,
+    "notes": "Plugin for After Effects and Premiere Pro.",
+    "_source_name": "Dehancer.Pro.Ae.Pr.v7.1.1",
+    "_batch_index": 2487
+  },
+  {
+    "name": "Dehancer.Pro.OFX.v7.1.3",
+    "category": "Plugins & Extensions",
+    "clean_name": "Dehancer Pro OFX v7.1.3",
+    "confidence": 90,
+    "notes": "OFX plugin.",
+    "_source_name": "Dehancer.Pro.OFX.v7.1.3",
+    "_batch_index": 2488
+  },
+  {
+    "name": "delivery-service-food-scooter-38915525",
+    "category": "Stock Photos - General",
+    "clean_name": "Delivery Service Food Scooter",
+    "confidence": 70,
+    "notes": "Only .jpg, likely a stock photo.",
+    "_source_name": "delivery-service-food-scooter-38915525",
+    "_batch_index": 2489
+  },
+  {
+    "name": "delivery-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Delivery Slideshow",
+    "confidence": 75,
+    "notes": "Name suggests slideshow template.",
+    "_source_name": "delivery-slideshow",
+    "_batch_index": 2490
+  },
+  {
+    "name": "delusio-halftone-photoshop-effect",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Delusio Halftone Photoshop Effect",
+    "confidence": 90,
+    "notes": "Explicitly Photoshop effect.",
+    "_source_name": "delusio-halftone-photoshop-effect",
+    "_batch_index": 2491
+  },
+  {
+    "name": "DELUTS_Clog_Neutral_LUTs-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "DELUTS Clog Neutral LUTs",
+    "confidence": 95,
+    "notes": "Name contains LUTs.",
+    "_source_name": "DELUTS_Clog_Neutral_LUTs-INTRO-HD.NET",
+    "_batch_index": 2492
+  },
+  {
+    "name": "denmark-map-kingdom-of-denmark-map-kit",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Denmark Map Kingdom of Denmark Map Kit",
+    "confidence": 85,
+    "notes": "Map kit, likely for After Effects.",
+    "_source_name": "denmark-map-kingdom-of-denmark-map-kit",
+    "_batch_index": 2493
+  },
+  {
+    "name": "dense-trailer-titles",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Dense Trailer Titles",
+    "confidence": 80,
+    "notes": "Trailer titles, likely After Effects.",
+    "_source_name": "dense-trailer-titles",
+    "_batch_index": 2494
+  },
+  {
+    "name": "dental-health-clinic-slideshow-42152352",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dental Health Clinic Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow template.",
+    "_source_name": "dental-health-clinic-slideshow-42152352",
+    "_batch_index": 2495
+  },
+  {
+    "name": "dental-professionals-51670029",
+    "category": "Stock Photos - General",
+    "clean_name": "Dental Professionals",
+    "confidence": 70,
+    "notes": "Likely stock photos of dental professionals.",
+    "_source_name": "dental-professionals-51670029",
+    "_batch_index": 2496
+  },
+  {
+    "name": "Deposit photos 1 DokanMosmm",
+    "category": "Stock Photos - General",
+    "clean_name": "Deposit Photos 1",
+    "confidence": 80,
+    "notes": "Contains .eps, .jpg, .svg; likely stock photos/vectors.",
+    "_source_name": "Deposit photos 1 DokanMosmm",
+    "_batch_index": 2497
+  },
+  {
+    "name": "Depth Scanner v1.14.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Depth Scanner v1.14.0",
+    "confidence": 80,
+    "notes": "Tool/plugin name.",
+    "_source_name": "Depth Scanner v1.14.0",
+    "_batch_index": 2498
+  },
+  {
+    "name": "Depth Scanner v1.15.8 Win",
+    "category": "Plugins & Extensions",
+    "clean_name": "Depth Scanner v1.15.8 Win",
+    "confidence": 90,
+    "notes": "Contains .blaceplugin file, a plugin extension.",
+    "_source_name": "Depth Scanner v1.15.8 Win",
+    "_batch_index": 2499
+  },
+  {
+    "name": "desert-war-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Desert War Slideshow",
+    "confidence": 70,
+    "notes": "Name suggests slideshow, but only .jpg files; likely preview images.",
+    "_source_name": "desert-war-slideshow",
+    "_batch_index": 2500
+  },
+  {
+    "name": "design-scenes-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Design Scenes Titles",
+    "confidence": 80,
+    "notes": "Title template.",
+    "_source_name": "design-scenes-titles",
+    "_batch_index": 2501
+  },
+  {
+    "name": "designbundles_1894534-Aidownload.net",
+    "category": "_Review",
+    "clean_name": "designbundles_1894534",
+    "confidence": 50,
+    "notes": "Numeric ID only, no content hint.",
+    "_source_name": "designbundles_1894534-Aidownload.net",
+    "_batch_index": 2502
+  },
+  {
+    "name": "designbundles_1894553-Aidownload.net",
+    "category": "_Review",
+    "clean_name": "designbundles_1894553",
+    "confidence": 50,
+    "notes": "Numeric ID only, no content hint.",
+    "_source_name": "designbundles_1894553-Aidownload.net",
+    "_batch_index": 2503
+  },
+  {
+    "name": "designbundles_1894603-Aidownload.net",
+    "category": "_Review",
+    "clean_name": "designbundles_1894603",
+    "confidence": 50,
+    "notes": "Numeric ID only, no content hint.",
+    "_source_name": "designbundles_1894603-Aidownload.net",
+    "_batch_index": 2504
+  },
+  {
+    "name": "designbundles_1894615-Aidownload.net",
+    "category": "_Review",
+    "clean_name": "designbundles_1894615",
+    "confidence": 50,
+    "notes": "Numeric ID only, no content hint.",
+    "_source_name": "designbundles_1894615-Aidownload.net",
+    "_batch_index": 2505
+  },
+  {
+    "name": "designbundles_1894905-Aidownload.net",
+    "category": "_Review",
+    "clean_name": "designbundles_1894905",
+    "confidence": 50,
+    "notes": "Numeric ID only, no content hint.",
+    "_source_name": "designbundles_1894905-Aidownload.net",
+    "_batch_index": 2506
+  },
+  {
+    "name": "designbundles_414715-Aidownload.net",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Real City Great Pack Bokeh",
+    "confidence": 85,
+    "notes": "Numeric ID only, no content hint.",
+    "_source_name": "designbundles_414715-Aidownload.net",
+    "_batch_index": 2507,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Designer Sound FX",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Designer Sound FX",
+    "confidence": 80,
+    "notes": "Name says Sound FX, but only .txt file; likely a description or link.",
+    "_source_name": "Designer Sound FX",
+    "_batch_index": 2508
+  },
+  {
+    "name": "DesignOptimal.com - Videohive - Company History - Corporate Timeline 31189097",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Company History Corporate Timeline",
+    "confidence": 85,
+    "notes": "Corporate timeline template from Videohive.",
+    "_source_name": "DesignOptimal.com - Videohive - Company History - Corporate Timeline 31189097",
+    "_batch_index": 2509
+  },
+  {
+    "name": "Desk Calendar 2022",
+    "category": "Print - Other",
+    "clean_name": "Desk Calendar 2022",
+    "confidence": 80,
+    "notes": "Calendar design, likely print template.",
+    "_source_name": "Desk Calendar 2022",
+    "_batch_index": 2510
+  },
+  {
+    "name": "Desk-Calendar-Mockup-6-views",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Desk Calendar Mockup 6 Views",
+    "confidence": 95,
+    "notes": "Contains .psd, mockup of desk calendar.",
+    "_source_name": "Desk-Calendar-Mockup-6-views",
+    "_batch_index": 2511
+  },
+  {
+    "name": "Destination-20490700",
+    "category": "Fonts & Typography",
+    "clean_name": "Destination",
+    "confidence": 95,
+    "notes": "Name ambiguous, no file type hints.",
+    "_source_name": "Destination-20490700",
+    "_batch_index": 2512,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "detective-paper-intro-51171586",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Detective Paper Intro",
+    "confidence": 80,
+    "notes": "Intro template.",
+    "_source_name": "detective-paper-intro-51171586",
+    "_batch_index": 2513
+  },
+  {
+    "name": "detective-story-10969894",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Detective Story",
+    "confidence": 75,
+    "notes": "Likely an intro or opener.",
+    "_source_name": "detective-story-10969894",
+    "_batch_index": 2514
+  },
+  {
+    "name": "detective-theory-40420678",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Detective Theory",
+    "confidence": 75,
+    "notes": "Likely an intro or opener.",
+    "_source_name": "detective-theory-40420678",
+    "_batch_index": 2515
+  },
+  {
+    "name": "detective-theory-52052316",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Detective Theory",
+    "confidence": 75,
+    "notes": "Likely an intro or opener.",
+    "_source_name": "detective-theory-52052316",
+    "_batch_index": 2516
+  },
+  {
+    "name": "devastation-photoshop-action-DWD48GJ",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Devastation Photoshop Action",
+    "confidence": 95,
+    "notes": "Explicitly Photoshop action.",
+    "_source_name": "devastation-photoshop-action-DWD48GJ",
+    "_batch_index": 2517
+  },
+  {
+    "name": "devbrush-6-0-for-procreate-5-HASANDU",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Devbrush 6.0 for Procreate 5",
+    "confidence": 85,
+    "notes": "Brushes for Procreate, but categorized under Photoshop brushes as closest.",
+    "_source_name": "devbrush-6-0-for-procreate-5-HASANDU",
+    "_batch_index": 2518
+  },
+  {
+    "name": "Device",
+    "category": "3D - Models & Objects",
+    "clean_name": "Device",
+    "confidence": 80,
+    "notes": "Contains .obj file, a 3D model.",
+    "_source_name": "Device",
+    "_batch_index": 2519
+  }
+]

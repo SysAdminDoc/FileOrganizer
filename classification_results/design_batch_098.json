@@ -1,0 +1,543 @@
+[
+  {
+    "name": "super-8mm-film-filters-52081853",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Super 8mm Film Filters",
+    "confidence": 85,
+    "notes": "Name suggests film filters, likely LUTs/presets",
+    "_source_name": "super-8mm-film-filters-52081853",
+    "_batch_index": 5820
+  },
+  {
+    "name": "super-comic-titles-36759859",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Super Comic Titles",
+    "confidence": 80,
+    "notes": "Comic titles likely AE template",
+    "_source_name": "super-comic-titles-36759859",
+    "_batch_index": 5821
+  },
+  {
+    "name": "super-dynamic",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Super Dynamic",
+    "confidence": 70,
+    "notes": "Generic name, likely motion graphics pack",
+    "_source_name": "super-dynamic",
+    "_batch_index": 5822
+  },
+  {
+    "name": "super-fashion-sale-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Super Fashion Sale Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow for fashion sale",
+    "_source_name": "super-fashion-sale-slideshow",
+    "_batch_index": 5823
+  },
+  {
+    "name": "super-hero-title-design-46236135",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Super Hero Title Design",
+    "confidence": 85,
+    "notes": "Title design, likely AE",
+    "_source_name": "super-hero-title-design-46236135",
+    "_batch_index": 5824
+  },
+  {
+    "name": "super-mixed-transitions-pack-vertical-instagram",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Super Mixed Transitions Pack Vertical Instagram",
+    "confidence": 90,
+    "notes": "Contains .aep, transitions for Instagram",
+    "_source_name": "super-mixed-transitions-pack-vertical-instagram",
+    "_batch_index": 5825
+  },
+  {
+    "name": "Superhero LUTs - Triune Films",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Superhero LUTs - Triune Films",
+    "confidence": 95,
+    "notes": "Explicit LUTs in name",
+    "_source_name": "Superhero LUTs - Triune Films",
+    "_batch_index": 5826
+  },
+  {
+    "name": "Superluminal Stardust v1.6.0c Win",
+    "category": "Plugins & Extensions",
+    "clean_name": "Superluminal Stardust v1.6.0c Win",
+    "confidence": 85,
+    "notes": "Plugin name, likely AE plugin",
+    "_source_name": "Superluminal Stardust v1.6.0c Win",
+    "_batch_index": 5827
+  },
+  {
+    "name": "Supermarket Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Supermarket Flyer",
+    "confidence": 90,
+    "notes": "Flyer design",
+    "_source_name": "Supermarket Flyer",
+    "_batch_index": 5828
+  },
+  {
+    "name": "SuperposeAE v2.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "SuperposeAE v2.2",
+    "confidence": 85,
+    "notes": "AE plugin name",
+    "_source_name": "SuperposeAE v2.2",
+    "_batch_index": 5829
+  },
+  {
+    "name": "surreal-mirror-effects-43560937",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Surreal Mirror Effects",
+    "confidence": 75,
+    "notes": "Effects pack, likely AE",
+    "_source_name": "surreal-mirror-effects-43560937",
+    "_batch_index": 5830
+  },
+  {
+    "name": "suspense-and-horror-trailer-39510932",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Suspense and Horror Trailer",
+    "confidence": 85,
+    "notes": "Trailer template",
+    "_source_name": "suspense-and-horror-trailer-39510932",
+    "_batch_index": 5831
+  },
+  {
+    "name": "svg2ae_v1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "svg2ae v1.0",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, AE script/plugin",
+    "_source_name": "svg2ae_v1.0",
+    "_batch_index": 5832
+  },
+  {
+    "name": "swag-urban-stories-36875908",
+    "category": "After Effects - Social Media",
+    "clean_name": "Swag Urban Stories",
+    "confidence": 75,
+    "notes": "Stories format, likely social media",
+    "_source_name": "swag-urban-stories-36875908",
+    "_batch_index": 5833
+  },
+  {
+    "name": "sweatshirt-mockup-FP2BGC9",
+    "category": "Mockups - Apparel",
+    "clean_name": "Sweatshirt Mockup",
+    "confidence": 95,
+    "notes": "Mockup of sweatshirt",
+    "_source_name": "sweatshirt-mockup-FP2BGC9",
+    "_batch_index": 5834
+  },
+  {
+    "name": "sweet-memories-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Sweet Memories Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow template",
+    "_source_name": "sweet-memories-slideshow",
+    "_batch_index": 5835
+  },
+  {
+    "name": "sweet-memories-slideshow-40862629",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Sweet Memories Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow template",
+    "_source_name": "sweet-memories-slideshow-40862629",
+    "_batch_index": 5836
+  },
+  {
+    "name": "sweet-memories-slideshow-45851311",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Sweet Memories Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow template",
+    "_source_name": "sweet-memories-slideshow-45851311",
+    "_batch_index": 5837
+  },
+  {
+    "name": "sweety-memories-53318878",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Sweety Memories",
+    "confidence": 80,
+    "notes": "Likely slideshow",
+    "_source_name": "sweety-memories-53318878",
+    "_batch_index": 5838
+  },
+  {
+    "name": "swipe-up",
+    "category": "After Effects - Social Media",
+    "clean_name": "Swipe Up",
+    "confidence": 75,
+    "notes": "Social media story element",
+    "_source_name": "swipe-up",
+    "_batch_index": 5839
+  },
+  {
+    "name": "swipe-up-for-premier-pro",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Swipe Up for Premier Pro",
+    "confidence": 85,
+    "notes": "Premiere Pro specific",
+    "_source_name": "swipe-up-for-premier-pro",
+    "_batch_index": 5840
+  },
+  {
+    "name": "Swiss Knife 1.1.7",
+    "category": "Plugins & Extensions",
+    "clean_name": "Swiss Knife 1.1.7",
+    "confidence": 95,
+    "notes": "Contains .jsxbin, AE script",
+    "_source_name": "Swiss Knife 1.1.7",
+    "_batch_index": 5841
+  },
+  {
+    "name": "Swiss Knife 1.2 c",
+    "category": "Plugins & Extensions",
+    "clean_name": "Swiss Knife 1.2 c",
+    "confidence": 95,
+    "notes": "Contains .jsxbin, AE script",
+    "_source_name": "Swiss Knife 1.2 c",
+    "_batch_index": 5842
+  },
+  {
+    "name": "Swiss Knife 1.2.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Swiss Knife 1.2.0",
+    "confidence": 95,
+    "notes": "Contains .jsxbin, AE script",
+    "_source_name": "Swiss Knife 1.2.0",
+    "_batch_index": 5843
+  },
+  {
+    "name": "switzerland-map-swiss-confederation-map-kit",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Switzerland Map Swiss Confederation Map Kit",
+    "confidence": 90,
+    "notes": "Map kit, likely AE",
+    "_source_name": "switzerland-map-swiss-confederation-map-kit",
+    "_batch_index": 5844
+  },
+  {
+    "name": "t-shirt-designs-collection-part-1-JYN2ME",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "T-Shirt Designs Collection Part 1",
+    "confidence": 80,
+    "notes": "T-shirt designs likely vector",
+    "_source_name": "t-shirt-designs-collection-part-1-JYN2ME",
+    "_batch_index": 5845
+  },
+  {
+    "name": "t-shirt-designs-retro-collection-part-2-3HWKNCT",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "T-Shirt Designs Retro Collection Part 2",
+    "confidence": 80,
+    "notes": "T-shirt designs likely vector",
+    "_source_name": "t-shirt-designs-retro-collection-part-2-3HWKNCT",
+    "_batch_index": 5846
+  },
+  {
+    "name": "t-shirt-designs-retro-collection-part-3-W6STYZA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "T-Shirt Designs Retro Collection Part 3",
+    "confidence": 80,
+    "notes": "T-shirt designs likely vector",
+    "_source_name": "t-shirt-designs-retro-collection-part-3-W6STYZA",
+    "_batch_index": 5847
+  },
+  {
+    "name": "t-shirt-mock-up-3-TCASQ6",
+    "category": "Mockups - Apparel",
+    "clean_name": "T-Shirt Mock Up 3",
+    "confidence": 95,
+    "notes": "Mockup of t-shirt",
+    "_source_name": "t-shirt-mock-up-3-TCASQ6",
+    "_batch_index": 5848
+  },
+  {
+    "name": "t-shirt-mockups-K6DACR5",
+    "category": "Mockups - Apparel",
+    "clean_name": "T-Shirt Mockups",
+    "confidence": 95,
+    "notes": "Mockup of t-shirt",
+    "_source_name": "t-shirt-mockups-K6DACR5",
+    "_batch_index": 5849
+  },
+  {
+    "name": "t-shirt-presentation-mockup-CZK7W5P",
+    "category": "Mockups - Apparel",
+    "clean_name": "T-Shirt Presentation Mockup",
+    "confidence": 95,
+    "notes": "Mockup of t-shirt",
+    "_source_name": "t-shirt-presentation-mockup-CZK7W5P",
+    "_batch_index": 5850
+  },
+  {
+    "name": "T3XNEKU-Aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "South Montana Regular",
+    "confidence": 99,
+    "notes": "Numeric ID only, no content clue",
+    "_source_name": "T3XNEKU-Aidownload.net",
+    "_batch_index": 5851,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "table-list-pack-42304899",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "Table List Pack",
+    "confidence": 80,
+    "notes": "Table list likely infographic",
+    "_source_name": "table-list-pack-42304899",
+    "_batch_index": 5852
+  },
+  {
+    "name": "table-tennis-racket-mockups-GFJQ5ST",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Table Tennis Racket Mockups",
+    "confidence": 80,
+    "notes": "Product mockup, not apparel",
+    "_source_name": "table-tennis-racket-mockups-GFJQ5ST",
+    "_batch_index": 5853
+  },
+  {
+    "name": "Tablets And Pills 6",
+    "category": "Stock Photos - General",
+    "clean_name": "Tablets And Pills 6",
+    "confidence": 70,
+    "notes": "Only .jpg, likely stock photo",
+    "_source_name": "Tablets And Pills 6",
+    "_batch_index": 5854
+  },
+  {
+    "name": "taiwan-animated-map-republic-of-china-roc-map-ki",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Taiwan Animated Map Republic of China ROC Map Kit",
+    "confidence": 90,
+    "notes": "Animated map kit",
+    "_source_name": "taiwan-animated-map-republic-of-china-roc-map-ki",
+    "_batch_index": 5855
+  },
+  {
+    "name": "take-away-coffee-cup-mockup-287JPNL",
+    "category": "Mockups - Packaging",
+    "clean_name": "Take Away Coffee Cup Mockup",
+    "confidence": 95,
+    "notes": "Packaging mockup",
+    "_source_name": "take-away-coffee-cup-mockup-287JPNL",
+    "_batch_index": 5856
+  },
+  {
+    "name": "talkie-online-meeting",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Talkie Online Meeting",
+    "confidence": 75,
+    "notes": "Online meeting graphics",
+    "_source_name": "talkie-online-meeting",
+    "_batch_index": 5857
+  },
+  {
+    "name": "Talking Head v2.0.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Talking Head v2.0.1",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, AE script",
+    "_source_name": "Talking Head v2.0.1",
+    "_batch_index": 5858
+  },
+  {
+    "name": "Tall_Kraft_Paper_Packaging_Mockup",
+    "category": "Mockups - Packaging",
+    "clean_name": "Tall Kraft Paper Packaging Mockup",
+    "confidence": 95,
+    "notes": "Packaging mockup",
+    "_source_name": "Tall_Kraft_Paper_Packaging_Mockup",
+    "_batch_index": 5859
+  },
+  {
+    "name": "tape-titles-mogrt-52852239",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Tape Titles Mogrt",
+    "confidence": 95,
+    "notes": "Contains .mogrt in name",
+    "_source_name": "tape-titles-mogrt-52852239",
+    "_batch_index": 5860
+  },
+  {
+    "name": "TC - OPPENHEIMER LOOKS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TC - OPPENHEIMER LOOKS",
+    "confidence": 90,
+    "notes": "Looks/LUTs",
+    "_source_name": "TC - OPPENHEIMER LOOKS",
+    "_batch_index": 5861
+  },
+  {
+    "name": "TC - TV LOOKS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TC - TV LOOKS",
+    "confidence": 90,
+    "notes": "Looks/LUTs",
+    "_source_name": "TC - TV LOOKS",
+    "_batch_index": 5862
+  },
+  {
+    "name": "TC CINEMATIC POSTER 2",
+    "category": "Photoshop - Mockups",
+    "clean_name": "TC CINEMATIC POSTER 2",
+    "confidence": 80,
+    "notes": "Contains .jpg and .docx, likely poster mockup",
+    "_source_name": "TC CINEMATIC POSTER 2",
+    "_batch_index": 5863
+  },
+  {
+    "name": "TC__-_-BEST_OF-_LOOKS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TC - BEST OF LOOKS",
+    "confidence": 90,
+    "notes": "Looks/LUTs",
+    "_source_name": "TC__-_-BEST_OF-_LOOKS",
+    "_batch_index": 5864
+  },
+  {
+    "name": "TC_-_CANON_CONVERSION_LUTS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TC - CANON CONVERSION LUTS",
+    "confidence": 95,
+    "notes": "Explicit LUTs in name",
+    "_source_name": "TC_-_CANON_CONVERSION_LUTS",
+    "_batch_index": 5865
+  },
+  {
+    "name": "TC_-_CINEMATIC_POSTERS",
+    "category": "Photoshop - Mockups",
+    "clean_name": "TC - CINEMATIC POSTERS",
+    "confidence": 80,
+    "notes": "Poster mockups",
+    "_source_name": "TC_-_CINEMATIC_POSTERS",
+    "_batch_index": 5866
+  },
+  {
+    "name": "TC_-_Film_Titles_Vol3",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "TC - Film Titles Vol3",
+    "confidence": 85,
+    "notes": "Film titles template",
+    "_source_name": "TC_-_Film_Titles_Vol3",
+    "_batch_index": 5867
+  },
+  {
+    "name": "TC_-_KOMODO_CONVERSION_LUTS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TC - KOMODO CONVERSION LUTS",
+    "confidence": 95,
+    "notes": "Explicit LUTs in name",
+    "_source_name": "TC_-_KOMODO_CONVERSION_LUTS",
+    "_batch_index": 5868
+  },
+  {
+    "name": "TC_-_MOVIE_LOOKS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TC - MOVIE LOOKS",
+    "confidence": 90,
+    "notes": "Looks/LUTs",
+    "_source_name": "TC_-_MOVIE_LOOKS",
+    "_batch_index": 5869
+  },
+  {
+    "name": "TC_-_PIXEL_GENERATOR",
+    "category": "Plugins & Extensions",
+    "clean_name": "TC - PIXEL GENERATOR",
+    "confidence": 80,
+    "notes": "Generator plugin",
+    "_source_name": "TC_-_PIXEL_GENERATOR",
+    "_batch_index": 5870
+  },
+  {
+    "name": "TC_Animated_Font",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "TC Animated Font",
+    "confidence": 85,
+    "notes": "Animated font template",
+    "_source_name": "TC_Animated_Font",
+    "_batch_index": 5871
+  },
+  {
+    "name": "TC_BARBIE",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TC BARBIE",
+    "confidence": 80,
+    "notes": "Likely LUTs for Barbie look",
+    "_source_name": "TC_BARBIE",
+    "_batch_index": 5872
+  },
+  {
+    "name": "TC_MOVIELOOKS_VOL2",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TC MOVIELOOKS VOL2",
+    "confidence": 90,
+    "notes": "Looks/LUTs",
+    "_source_name": "TC_MOVIELOOKS_VOL2",
+    "_batch_index": 5873
+  },
+  {
+    "name": "TC_PRODUCTION_ESSENTIALS",
+    "category": "After Effects - Other",
+    "clean_name": "TC PRODUCTION ESSENTIALS",
+    "confidence": 70,
+    "notes": "Generic production assets",
+    "_source_name": "TC_PRODUCTION_ESSENTIALS",
+    "_batch_index": 5874
+  },
+  {
+    "name": "Tea_Box_Packaging_Mockup_Set_5971990",
+    "category": "Mockups - Packaging",
+    "clean_name": "Tea Box Packaging Mockup Set",
+    "confidence": 95,
+    "notes": "Packaging mockup",
+    "_source_name": "Tea_Box_Packaging_Mockup_Set_5971990",
+    "_batch_index": 5875
+  },
+  {
+    "name": "tea-bag-box-mockup-MU228DQ",
+    "category": "Mockups - Packaging",
+    "clean_name": "Tea Bag Box Mockup",
+    "confidence": 95,
+    "notes": "Packaging mockup",
+    "_source_name": "tea-bag-box-mockup-MU228DQ",
+    "_batch_index": 5876
+  },
+  {
+    "name": "tea-bag-mock-up-ES64WD",
+    "category": "Mockups - Packaging",
+    "clean_name": "Tea Bag Mock Up",
+    "confidence": 95,
+    "notes": "Packaging mockup",
+    "_source_name": "tea-bag-mock-up-ES64WD",
+    "_batch_index": 5877
+  },
+  {
+    "name": "tea-box-and-tea-bag-mockup-set-4MNUQKF",
+    "category": "Mockups - Packaging",
+    "clean_name": "Tea Box and Tea Bag Mockup Set",
+    "confidence": 95,
+    "notes": "Packaging mockup",
+    "_source_name": "tea-box-and-tea-bag-mockup-set-4MNUQKF",
+    "_batch_index": 5878
+  },
+  {
+    "name": "tea-box-and-tea-bag-mockup-set-JWTTPMA",
+    "category": "Mockups - Packaging",
+    "clean_name": "Tea Box and Tea Bag Mockup Set",
+    "confidence": 95,
+    "notes": "Packaging mockup",
+    "_source_name": "tea-box-and-tea-bag-mockup-set-JWTTPMA",
+    "_batch_index": 5879
+  }
+]

@@ -1,0 +1,545 @@
+[
+  {
+    "name": "Tropic Colour – Cinematic Poster Templates",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Tropic Colour Cinematic Poster Templates",
+    "confidence": 85,
+    "notes": "Poster templates suggest print mockups.",
+    "_source_name": "Tropic Colour – Cinematic Poster Templates",
+    "_batch_index": 6120
+  },
+  {
+    "name": "Tropic Colour – CINEMATIC TITLE PACK",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Tropic Colour Cinematic Title Pack",
+    "confidence": 80,
+    "notes": "Title pack likely for After Effects.",
+    "_source_name": "Tropic Colour – CINEMATIC TITLE PACK",
+    "_batch_index": 6121
+  },
+  {
+    "name": "Tropic Colour – Creative Resumes",
+    "category": "Print - Other",
+    "clean_name": "Tropic Colour Creative Resumes",
+    "confidence": 70,
+    "notes": "Resumes in .jpg format, likely print templates.",
+    "_source_name": "Tropic Colour – Creative Resumes",
+    "_batch_index": 6122
+  },
+  {
+    "name": "Tropic Colour – CRT TYPE KIT – Digital CRT FONT PLUGIN",
+    "category": "Plugins & Extensions",
+    "clean_name": "Tropic Colour CRT Type Kit",
+    "confidence": 85,
+    "notes": "Plugin in name, .zip likely contains plugin files.",
+    "_source_name": "Tropic Colour – CRT TYPE KIT – Digital CRT FONT PLUGIN",
+    "_batch_index": 6123
+  },
+  {
+    "name": "Tropic Colour – Film Titles Vol. 2",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Tropic Colour Film Titles Vol 2",
+    "confidence": 80,
+    "notes": "Film titles suggest After Effects title pack.",
+    "_source_name": "Tropic Colour – Film Titles Vol. 2",
+    "_batch_index": 6124
+  },
+  {
+    "name": "Tropic Colour – Magazine Cutouts",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Tropic Colour Magazine Cutouts",
+    "confidence": 75,
+    "notes": "Cutouts likely Photoshop overlays.",
+    "_source_name": "Tropic Colour – Magazine Cutouts",
+    "_batch_index": 6125
+  },
+  {
+    "name": "Tropic Colour – Tape FX",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "Tropic Colour Tape FX",
+    "confidence": 80,
+    "notes": "Tape effects often retro/VHS style.",
+    "_source_name": "Tropic Colour – Tape FX",
+    "_batch_index": 6126
+  },
+  {
+    "name": "Tropic Colour SUBTLE MOOD LOOKS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Tropic Colour Subtle Mood Looks",
+    "confidence": 85,
+    "notes": "Looks implies color grading LUTs.",
+    "_source_name": "Tropic Colour SUBTLE MOOD LOOKS",
+    "_batch_index": 6127
+  },
+  {
+    "name": "Tropic Colour-1",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Tropic Colour – PNW Film Stock",
+    "confidence": 92,
+    "notes": "Generic name, single .rar, unclear content.",
+    "_source_name": "Tropic Colour-1",
+    "_batch_index": 6128,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Tropic_Colour_-_Motion_Type_Kit",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Tropic Colour Motion Type Kit",
+    "confidence": 80,
+    "notes": "Motion type kit likely for After Effects.",
+    "_source_name": "Tropic_Colour_-_Motion_Type_Kit",
+    "_batch_index": 6129
+  },
+  {
+    "name": "Tropic_Colour_-_Thermal_LUTs",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Tropic Colour Thermal LUTs",
+    "confidence": 95,
+    "notes": "LUTs in name.",
+    "_source_name": "Tropic_Colour_-_Thermal_LUTs",
+    "_batch_index": 6130
+  },
+  {
+    "name": "Tropical Summer Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Tropical Summer Flyer",
+    "confidence": 90,
+    "notes": "Flyer in name, .psd file.",
+    "_source_name": "Tropical Summer Flyer",
+    "_batch_index": 6131
+  },
+  {
+    "name": "tropical-twist-mockup-52918235",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Tropical Twist Mockup",
+    "confidence": 85,
+    "notes": "Mockup in name.",
+    "_source_name": "tropical-twist-mockup-52918235",
+    "_batch_index": 6132
+  },
+  {
+    "name": "true-love-story-for-after-effects-45395778",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "True Love Story for After Effects",
+    "confidence": 90,
+    "notes": "After Effects in name, romance theme.",
+    "_source_name": "true-love-story-for-after-effects-45395778",
+    "_batch_index": 6133
+  },
+  {
+    "name": "True-Sky v2.2.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "True Sky v2.2.2",
+    "confidence": 70,
+    "notes": "Likely a plugin, .txt only but version suggests software.",
+    "_source_name": "True-Sky v2.2.2",
+    "_batch_index": 6134
+  },
+  {
+    "name": "TS22V 2- Premium LUT Pack- Timo Sell",
+    "category": "Color Grading & LUTs",
+    "clean_name": "TS22V 2 Premium LUT Pack Timo Sell",
+    "confidence": 95,
+    "notes": "LUT Pack in name.",
+    "_source_name": "TS22V 2- Premium LUT Pack- Timo Sell",
+    "_batch_index": 6135
+  },
+  {
+    "name": "Tube_Mockup_6631184",
+    "category": "Mockups - Packaging",
+    "clean_name": "Tube Mockup",
+    "confidence": 85,
+    "notes": "Mockup in name, tube suggests packaging.",
+    "_source_name": "Tube_Mockup_6631184",
+    "_batch_index": 6136
+  },
+  {
+    "name": "tunnel-vision-loophole-gallery-24976628",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Tunnel Vision Loophole Gallery",
+    "confidence": 75,
+    "notes": "Gallery suggests photo album template.",
+    "_source_name": "tunnel-vision-loophole-gallery-24976628",
+    "_batch_index": 6137
+  },
+  {
+    "name": "TuomoDesign – Ultimate Bundle 1",
+    "category": "After Effects - Other",
+    "clean_name": "TuomoDesign Ultimate Bundle 1",
+    "confidence": 65,
+    "notes": "Bundle, no clear subcategory.",
+    "_source_name": "TuomoDesign – Ultimate Bundle 1",
+    "_batch_index": 6138
+  },
+  {
+    "name": "turkey-map-republic-of-turkey-map-kit-24591583",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Turkey Map Republic of Turkey Map Kit",
+    "confidence": 90,
+    "notes": "Map kit in name.",
+    "_source_name": "turkey-map-republic-of-turkey-map-kit-24591583",
+    "_batch_index": 6139
+  },
+  {
+    "name": "Tutorial",
+    "category": "Tutorial & Education",
+    "clean_name": "Tutorial",
+    "confidence": 95,
+    "notes": "Tutorial in name, video files.",
+    "_source_name": "Tutorial",
+    "_batch_index": 6140
+  },
+  {
+    "name": "TV Distortion Bundle v2.7.2",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "TV Distortion Bundle v2.7.2",
+    "confidence": 80,
+    "notes": "TV distortion suggests retro/VHS effects.",
+    "_source_name": "TV Distortion Bundle v2.7.2",
+    "_batch_index": 6141
+  },
+  {
+    "name": "Tweaks v1.2.3",
+    "category": "Plugins & Extensions",
+    "clean_name": "Tweaks v1.2.3",
+    "confidence": 70,
+    "notes": "Likely a plugin or script.",
+    "_source_name": "Tweaks v1.2.3",
+    "_batch_index": 6142
+  },
+  {
+    "name": "TweiNa_v1.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "TweiNa v1.2",
+    "confidence": 95,
+    "notes": "Unclear content, single .rar.",
+    "_source_name": "TweiNa_v1.2",
+    "_batch_index": 6143,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "twitch-facecam-overlay-v13-FNA38S6",
+    "category": "After Effects - Social Media",
+    "clean_name": "Twitch Facecam Overlay v13",
+    "confidence": 85,
+    "notes": "Twitch overlay for social media streaming.",
+    "_source_name": "twitch-facecam-overlay-v13-FNA38S6",
+    "_batch_index": 6144
+  },
+  {
+    "name": "twitch-facecam-overlay-v4-VBGM7QA",
+    "category": "After Effects - Social Media",
+    "clean_name": "Twitch Facecam Overlay v4",
+    "confidence": 85,
+    "notes": "Twitch overlay for social media streaming.",
+    "_source_name": "twitch-facecam-overlay-v4-VBGM7QA",
+    "_batch_index": 6145
+  },
+  {
+    "name": "twitch-neon-gamer-UUNEAMZ",
+    "category": "After Effects - Social Media",
+    "clean_name": "Twitch Neon Gamer",
+    "confidence": 85,
+    "notes": "Twitch overlay for social media.",
+    "_source_name": "twitch-neon-gamer-UUNEAMZ",
+    "_batch_index": 6146
+  },
+  {
+    "name": "TXZDVWL-aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "TXZDVWL Font",
+    "confidence": 99,
+    "notes": "Generic name, single .rar, unclear.",
+    "_source_name": "TXZDVWL-aidownload.net",
+    "_batch_index": 6147,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Type 1.5.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "Type 1.5.2",
+    "confidence": 80,
+    "notes": ".jsxbin file indicates script/plugin.",
+    "_source_name": "Type 1.5.2",
+    "_batch_index": 6148
+  },
+  {
+    "name": "Type Morph 2.4",
+    "category": "Plugins & Extensions",
+    "clean_name": "Type Morph 2.4",
+    "confidence": 80,
+    "notes": ".jsxbin file indicates script/plugin.",
+    "_source_name": "Type Morph 2.4",
+    "_batch_index": 6149
+  },
+  {
+    "name": "type_1.5.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Type 1.5.1",
+    "confidence": 75,
+    "notes": "Likely a script/plugin, .rar.",
+    "_source_name": "type_1.5.1",
+    "_batch_index": 6150
+  },
+  {
+    "name": "Type_v1.5.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "Type v1.5.2",
+    "confidence": 75,
+    "notes": "Likely a script/plugin, .rar.",
+    "_source_name": "Type_v1.5.2",
+    "_batch_index": 6151
+  },
+  {
+    "name": "Type-on-titles-presets-427777",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Type on Titles Presets",
+    "confidence": 85,
+    "notes": "Title presets for After Effects.",
+    "_source_name": "Type-on-titles-presets-427777",
+    "_batch_index": 6152
+  },
+  {
+    "name": "typemonkey_v1.21",
+    "category": "Plugins & Extensions",
+    "clean_name": "TypeMonkey v1.21",
+    "confidence": 80,
+    "notes": "Likely a script/plugin.",
+    "_source_name": "typemonkey_v1.21",
+    "_batch_index": 6153
+  },
+  {
+    "name": "typemonkey_v1.25",
+    "category": "Plugins & Extensions",
+    "clean_name": "TypeMonkey v1.25",
+    "confidence": 80,
+    "notes": "Likely a script/plugin.",
+    "_source_name": "typemonkey_v1.25",
+    "_batch_index": 6154
+  },
+  {
+    "name": "TypeMonkey3D_v1.00",
+    "category": "Plugins & Extensions",
+    "clean_name": "TypeMonkey3D v1.00",
+    "confidence": 80,
+    "notes": "Likely a script/plugin.",
+    "_source_name": "TypeMonkey3D_v1.00",
+    "_batch_index": 6155
+  },
+  {
+    "name": "Typewriter_Text_Preset_MOGRT",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Typewriter Text Preset MOGRT",
+    "confidence": 90,
+    "notes": "MOGRT in name.",
+    "_source_name": "Typewriter_Text_Preset_MOGRT",
+    "_batch_index": 6156
+  },
+  {
+    "name": "typewriter-after-effects-template-39997134",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typewriter After Effects Template",
+    "confidence": 90,
+    "notes": "After Effects template in name.",
+    "_source_name": "typewriter-after-effects-template-39997134",
+    "_batch_index": 6157
+  },
+  {
+    "name": "typewriter-video-template",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typewriter Video Template",
+    "confidence": 80,
+    "notes": "Video template likely for After Effects.",
+    "_source_name": "typewriter-video-template",
+    "_batch_index": 6158
+  },
+  {
+    "name": "typo-22633632",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typo",
+    "confidence": 75,
+    "notes": "Typo suggests typography template.",
+    "_source_name": "typo-22633632",
+    "_batch_index": 6159
+  },
+  {
+    "name": "typo-39229175",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typo",
+    "confidence": 75,
+    "notes": "Typo suggests typography template.",
+    "_source_name": "typo-39229175",
+    "_batch_index": 6160
+  },
+  {
+    "name": "typo-intro-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typo Intro Opener",
+    "confidence": 85,
+    "notes": "Intro opener in name.",
+    "_source_name": "typo-intro-opener",
+    "_batch_index": 6161
+  },
+  {
+    "name": "typo-intro-version_02",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typo Intro Version 02",
+    "confidence": 85,
+    "notes": "Intro in name.",
+    "_source_name": "typo-intro-version_02",
+    "_batch_index": 6162
+  },
+  {
+    "name": "typo-mosaic-opener-44873294",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typo Mosaic Opener",
+    "confidence": 85,
+    "notes": "Opener in name.",
+    "_source_name": "typo-mosaic-opener-44873294",
+    "_batch_index": 6163
+  },
+  {
+    "name": "typo-opener-34619395",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typo Opener",
+    "confidence": 85,
+    "notes": "Opener in name.",
+    "_source_name": "typo-opener-34619395",
+    "_batch_index": 6164
+  },
+  {
+    "name": "typography-39634204",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography",
+    "confidence": 75,
+    "notes": "Typography template.",
+    "_source_name": "typography-39634204",
+    "_batch_index": 6165
+  },
+  {
+    "name": "typography-event-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typography Event Opener",
+    "confidence": 85,
+    "notes": "Event opener in name.",
+    "_source_name": "typography-event-opener",
+    "_batch_index": 6166
+  },
+  {
+    "name": "typography-graphics-package-V1.4-28464847",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Typography Graphics Package V1.4",
+    "confidence": 80,
+    "notes": "Graphics package.",
+    "_source_name": "typography-graphics-package-V1.4-28464847",
+    "_batch_index": 6167
+  },
+  {
+    "name": "typography-mogrt-38234482",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Typography MOGRT",
+    "confidence": 90,
+    "notes": "MOGRT in name.",
+    "_source_name": "typography-mogrt-38234482",
+    "_batch_index": 6168
+  },
+  {
+    "name": "typography-opener-19866420",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typography Opener",
+    "confidence": 85,
+    "notes": "Opener in name.",
+    "_source_name": "typography-opener-19866420",
+    "_batch_index": 6169
+  },
+  {
+    "name": "typography-opener-2-0-47722615",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typography Opener 2.0",
+    "confidence": 85,
+    "notes": "Opener in name.",
+    "_source_name": "typography-opener-2-0-47722615",
+    "_batch_index": 6170
+  },
+  {
+    "name": "typography-pack-ae-36309270",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Pack AE",
+    "confidence": 90,
+    "notes": "AE in name.",
+    "_source_name": "typography-pack-ae-36309270",
+    "_batch_index": 6171
+  },
+  {
+    "name": "typography-rave-intro-42727959",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typography Rave Intro",
+    "confidence": 85,
+    "notes": "Intro in name.",
+    "_source_name": "typography-rave-intro-42727959",
+    "_batch_index": 6172
+  },
+  {
+    "name": "Typography-retro-documentary-1662380",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Retro Documentary",
+    "confidence": 80,
+    "notes": "Typography template.",
+    "_source_name": "Typography-retro-documentary-1662380",
+    "_batch_index": 6173
+  },
+  {
+    "name": "typography-slideshow-36504018",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Typography Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow in name.",
+    "_source_name": "typography-slideshow-36504018",
+    "_batch_index": 6174
+  },
+  {
+    "name": "typography-titles-37989269",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Titles",
+    "confidence": 85,
+    "notes": "Titles in name.",
+    "_source_name": "typography-titles-37989269",
+    "_batch_index": 6175
+  },
+  {
+    "name": "typomax-1000-animated-titles-for-after-effects-39625348",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typomax 1000 Animated Titles for After Effects",
+    "confidence": 95,
+    "notes": "After Effects titles in name.",
+    "_source_name": "typomax-1000-animated-titles-for-after-effects-39625348",
+    "_batch_index": 6176
+  },
+  {
+    "name": "Uber_Key_1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Uber Key 1.0",
+    "confidence": 70,
+    "notes": "Likely a plugin or script.",
+    "_source_name": "Uber_Key_1.0",
+    "_batch_index": 6177
+  },
+  {
+    "name": "ukraine-map-37898329",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Ukraine Map",
+    "confidence": 90,
+    "notes": "Map in name.",
+    "_source_name": "ukraine-map-37898329",
+    "_batch_index": 6178
+  },
+  {
+    "name": "UKRAINE-Watercolor-PNG-Clipart-26738077",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Ukraine Watercolor PNG Clipart",
+    "confidence": 75,
+    "notes": "Clipart likely vector/PNG assets.",
+    "_source_name": "UKRAINE-Watercolor-PNG-Clipart-26738077",
+    "_batch_index": 6179
+  }
+]

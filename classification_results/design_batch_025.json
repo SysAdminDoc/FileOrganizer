@@ -1,0 +1,554 @@
+[
+  {
+    "name": "AIDOWNLOAD.NET-R3DPBFM",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Torn Paper Photocopy",
+    "confidence": 75,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "AIDOWNLOAD.NET-R3DPBFM",
+    "_batch_index": 1440,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET-SLTG6CF",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Haze Brushes",
+    "confidence": 95,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "AIDOWNLOAD.NET-SLTG6CF",
+    "_batch_index": 1441,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "aidownload.net-SVDRND3",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Preset",
+    "confidence": 85,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "aidownload.net-SVDRND3",
+    "_batch_index": 1442,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Aidownload.Net-TA88CLN",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Painting Action",
+    "confidence": 95,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "Aidownload.Net-TA88CLN",
+    "_batch_index": 1443,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIdownload.net-TNUVMVJ",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer",
+    "confidence": 80,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "AIdownload.net-TNUVMVJ",
+    "_batch_index": 1444,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET-VC8VD6V",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "All Leaks 1080x1080px",
+    "confidence": 85,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "AIDOWNLOAD.NET-VC8VD6V",
+    "_batch_index": 1445,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET-vector-sketch-photoshop-action",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Vector Sketch Photoshop Action",
+    "confidence": 90,
+    "notes": "Name includes 'photoshop-action'",
+    "_source_name": "AIDOWNLOAD.NET-vector-sketch-photoshop-action",
+    "_batch_index": 1446
+  },
+  {
+    "name": "AIDOWNLOAD.NET-VXWJTP8",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Presets",
+    "confidence": 80,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "AIDOWNLOAD.NET-VXWJTP8",
+    "_batch_index": 1447,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET-X3DXD79",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Presets",
+    "confidence": 80,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "AIDOWNLOAD.NET-X3DXD79",
+    "_batch_index": 1448,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET-XMGD4CM",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Presets",
+    "confidence": 80,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "AIDOWNLOAD.NET-XMGD4CM",
+    "_batch_index": 1449,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET-Z69ELCC",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Light Leak Photo Template",
+    "confidence": 85,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "AIDOWNLOAD.NET-Z69ELCC",
+    "_batch_index": 1450,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "aidownload.nete-5CQ38PQ",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Preset",
+    "confidence": 85,
+    "notes": "Numeric ID only, single zip, no content clue",
+    "_source_name": "aidownload.nete-5CQ38PQ",
+    "_batch_index": 1451,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "airbrush-vibes-abstract-intro-44676603",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Airbrush Vibes Abstract Intro",
+    "confidence": 85,
+    "notes": "Name suggests intro, likely .aep inside zip",
+    "_source_name": "airbrush-vibes-abstract-intro-44676603",
+    "_batch_index": 1452
+  },
+  {
+    "name": "airplane-pack-deluxe",
+    "category": "Stock Footage - General",
+    "clean_name": "Airplane Pack Deluxe",
+    "confidence": 80,
+    "notes": "Contains .mov and .jpg, likely stock footage",
+    "_source_name": "airplane-pack-deluxe",
+    "_batch_index": 1453
+  },
+  {
+    "name": "AKV Studios 3000+ Action Transitions",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "AKV Studios 3000+ Action Transitions",
+    "confidence": 85,
+    "notes": "Name indicates transitions, likely AE project",
+    "_source_name": "AKV Studios 3000+ Action Transitions",
+    "_batch_index": 1454
+  },
+  {
+    "name": "album-photo-slideshow-51984525",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Album Photo Slideshow",
+    "confidence": 90,
+    "notes": "Name clearly indicates photo slideshow",
+    "_source_name": "album-photo-slideshow-51984525",
+    "_batch_index": 1455
+  },
+  {
+    "name": "album-slideshow-37215769",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Album Slideshow",
+    "confidence": 90,
+    "notes": "Name indicates slideshow",
+    "_source_name": "album-slideshow-37215769",
+    "_batch_index": 1456
+  },
+  {
+    "name": "alfio-mobile-and-desktop-lightroom-presets-L525EN8",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Alfio Mobile and Desktop Lightroom Presets",
+    "confidence": 95,
+    "notes": "Name includes 'lightroom-presets'",
+    "_source_name": "alfio-mobile-and-desktop-lightroom-presets-L525EN8",
+    "_batch_index": 1457
+  },
+  {
+    "name": "aliens-cinematic-titles-53303648",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Aliens Cinematic Titles",
+    "confidence": 85,
+    "notes": "Name indicates titles, likely AE",
+    "_source_name": "aliens-cinematic-titles-53303648",
+    "_batch_index": 1458
+  },
+  {
+    "name": "align_pro_1.1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Align Pro 1.1.0",
+    "confidence": 80,
+    "notes": "Name suggests plugin, zip likely contains .zxp or .jsx",
+    "_source_name": "align_pro_1.1.0",
+    "_batch_index": 1459
+  },
+  {
+    "name": "All fonts from macOS Sonoma 14.1",
+    "category": "Fonts & Typography",
+    "clean_name": "All fonts from macOS Sonoma 14.1",
+    "confidence": 95,
+    "notes": "Contains .dfont, .otf, .ttc, .ttf",
+    "_source_name": "All fonts from macOS Sonoma 14.1",
+    "_batch_index": 1460
+  },
+  {
+    "name": "All-_packages-_of_-Video_Copilot",
+    "category": "After Effects - Other",
+    "clean_name": "All packages of Video Copilot",
+    "confidence": 70,
+    "notes": "Video Copilot is AE-related, but no specific subcategory",
+    "_source_name": "All-_packages-_of_-Video_Copilot",
+    "_batch_index": 1461
+  },
+  {
+    "name": "alrosa-glass-and-bokeh-photo-distortion-25416233",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Alrosa Glass and Bokeh Photo Distortion",
+    "confidence": 80,
+    "notes": "Name suggests photo distortion effect, likely Photoshop",
+    "_source_name": "alrosa-glass-and-bokeh-photo-distortion-25416233",
+    "_batch_index": 1462
+  },
+  {
+    "name": "aluminum-spray-pump-bottle-mock-up-77QYKED",
+    "category": "Mockups - Packaging",
+    "clean_name": "Aluminum Spray Pump Bottle Mock Up",
+    "confidence": 95,
+    "notes": "Name includes 'mock-up' and describes packaging",
+    "_source_name": "aluminum-spray-pump-bottle-mock-up-77QYKED",
+    "_batch_index": 1463
+  },
+  {
+    "name": "Ambasaj-20490780",
+    "category": "Fonts & Typography",
+    "clean_name": "Ambasaj",
+    "confidence": 95,
+    "notes": "Unclear content, single zip",
+    "_source_name": "Ambasaj-20490780",
+    "_batch_index": 1464,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "amber-glass-candle-mockup-69GUV4F",
+    "category": "Mockups - Packaging",
+    "clean_name": "Amber Glass Candle Mockup",
+    "confidence": 95,
+    "notes": "Name includes 'mockup', contains .psd",
+    "_source_name": "amber-glass-candle-mockup-69GUV4F",
+    "_batch_index": 1465
+  },
+  {
+    "name": "American-sport-game-1385359",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "American Sport Game",
+    "confidence": 80,
+    "notes": "Name suggests sports theme, likely AE template",
+    "_source_name": "American-sport-game-1385359",
+    "_batch_index": 1466
+  },
+  {
+    "name": "amithen-brush-font-F8T4SL",
+    "category": "Fonts & Typography",
+    "clean_name": "Amithen Brush Font",
+    "confidence": 90,
+    "notes": "Name includes 'font'",
+    "_source_name": "amithen-brush-font-F8T4SL",
+    "_batch_index": 1467
+  },
+  {
+    "name": "analog-film-luts-43556237",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Analog Film LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'luts'",
+    "_source_name": "analog-film-luts-43556237",
+    "_batch_index": 1468
+  },
+  {
+    "name": "analog-film-luts-47689542",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Analog Film LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'luts'",
+    "_source_name": "analog-film-luts-47689542",
+    "_batch_index": 1469
+  },
+  {
+    "name": "Analogica Lab - KODAK 2383 D55 D60 D65 35MM",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Analogica Lab - KODAK 2383 D55 D60 D65 35MM",
+    "confidence": 95,
+    "notes": "Contains .cube files",
+    "_source_name": "Analogica Lab - KODAK 2383 D55 D60 D65 35MM",
+    "_batch_index": 1470
+  },
+  {
+    "name": "Analogica Lab - Kodak Vision3 250D",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Analogica Lab - Kodak Vision3 250D",
+    "confidence": 95,
+    "notes": "Contains .cube files",
+    "_source_name": "Analogica Lab - Kodak Vision3 250D",
+    "_batch_index": 1471
+  },
+  {
+    "name": "Analogica Lab - LUT Fuji 3513 35MM",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Analogica Lab - LUT Fuji 3513 35MM",
+    "confidence": 95,
+    "notes": "Contains .cube files",
+    "_source_name": "Analogica Lab - LUT Fuji 3513 35MM",
+    "_batch_index": 1472
+  },
+  {
+    "name": "Analogica Lab – CINESTILL 800T Power Grade",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Analogica Lab – CINESTILL 800T Power Grade",
+    "confidence": 95,
+    "notes": "Name includes 'Power Grade', likely LUTs",
+    "_source_name": "Analogica Lab – CINESTILL 800T Power Grade",
+    "_batch_index": 1473
+  },
+  {
+    "name": "Analogica Lab – KODAK VISION3 200T Lut",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Analogica Lab – KODAK VISION3 200T Lut",
+    "confidence": 95,
+    "notes": "Name includes 'Lut'",
+    "_source_name": "Analogica Lab – KODAK VISION3 200T Lut",
+    "_batch_index": 1474
+  },
+  {
+    "name": "ANALOGICAFUJI PowerGrade",
+    "category": "Color Grading & LUTs",
+    "clean_name": "ANALOGICAFUJI PowerGrade",
+    "confidence": 95,
+    "notes": "Contains .cube files",
+    "_source_name": "ANALOGICAFUJI PowerGrade",
+    "_batch_index": 1475
+  },
+  {
+    "name": "anatomical-scanner-titles-39729158",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Anatomical Scanner Titles",
+    "confidence": 85,
+    "notes": "Name indicates titles, likely AE",
+    "_source_name": "anatomical-scanner-titles-39729158",
+    "_batch_index": 1476
+  },
+  {
+    "name": "anatomical-x-ray-titles-vertical-42887575",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Anatomical X-Ray Titles Vertical",
+    "confidence": 85,
+    "notes": "Name indicates titles, likely AE",
+    "_source_name": "anatomical-x-ray-titles-vertical-42887575",
+    "_batch_index": 1477
+  },
+  {
+    "name": "Anchor Sniper v1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Anchor Sniper v1.0",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, likely plugin",
+    "_source_name": "Anchor Sniper v1.0",
+    "_batch_index": 1478
+  },
+  {
+    "name": "ancient-fiery-temple-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Ancient Fiery Temple Opener",
+    "confidence": 90,
+    "notes": "Name includes 'opener'",
+    "_source_name": "ancient-fiery-temple-opener",
+    "_batch_index": 1479
+  },
+  {
+    "name": "ancient-history-documentary-unfold-project-45547980",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Ancient History Documentary Unfold Project",
+    "confidence": 80,
+    "notes": "Name suggests documentary project, likely AE",
+    "_source_name": "ancient-history-documentary-unfold-project-45547980",
+    "_batch_index": 1480
+  },
+  {
+    "name": "ancient-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Ancient Opener",
+    "confidence": 90,
+    "notes": "Name includes 'opener'",
+    "_source_name": "ancient-opener",
+    "_batch_index": 1481
+  },
+  {
+    "name": "Anima FX – CRT Tool for AfterEffects",
+    "category": "After Effects - Other",
+    "clean_name": "Anima FX – CRT Tool for AfterEffects",
+    "confidence": 85,
+    "notes": "AE tool, no specific subcategory",
+    "_source_name": "Anima FX – CRT Tool for AfterEffects",
+    "_batch_index": 1482
+  },
+  {
+    "name": "animal-textures-procreate-brushes",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Animal Textures Procreate Brushes",
+    "confidence": 85,
+    "notes": "Name indicates brushes, likely .brushset or .abr",
+    "_source_name": "animal-textures-procreate-brushes",
+    "_batch_index": 1483
+  },
+  {
+    "name": "Animalia_-_Alphabet_illustration_Set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Animalia - Alphabet Illustration Set",
+    "confidence": 85,
+    "notes": "Name suggests vector illustrations",
+    "_source_name": "Animalia_-_Alphabet_illustration_Set",
+    "_batch_index": 1484
+  },
+  {
+    "name": "Animated Sale Banners Pack",
+    "category": "After Effects - Social Media",
+    "clean_name": "Animated Sale Banners Pack",
+    "confidence": 80,
+    "notes": "Contains .mp4, likely social media banners",
+    "_source_name": "Animated Sale Banners Pack",
+    "_batch_index": 1485
+  },
+  {
+    "name": "Animated Trailer & Show Film Title Templates",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Animated Trailer & Show Film Title Templates",
+    "confidence": 85,
+    "notes": "Name indicates trailer/title templates",
+    "_source_name": "Animated Trailer & Show Film Title Templates",
+    "_batch_index": 1486
+  },
+  {
+    "name": "animated-motion-titles-36319220",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Animated Motion Titles",
+    "confidence": 85,
+    "notes": "Name indicates titles",
+    "_source_name": "animated-motion-titles-36319220",
+    "_batch_index": 1487
+  },
+  {
+    "name": "animated-retro-vintage-film-photoshop-actions-FLAAXH",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Animated Retro Vintage Film Photoshop Actions",
+    "confidence": 95,
+    "notes": "Name includes 'photoshop-actions'",
+    "_source_name": "animated-retro-vintage-film-photoshop-actions-FLAAXH",
+    "_batch_index": 1488
+  },
+  {
+    "name": "animated-shadows-46452268",
+    "category": "After Effects - Other",
+    "clean_name": "Animated Shadows",
+    "confidence": 70,
+    "notes": "Unclear, likely AE effect",
+    "_source_name": "animated-shadows-46452268",
+    "_batch_index": 1489
+  },
+  {
+    "name": "animated-stickers-36319312",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Animated Stickers",
+    "confidence": 75,
+    "notes": "Name suggests stickers, possibly AE",
+    "_source_name": "animated-stickers-36319312",
+    "_batch_index": 1490
+  },
+  {
+    "name": "animated-titles-in-transitions-35915325",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Animated Titles in Transitions",
+    "confidence": 85,
+    "notes": "Name indicates titles and transitions",
+    "_source_name": "animated-titles-in-transitions-35915325",
+    "_batch_index": 1491
+  },
+  {
+    "name": "animated-titles-pack-22353258",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Animated Titles Pack",
+    "confidence": 85,
+    "notes": "Name indicates titles pack",
+    "_source_name": "animated-titles-pack-22353258",
+    "_batch_index": 1492
+  },
+  {
+    "name": "AnimationStudio Gaze",
+    "category": "After Effects - Other",
+    "clean_name": "AnimationStudio Gaze",
+    "confidence": 70,
+    "notes": "Unclear, likely AE-related",
+    "_source_name": "AnimationStudio Gaze",
+    "_batch_index": 1493
+  },
+  {
+    "name": "anime-fx-speed-lines-36760844",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Anime FX Speed Lines",
+    "confidence": 80,
+    "notes": "Name suggests speed lines effect, likely AE",
+    "_source_name": "anime-fx-speed-lines-36760844",
+    "_batch_index": 1494
+  },
+  {
+    "name": "anonymous-attack",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Anonymous Attack",
+    "confidence": 75,
+    "notes": "Name suggests glitch/hacker theme",
+    "_source_name": "anonymous-attack",
+    "_batch_index": 1495
+  },
+  {
+    "name": "apocalyptic-halloween-40151858",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Apocalyptic Halloween",
+    "confidence": 80,
+    "notes": "Name suggests Halloween theme",
+    "_source_name": "apocalyptic-halloween-40151858",
+    "_batch_index": 1496
+  },
+  {
+    "name": "app-presentation-phone-13-pro-mockup-35459361",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "App Presentation Phone 13 Pro Mockup",
+    "confidence": 95,
+    "notes": "Name includes 'mockup' and 'phone'",
+    "_source_name": "app-presentation-phone-13-pro-mockup-35459361",
+    "_batch_index": 1497
+  },
+  {
+    "name": "Apply OTFs",
+    "category": "Fonts & Typography",
+    "clean_name": "Apply OTFs",
+    "confidence": 90,
+    "notes": "Contains .otf files",
+    "_source_name": "Apply OTFs",
+    "_batch_index": 1498
+  },
+  {
+    "name": "Aqua Luster Bottle Mockup",
+    "category": "Mockups - Packaging",
+    "clean_name": "Aqua Luster Bottle Mockup",
+    "confidence": 95,
+    "notes": "Name includes 'Mockup', bottle packaging",
+    "_source_name": "Aqua Luster Bottle Mockup",
+    "_batch_index": 1499
+  }
+]

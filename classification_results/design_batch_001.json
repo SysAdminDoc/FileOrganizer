@@ -1,0 +1,543 @@
+[
+  {
+    "name": "_Adobe_After_Effects__Autokroma_Influx_v1.4.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "Autokroma Influx v1.4.2",
+    "confidence": 90,
+    "notes": "Plugin for After Effects, likely .aex or .zxp",
+    "_source_name": "_Adobe_After_Effects__Autokroma_Influx_v1.4.2",
+    "_batch_index": 0
+  },
+  {
+    "name": "_Adobe_After_Effects_-_Win__I_Ate_Mushrooms_v1.6.24",
+    "category": "Plugins & Extensions",
+    "clean_name": "I Ate Mushrooms v1.6.24",
+    "confidence": 85,
+    "notes": "Plugin for After Effects",
+    "_source_name": "_Adobe_After_Effects_-_Win__I_Ate_Mushrooms_v1.6.24",
+    "_batch_index": 1
+  },
+  {
+    "name": "_ed_Title_Design_23194683",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Ed Title Design",
+    "confidence": 70,
+    "notes": "Name suggests title design, likely .aep inside zip",
+    "_source_name": "_ed_Title_Design_23194683",
+    "_batch_index": 2
+  },
+  {
+    "name": "_m-transition-51180556",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "M-Transition",
+    "confidence": 75,
+    "notes": "Name implies transitions, likely .aep or .mogrt",
+    "_source_name": "_m-transition-51180556",
+    "_batch_index": 3
+  },
+  {
+    "name": "_Tutorial",
+    "category": "Tutorial & Education",
+    "clean_name": "Tutorial",
+    "confidence": 95,
+    "notes": "Contains .mp4 and .txt, tutorial content",
+    "_source_name": "_Tutorial",
+    "_batch_index": 4
+  },
+  {
+    "name": "_WATZAC_CINEMATIC_LUTS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Watzac Cinematic LUTs",
+    "confidence": 95,
+    "notes": "Name contains LUTS",
+    "_source_name": "_WATZAC_CINEMATIC_LUTS",
+    "_batch_index": 5
+  },
+  {
+    "name": "0000-1",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "CinePacks White Out FX 2",
+    "confidence": 80,
+    "notes": "Contains VFX stock footage pack",
+    "_source_name": "0000-1",
+    "_batch_index": 6
+  },
+  {
+    "name": "0000-2",
+    "category": "_Skip",
+    "clean_name": "0000-2",
+    "confidence": 100,
+    "notes": "Empty folder, no files listed",
+    "_source_name": "0000-2",
+    "_batch_index": 7
+  },
+  {
+    "name": "0000-3",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Bigfilms INFERNO Blockbuster Pack",
+    "confidence": 80,
+    "notes": "Contains VFX stock footage pack",
+    "_source_name": "0000-3",
+    "_batch_index": 8
+  },
+  {
+    "name": "0000-5",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Bigfilms Warzone Pack",
+    "confidence": 80,
+    "notes": "Contains VFX stock footage pack",
+    "_source_name": "0000-5",
+    "_batch_index": 9
+  },
+  {
+    "name": "0000-6",
+    "category": "Stock Music & Audio",
+    "clean_name": "Motion Array Stock Music Bundle",
+    "confidence": 85,
+    "notes": "Contains stock music bundle",
+    "_source_name": "0000-6",
+    "_batch_index": 10
+  },
+  {
+    "name": "01 - Previews",
+    "category": "_Skip",
+    "clean_name": "01 - Previews",
+    "confidence": 100,
+    "notes": "Only .html previews, no usable assets",
+    "_source_name": "01 - Previews",
+    "_batch_index": 11
+  },
+  {
+    "name": "01. Project Files",
+    "category": "After Effects - Other",
+    "clean_name": "Project Files",
+    "confidence": 70,
+    "notes": "Contains .aep but no specific subcategory indicated",
+    "_source_name": "01. Project Files",
+    "_batch_index": 12
+  },
+  {
+    "name": "01. Tutorial",
+    "category": "Tutorial & Education",
+    "clean_name": "Tutorial",
+    "confidence": 95,
+    "notes": "Contains .mp4 tutorial",
+    "_source_name": "01. Tutorial",
+    "_batch_index": 13
+  },
+  {
+    "name": "02. Project",
+    "category": "After Effects - Other",
+    "clean_name": "Project",
+    "confidence": 70,
+    "notes": "Contains .aep but no specific subcategory indicated",
+    "_source_name": "02. Project",
+    "_batch_index": 14
+  },
+  {
+    "name": "02. Tutorial",
+    "category": "Tutorial & Education",
+    "clean_name": "Tutorial",
+    "confidence": 90,
+    "notes": "Contains .html tutorial",
+    "_source_name": "02. Tutorial",
+    "_batch_index": 15
+  },
+  {
+    "name": "060360968-menu-restaurant-cooking",
+    "category": "After Effects - Other",
+    "clean_name": "Menu Restaurant Cooking",
+    "confidence": 60,
+    "notes": "Likely a template, but no file type clues",
+    "_source_name": "060360968-menu-restaurant-cooking",
+    "_batch_index": 16
+  },
+  {
+    "name": "1-arrival-tutorial",
+    "category": "Tutorial & Education",
+    "clean_name": "Arrival Tutorial",
+    "confidence": 90,
+    "notes": "Contains .mp4 and .psd, tutorial content",
+    "_source_name": "1-arrival-tutorial",
+    "_batch_index": 17
+  },
+  {
+    "name": "1._Cinecolor_Primaries_LUT_Pack",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Cinecolor Primaries LUT Pack",
+    "confidence": 95,
+    "notes": "Name contains LUT Pack",
+    "_source_name": "1._Cinecolor_Primaries_LUT_Pack",
+    "_batch_index": 18
+  },
+  {
+    "name": "10 Clear Container Packaging Mockups 3991572",
+    "category": "Mockups - Packaging",
+    "clean_name": "10 Clear Container Packaging Mockups",
+    "confidence": 95,
+    "notes": "Name says Mockups and Packaging",
+    "_source_name": "10 Clear Container Packaging Mockups 3991572",
+    "_batch_index": 19
+  },
+  {
+    "name": "10 Premium Photoshop Overlays",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "10 Premium Photoshop Overlays",
+    "confidence": 90,
+    "notes": "Name says Photoshop Overlays",
+    "_source_name": "10 Premium Photoshop Overlays",
+    "_batch_index": 20
+  },
+  {
+    "name": "10 Romantic Love Lettering Quotes 7735072",
+    "category": "Fonts & Typography",
+    "clean_name": "10 Romantic Love Lettering Quotes",
+    "confidence": 70,
+    "notes": "Likely contains lettering/typography assets",
+    "_source_name": "10 Romantic Love  Lettering Quotes 7735072",
+    "_batch_index": 21
+  },
+  {
+    "name": "10-endless-music-visualization-audio-react-tunnel-15656207",
+    "category": "After Effects - Music & Audio Visualizer",
+    "clean_name": "Endless Music Visualization Audio React Tunnel",
+    "confidence": 85,
+    "notes": "Name indicates music visualization",
+    "_source_name": "10-endless-music-visualization-audio-react-tunnel-15656207",
+    "_batch_index": 22
+  },
+  {
+    "name": "10-Winter-Snow-Frozen-Text-Effects-5-PSD-5-EPS-10-JPG 131221",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Winter Snow Frozen Text Effects",
+    "confidence": 80,
+    "notes": "Contains .psd text effects",
+    "_source_name": "10-Winter-Snow-Frozen-Text-Effects-5-PSD-5-EPS-10-JPG 131221",
+    "_batch_index": 23
+  },
+  {
+    "name": "100_Fantasy_LUTs_Pack",
+    "category": "Color Grading & LUTs",
+    "clean_name": "100 Fantasy LUTs Pack",
+    "confidence": 95,
+    "notes": "Name contains LUTs",
+    "_source_name": "100_Fantasy_LUTs_Pack",
+    "_batch_index": 24
+  },
+  {
+    "name": "100_Leggings_Mock-Up_n20",
+    "category": "Mockups - Apparel",
+    "clean_name": "100 Leggings Mock-Up",
+    "confidence": 95,
+    "notes": "Name says Mock-Up and Leggings (apparel)",
+    "_source_name": "100_Leggings_Mock-Up_n20",
+    "_batch_index": 25
+  },
+  {
+    "name": "100_Leggings_Mock-Up_n20.part1",
+    "category": "Mockups - Apparel",
+    "clean_name": "100 Leggings Mock-Up part1",
+    "confidence": 95,
+    "notes": "Part of leggings mockup set",
+    "_source_name": "100_Leggings_Mock-Up_n20.part1",
+    "_batch_index": 26
+  },
+  {
+    "name": "100-animated-titles-36523868",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "100 Animated Titles",
+    "confidence": 85,
+    "notes": "Name indicates animated titles",
+    "_source_name": "100-animated-titles-36523868",
+    "_batch_index": 27
+  },
+  {
+    "name": "100-cinematic-luts-color-grading-35390122",
+    "category": "Color Grading & LUTs",
+    "clean_name": "100 Cinematic LUTs Color Grading",
+    "confidence": 95,
+    "notes": "Name contains LUTs and Color Grading",
+    "_source_name": "100-cinematic-luts-color-grading-35390122",
+    "_batch_index": 28
+  },
+  {
+    "name": "100-colorful-lower-thirds-after-effects-35584463",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "100 Colorful Lower Thirds",
+    "confidence": 95,
+    "notes": "Name specifies Lower Thirds and After Effects",
+    "_source_name": "100-colorful-lower-thirds-after-effects-35584463",
+    "_batch_index": 29
+  },
+  {
+    "name": "100-frame-slideshow-38006559",
+    "category": "After Effects - Slideshow",
+    "clean_name": "100 Frame Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "100-frame-slideshow-38006559",
+    "_batch_index": 30
+  },
+  {
+    "name": "100-hud-ui-call-outs-36768084",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "100 HUD UI Call Outs",
+    "confidence": 80,
+    "notes": "HUD UI elements often used in infographics/data viz",
+    "_source_name": "100-hud-ui-call-outs-36768084",
+    "_batch_index": 31
+  },
+  {
+    "name": "100-spotlight-overlays-W8D7A6",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "100 Spotlight Overlays",
+    "confidence": 75,
+    "notes": "Overlays likely stock footage",
+    "_source_name": "100-spotlight-overlays-W8D7A6",
+    "_batch_index": 32
+  },
+  {
+    "name": "100-typography-scenes-pack-39082765",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "100 Typography Scenes Pack",
+    "confidence": 85,
+    "notes": "Name indicates typography scenes",
+    "_source_name": "100-typography-scenes-pack-39082765",
+    "_batch_index": 33
+  },
+  {
+    "name": "1000_Realistic_Photo_Overlays-GFXDRUG.COM",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "1000 Realistic Photo Overlays",
+    "confidence": 85,
+    "notes": "Photo overlays typically for Photoshop",
+    "_source_name": "1000_Realistic_Photo_Overlays-GFXDRUG.COM",
+    "_batch_index": 34
+  },
+  {
+    "name": "1000-cinematic-color-presets-lut-pack-for-premie-24589977",
+    "category": "Color Grading & LUTs",
+    "clean_name": "1000 Cinematic Color Presets LUT Pack",
+    "confidence": 95,
+    "notes": "Name contains LUT pack and color presets",
+    "_source_name": "1000-cinematic-color-presets-lut-pack-for-premie-24589977",
+    "_batch_index": 35
+  },
+  {
+    "name": "1000-scribble-elements-21777834",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1000 Scribble Elements",
+    "confidence": 75,
+    "notes": "Scribble elements likely vector-based",
+    "_source_name": "1000-scribble-elements-21777834",
+    "_batch_index": 36
+  },
+  {
+    "name": "1000+ Color Presets",
+    "category": "Color Grading & LUTs",
+    "clean_name": "1000+ Color Presets",
+    "confidence": 90,
+    "notes": "Name says Color Presets",
+    "_source_name": "1000+ Color Presets",
+    "_batch_index": 37
+  },
+  {
+    "name": "10034856-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Intro HD",
+    "confidence": 80,
+    "notes": "Name suggests intro template",
+    "_source_name": "10034856-INTRO-HD.NET",
+    "_batch_index": 38
+  },
+  {
+    "name": "10037826-gold-silver-presets-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Gold Silver Presets",
+    "confidence": 85,
+    "notes": "Name says presets, likely color presets",
+    "_source_name": "10037826-gold-silver-presets-INTRO-HD.NET",
+    "_batch_index": 39
+  },
+  {
+    "name": "10115215-elegant-3d-marble-logo-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Elegant 3D Marble Logo",
+    "confidence": 85,
+    "notes": "Name indicates logo reveal",
+    "_source_name": "10115215-elegant-3d-marble-logo-INTRO-HD.NET",
+    "_batch_index": 40
+  },
+  {
+    "name": "10374984-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Guardians Galaxy Intro",
+    "confidence": 85,
+    "notes": "Mixed files, unclear content",
+    "_source_name": "10374984-INTRO-HD.NET",
+    "_batch_index": 41,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "10405770-INTRO-HD.NET",
+    "category": "_Skip",
+    "clean_name": "10405770-INTRO-HD.NET",
+    "confidence": 100,
+    "notes": "No files listed",
+    "_source_name": "10405770-INTRO-HD.NET",
+    "_batch_index": 42
+  },
+  {
+    "name": "1046-VINTAGE-BADGE-RIBBON-324246",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vintage Badge Ribbon",
+    "confidence": 80,
+    "notes": "Badge/ribbon likely vector assets",
+    "_source_name": "1046-VINTAGE-BADGE-RIBBON-324246",
+    "_batch_index": 43
+  },
+  {
+    "name": "105-glowing-hand-drawn-arrows-mogrt-51447624",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "105 Glowing Hand Drawn Arrows",
+    "confidence": 95,
+    "notes": "Name contains .mogrt",
+    "_source_name": "105-glowing-hand-drawn-arrows-mogrt-51447624",
+    "_batch_index": 44
+  },
+  {
+    "name": "10595483-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Intro HD",
+    "confidence": 80,
+    "notes": "Name suggests intro template",
+    "_source_name": "10595483-INTRO-HD.NET",
+    "_batch_index": 45
+  },
+  {
+    "name": "10690849-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Intro HD",
+    "confidence": 80,
+    "notes": "Name suggests intro template",
+    "_source_name": "10690849-INTRO-HD.NET",
+    "_batch_index": 46
+  },
+  {
+    "name": "10695070-digital-glitch-logo-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Digital Glitch Logo",
+    "confidence": 85,
+    "notes": "Name indicates glitch logo",
+    "_source_name": "10695070-digital-glitch-logo-INTRO-HD.NET",
+    "_batch_index": 47
+  },
+  {
+    "name": "108-origami-arrows-45909130",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "108 Origami Arrows",
+    "confidence": 70,
+    "notes": "Likely motion graphics elements",
+    "_source_name": "108-origami-arrows-45909130",
+    "_batch_index": 48
+  },
+  {
+    "name": "10863999-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Intro HD",
+    "confidence": 80,
+    "notes": "Name suggests intro template",
+    "_source_name": "10863999-INTRO-HD.NET",
+    "_batch_index": 49
+  },
+  {
+    "name": "10928709-trailer-titles-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Trailer Titles",
+    "confidence": 85,
+    "notes": "Name indicates trailer titles",
+    "_source_name": "10928709-trailer-titles-INTRO-HD.NET",
+    "_batch_index": 50
+  },
+  {
+    "name": "10950488-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Intro HD",
+    "confidence": 80,
+    "notes": "Name suggests intro template",
+    "_source_name": "10950488-INTRO-HD.NET",
+    "_batch_index": 51
+  },
+  {
+    "name": "10953988-wedding-film-package-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Wedding Film Package",
+    "confidence": 90,
+    "notes": "Name indicates wedding package",
+    "_source_name": "10953988-wedding-film-package-INTRO-HD.NET",
+    "_batch_index": 52
+  },
+  {
+    "name": "11 Abstract Banners Vector Templates",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "11 Abstract Banners Vector Templates",
+    "confidence": 85,
+    "notes": "Vector templates",
+    "_source_name": "11 Abstract Banners Vector Templates",
+    "_batch_index": 53
+  },
+  {
+    "name": "11-photorealistic-flag-mockup-L9DBLA",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "11 Photorealistic Flag Mockup",
+    "confidence": 90,
+    "notes": "Flag mockup for signage",
+    "_source_name": "11-photorealistic-flag-mockup-L9DBLA",
+    "_batch_index": 54
+  },
+  {
+    "name": "110-glowing-doodles-pack-38543976",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "110 Glowing Doodles Pack",
+    "confidence": 75,
+    "notes": "Doodles likely vector assets",
+    "_source_name": "110-glowing-doodles-pack-38543976",
+    "_batch_index": 55
+  },
+  {
+    "name": "11027884-INTRO-HD.NET",
+    "category": "_Skip",
+    "clean_name": "11027884-INTRO-HD.NET",
+    "confidence": 100,
+    "notes": "No files listed",
+    "_source_name": "11027884-INTRO-HD.NET",
+    "_batch_index": 56
+  },
+  {
+    "name": "1111-12",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "VH-20601772-V22",
+    "confidence": 75,
+    "notes": "Contains VFX stock footage",
+    "_source_name": "1111-12",
+    "_batch_index": 57
+  },
+  {
+    "name": "1111-14",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Cybercity Pack 4K",
+    "confidence": 80,
+    "notes": "Contains stock footage pack",
+    "_source_name": "1111-14",
+    "_batch_index": 58
+  },
+  {
+    "name": "1111-16",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "BusyBoxx V09 Glitter & Glitz",
+    "confidence": 80,
+    "notes": "Contains stock footage pack",
+    "_source_name": "1111-16",
+    "_batch_index": 59
+  }
+]

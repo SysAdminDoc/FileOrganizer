@@ -1,0 +1,542 @@
+[
+  {
+    "name": "19810516-wedding-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Wedding",
+    "confidence": 80,
+    "notes": "Name contains 'wedding', likely an After Effects template.",
+    "_source_name": "19810516-wedding-INTRO-HD.NET",
+    "_batch_index": 240
+  },
+  {
+    "name": "19825506-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "19825506",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name; .jpg files suggest preview.",
+    "_source_name": "19825506-INTRO-HD.NET",
+    "_batch_index": 241
+  },
+  {
+    "name": "19843382-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Travel Slideshow",
+    "confidence": 85,
+    "notes": "Contains 'travel-slideshow'.",
+    "_source_name": "19843382-INTRO-HD.NET",
+    "_batch_index": 242
+  },
+  {
+    "name": "19843382-travel-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Travel Slideshow",
+    "confidence": 85,
+    "notes": "Name explicitly says 'travel-slideshow'.",
+    "_source_name": "19843382-travel-slideshow-INTRO-HD.NET",
+    "_batch_index": 243
+  },
+  {
+    "name": "19850765-INTRO-HD.NET",
+    "category": "After Effects - Music & Audio Visualizer",
+    "clean_name": "Glitched Audio Spectrum Music Visualizer",
+    "confidence": 90,
+    "notes": "Contains 'glitched-audio-spectrum-music-visualizer'.",
+    "_source_name": "19850765-INTRO-HD.NET",
+    "_batch_index": 244
+  },
+  {
+    "name": "19853850-cinematic-title-sequence",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Cinematic Title Sequence",
+    "confidence": 85,
+    "notes": "Name says 'cinematic-title-sequence'.",
+    "_source_name": "19853850-cinematic-title-sequence",
+    "_batch_index": 245
+  },
+  {
+    "name": "19861548-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "19861548",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name.",
+    "_source_name": "19861548-INTRO-HD.NET",
+    "_batch_index": 246
+  },
+  {
+    "name": "19893483-corporate-bundle-v5",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Corporate Bundle v5",
+    "confidence": 90,
+    "notes": "Name says 'corporate-bundle'.",
+    "_source_name": "19893483-corporate-bundle-v5",
+    "_batch_index": 247
+  },
+  {
+    "name": "19906092-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "HUD Title Builder",
+    "confidence": 85,
+    "notes": "Contains 'hud-title-builder', likely a logo/title tool.",
+    "_source_name": "19906092-INTRO-HD.NET",
+    "_batch_index": 248
+  },
+  {
+    "name": "19933896-INTRO-HD.NET",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Comic Titles",
+    "confidence": 85,
+    "notes": "Contains 'Comic Titles'.",
+    "_source_name": "19933896-INTRO-HD.NET",
+    "_batch_index": 249
+  },
+  {
+    "name": "19983889-fiery-particles-trailer-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Fiery Particles Trailer",
+    "confidence": 90,
+    "notes": "Name says 'fiery-particles-trailer'.",
+    "_source_name": "19983889-fiery-particles-trailer-INTRO-HD.NET",
+    "_batch_index": 250
+  },
+  {
+    "name": "19996067-terminus-game-trailer-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Terminus Game Trailer",
+    "confidence": 90,
+    "notes": "Name says 'game-trailer'.",
+    "_source_name": "19996067-terminus-game-trailer-INTRO-HD.NET",
+    "_batch_index": 251
+  },
+  {
+    "name": "2-castle-matte-paint-tutorial",
+    "category": "Tutorial & Education",
+    "clean_name": "Castle Matte Paint Tutorial",
+    "confidence": 95,
+    "notes": "Name contains 'tutorial'.",
+    "_source_name": "2-castle-matte-paint-tutorial",
+    "_batch_index": 252
+  },
+  {
+    "name": "20 Realistic Snow Overlays",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Realistic Snow Overlays",
+    "confidence": 80,
+    "notes": "Overlays likely video or image overlays; .pdf and .png suggest preview.",
+    "_source_name": "20 Realistic Snow Overlays",
+    "_batch_index": 253
+  },
+  {
+    "name": "20 Retro Wave Photo Overlays",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Retro Wave Photo Overlays",
+    "confidence": 85,
+    "notes": "Photo overlays typically for Photoshop.",
+    "_source_name": "20 Retro Wave Photo Overlays",
+    "_batch_index": 254
+  },
+  {
+    "name": "20-black-lightroom-presets-and-luts-3UJ9BXD",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Black Lightroom Presets and LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'lightroom-presets-and-luts'.",
+    "_source_name": "20-black-lightroom-presets-and-luts-3UJ9BXD",
+    "_batch_index": 255
+  },
+  {
+    "name": "20-canary-yellow-lightroom-presets-and-luts-TPAFBFD",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Canary Yellow Lightroom Presets and LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'lightroom-presets-and-luts'.",
+    "_source_name": "20-canary-yellow-lightroom-presets-and-luts-TPAFBFD",
+    "_batch_index": 256
+  },
+  {
+    "name": "20-desert-lightroom-presets-and-luts-Z8CYJNS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Desert Lightroom Presets and LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'lightroom-presets-and-luts'.",
+    "_source_name": "20-desert-lightroom-presets-and-luts-Z8CYJNS",
+    "_batch_index": 257
+  },
+  {
+    "name": "20-fantasy-luts-pack-B7TDP7Y",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Fantasy LUTs Pack",
+    "confidence": 95,
+    "notes": "Name includes 'luts-pack'.",
+    "_source_name": "20-fantasy-luts-pack-B7TDP7Y",
+    "_batch_index": 258
+  },
+  {
+    "name": "20-pack-corporate-clean-background-loop-22721787",
+    "category": "Stock Footage - General",
+    "clean_name": "Corporate Clean Background Loop",
+    "confidence": 80,
+    "notes": "Background loop suggests stock footage; .jpg is preview.",
+    "_source_name": "20-pack-corporate-clean-background-loop-22721787",
+    "_batch_index": 259
+  },
+  {
+    "name": "20-wartime-lightroom-presets-and-luts-HEAGD2J",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Wartime Lightroom Presets and LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'lightroom-presets-and-luts'.",
+    "_source_name": "20-wartime-lightroom-presets-and-luts-HEAGD2J",
+    "_batch_index": 260
+  },
+  {
+    "name": "200-shape-transitions-36929854",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Shape Transitions",
+    "confidence": 85,
+    "notes": "Name says 'shape-transitions'.",
+    "_source_name": "200-shape-transitions-36929854",
+    "_batch_index": 261
+  },
+  {
+    "name": "20001253-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "20001253",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name.",
+    "_source_name": "20001253-INTRO-HD.NET",
+    "_batch_index": 262
+  },
+  {
+    "name": "20020190-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Promo",
+    "confidence": 85,
+    "notes": "Contains 'typography-promo'.",
+    "_source_name": "20020190-INTRO-HD.NET",
+    "_batch_index": 263
+  },
+  {
+    "name": "20042866-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Laptop Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains 'laptop-logo-reveal'.",
+    "_source_name": "20042866-INTRO-HD.NET",
+    "_batch_index": 264
+  },
+  {
+    "name": "20043748-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "20043748",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name.",
+    "_source_name": "20043748-INTRO-HD.NET",
+    "_batch_index": 265
+  },
+  {
+    "name": "20045183-ultimate-fire-trailer-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Ultimate Fire Trailer",
+    "confidence": 90,
+    "notes": "Name says 'fire-trailer'.",
+    "_source_name": "20045183-ultimate-fire-trailer-INTRO-HD.NET",
+    "_batch_index": 266
+  },
+  {
+    "name": "20053543-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Holographic Display Digital Era",
+    "confidence": 85,
+    "notes": "Contains 'holographic-display-digital-era', likely a logo reveal.",
+    "_source_name": "20053543-INTRO-HD.NET",
+    "_batch_index": 267
+  },
+  {
+    "name": "20055743-cinematic-intro-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Cinematic Intro",
+    "confidence": 90,
+    "notes": "Name says 'cinematic-intro'.",
+    "_source_name": "20055743-cinematic-intro-INTRO-HD.NET",
+    "_batch_index": 268
+  },
+  {
+    "name": "20074377-urban-glitch-opener-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Urban Glitch Opener",
+    "confidence": 90,
+    "notes": "Name says 'urban-glitch-opener'.",
+    "_source_name": "20074377-urban-glitch-opener-INTRO-HD.NET",
+    "_batch_index": 269
+  },
+  {
+    "name": "20094812-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Dynamic Urban Glitch Opener",
+    "confidence": 90,
+    "notes": "Contains 'dynamic-urban-glitch-opener'.",
+    "_source_name": "20094812-INTRO-HD.NET",
+    "_batch_index": 270
+  },
+  {
+    "name": "20104138-cinematic-shatter-trailer-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Shatter Trailer",
+    "confidence": 90,
+    "notes": "Name says 'cinematic-shatter-trailer'.",
+    "_source_name": "20104138-cinematic-shatter-trailer-INTRO-HD.NET",
+    "_batch_index": 271
+  },
+  {
+    "name": "20116805-modern-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Opener",
+    "confidence": 90,
+    "notes": "Name says 'modern-opener'.",
+    "_source_name": "20116805-modern-opener-INTRO-HD.NET",
+    "_batch_index": 272
+  },
+  {
+    "name": "20118789-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "White Gears Logo",
+    "confidence": 85,
+    "notes": "Contains 'white-gears-logo'.",
+    "_source_name": "20118789-INTRO-HD.NET",
+    "_batch_index": 273
+  },
+  {
+    "name": "20128482-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Social Media",
+    "confidence": 85,
+    "notes": "Contains 'social-media'.",
+    "_source_name": "20128482-INTRO-HD.NET",
+    "_batch_index": 274
+  },
+  {
+    "name": "20129332-INTRO-HD.NET",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Food Deals Promo",
+    "confidence": 85,
+    "notes": "Contains 'food-deals-promo'.",
+    "_source_name": "20129332-INTRO-HD.NET",
+    "_batch_index": 275
+  },
+  {
+    "name": "20134054-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Shattered Golden Logo",
+    "confidence": 85,
+    "notes": "Contains 'shattered-golden-logo'.",
+    "_source_name": "20134054-INTRO-HD.NET",
+    "_batch_index": 276
+  },
+  {
+    "name": "20163088-clean-rhythmic-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Clean Rhythmic Opener",
+    "confidence": 90,
+    "notes": "Name says 'clean-rhythmic-opener'.",
+    "_source_name": "20163088-clean-rhythmic-opener-INTRO-HD.NET",
+    "_batch_index": 277
+  },
+  {
+    "name": "20177141-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Brush Slideshow Memories Photo Album",
+    "confidence": 85,
+    "notes": "Contains 'brush-slideshow-memories-photo-album'.",
+    "_source_name": "20177141-INTRO-HD.NET",
+    "_batch_index": 278
+  },
+  {
+    "name": "20196822-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Adrenaline Action Opener",
+    "confidence": 85,
+    "notes": "Contains 'adrenaline-action-opener'.",
+    "_source_name": "20196822-INTRO-HD.NET",
+    "_batch_index": 279
+  },
+  {
+    "name": "2021",
+    "category": "Stock Footage - General",
+    "clean_name": "2021",
+    "confidence": 70,
+    "notes": ".mp4 and .txt suggest a video file; likely stock footage.",
+    "_source_name": "2021",
+    "_batch_index": 280
+  },
+  {
+    "name": "2021 Desktop Calendar Corporate Identity PSD Mockup Template",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Desktop Calendar Corporate Identity Mockup",
+    "confidence": 90,
+    "notes": "Name includes 'Mockup' and 'PSD'.",
+    "_source_name": "2021 Desktop Calendar Corporate Identity PSD Mockup Template",
+    "_batch_index": 281
+  },
+  {
+    "name": "20210219 Hamerian Bedrock",
+    "category": "3D - Scenes & Environments",
+    "clean_name": "Hamerian Bedrock",
+    "confidence": 75,
+    "notes": ".dat and .json suggest 3D scene data.",
+    "_source_name": "20210219 Hamerian Bedrock",
+    "_batch_index": 282
+  },
+  {
+    "name": "20217591-business-card-bundle",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Business Card Bundle",
+    "confidence": 85,
+    "notes": "Name says 'business-card-bundle'.",
+    "_source_name": "20217591-business-card-bundle",
+    "_batch_index": 283
+  },
+  {
+    "name": "20219361-splash-logo-reveal-i-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Splash Logo Reveal",
+    "confidence": 90,
+    "notes": "Name says 'splash-logo-reveal'.",
+    "_source_name": "20219361-splash-logo-reveal-i-INTRO-HD.NET",
+    "_batch_index": 284
+  },
+  {
+    "name": "20226053-INTRO-HD.NET",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Particle Blast Logo",
+    "confidence": 85,
+    "notes": "Contains 'particle-blast-logo'.",
+    "_source_name": "20226053-INTRO-HD.NET",
+    "_batch_index": 285
+  },
+  {
+    "name": "20233979-typex-text-animation-tool-vol05-broadcast-titles-pack-v5.1",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typex Text Animation Tool Broadcast Titles Pack",
+    "confidence": 90,
+    "notes": "Name says 'text-animation-tool' and 'broadcast-titles-pack'.",
+    "_source_name": "20233979-typex-text-animation-tool-vol05-broadcast-titles-pack-v5.1",
+    "_batch_index": 286
+  },
+  {
+    "name": "20235989-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Memories Opener",
+    "confidence": 85,
+    "notes": "Contains 'memories-opener', likely a photo slideshow.",
+    "_source_name": "20235989-INTRO-HD.NET",
+    "_batch_index": 287
+  },
+  {
+    "name": "20255285-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Brush Opener Slideshow",
+    "confidence": 85,
+    "notes": "Contains 'brush-opener-slideshow'.",
+    "_source_name": "20255285-INTRO-HD.NET",
+    "_batch_index": 288
+  },
+  {
+    "name": "20263594-stormy-clouds-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Stormy Clouds Trailer",
+    "confidence": 85,
+    "notes": "Name says 'stormy-clouds-trailer'.",
+    "_source_name": "20263594-stormy-clouds-trailer",
+    "_batch_index": 289
+  },
+  {
+    "name": "20264214-gears-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Gears Logo Reveal",
+    "confidence": 90,
+    "notes": "Name says 'gears-logo-reveal'.",
+    "_source_name": "20264214-gears-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 290
+  },
+  {
+    "name": "20264214-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "20264214",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name.",
+    "_source_name": "20264214-INTRO-HD.NET",
+    "_batch_index": 291
+  },
+  {
+    "name": "20282994-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Magic Logo",
+    "confidence": 85,
+    "notes": "Contains 'magic-logo'.",
+    "_source_name": "20282994-INTRO-HD.NET",
+    "_batch_index": 292
+  },
+  {
+    "name": "20288259-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Memories",
+    "confidence": 85,
+    "notes": "Contains 'photo-memories'.",
+    "_source_name": "20288259-INTRO-HD.NET",
+    "_batch_index": 293
+  },
+  {
+    "name": "20293027-INTRO-HD.NET",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Magic Storm",
+    "confidence": 85,
+    "notes": "Contains 'magic-storm', likely particle-based.",
+    "_source_name": "20293027-INTRO-HD.NET",
+    "_batch_index": 294
+  },
+  {
+    "name": "20318954-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "20318954",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name.",
+    "_source_name": "20318954-INTRO-HD.NET",
+    "_batch_index": 295
+  },
+  {
+    "name": "20349216-wedding-memories-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Wedding Memories",
+    "confidence": 90,
+    "notes": "Name says 'wedding-memories'.",
+    "_source_name": "20349216-wedding-memories-INTRO-HD.NET",
+    "_batch_index": 296
+  },
+  {
+    "name": "20385781-alternative-energy-intro-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Alternative Energy Intro",
+    "confidence": 85,
+    "notes": "Name says 'alternative-energy-intro'.",
+    "_source_name": "20385781-alternative-energy-intro-INTRO-HD.NET",
+    "_batch_index": 297
+  },
+  {
+    "name": "20393328-fast-stomp-photo-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fast Stomp Photo Opener",
+    "confidence": 85,
+    "notes": "Name says 'fast-stomp-photo-opener'.",
+    "_source_name": "20393328-fast-stomp-photo-opener-INTRO-HD.NET",
+    "_batch_index": 298
+  },
+  {
+    "name": "20414326-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Epic Fire Titles",
+    "confidence": 85,
+    "notes": "Contains 'epic-fire-titles'.",
+    "_source_name": "20414326-INTRO-HD.NET",
+    "_batch_index": 299
+  }
+]

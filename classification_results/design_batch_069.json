@@ -1,0 +1,545 @@
+[
+  {
+    "name": "JFPV_-_LUTs_Pro_Edition",
+    "category": "Color Grading & LUTs",
+    "clean_name": "JFPV LUTs Pro Edition",
+    "confidence": 90,
+    "notes": "Name contains LUTs, files are .jpg previews",
+    "_source_name": "JFPV_-_LUTs_Pro_Edition",
+    "_batch_index": 4080
+  },
+  {
+    "name": "JGWLE7E-aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "Font Pack",
+    "confidence": 95,
+    "notes": "Only a .zip archive, no content clue",
+    "_source_name": "JGWLE7E-aidownload.net",
+    "_batch_index": 4081,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "JOEL_FAMULARO_____Phantom_LUTs_for_Sony_A7s3___FX6_____2023_Updated",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Joel Famularo Phantom LUTs for Sony A7s3 FX6 2023 Updated",
+    "confidence": 95,
+    "notes": "Name explicitly says LUTs",
+    "_source_name": "JOEL_FAMULARO_____Phantom_LUTs_for_Sony_A7s3___FX6_____2023_Updated",
+    "_batch_index": 4082
+  },
+  {
+    "name": "John Razallo - ClassicPrint 35mm Film Emulation PowerGrade V3",
+    "category": "Color Grading & LUTs",
+    "clean_name": "John Razallo ClassicPrint 35mm Film Emulation PowerGrade V3",
+    "confidence": 90,
+    "notes": "PowerGrade implies color grading, .jpg and .pdf previews",
+    "_source_name": "John Razallo - ClassicPrint 35mm Film Emulation PowerGrade V3",
+    "_batch_index": 4083
+  },
+  {
+    "name": "Joysticks_n_Sliders_1.7.10",
+    "category": "Plugins & Extensions",
+    "clean_name": "Joysticks n Sliders 1.7.10",
+    "confidence": 85,
+    "notes": "Likely an After Effects plugin/script",
+    "_source_name": "Joysticks_n_Sliders_1.7.10",
+    "_batch_index": 4084
+  },
+  {
+    "name": "Just Sound Effects - Metal Movements",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Just Sound Effects Metal Movements",
+    "confidence": 95,
+    "notes": "Sound effects pack",
+    "_source_name": "Just Sound Effects - Metal Movements",
+    "_batch_index": 4085
+  },
+  {
+    "name": "Just Sound Effects - Transition Whooshes Vol.1",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Just Sound Effects Transition Whooshes Vol.1",
+    "confidence": 95,
+    "notes": "Sound effects pack",
+    "_source_name": "Just Sound Effects - Transition Whooshes Vol.1",
+    "_batch_index": 4086
+  },
+  {
+    "name": "Just_Sound_Effects_Ocean_Waves_WAV-ViP",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Just Sound Effects Ocean Waves WAV",
+    "confidence": 95,
+    "notes": "Sound effects pack",
+    "_source_name": "Just_Sound_Effects_Ocean_Waves_WAV-ViP",
+    "_batch_index": 4087
+  },
+  {
+    "name": "just-a-cool-50846992",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sneaker Logo",
+    "confidence": 70,
+    "notes": "Only a .zip archive, no content clue",
+    "_source_name": "just-a-cool-50846992",
+    "_batch_index": 4088,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "justice-lawyer-identity-opener-2767000",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Justice Lawyer Identity Opener",
+    "confidence": 80,
+    "notes": "Name suggests opener, .txt may be description",
+    "_source_name": "justice-lawyer-identity-opener-2767000",
+    "_batch_index": 4089
+  },
+  {
+    "name": "justice-legend-trailer-19747459",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Justice Legend Trailer",
+    "confidence": 80,
+    "notes": "Name suggests trailer",
+    "_source_name": "justice-legend-trailer-19747459",
+    "_batch_index": 4090
+  },
+  {
+    "name": "Justkay Sony Cinevision Powergrade",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Justkay Sony Cinevision Powergrade",
+    "confidence": 90,
+    "notes": "Powergrade implies color grading",
+    "_source_name": "Justkay Sony Cinevision Powergrade",
+    "_batch_index": 4091
+  },
+  {
+    "name": "Justkay Sony True Tone Luts",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Justkay Sony True Tone LUTs",
+    "confidence": 95,
+    "notes": "Name explicitly says LUTs",
+    "_source_name": "Justkay Sony True Tone Luts",
+    "_batch_index": 4092
+  },
+  {
+    "name": "JZMD4T2-Aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "Inosuke",
+    "confidence": 95,
+    "notes": "Only a .zip archive, no content clue",
+    "_source_name": "JZMD4T2-Aidownload.net",
+    "_batch_index": 4093,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "K1-Production-The-Whole-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "K1 Production The Whole Intro",
+    "confidence": 80,
+    "notes": "Name suggests intro",
+    "_source_name": "K1-Production-The-Whole-INTRO-HD.NET",
+    "_batch_index": 4094
+  },
+  {
+    "name": "K83_LUTs_v.1",
+    "category": "Color Grading & LUTs",
+    "clean_name": "K83 LUTs v.1",
+    "confidence": 95,
+    "notes": "Name explicitly says LUTs",
+    "_source_name": "K83_LUTs_v.1",
+    "_batch_index": 4095
+  },
+  {
+    "name": "Kai Boettcher  Kai Boet – Elysium Preset Pack",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Kai Boettcher Elysium Preset Pack",
+    "confidence": 80,
+    "notes": "Preset pack likely for color grading",
+    "_source_name": "Kai Boettcher  Kai Boet – Elysium Preset Pack",
+    "_batch_index": 4096
+  },
+  {
+    "name": "Kaleidoscope_Photo_Effect_35278751-AIDOWNLOAD.NET",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Kaleidoscope Photo Effect",
+    "confidence": 80,
+    "notes": "Photo effect likely for Photoshop",
+    "_source_name": "Kaleidoscope_Photo_Effect_35278751-AIDOWNLOAD.NET",
+    "_batch_index": 4097
+  },
+  {
+    "name": "karaoke_flyer_G",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Karaoke Flyer",
+    "confidence": 90,
+    "notes": "Flyer design with .eps, .jpg, .pdf",
+    "_source_name": "karaoke_flyer_G",
+    "_batch_index": 4098
+  },
+  {
+    "name": "Karaoke-party-flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Karaoke Party Flyer",
+    "confidence": 90,
+    "notes": "Flyer design with .pdf, .psd",
+    "_source_name": "Karaoke-party-flyer",
+    "_batch_index": 4099
+  },
+  {
+    "name": "Kease v1.2.8",
+    "category": "Plugins & Extensions",
+    "clean_name": "Kease v1.2.8",
+    "confidence": 80,
+    "notes": "Likely a plugin/extension",
+    "_source_name": "Kease v1.2.8",
+    "_batch_index": 4100
+  },
+  {
+    "name": "Keentools GeoTracker v2024.1.0.756",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keentools GeoTracker v2024.1.0.756",
+    "confidence": 95,
+    "notes": "Known plugin for tracking",
+    "_source_name": "Keentools GeoTracker v2024.1.0.756",
+    "_batch_index": 4101
+  },
+  {
+    "name": "Keentools_GeoTracker_2023.2.2.675",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keentools GeoTracker 2023.2.2.675",
+    "confidence": 95,
+    "notes": "Known plugin for tracking",
+    "_source_name": "Keentools_GeoTracker_2023.2.2.675",
+    "_batch_index": 4102
+  },
+  {
+    "name": "Keentools_GeoTracker_v2023.2.1.666",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keentools GeoTracker v2023.2.1.666",
+    "confidence": 95,
+    "notes": "Known plugin for tracking",
+    "_source_name": "Keentools_GeoTracker_v2023.2.1.666",
+    "_batch_index": 4103
+  },
+  {
+    "name": "Keentools_GeoTracker_v2023.3.0.714",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keentools GeoTracker v2023.3.0.714",
+    "confidence": 95,
+    "notes": "Known plugin for tracking",
+    "_source_name": "Keentools_GeoTracker_v2023.3.0.714",
+    "_batch_index": 4104
+  },
+  {
+    "name": "Keentools_GeoTracker_v2023.3.0.716",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keentools GeoTracker v2023.3.0.716",
+    "confidence": 95,
+    "notes": "Known plugin for tracking",
+    "_source_name": "Keentools_GeoTracker_v2023.3.0.716",
+    "_batch_index": 4105
+  },
+  {
+    "name": "Keentools_GeoTracker_v2024.1.0.746",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keentools GeoTracker v2024.1.0.746",
+    "confidence": 95,
+    "notes": "Known plugin for tracking",
+    "_source_name": "Keentools_GeoTracker_v2024.1.0.746",
+    "_batch_index": 4106
+  },
+  {
+    "name": "kemayu-mobile-and-desktop-lightroom-presets-7J3QAGA",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Kemayu Mobile and Desktop Lightroom Presets",
+    "confidence": 95,
+    "notes": "Lightroom presets",
+    "_source_name": "kemayu-mobile-and-desktop-lightroom-presets-7J3QAGA",
+    "_batch_index": 4107
+  },
+  {
+    "name": "keyboardfx_v1.50",
+    "category": "Plugins & Extensions",
+    "clean_name": "KeyboardFX v1.50",
+    "confidence": 85,
+    "notes": "Contains .jsxbin, likely an After Effects script",
+    "_source_name": "keyboardfx_v1.50",
+    "_batch_index": 4108
+  },
+  {
+    "name": "KeysBinder v1.05",
+    "category": "Plugins & Extensions",
+    "clean_name": "KeysBinder v1.05",
+    "confidence": 80,
+    "notes": "Likely a plugin/script",
+    "_source_name": "KeysBinder v1.05",
+    "_batch_index": 4109
+  },
+  {
+    "name": "keystone_1.1.6",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keystone 1.1.6",
+    "confidence": 80,
+    "notes": "Likely a plugin/extension",
+    "_source_name": "keystone_1.1.6",
+    "_batch_index": 4110
+  },
+  {
+    "name": "Keystone_2.0.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keystone 2.0.2",
+    "confidence": 80,
+    "notes": "Likely a plugin/extension",
+    "_source_name": "Keystone_2.0.2",
+    "_batch_index": 4111
+  },
+  {
+    "name": "keystroke-hotkeys-mogrt-43852069",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Keystroke Hotkeys Mogrt",
+    "confidence": 90,
+    "notes": "Name contains .mogrt",
+    "_source_name": "keystroke-hotkeys-mogrt-43852069",
+    "_batch_index": 4112
+  },
+  {
+    "name": "keystroke-pro-for-after-effects-43682443",
+    "category": "Plugins & Extensions",
+    "clean_name": "Keystroke Pro for After Effects",
+    "confidence": 85,
+    "notes": "Script/plugin for After Effects",
+    "_source_name": "keystroke-pro-for-after-effects-43682443",
+    "_batch_index": 4113
+  },
+  {
+    "name": "kid-astronaut-adventure-39547020",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kid Astronaut Adventure",
+    "confidence": 80,
+    "notes": "Kids theme",
+    "_source_name": "kid-astronaut-adventure-39547020",
+    "_batch_index": 4114
+  },
+  {
+    "name": "kids-apparel-mockup-L3XH57P",
+    "category": "Mockups - Apparel",
+    "clean_name": "Kids Apparel Mockup",
+    "confidence": 95,
+    "notes": "Mockup for kids apparel",
+    "_source_name": "kids-apparel-mockup-L3XH57P",
+    "_batch_index": 4115
+  },
+  {
+    "name": "kids-blog-intro-36737264",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Blog Intro",
+    "confidence": 80,
+    "notes": "Kids themed intro",
+    "_source_name": "kids-blog-intro-36737264",
+    "_batch_index": 4116
+  },
+  {
+    "name": "kids-education-36138500",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Education",
+    "confidence": 80,
+    "notes": "Kids education theme",
+    "_source_name": "kids-education-36138500",
+    "_batch_index": 4117
+  },
+  {
+    "name": "kids-education-slideshow-36949036",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Education Slideshow",
+    "confidence": 80,
+    "notes": "Kids education slideshow",
+    "_source_name": "kids-education-slideshow-36949036",
+    "_batch_index": 4118
+  },
+  {
+    "name": "kids-education-slideshow-38494698",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Education Slideshow",
+    "confidence": 80,
+    "notes": "Kids education slideshow",
+    "_source_name": "kids-education-slideshow-38494698",
+    "_batch_index": 4119
+  },
+  {
+    "name": "kids-only-blog-opener-42800031",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Only Blog Opener",
+    "confidence": 80,
+    "notes": "Kids themed opener",
+    "_source_name": "kids-only-blog-opener-42800031",
+    "_batch_index": 4120
+  },
+  {
+    "name": "kids-planet-slideshow-3-mogrt-37318625",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Kids Planet Slideshow 3 Mogrt",
+    "confidence": 90,
+    "notes": "Name contains .mogrt",
+    "_source_name": "kids-planet-slideshow-3-mogrt-37318625",
+    "_batch_index": 4121
+  },
+  {
+    "name": "kids-planet-v-3-sweet-24422403",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Planet V3 Sweet",
+    "confidence": 80,
+    "notes": "Kids theme",
+    "_source_name": "kids-planet-v-3-sweet-24422403",
+    "_batch_index": 4122
+  },
+  {
+    "name": "kids-shirt-mock-up-69MV66",
+    "category": "Mockups - Apparel",
+    "clean_name": "Kids Shirt Mock Up",
+    "confidence": 95,
+    "notes": "Mockup for kids shirt",
+    "_source_name": "kids-shirt-mock-up-69MV66",
+    "_batch_index": 4123
+  },
+  {
+    "name": "kids-sleeper-clothes-mockup-PYBHXP8",
+    "category": "Mockups - Apparel",
+    "clean_name": "Kids Sleeper Clothes Mockup",
+    "confidence": 95,
+    "notes": "Mockup for kids clothes",
+    "_source_name": "kids-sleeper-clothes-mockup-PYBHXP8",
+    "_batch_index": 4124
+  },
+  {
+    "name": "kids-slideshow-after-effects-36449519",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Slideshow After Effects",
+    "confidence": 80,
+    "notes": "Kids slideshow for After Effects",
+    "_source_name": "kids-slideshow-after-effects-36449519",
+    "_batch_index": 4125
+  },
+  {
+    "name": "kids-slideshow-after-effects-template",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Slideshow After Effects Template",
+    "confidence": 80,
+    "notes": "Kids slideshow template",
+    "_source_name": "kids-slideshow-after-effects-template",
+    "_batch_index": 4126
+  },
+  {
+    "name": "kids-vlog-opener-36649310",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids Vlog Opener",
+    "confidence": 80,
+    "notes": "Kids vlog opener",
+    "_source_name": "kids-vlog-opener-36649310",
+    "_batch_index": 4127
+  },
+  {
+    "name": "kids-world-video-opener-38598339",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kids World Video Opener",
+    "confidence": 80,
+    "notes": "Kids themed opener",
+    "_source_name": "kids-world-video-opener-38598339",
+    "_batch_index": 4128
+  },
+  {
+    "name": "kindergarten-slides-opener",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Kindergarten Slides Opener",
+    "confidence": 80,
+    "notes": "Kids/kindergarten theme",
+    "_source_name": "kindergarten-slides-opener",
+    "_batch_index": 4129
+  },
+  {
+    "name": "kinetic-neon-typo-pack-39609087",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Kinetic Neon Typo Pack",
+    "confidence": 85,
+    "notes": "Kinetic typography pack",
+    "_source_name": "kinetic-neon-typo-pack-39609087",
+    "_batch_index": 4130
+  },
+  {
+    "name": "kinetic-titles-after-effects-37665280",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Kinetic Titles After Effects",
+    "confidence": 85,
+    "notes": "Kinetic titles for After Effects",
+    "_source_name": "kinetic-titles-after-effects-37665280",
+    "_batch_index": 4131
+  },
+  {
+    "name": "kinetic-titles-pack",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Kinetic Titles Pack",
+    "confidence": 85,
+    "notes": "Kinetic titles pack",
+    "_source_name": "kinetic-titles-pack",
+    "_batch_index": 4132
+  },
+  {
+    "name": "kinetic-transitions-pack-49401595",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Kinetic Transitions Pack",
+    "confidence": 85,
+    "notes": "Kinetic transitions pack",
+    "_source_name": "kinetic-transitions-pack-49401595",
+    "_batch_index": 4133
+  },
+  {
+    "name": "kinetic-typography-kit-45394656",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Kinetic Typography Kit",
+    "confidence": 85,
+    "notes": "Kinetic typography kit",
+    "_source_name": "kinetic-typography-kit-45394656",
+    "_batch_index": 4134
+  },
+  {
+    "name": "kinetrick-text-effect",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Kinetrick Text Effect",
+    "confidence": 80,
+    "notes": "Text effect",
+    "_source_name": "kinetrick-text-effect",
+    "_batch_index": 4135
+  },
+  {
+    "name": "Kitbash3D - Cyberpunk 2022",
+    "category": "3D - Models & Objects",
+    "clean_name": "Kitbash3D Cyberpunk 2022",
+    "confidence": 90,
+    "notes": "3D model kit from Kitbash3D",
+    "_source_name": "Kitbash3D - Cyberpunk 2022",
+    "_batch_index": 4136
+  },
+  {
+    "name": "kitchen-scene-gen-herbs-spices-MSS3PF",
+    "category": "Stock Photos - General",
+    "clean_name": "Kitchen Scene Gen Herbs Spices",
+    "confidence": 70,
+    "notes": "Likely stock photo scene",
+    "_source_name": "kitchen-scene-gen-herbs-spices-MSS3PF",
+    "_batch_index": 4137
+  },
+  {
+    "name": "kitchen-tissue-paper-roll-mockups-YD6MG7X",
+    "category": "Mockups - Packaging",
+    "clean_name": "Kitchen Tissue Paper Roll Mockups",
+    "confidence": 90,
+    "notes": "Mockup for packaging",
+    "_source_name": "kitchen-tissue-paper-roll-mockups-YD6MG7X",
+    "_batch_index": 4138
+  },
+  {
+    "name": "klean lut pack",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Klean LUT Pack",
+    "confidence": 95,
+    "notes": "Name explicitly says LUT pack",
+    "_source_name": "klean lut pack",
+    "_batch_index": 4139
+  }
+]

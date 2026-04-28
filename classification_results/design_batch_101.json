@@ -1,0 +1,545 @@
+[
+  {
+    "name": "tissue",
+    "category": "Plugins & Extensions",
+    "clean_name": "Tissue Blender Addon",
+    "confidence": 95,
+    "notes": "Only a .zip file, no content clue",
+    "_source_name": "tissue",
+    "_batch_index": 6000,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "title-fx-kit-v-1",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Title FX Kit v1",
+    "confidence": 75,
+    "notes": "Name suggests title effects kit, likely AE",
+    "_source_name": "title-fx-kit-v-1",
+    "_batch_index": 6001
+  },
+  {
+    "name": "title-kit-game-fx-TXUE43D",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Title Kit Game FX",
+    "confidence": 75,
+    "notes": "Name suggests game-themed title effects",
+    "_source_name": "title-kit-game-fx-TXUE43D",
+    "_batch_index": 6002
+  },
+  {
+    "name": "titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles",
+    "confidence": 70,
+    "notes": "Generic titles pack, likely AE",
+    "_source_name": "titles",
+    "_batch_index": 6003
+  },
+  {
+    "name": "Titles Pro 34872698",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles Pro",
+    "confidence": 70,
+    "notes": "Name suggests title pack, .jpg only but likely preview",
+    "_source_name": "Titles Pro 34872698",
+    "_batch_index": 6004
+  },
+  {
+    "name": "titles-36313352",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles",
+    "confidence": 70,
+    "notes": "Numeric ID, likely AE titles pack",
+    "_source_name": "titles-36313352",
+    "_batch_index": 6005
+  },
+  {
+    "name": "titles-and-comments-38632399",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles and Comments",
+    "confidence": 70,
+    "notes": "Name suggests title pack with comment graphics",
+    "_source_name": "titles-and-comments-38632399",
+    "_batch_index": 6006
+  },
+  {
+    "name": "titles-in-note-style-42918573",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles in Note Style",
+    "confidence": 75,
+    "notes": "Note-style titles, likely AE",
+    "_source_name": "titles-in-note-style-42918573",
+    "_batch_index": 6007
+  },
+  {
+    "name": "titles-neon-36327630",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Neon Titles",
+    "confidence": 75,
+    "notes": "Neon style titles, likely AE",
+    "_source_name": "titles-neon-36327630",
+    "_batch_index": 6008
+  },
+  {
+    "name": "titles-numbers-36360108",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Number Titles",
+    "confidence": 75,
+    "notes": "Number-themed titles, likely AE",
+    "_source_name": "titles-numbers-36360108",
+    "_batch_index": 6009
+  },
+  {
+    "name": "titles-opener-36946911",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Titles Opener",
+    "confidence": 75,
+    "notes": "Opener with titles, likely AE",
+    "_source_name": "titles-opener-36946911",
+    "_batch_index": 6010
+  },
+  {
+    "name": "titles-pack",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles Pack",
+    "confidence": 70,
+    "notes": "Generic titles pack, likely AE",
+    "_source_name": "titles-pack",
+    "_batch_index": 6011
+  },
+  {
+    "name": "titles-pack-0-1-35182964",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles Pack 0.1",
+    "confidence": 70,
+    "notes": "Titles pack, likely AE",
+    "_source_name": "titles-pack-0-1-35182964",
+    "_batch_index": 6012
+  },
+  {
+    "name": "titles-pack-dr-45172810",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles Pack DR",
+    "confidence": 70,
+    "notes": "Titles pack, likely AE",
+    "_source_name": "titles-pack-dr-45172810",
+    "_batch_index": 6013
+  },
+  {
+    "name": "TJB572D-Aidownload.net",
+    "category": "After Effects - Other",
+    "clean_name": "TJB572D",
+    "confidence": 65,
+    "notes": "Numeric ID only, no title hint",
+    "_source_name": "TJB572D-Aidownload.net",
+    "_batch_index": 6014
+  },
+  {
+    "name": "todo-transitions-transitions-pack-for-davinci-re-30888366",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Transitions Pack for DaVinci Resolve",
+    "confidence": 80,
+    "notes": "Name says DaVinci Resolve, but category not listed; closest is Premiere Pro transitions",
+    "_source_name": "todo-transitions-transitions-pack-for-davinci-re-30888366",
+    "_batch_index": 6015
+  },
+  {
+    "name": "Tom Noske Cinematic LUT",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Tom Noske Cinematic LUT",
+    "confidence": 95,
+    "notes": "Name explicitly says LUT",
+    "_source_name": "Tom Noske Cinematic LUT",
+    "_batch_index": 6016
+  },
+  {
+    "name": "Tool Launcher v1.4.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "Tool Launcher v1.4.2",
+    "confidence": 70,
+    "notes": "Name suggests a software tool/launcher",
+    "_source_name": "Tool Launcher v1.4.2",
+    "_batch_index": 6017
+  },
+  {
+    "name": "ToothAnatomy",
+    "category": "After Effects - Other",
+    "clean_name": "Tooth Anatomy",
+    "confidence": 70,
+    "notes": "Has .aep file, educational content",
+    "_source_name": "ToothAnatomy",
+    "_batch_index": 6018
+  },
+  {
+    "name": "ToothPaste v1.2.4",
+    "category": "Software & Utilities",
+    "clean_name": "ToothPaste",
+    "confidence": 95,
+    "notes": "Mixed file types, likely software but unclear",
+    "_source_name": "ToothPaste v1.2.4",
+    "_batch_index": 6019,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "ToothPaste-v1.2.3_c",
+    "category": "Software & Utilities",
+    "clean_name": "ToothPaste",
+    "confidence": 95,
+    "notes": "Mixed file types, likely software but unclear",
+    "_source_name": "ToothPaste-v1.2.3_c",
+    "_batch_index": 6020,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "top-10-broadcast-package-32975479",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Top 10 Broadcast Package",
+    "confidence": 85,
+    "notes": "Name suggests broadcast package for top 10 countdown",
+    "_source_name": "top-10-broadcast-package-32975479",
+    "_batch_index": 6021
+  },
+  {
+    "name": "top-10-history-vertical-video-42008296",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Top 10 History Vertical Video",
+    "confidence": 80,
+    "notes": "Vertical video broadcast style",
+    "_source_name": "top-10-history-vertical-video-42008296",
+    "_batch_index": 6022
+  },
+  {
+    "name": "top10-broadcast-pack-33635464",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Top 10 Broadcast Pack",
+    "confidence": 85,
+    "notes": "Broadcast pack for top 10",
+    "_source_name": "top10-broadcast-pack-33635464",
+    "_batch_index": 6023
+  },
+  {
+    "name": "Topaz Photo AI 2.0.5 (x64) + Crack",
+    "category": "Plugins & Extensions",
+    "clean_name": "Topaz Photo AI 2.0.5",
+    "confidence": 90,
+    "notes": "AI photo software, plugin-like",
+    "_source_name": "Topaz Photo AI 2.0.5 (x64) + Crack",
+    "_batch_index": 6024
+  },
+  {
+    "name": "Torn Paper Transitions VOL. 2.dra",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Torn Paper Transitions Vol. 2",
+    "confidence": 80,
+    "notes": ".drp file is DaVinci Resolve, but closest category is Premiere transitions",
+    "_source_name": "Torn Paper Transitions VOL. 2.dra",
+    "_batch_index": 6025
+  },
+  {
+    "name": "torn-paper-countdown-top-10-titles-47006324",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Torn Paper Countdown Top 10 Titles",
+    "confidence": 80,
+    "notes": "Torn paper style titles with countdown",
+    "_source_name": "torn-paper-countdown-top-10-titles-47006324",
+    "_batch_index": 6026
+  },
+  {
+    "name": "torn-paper-fashion-sale-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Torn Paper Fashion Sale Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow with torn paper style",
+    "_source_name": "torn-paper-fashion-sale-slideshow",
+    "_batch_index": 6027
+  },
+  {
+    "name": "torn-paper-film-titles-37693403",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Torn Paper Film Titles",
+    "confidence": 80,
+    "notes": "Film titles with torn paper effect",
+    "_source_name": "torn-paper-film-titles-37693403",
+    "_batch_index": 6028
+  },
+  {
+    "name": "torn-paper-film-titles-39313788",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Torn Paper Film Titles",
+    "confidence": 80,
+    "notes": "Film titles with torn paper effect",
+    "_source_name": "torn-paper-film-titles-39313788",
+    "_batch_index": 6029
+  },
+  {
+    "name": "torn-paper-magazine-and-posters-37681852",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Torn Paper Magazine and Posters",
+    "confidence": 80,
+    "notes": "Print design for magazines and posters",
+    "_source_name": "torn-paper-magazine-and-posters-37681852",
+    "_batch_index": 6030
+  },
+  {
+    "name": "torn-paper-photo-slideshow-52949409",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Torn Paper Photo Slideshow",
+    "confidence": 80,
+    "notes": "Photo slideshow with torn paper effect",
+    "_source_name": "torn-paper-photo-slideshow-52949409",
+    "_batch_index": 6031
+  },
+  {
+    "name": "torn-paper-transitions-for-ae-36332705",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Torn Paper Transitions for AE",
+    "confidence": 90,
+    "notes": "Explicitly for After Effects transitions",
+    "_source_name": "torn-paper-transitions-for-ae-36332705",
+    "_batch_index": 6032
+  },
+  {
+    "name": "torn-photo-templates-EG56C99",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Torn Photo Templates",
+    "confidence": 80,
+    "notes": "Has .psd files, photo templates",
+    "_source_name": "torn-photo-templates-EG56C99",
+    "_batch_index": 6033
+  },
+  {
+    "name": "total-defeated-t-shirt-design-8PU3S5Y",
+    "category": "Mockups - Apparel",
+    "clean_name": "Total Defeated T-Shirt Design",
+    "confidence": 85,
+    "notes": "T-shirt design mockup",
+    "_source_name": "total-defeated-t-shirt-design-8PU3S5Y",
+    "_batch_index": 6034
+  },
+  {
+    "name": "toy-theme-park-45508244",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Toy Theme Park",
+    "confidence": 75,
+    "notes": "Kids/cartoon theme park",
+    "_source_name": "toy-theme-park-45508244",
+    "_batch_index": 6035
+  },
+  {
+    "name": "toys-sale-25349251",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Toys Sale",
+    "confidence": 70,
+    "notes": "Has .aep, likely promo for toy sale",
+    "_source_name": "toys-sale-25349251",
+    "_batch_index": 6036
+  },
+  {
+    "name": "TP4FCZK-aidownload.net",
+    "category": "After Effects - Other",
+    "clean_name": "TP4FCZK",
+    "confidence": 65,
+    "notes": "Numeric ID only, no title hint",
+    "_source_name": "TP4FCZK-aidownload.net",
+    "_batch_index": 6037
+  },
+  {
+    "name": "trading-intro-after-effects-45341376",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Trading Intro After Effects",
+    "confidence": 90,
+    "notes": "Explicitly AE intro for trading",
+    "_source_name": "trading-intro-after-effects-45341376",
+    "_batch_index": 6038
+  },
+  {
+    "name": "Trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Trailer",
+    "confidence": 80,
+    "notes": "Has .aep, trailer project",
+    "_source_name": "Trailer",
+    "_batch_index": 6039
+  },
+  {
+    "name": "TRAILER SOUNDS - Cinematic Hits",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Trailer Sounds - Cinematic Hits",
+    "confidence": 95,
+    "notes": "Sound effects for trailers",
+    "_source_name": "TRAILER SOUNDS - Cinematic Hits",
+    "_batch_index": 6040
+  },
+  {
+    "name": "trailer-20431081",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Trailer",
+    "confidence": 75,
+    "notes": "Trailer project, likely AE",
+    "_source_name": "trailer-20431081",
+    "_batch_index": 6041
+  },
+  {
+    "name": "trailer-31095245",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Trailer",
+    "confidence": 75,
+    "notes": "Trailer project, likely AE",
+    "_source_name": "trailer-31095245",
+    "_batch_index": 6042
+  },
+  {
+    "name": "trailer-intro-15594022",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Trailer Intro",
+    "confidence": 80,
+    "notes": "Trailer intro, likely AE",
+    "_source_name": "trailer-intro-15594022",
+    "_batch_index": 6043
+  },
+  {
+    "name": "trailer-titles-14481498",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Trailer Titles",
+    "confidence": 80,
+    "notes": "Trailer titles, likely AE",
+    "_source_name": "trailer-titles-14481498",
+    "_batch_index": 6044
+  },
+  {
+    "name": "trailer-titles-19186651",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Trailer Titles",
+    "confidence": 80,
+    "notes": "Trailer titles, likely AE",
+    "_source_name": "trailer-titles-19186651",
+    "_batch_index": 6045
+  },
+  {
+    "name": "trailer-titles-21225801",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Trailer Titles",
+    "confidence": 80,
+    "notes": "Trailer titles, likely AE",
+    "_source_name": "trailer-titles-21225801",
+    "_batch_index": 6046
+  },
+  {
+    "name": "trailer-titles-42818772",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Trailer Titles",
+    "confidence": 80,
+    "notes": "Trailer titles, likely AE",
+    "_source_name": "trailer-titles-42818772",
+    "_batch_index": 6047
+  },
+  {
+    "name": "transformium-film-credits",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Transformium Film Credits",
+    "confidence": 80,
+    "notes": "Film credits style titles",
+    "_source_name": "transformium-film-credits",
+    "_batch_index": 6048
+  },
+  {
+    "name": "Transition Master Pro v2.0.2 Win-Mac",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Transition Master Pro v2.0.2",
+    "confidence": 75,
+    "notes": "Transition plugin/software, likely for Premiere",
+    "_source_name": "Transition Master Pro v2.0.2 Win-Mac",
+    "_batch_index": 6049
+  },
+  {
+    "name": "Transition-mattes-toolkit-37937",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Transition Mattes Toolkit",
+    "confidence": 80,
+    "notes": "Transition mattes toolkit, likely AE",
+    "_source_name": "Transition-mattes-toolkit-37937",
+    "_batch_index": 6050
+  },
+  {
+    "name": "transition-zone-34522242",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Transition Zone",
+    "confidence": 75,
+    "notes": "Transition pack, likely AE",
+    "_source_name": "transition-zone-34522242",
+    "_batch_index": 6051
+  },
+  {
+    "name": "transitions-10815849",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Transitions",
+    "confidence": 70,
+    "notes": "Generic transitions pack",
+    "_source_name": "transitions-10815849",
+    "_batch_index": 6052
+  },
+  {
+    "name": "transitions-24427647",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Transitions",
+    "confidence": 70,
+    "notes": "Generic transitions pack",
+    "_source_name": "transitions-24427647",
+    "_batch_index": 6053
+  },
+  {
+    "name": "transitions-40309585",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Transitions",
+    "confidence": 70,
+    "notes": "Generic transitions pack",
+    "_source_name": "transitions-40309585",
+    "_batch_index": 6054
+  },
+  {
+    "name": "transitions-davinci-resolve-40292976",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Transitions for DaVinci Resolve",
+    "confidence": 80,
+    "notes": "DaVinci Resolve transitions, closest category",
+    "_source_name": "transitions-davinci-resolve-40292976",
+    "_batch_index": 6055
+  },
+  {
+    "name": "transitions-presets-pack",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Transitions Presets Pack",
+    "confidence": 75,
+    "notes": "Transition presets, likely AE",
+    "_source_name": "transitions-presets-pack",
+    "_batch_index": 6056
+  },
+  {
+    "name": "transparent-plastic-wrap-texture-mock-up-PF456YU",
+    "category": "Mockups - Packaging",
+    "clean_name": "Transparent Plastic Wrap Texture Mockup",
+    "confidence": 85,
+    "notes": "Mockup for plastic wrap packaging",
+    "_source_name": "transparent-plastic-wrap-texture-mock-up-PF456YU",
+    "_batch_index": 6057
+  },
+  {
+    "name": "transparent-spray-cleaner-bottle-mockup-XW22A92",
+    "category": "Mockups - Packaging",
+    "clean_name": "Transparent Spray Cleaner Bottle Mockup",
+    "confidence": 85,
+    "notes": "Mockup for spray bottle packaging",
+    "_source_name": "transparent-spray-cleaner-bottle-mockup-XW22A92",
+    "_batch_index": 6058
+  },
+  {
+    "name": "trap-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Trap Opener",
+    "confidence": 75,
+    "notes": "Opener with trap style, likely AE",
+    "_source_name": "trap-opener",
+    "_batch_index": 6059
+  }
+]

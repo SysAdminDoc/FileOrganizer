@@ -1,0 +1,543 @@
+[
+  {
+    "name": "location-map-26409836",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Location Map",
+    "confidence": 75,
+    "notes": "Name suggests map-related After Effects project, .zip likely contains .aep",
+    "_source_name": "location-map-26409836",
+    "_batch_index": 4200
+  },
+  {
+    "name": "location-titles-36489747",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Location Titles",
+    "confidence": 75,
+    "notes": "Name suggests title animations for locations, .zip likely contains .aep",
+    "_source_name": "location-titles-36489747",
+    "_batch_index": 4201
+  },
+  {
+    "name": "Lockdown v3.1.0 WinMac",
+    "category": "Plugins & Extensions",
+    "clean_name": "Lockdown v3.1.0",
+    "confidence": 90,
+    "notes": "Known After Effects plugin for surface tracking, .jpg and .mp4 are preview files",
+    "_source_name": "Lockdown v3.1.0 WinMac",
+    "_batch_index": 4202
+  },
+  {
+    "name": "Lockdown_V3.0.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Lockdown V3.0.1",
+    "confidence": 85,
+    "notes": "Archive likely contains plugin installer, name matches known AE plugin",
+    "_source_name": "Lockdown_V3.0.1",
+    "_batch_index": 4203
+  },
+  {
+    "name": "locked-on-stabilization-effect-42845073",
+    "category": "After Effects - Other",
+    "clean_name": "Locked On Stabilization Effect",
+    "confidence": 70,
+    "notes": "Name suggests a stabilization effect for After Effects, .zip likely contains .aep",
+    "_source_name": "locked-on-stabilization-effect-42845073",
+    "_batch_index": 4204
+  },
+  {
+    "name": "Lofi_New_Editing_Bundle_(ALL_IN_ONE)",
+    "category": "After Effects - Other",
+    "clean_name": "Lofi New Editing Bundle",
+    "confidence": 65,
+    "notes": "Generic bundle name, likely contains multiple AE assets, no specific subcategory",
+    "_source_name": "Lofi_New_Editing_Bundle_(ALL_IN_ONE)",
+    "_batch_index": 4205
+  },
+  {
+    "name": "logging-23430561",
+    "category": "Plugins & Extensions",
+    "clean_name": "Logging",
+    "confidence": 65,
+    "notes": "Ambiguous name, .zip only, no clear category",
+    "_source_name": "logging-23430561",
+    "_batch_index": 4206,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "lollipop-wrapping-mockups-RASHJ9Z",
+    "category": "Mockups - Packaging",
+    "clean_name": "Lollipop Wrapping Mockups",
+    "confidence": 90,
+    "notes": "Mockup for candy packaging",
+    "_source_name": "lollipop-wrapping-mockups-RASHJ9Z",
+    "_batch_index": 4207
+  },
+  {
+    "name": "long-sleeve-baby-clothes-mockup",
+    "category": "Mockups - Apparel",
+    "clean_name": "Long Sleeve Baby Clothes Mockup",
+    "confidence": 95,
+    "notes": "Apparel mockup for baby clothes",
+    "_source_name": "long-sleeve-baby-clothes-mockup",
+    "_batch_index": 4208
+  },
+  {
+    "name": "Look Designer V3.1.1 For Adobe Win",
+    "category": "Plugins & Extensions",
+    "clean_name": "Look Designer V3.1.1",
+    "confidence": 95,
+    "notes": "Contains .aex file, which is an After Effects plugin extension",
+    "_source_name": "Look Designer V3.1.1 For Adobe Win",
+    "_batch_index": 4209
+  },
+  {
+    "name": "LOOK-LAB-PRINT-v1.1",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Look Lab Print v1.1",
+    "confidence": 70,
+    "notes": "Name suggests print presets/actions for Photoshop, .zip likely contains .atn or .lrtemplate",
+    "_source_name": "LOOK-LAB-PRINT-v1.1",
+    "_batch_index": 4210
+  },
+  {
+    "name": "loopFlow_V1.3.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "loopFlow V1.3.1",
+    "confidence": 85,
+    "notes": "Known After Effects plugin for creating infinite loops, .rar archive",
+    "_source_name": "loopFlow_V1.3.1",
+    "_batch_index": 4211
+  },
+  {
+    "name": "LoopMaster_1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "LoopMaster 1.1",
+    "confidence": 80,
+    "notes": "Name suggests a plugin for looping, .rar archive",
+    "_source_name": "LoopMaster_1.1",
+    "_batch_index": 4212
+  },
+  {
+    "name": "loopy v1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Loopy v1.1",
+    "confidence": 75,
+    "notes": "Name suggests a plugin or script, .zip archive",
+    "_source_name": "loopy v1.1",
+    "_batch_index": 4213
+  },
+  {
+    "name": "loulia-mobile-and-desktop-lightroom-presets-V22LPSV",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Loulia Mobile and Desktop Lightroom Presets",
+    "confidence": 95,
+    "notes": "Explicitly Lightroom presets for mobile and desktop",
+    "_source_name": "loulia-mobile-and-desktop-lightroom-presets-V22LPSV",
+    "_batch_index": 4214
+  },
+  {
+    "name": "Love story- photo album",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Love Story Photo Album",
+    "confidence": 90,
+    "notes": "Contains .aep file, name indicates photo album style",
+    "_source_name": "Love story- photo album",
+    "_batch_index": 4215
+  },
+  {
+    "name": "love-affair-flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Love Affair Flyer",
+    "confidence": 85,
+    "notes": "Flyer design, likely print-ready",
+    "_source_name": "love-affair-flyer",
+    "_batch_index": 4216
+  },
+  {
+    "name": "Love-photo-album-25701772",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Love Photo Album",
+    "confidence": 75,
+    "notes": "Name suggests photo album template, .jpg preview only",
+    "_source_name": "Love-photo-album-25701772",
+    "_batch_index": 4217
+  },
+  {
+    "name": "love-slideshow-42668743",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Love Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow template, likely for After Effects",
+    "_source_name": "love-slideshow-42668743",
+    "_batch_index": 4218
+  },
+  {
+    "name": "love-slideshow-50533187",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Love Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow template, likely for After Effects",
+    "_source_name": "love-slideshow-50533187",
+    "_batch_index": 4219
+  },
+  {
+    "name": "love-slideshow-for-after-effects-38463675",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Love Slideshow for After Effects",
+    "confidence": 95,
+    "notes": "Explicitly for After Effects, slideshow style",
+    "_source_name": "love-slideshow-for-after-effects-38463675",
+    "_batch_index": 4220
+  },
+  {
+    "name": "Love-story-103384",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Love Story",
+    "confidence": 75,
+    "notes": "Name suggests romantic slideshow, .zip likely contains .aep",
+    "_source_name": "Love-story-103384",
+    "_batch_index": 4221
+  },
+  {
+    "name": "love-story-36760450",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Love Story",
+    "confidence": 75,
+    "notes": "Name suggests romantic slideshow, .zip likely contains .aep",
+    "_source_name": "love-story-36760450",
+    "_batch_index": 4222
+  },
+  {
+    "name": "love-story-37655711",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Love Story",
+    "confidence": 75,
+    "notes": "Name suggests romantic slideshow, .zip likely contains .aep",
+    "_source_name": "love-story-37655711",
+    "_batch_index": 4223
+  },
+  {
+    "name": "Lovely-bokeh-opener-24955",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Lovely Bokeh Opener",
+    "confidence": 85,
+    "notes": "Opener with bokeh effect, .jpg preview",
+    "_source_name": "Lovely-bokeh-opener-24955",
+    "_batch_index": 4224
+  },
+  {
+    "name": "Lovely-memories-2-556142",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Memories 2",
+    "confidence": 75,
+    "notes": "Slideshow style, .zip likely contains .aep",
+    "_source_name": "Lovely-memories-2-556142",
+    "_batch_index": 4225
+  },
+  {
+    "name": "Lovely-memories-61879",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Memories",
+    "confidence": 70,
+    "notes": "Slideshow style, .jpg and .pdf preview",
+    "_source_name": "Lovely-memories-61879",
+    "_batch_index": 4226
+  },
+  {
+    "name": "lovely-memories-for-after-effects-50968484",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Memories for After Effects",
+    "confidence": 95,
+    "notes": "Explicitly for After Effects, slideshow",
+    "_source_name": "lovely-memories-for-after-effects-50968484",
+    "_batch_index": 4227
+  },
+  {
+    "name": "lovely-memories-slideshow-photo-slideshow-mogr-43428441",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Lovely Memories Slideshow Photo Slideshow",
+    "confidence": 90,
+    "notes": "Name includes .mogrt, Premiere Pro motion graphics template",
+    "_source_name": "lovely-memories-slideshow-photo-slideshow-mogr-43428441",
+    "_batch_index": 4228
+  },
+  {
+    "name": "lovely-parallax-slideshow-opener-19632627",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Lovely Parallax Slideshow Opener",
+    "confidence": 85,
+    "notes": "Opener with parallax effect, slideshow style",
+    "_source_name": "lovely-parallax-slideshow-opener-19632627",
+    "_batch_index": 4229
+  },
+  {
+    "name": "lovely-photo-slideshow-38781498",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Photo Slideshow",
+    "confidence": 80,
+    "notes": "Photo slideshow template",
+    "_source_name": "lovely-photo-slideshow-38781498",
+    "_batch_index": 4230
+  },
+  {
+    "name": "lovely-photo-slideshow-51886039",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Photo Slideshow",
+    "confidence": 80,
+    "notes": "Photo slideshow template",
+    "_source_name": "lovely-photo-slideshow-51886039",
+    "_batch_index": 4231
+  },
+  {
+    "name": "lovely-photo-slideshow-52228155",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Photo Slideshow",
+    "confidence": 80,
+    "notes": "Photo slideshow template",
+    "_source_name": "lovely-photo-slideshow-52228155",
+    "_batch_index": 4232
+  },
+  {
+    "name": "lovely-pink-transitions",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Lovely Pink Transitions",
+    "confidence": 80,
+    "notes": "Transition pack with pink theme",
+    "_source_name": "lovely-pink-transitions",
+    "_batch_index": 4233
+  },
+  {
+    "name": "lovely-romantic-photo-slideshow-42853311",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Romantic Photo Slideshow",
+    "confidence": 80,
+    "notes": "Romantic photo slideshow template",
+    "_source_name": "lovely-romantic-photo-slideshow-42853311",
+    "_batch_index": 4234
+  },
+  {
+    "name": "lovely-school-opener-37584966",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Lovely School Opener",
+    "confidence": 85,
+    "notes": "Opener for school theme",
+    "_source_name": "lovely-school-opener-37584966",
+    "_batch_index": 4235
+  },
+  {
+    "name": "lovely-slides-ii-10992477",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Slides II",
+    "confidence": 90,
+    "notes": "Contains .aep file, slideshow template",
+    "_source_name": "lovely-slides-ii-10992477",
+    "_batch_index": 4236
+  },
+  {
+    "name": "lovely-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Slideshow",
+    "confidence": 75,
+    "notes": "Slideshow template, .zip likely contains .aep",
+    "_source_name": "lovely-slideshow",
+    "_batch_index": 4237
+  },
+  {
+    "name": "lovely-slideshow-28874454",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow template",
+    "_source_name": "lovely-slideshow-28874454",
+    "_batch_index": 4238
+  },
+  {
+    "name": "lovely-slideshow-36135809",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow template",
+    "_source_name": "lovely-slideshow-36135809",
+    "_batch_index": 4239
+  },
+  {
+    "name": "lovely-slideshow-50919696",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lovely Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow template",
+    "_source_name": "lovely-slideshow-50919696",
+    "_batch_index": 4240
+  },
+  {
+    "name": "Loving-Rose-1061530",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Loving Rose",
+    "confidence": 75,
+    "notes": "Romantic slideshow style, .zip likely contains .aep",
+    "_source_name": "Loving-Rose-1061530",
+    "_batch_index": 4241
+  },
+  {
+    "name": "Lower Thirds 20776591",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds",
+    "confidence": 80,
+    "notes": "Lower thirds template, .mp4 preview",
+    "_source_name": "Lower Thirds 20776591",
+    "_batch_index": 4242
+  },
+  {
+    "name": "lower-thirds-35871076",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds",
+    "confidence": 85,
+    "notes": "Lower thirds template",
+    "_source_name": "lower-thirds-35871076",
+    "_batch_index": 4243
+  },
+  {
+    "name": "lower-thirds-36599391",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds",
+    "confidence": 85,
+    "notes": "Lower thirds template",
+    "_source_name": "lower-thirds-36599391",
+    "_batch_index": 4244
+  },
+  {
+    "name": "lower-thirds-36659750",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds",
+    "confidence": 85,
+    "notes": "Lower thirds template",
+    "_source_name": "lower-thirds-36659750",
+    "_batch_index": 4245
+  },
+  {
+    "name": "lower-thirds-4-36740208",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds 4",
+    "confidence": 85,
+    "notes": "Lower thirds template",
+    "_source_name": "lower-thirds-4-36740208",
+    "_batch_index": 4246
+  },
+  {
+    "name": "lower-thirds-41869035",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds",
+    "confidence": 70,
+    "notes": "Lower thirds template, .jpg preview only",
+    "_source_name": "lower-thirds-41869035",
+    "_batch_index": 4247
+  },
+  {
+    "name": "lower-thirds-42845756",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds",
+    "confidence": 85,
+    "notes": "Lower thirds template",
+    "_source_name": "lower-thirds-42845756",
+    "_batch_index": 4248
+  },
+  {
+    "name": "lower-thirds-45383176",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds",
+    "confidence": 85,
+    "notes": "Lower thirds template",
+    "_source_name": "lower-thirds-45383176",
+    "_batch_index": 4249
+  },
+  {
+    "name": "lower-thirds-bundle-51808773",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds Bundle",
+    "confidence": 85,
+    "notes": "Bundle of lower thirds templates",
+    "_source_name": "lower-thirds-bundle-51808773",
+    "_batch_index": 4250
+  },
+  {
+    "name": "lower-thirds-mogrt-44609004",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Lower Thirds Mogrt",
+    "confidence": 95,
+    "notes": "Name includes .mogrt, Premiere Pro motion graphics",
+    "_source_name": "lower-thirds-mogrt-44609004",
+    "_batch_index": 4251
+  },
+  {
+    "name": "lower-thirds-xi-35489471",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds XI",
+    "confidence": 85,
+    "notes": "Lower thirds template",
+    "_source_name": "lower-thirds-xi-35489471",
+    "_batch_index": 4252
+  },
+  {
+    "name": "lower-thirds-xi-35489485",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Lower Thirds XI",
+    "confidence": 85,
+    "notes": "Lower thirds template",
+    "_source_name": "lower-thirds-xi-35489485",
+    "_batch_index": 4253
+  },
+  {
+    "name": "lowrider-music-visualizer-35832576",
+    "category": "After Effects - Music & Audio Visualizer",
+    "clean_name": "Lowrider Music Visualizer",
+    "confidence": 90,
+    "notes": "Music visualizer template",
+    "_source_name": "lowrider-music-visualizer-35832576",
+    "_batch_index": 4254
+  },
+  {
+    "name": "luran-mobile-and-desktop-lightroom-presets-EJLP6XA",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Luran Mobile and Desktop Lightroom Presets",
+    "confidence": 95,
+    "notes": "Explicitly Lightroom presets",
+    "_source_name": "luran-mobile-and-desktop-lightroom-presets-EJLP6XA",
+    "_batch_index": 4255
+  },
+  {
+    "name": "luts-cinematic-41936493",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Luts Cinematic",
+    "confidence": 95,
+    "notes": "Name includes LUTs, cinematic color grading",
+    "_source_name": "luts-cinematic-41936493",
+    "_batch_index": 4256
+  },
+  {
+    "name": "luts-cinematic-film-43308814",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Luts Cinematic Film",
+    "confidence": 95,
+    "notes": "Name includes LUTs, cinematic film color grading",
+    "_source_name": "luts-cinematic-film-43308814",
+    "_batch_index": 4257
+  },
+  {
+    "name": "luts-dj-42950713",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Luts DJ",
+    "confidence": 95,
+    "notes": "Name includes LUTs, DJ themed",
+    "_source_name": "luts-dj-42950713",
+    "_batch_index": 4258
+  },
+  {
+    "name": "luts-pack-davinci-resolve-43337012",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Luts Pack DaVinci Resolve",
+    "confidence": 95,
+    "notes": "Name includes LUTs, for DaVinci Resolve, .jpg preview",
+    "_source_name": "luts-pack-davinci-resolve-43337012",
+    "_batch_index": 4259
+  }
+]

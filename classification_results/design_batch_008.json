@@ -1,0 +1,543 @@
+[
+  {
+    "name": "21539123-mobile-product-promo-INTRO-HD.NET",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Mobile Product Promo",
+    "confidence": 85,
+    "notes": "Name suggests product promo, likely After Effects template.",
+    "_source_name": "21539123-mobile-product-promo-INTRO-HD.NET",
+    "_batch_index": 420
+  },
+  {
+    "name": "21539302-INTRO-HD.NET",
+    "category": "After Effects - Lyric & Music Video",
+    "clean_name": "Cassette Audio Visualizer",
+    "confidence": 85,
+    "notes": "Contains 'cassette audio visualizer' hint.",
+    "_source_name": "21539302-INTRO-HD.NET",
+    "_batch_index": 421
+  },
+  {
+    "name": "21539748-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "360 Camera",
+    "confidence": 65,
+    "notes": "Contains '360 camera' hint, unclear subcategory.",
+    "_source_name": "21539748-INTRO-HD.NET",
+    "_batch_index": 422
+  },
+  {
+    "name": "21557987-shadow-dust-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Shadow Dust Reveal",
+    "confidence": 80,
+    "notes": "Reveal style suggests logo reveal.",
+    "_source_name": "21557987-shadow-dust-reveal-INTRO-HD.NET",
+    "_batch_index": 423
+  },
+  {
+    "name": "21560898-dynamic-intro-pack-3-in-1-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Intro Pack 3 in 1",
+    "confidence": 90,
+    "notes": "Explicitly an intro pack.",
+    "_source_name": "21560898-dynamic-intro-pack-3-in-1-INTRO-HD.NET",
+    "_batch_index": 424
+  },
+  {
+    "name": "21569816-minimal-presentation-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Minimal Presentation",
+    "confidence": 85,
+    "notes": "Presentation style suggests slideshow.",
+    "_source_name": "21569816-minimal-presentation-INTRO-HD.NET",
+    "_batch_index": 425
+  },
+  {
+    "name": "21577859-INTRO-HD.NET",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Future Website Promo 2in1",
+    "confidence": 85,
+    "notes": "Contains 'future website promo' hint.",
+    "_source_name": "21577859-INTRO-HD.NET",
+    "_batch_index": 426
+  },
+  {
+    "name": "21581687-youtube-animation-page-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "YouTube Animation Page",
+    "confidence": 85,
+    "notes": "YouTube-focused animation.",
+    "_source_name": "21581687-youtube-animation-page-INTRO-HD.NET",
+    "_batch_index": 427
+  },
+  {
+    "name": "21583038-our-memories-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Our Memories Slideshow",
+    "confidence": 90,
+    "notes": "Explicitly a slideshow.",
+    "_source_name": "21583038-our-memories-slideshow-INTRO-HD.NET",
+    "_batch_index": 428
+  },
+  {
+    "name": "21583795-clean-dynamic-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Clean Dynamic Opener",
+    "confidence": 90,
+    "notes": "Opener template.",
+    "_source_name": "21583795-clean-dynamic-opener-INTRO-HD.NET",
+    "_batch_index": 429
+  },
+  {
+    "name": "21589709-INTRO-HD.NET",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Breaking News",
+    "confidence": 85,
+    "notes": "Contains 'breaking news' hint.",
+    "_source_name": "21589709-INTRO-HD.NET",
+    "_batch_index": 430
+  },
+  {
+    "name": "21601793-youtube-essential-library",
+    "category": "After Effects - Social Media",
+    "clean_name": "YouTube Essential Library",
+    "confidence": 85,
+    "notes": "YouTube-focused library.",
+    "_source_name": "21601793-youtube-essential-library",
+    "_batch_index": 431
+  },
+  {
+    "name": "21632781-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles",
+    "confidence": 80,
+    "notes": "Generic titles pack.",
+    "_source_name": "21632781-titles",
+    "_batch_index": 432
+  },
+  {
+    "name": "21633689-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Scramble",
+    "confidence": 80,
+    "notes": "Contains 'scramble' hint, likely text effect.",
+    "_source_name": "21633689-INTRO-HD.NET",
+    "_batch_index": 433
+  },
+  {
+    "name": "21634457-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Colorful Opener",
+    "confidence": 85,
+    "notes": "Contains 'Colorfull opener' hint.",
+    "_source_name": "21634457-INTRO-HD.NET",
+    "_batch_index": 434
+  },
+  {
+    "name": "21638097-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Fashion Logo Opener",
+    "confidence": 85,
+    "notes": "Contains 'fashion logo opener' hint.",
+    "_source_name": "21638097-INTRO-HD.NET",
+    "_batch_index": 435
+  },
+  {
+    "name": "21658460-ultra-preset-INTRO-HD.NET",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Ultra Preset",
+    "confidence": 85,
+    "notes": "Name says 'preset'.",
+    "_source_name": "21658460-ultra-preset-INTRO-HD.NET",
+    "_batch_index": 436
+  },
+  {
+    "name": "21670007-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Ink Cinematic Titles",
+    "confidence": 85,
+    "notes": "Contains 'ink cinematic titles' hint.",
+    "_source_name": "21670007-INTRO-HD.NET",
+    "_batch_index": 437
+  },
+  {
+    "name": "21682928-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Intro",
+    "confidence": 85,
+    "notes": "Contains 'sport intro' hint.",
+    "_source_name": "21682928-INTRO-HD.NET",
+    "_batch_index": 438
+  },
+  {
+    "name": "21695712-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Stylish Logo",
+    "confidence": 85,
+    "notes": "Contains 'stylish logo' hint.",
+    "_source_name": "21695712-INTRO-HD.NET",
+    "_batch_index": 439
+  },
+  {
+    "name": "21712361-INTRO-HD.NET",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Brush Modern Promo",
+    "confidence": 80,
+    "notes": "Contains 'brush modern promo' hint.",
+    "_source_name": "21712361-INTRO-HD.NET",
+    "_batch_index": 440
+  },
+  {
+    "name": "21724337-INTRO-HD.NET",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Phoenix Reveal Premiere Pro",
+    "confidence": 85,
+    "notes": "Contains 'premiere pro' in hint.",
+    "_source_name": "21724337-INTRO-HD.NET",
+    "_batch_index": 441
+  },
+  {
+    "name": "21740478-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Motivational Opener",
+    "confidence": 85,
+    "notes": "Contains 'sport motivational opener' hint.",
+    "_source_name": "21740478-INTRO-HD.NET",
+    "_batch_index": 442
+  },
+  {
+    "name": "21744925-dynamic-fashion-openerINTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Fashion Opener",
+    "confidence": 90,
+    "notes": "Fashion opener template.",
+    "_source_name": "21744925-dynamic-fashion-openerINTRO-HD.NET",
+    "_batch_index": 443
+  },
+  {
+    "name": "21751656-V5-book-animation-toolkit-INTRO-HD.NET [source]",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "V5 Book Animation Toolkit",
+    "confidence": 85,
+    "notes": "Animation toolkit suggests motion graphics pack.",
+    "_source_name": "21751656-V5-book-animation-toolkit-INTRO-HD.NET [source]",
+    "_batch_index": 444
+  },
+  {
+    "name": "21796770-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "YouTube",
+    "confidence": 80,
+    "notes": "Contains 'youtube' hint.",
+    "_source_name": "21796770-INTRO-HD.NET",
+    "_batch_index": 445
+  },
+  {
+    "name": "21796770-youtube-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "YouTube",
+    "confidence": 85,
+    "notes": "YouTube-focused template.",
+    "_source_name": "21796770-youtube-INTRO-HD.NET",
+    "_batch_index": 446
+  },
+  {
+    "name": "21800709-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Times",
+    "confidence": 70,
+    "notes": "Contains 'times' hint, possibly title style.",
+    "_source_name": "21800709-INTRO-HD.NET",
+    "_batch_index": 447
+  },
+  {
+    "name": "21804022-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Corporate Slideshow",
+    "confidence": 85,
+    "notes": "Contains 'corporate slideshow' hint.",
+    "_source_name": "21804022-INTRO-HD.NET",
+    "_batch_index": 448
+  },
+  {
+    "name": "21811396-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Opener",
+    "confidence": 85,
+    "notes": "Contains 'sport opener' hint.",
+    "_source_name": "21811396-INTRO-HD.NET",
+    "_batch_index": 449
+  },
+  {
+    "name": "21811903-modern-store-event-promo-INTRO-HD.NET",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Modern Store Event Promo",
+    "confidence": 85,
+    "notes": "Event promo for store.",
+    "_source_name": "21811903-modern-store-event-promo-INTRO-HD.NET",
+    "_batch_index": 450
+  },
+  {
+    "name": "21830111-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Opener Dynamic Slideshow Hip Hop Lifestyle",
+    "confidence": 85,
+    "notes": "Contains 'urban opener dynamic slideshow' hint.",
+    "_source_name": "21830111-INTRO-HD.NET",
+    "_batch_index": 451
+  },
+  {
+    "name": "21839523-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Promo",
+    "confidence": 85,
+    "notes": "Contains 'Sport Promo' hint.",
+    "_source_name": "21839523-INTRO-HD.NET",
+    "_batch_index": 452
+  },
+  {
+    "name": "21863359-INTRO-HD.NET",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "News Broadcast",
+    "confidence": 85,
+    "notes": "Contains 'news broadcast' hint.",
+    "_source_name": "21863359-INTRO-HD.NET",
+    "_batch_index": 453
+  },
+  {
+    "name": "21867526-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Opener Fast Intro Dynamic Promo Urban",
+    "confidence": 85,
+    "notes": "Contains 'typography opener' hint.",
+    "_source_name": "21867526-INTRO-HD.NET",
+    "_batch_index": 454
+  },
+  {
+    "name": "21872448-INTRO-HD.NET",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "News Intro",
+    "confidence": 85,
+    "notes": "Contains 'news intro' hint.",
+    "_source_name": "21872448-INTRO-HD.NET",
+    "_batch_index": 455
+  },
+  {
+    "name": "21877978-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Promo",
+    "confidence": 80,
+    "notes": "Contains 'modern promo' hint.",
+    "_source_name": "21877978-INTRO-HD.NET",
+    "_batch_index": 456
+  },
+  {
+    "name": "21879670-INTRO-HD.NET",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Clean Titles Lower Thirds Mogrt for Premiere Pro",
+    "confidence": 90,
+    "notes": "Contains 'mogrt for premiere pro' hint.",
+    "_source_name": "21879670-INTRO-HD.NET",
+    "_batch_index": 457
+  },
+  {
+    "name": "21888723-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Paint Opener",
+    "confidence": 85,
+    "notes": "Contains 'Paint Opener' hint.",
+    "_source_name": "21888723-INTRO-HD.NET",
+    "_batch_index": 458
+  },
+  {
+    "name": "21901914-corporate-video",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Corporate Video",
+    "confidence": 85,
+    "notes": "Corporate video template.",
+    "_source_name": "21901914-corporate-video",
+    "_batch_index": 459
+  },
+  {
+    "name": "21945846-INTRO-HD.NET",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Serif Titles Mogrt Files",
+    "confidence": 90,
+    "notes": "Contains 'mogrt files' hint.",
+    "_source_name": "21945846-INTRO-HD.NET",
+    "_batch_index": 460
+  },
+  {
+    "name": "21948363-opener-pack-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Opener Pack",
+    "confidence": 90,
+    "notes": "Opener pack.",
+    "_source_name": "21948363-opener-pack-INTRO-HD.NET",
+    "_batch_index": 461
+  },
+  {
+    "name": "21957163-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Fast Glitch V2",
+    "confidence": 85,
+    "notes": "Contains 'fast glitch' hint.",
+    "_source_name": "21957163-INTRO-HD.NET",
+    "_batch_index": 462
+  },
+  {
+    "name": "21968996-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "OpenEXR 2 Opener Template",
+    "confidence": 85,
+    "notes": "Contains 'opener template' hint.",
+    "_source_name": "21968996-INTRO-HD.NET",
+    "_batch_index": 463
+  },
+  {
+    "name": "21972677-INTRO-HD.NET",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Historical Outstanding People",
+    "confidence": 80,
+    "notes": "Historical theme suggests cinematic.",
+    "_source_name": "21972677-INTRO-HD.NET",
+    "_batch_index": 464
+  },
+  {
+    "name": "21976691-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Instagram Stories Promo",
+    "confidence": 85,
+    "notes": "Contains 'Instagram Stories Promo' hint.",
+    "_source_name": "21976691-INTRO-HD.NET",
+    "_batch_index": 465
+  },
+  {
+    "name": "21980473-INTRO-HD.NET",
+    "category": "After Effects - Product Promo",
+    "clean_name": "3D Phone App Promo",
+    "confidence": 85,
+    "notes": "Contains '3d phone app promo' hint.",
+    "_source_name": "21980473-INTRO-HD.NET",
+    "_batch_index": 466
+  },
+  {
+    "name": "21984571-event-promo-INTRO-HD.NET",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Event Promo",
+    "confidence": 85,
+    "notes": "Event promo template.",
+    "_source_name": "21984571-event-promo-INTRO-HD.NET",
+    "_batch_index": 467
+  },
+  {
+    "name": "21986768-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Stomp Instagram 3 in 1 Vertical and Square",
+    "confidence": 85,
+    "notes": "Contains 'instagram' hint.",
+    "_source_name": "21986768-INTRO-HD.NET",
+    "_batch_index": 468
+  },
+  {
+    "name": "22-flyer-bundle",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Bundle",
+    "confidence": 90,
+    "notes": "Contains .psd and .jpg, flyer bundle.",
+    "_source_name": "22-flyer-bundle",
+    "_batch_index": 469
+  },
+  {
+    "name": "220-cartoon-elements-pack",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Cartoon Elements Pack",
+    "confidence": 85,
+    "notes": "Cartoon elements pack.",
+    "_source_name": "220-cartoon-elements-pack",
+    "_batch_index": 470
+  },
+  {
+    "name": "22000321-INTRO-HD.NET",
+    "category": "Premiere Pro - Title & Typography",
+    "clean_name": "Modern Promo Titles for Premiere",
+    "confidence": 85,
+    "notes": "Contains 'for premiere' hint.",
+    "_source_name": "22000321-INTRO-HD.NET",
+    "_batch_index": 471
+  },
+  {
+    "name": "22001637-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Digital Logo Reveal",
+    "confidence": 85,
+    "notes": "Contains 'digital logo reveal' hint.",
+    "_source_name": "22001637-INTRO-HD.NET",
+    "_batch_index": 472
+  },
+  {
+    "name": "22010485-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "22010485",
+    "confidence": 65,
+    "notes": "No hint, numeric ID only.",
+    "_source_name": "22010485-INTRO-HD.NET",
+    "_batch_index": 473
+  },
+  {
+    "name": "22010756-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Showreel",
+    "confidence": 85,
+    "notes": "Contains 'sport showreel' hint.",
+    "_source_name": "22010756-INTRO-HD.NET",
+    "_batch_index": 474
+  },
+  {
+    "name": "22010756-sport-showreel-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Showreel",
+    "confidence": 90,
+    "notes": "Sport showreel template.",
+    "_source_name": "22010756-sport-showreel-INTRO-HD.NET",
+    "_batch_index": 475
+  },
+  {
+    "name": "22010978-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "YouTube",
+    "confidence": 80,
+    "notes": "Contains 'youtube' hint.",
+    "_source_name": "22010978-INTRO-HD.NET",
+    "_batch_index": 476
+  },
+  {
+    "name": "22011215-INTRO-HD.NET",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Furniture Style Promo",
+    "confidence": 85,
+    "notes": "Contains 'furniture style promo' hint.",
+    "_source_name": "22011215-INTRO-HD.NET",
+    "_batch_index": 477
+  },
+  {
+    "name": "22018574-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Opener",
+    "confidence": 85,
+    "notes": "Contains 'sport opener' hint.",
+    "_source_name": "22018574-INTRO-HD.NET",
+    "_batch_index": 478
+  },
+  {
+    "name": "2202328_AIDOWNLOAD.NET",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Texture Art Action",
+    "confidence": 95,
+    "notes": "Only .zip, no content clue.",
+    "_source_name": "2202328_AIDOWNLOAD.NET",
+    "_batch_index": 479,
+    "resolved_by": "review_resolver"
+  }
+]

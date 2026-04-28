@@ -1,0 +1,597 @@
+[
+  {
+    "name": "VH-23351384-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "After Effects Intro Template",
+    "confidence": 70,
+    "notes": "Contains .aep and .mogrt; name suggests intro template.",
+    "_source_name": "VH-23351384-INTRO-HD.NET",
+    "_batch_index": 6300
+  },
+  {
+    "name": "VH-23457179-SF-Subtitles v2.6.1-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "SF Subtitles",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-23457179-SF-Subtitles v2.6.1-INTRO-HD.NET",
+    "_batch_index": 6301,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-23777352",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typography Opener",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-23777352",
+    "_batch_index": 6302,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-24766267-INTRO-HD.NET",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Colorful Transitions Pack 500+",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-24766267-INTRO-HD.NET",
+    "_batch_index": 6303,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-24793887-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Action Dynamic Sport Opener",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-24793887-INTRO-HD.NET",
+    "_batch_index": 6304,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-24958166-V4.1.2-INTRO-HD.NET",
+    "category": "After Effects - Plugin & Script",
+    "clean_name": "AE Face Tools",
+    "confidence": 85,
+    "notes": "Only .txt and .url files.",
+    "_source_name": "VH-24958166-V4.1.2-INTRO-HD.NET",
+    "_batch_index": 6305,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-24958166-V5.2",
+    "category": "After Effects - Plugin & Script",
+    "clean_name": "AE Face Tools Packages",
+    "confidence": 80,
+    "notes": "Only .jpg, .pdf, .txt files.",
+    "_source_name": "VH-24958166-V5.2",
+    "_batch_index": 6306,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-25256893-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-25256893-INTRO-HD.NET",
+    "_batch_index": 6307,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-25895558-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "10 Modern Stories",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-25895558-INTRO-HD.NET",
+    "_batch_index": 6308,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-26441046-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "3D Corporate Timeline Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-26441046-INTRO-HD.NET",
+    "_batch_index": 6309,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-27596414-V3.0-INTRO-HD.NET",
+    "category": "After Effects - Mockup & Device",
+    "clean_name": "AR Holders",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-27596414-V3.0-INTRO-HD.NET",
+    "_batch_index": 6310,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-2760984-INTRO-HD.NET",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "10 Light Color Overlay",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-2760984-INTRO-HD.NET",
+    "_batch_index": 6311,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-27670629-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "After Effects Intro Template",
+    "confidence": 70,
+    "notes": "Contains .aep and .mp4; name suggests intro.",
+    "_source_name": "VH-27670629-INTRO-HD.NET",
+    "_batch_index": 6312
+  },
+  {
+    "name": "VH-27907217-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Instagram Slideshow Pack",
+    "confidence": 85,
+    "notes": "Only .jpg file.",
+    "_source_name": "VH-27907217-INTRO-HD.NET",
+    "_batch_index": 6313,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-28331308-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Modern Food Menu Instagram Stories",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-28331308-INTRO-HD.NET",
+    "_batch_index": 6314,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-28464847-V1.5",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects Project",
+    "confidence": 65,
+    "notes": "Contains .aep and various files; no clear subcategory.",
+    "_source_name": "VH-28464847-V1.5",
+    "_batch_index": 6315
+  },
+  {
+    "name": "VH-28917041-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Digital 3D Logo Reveal",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-28917041-INTRO-HD.NET",
+    "_batch_index": 6316,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-28985545-V1.5-INTRO-HD.NET",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Extreme HUD Pack",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-28985545-V1.5-INTRO-HD.NET",
+    "_batch_index": 6317,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-29262752-INTRO-HD.NET",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Glitch Logo Intro Grunge Distortion",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-29262752-INTRO-HD.NET",
+    "_batch_index": 6318,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-29308116-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Santa Christmas Magic 6",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-29308116-INTRO-HD.NET",
+    "_batch_index": 6319,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-29337962-INTRO-HD.NET",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "New Year Countdown 2021 Premiere Pro",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-29337962-INTRO-HD.NET",
+    "_batch_index": 6320,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-29347658-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Old TV YouTube Opener",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-29347658-INTRO-HD.NET",
+    "_batch_index": 6321,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-29360610-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Universal Slideshow",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-29360610-INTRO-HD.NET",
+    "_batch_index": 6322,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-29415978-INTRO-HD.NET",
+    "category": "Premiere Pro - Title & Typography",
+    "clean_name": "Christmas Logo PR",
+    "confidence": 85,
+    "notes": "Only .jpg and .pdf files.",
+    "_source_name": "VH-29415978-INTRO-HD.NET",
+    "_batch_index": 6323,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-29663283-INTRO-HD.NET",
+    "category": "Premiere Pro - Title & Typography",
+    "clean_name": "Christmas Logo PR",
+    "confidence": 85,
+    "notes": "Only .pdf file.",
+    "_source_name": "VH-29663283-INTRO-HD.NET",
+    "_batch_index": 6324,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-29948373-INTRO-HD.NET",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "Video Galleries",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-29948373-INTRO-HD.NET",
+    "_batch_index": 6325,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-30355920-V2",
+    "category": "After Effects - Plugin & Script",
+    "clean_name": "Motion Bro",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-30355920-V2",
+    "_batch_index": 6326,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "vh-3209013-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery on a Sunny Afternoon",
+    "confidence": 90,
+    "notes": "Only .jpg file.",
+    "_source_name": "vh-3209013-INTRO-HD.NET",
+    "_batch_index": 6327,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-3315382-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Merry Christmas",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-3315382-INTRO-HD.NET",
+    "_batch_index": 6328,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33176397-V2-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects Project",
+    "confidence": 65,
+    "notes": "Contains .aep and .txt; no clear subcategory.",
+    "_source_name": "VH-33176397-V2-INTRO-HD.NET",
+    "_batch_index": 6329
+  },
+  {
+    "name": "VH-33348672-INTRO-HD.NET",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Fade Grid Transitions",
+    "confidence": 88,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33348672-INTRO-HD.NET",
+    "_batch_index": 6330,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33387919-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "CH37 Typography Promo",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33387919-INTRO-HD.NET",
+    "_batch_index": 6331,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33394839-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Car Logo Reveal",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33394839-INTRO-HD.NET",
+    "_batch_index": 6332,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33444949-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Typography Opener",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33444949-INTRO-HD.NET",
+    "_batch_index": 6333,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33516336-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Multi Stroke Logo",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33516336-INTRO-HD.NET",
+    "_batch_index": 6334,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33519723-INTRO-HD.NET",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Multi Screen Constructor",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33519723-INTRO-HD.NET",
+    "_batch_index": 6335,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33715363-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Energy Fusion Logo Reveal",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33715363-INTRO-HD.NET",
+    "_batch_index": 6336,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33732398-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Jolly Wedding Pack",
+    "confidence": 90,
+    "notes": "Only .txt and .url files.",
+    "_source_name": "VH-33732398-INTRO-HD.NET",
+    "_batch_index": 6337,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33732559-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "100 Kinetic Typography Posters",
+    "confidence": 95,
+    "notes": "Only .txt file.",
+    "_source_name": "VH-33732559-INTRO-HD.NET",
+    "_batch_index": 6338,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33753478-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Radial Grad Small",
+    "confidence": 70,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33753478-INTRO-HD.NET",
+    "_batch_index": 6339,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33766794-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Quick Promo Opener",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33766794-INTRO-HD.NET",
+    "_batch_index": 6340,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33789739-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Corporate Presentation Sirius",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33789739-INTRO-HD.NET",
+    "_batch_index": 6341,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33814124-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Neon Grunge Logo",
+    "confidence": 92,
+    "notes": "Only .txt file.",
+    "_source_name": "VH-33814124-INTRO-HD.NET",
+    "_batch_index": 6342,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33825652-INTRO-HD.NET",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Gold Phone App Promo",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33825652-INTRO-HD.NET",
+    "_batch_index": 6343,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33825768-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Slideshow Blue",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33825768-INTRO-HD.NET",
+    "_batch_index": 6344,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33841744-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Main Horizontal",
+    "confidence": 65,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33841744-INTRO-HD.NET",
+    "_batch_index": 6345,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33867321-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Envato White",
+    "confidence": 60,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33867321-INTRO-HD.NET",
+    "_batch_index": 6346,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33868865-INTRO-HD.NET",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Motion Particles",
+    "confidence": 85,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33868865-INTRO-HD.NET",
+    "_batch_index": 6347,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33897481-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Quick Clean Logo",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33897481-INTRO-HD.NET",
+    "_batch_index": 6348,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33897931-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects Project",
+    "confidence": 65,
+    "notes": "Contains .aep and .txt; no clear subcategory.",
+    "_source_name": "VH-33897931-INTRO-HD.NET",
+    "_batch_index": 6349
+  },
+  {
+    "name": "VH-33909628-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33909628-INTRO-HD.NET",
+    "_batch_index": 6350,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33910667-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Multiscreen Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33910667-INTRO-HD.NET",
+    "_batch_index": 6351,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33911001-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Cinematic Thunder Opener",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33911001-INTRO-HD.NET",
+    "_batch_index": 6352,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33911534-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33911534-INTRO-HD.NET",
+    "_batch_index": 6353,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33914250-V01-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Envato",
+    "confidence": 60,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33914250-V01-INTRO-HD.NET",
+    "_batch_index": 6354,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33916541-INTRO-HD.NET",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Funeral Flower Card",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33916541-INTRO-HD.NET",
+    "_batch_index": 6355,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33923086-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Business Corporate Slideshow",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33923086-INTRO-HD.NET",
+    "_batch_index": 6356,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33951403-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Intro Urban Opener",
+    "confidence": 95,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33951403-INTRO-HD.NET",
+    "_batch_index": 6357,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33959694-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Jump Intro",
+    "confidence": 92,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33959694-INTRO-HD.NET",
+    "_batch_index": 6358,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "VH-33961769-INTRO-HD.NET",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Multiscreen Layouts Pack Fade",
+    "confidence": 90,
+    "notes": "Only .zip archive, no content clue.",
+    "_source_name": "VH-33961769-INTRO-HD.NET",
+    "_batch_index": 6359,
+    "resolved_by": "review_resolver"
+  }
+]

@@ -1,0 +1,542 @@
+[
+  {
+    "name": "VideoHive The Best Explainer Pack Explainer Video Toolkit 29668190",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "The Best Explainer Pack Explainer Video Toolkit",
+    "confidence": 85,
+    "notes": "Name says 'Explainer Pack' and 'Explainer Video Toolkit', .zip likely contains AE project files.",
+    "_source_name": "VideoHive The Best Explainer Pack Explainer Video Toolkit 29668190",
+    "_batch_index": 6720
+  },
+  {
+    "name": "Videohive The Creative Opener 54275335",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "The Creative Opener",
+    "confidence": 90,
+    "notes": "Name says 'Opener', .mov files suggest video preview.",
+    "_source_name": "Videohive The Creative Opener 54275335",
+    "_batch_index": 6721
+  },
+  {
+    "name": "Videohive Therapist Services Intro 54299945",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Therapist Services Intro",
+    "confidence": 95,
+    "notes": "Name says 'Intro', .aep file confirms After Effects project.",
+    "_source_name": "Videohive Therapist Services Intro 54299945",
+    "_batch_index": 6722
+  },
+  {
+    "name": "Videohive Torn Paper Transition Mogrt 53647324",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Torn Paper Transition Mogrt",
+    "confidence": 95,
+    "notes": "Name says 'Mogrt', .mogrt file type.",
+    "_source_name": "Videohive Torn Paper Transition Mogrt 53647324",
+    "_batch_index": 6723
+  },
+  {
+    "name": "Videohive Torn Paper Transitions 53849411",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Torn Paper Transitions",
+    "confidence": 80,
+    "notes": "Name says 'Transitions', .mp4 preview, likely AE project.",
+    "_source_name": "Videohive Torn Paper Transitions 53849411",
+    "_batch_index": 6724
+  },
+  {
+    "name": "Videohive Transitions Library for DaVinci Resolve 34325208",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Transitions Library for DaVinci Resolve",
+    "confidence": 70,
+    "notes": "DaVinci Resolve transitions, .zip may contain .drp or LUTs, but no clear file hint; classified as Color Grading & LUTs as fallback.",
+    "_source_name": "Videohive Transitions Library for DaVinci Resolve 34325208",
+    "_batch_index": 6725
+  },
+  {
+    "name": "Videohive Travel Map Sidebars 35877270",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Travel Map Sidebars",
+    "confidence": 90,
+    "notes": "Name says 'Travel Map', .zip likely AE project.",
+    "_source_name": "Videohive Travel Map Sidebars 35877270",
+    "_batch_index": 6726
+  },
+  {
+    "name": "Videohive Typography 54279900",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography",
+    "confidence": 90,
+    "notes": "Name says 'Typography', .aep file confirms AE project.",
+    "_source_name": "Videohive Typography 54279900",
+    "_batch_index": 6727
+  },
+  {
+    "name": "Videohive Under Darkness Main Title 26433291",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Under Darkness Main Title",
+    "confidence": 85,
+    "notes": "Name says 'Main Title', .zip likely AE project.",
+    "_source_name": "Videohive Under Darkness Main Title 26433291",
+    "_batch_index": 6728
+  },
+  {
+    "name": "Videohive Vertical Lower Thirds 54183103",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Vertical Lower Thirds",
+    "confidence": 95,
+    "notes": "Name says 'Lower Thirds', .aep file confirms AE project.",
+    "_source_name": "Videohive Vertical Lower Thirds 54183103",
+    "_batch_index": 6729
+  },
+  {
+    "name": "Videohive Virtual Assistant User Premium Vector Instagram Story 47441432",
+    "category": "After Effects - Social Media",
+    "clean_name": "Virtual Assistant User Premium Vector Instagram Story",
+    "confidence": 85,
+    "notes": "Name says 'Instagram Story', .aep file suggests AE project for social media.",
+    "_source_name": "Videohive Virtual Assistant User Premium Vector Instagram Story 47441432",
+    "_batch_index": 6730
+  },
+  {
+    "name": "Videohive We Are Hiring 54320230",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "We Are Hiring",
+    "confidence": 85,
+    "notes": "Name suggests corporate recruitment, .aep file confirms AE project.",
+    "_source_name": "Videohive We Are Hiring 54320230",
+    "_batch_index": 6731
+  },
+  {
+    "name": "Videohive Wheel Of Fortune Pp 53008962",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Wheel Of Fortune Pp",
+    "confidence": 90,
+    "notes": "Name says 'Pp' (Premiere Pro), .mogrt file present.",
+    "_source_name": "Videohive Wheel Of Fortune Pp 53008962",
+    "_batch_index": 6732
+  },
+  {
+    "name": "Videohive Youtube Essential Pack 30928023",
+    "category": "After Effects - Social Media",
+    "clean_name": "Youtube Essential Pack",
+    "confidence": 85,
+    "notes": "Name says 'Youtube', .zip likely AE project for social media.",
+    "_source_name": "Videohive Youtube Essential Pack 30928023",
+    "_batch_index": 6733
+  },
+  {
+    "name": "Videohive Youtube Pack Transitions 54305059",
+    "category": "After Effects - Social Media",
+    "clean_name": "Youtube Pack Transitions",
+    "confidence": 85,
+    "notes": "Name says 'Youtube' and 'Transitions', likely AE project.",
+    "_source_name": "Videohive Youtube Pack Transitions 54305059",
+    "_batch_index": 6734
+  },
+  {
+    "name": "Videohive Youtube Subscribe 54295287",
+    "category": "After Effects - Social Media",
+    "clean_name": "Youtube Subscribe",
+    "confidence": 90,
+    "notes": "Name says 'Youtube Subscribe', .aep file confirms AE project.",
+    "_source_name": "Videohive Youtube Subscribe 54295287",
+    "_batch_index": 6735
+  },
+  {
+    "name": "VideoHive_Digital_Corporate_Slideshow_15323220-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Digital Corporate Slideshow",
+    "confidence": 90,
+    "notes": "Name says 'Slideshow', .aep file confirms AE project.",
+    "_source_name": "VideoHive_Digital_Corporate_Slideshow_15323220-INTRO-HD.NET",
+    "_batch_index": 6736
+  },
+  {
+    "name": "Videohive_Epic_Fire_Logo_Reveal_22655776",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Epic Fire Logo Reveal",
+    "confidence": 90,
+    "notes": "Name says 'Logo Reveal', .jpg preview.",
+    "_source_name": "Videohive_Epic_Fire_Logo_Reveal_22655776",
+    "_batch_index": 6737
+  },
+  {
+    "name": "VideoHive_Flat_Colorful_Logo_Animation_21345771-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Flat Colorful Logo Animation",
+    "confidence": 90,
+    "notes": "Name says 'Logo Animation', .zip likely AE project.",
+    "_source_name": "VideoHive_Flat_Colorful_Logo_Animation_21345771-INTRO-HD.NET",
+    "_batch_index": 6738
+  },
+  {
+    "name": "VideoHive_Fresh_Transitions_23329699-INTRO-HD.NET",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Fresh Transitions",
+    "confidence": 85,
+    "notes": "Name says 'Transitions', .jpg/.png preview.",
+    "_source_name": "VideoHive_Fresh_Transitions_23329699-INTRO-HD.NET",
+    "_batch_index": 6739
+  },
+  {
+    "name": "Videohive_FX_Movie_Pro_Pack_24915451",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "FX Movie Pro Pack",
+    "confidence": 85,
+    "notes": "Name says 'FX Movie', .zip likely AE project.",
+    "_source_name": "Videohive_FX_Movie_Pro_Pack_24915451",
+    "_batch_index": 6740
+  },
+  {
+    "name": "Videohive_Journey_to_History_21458544",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Journey to History",
+    "confidence": 80,
+    "notes": "Name suggests historical slideshow, .zip likely AE project.",
+    "_source_name": "Videohive_Journey_to_History_21458544",
+    "_batch_index": 6741
+  },
+  {
+    "name": "Videohive_Kinetic_Typography_Pack_for_F_X_36015688",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Kinetic Typography Pack for F X",
+    "confidence": 90,
+    "notes": "Name says 'Kinetic Typography', .zip likely AE project.",
+    "_source_name": "Videohive_Kinetic_Typography_Pack_for_F_X_36015688",
+    "_batch_index": 6742
+  },
+  {
+    "name": "Videohive_Realistic_Hits_And_Rumbles_Effects_for_After_Effects_40658029",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Realistic Hits And Rumbles Effects for After Effects",
+    "confidence": 95,
+    "notes": "Name says 'Effects for After Effects', .zip likely AE project.",
+    "_source_name": "Videohive_Realistic_Hits_And_Rumbles_Effects_for_After_Effects_40658029",
+    "_batch_index": 6743
+  },
+  {
+    "name": "Videohive_Slideshow_43306691",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Slideshow",
+    "confidence": 85,
+    "notes": "Name says 'Slideshow', .zip likely AE project.",
+    "_source_name": "Videohive_Slideshow_43306691",
+    "_batch_index": 6744
+  },
+  {
+    "name": "Videohive_SPICE_-_300__Animated_Elements_10906735-INTRO-HD.NET",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "SPICE - 300 Animated Elements",
+    "confidence": 85,
+    "notes": "Name says 'Animated Elements', .zip likely AE project.",
+    "_source_name": "Videohive_SPICE_-_300__Animated_Elements_10906735-INTRO-HD.NET",
+    "_batch_index": 6745
+  },
+  {
+    "name": "Videohive_Transitions_22613802-INTRO-HD.NET",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Transitions",
+    "confidence": 85,
+    "notes": "Name says 'Transitions', .zip likely AE project.",
+    "_source_name": "Videohive_Transitions_22613802-INTRO-HD.NET",
+    "_batch_index": 6746
+  },
+  {
+    "name": "videohive-10677746-photo-memories-retro-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Memories Retro Slideshow",
+    "confidence": 90,
+    "notes": "Name says 'slideshow', .zip likely AE project.",
+    "_source_name": "videohive-10677746-photo-memories-retro-slideshow",
+    "_batch_index": 6747
+  },
+  {
+    "name": "videohive-10776768-love-story-photo-album",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Love Story Photo Album",
+    "confidence": 90,
+    "notes": "Name says 'photo album', .zip likely AE project.",
+    "_source_name": "videohive-10776768-love-story-photo-album",
+    "_batch_index": 6748
+  },
+  {
+    "name": "videohive-11580863-ramadan-logo-pack-2",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Ramadan Logo Pack 2",
+    "confidence": 85,
+    "notes": "Name says 'logo pack', .rar likely AE project.",
+    "_source_name": "videohive-11580863-ramadan-logo-pack-2",
+    "_batch_index": 6749
+  },
+  {
+    "name": "videohive-11649171-ramadan-logo-reveal",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Ramadan Logo Reveal",
+    "confidence": 90,
+    "notes": "Name says 'logo reveal', .rar likely AE project.",
+    "_source_name": "videohive-11649171-ramadan-logo-reveal",
+    "_batch_index": 6750
+  },
+  {
+    "name": "videohive-11929031-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "11929031",
+    "confidence": 65,
+    "notes": "Numeric ID only, .rar, no informative name.",
+    "_source_name": "videohive-11929031-INTRO-HD.NET",
+    "_batch_index": 6751
+  },
+  {
+    "name": "videohive-12610960-virtual-studio-103",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Virtual Studio 103",
+    "confidence": 80,
+    "notes": "Name says 'virtual studio', .zip likely AE broadcast package.",
+    "_source_name": "videohive-12610960-virtual-studio-103",
+    "_batch_index": 6752
+  },
+  {
+    "name": "videohive-12843211-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "12843211",
+    "confidence": 65,
+    "notes": "Numeric ID only, .rar, no informative name.",
+    "_source_name": "videohive-12843211-INTRO-HD.NET",
+    "_batch_index": 6753
+  },
+  {
+    "name": "videohive-14637260-world-war-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "World War Titles",
+    "confidence": 85,
+    "notes": "Name says 'titles', .zip likely AE project.",
+    "_source_name": "videohive-14637260-world-war-titles",
+    "_batch_index": 6754
+  },
+  {
+    "name": "videohive-15327664-map-kit",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Map Kit",
+    "confidence": 90,
+    "notes": "Name says 'map kit', .zip likely AE project.",
+    "_source_name": "videohive-15327664-map-kit",
+    "_batch_index": 6755
+  },
+  {
+    "name": "videohive-15486596-face-cutout-toolkit",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Face Cutout Toolkit",
+    "confidence": 80,
+    "notes": "Name says 'face cutout toolkit', .zip likely AE explainer tool.",
+    "_source_name": "videohive-15486596-face-cutout-toolkit",
+    "_batch_index": 6756
+  },
+  {
+    "name": "videohive-15795143-tree-of-life-photo-gallery",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Tree of Life Photo Gallery",
+    "confidence": 90,
+    "notes": "Name says 'photo gallery', .jpg preview.",
+    "_source_name": "videohive-15795143-tree-of-life-photo-gallery",
+    "_batch_index": 6757
+  },
+  {
+    "name": "videohive-16836718-civil-battlefield",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Civil Battlefield",
+    "confidence": 85,
+    "notes": "Name suggests cinematic, .aep file confirms AE project.",
+    "_source_name": "videohive-16836718-civil-battlefield",
+    "_batch_index": 6758
+  },
+  {
+    "name": "videohive-17031672-video-marketing-explainer",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Video Marketing Explainer",
+    "confidence": 90,
+    "notes": "Name says 'explainer', .zip likely AE project.",
+    "_source_name": "videohive-17031672-video-marketing-explainer",
+    "_batch_index": 6759
+  },
+  {
+    "name": "videohive-17745252-the-military-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "The Military Slideshow",
+    "confidence": 90,
+    "notes": "Name says 'slideshow', .aep file confirms AE project.",
+    "_source_name": "videohive-17745252-the-military-slideshow",
+    "_batch_index": 6760
+  },
+  {
+    "name": "videohive-18522966-particle-graphy-studio",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Particle Graphy Studio",
+    "confidence": 85,
+    "notes": "Name says 'particle', .jpg preview.",
+    "_source_name": "videohive-18522966-particle-graphy-studio",
+    "_batch_index": 6761
+  },
+  {
+    "name": "videohive-19029072-ink-style-parallax-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Ink Style Parallax Slideshow",
+    "confidence": 90,
+    "notes": "Name says 'slideshow', .zip likely AE project.",
+    "_source_name": "videohive-19029072-ink-style-parallax-slideshow",
+    "_batch_index": 6762
+  },
+  {
+    "name": "videohive-19264969-caricature-toolkit-face-cut-out-explainer-video-toolkit",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Caricature Toolkit Face Cut Out Explainer Video Toolkit",
+    "confidence": 90,
+    "notes": "Name says 'explainer video toolkit', .zip likely AE project.",
+    "_source_name": "videohive-19264969-caricature-toolkit-face-cut-out-explainer-video-toolkit",
+    "_batch_index": 6763
+  },
+  {
+    "name": "videohive-19383691-cooking-tv-clean-broadcast-pack",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Cooking TV Clean Broadcast Pack",
+    "confidence": 90,
+    "notes": "Name says 'broadcast pack', .aep file confirms AE project.",
+    "_source_name": "videohive-19383691-cooking-tv-clean-broadcast-pack",
+    "_batch_index": 6764
+  },
+  {
+    "name": "videohive-19401103-glossy-logo-reflection-logo-loop-INTROHD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Glossy Logo Reflection Logo Loop",
+    "confidence": 90,
+    "notes": "Name says 'logo loop', .zip likely AE project.",
+    "_source_name": "videohive-19401103-glossy-logo-reflection-logo-loop-INTROHD.NET",
+    "_batch_index": 6765
+  },
+  {
+    "name": "videohive-19435270-golden-brilliant-logo-reveal",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Golden Brilliant Logo Reveal",
+    "confidence": 95,
+    "notes": "Name says 'logo reveal', .zip likely AE project.",
+    "_source_name": "videohive-19435270-golden-brilliant-logo-reveal",
+    "_batch_index": 6766
+  },
+  {
+    "name": "videohive-19529541-water-logo",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Water Logo",
+    "confidence": 85,
+    "notes": "Name says 'logo', .jpg preview.",
+    "_source_name": "videohive-19529541-water-logo",
+    "_batch_index": 6767
+  },
+  {
+    "name": "videohive-19790695-imaginary-force-urban-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Imaginary Force Urban Opener",
+    "confidence": 90,
+    "notes": "Name says 'opener', .zip likely AE project.",
+    "_source_name": "videohive-19790695-imaginary-force-urban-opener",
+    "_batch_index": 6768
+  },
+  {
+    "name": "videohive-19858692-cooking-design-pack-cocktails",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Cooking Design Pack Cocktails",
+    "confidence": 80,
+    "notes": "Name says 'design pack', .jpg preview, likely AE broadcast.",
+    "_source_name": "videohive-19858692-cooking-design-pack-cocktails",
+    "_batch_index": 6769
+  },
+  {
+    "name": "videohive-19969746-furious-50-titles-presets",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Furious 50 Titles Presets",
+    "confidence": 90,
+    "notes": "Name says 'titles presets', .zip likely AE project.",
+    "_source_name": "videohive-19969746-furious-50-titles-presets",
+    "_batch_index": 6770
+  },
+  {
+    "name": "videohive-20201814-photo-gallery-our-happy-day",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Our Happy Day",
+    "confidence": 90,
+    "notes": "Name says 'photo gallery', .jpg preview.",
+    "_source_name": "videohive-20201814-photo-gallery-our-happy-day",
+    "_batch_index": 6771
+  },
+  {
+    "name": "videohive-20281690-soccer-logo",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Soccer Logo",
+    "confidence": 85,
+    "notes": "Name says 'logo', no files listed, likely AE project.",
+    "_source_name": "videohive-20281690-soccer-logo",
+    "_batch_index": 6772
+  },
+  {
+    "name": "videohive-20481472-cinematic-parallax-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Cinematic Parallax Slideshow",
+    "confidence": 90,
+    "notes": "Name says 'slideshow', .zip likely AE project.",
+    "_source_name": "videohive-20481472-cinematic-parallax-slideshow",
+    "_batch_index": 6773
+  },
+  {
+    "name": "videohive-20648253-cinematic-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer",
+    "confidence": 90,
+    "notes": "Name says 'trailer', .zip likely AE project.",
+    "_source_name": "videohive-20648253-cinematic-trailer",
+    "_batch_index": 6774
+  },
+  {
+    "name": "videohive-20930924-cinematic-trailer-5",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer 5",
+    "confidence": 90,
+    "notes": "Name says 'trailer', .aep file confirms AE project.",
+    "_source_name": "videohive-20930924-cinematic-trailer-5",
+    "_batch_index": 6775
+  },
+  {
+    "name": "videohive-22136831-epic-action-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Epic Action Trailer",
+    "confidence": 90,
+    "notes": "Name says 'trailer', .zip likely AE project.",
+    "_source_name": "videohive-22136831-epic-action-trailer",
+    "_batch_index": 6776
+  },
+  {
+    "name": "videohive-22818407-coding-logo-reveals",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Coding Logo Reveals",
+    "confidence": 90,
+    "notes": "Name says 'logo reveals', .aep file confirms AE project.",
+    "_source_name": "videohive-22818407-coding-logo-reveals",
+    "_batch_index": 6777
+  },
+  {
+    "name": "videohive-23185009-_-teaser",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Teaser",
+    "confidence": 90,
+    "notes": "Name says 'teaser', .zip likely AE project.",
+    "_source_name": "videohive-23185009-_-teaser",
+    "_batch_index": 6778
+  },
+  {
+    "name": "videohive-23879041-modern-brushes-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Brushes Slideshow",
+    "confidence": 90,
+    "notes": "Name says 'slideshow', .zip likely AE project.",
+    "_source_name": "videohive-23879041-modern-brushes-slideshow",
+    "_batch_index": 6779
+  }
+]

@@ -1,0 +1,544 @@
+[
+  {
+    "name": "Party & Celeb. Canvases",
+    "category": "Print - Other",
+    "clean_name": "Party & Celeb. Canvases",
+    "confidence": 70,
+    "notes": "Only .pdf files, likely print templates",
+    "_source_name": "Party & Celeb. Canvases",
+    "_batch_index": 4920
+  },
+  {
+    "name": "party-intro-mogrt-36744078",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Party Intro Mogrt",
+    "confidence": 90,
+    "notes": "Name contains 'mogrt' and .zip likely contains .mogrt",
+    "_source_name": "party-intro-mogrt-36744078",
+    "_batch_index": 4921
+  },
+  {
+    "name": "party-music-intro-39042671",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Party Music Intro",
+    "confidence": 80,
+    "notes": "Name suggests intro, likely AE template",
+    "_source_name": "party-music-intro-39042671",
+    "_batch_index": 4922
+  },
+  {
+    "name": "party-opener-42884810",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Party Opener",
+    "confidence": 85,
+    "notes": "Name clearly indicates opener",
+    "_source_name": "party-opener-42884810",
+    "_batch_index": 4923
+  },
+  {
+    "name": "party-scene-situation-28479726",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Party Scene Situation",
+    "confidence": 80,
+    "notes": "Party-related scene template",
+    "_source_name": "party-scene-situation-28479726",
+    "_batch_index": 4924
+  },
+  {
+    "name": "Passionate Kiss",
+    "category": "Stock Photos - General",
+    "clean_name": "Passionate Kiss",
+    "confidence": 75,
+    "notes": "Only .jpg file, likely stock photo",
+    "_source_name": "Passionate Kiss",
+    "_batch_index": 4925
+  },
+  {
+    "name": "past-time-historical-slideshow-32175339",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Past Time Historical Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow in name, .jpg files suggest preview",
+    "_source_name": "past-time-historical-slideshow-32175339",
+    "_batch_index": 4926
+  },
+  {
+    "name": "Pastiche v2.1.15",
+    "category": "Plugins & Extensions",
+    "clean_name": "Pastiche",
+    "confidence": 70,
+    "notes": "Version number suggests software/plugin, .zip likely contains plugin",
+    "_source_name": "Pastiche v2.1.15",
+    "_batch_index": 4927
+  },
+  {
+    "name": "Path Visualizer v1.2.2",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "Path Visualizer",
+    "confidence": 80,
+    "notes": "Visualizer suggests data viz, version number",
+    "_source_name": "Path Visualizer v1.2.2",
+    "_batch_index": 4928
+  },
+  {
+    "name": "Payhip – BAT PACK 2",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "BAT PACK 2",
+    "confidence": 85,
+    "notes": "Only .txt file, unclear content",
+    "_source_name": "Payhip – BAT PACK 2",
+    "_batch_index": 4929,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Payhip – Desvx Pack",
+    "category": "After Effects - Other",
+    "clean_name": "Desvx Pack",
+    "confidence": 85,
+    "notes": "Mixed .jpg and .txt, unclear category",
+    "_source_name": "Payhip – Desvx Pack",
+    "_batch_index": 4930,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Payhip – Dnte Editing Pack",
+    "category": "After Effects - Other",
+    "clean_name": "Payhip Dnte Editing Pack",
+    "confidence": 60,
+    "notes": "Editing pack likely for AE, but no specific subcategory",
+    "_source_name": "Payhip – Dnte Editing Pack",
+    "_batch_index": 4931
+  },
+  {
+    "name": "Payhip – JAUVOS EDITING PACK",
+    "category": "After Effects - Other",
+    "clean_name": "Payhip JAUVOS Editing Pack",
+    "confidence": 60,
+    "notes": "Editing pack, likely AE",
+    "_source_name": "Payhip – JAUVOS EDITING PACK",
+    "_batch_index": 4932
+  },
+  {
+    "name": "Payhip – Jeup’s Editing Pack 1",
+    "category": "After Effects - Other",
+    "clean_name": "Payhip Jeup's Editing Pack 1",
+    "confidence": 60,
+    "notes": "Editing pack, likely AE",
+    "_source_name": "Payhip – Jeup’s Editing Pack 1",
+    "_batch_index": 4933
+  },
+  {
+    "name": "Payhip – Koki Sukuna VS Jogo",
+    "category": "Stock Footage - General",
+    "clean_name": "Payhip Koki Sukuna VS Jogo",
+    "confidence": 70,
+    "notes": "Contains .mp4, likely stock footage",
+    "_source_name": "Payhip – Koki Sukuna VS Jogo",
+    "_batch_index": 4934
+  },
+  {
+    "name": "Payhip – NANO 7k Editing Pack",
+    "category": "After Effects - Other",
+    "clean_name": "Payhip NANO 7k Editing Pack",
+    "confidence": 60,
+    "notes": "Editing pack, likely AE",
+    "_source_name": "Payhip – NANO 7k Editing Pack",
+    "_batch_index": 4935
+  },
+  {
+    "name": "Payhip – RAIO – 4 IN 1 Preset Pack",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Payhip RAIO 4 IN 1 Preset Pack",
+    "confidence": 85,
+    "notes": "Preset pack in name",
+    "_source_name": "Payhip – RAIO – 4 IN 1 Preset Pack",
+    "_batch_index": 4936
+  },
+  {
+    "name": "Payhip – RAIO – 4 IN 1 Preset Pack v2",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Payhip RAIO 4 IN 1 Preset Pack v2",
+    "confidence": 85,
+    "notes": "Preset pack in name",
+    "_source_name": "Payhip – RAIO – 4 IN 1 Preset Pack v2",
+    "_batch_index": 4937
+  },
+  {
+    "name": "Payhip – STRY EDITING PACK",
+    "category": "After Effects - Other",
+    "clean_name": "Payhip STRY Editing Pack",
+    "confidence": 60,
+    "notes": "Editing pack, likely AE",
+    "_source_name": "Payhip – STRY EDITING PACK",
+    "_batch_index": 4938
+  },
+  {
+    "name": "pbr-painter-2.4.11_B4.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "PBR Painter",
+    "confidence": 80,
+    "notes": "Version number suggests software/plugin",
+    "_source_name": "pbr-painter-2.4.11_B4.0",
+    "_batch_index": 4939
+  },
+  {
+    "name": "PBX_LUTS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "PBX LUTS",
+    "confidence": 95,
+    "notes": "LUTS in name, .rar likely contains LUT files",
+    "_source_name": "PBX_LUTS",
+    "_batch_index": 4940
+  },
+  {
+    "name": "peeling-paint-and-metal-titles-51014536",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Peeling Paint and Metal Titles",
+    "confidence": 85,
+    "notes": "Titles in name",
+    "_source_name": "peeling-paint-and-metal-titles-51014536",
+    "_batch_index": 4941
+  },
+  {
+    "name": "Pencil_sketch_photoshop_effect_35382261-AIDOWNLOAD.NET",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Pencil Sketch Photoshop Effect",
+    "confidence": 90,
+    "notes": "Photoshop effect in name, .rar likely contains action",
+    "_source_name": "Pencil_sketch_photoshop_effect_35382261-AIDOWNLOAD.NET",
+    "_batch_index": 4942
+  },
+  {
+    "name": "pencil-drawing-parallax-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Pencil Drawing Parallax Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow in name",
+    "_source_name": "pencil-drawing-parallax-slideshow",
+    "_batch_index": 4943
+  },
+  {
+    "name": "pencil-overlay-toolkit",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Pencil Overlay Toolkit",
+    "confidence": 80,
+    "notes": "Overlay toolkit suggests Photoshop overlays",
+    "_source_name": "pencil-overlay-toolkit",
+    "_batch_index": 4944
+  },
+  {
+    "name": "pencil-sketch-photoshop-action",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Pencil Sketch Photoshop Action",
+    "confidence": 95,
+    "notes": "Photoshop action in name",
+    "_source_name": "pencil-sketch-photoshop-action",
+    "_batch_index": 4945
+  },
+  {
+    "name": "pentecost",
+    "category": "Print - Other",
+    "clean_name": "Pentecost",
+    "confidence": 70,
+    "notes": "Contains .pdf and .psd, likely print design",
+    "_source_name": "pentecost",
+    "_batch_index": 4946
+  },
+  {
+    "name": "percent-pack-2-0-2022-02-21-09-32-21-utc",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Percent Pack 2.0",
+    "confidence": 70,
+    "notes": "Pack name suggests preset pack",
+    "_source_name": "percent-pack-2-0-2022-02-21-09-32-21-utc",
+    "_batch_index": 4947
+  },
+  {
+    "name": "Perfect-Engrave-Photoshop-Action-AIDOWNLOAD.NET",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Perfect Engrave Photoshop Action",
+    "confidence": 95,
+    "notes": "Photoshop action in name",
+    "_source_name": "Perfect-Engrave-Photoshop-Action-AIDOWNLOAD.NET",
+    "_batch_index": 4948
+  },
+  {
+    "name": "perfume-mock-up-DLF8WH",
+    "category": "Mockups - Packaging",
+    "clean_name": "Perfume Mock Up",
+    "confidence": 90,
+    "notes": "Mock up in name, perfume suggests packaging",
+    "_source_name": "perfume-mock-up-DLF8WH",
+    "_batch_index": 4949
+  },
+  {
+    "name": "perfume-professionals-51838914",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Perfume Professionals",
+    "confidence": 75,
+    "notes": "Likely product promo template",
+    "_source_name": "perfume-professionals-51838914",
+    "_batch_index": 4950
+  },
+  {
+    "name": "pet-bowl-mockup-L28DY56c",
+    "category": "Mockups - Packaging",
+    "clean_name": "Pet Bowl Mockup",
+    "confidence": 85,
+    "notes": "Mockup in name, pet bowl is packaging-related",
+    "_source_name": "pet-bowl-mockup-L28DY56c",
+    "_batch_index": 4951
+  },
+  {
+    "name": "pet-food-bag-mockup-6W5DKXF",
+    "category": "Mockups - Packaging",
+    "clean_name": "Pet Food Bag Mockup",
+    "confidence": 90,
+    "notes": "Mockup in name, food bag is packaging",
+    "_source_name": "pet-food-bag-mockup-6W5DKXF",
+    "_batch_index": 4952
+  },
+  {
+    "name": "pet-food-bowl-mockup-ZDLA5NN",
+    "category": "Mockups - Packaging",
+    "clean_name": "Pet Food Bowl Mockup",
+    "confidence": 85,
+    "notes": "Mockup in name, food bowl is packaging-related",
+    "_source_name": "pet-food-bowl-mockup-ZDLA5NN",
+    "_batch_index": 4953
+  },
+  {
+    "name": "pet-food-packaging-design-7XQHMHY",
+    "category": "Mockups - Packaging",
+    "clean_name": "Pet Food Packaging Design",
+    "confidence": 90,
+    "notes": "Packaging design in name",
+    "_source_name": "pet-food-packaging-design-7XQHMHY",
+    "_batch_index": 4954
+  },
+  {
+    "name": "pet-food-packaging-design-9BSHNU9",
+    "category": "Mockups - Packaging",
+    "clean_name": "Pet Food Packaging Design",
+    "confidence": 90,
+    "notes": "Packaging design in name",
+    "_source_name": "pet-food-packaging-design-9BSHNU9",
+    "_batch_index": 4955
+  },
+  {
+    "name": "pet-food-sachet-mockup-Z6PV6MR",
+    "category": "Mockups - Packaging",
+    "clean_name": "Pet Food Sachet Mockup",
+    "confidence": 90,
+    "notes": "Mockup in name, sachet is packaging",
+    "_source_name": "pet-food-sachet-mockup-Z6PV6MR",
+    "_batch_index": 4956
+  },
+  {
+    "name": "pets-care-and-veterinarian-after-effects",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Pets Care and Veterinarian After Effects",
+    "confidence": 75,
+    "notes": "After effects in name, likely corporate template",
+    "_source_name": "pets-care-and-veterinarian-after-effects",
+    "_batch_index": 4957
+  },
+  {
+    "name": "PGS _ Wildlife",
+    "category": "Color Grading & LUTs",
+    "clean_name": "PGS Wildlife",
+    "confidence": 95,
+    "notes": "Contains .cube file, LUT",
+    "_source_name": "PGS _ Wildlife",
+    "_batch_index": 4958
+  },
+  {
+    "name": "philmColorR3",
+    "category": "Color Grading & LUTs",
+    "clean_name": "philmColor R3",
+    "confidence": 80,
+    "notes": "Name suggests color grading, .zip likely contains LUTs",
+    "_source_name": "philmColorR3",
+    "_batch_index": 4959
+  },
+  {
+    "name": "phone-screen-mockup",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Phone Screen Mockup",
+    "confidence": 95,
+    "notes": "Mockup in name, phone screen is device",
+    "_source_name": "phone-screen-mockup",
+    "_batch_index": 4960
+  },
+  {
+    "name": "Photo Gallery in a Sunny Orchard",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery in a Sunny Orchard",
+    "confidence": 85,
+    "notes": "Photo gallery in name",
+    "_source_name": "Photo Gallery in a Sunny Orchard",
+    "_batch_index": 4961
+  },
+  {
+    "name": "Photo Projector Pro – Professional Photo Animator 13503218 [source]",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Projector Pro",
+    "confidence": 80,
+    "notes": "Photo animator suggests AE template for photo gallery",
+    "_source_name": "Photo Projector Pro – Professional Photo Animator 13503218 [source]",
+    "_batch_index": 4962
+  },
+  {
+    "name": "photo-collage-psd-mockup-8YFW868",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Photo Collage PSD Mockup",
+    "confidence": 90,
+    "notes": "PSD mockup in name",
+    "_source_name": "photo-collage-psd-mockup-8YFW868",
+    "_batch_index": 4963
+  },
+  {
+    "name": "photo-collage-template-with-tape-effect-WX9Q3AF",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Photo Collage Template with Tape Effect",
+    "confidence": 85,
+    "notes": "Template in name, likely PSD",
+    "_source_name": "photo-collage-template-with-tape-effect-WX9Q3AF",
+    "_batch_index": 4964
+  },
+  {
+    "name": "photo-collage-transitions-46291566",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Photo Collage Transitions",
+    "confidence": 85,
+    "notes": "Transitions in name",
+    "_source_name": "photo-collage-transitions-46291566",
+    "_batch_index": 4965
+  },
+  {
+    "name": "photo-collage-video-template-52210293",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Collage Video Template",
+    "confidence": 85,
+    "notes": "Video template for photo collage",
+    "_source_name": "photo-collage-video-template-52210293",
+    "_batch_index": 4966
+  },
+  {
+    "name": "photo-collage-video-template-52322442",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Collage Video Template",
+    "confidence": 85,
+    "notes": "Video template for photo collage",
+    "_source_name": "photo-collage-video-template-52322442",
+    "_batch_index": 4967
+  },
+  {
+    "name": "photo-documentary",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Documentary",
+    "confidence": 75,
+    "notes": "Likely slideshow template",
+    "_source_name": "photo-documentary",
+    "_batch_index": 4968
+  },
+  {
+    "name": "photo-double-exposure-animator-37910052",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Double Exposure Animator",
+    "confidence": 80,
+    "notes": "Photo animator for AE",
+    "_source_name": "photo-double-exposure-animator-37910052",
+    "_batch_index": 4969
+  },
+  {
+    "name": "photo-energy-animator-38418387",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Energy Animator",
+    "confidence": 80,
+    "notes": "Photo animator for AE",
+    "_source_name": "photo-energy-animator-38418387",
+    "_batch_index": 4970
+  },
+  {
+    "name": "photo-exhibition-in-a-photo-studio-35523970",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Exhibition in a Photo Studio",
+    "confidence": 80,
+    "notes": "Photo exhibition template",
+    "_source_name": "photo-exhibition-in-a-photo-studio-35523970",
+    "_batch_index": 4971
+  },
+  {
+    "name": "photo-film-slideshow-52270562",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Film Slideshow",
+    "confidence": 90,
+    "notes": "Slideshow in name",
+    "_source_name": "photo-film-slideshow-52270562",
+    "_batch_index": 4972
+  },
+  {
+    "name": "photo-fire-animator-37939687",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Fire Animator",
+    "confidence": 80,
+    "notes": "Photo animator for AE",
+    "_source_name": "photo-fire-animator-37939687",
+    "_batch_index": 4973
+  },
+  {
+    "name": "photo-frame-mockup-template-love-heart-card-design",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Photo Frame Mockup Template Love Heart Card Design",
+    "confidence": 80,
+    "notes": "Mockup template, likely print",
+    "_source_name": "photo-frame-mockup-template-love-heart-card-design",
+    "_batch_index": 4974
+  },
+  {
+    "name": "photo-frames",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Frames",
+    "confidence": 75,
+    "notes": "Likely AE photo frames template",
+    "_source_name": "photo-frames",
+    "_batch_index": 4975
+  },
+  {
+    "name": "photo-gallery",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery",
+    "confidence": 85,
+    "notes": "Photo gallery in name",
+    "_source_name": "photo-gallery",
+    "_batch_index": 4976
+  },
+  {
+    "name": "Photo-gallery-31616",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery",
+    "confidence": 85,
+    "notes": "Photo gallery in name",
+    "_source_name": "Photo-gallery-31616",
+    "_batch_index": 4977
+  },
+  {
+    "name": "photo-gallery-after-the-rain-5991662",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery After the Rain",
+    "confidence": 85,
+    "notes": "Photo gallery in name",
+    "_source_name": "photo-gallery-after-the-rain-5991662",
+    "_batch_index": 4978
+  },
+  {
+    "name": "photo-gallery-beautiful-moments-16115818",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Beautiful Moments",
+    "confidence": 85,
+    "notes": "Photo gallery in name",
+    "_source_name": "photo-gallery-beautiful-moments-16115818",
+    "_batch_index": 4979
+  }
+]

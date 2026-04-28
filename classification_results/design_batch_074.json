@@ -1,0 +1,545 @@
+[
+  {
+    "name": "Meet-the-team-1739514",
+    "category": "Stock Photos - General",
+    "clean_name": "Meet the Team",
+    "confidence": 85,
+    "notes": "Only .jpg files, likely stock photos of team members.",
+    "_source_name": "Meet-the-team-1739514",
+    "_batch_index": 4380
+  },
+  {
+    "name": "meet-video-conference-pack-36353442",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Meet Video Conference Pack",
+    "confidence": 80,
+    "notes": "Name suggests video conference graphics, likely AE template.",
+    "_source_name": "meet-video-conference-pack-36353442",
+    "_batch_index": 4381
+  },
+  {
+    "name": "Megasonics Sound Design SFX",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Megasonics Sound Design SFX",
+    "confidence": 95,
+    "notes": "Contains .wav files, sound effects.",
+    "_source_name": "Megasonics Sound Design SFX",
+    "_batch_index": 4382
+  },
+  {
+    "name": "memleak v1.1.1 Win",
+    "category": "Plugins & Extensions",
+    "clean_name": "Memleak v1.1.1 Win",
+    "confidence": 90,
+    "notes": "Contains .aex file, an After Effects plugin.",
+    "_source_name": "memleak v1.1.1 Win",
+    "_batch_index": 4383
+  },
+  {
+    "name": "memleak_1.0.1",
+    "category": "Software & Utilities",
+    "clean_name": "MemLeak 1.0.1",
+    "confidence": 85,
+    "notes": "Single .rar archive, no content clue.",
+    "_source_name": "memleak_1.0.1",
+    "_batch_index": 4384,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Memorial Day Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Memorial Day Flyer",
+    "confidence": 90,
+    "notes": "Contains .psd, name says flyer.",
+    "_source_name": "Memorial Day Flyer",
+    "_batch_index": 4385
+  },
+  {
+    "name": "memorial-photo-slideshow-mogrt-51730582",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Memorial Photo Slideshow Mogrt",
+    "confidence": 90,
+    "notes": "Name includes .mogrt.",
+    "_source_name": "memorial-photo-slideshow-mogrt-51730582",
+    "_batch_index": 4386
+  },
+  {
+    "name": "memorial-slideshow-42839195",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memorial Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memorial-slideshow-42839195",
+    "_batch_index": 4387
+  },
+  {
+    "name": "memorial-slideshow-and-cards-47021228",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memorial Slideshow and Cards",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memorial-slideshow-and-cards-47021228",
+    "_batch_index": 4388
+  },
+  {
+    "name": "memories-37727213",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-37727213",
+    "_batch_index": 4389
+  },
+  {
+    "name": "memories-album-slideshow-50872986",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Album Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-album-slideshow-50872986",
+    "_batch_index": 4390
+  },
+  {
+    "name": "memories-parallax-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Parallax Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-parallax-slideshow",
+    "_batch_index": 4391
+  },
+  {
+    "name": "memories-photo-frames-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Photo Frames Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-photo-frames-slideshow",
+    "_batch_index": 4392
+  },
+  {
+    "name": "memories-photo-gallery-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Photo Gallery Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-photo-gallery-slideshow",
+    "_batch_index": 4393
+  },
+  {
+    "name": "memories-photo-slideshow-39718751",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Photo Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-photo-slideshow-39718751",
+    "_batch_index": 4394
+  },
+  {
+    "name": "memories-photo-slideshow-43093770",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Photo Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-photo-slideshow-43093770",
+    "_batch_index": 4395
+  },
+  {
+    "name": "memories-photo-slideshow-clean-cinematic-photo-s-40352563",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Photo Slideshow Clean Cinematic",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-photo-slideshow-clean-cinematic-photo-s-40352563",
+    "_batch_index": 4396
+  },
+  {
+    "name": "memories-photo-slideshow-clean-cinematic-style-43413021",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Photo Slideshow Clean Cinematic Style",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-photo-slideshow-clean-cinematic-style-43413021",
+    "_batch_index": 4397
+  },
+  {
+    "name": "memories-revived-in-magic-dreams-2-in-1-35160469",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Revived in Magic Dreams 2 in 1",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-revived-in-magic-dreams-2-in-1-35160469",
+    "_batch_index": 4398
+  },
+  {
+    "name": "memories-sideshow-photo-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Sideshow Photo Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-sideshow-photo-slideshow",
+    "_batch_index": 4399
+  },
+  {
+    "name": "memories-slideshow-37310477",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-slideshow-37310477",
+    "_batch_index": 4400
+  },
+  {
+    "name": "memories-slideshow-39157401",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-slideshow-39157401",
+    "_batch_index": 4401
+  },
+  {
+    "name": "memories-slideshow-42450174",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-slideshow-42450174",
+    "_batch_index": 4402
+  },
+  {
+    "name": "memories-slideshow-49487890",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-slideshow-49487890",
+    "_batch_index": 4403
+  },
+  {
+    "name": "memories-slideshow-51821264",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-slideshow-51821264",
+    "_batch_index": 4404
+  },
+  {
+    "name": "memories-slideshow-travel-memories",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Memories Slideshow Travel Memories",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "memories-slideshow-travel-memories",
+    "_batch_index": 4405
+  },
+  {
+    "name": "memories-wall-cinematic-opener-37846964",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Memories Wall Cinematic Opener",
+    "confidence": 80,
+    "notes": "Name suggests opener, likely AE template.",
+    "_source_name": "memories-wall-cinematic-opener-37846964",
+    "_batch_index": 4406
+  },
+  {
+    "name": "memphis-style-color-titles-mogrs-45358426",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Memphis Style Color Titles Mogrt",
+    "confidence": 90,
+    "notes": "Name includes mogrt.",
+    "_source_name": "memphis-style-color-titles-mogrs-45358426",
+    "_batch_index": 4407
+  },
+  {
+    "name": "menu-breakfast-food-menu-N2YMEUX",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Menu Breakfast Food Menu",
+    "confidence": 85,
+    "notes": "Name suggests a printable menu.",
+    "_source_name": "menu-breakfast-food-menu-N2YMEUX",
+    "_batch_index": 4408
+  },
+  {
+    "name": "message-intro-35503432",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Message Intro",
+    "confidence": 80,
+    "notes": "Name suggests intro, likely AE template.",
+    "_source_name": "message-intro-35503432",
+    "_batch_index": 4409
+  },
+  {
+    "name": "message-toolkit",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Message Toolkit",
+    "confidence": 75,
+    "notes": "Name suggests a pack of motion graphics elements.",
+    "_source_name": "message-toolkit",
+    "_batch_index": 4410
+  },
+  {
+    "name": "metavers-nft-slideshow-template-36570990",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Metavers NFT Slideshow Template",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "metavers-nft-slideshow-template-36570990",
+    "_batch_index": 4411
+  },
+  {
+    "name": "mexican-a4-us-letter-single-page-food-menu-2CUGZH",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mexican A4 US Letter Single Page Food Menu",
+    "confidence": 85,
+    "notes": "Name suggests a printable menu.",
+    "_source_name": "mexican-a4-us-letter-single-page-food-menu-2CUGZH",
+    "_batch_index": 4412
+  },
+  {
+    "name": "mexican-food-menu-9GYJFJ",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mexican Food Menu",
+    "confidence": 85,
+    "notes": "Name suggests a printable menu.",
+    "_source_name": "mexican-food-menu-9GYJFJ",
+    "_batch_index": 4413
+  },
+  {
+    "name": "mexican-food-menu-WR4SWC",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mexican Food Menu",
+    "confidence": 85,
+    "notes": "Name suggests a printable menu.",
+    "_source_name": "mexican-food-menu-WR4SWC",
+    "_batch_index": 4414
+  },
+  {
+    "name": "mexican-menu-T4PECA2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mexican Menu",
+    "confidence": 85,
+    "notes": "Name suggests a printable menu.",
+    "_source_name": "mexican-menu-T4PECA2",
+    "_batch_index": 4415
+  },
+  {
+    "name": "mexican-menu-VWG2RS",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mexican Menu",
+    "confidence": 85,
+    "notes": "Name suggests a printable menu.",
+    "_source_name": "mexican-menu-VWG2RS",
+    "_batch_index": 4416
+  },
+  {
+    "name": "Mextures Overlay Packs Bundle",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Mextures Overlay Packs Bundle",
+    "confidence": 90,
+    "notes": "Name says overlays, likely for Photoshop.",
+    "_source_name": "Mextures Overlay Packs Bundle",
+    "_batch_index": 4417
+  },
+  {
+    "name": "Mextures Overlays - Complete Bundle",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Mextures Overlays Complete Bundle",
+    "confidence": 90,
+    "notes": "Name says overlays, likely for Photoshop.",
+    "_source_name": "Mextures Overlays - Complete Bundle",
+    "_batch_index": 4418
+  },
+  {
+    "name": "mFilm Matte 2",
+    "category": "Color Grading & LUTs",
+    "clean_name": "mFilm Matte 2",
+    "confidence": 80,
+    "notes": "Name suggests a film matte/LUT preset.",
+    "_source_name": "mFilm Matte 2",
+    "_batch_index": 4419
+  },
+  {
+    "name": "MFX2QRZ-aidownload.net",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Retro Comic Book Photoshop Action",
+    "confidence": 92,
+    "notes": "Numeric ID only, no informative name.",
+    "_source_name": "MFX2QRZ-aidownload.net",
+    "_batch_index": 4420,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "mGrid",
+    "category": "After Effects - Other",
+    "clean_name": "mGrid",
+    "confidence": 65,
+    "notes": "Name ambiguous, likely an AE utility.",
+    "_source_name": "mGrid",
+    "_batch_index": 4421
+  },
+  {
+    "name": "microfilm-intro-53331957",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Microfilm Intro",
+    "confidence": 80,
+    "notes": "Name suggests intro, likely AE template.",
+    "_source_name": "microfilm-intro-53331957",
+    "_batch_index": 4422
+  },
+  {
+    "name": "Microsoft Visual C++ 2015-2022 Redistributable 14.34.31931.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Microsoft Visual C++ Redistributable",
+    "confidence": 90,
+    "notes": "Software installer, not a design asset.",
+    "_source_name": "Microsoft Visual C++ 2015-2022 Redistributable 14.34.31931.0",
+    "_batch_index": 4423
+  },
+  {
+    "name": "midnight-rider-P9VTDQ",
+    "category": "Fonts & Typography",
+    "clean_name": "Midnight Rider",
+    "confidence": 95,
+    "notes": "Name ambiguous, no file type clues.",
+    "_source_name": "midnight-rider-P9VTDQ",
+    "_batch_index": 4424,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Military suit_[torrents.ru]",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Military Suit Mockup",
+    "confidence": 85,
+    "notes": "Contains .psd, likely a mockup.",
+    "_source_name": "Military suit_[torrents.ru]",
+    "_batch_index": 4425
+  },
+  {
+    "name": "military-dossier-slideshow-39953149",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Military Dossier Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE template.",
+    "_source_name": "military-dossier-slideshow-39953149",
+    "_batch_index": 4426
+  },
+  {
+    "name": "military-esports-lower-thirds",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Military Esports Lower Thirds",
+    "confidence": 85,
+    "notes": "Name says lower thirds.",
+    "_source_name": "military-esports-lower-thirds",
+    "_batch_index": 4427
+  },
+  {
+    "name": "military-hud-ui-maps-40259323",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Military HUD UI Maps",
+    "confidence": 85,
+    "notes": "Name suggests HUD maps, likely AE.",
+    "_source_name": "military-hud-ui-maps-40259323",
+    "_batch_index": 4428
+  },
+  {
+    "name": "Milk_Powder_Can_Mockup_4075943",
+    "category": "Mockups - Packaging",
+    "clean_name": "Milk Powder Can Mockup",
+    "confidence": 95,
+    "notes": "Name says mockup, packaging.",
+    "_source_name": "Milk_Powder_Can_Mockup_4075943",
+    "_batch_index": 4429
+  },
+  {
+    "name": "mini-comic-bundle-titles-38044019",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Mini Comic Bundle Titles",
+    "confidence": 80,
+    "notes": "Name suggests titles, likely AE.",
+    "_source_name": "mini-comic-bundle-titles-38044019",
+    "_batch_index": 4430
+  },
+  {
+    "name": "Minimal Lower Thirds",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Minimal Lower Thirds",
+    "confidence": 90,
+    "notes": "Name says lower thirds.",
+    "_source_name": "Minimal Lower Thirds",
+    "_batch_index": 4431
+  },
+  {
+    "name": "Minimal Modern Food Menu Bundle",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Minimal Modern Food Menu Bundle",
+    "confidence": 85,
+    "notes": "Name suggests printable menu.",
+    "_source_name": "Minimal Modern Food Menu Bundle",
+    "_batch_index": 4432
+  },
+  {
+    "name": "Minimal Stylish Titles 26783529",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Minimal Stylish Titles",
+    "confidence": 80,
+    "notes": "Name suggests titles, likely AE.",
+    "_source_name": "Minimal Stylish Titles 26783529",
+    "_batch_index": 4433
+  },
+  {
+    "name": "minimal-corporate-timeline-apple-motion-35500676",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Minimal Corporate Timeline Apple Motion",
+    "confidence": 80,
+    "notes": "Name suggests corporate timeline.",
+    "_source_name": "minimal-corporate-timeline-apple-motion-35500676",
+    "_batch_index": 4434
+  },
+  {
+    "name": "minimal-document-after-effects-42840531",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Minimal Document After Effects",
+    "confidence": 80,
+    "notes": "Name suggests document template.",
+    "_source_name": "minimal-document-after-effects-42840531",
+    "_batch_index": 4435
+  },
+  {
+    "name": "minimal-elegant-intro-33242179",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Minimal Elegant Intro",
+    "confidence": 80,
+    "notes": "Name suggests intro, likely AE.",
+    "_source_name": "minimal-elegant-intro-33242179",
+    "_batch_index": 4436
+  },
+  {
+    "name": "minimal-fashion-slideshow-35425635",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Minimal Fashion Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow, likely AE.",
+    "_source_name": "minimal-fashion-slideshow-35425635",
+    "_batch_index": 4437
+  },
+  {
+    "name": "minimal-instagram-story-pack-23954792",
+    "category": "After Effects - Social Media",
+    "clean_name": "Minimal Instagram Story Pack",
+    "confidence": 85,
+    "notes": "Name says Instagram story pack.",
+    "_source_name": "minimal-instagram-story-pack-23954792",
+    "_batch_index": 4438
+  },
+  {
+    "name": "minimal-openers-simple-slideshow-modern-museum-21544948",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Minimal Openers Simple Slideshow Modern Museum",
+    "confidence": 80,
+    "notes": "Name suggests openers, likely AE.",
+    "_source_name": "minimal-openers-simple-slideshow-modern-museum-21544948",
+    "_batch_index": 4439
+  }
+]

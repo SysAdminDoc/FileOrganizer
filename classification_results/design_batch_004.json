@@ -1,0 +1,547 @@
+[
+  {
+    "name": "18",
+    "category": "After Effects - Other",
+    "clean_name": "Motion Control Packs Collection 2023",
+    "confidence": 65,
+    "notes": "Numeric ID only, contains hint reveals informative name but no clear AE subcategory",
+    "_source_name": "18",
+    "_batch_index": 180
+  },
+  {
+    "name": "180_in_1_Brush_Strokes_Bundle",
+    "category": "Photoshop - Brushes",
+    "clean_name": "180 in 1 Brush Strokes Bundle",
+    "confidence": 85,
+    "notes": "Brush strokes bundle likely for Photoshop",
+    "_source_name": "180_in_1_Brush_Strokes_Bundle",
+    "_batch_index": 181
+  },
+  {
+    "name": "18108025-fast-glitch-opener-dynamic-intro-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Fast Glitch Opener Dynamic Intro",
+    "confidence": 90,
+    "notes": "Glitch opener, likely After Effects template",
+    "_source_name": "18108025-fast-glitch-opener-dynamic-intro-INTRO-HD.NET",
+    "_batch_index": 182
+  },
+  {
+    "name": "1813248_AIDOWNLOAD.NET",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Storm Photoshop Action",
+    "confidence": 95,
+    "notes": "No file type or content clues",
+    "_source_name": "1813248_AIDOWNLOAD.NET",
+    "_batch_index": 183,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "18192052-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Lightened Memories",
+    "confidence": 85,
+    "notes": "Contains hint 'lightened memories' suggests photo gallery",
+    "_source_name": "18192052-INTRO-HD.NET",
+    "_batch_index": 184
+  },
+  {
+    "name": "18192853-photo-gallery-our-beautiful-memories-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Our Beautiful Memories",
+    "confidence": 95,
+    "notes": "Explicit photo gallery name",
+    "_source_name": "18192853-photo-gallery-our-beautiful-memories-INTRO-HD.NET",
+    "_batch_index": 185
+  },
+  {
+    "name": "18273509-parallax-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Parallax Slideshow",
+    "confidence": 90,
+    "notes": "Slideshow with parallax effect",
+    "_source_name": "18273509-parallax-slideshow-INTRO-HD.NET",
+    "_batch_index": 186
+  },
+  {
+    "name": "18338309-evil-dead-trailer-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Evil Dead Trailer",
+    "confidence": 90,
+    "notes": "Trailer style template",
+    "_source_name": "18338309-evil-dead-trailer-INTRO-HD.NET",
+    "_batch_index": 187
+  },
+  {
+    "name": "18376302-platinum-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Platinum Logo Reveal",
+    "confidence": 95,
+    "notes": "Explicit logo reveal",
+    "_source_name": "18376302-platinum-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 188
+  },
+  {
+    "name": "18394184-39-flat-usa-election-icons-INTRO-HD.NET",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "39 Flat USA Election Icons",
+    "confidence": 85,
+    "notes": "Flat icons likely vector format",
+    "_source_name": "18394184-39-flat-usa-election-icons-INTRO-HD.NET",
+    "_batch_index": 189
+  },
+  {
+    "name": "18431875-elegant-fast-logo-reveal-2-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Elegant Fast Logo Reveal 2",
+    "confidence": 95,
+    "notes": "Explicit logo reveal",
+    "_source_name": "18431875-elegant-fast-logo-reveal-2-INTRO-HD.NET",
+    "_batch_index": 190
+  },
+  {
+    "name": "18453282_Demolition_Slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Demolition Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow with demolition theme, .jpg files suggest preview",
+    "_source_name": "18453282_Demolition_Slideshow",
+    "_batch_index": 191
+  },
+  {
+    "name": "18504500-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Modern Multi Video Logo",
+    "confidence": 85,
+    "notes": "Contains hint 'modern multi video logo'",
+    "_source_name": "18504500-INTRO-HD.NET",
+    "_batch_index": 192
+  },
+  {
+    "name": "18616946-new-year-card-3d-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "New Year Card 3D",
+    "confidence": 90,
+    "notes": "New Year holiday card",
+    "_source_name": "18616946-new-year-card-3d-INTRO-HD.NET",
+    "_batch_index": 193
+  },
+  {
+    "name": "18847450-clean-chrome-logo-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Clean Chrome Logo",
+    "confidence": 95,
+    "notes": "Explicit logo reveal",
+    "_source_name": "18847450-clean-chrome-logo-INTRO-HD.NET",
+    "_batch_index": 194
+  },
+  {
+    "name": "18927102-grunge-book-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Grunge Book",
+    "confidence": 70,
+    "notes": "No file info, likely AE template but unclear subcategory",
+    "_source_name": "18927102-grunge-book-INTRO-HD.NET",
+    "_batch_index": 195
+  },
+  {
+    "name": "18950108-V3.2.5-aintrailers-ultimate-explainer-video-toolkit",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Ultimate Explainer Video Toolkit",
+    "confidence": 90,
+    "notes": "Explainer video toolkit",
+    "_source_name": "18950108-V3.2.5-aintrailers-ultimate-explainer-video-toolkit",
+    "_batch_index": 196
+  },
+  {
+    "name": "19000530-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Red Thrilla Cinematic Teaser",
+    "confidence": 90,
+    "notes": "Contains hint 'Cinematic Teaser'",
+    "_source_name": "19000530-INTRO-HD.NET",
+    "_batch_index": 197
+  },
+  {
+    "name": "19017315-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Collision Titles",
+    "confidence": 85,
+    "notes": "No content hint, numeric ID only",
+    "_source_name": "19017315-INTRO-HD.NET",
+    "_batch_index": 198,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "19018109-socializing-christmas-edition-social-media-pack-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Socializing Christmas Edition Social Media Pack",
+    "confidence": 90,
+    "notes": "Social media pack with Christmas theme",
+    "_source_name": "19018109-socializing-christmas-edition-social-media-pack-INTRO-HD.NET",
+    "_batch_index": 199
+  },
+  {
+    "name": "19121816-christmas-short-greetings-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas Short Greetings",
+    "confidence": 95,
+    "notes": "Christmas greetings template",
+    "_source_name": "19121816-christmas-short-greetings-INTRO-HD.NET",
+    "_batch_index": 200
+  },
+  {
+    "name": "19196389-clean-particles-explosion-logo-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Clean Particles Explosion Logo",
+    "confidence": 95,
+    "notes": "Logo reveal with particles",
+    "_source_name": "19196389-clean-particles-explosion-logo-INTRO-HD.NET",
+    "_batch_index": 201
+  },
+  {
+    "name": "19199147-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Slow Motion Trailer",
+    "confidence": 85,
+    "notes": "Contains hint 'Slow Motion Trailer'",
+    "_source_name": "19199147-INTRO-HD.NET",
+    "_batch_index": 202
+  },
+  {
+    "name": "19261316-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Dark Glitch Logo",
+    "confidence": 90,
+    "notes": "Contains hint 'dark-glitch-logo'",
+    "_source_name": "19261316-INTRO-HD.NET",
+    "_batch_index": 203
+  },
+  {
+    "name": "19267378-my-paper-story-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "My Paper Story",
+    "confidence": 80,
+    "notes": "Paper style story/slideshow",
+    "_source_name": "19267378-my-paper-story-INTRO-HD.NET",
+    "_batch_index": 204
+  },
+  {
+    "name": "19298867-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitch Logo Reveal",
+    "confidence": 95,
+    "notes": "Contains hint 'glitch-logo-reveal'",
+    "_source_name": "19298867-INTRO-HD.NET",
+    "_batch_index": 205
+  },
+  {
+    "name": "19358391-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Elegant Logo",
+    "confidence": 90,
+    "notes": "Contains hint 'elegant-logo'",
+    "_source_name": "19358391-INTRO-HD.NET",
+    "_batch_index": 206
+  },
+  {
+    "name": "19391661-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Freeze Frame",
+    "confidence": 70,
+    "notes": "Contains hint 'freeze-frame', unclear subcategory",
+    "_source_name": "19391661-INTRO-HD.NET",
+    "_batch_index": 207
+  },
+  {
+    "name": "19405159-INTRO-HD.NET",
+    "category": "After Effects - Real Estate",
+    "clean_name": "Real Estate Promo",
+    "confidence": 95,
+    "notes": "Contains hint 'real-estate-promo'",
+    "_source_name": "19405159-INTRO-HD.NET",
+    "_batch_index": 208
+  },
+  {
+    "name": "19409298-elegant-brush-photo-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Elegant Brush Photo Slideshow",
+    "confidence": 95,
+    "notes": "Explicit slideshow",
+    "_source_name": "19409298-elegant-brush-photo-slideshow-INTRO-HD.NET",
+    "_batch_index": 209
+  },
+  {
+    "name": "19429492-typemax-title-animation-and-lower-thirds",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "TypeMax Title Animation and Lower Thirds",
+    "confidence": 90,
+    "notes": "Title animation and lower thirds",
+    "_source_name": "19429492-typemax-title-animation-and-lower-thirds",
+    "_batch_index": 210
+  },
+  {
+    "name": "19437956-shape-and-motion-animated-elements-pack-INTRO-HD.NET",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Shape and Motion Animated Elements Pack",
+    "confidence": 85,
+    "notes": "Animated elements pack",
+    "_source_name": "19437956-shape-and-motion-animated-elements-pack-INTRO-HD.NET",
+    "_batch_index": 211
+  },
+  {
+    "name": "19450544-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Title Slideshow",
+    "confidence": 85,
+    "notes": "Contains hint 'title-slideshow'",
+    "_source_name": "19450544-INTRO-HD.NET",
+    "_batch_index": 212
+  },
+  {
+    "name": "19452371-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "INTRO HD Item",
+    "confidence": 60,
+    "notes": "No content hint, numeric ID only",
+    "_source_name": "19452371-INTRO-HD.NET",
+    "_batch_index": 213,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "19482085-INTRO-HD.NET",
+    "category": "After Effects - Mockup & Device",
+    "clean_name": "Hybrid UI Screens CC 2014",
+    "confidence": 85,
+    "notes": "Contains hint 'Hybrid Ui Screens'",
+    "_source_name": "19482085-INTRO-HD.NET",
+    "_batch_index": 214
+  },
+  {
+    "name": "19486364-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "World Network Logo",
+    "confidence": 90,
+    "notes": "Contains hint 'world-network-logo'",
+    "_source_name": "19486364-INTRO-HD.NET",
+    "_batch_index": 215
+  },
+  {
+    "name": "19526799-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Epic Sliced Logo",
+    "confidence": 90,
+    "notes": "Contains hint 'epic-sliced-logo'",
+    "_source_name": "19526799-INTRO-HD.NET",
+    "_batch_index": 216
+  },
+  {
+    "name": "19540919-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Motivation Promo",
+    "confidence": 95,
+    "notes": "Contains hint 'sport-motivation-promo'",
+    "_source_name": "19540919-INTRO-HD.NET",
+    "_batch_index": 217
+  },
+  {
+    "name": "19551097-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Electric Logo",
+    "confidence": 75,
+    "notes": "No file info or content hint",
+    "_source_name": "19551097-INTRO-HD.NET",
+    "_batch_index": 218,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "19566375-technical-sketch-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Technical Sketch Logo Reveal",
+    "confidence": 95,
+    "notes": "Explicit logo reveal",
+    "_source_name": "19566375-technical-sketch-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 219
+  },
+  {
+    "name": "19567687-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Elegant Slides",
+    "confidence": 85,
+    "notes": "Contains hint 'elegant-slides'",
+    "_source_name": "19567687-INTRO-HD.NET",
+    "_batch_index": 220
+  },
+  {
+    "name": "19604336-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Tech Glitch Logo",
+    "confidence": 90,
+    "notes": "Contains hint 'tech-glitch-logo'",
+    "_source_name": "19604336-INTRO-HD.NET",
+    "_batch_index": 221
+  },
+  {
+    "name": "19634339-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Cinematic Titles",
+    "confidence": 80,
+    "notes": "No file info or content hint",
+    "_source_name": "19634339-INTRO-HD.NET",
+    "_batch_index": 222,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "19640249-glitch-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitch Logo Reveal",
+    "confidence": 95,
+    "notes": "Explicit glitch logo reveal",
+    "_source_name": "19640249-glitch-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 223
+  },
+  {
+    "name": "19644643-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Unique Promo V13 Corporate Presentation",
+    "confidence": 90,
+    "notes": "Contains hint 'corporate-presentation'",
+    "_source_name": "19644643-INTRO-HD.NET",
+    "_batch_index": 224
+  },
+  {
+    "name": "19646530-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Opener Slideshow",
+    "confidence": 95,
+    "notes": "Contains hint 'sport-opener-slideshow'",
+    "_source_name": "19646530-INTRO-HD.NET",
+    "_batch_index": 225
+  },
+  {
+    "name": "19661710-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Unique Promo V14 Corporate Presentation",
+    "confidence": 90,
+    "notes": "Contains hint 'corporate-presentation'",
+    "_source_name": "19661710-INTRO-HD.NET",
+    "_batch_index": 226
+  },
+  {
+    "name": "19669202-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Unique Promo V15 Corporate Presentation",
+    "confidence": 90,
+    "notes": "Contains hint 'corporate-presentation'",
+    "_source_name": "19669202-INTRO-HD.NET",
+    "_batch_index": 227
+  },
+  {
+    "name": "19670709-cinematic-light-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Cinematic Light Logo Reveal",
+    "confidence": 95,
+    "notes": "Explicit logo reveal",
+    "_source_name": "19670709-cinematic-light-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 228
+  },
+  {
+    "name": "19687986-economics-opener-business-and-corporate-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Economics Opener Business and Corporate",
+    "confidence": 95,
+    "notes": "Business/corporate opener",
+    "_source_name": "19687986-economics-opener-business-and-corporate-INTRO-HD.NET",
+    "_batch_index": 229
+  },
+  {
+    "name": "19694880-rhythmic-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Rhythmic Opener",
+    "confidence": 90,
+    "notes": "Opener template",
+    "_source_name": "19694880-rhythmic-opener-INTRO-HD.NET",
+    "_batch_index": 230
+  },
+  {
+    "name": "19714376-ultimate-photographer-package-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Ultimate Photographer Package",
+    "confidence": 85,
+    "notes": "Photographer package likely photo gallery",
+    "_source_name": "19714376-ultimate-photographer-package-INTRO-HD.NET",
+    "_batch_index": 231
+  },
+  {
+    "name": "19721199-cinema-grunge-trailer-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinema Grunge Trailer",
+    "confidence": 95,
+    "notes": "Explicit trailer",
+    "_source_name": "19721199-cinema-grunge-trailer-INTRO-HD.NET",
+    "_batch_index": 232
+  },
+  {
+    "name": "19721377-hot-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Hot Logo Reveal",
+    "confidence": 95,
+    "notes": "Explicit logo reveal",
+    "_source_name": "19721377-hot-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 233
+  },
+  {
+    "name": "19721501-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Unique Promo V16 Corporate Presentation",
+    "confidence": 90,
+    "notes": "Contains hint 'corporate-presentation'",
+    "_source_name": "19721501-INTRO-HD.NET",
+    "_batch_index": 234
+  },
+  {
+    "name": "19724911-cinema-grunge-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Cinema Grunge Logo Reveal",
+    "confidence": 95,
+    "notes": "Explicit logo reveal",
+    "_source_name": "19724911-cinema-grunge-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 235
+  },
+  {
+    "name": "19733214-artistic-photo-animator-INTRO-HD.NET",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Artistic Photo Animator",
+    "confidence": 85,
+    "notes": "Photo animation template",
+    "_source_name": "19733214-artistic-photo-animator-INTRO-HD.NET",
+    "_batch_index": 236
+  },
+  {
+    "name": "19789867-calm-presentation-trailer-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Calm Presentation Trailer",
+    "confidence": 90,
+    "notes": "Trailer style presentation",
+    "_source_name": "19789867-calm-presentation-trailer-INTRO-HD.NET",
+    "_batch_index": 237
+  },
+  {
+    "name": "19801775-photography-logo-reveal-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Photography Logo Reveal",
+    "confidence": 95,
+    "notes": "Explicit logo reveal",
+    "_source_name": "19801775-photography-logo-reveal-INTRO-HD.NET",
+    "_batch_index": 238
+  },
+  {
+    "name": "19806452-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Intense Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains hint 'intense-logo-reveal'",
+    "_source_name": "19806452-INTRO-HD.NET",
+    "_batch_index": 239
+  }
+]
