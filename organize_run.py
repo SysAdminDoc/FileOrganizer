@@ -186,7 +186,14 @@ def undo_moves(last_n: int = 0, dry_run: bool = False) -> dict:
 
 # ── Load org_index ────────────────────────────────────────────────────────────
 def load_index_for_source(source_mode: str) -> list:
-    path = DESIGN_INDEX_FILE if source_mode == 'design' else INDEX_FILE
+    if source_mode == 'design':
+        path = DESIGN_INDEX_FILE
+    elif source_mode == 'design_org':
+        path = os.path.join(os.path.dirname(__file__), 'design_org_index.json')
+    elif source_mode == 'loose_files':
+        path = os.path.join(os.path.dirname(__file__), 'loose_files_index.json')
+    else:
+        path = INDEX_FILE
     if not os.path.exists(path):
         return []
     with open(path, 'r', encoding='utf-8') as f:
@@ -206,9 +213,19 @@ def batch_offset(filename: str, source_mode: str = 'ae') -> int:
       Design mode:
         design_batch_001.json → 0
         design_batch_013.json → 720
+      Design Org mode:
+        design_org_batch_001.json → 0
+      Loose files mode:
+        loose_batch_001.json → 0
     """
     stem = Path(filename).stem
-    if stem.startswith('design_batch_'):
+    if stem.startswith('design_org_batch_'):
+        n = int(stem.split('_')[-1])
+        return (n - 1) * DESIGN_BATCH_SIZE
+    elif stem.startswith('loose_batch_'):
+        n = int(stem.split('_')[-1])
+        return (n - 1) * DESIGN_BATCH_SIZE
+    elif stem.startswith('design_batch_'):
         n = int(stem.split('_')[-1])
         return (n - 1) * DESIGN_BATCH_SIZE
     elif stem.startswith('unorg_batch_'):
@@ -345,25 +362,36 @@ def load_one(path: str) -> list:
 def load_all_with_index(source_mode: str = 'ae') -> list:
     """
     Returns list of (classified_item, index_entry) tuples.
-    source_mode='ae'     → batch_NNN.json + unorg_batch_NNN.json → org_index.json
-    source_mode='design' → design_batch_NNN.json → design_unorg_index.json
+    source_mode='ae'          → batch_NNN.json + unorg_batch_NNN.json → org_index.json
+    source_mode='design'      → design_batch_NNN.json → design_unorg_index.json
+    source_mode='design_org'  → design_org_batch_NNN.json → design_org_index.json
+    source_mode='loose_files' → loose_batch_NNN.json → loose_files_index.json
     """
     org = load_index_for_source(source_mode)
     pairs = []
 
     if source_mode == 'design':
         glob_pattern = 'design_batch_*.json'
+    elif source_mode == 'design_org':
+        glob_pattern = 'design_org_batch_*.json'
+    elif source_mode == 'loose_files':
+        glob_pattern = 'loose_batch_*.json'
     else:
-        # AE mode: load batch_NNN.json and unorg_batch_NNN.json; skip design_batch files
         glob_pattern = '*.json'
 
     for p in sorted(Path(RESULTS_DIR).glob(glob_pattern)):
         stem = p.stem
-        # In AE mode, skip design_batch files
-        if source_mode == 'ae' and stem.startswith('design_batch_'):
+        # In AE mode, skip design/org/loose batch files
+        if source_mode == 'ae' and stem.startswith(('design_batch_', 'design_org_batch_', 'loose_batch_')):
             continue
         # In design mode, only design_batch files
         if source_mode == 'design' and not stem.startswith('design_batch_'):
+            continue
+        # In design_org mode, only design_org_batch files
+        if source_mode == 'design_org' and not stem.startswith('design_org_batch_'):
+            continue
+        # In loose_files mode, only loose_batch files
+        if source_mode == 'loose_files' and not stem.startswith('loose_batch_'):
             continue
 
         items = load_one(str(p))
@@ -396,6 +424,17 @@ def safe_dest_path(dest_root: str, category: str, clean_name: str) -> str:
             i += 1
     return dest
 
+def safe_dest_path_file(dest_root: str, category: str, clean_name: str, ext: str) -> str:
+    """Build collision-safe destination path for a flat file (not a directory)."""
+    stem = sanitize(clean_name)
+    dest = os.path.join(dest_root, sanitize(category), f"{stem}{ext}")
+    if os.path.exists(dest):
+        i = 1
+        while os.path.exists(dest):
+            dest = os.path.join(dest_root, sanitize(category), f"{stem} ({i}){ext}")
+            i += 1
+    return dest
+
 # ── Core move logic ───────────────────────────────────────────────────────────
 def apply_moves(pairs: list, source_override: str,
                 dry_run: bool = True, verbose: bool = True):
@@ -415,12 +454,17 @@ def apply_moves(pairs: list, source_override: str,
             skipped += 1
             continue
 
-        src_dir   = source_override or org_entry['folder']
-        disk_name = org_entry['name']
-        src       = os.path.join(src_dir, disk_name)
+        # Determine source path — new index formats use 'path' directly
+        is_file_item = bool(org_entry.get('is_file'))
+        if 'path' in org_entry:
+            src       = org_entry['path']
+            disk_name = os.path.basename(src)
+        else:
+            src_dir   = source_override or org_entry['folder']
+            disk_name = org_entry['name']
+            src       = os.path.join(src_dir, disk_name)
 
         if not os.path.exists(src):
-            # Skip already-moved items silently (idempotent re-runs)
             skipped += 1
             continue
 
@@ -431,7 +475,13 @@ def apply_moves(pairs: list, source_override: str,
         else:
             eff_category = category
 
-        dest = safe_dest_path(dest_root, eff_category, clean)
+        # Build destination path
+        if is_file_item:
+            file_ext = org_entry.get('file_ext', Path(src).suffix.lower())
+            dest = safe_dest_path_file(dest_root, eff_category, clean, file_ext)
+        else:
+            dest = safe_dest_path(dest_root, eff_category, clean)
+
         category_counts[category] += 1
 
         if verbose:
@@ -442,14 +492,21 @@ def apply_moves(pairs: list, source_override: str,
 
         if not dry_run:
             try:
-                # Pre-sanitize: strip trailing spaces from any names inside src
-                renamed = strip_trailing_spaces(src)
-                if renamed:
-                    log(f"    Pre-sanitized {len(renamed)} name(s) with trailing spaces in {disk_name!r}")
-
                 os.makedirs(os.path.dirname(dest), exist_ok=True)
-                robust_move(src, dest)
-                # Journal every successful move for undo support
+
+                if is_file_item:
+                    # File move: try os.rename first, fall back to shutil.move
+                    try:
+                        os.rename(src, dest)
+                    except OSError:
+                        shutil.move(src, dest)
+                else:
+                    # Directory move: pre-sanitize trailing spaces then robust_move
+                    renamed = strip_trailing_spaces(src)
+                    if renamed:
+                        log(f"    Pre-sanitized {len(renamed)} name(s) with trailing spaces in {disk_name!r}")
+                    robust_move(src, dest)
+
                 journal_record(src, dest, disk_name, clean, category, conf)
                 moved += 1
             except Exception as e:
@@ -568,8 +625,8 @@ def main():
     ap.add_argument('--undo-all',      action='store_true',   help='Reverse ALL moves from journal')
     ap.add_argument('--load',          type=str,            help='Single JSON file (skips position mapping)')
     ap.add_argument('--source',        type=str, default='ae',
-                    choices=['ae', 'design'],
-                    help='Source mode: ae (default, I:\\After Effects + I:\\Unorganized) or design (G:\\Design Unorganized)')
+                    choices=['ae', 'design', 'design_org', 'loose_files'],
+                    help='Source mode: ae (default), design, design_org, or loose_files')
     ap.add_argument('--stats',         action='store_true', help='Show batch file counts')
     ap.add_argument('--summary',       action='store_true', help='Category/marketplace breakdown')
     ap.add_argument('--quiet',         action='store_true', help='Suppress per-item output')
@@ -587,7 +644,7 @@ def main():
         undo_moves(last_n=0)
         return
 
-    source_mode = args.source   # 'ae' or 'design'
+    source_mode = args.source
 
     if args.stats:
         files = sorted(Path(RESULTS_DIR).glob('*.json'))
@@ -622,10 +679,13 @@ def main():
         pairs = load_all_with_index(source_mode)
         log(f"Loaded {len(pairs)} items via position-based index mapping (source={source_mode})")
 
-    # Determine the source directory override for design mode
-    source_dir_override = ''
-    if source_mode == 'design':
-        source_dir_override = r'G:\Design Unorganized'
+    # Determine source directory override per mode
+    _SOURCE_DIRS = {
+        'design':      r'G:\Design Unorganized',
+        'design_org':  r'G:\Design Organized',
+        'loose_files': r'G:\Design Unorganized',
+    }
+    source_dir_override = _SOURCE_DIRS.get(source_mode, '')
 
     if args.validate:
         cmd_validate(pairs, source_dir_override)
