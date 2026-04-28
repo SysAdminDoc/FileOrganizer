@@ -28,7 +28,12 @@ from datetime import datetime
 
 REPO      = Path(__file__).parent
 DB        = REPO / 'organize_moves.db'
-ORGANIZED = Path(r'G:\Organized')
+ORGANIZED          = Path(r'G:\Organized')
+ORGANIZED_OVERFLOW = Path(r'I:\Organized')   # overflow destination when G:\ is low
+
+def all_org_roots() -> list[Path]:
+    """Return all organized root directories that exist on disk."""
+    return [r for r in (ORGANIZED, ORGANIZED_OVERFLOW) if r.exists()]
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -49,16 +54,14 @@ def iter_db_moves():
 
 
 def walk_organized():
-    r"""Yield all files recursively under G:\Organized with their category dir."""
-    if not ORGANIZED.exists():
-        print(f'ERROR: {ORGANIZED} does not exist.')
-        return
-    for cat_dir in sorted(ORGANIZED.iterdir()):
-        if not cat_dir.is_dir():
-            continue
-        for f in cat_dir.rglob('*'):
-            if f.is_file():
-                yield f, cat_dir.name
+    r"""Yield all files recursively under all organized roots with their category dir."""
+    for root in all_org_roots():
+        for cat_dir in sorted(root.iterdir()):
+            if not cat_dir.is_dir():
+                continue
+            for f in cat_dir.rglob('*'):
+                if f.is_file():
+                    yield f, cat_dir.name
 
 
 COLLISION_PAT = re.compile(r'^(.+) \((\d+)\)$')
@@ -66,30 +69,30 @@ REPLACEMENT_CHARS = re.compile(r'[\ufffd\u003f]{2,}')  # repeated ? or replaceme
 
 
 def category_quick_counts() -> Counter:
-    """Fast category summary using os.scandir (1 level deep + count sub-items)."""
+    """Fast category summary using os.scandir (1 level deep + count sub-items).
+    Aggregates across all organized roots (G:\\ primary + I:\\ overflow if present)."""
     counts: Counter = Counter()
-    if not ORGANIZED.exists():
-        return counts
-    with os.scandir(str(ORGANIZED)) as top:
-        for cat_entry in top:
-            if not cat_entry.is_dir():
-                continue
-            n = 0
-            try:
-                with os.scandir(cat_entry.path) as items:
-                    for item in items:
-                        if item.is_file():
-                            n += 1
-                        elif item.is_dir():
-                            # Count files one more level deep (sub-folders of template packs)
-                            try:
-                                with os.scandir(item.path) as sub:
-                                    n += sum(1 for s in sub if s.is_file())
-                            except PermissionError:
-                                pass
-            except PermissionError:
-                pass
-            counts[cat_entry.name] = n
+    for root in all_org_roots():
+        with os.scandir(str(root)) as top:
+            for cat_entry in top:
+                if not cat_entry.is_dir():
+                    continue
+                n = 0
+                try:
+                    with os.scandir(cat_entry.path) as items:
+                        for item in items:
+                            if item.is_file():
+                                n += 1
+                            elif item.is_dir():
+                                # Count files one more level deep (sub-folders of template packs)
+                                try:
+                                    with os.scandir(item.path) as sub:
+                                        n += sum(1 for s in sub if s.is_file())
+                                except PermissionError:
+                                    pass
+                except PermissionError:
+                    pass
+                counts[cat_entry.name] += n  # += so same category across roots accumulates
     return counts
 
 
@@ -106,9 +109,11 @@ def detect_issues(path: Path) -> list[str]:
 # ── Report sections ───────────────────────────────────────────────────────────
 
 def report_summary(category_counts: Counter, output: list) -> None:
+    roots = all_org_roots()
+    root_labels = ' + '.join(str(r) for r in roots)
     output.append('\n## Category Summary\n')
     total_files = sum(category_counts.values())
-    output.append(f'Total files in G:\\Organized: {total_files:,}\n')
+    output.append(f'Total files in {root_labels}: {total_files:,}\n')
     output.append(f'Total categories: {len(category_counts)}\n\n')
     output.append(f'{"Category":<50} {"Files":>7}\n')
     output.append('-' * 60 + '\n')
@@ -122,8 +127,13 @@ def report_collisions(collision_files: list[Path], output: list) -> None:
         output.append('None — all (N) collisions have been resolved. ✓\n')
         return
     by_cat: dict[str, list] = defaultdict(list)
+    roots = all_org_roots()
     for f in collision_files:
-        cat = f.parent.relative_to(ORGANIZED).parts[0] if f.is_relative_to(ORGANIZED) else '?'
+        cat = '?'
+        for root in roots:
+            if f.is_relative_to(root):
+                cat = f.parent.relative_to(root).parts[0]
+                break
         by_cat[cat].append(f.name)
     output.append(f'{len(collision_files)} collision files remaining across {len(by_cat)} categories.\n')
     output.append('Run: python fix_duplicates.py --apply  to resolve.\n\n')
@@ -201,8 +211,10 @@ def report_encoding_issues(encoding_bad: list[Path], output: list) -> None:
 
 
 def report_empty_categories(category_counts: Counter, output: list) -> None:
-    empty = [d.name for d in ORGANIZED.iterdir()
-             if d.is_dir() and d.name not in category_counts]
+    empty = []
+    for root in all_org_roots():
+        empty += [d.name for d in root.iterdir()
+                  if d.is_dir() and d.name not in category_counts]
     output.append('\n## Empty Category Directories\n')
     if not empty:
         output.append('No empty category directories. ✓\n')
