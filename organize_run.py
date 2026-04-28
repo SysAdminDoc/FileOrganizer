@@ -58,8 +58,9 @@ def errors_file(source_mode: str) -> str:
 CATEGORY_ALIASES = {
     # word-order variant from the AE classifier
     'After Effects - Opener & Intro':   'After Effects - Intro & Opener',
-    # old short name — "Title & Typography" is more precise
+    # old short names — "Title & Typography" is the canonical form
     'After Effects - Typography':       'After Effects - Title & Typography',
+    'After Effects - Titles & Typography': 'After Effects - Title & Typography',
     # flat names returned by older AE batches for categories with subtypes
     'Business & Marketing':             'After Effects - Corporate & Business',
     'Holiday & Seasonal':               'After Effects - Christmas & Holiday',
@@ -72,6 +73,10 @@ CATEGORY_ALIASES = {
     'Video Editing - General':          'After Effects - Other',
     # G:\Stock bucket category — maps to general stock footage
     'Stock Footage & Photos':           'Stock Footage - General',
+    # Photoshop aliases (from older reclassify batches)
+    'Photoshop - Templates & Mockups':  'Photoshop - Smart Objects & Templates',
+    'Photoshop - Social Media':         'Photoshop - Smart Objects & Templates',
+    'Print - Templates & Layouts':      'Print - Other',
 }
 
 def normalize_category(cat: str) -> str:
