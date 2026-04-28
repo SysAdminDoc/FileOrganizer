@@ -26,7 +26,7 @@ from pathlib import Path
 
 REPO = Path(__file__).parent
 
-AE_APPLY_PID    = 22500  # original PID — update if process restarted
+AE_APPLY_PID    = 20864  # Python ae apply parent PID (robocopy child is 22500)
 PYTHON          = sys.executable
 
 def is_pid_running(pid: int) -> bool:
