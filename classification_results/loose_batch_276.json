@@ -1,0 +1,542 @@
+[
+  {
+    "name": "ProCV_A4_B&P_Option1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro CV A4 B&P Option 1",
+    "confidence": 90,
+    "notes": "PSD file, resume/CV template",
+    "_source_name": "ProCV_A4_B&P_Option1",
+    "_batch_index": 16500
+  },
+  {
+    "name": "ProCV_A4_B&P_Option2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro CV A4 B&P Option 2",
+    "confidence": 90,
+    "notes": "PSD file, resume/CV template",
+    "_source_name": "ProCV_A4_B&P_Option2",
+    "_batch_index": 16501
+  },
+  {
+    "name": "ProCV_A4_B&R",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro CV A4 B&R",
+    "confidence": 90,
+    "notes": "PSD file, resume/CV template",
+    "_source_name": "ProCV_A4_B&R",
+    "_batch_index": 16502
+  },
+  {
+    "name": "ProCV_A4_B&W",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro CV A4 B&W",
+    "confidence": 90,
+    "notes": "PSD file, resume/CV template",
+    "_source_name": "ProCV_A4_B&W",
+    "_batch_index": 16503
+  },
+  {
+    "name": "ProCV_USA_B&P_Option1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro CV USA B&P Option 1",
+    "confidence": 90,
+    "notes": "PSD file, resume/CV template",
+    "_source_name": "ProCV_USA_B&P_Option1",
+    "_batch_index": 16504
+  },
+  {
+    "name": "ProCV_USA_B&P_Option2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro CV USA B&P Option 2",
+    "confidence": 90,
+    "notes": "PSD file, resume/CV template",
+    "_source_name": "ProCV_USA_B&P_Option2",
+    "_batch_index": 16505
+  },
+  {
+    "name": "ProCV_USA_B&R",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro CV USA B&R",
+    "confidence": 90,
+    "notes": "PSD file, resume/CV template",
+    "_source_name": "ProCV_USA_B&R",
+    "_batch_index": 16506
+  },
+  {
+    "name": "ProCV_USA_B&W",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro CV USA B&W",
+    "confidence": 90,
+    "notes": "PSD file, resume/CV template",
+    "_source_name": "ProCV_USA_B&W",
+    "_batch_index": 16507
+  },
+  {
+    "name": "Product Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Product Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Product Flyer",
+    "_batch_index": 16508
+  },
+  {
+    "name": "Product Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Product Flyer 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Product Flyer_2",
+    "_batch_index": 16509
+  },
+  {
+    "name": "Product presentation",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Product Presentation",
+    "confidence": 85,
+    "notes": "PSD presentation template",
+    "_source_name": "Product presentation",
+    "_batch_index": 16510
+  },
+  {
+    "name": "product-listing",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Product Listing",
+    "confidence": 85,
+    "notes": "PSD product listing template",
+    "_source_name": "product-listing",
+    "_batch_index": 16511
+  },
+  {
+    "name": "product-showcases",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Product Showcases",
+    "confidence": 85,
+    "notes": "PSD product showcase template",
+    "_source_name": "product-showcases",
+    "_batch_index": 16512
+  },
+  {
+    "name": "product_calalog_bg",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Product Catalog Background",
+    "confidence": 85,
+    "notes": "PSD catalog background template",
+    "_source_name": "product_calalog_bg",
+    "_batch_index": 16513
+  },
+  {
+    "name": "productDisplay3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Product Display 3",
+    "confidence": 85,
+    "notes": "PSD product display template",
+    "_source_name": "productDisplay3",
+    "_batch_index": 16514
+  },
+  {
+    "name": "productflyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Product Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "productflyer",
+    "_batch_index": 16515
+  },
+  {
+    "name": "productflyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Product Flyer 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "productflyer_2",
+    "_batch_index": 16516
+  },
+  {
+    "name": "ProExtraContent_A4_B&P",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro Extra Content A4 B&P",
+    "confidence": 85,
+    "notes": "PSD extra content template",
+    "_source_name": "ProExtraContent_A4_B&P",
+    "_batch_index": 16517
+  },
+  {
+    "name": "ProExtraContent_A4_B&R",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro Extra Content A4 B&R",
+    "confidence": 85,
+    "notes": "PSD extra content template",
+    "_source_name": "ProExtraContent_A4_B&R",
+    "_batch_index": 16518
+  },
+  {
+    "name": "ProExtraContent_A4_B&W",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro Extra Content A4 B&W",
+    "confidence": 85,
+    "notes": "PSD extra content template",
+    "_source_name": "ProExtraContent_A4_B&W",
+    "_batch_index": 16519
+  },
+  {
+    "name": "ProExtraContent_USA_B&P",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro Extra Content USA B&P",
+    "confidence": 85,
+    "notes": "PSD extra content template",
+    "_source_name": "ProExtraContent_USA_B&P",
+    "_batch_index": 16520
+  },
+  {
+    "name": "ProExtraContent_USA_B&P_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro Extra Content USA B&P 2",
+    "confidence": 85,
+    "notes": "PSD extra content template",
+    "_source_name": "ProExtraContent_USA_B&P_2",
+    "_batch_index": 16521
+  },
+  {
+    "name": "ProExtraContent_USA_B&W",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Pro Extra Content USA B&W",
+    "confidence": 85,
+    "notes": "PSD extra content template",
+    "_source_name": "ProExtraContent_USA_B&W",
+    "_batch_index": 16522
+  },
+  {
+    "name": "Professional Resume",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professional Resume",
+    "confidence": 95,
+    "notes": "PSD resume template",
+    "_source_name": "Professional Resume",
+    "_batch_index": 16523
+  },
+  {
+    "name": "Professional_V1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professional V1",
+    "confidence": 85,
+    "notes": "PSD template",
+    "_source_name": "Professional_V1",
+    "_batch_index": 16524
+  },
+  {
+    "name": "Professional_V2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professional V2",
+    "confidence": 85,
+    "notes": "PSD template",
+    "_source_name": "Professional_V2",
+    "_batch_index": 16525
+  },
+  {
+    "name": "Professional_V3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professional V3",
+    "confidence": 85,
+    "notes": "PSD template",
+    "_source_name": "Professional_V3",
+    "_batch_index": 16526
+  },
+  {
+    "name": "Professor Mascot - Blogger",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Blogger",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Blogger",
+    "_batch_index": 16527
+  },
+  {
+    "name": "Professor Mascot - Contact",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Contact",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Contact",
+    "_batch_index": 16528
+  },
+  {
+    "name": "Professor Mascot - Cool",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Cool",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Cool",
+    "_batch_index": 16529
+  },
+  {
+    "name": "Professor Mascot - Crazy",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Crazy",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Crazy",
+    "_batch_index": 16530
+  },
+  {
+    "name": "Professor Mascot - Error",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Error",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Error",
+    "_batch_index": 16531
+  },
+  {
+    "name": "Professor Mascot - Fix",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Fix",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Fix",
+    "_batch_index": 16532
+  },
+  {
+    "name": "Professor Mascot - Idea",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Idea",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Idea",
+    "_batch_index": 16533
+  },
+  {
+    "name": "Professor Mascot - Main",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Main",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Main",
+    "_batch_index": 16534
+  },
+  {
+    "name": "Professor Mascot - Present",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Present",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Present",
+    "_batch_index": 16535
+  },
+  {
+    "name": "Professor Mascot - Read",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Read",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Read",
+    "_batch_index": 16536
+  },
+  {
+    "name": "Professor Mascot - Rich",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Rich",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Rich",
+    "_batch_index": 16537
+  },
+  {
+    "name": "Professor Mascot - Search",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Professor Mascot Search",
+    "confidence": 85,
+    "notes": "PSD mascot character template",
+    "_source_name": "Professor Mascot - Search",
+    "_batch_index": 16538
+  },
+  {
+    "name": "Profile Box",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Profile Box",
+    "confidence": 85,
+    "notes": "PSD profile template",
+    "_source_name": "Profile Box",
+    "_batch_index": 16539
+  },
+  {
+    "name": "profile_1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Profile 1",
+    "confidence": 85,
+    "notes": "PSD profile template",
+    "_source_name": "profile_1",
+    "_batch_index": 16540
+  },
+  {
+    "name": "profile_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Profile 2",
+    "confidence": 85,
+    "notes": "PSD profile template",
+    "_source_name": "profile_2",
+    "_batch_index": 16541
+  },
+  {
+    "name": "profile_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Profile 3",
+    "confidence": 85,
+    "notes": "PSD profile template",
+    "_source_name": "profile_3",
+    "_batch_index": 16542
+  },
+  {
+    "name": "profile_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Profile 4",
+    "confidence": 85,
+    "notes": "PSD profile template",
+    "_source_name": "profile_4",
+    "_batch_index": 16543
+  },
+  {
+    "name": "profile_5",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Profile 5",
+    "confidence": 85,
+    "notes": "PSD profile template",
+    "_source_name": "profile_5",
+    "_batch_index": 16544
+  },
+  {
+    "name": "profile_6",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Profile 6",
+    "confidence": 85,
+    "notes": "PSD profile template",
+    "_source_name": "profile_6",
+    "_batch_index": 16545
+  },
+  {
+    "name": "Progresive sounds",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Progressive Sounds",
+    "confidence": 70,
+    "notes": "Name suggests audio, but file is .psd; likely misnamed, classifying as SFX based on name",
+    "_source_name": "Progresive sounds",
+    "_batch_index": 16546
+  },
+  {
+    "name": "Progress Trackers_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Progress Trackers 2",
+    "confidence": 85,
+    "notes": "PSD progress tracker template",
+    "_source_name": "Progress Trackers_2",
+    "_batch_index": 16547
+  },
+  {
+    "name": "progress",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Progress",
+    "confidence": 85,
+    "notes": "PSD progress template",
+    "_source_name": "progress",
+    "_batch_index": 16548
+  },
+  {
+    "name": "project-analytics",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Project Analytics",
+    "confidence": 85,
+    "notes": "PSD analytics template",
+    "_source_name": "project-analytics",
+    "_batch_index": 16549
+  },
+  {
+    "name": "project",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Project",
+    "confidence": 85,
+    "notes": "PSD project template",
+    "_source_name": "project",
+    "_batch_index": 16550
+  },
+  {
+    "name": "project_ver2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Project Version 2",
+    "confidence": 85,
+    "notes": "PSD project template",
+    "_source_name": "project_ver2",
+    "_batch_index": 16551
+  },
+  {
+    "name": "Properties Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Properties Flyer Template",
+    "confidence": 95,
+    "notes": "PSD real estate flyer template",
+    "_source_name": "Properties Flyer Template",
+    "_batch_index": 16552
+  },
+  {
+    "name": "Properties Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Properties Flyer",
+    "confidence": 95,
+    "notes": "PSD real estate flyer template",
+    "_source_name": "Properties Flyer",
+    "_batch_index": 16553
+  },
+  {
+    "name": "Property Flyer-FA",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Property Flyer FA",
+    "confidence": 95,
+    "notes": "PSD real estate flyer template",
+    "_source_name": "Property Flyer-FA",
+    "_batch_index": 16554
+  },
+  {
+    "name": "property flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Property Flyer",
+    "confidence": 95,
+    "notes": "PSD real estate flyer template",
+    "_source_name": "property flyer",
+    "_batch_index": 16555
+  },
+  {
+    "name": "property-flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Property Flyer",
+    "confidence": 95,
+    "notes": "PSD real estate flyer template",
+    "_source_name": "property-flyer",
+    "_batch_index": 16556
+  },
+  {
+    "name": "Property1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Property 1",
+    "confidence": 85,
+    "notes": "PSD property template",
+    "_source_name": "Property1",
+    "_batch_index": 16557
+  },
+  {
+    "name": "Property2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Property 2",
+    "confidence": 85,
+    "notes": "PSD property template",
+    "_source_name": "Property2",
+    "_batch_index": 16558
+  },
+  {
+    "name": "prototypecolors",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Prototype Colors",
+    "confidence": 85,
+    "notes": "PSD prototype colors template",
+    "_source_name": "prototypecolors",
+    "_batch_index": 16559
+  }
+]
