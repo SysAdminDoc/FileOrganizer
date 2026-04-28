@@ -1,0 +1,542 @@
+[
+  {
+    "name": "ME-10761739",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Diary Templet",
+    "confidence": 90,
+    "notes": "Contains .aep, name suggests photo album/gallery template",
+    "_source_name": "ME-10761739",
+    "_batch_index": 15180
+  },
+  {
+    "name": "ME-10778617",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Gold Intro",
+    "confidence": 95,
+    "notes": "Contains .aep, name clearly indicates an intro",
+    "_source_name": "ME-10778617",
+    "_batch_index": 15181
+  },
+  {
+    "name": "ME-10803454",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Video Game Victory 4k",
+    "confidence": 90,
+    "notes": "Contains .aep, name suggests video game/sports victory theme",
+    "_source_name": "ME-10803454",
+    "_batch_index": 15182
+  },
+  {
+    "name": "ME-10881162",
+    "category": "After Effects - Mockup & Device",
+    "clean_name": "Screens",
+    "confidence": 85,
+    "notes": "Contains .aep and .ai, name 'Screens' implies device mockups",
+    "_source_name": "ME-10881162",
+    "_batch_index": 15183
+  },
+  {
+    "name": "ME-10964275",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Deep_Web",
+    "confidence": 85,
+    "notes": "Contains .aep, name suggests glitch/cyber theme",
+    "_source_name": "ME-10964275",
+    "_batch_index": 15184
+  },
+  {
+    "name": "ME-10982824",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Happy Day",
+    "confidence": 95,
+    "notes": "Contains .aep, name explicitly says Photo Gallery",
+    "_source_name": "ME-10982824",
+    "_batch_index": 15185
+  },
+  {
+    "name": "ME-10982846",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Beautiful Christmas Photo Gallery",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Christmas and Photo Gallery",
+    "_source_name": "ME-10982846",
+    "_batch_index": 15186
+  },
+  {
+    "name": "ME-10982851",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Happy Moments Photo Gallery",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Photo Gallery",
+    "_source_name": "ME-10982851",
+    "_batch_index": 15187
+  },
+  {
+    "name": "ME-10982867",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Love Story Photo Gallery",
+    "confidence": 95,
+    "notes": "Contains .aep, name implies wedding/romance photo gallery",
+    "_source_name": "ME-10982867",
+    "_batch_index": 15188
+  },
+  {
+    "name": "ME-11047737",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "FlagStudio After Effects Flag Template",
+    "confidence": 85,
+    "notes": "Contains .aep, flag template likely used for logo reveals",
+    "_source_name": "ME-11047737",
+    "_batch_index": 15189
+  },
+  {
+    "name": "ME-11088705",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "20 Unique Light Leaks",
+    "confidence": 90,
+    "notes": "Contains .aep, light leaks are stock VFX elements",
+    "_source_name": "ME-11088705",
+    "_batch_index": 15190
+  },
+  {
+    "name": "ME-11135606",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Cinematic Lighthemes v1.0",
+    "confidence": 90,
+    "notes": "Contains .aep, name says Cinematic",
+    "_source_name": "ME-11135606",
+    "_batch_index": 15191
+  },
+  {
+    "name": "ME-11263024",
+    "category": "After Effects - Other",
+    "clean_name": "brush",
+    "confidence": 70,
+    "notes": "Contains .aep, .ai, .psd; name 'brush' ambiguous but AE project",
+    "_source_name": "ME-11263024",
+    "_batch_index": 15192
+  },
+  {
+    "name": "ME-11306736",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Luxtry Cinematic Particles Opener",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Cinematic and Opener",
+    "_source_name": "ME-11306736",
+    "_batch_index": 15193
+  },
+  {
+    "name": "ME-11327228",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "Ultimate VHS Pack 4K",
+    "confidence": 95,
+    "notes": "Contains .aep, name explicitly says VHS",
+    "_source_name": "ME-11327228",
+    "_batch_index": 15194
+  },
+  {
+    "name": "ME-11327270",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Scientastic Titles 4K",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Titles",
+    "_source_name": "ME-11327270",
+    "_batch_index": 15195
+  },
+  {
+    "name": "ME-11451566",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Extreme Opener",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Opener",
+    "_source_name": "ME-11451566",
+    "_batch_index": 15196
+  },
+  {
+    "name": "ME-11451606",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Electric Logo",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Logo",
+    "_source_name": "ME-11451606",
+    "_batch_index": 15197
+  },
+  {
+    "name": "ME-11471582",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "watercolor project",
+    "confidence": 85,
+    "notes": "Contains .aep, watercolor implies liquid/fluid style",
+    "_source_name": "ME-11471582",
+    "_batch_index": 15198
+  },
+  {
+    "name": "ME-11499461",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Wedding And Special Events Gallery",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Wedding",
+    "_source_name": "ME-11499461",
+    "_batch_index": 15199
+  },
+  {
+    "name": "ME-11526441",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "10 Wedding Transitions",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Wedding Transitions",
+    "_source_name": "ME-11526441",
+    "_batch_index": 15200
+  },
+  {
+    "name": "ME-11529439",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Breakfast LogoStinger",
+    "confidence": 95,
+    "notes": "Contains .aep, name says LogoStinger",
+    "_source_name": "ME-11529439",
+    "_batch_index": 15201
+  },
+  {
+    "name": "ME-11530313",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Our Great Memories - Special Events Intro",
+    "confidence": 90,
+    "notes": "Contains .aep, name says Special Events Intro",
+    "_source_name": "ME-11530313",
+    "_batch_index": 15202
+  },
+  {
+    "name": "ME-11548915",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Moving Photo",
+    "confidence": 85,
+    "notes": "Contains .aep, name suggests photo animation",
+    "_source_name": "ME-11548915",
+    "_batch_index": 15203
+  },
+  {
+    "name": "ME-11562855",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Spreading Ink Slideshow",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Slideshow",
+    "_source_name": "ME-11562855",
+    "_batch_index": 15204
+  },
+  {
+    "name": "ME-11565562",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Marker Madness",
+    "confidence": 80,
+    "notes": "Contains .aep, name suggests playful/kids style",
+    "_source_name": "ME-11565562",
+    "_batch_index": 15205
+  },
+  {
+    "name": "ME-11589168",
+    "category": "After Effects - Other",
+    "clean_name": "Image_Filter",
+    "confidence": 70,
+    "notes": "Contains .aep and .ai, name suggests filter effects",
+    "_source_name": "ME-11589168",
+    "_batch_index": 15206
+  },
+  {
+    "name": "ME-11617705",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Parallax Slideshow",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Slideshow",
+    "_source_name": "ME-11617705",
+    "_batch_index": 15207
+  },
+  {
+    "name": "ME-11649299",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Modern Glitch Opener Slideshow",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Glitch",
+    "_source_name": "ME-11649299",
+    "_batch_index": 15208
+  },
+  {
+    "name": "ME-11754459",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "100 Light Leaks",
+    "confidence": 90,
+    "notes": "Contains .aep, light leaks are stock VFX elements",
+    "_source_name": "ME-11754459",
+    "_batch_index": 15209
+  },
+  {
+    "name": "ME-11790736",
+    "category": "After Effects - Social Media",
+    "clean_name": "3DSocialicon",
+    "confidence": 85,
+    "notes": "Contains .aep, name suggests social media icons",
+    "_source_name": "ME-11790736",
+    "_batch_index": 15210
+  },
+  {
+    "name": "ME-11799059",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Lovely Slides-Rose Photo Slides",
+    "confidence": 90,
+    "notes": "Contains .aep, name says Photo Slides",
+    "_source_name": "ME-11799059",
+    "_batch_index": 15211
+  },
+  {
+    "name": "ME-11809267",
+    "category": "After Effects - Other",
+    "clean_name": "Blue_Filter",
+    "confidence": 70,
+    "notes": "Contains .aep and .ai, name suggests color filter effect",
+    "_source_name": "ME-11809267",
+    "_batch_index": 15212
+  },
+  {
+    "name": "ME-12288787",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Sneaker Logo",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Logo",
+    "_source_name": "ME-12288787",
+    "_batch_index": 15213
+  },
+  {
+    "name": "ME-12415854",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Water_Wave_Transitions_Pack",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Water Wave",
+    "_source_name": "ME-12415854",
+    "_batch_index": 15214
+  },
+  {
+    "name": "ME-12453250",
+    "category": "After Effects - Social Media",
+    "clean_name": "YoutubePromoToolKit",
+    "confidence": 95,
+    "notes": "Contains .aep, name says YouTube Promo",
+    "_source_name": "ME-12453250",
+    "_batch_index": 15215
+  },
+  {
+    "name": "ME-12475174",
+    "category": "After Effects - Other",
+    "clean_name": "ResourcesAE",
+    "confidence": 65,
+    "notes": "Contains .aep and .psd, generic name",
+    "_source_name": "ME-12475174",
+    "_batch_index": 15216
+  },
+  {
+    "name": "ME-12526037",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Countdown",
+    "confidence": 80,
+    "notes": "Contains .aep, countdowns often used in corporate/broadcast",
+    "_source_name": "ME-12526037",
+    "_batch_index": 15217
+  },
+  {
+    "name": "ME-12974187",
+    "category": "After Effects - Social Media",
+    "clean_name": "YoutubeEndScene",
+    "confidence": 95,
+    "notes": "Contains .aep, name says YouTube End Scene",
+    "_source_name": "ME-12974187",
+    "_batch_index": 15218
+  },
+  {
+    "name": "ME-13268857",
+    "category": "After Effects - Other",
+    "clean_name": "40626 [Converted]",
+    "confidence": 65,
+    "notes": "Contains .aep and .ai, numeric ID with no clear theme",
+    "_source_name": "ME-13268857",
+    "_batch_index": 15219
+  },
+  {
+    "name": "ME-13438013",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "MotionElements-logo-cmyk-standard",
+    "confidence": 90,
+    "notes": "Contains .aep and .ai, name says logo",
+    "_source_name": "ME-13438013",
+    "_batch_index": 15220
+  },
+  {
+    "name": "ME-13683395",
+    "category": "Color Grading & LUTs",
+    "clean_name": "After Effects",
+    "confidence": 95,
+    "notes": "Contains .cube file, rule 2 applies",
+    "_source_name": "ME-13683395",
+    "_batch_index": 15221
+  },
+  {
+    "name": "ME-13687476",
+    "category": "After Effects - Mockup & Device",
+    "clean_name": "Mock-Up Real Footage Laptop",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Mock-Up and Laptop",
+    "_source_name": "ME-13687476",
+    "_batch_index": 15222
+  },
+  {
+    "name": "ME-13825184",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "logo revival-space&fire circle",
+    "confidence": 95,
+    "notes": "Contains .aep, name says logo",
+    "_source_name": "ME-13825184",
+    "_batch_index": 15223
+  },
+  {
+    "name": "ME-14254816",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Sneaker Logo",
+    "confidence": 95,
+    "notes": "Contains .aep, name says Logo",
+    "_source_name": "ME-14254816",
+    "_batch_index": 15224
+  },
+  {
+    "name": "ME-14259073",
+    "category": "After Effects - Other",
+    "clean_name": "FrameBel",
+    "confidence": 70,
+    "notes": "Contains .aep and .psd, name ambiguous",
+    "_source_name": "ME-14259073",
+    "_batch_index": 15225
+  },
+  {
+    "name": "Medicine Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Medicine Flyer",
+    "confidence": 95,
+    "notes": "Contains .psd, name says Flyer",
+    "_source_name": "Medicine Flyer",
+    "_batch_index": 15226
+  },
+  {
+    "name": "Medicine Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Medicine Flyer 2",
+    "confidence": 95,
+    "notes": "Contains .psd, name says Flyer",
+    "_source_name": "Medicine Flyer_2",
+    "_batch_index": 15227
+  },
+  {
+    "name": "Medicine Flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Medicine Flyer 3",
+    "confidence": 95,
+    "notes": "Contains .psd, name says Flyer",
+    "_source_name": "Medicine Flyer_3",
+    "_batch_index": 15228
+  },
+  {
+    "name": "Medicine Flyer_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Medicine Flyer 4",
+    "confidence": 95,
+    "notes": "Contains .psd, name says Flyer",
+    "_source_name": "Medicine Flyer_4",
+    "_batch_index": 15229
+  },
+  {
+    "name": "medium-styles",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "medium-styles",
+    "confidence": 85,
+    "notes": "Contains .psd, name suggests layer styles",
+    "_source_name": "medium-styles",
+    "_batch_index": 15230
+  },
+  {
+    "name": "Meet & greet Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Meet & Greet Flyer",
+    "confidence": 95,
+    "notes": "Contains .psd, name says Flyer",
+    "_source_name": "Meet & greet Flyer",
+    "_batch_index": 15231
+  },
+  {
+    "name": "Megatron 1",
+    "category": "Photoshop - Other",
+    "clean_name": "Megatron 1",
+    "confidence": 70,
+    "notes": "Contains .psd, name ambiguous but likely a design asset",
+    "_source_name": "Megatron 1",
+    "_batch_index": 15232
+  },
+  {
+    "name": "Megatron 2",
+    "category": "Photoshop - Other",
+    "clean_name": "Megatron 2",
+    "confidence": 70,
+    "notes": "Contains .psd, name ambiguous but likely a design asset",
+    "_source_name": "Megatron 2",
+    "_batch_index": 15233
+  },
+  {
+    "name": "meishihuace",
+    "category": "Photoshop - Other",
+    "clean_name": "meishihuace",
+    "confidence": 65,
+    "notes": "Contains .psd, name unclear",
+    "_source_name": "meishihuace",
+    "_batch_index": 15234
+  },
+  {
+    "name": "Melodies & Soul flyer poster",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Melodies & Soul Flyer Poster",
+    "confidence": 95,
+    "notes": "Contains .psd, name says flyer poster",
+    "_source_name": "Melodies & Soul flyer poster",
+    "_batch_index": 15235
+  },
+  {
+    "name": "Melt Waves Flyer Poster",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Melt Waves Flyer Poster",
+    "confidence": 95,
+    "notes": "Contains .psd, name says Flyer Poster",
+    "_source_name": "Melt Waves Flyer Poster",
+    "_batch_index": 15236
+  },
+  {
+    "name": "meme template",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Meme Template",
+    "confidence": 90,
+    "notes": "Contains .psd, name says template",
+    "_source_name": "meme template",
+    "_batch_index": 15237
+  },
+  {
+    "name": "Memorial Day 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Memorial Day 3",
+    "confidence": 85,
+    "notes": "Contains .psd, likely a flyer for Memorial Day event",
+    "_source_name": "Memorial Day 3",
+    "_batch_index": 15238
+  },
+  {
+    "name": "Memorial Day Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Memorial Day Flyer",
+    "confidence": 95,
+    "notes": "Contains .psd, name says Flyer",
+    "_source_name": "Memorial Day Flyer",
+    "_batch_index": 15239
+  }
+]
