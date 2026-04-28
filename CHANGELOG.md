@@ -56,6 +56,31 @@ All notable changes to FileOrganizer will be documented in this file.
 - loose_files classification: 326 batches, file extension is strong signal, ~0% _Review rate
 - design_org classification: legacy_category hint dramatically reduces _Review rate to <1%
 
+### Fixed (session 2026-04-28 emergency continuation)
+- `post_apply_sequence.py` — removed dependence on a single stale hardcoded AE apply PID.
+  - New `detect_ae_apply_pid()` auto-detects a live `python organize_run.py --apply` AE process
+    via WMIC when possible.
+  - New `--wait-pid` override preserves explicit wait behavior when a specific PID is known.
+  - `--step 0` now correctly runs only the category-merge step; previous selection logic
+    accidentally ran steps 1-6 after step 0.
+  - `is_merge_stock_done()` now reuses the same WMIC key/value parser used by AE apply detection.
+- Runtime artifact hygiene:
+  - `organize_errors_ae.json` removed from version control. It is a transient per-source retry file
+    that is expected to auto-delete when `organize_run.py --retry-errors --source ae` clears all errors.
+  - `.gitignore` now ignores `migrate_*.log`, covering emergency robocopy transcripts such as the
+    earlier `/COPYALL` failures that would otherwise leave noisy untracked files in the repo root.
+
+### Documented (session 2026-04-28 emergency continuation)
+- Resume-state facts confirmed at restart:
+  - AE apply had already finished by `2026-04-28 11:20`, and the retry pass resolved all 5 prior
+    AE error entries by auto-skipping missing sources and deleting `organize_errors_ae.json`.
+  - All 326 `loose_batch_*.json` files are present, so orchestrator step 4 is ready once step 0
+    and the unorganized reclassification steps complete.
+  - The only remaining variant-category merge at resume time was
+    `I:\Organized\After Effects - Titles & Typography` -> `I:\Organized\After Effects - Title & Typography`.
+  - Emergency stock migrations had completed by the restart check; `G:\` free space had recovered
+    to roughly `129.5 GB` and `I:\` free space was roughly `2301.3 GB`.
+
 ### Fixed (session 2026-04-28)
 - `organize_run.py` — `_Review-CategoryName` flat folder bug: `sanitize()` was stripping the
   backslash from `_Review\Category` (produced by `os.path.join(REVIEW_SUBDIR, category)`),

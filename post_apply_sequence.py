@@ -18,9 +18,12 @@ Usage:
     python post_apply_sequence.py              # run all steps
     python post_apply_sequence.py --dry-run    # preview without moving
     python post_apply_sequence.py --step 1     # run just step N
+    python post_apply_sequence.py --step 0     # run only the category-merge step
     python post_apply_sequence.py --skip 4     # skip step N
+    python post_apply_sequence.py --wait-pid 12345  # wait for a specific AE apply PID first
 
-Blocking: waits for AE apply PID before starting. Does NOT wait for merge_stock.
+Blocking: auto-detects a live AE apply PID before starting when possible.
+Does NOT wait for merge_stock.
 """
 
 import os, sys, subprocess, argparse, time, shutil
@@ -28,7 +31,7 @@ from pathlib import Path
 
 REPO = Path(__file__).parent
 
-AE_APPLY_PID    = 22500  # Python ae apply (PID confirmed from WMI, robocopy child is 17596)
+DEFAULT_AE_APPLY_PID = 22500  # Historical hint from an earlier AE apply run; auto-detection is preferred.
 PYTHON          = sys.executable
 ORGANIZED          = Path(r'G:\Organized')
 ORGANIZED_OVERFLOW = Path(r'I:\Organized')   # overflow destination when G:\ is low
@@ -61,6 +64,69 @@ def is_pid_running(pid: int) -> bool:
     except Exception:
         return False
 
+
+def iter_wmic_processes(process_name: str) -> list[dict[str, str]]:
+    r"""Return process records from WMIC /format:list as a list of dicts."""
+    try:
+        out = subprocess.check_output(
+            ['wmic', 'process', 'where', f'name="{process_name}"', 'get', 'ProcessId,CommandLine', '/format:list'],
+            text=True, stderr=subprocess.DEVNULL
+        )
+    except Exception:
+        return []
+
+    records: list[dict[str, str]] = []
+    current: dict[str, str] = {}
+    for raw_line in out.splitlines():
+        line = raw_line.strip()
+        if not line:
+            if current:
+                records.append(current)
+                current = {}
+            continue
+        if '=' not in line:
+            continue
+        key, value = line.split('=', 1)
+        current[key] = value
+    if current:
+        records.append(current)
+    return records
+
+
+def looks_like_ae_apply_command(cmdline: str) -> bool:
+    lowered = cmdline.lower()
+    if 'organize_run.py' not in lowered or '--apply' not in lowered:
+        return False
+    if '--retry-errors' in lowered:
+        return False
+    for other_source in ('design', 'design_org', 'loose_files', 'design_elements'):
+        if f'--source {other_source}' in lowered:
+            return False
+    return True
+
+
+def detect_ae_apply_pid(explicit_pid: int | None = None) -> tuple[int | None, str]:
+    r"""Return `(pid, reason)` for the AE apply process to wait on, if one is live."""
+    if explicit_pid is not None:
+        return explicit_pid, 'explicit'
+
+    candidates: list[int] = []
+    for proc in iter_wmic_processes('python.exe'):
+        cmdline = proc.get('CommandLine', '')
+        pid_str = proc.get('ProcessId', '')
+        if not pid_str.isdigit() or not looks_like_ae_apply_command(cmdline):
+            continue
+        candidates.append(int(pid_str))
+
+    live_candidates = [pid for pid in candidates if is_pid_running(pid)]
+    if len(live_candidates) == 1:
+        return live_candidates[0], 'auto-detected'
+    if len(live_candidates) > 1:
+        return None, f'ambiguous ({", ".join(str(pid) for pid in live_candidates)})'
+    if is_pid_running(DEFAULT_AE_APPLY_PID):
+        return DEFAULT_AE_APPLY_PID, 'historical-default'
+    return None, 'not-found'
+
 def run(label: str, cmd: list[str], dry_run: bool = False) -> bool:
     print(f'\n{"="*62}')
     print(f'  [{label}]')
@@ -79,12 +145,9 @@ def run(label: str, cmd: list[str], dry_run: bool = False) -> bool:
 def is_merge_stock_done() -> bool:
     r"""Check if merge_stock has finished (no robocopy process copying from G:\Stock)."""
     try:
-        out = subprocess.check_output(
-            ['wmic', 'process', 'where', 'name="robocopy.exe"', 'get', 'CommandLine'],
-            text=True, stderr=subprocess.DEVNULL
-        )
-        for line in out.splitlines():
-            if r'G:\Stock' in line or 'Stock' in line:
+        for proc in iter_wmic_processes('robocopy.exe'):
+            cmdline = proc.get('CommandLine', '')
+            if r'G:\Stock' in cmdline or 'Stock' in cmdline:
                 return False
         return True
     except Exception:
@@ -94,26 +157,33 @@ def is_merge_stock_done() -> bool:
 def main():
     ap = argparse.ArgumentParser(description='Post-apply cleanup orchestrator')
     ap.add_argument('--dry-run', action='store_true', help='Preview steps without executing')
-    ap.add_argument('--step',    type=int, help='Run only step N (1-5)')
+    ap.add_argument('--step',    type=int, help='Run only step N (0-6)')
     ap.add_argument('--skip',    type=int, help='Skip step N')
     ap.add_argument('--no-wait', action='store_true', help='Skip waiting for AE apply to exit')
+    ap.add_argument('--wait-pid', type=int, help='Explicit AE apply PID to wait for before starting')
     args = ap.parse_args()
 
     # --- Wait for AE apply if still running ---
     if not args.no_wait:
-        if is_pid_running(AE_APPLY_PID):
-            print(f'Waiting for AE apply (PID {AE_APPLY_PID}) to exit...')
-            while is_pid_running(AE_APPLY_PID):
+        wait_pid, wait_reason = detect_ae_apply_pid(args.wait_pid)
+        if wait_pid is not None and is_pid_running(wait_pid):
+            print(f'Waiting for AE apply (PID {wait_pid}, {wait_reason}) to exit...')
+            while is_pid_running(wait_pid):
                 time.sleep(15)
                 print('.', end='', flush=True)
             print('\nAE apply exited. Starting cleanup sequence.')
+        elif args.wait_pid is not None:
+            print(f'AE apply PID {args.wait_pid} already exited.')
+        elif wait_reason.startswith('ambiguous'):
+            print(f'No unique AE apply process detected ({wait_reason}). Starting immediately.')
         else:
-            print(f'AE apply PID {AE_APPLY_PID} already exited.')
+            print('No live AE apply process detected. Starting cleanup sequence immediately.')
     else:
         print('[no-wait] Skipping AE apply check.')
 
     # --- Step 0: Merge mis-named category directories into canonical names ---
-    if not args.step or args.step == 0:
+    run_step0 = (args.step is None or args.step == 0) and args.skip != 0
+    if run_step0:
         print('\n' + '='*62)
         print('  [Step 0] Merging variant category directories')
         print('='*62)
@@ -153,7 +223,12 @@ def main():
         6: ('Fix stock AE items',       None),  # conditional — requires merge_stock done
     }
 
-    selected = [args.step] if args.step is not None and args.step > 0 else sorted(steps.keys())
+    if args.step is None:
+        selected = sorted(steps.keys())
+    elif args.step == 0:
+        selected = []
+    else:
+        selected = [args.step]
     if args.skip:
         selected = [s for s in selected if s != args.skip]
 
