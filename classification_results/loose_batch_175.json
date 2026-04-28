@@ -1,0 +1,542 @@
+[
+  {
+    "name": "calendar_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Calendar 2",
+    "confidence": 85,
+    "notes": ".psd file, likely a calendar print template",
+    "_source_name": "calendar_2",
+    "_batch_index": 10440
+  },
+  {
+    "name": "calendar_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Calendar 3",
+    "confidence": 85,
+    "notes": ".psd file, likely a calendar print template",
+    "_source_name": "calendar_3",
+    "_batch_index": 10441
+  },
+  {
+    "name": "Cam",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cam",
+    "confidence": 70,
+    "notes": ".psd file, name suggests camera mockup or template",
+    "_source_name": "Cam",
+    "_batch_index": 10442
+  },
+  {
+    "name": "Cam_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cam 2",
+    "confidence": 70,
+    "notes": ".psd file, name suggests camera mockup or template",
+    "_source_name": "Cam_2",
+    "_batch_index": 10443
+  },
+  {
+    "name": "Cam_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cam 3",
+    "confidence": 70,
+    "notes": ".psd file, name suggests camera mockup or template",
+    "_source_name": "Cam_3",
+    "_batch_index": 10444
+  },
+  {
+    "name": "Cam_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cam 4",
+    "confidence": 70,
+    "notes": ".psd file, name suggests camera mockup or template",
+    "_source_name": "Cam_4",
+    "_batch_index": 10445
+  },
+  {
+    "name": "Cam_5",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cam 5",
+    "confidence": 70,
+    "notes": ".psd file, name suggests camera mockup or template",
+    "_source_name": "Cam_5",
+    "_batch_index": 10446
+  },
+  {
+    "name": "Cam_6",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cam 6",
+    "confidence": 70,
+    "notes": ".psd file, name suggests camera mockup or template",
+    "_source_name": "Cam_6",
+    "_batch_index": 10447
+  },
+  {
+    "name": "Cam_7",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cam 7",
+    "confidence": 70,
+    "notes": ".psd file, name suggests camera mockup or template",
+    "_source_name": "Cam_7",
+    "_batch_index": 10448
+  },
+  {
+    "name": "Cam_8",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cam 8",
+    "confidence": 70,
+    "notes": ".psd file, name suggests camera mockup or template",
+    "_source_name": "Cam_8",
+    "_batch_index": 10449
+  },
+  {
+    "name": "Camera_Display_Toolkit",
+    "category": "After Effects - Mockup & Device",
+    "clean_name": "Camera Display Toolkit",
+    "confidence": 90,
+    "notes": ".aep file, name indicates camera display mockup toolkit",
+    "_source_name": "Camera_Display_Toolkit",
+    "_batch_index": 10450
+  },
+  {
+    "name": "Camera_Display_Toolkit_CC2021",
+    "category": "After Effects - Mockup & Device",
+    "clean_name": "Camera Display Toolkit CC2021",
+    "confidence": 90,
+    "notes": ".aep file, name indicates camera display mockup toolkit",
+    "_source_name": "Camera_Display_Toolkit_CC2021",
+    "_batch_index": 10451
+  },
+  {
+    "name": "Caminito",
+    "category": "Photoshop - Other",
+    "clean_name": "Caminito",
+    "confidence": 60,
+    "notes": ".psd file, name unclear but likely a design asset",
+    "_source_name": "Caminito",
+    "_batch_index": 10452
+  },
+  {
+    "name": "camp crew adventure awaits",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Camp Crew Adventure Awaits",
+    "confidence": 90,
+    "notes": ".eps file, vector design for camping theme",
+    "_source_name": "camp crew adventure awaits",
+    "_batch_index": 10453
+  },
+  {
+    "name": "camp queen",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Camp Queen",
+    "confidence": 90,
+    "notes": ".eps file, vector design for camping theme",
+    "_source_name": "camp queen",
+    "_batch_index": 10454
+  },
+  {
+    "name": "campers gonna camp",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Campers Gonna Camp",
+    "confidence": 90,
+    "notes": ".eps file, vector design for camping theme",
+    "_source_name": "campers gonna camp",
+    "_batch_index": 10455
+  },
+  {
+    "name": "campfire cutie",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Campfire Cutie",
+    "confidence": 90,
+    "notes": ".eps file, vector design for camping theme",
+    "_source_name": "campfire cutie",
+    "_batch_index": 10456
+  },
+  {
+    "name": "camping hair don't care",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Camping Hair Don't Care",
+    "confidence": 90,
+    "notes": ".eps file, vector design for camping theme",
+    "_source_name": "camping hair don't care",
+    "_batch_index": 10457
+  },
+  {
+    "name": "Camping is my favorite therapy",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Camping Is My Favorite Therapy",
+    "confidence": 90,
+    "notes": ".eps file, vector design for camping theme",
+    "_source_name": "Camping is my favorite therapy",
+    "_batch_index": 10458
+  },
+  {
+    "name": "camping is my therapy",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Camping Is My Therapy",
+    "confidence": 90,
+    "notes": ".eps file, vector design for camping theme",
+    "_source_name": "camping is my therapy",
+    "_batch_index": 10459
+  },
+  {
+    "name": "Camping vibes only",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Camping Vibes Only",
+    "confidence": 90,
+    "notes": ".eps file, vector design for camping theme",
+    "_source_name": "Camping vibes only",
+    "_batch_index": 10460
+  },
+  {
+    "name": "Canada Day Celebration",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Canada Day Celebration",
+    "confidence": 85,
+    "notes": ".psd file, Canada Day flyer template",
+    "_source_name": "Canada Day Celebration",
+    "_batch_index": 10461
+  },
+  {
+    "name": "Canada Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Canada Day",
+    "confidence": 85,
+    "notes": ".psd file, Canada Day flyer template",
+    "_source_name": "Canada Day",
+    "_batch_index": 10462
+  },
+  {
+    "name": "Canada Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Canada Flyer",
+    "confidence": 90,
+    "notes": ".psd file, flyer template",
+    "_source_name": "Canada Flyer",
+    "_batch_index": 10463
+  },
+  {
+    "name": "Canada_Day_Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Canada Day Flyer",
+    "confidence": 90,
+    "notes": ".psd file, flyer template",
+    "_source_name": "Canada_Day_Flyer",
+    "_batch_index": 10464
+  },
+  {
+    "name": "canada_day_flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Canada Day Flyer 2",
+    "confidence": 90,
+    "notes": ".psd file, flyer template",
+    "_source_name": "canada_day_flyer_2",
+    "_batch_index": 10465
+  },
+  {
+    "name": "candle_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Candle 2",
+    "confidence": 70,
+    "notes": ".psd file, likely a candle mockup or template",
+    "_source_name": "candle_2",
+    "_batch_index": 10466
+  },
+  {
+    "name": "candle_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Candle 3",
+    "confidence": 70,
+    "notes": ".psd file, likely a candle mockup or template",
+    "_source_name": "candle_3",
+    "_batch_index": 10467
+  },
+  {
+    "name": "Candle_four-03",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Candle Four 03",
+    "confidence": 85,
+    "notes": ".eps file, vector candle design",
+    "_source_name": "Candle_four-03",
+    "_batch_index": 10468
+  },
+  {
+    "name": "Canvas",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Canvas",
+    "confidence": 75,
+    "notes": ".psd file, likely a canvas mockup",
+    "_source_name": "Canvas",
+    "_batch_index": 10469
+  },
+  {
+    "name": "canvas_placeholder",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Canvas Placeholder",
+    "confidence": 80,
+    "notes": ".psd file, placeholder for canvas mockup",
+    "_source_name": "canvas_placeholder",
+    "_batch_index": 10470
+  },
+  {
+    "name": "cap",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cap",
+    "confidence": 70,
+    "notes": ".psd file, likely a cap mockup",
+    "_source_name": "cap",
+    "_batch_index": 10471
+  },
+  {
+    "name": "Capoeira Flyer Template_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Capoeira Flyer Template 2",
+    "confidence": 90,
+    "notes": ".psd file, flyer template",
+    "_source_name": "Capoeira Flyer Template_2",
+    "_batch_index": 10472
+  },
+  {
+    "name": "capslock_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Capslock 2",
+    "confidence": 60,
+    "notes": ".psd file, unclear purpose",
+    "_source_name": "capslock_2",
+    "_batch_index": 10473
+  },
+  {
+    "name": "car_expo",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Car Expo",
+    "confidence": 85,
+    "notes": ".eps file, vector car expo design",
+    "_source_name": "car_expo",
+    "_batch_index": 10474
+  },
+  {
+    "name": "Career Expo-1_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Career Expo 1 2",
+    "confidence": 85,
+    "notes": ".psd file, career expo flyer",
+    "_source_name": "Career Expo-1_2",
+    "_batch_index": 10475
+  },
+  {
+    "name": "Career Expo-2_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Career Expo 2 2",
+    "confidence": 85,
+    "notes": ".psd file, career expo flyer",
+    "_source_name": "Career Expo-2_2",
+    "_batch_index": 10476
+  },
+  {
+    "name": "Career Expo-3_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Career Expo 3 2",
+    "confidence": 85,
+    "notes": ".psd file, career expo flyer",
+    "_source_name": "Career Expo-3_2",
+    "_batch_index": 10477
+  },
+  {
+    "name": "Careers #1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Careers 1",
+    "confidence": 80,
+    "notes": ".psd file, careers flyer",
+    "_source_name": "Careers #1",
+    "_batch_index": 10478
+  },
+  {
+    "name": "Careers #2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Careers 2",
+    "confidence": 80,
+    "notes": ".psd file, careers flyer",
+    "_source_name": "Careers #2",
+    "_batch_index": 10479
+  },
+  {
+    "name": "Carft Fair_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Craft Fair 2",
+    "confidence": 85,
+    "notes": ".psd file, craft fair flyer",
+    "_source_name": "Carft Fair_2",
+    "_batch_index": 10480
+  },
+  {
+    "name": "Caribbean Party_Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Caribbean Party Flyer",
+    "confidence": 90,
+    "notes": ".psd file, party flyer",
+    "_source_name": "Caribbean Party_Flyer",
+    "_batch_index": 10481
+  },
+  {
+    "name": "CaricatureStudio_Template",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Caricature Studio Template",
+    "confidence": 85,
+    "notes": ".psd file, caricature studio template",
+    "_source_name": "CaricatureStudio_Template",
+    "_batch_index": 10482
+  },
+  {
+    "name": "Carnival flyer A4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Carnival Flyer A4",
+    "confidence": 90,
+    "notes": ".psd file, carnival flyer",
+    "_source_name": "Carnival flyer A4",
+    "_batch_index": 10483
+  },
+  {
+    "name": "Carnival flyer A5",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Carnival Flyer A5",
+    "confidence": 90,
+    "notes": ".psd file, carnival flyer",
+    "_source_name": "Carnival flyer A5",
+    "_batch_index": 10484
+  },
+  {
+    "name": "Carnival",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Carnival",
+    "confidence": 85,
+    "notes": ".psd file, carnival flyer",
+    "_source_name": "Carnival",
+    "_batch_index": 10485
+  },
+  {
+    "name": "Carpet Flyer - v013",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Carpet Flyer v013",
+    "confidence": 90,
+    "notes": ".psd file, carpet sale flyer",
+    "_source_name": "Carpet Flyer - v013",
+    "_batch_index": 10486
+  },
+  {
+    "name": "Carpet",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Carpet",
+    "confidence": 80,
+    "notes": ".psd file, carpet flyer",
+    "_source_name": "Carpet",
+    "_batch_index": 10487
+  },
+  {
+    "name": "carrot_cake_day_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Carrot Cake Day Flyer",
+    "confidence": 90,
+    "notes": ".psd file, carrot cake day flyer",
+    "_source_name": "carrot_cake_day_flyer",
+    "_batch_index": 10488
+  },
+  {
+    "name": "Carry_On_Flyer_Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Carry On Flyer Template",
+    "confidence": 90,
+    "notes": ".psd file, flyer template",
+    "_source_name": "Carry_On_Flyer_Template",
+    "_batch_index": 10489
+  },
+  {
+    "name": "cart",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cart",
+    "confidence": 70,
+    "notes": ".psd file, likely a shopping cart mockup",
+    "_source_name": "cart",
+    "_batch_index": 10490
+  },
+  {
+    "name": "Cartoon Movie Ticket Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cartoon Movie Ticket Template",
+    "confidence": 85,
+    "notes": ".psd file, movie ticket template",
+    "_source_name": "Cartoon Movie Ticket Template",
+    "_batch_index": 10491
+  },
+  {
+    "name": "Cartoon Painting Photo Template - Smart Object",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cartoon Painting Photo Template Smart Object",
+    "confidence": 90,
+    "notes": ".psd file, smart object template for cartoon painting",
+    "_source_name": "Cartoon Painting Photo Template - Smart Object",
+    "_batch_index": 10492
+  },
+  {
+    "name": "Cartoon Portrait Photoshop Action EBCENAA",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Cartoon Portrait Photoshop Action",
+    "confidence": 95,
+    "notes": ".atn file, Photoshop action for cartoon portrait",
+    "_source_name": "Cartoon Portrait Photoshop Action EBCENAA",
+    "_batch_index": 10493
+  },
+  {
+    "name": "carwash-flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Carwash Flyer",
+    "confidence": 90,
+    "notes": ".psd file, carwash flyer",
+    "_source_name": "carwash-flyer",
+    "_batch_index": 10494
+  },
+  {
+    "name": "Case Study 02 (Blue)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Case Study 02 Blue",
+    "confidence": 80,
+    "notes": ".psd file, case study presentation template",
+    "_source_name": "Case Study 02 (Blue)",
+    "_batch_index": 10495
+  },
+  {
+    "name": "Case Study 02 (Green)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Case Study 02 Green",
+    "confidence": 80,
+    "notes": ".psd file, case study presentation template",
+    "_source_name": "Case Study 02 (Green)",
+    "_batch_index": 10496
+  },
+  {
+    "name": "Case Study 02 (Red)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Case Study 02 Red",
+    "confidence": 80,
+    "notes": ".psd file, case study presentation template",
+    "_source_name": "Case Study 02 (Red)",
+    "_batch_index": 10497
+  },
+  {
+    "name": "Case Study 02 (Yellow)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Case Study 02 Yellow",
+    "confidence": 80,
+    "notes": ".psd file, case study presentation template",
+    "_source_name": "Case Study 02 (Yellow)",
+    "_batch_index": 10498
+  },
+  {
+    "name": "Casino Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Casino Flyer",
+    "confidence": 90,
+    "notes": ".psd file, casino flyer",
+    "_source_name": "Casino Flyer",
+    "_batch_index": 10499
+  }
+]

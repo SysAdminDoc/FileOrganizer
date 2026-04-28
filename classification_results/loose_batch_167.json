@@ -1,0 +1,542 @@
+[
+  {
+    "name": "ban_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Ban 2",
+    "confidence": 85,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "ban_2",
+    "_batch_index": 9960
+  },
+  {
+    "name": "ban_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Ban 3",
+    "confidence": 85,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "ban_3",
+    "_batch_index": 9961
+  },
+  {
+    "name": "Band Tour vol 02 Flyer Poster",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Band Tour Vol 02 Flyer Poster",
+    "confidence": 95,
+    "notes": "Name explicitly says Flyer Poster, .psd file",
+    "_source_name": "Band Tour vol 02 Flyer Poster",
+    "_batch_index": 9962
+  },
+  {
+    "name": "Banner",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner",
+    "_batch_index": 9963
+  },
+  {
+    "name": "Banner_10",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 10",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_10",
+    "_batch_index": 9964
+  },
+  {
+    "name": "Banner_11",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 11",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_11",
+    "_batch_index": 9965
+  },
+  {
+    "name": "banner_12",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 12",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_12",
+    "_batch_index": 9966
+  },
+  {
+    "name": "banner_13",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 13",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_13",
+    "_batch_index": 9967
+  },
+  {
+    "name": "banner_14",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 14",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_14",
+    "_batch_index": 9968
+  },
+  {
+    "name": "banner_15",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 15",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_15",
+    "_batch_index": 9969
+  },
+  {
+    "name": "banner_16",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 16",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_16",
+    "_batch_index": 9970
+  },
+  {
+    "name": "banner_17",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 17",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_17",
+    "_batch_index": 9971
+  },
+  {
+    "name": "banner_18",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 18",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_18",
+    "_batch_index": 9972
+  },
+  {
+    "name": "banner_19",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 19",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_19",
+    "_batch_index": 9973
+  },
+  {
+    "name": "Banner_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 2",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_2",
+    "_batch_index": 9974
+  },
+  {
+    "name": "banner_20",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 20",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "banner_20",
+    "_batch_index": 9975
+  },
+  {
+    "name": "Banner_23",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 23",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_23",
+    "_batch_index": 9976
+  },
+  {
+    "name": "Banner_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 3",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_3",
+    "_batch_index": 9977
+  },
+  {
+    "name": "Banner_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 4",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_4",
+    "_batch_index": 9978
+  },
+  {
+    "name": "Banner_5",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 5",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_5",
+    "_batch_index": 9979
+  },
+  {
+    "name": "Banner_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 6",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_6",
+    "_batch_index": 9980
+  },
+  {
+    "name": "Banner_7",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 7",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_7",
+    "_batch_index": 9981
+  },
+  {
+    "name": "Banner_8",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 8",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_8",
+    "_batch_index": 9982
+  },
+  {
+    "name": "Banner_9",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner 9",
+    "confidence": 85,
+    "notes": ".psd file, likely a banner design",
+    "_source_name": "Banner_9",
+    "_batch_index": 9983
+  },
+  {
+    "name": "Bark",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Bark",
+    "confidence": 70,
+    "notes": ".psd file, possibly a texture or template",
+    "_source_name": "Bark",
+    "_batch_index": 9984
+  },
+  {
+    "name": "Barricade 1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Barricade 1",
+    "confidence": 70,
+    "notes": ".psd file, likely a design element",
+    "_source_name": "Barricade 1",
+    "_batch_index": 9985
+  },
+  {
+    "name": "Barricade 2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Barricade 2",
+    "confidence": 70,
+    "notes": ".psd file, likely a design element",
+    "_source_name": "Barricade 2",
+    "_batch_index": 9986
+  },
+  {
+    "name": "base_elements",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Base Elements",
+    "confidence": 75,
+    "notes": ".psd file, likely UI or design base elements",
+    "_source_name": "base_elements",
+    "_batch_index": 9987
+  },
+  {
+    "name": "base_elements_dark",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Base Elements Dark",
+    "confidence": 75,
+    "notes": ".psd file, dark version of base elements",
+    "_source_name": "base_elements_dark",
+    "_batch_index": 9988
+  },
+  {
+    "name": "Basket Ball Lightroom Presets - Urban",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Basket Ball Lightroom Presets Urban",
+    "confidence": 95,
+    "notes": "Contains .xmp files, Lightroom presets",
+    "_source_name": "Basket Ball Lightroom Presets - Urban",
+    "_batch_index": 9989
+  },
+  {
+    "name": "Basket Ball Tournament Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Basket Ball Tournament Flyer",
+    "confidence": 95,
+    "notes": "Name says Flyer, .psd file",
+    "_source_name": "Basket Ball Tournament Flyer",
+    "_batch_index": 9990
+  },
+  {
+    "name": "Basketball Certificate",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Basketball Certificate",
+    "confidence": 85,
+    "notes": ".eps file, certificate design",
+    "_source_name": "Basketball Certificate",
+    "_batch_index": 9991
+  },
+  {
+    "name": "Bastille Day 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Bastille Day 1",
+    "confidence": 85,
+    "notes": ".psd file, likely a flyer",
+    "_source_name": "Bastille Day 1",
+    "_batch_index": 9992
+  },
+  {
+    "name": "Bastille Day 1_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Bastille Day 1 2",
+    "confidence": 85,
+    "notes": ".psd file, likely a flyer",
+    "_source_name": "Bastille Day 1_2",
+    "_batch_index": 9993
+  },
+  {
+    "name": "Bastille Day Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Bastille Day Flyer",
+    "confidence": 95,
+    "notes": "Name says Flyer, .psd file",
+    "_source_name": "Bastille Day Flyer",
+    "_batch_index": 9994
+  },
+  {
+    "name": "Bastille Day Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Bastille Day Flyer 2",
+    "confidence": 95,
+    "notes": "Name says Flyer, .psd file",
+    "_source_name": "Bastille Day Flyer_2",
+    "_batch_index": 9995
+  },
+  {
+    "name": "Bastille Day Flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Bastille Day Flyer 3",
+    "confidence": 95,
+    "notes": "Name says Flyer, .psd file",
+    "_source_name": "Bastille Day Flyer_3",
+    "_batch_index": 9996
+  },
+  {
+    "name": "Bastille_Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Bastille Day",
+    "confidence": 85,
+    "notes": ".psd file, likely a flyer",
+    "_source_name": "Bastille_Day",
+    "_batch_index": 9997
+  },
+  {
+    "name": "Bat_Mitzvah",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Bat Mitzvah",
+    "confidence": 85,
+    "notes": ".psd file, likely an invitation",
+    "_source_name": "Bat_Mitzvah",
+    "_batch_index": 9998
+  },
+  {
+    "name": "Battle of the Bands Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Battle of the Bands Flyer Template",
+    "confidence": 95,
+    "notes": "Name says Flyer Template, .psd file",
+    "_source_name": "Battle of the Bands Flyer Template",
+    "_batch_index": 9999
+  },
+  {
+    "name": "be good or i will text santa",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Good Or I Will Text Santa",
+    "confidence": 80,
+    "notes": ".eps file, likely a poster or sign",
+    "_source_name": "be good or i will text santa",
+    "_batch_index": 10000
+  },
+  {
+    "name": "be kind be brave be honest",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Kind Be Brave Be Honest",
+    "confidence": 80,
+    "notes": ".eps file, likely a poster or sign",
+    "_source_name": "be kind be brave be honest",
+    "_batch_index": 10001
+  },
+  {
+    "name": "be nice or leave",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Nice Or Leave",
+    "confidence": 80,
+    "notes": ".eps file, likely a poster or sign",
+    "_source_name": "be nice or leave",
+    "_batch_index": 10002
+  },
+  {
+    "name": "be our guest but don't expect much",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Our Guest But Don't Expect Much",
+    "confidence": 80,
+    "notes": ".eps file, likely a poster or sign",
+    "_source_name": "be our guest but don't expect much",
+    "_batch_index": 10003
+  },
+  {
+    "name": "Be right back  ",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back ",
+    "_batch_index": 10004
+  },
+  {
+    "name": "Be right back",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back",
+    "_batch_index": 10005
+  },
+  {
+    "name": "Be right back_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back 2",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back_2",
+    "_batch_index": 10006
+  },
+  {
+    "name": "Be right back_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back 3",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back_3",
+    "_batch_index": 10007
+  },
+  {
+    "name": "Be right back_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back 4",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back_4",
+    "_batch_index": 10008
+  },
+  {
+    "name": "Be right back_5",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back 5",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back_5",
+    "_batch_index": 10009
+  },
+  {
+    "name": "Be right back_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back 6",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back_6",
+    "_batch_index": 10010
+  },
+  {
+    "name": "Be right back_7",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back 7",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back_7",
+    "_batch_index": 10011
+  },
+  {
+    "name": "Be right back_8",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back 8",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back_8",
+    "_batch_index": 10012
+  },
+  {
+    "name": "Be right back_9",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Right Back 9",
+    "confidence": 80,
+    "notes": ".psd file, likely a sign or poster",
+    "_source_name": "Be right back_9",
+    "_batch_index": 10013
+  },
+  {
+    "name": "be savage not average",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Savage Not Average",
+    "confidence": 80,
+    "notes": ".eps file, likely a poster or sign",
+    "_source_name": "be savage not average",
+    "_batch_index": 10014
+  },
+  {
+    "name": "be stronger than your excuses 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Stronger Than Your Excuses 2",
+    "confidence": 80,
+    "notes": ".eps file, likely a poster or sign",
+    "_source_name": "be stronger than your excuses 2",
+    "_batch_index": 10015
+  },
+  {
+    "name": "be stronger than your excuses",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Be Stronger Than Your Excuses",
+    "confidence": 80,
+    "notes": ".eps file, likely a poster or sign",
+    "_source_name": "be stronger than your excuses",
+    "_batch_index": 10016
+  },
+  {
+    "name": "Beat Nite Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Beat Nite Flyer Template",
+    "confidence": 95,
+    "notes": "Name says Flyer Template, .psd file",
+    "_source_name": "Beat Nite Flyer Template",
+    "_batch_index": 10017
+  },
+  {
+    "name": "beat remix psd flyer template_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Beat Remix PSD Flyer Template 2",
+    "confidence": 95,
+    "notes": "Name says flyer template, .psd file",
+    "_source_name": "beat remix psd flyer template_2",
+    "_batch_index": 10018
+  },
+  {
+    "name": "Beautiful girl and guy in stylish and fashionable clothes",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Beautiful Girl and Guy in Stylish and Fashionable Clothes",
+    "confidence": 90,
+    "notes": "Contains .eps file, vector illustration",
+    "_source_name": "Beautiful girl and guy in stylish and fashionable clothes",
+    "_batch_index": 10019
+  }
+]
