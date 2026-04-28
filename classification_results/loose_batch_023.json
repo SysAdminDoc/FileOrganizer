@@ -1,0 +1,542 @@
+[
+  {
+    "name": "04_Business Flyer (Blue)_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Business Flyer Blue",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Business Flyer (Blue)_2",
+    "_batch_index": 1320
+  },
+  {
+    "name": "04_Business Flyer (Green)_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Business Flyer Green",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Business Flyer (Green)_2",
+    "_batch_index": 1321
+  },
+  {
+    "name": "04_Business Flyer (Orenge)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Business Flyer Orange",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Business Flyer (Orenge)",
+    "_batch_index": 1322
+  },
+  {
+    "name": "04_Business Flyer (Orenge)_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Business Flyer Orange",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Business Flyer (Orenge)_2",
+    "_batch_index": 1323
+  },
+  {
+    "name": "04_case_study",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Case Study",
+    "confidence": 80,
+    "notes": "PSD file, likely a print document",
+    "_source_name": "04_case_study",
+    "_batch_index": 1324
+  },
+  {
+    "name": "04_Cashier_Add Customer",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cashier Add Customer",
+    "confidence": 70,
+    "notes": "PSD file, likely a UI template",
+    "_source_name": "04_Cashier_Add Customer",
+    "_batch_index": 1325
+  },
+  {
+    "name": "04_Corporate Flyer_Green",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer Green",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Corporate Flyer_Green",
+    "_batch_index": 1326
+  },
+  {
+    "name": "04_Corporate Flyer_Green_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer Green",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Corporate Flyer_Green_2",
+    "_batch_index": 1327
+  },
+  {
+    "name": "04_Corporate Flyer_Green_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer Green",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Corporate Flyer_Green_3",
+    "_batch_index": 1328
+  },
+  {
+    "name": "04_Corporate Flyer_Green_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Corporate Flyer Green",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Corporate Flyer_Green_4",
+    "_batch_index": 1329
+  },
+  {
+    "name": "04_Course_Details",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Course Details",
+    "confidence": 80,
+    "notes": "PSD file, likely a print document",
+    "_source_name": "04_Course_Details",
+    "_batch_index": 1330
+  },
+  {
+    "name": "04_Cover Letter",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Cover Letter",
+    "confidence": 85,
+    "notes": "PSD file, stationery item",
+    "_source_name": "04_Cover Letter",
+    "_batch_index": 1331
+  },
+  {
+    "name": "04_Cover Letter_2",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Cover Letter",
+    "confidence": 85,
+    "notes": "PSD file, stationery item",
+    "_source_name": "04_Cover Letter_2",
+    "_batch_index": 1332
+  },
+  {
+    "name": "04_Crying",
+    "category": "Photoshop - Other",
+    "clean_name": "Crying",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "04_Crying",
+    "_batch_index": 1333
+  },
+  {
+    "name": "04_Example",
+    "category": "Photoshop - Other",
+    "clean_name": "Example",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "04_Example",
+    "_batch_index": 1334
+  },
+  {
+    "name": "04_Flyer - Orenge",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Orange",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer - Orenge",
+    "_batch_index": 1335
+  },
+  {
+    "name": "04_Flyer - Orenge_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Orange",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer - Orenge_2",
+    "_batch_index": 1336
+  },
+  {
+    "name": "04_Flyer - Orenge_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Orange",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer - Orenge_3",
+    "_batch_index": 1337
+  },
+  {
+    "name": "04_Flyer - Orenge_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Orange",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer - Orenge_4",
+    "_batch_index": 1338
+  },
+  {
+    "name": "04_Flyer Design_Blue Color_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Blue Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Blue Color_3",
+    "_batch_index": 1339
+  },
+  {
+    "name": "04_Flyer Design_Blue Color_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Blue Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Blue Color_4",
+    "_batch_index": 1340
+  },
+  {
+    "name": "04_Flyer Design_Blue Color_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Blue Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Blue Color_6",
+    "_batch_index": 1341
+  },
+  {
+    "name": "04_Flyer Design_Blue",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Blue",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Blue",
+    "_batch_index": 1342
+  },
+  {
+    "name": "04_Flyer Design_Blue_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Blue",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Blue_2",
+    "_batch_index": 1343
+  },
+  {
+    "name": "04_Flyer Design_Blue_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Blue",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Blue_3",
+    "_batch_index": 1344
+  },
+  {
+    "name": "04_Flyer Design_Cyan",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Cyan",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Cyan",
+    "_batch_index": 1345
+  },
+  {
+    "name": "04_Flyer design_Cyan_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Cyan",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer design_Cyan_2",
+    "_batch_index": 1346
+  },
+  {
+    "name": "04_Flyer design_Cyan_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Cyan",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer design_Cyan_3",
+    "_batch_index": 1347
+  },
+  {
+    "name": "04_Flyer design_Cyan_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Cyan",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer design_Cyan_4",
+    "_batch_index": 1348
+  },
+  {
+    "name": "04_Flyer Design_Cyan_7",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Cyan",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Cyan_7",
+    "_batch_index": 1349
+  },
+  {
+    "name": "04_Flyer Design_Gray Color_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Gray Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Gray Color_2",
+    "_batch_index": 1350
+  },
+  {
+    "name": "04_Flyer Design_Green Color",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Green Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Green Color",
+    "_batch_index": 1351
+  },
+  {
+    "name": "04_Flyer Design_Green Color_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Green Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Green Color_2",
+    "_batch_index": 1352
+  },
+  {
+    "name": "04_Flyer Design_Green_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Green",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Green_2",
+    "_batch_index": 1353
+  },
+  {
+    "name": "04_Flyer Design_Mix Color",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Mix Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Mix Color",
+    "_batch_index": 1354
+  },
+  {
+    "name": "04_Flyer Design_Mix Color_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Mix Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Mix Color_4",
+    "_batch_index": 1355
+  },
+  {
+    "name": "04_Flyer Design_Mix Colors_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Mix Colors",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Mix Colors_3",
+    "_batch_index": 1356
+  },
+  {
+    "name": "04_Flyer Design_Mix Colors_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Mix Colors",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Mix Colors_4",
+    "_batch_index": 1357
+  },
+  {
+    "name": "04_Flyer Design_Mix_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Mix",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Mix_3",
+    "_batch_index": 1358
+  },
+  {
+    "name": "04_Flyer Design_Mix_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Mix",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Mix_4",
+    "_batch_index": 1359
+  },
+  {
+    "name": "04_Flyer Design_Multi Color_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Multi Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Multi Color_3",
+    "_batch_index": 1360
+  },
+  {
+    "name": "04_Flyer Design_Multi Color_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Multi Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Multi Color_4",
+    "_batch_index": 1361
+  },
+  {
+    "name": "04_Flyer Design_Orange Color",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Orange Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Orange Color",
+    "_batch_index": 1362
+  },
+  {
+    "name": "04_Flyer Design_Orange Color_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Orange Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Orange Color_2",
+    "_batch_index": 1363
+  },
+  {
+    "name": "04_Flyer Design_Orange Color_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Orange Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Orange Color_3",
+    "_batch_index": 1364
+  },
+  {
+    "name": "04_Flyer Design_Orange Color_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Orange Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Orange Color_6",
+    "_batch_index": 1365
+  },
+  {
+    "name": "04_Flyer Design_Orange Color_7",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Orange Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Orange Color_7",
+    "_batch_index": 1366
+  },
+  {
+    "name": "04_Flyer Design_Orange Color_8",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Orange Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Orange Color_8",
+    "_batch_index": 1367
+  },
+  {
+    "name": "04_Flyer Design_Orange_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Orange",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Orange_2",
+    "_batch_index": 1368
+  },
+  {
+    "name": "04_Flyer Design_Red Color_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red Color_2",
+    "_batch_index": 1369
+  },
+  {
+    "name": "04_Flyer Design_Red Color_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red Color_3",
+    "_batch_index": 1370
+  },
+  {
+    "name": "04_Flyer Design_Red Color_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red Color_4",
+    "_batch_index": 1371
+  },
+  {
+    "name": "04_Flyer Design_Red Color_5",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red Color",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red Color_5",
+    "_batch_index": 1372
+  },
+  {
+    "name": "04_Flyer Design_Red_10",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red_10",
+    "_batch_index": 1373
+  },
+  {
+    "name": "04_Flyer Design_Red_11",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red_11",
+    "_batch_index": 1374
+  },
+  {
+    "name": "04_Flyer Design_Red_12",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red_12",
+    "_batch_index": 1375
+  },
+  {
+    "name": "04_Flyer Design_Red_13",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red_13",
+    "_batch_index": 1376
+  },
+  {
+    "name": "04_Flyer design_Red_17",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer design_Red_17",
+    "_batch_index": 1377
+  },
+  {
+    "name": "04_Flyer Design_Red_18",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red_18",
+    "_batch_index": 1378
+  },
+  {
+    "name": "04_Flyer Design_Red_19",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Design Red",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "04_Flyer Design_Red_19",
+    "_batch_index": 1379
+  }
+]

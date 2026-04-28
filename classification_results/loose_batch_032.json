@@ -1,0 +1,542 @@
+[
+  {
+    "name": "07_14_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_14_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_14_2",
+    "_batch_index": 1860
+  },
+  {
+    "name": "07_15",
+    "category": "Photoshop - Other",
+    "clean_name": "07_15",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_15",
+    "_batch_index": 1861
+  },
+  {
+    "name": "07_15_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_15_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_15_2",
+    "_batch_index": 1862
+  },
+  {
+    "name": "07_16",
+    "category": "Photoshop - Other",
+    "clean_name": "07_16",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_16",
+    "_batch_index": 1863
+  },
+  {
+    "name": "07_16_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_16_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_16_2",
+    "_batch_index": 1864
+  },
+  {
+    "name": "07_17",
+    "category": "Photoshop - Other",
+    "clean_name": "07_17",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_17",
+    "_batch_index": 1865
+  },
+  {
+    "name": "07_17_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_17_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_17_2",
+    "_batch_index": 1866
+  },
+  {
+    "name": "07_18",
+    "category": "Photoshop - Other",
+    "clean_name": "07_18",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_18",
+    "_batch_index": 1867
+  },
+  {
+    "name": "07_18_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_18_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_18_2",
+    "_batch_index": 1868
+  },
+  {
+    "name": "07_19",
+    "category": "Photoshop - Other",
+    "clean_name": "07_19",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_19",
+    "_batch_index": 1869
+  },
+  {
+    "name": "07_19_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_19_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_19_2",
+    "_batch_index": 1870
+  },
+  {
+    "name": "07_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_2",
+    "_batch_index": 1871
+  },
+  {
+    "name": "07_20",
+    "category": "Photoshop - Other",
+    "clean_name": "07_20",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_20",
+    "_batch_index": 1872
+  },
+  {
+    "name": "07_20_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_20_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_20_2",
+    "_batch_index": 1873
+  },
+  {
+    "name": "07_21",
+    "category": "Photoshop - Other",
+    "clean_name": "07_21",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_21",
+    "_batch_index": 1874
+  },
+  {
+    "name": "07_21_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_21_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_21_2",
+    "_batch_index": 1875
+  },
+  {
+    "name": "07_22",
+    "category": "Photoshop - Other",
+    "clean_name": "07_22",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_22",
+    "_batch_index": 1876
+  },
+  {
+    "name": "07_22_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_22_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_22_2",
+    "_batch_index": 1877
+  },
+  {
+    "name": "07_23",
+    "category": "Photoshop - Other",
+    "clean_name": "07_23",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_23",
+    "_batch_index": 1878
+  },
+  {
+    "name": "07_23_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_23_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_23_2",
+    "_batch_index": 1879
+  },
+  {
+    "name": "07_24",
+    "category": "Photoshop - Other",
+    "clean_name": "07_24",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_24",
+    "_batch_index": 1880
+  },
+  {
+    "name": "07_24_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_24_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_24_2",
+    "_batch_index": 1881
+  },
+  {
+    "name": "07_25",
+    "category": "Photoshop - Other",
+    "clean_name": "07_25",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_25",
+    "_batch_index": 1882
+  },
+  {
+    "name": "07_25_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_25_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_25_2",
+    "_batch_index": 1883
+  },
+  {
+    "name": "07_26",
+    "category": "Photoshop - Other",
+    "clean_name": "07_26",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_26",
+    "_batch_index": 1884
+  },
+  {
+    "name": "07_26_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_26_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_26_2",
+    "_batch_index": 1885
+  },
+  {
+    "name": "07_27",
+    "category": "Photoshop - Other",
+    "clean_name": "07_27",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_27",
+    "_batch_index": 1886
+  },
+  {
+    "name": "07_27_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_27_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_27_2",
+    "_batch_index": 1887
+  },
+  {
+    "name": "07_28",
+    "category": "Photoshop - Other",
+    "clean_name": "07_28",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_28",
+    "_batch_index": 1888
+  },
+  {
+    "name": "07_28_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_28_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_28_2",
+    "_batch_index": 1889
+  },
+  {
+    "name": "07_29",
+    "category": "Photoshop - Other",
+    "clean_name": "07_29",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_29",
+    "_batch_index": 1890
+  },
+  {
+    "name": "07_29_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_29_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_29_2",
+    "_batch_index": 1891
+  },
+  {
+    "name": "07_2_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_2_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_2_2",
+    "_batch_index": 1892
+  },
+  {
+    "name": "07_3",
+    "category": "Photoshop - Other",
+    "clean_name": "07_3",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_3",
+    "_batch_index": 1893
+  },
+  {
+    "name": "07_30",
+    "category": "Photoshop - Other",
+    "clean_name": "07_30",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_30",
+    "_batch_index": 1894
+  },
+  {
+    "name": "07_30_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_30_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_30_2",
+    "_batch_index": 1895
+  },
+  {
+    "name": "07_31",
+    "category": "Photoshop - Other",
+    "clean_name": "07_31",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_31",
+    "_batch_index": 1896
+  },
+  {
+    "name": "07_31_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_31_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_31_2",
+    "_batch_index": 1897
+  },
+  {
+    "name": "07_32",
+    "category": "Photoshop - Other",
+    "clean_name": "07_32",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_32",
+    "_batch_index": 1898
+  },
+  {
+    "name": "07_32_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_32_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_32_2",
+    "_batch_index": 1899
+  },
+  {
+    "name": "07_33",
+    "category": "Photoshop - Other",
+    "clean_name": "07_33",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_33",
+    "_batch_index": 1900
+  },
+  {
+    "name": "07_33_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_33_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_33_2",
+    "_batch_index": 1901
+  },
+  {
+    "name": "07_34",
+    "category": "Photoshop - Other",
+    "clean_name": "07_34",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_34",
+    "_batch_index": 1902
+  },
+  {
+    "name": "07_34_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_34_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_34_2",
+    "_batch_index": 1903
+  },
+  {
+    "name": "07_35",
+    "category": "Photoshop - Other",
+    "clean_name": "07_35",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_35",
+    "_batch_index": 1904
+  },
+  {
+    "name": "07_35_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_35_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_35_2",
+    "_batch_index": 1905
+  },
+  {
+    "name": "07_36",
+    "category": "Photoshop - Other",
+    "clean_name": "07_36",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_36",
+    "_batch_index": 1906
+  },
+  {
+    "name": "07_37",
+    "category": "Photoshop - Other",
+    "clean_name": "07_37",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_37",
+    "_batch_index": 1907
+  },
+  {
+    "name": "07_38",
+    "category": "Photoshop - Other",
+    "clean_name": "07_38",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_38",
+    "_batch_index": 1908
+  },
+  {
+    "name": "07_39",
+    "category": "Photoshop - Other",
+    "clean_name": "07_39",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_39",
+    "_batch_index": 1909
+  },
+  {
+    "name": "07_3_2",
+    "category": "Photoshop - Other",
+    "clean_name": "07_3_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_3_2",
+    "_batch_index": 1910
+  },
+  {
+    "name": "07_4",
+    "category": "Photoshop - Other",
+    "clean_name": "07_4",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_4",
+    "_batch_index": 1911
+  },
+  {
+    "name": "07_40",
+    "category": "Photoshop - Other",
+    "clean_name": "07_40",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_40",
+    "_batch_index": 1912
+  },
+  {
+    "name": "07_41",
+    "category": "Photoshop - Other",
+    "clean_name": "07_41",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_41",
+    "_batch_index": 1913
+  },
+  {
+    "name": "07_42",
+    "category": "Photoshop - Other",
+    "clean_name": "07_42",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_42",
+    "_batch_index": 1914
+  },
+  {
+    "name": "07_43",
+    "category": "Photoshop - Other",
+    "clean_name": "07_43",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_43",
+    "_batch_index": 1915
+  },
+  {
+    "name": "07_44",
+    "category": "Photoshop - Other",
+    "clean_name": "07_44",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_44",
+    "_batch_index": 1916
+  },
+  {
+    "name": "07_45",
+    "category": "Photoshop - Other",
+    "clean_name": "07_45",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_45",
+    "_batch_index": 1917
+  },
+  {
+    "name": "07_46",
+    "category": "Photoshop - Other",
+    "clean_name": "07_46",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_46",
+    "_batch_index": 1918
+  },
+  {
+    "name": "07_47",
+    "category": "Photoshop - Other",
+    "clean_name": "07_47",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "07_47",
+    "_batch_index": 1919
+  }
+]

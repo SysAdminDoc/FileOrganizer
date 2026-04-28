@@ -1,0 +1,542 @@
+[
+  {
+    "name": "09 Creative Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Creative Flyer Template",
+    "confidence": 95,
+    "notes": "PSD file, name says flyer template",
+    "_source_name": "09 Creative Flyer Template",
+    "_batch_index": 2100
+  },
+  {
+    "name": "09 Vintage Metal Scratches",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Vintage Metal Scratches",
+    "confidence": 90,
+    "notes": "PSD file, scratches overlay effect",
+    "_source_name": "09 Vintage Metal Scratches",
+    "_batch_index": 2101
+  },
+  {
+    "name": "09-404",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "404 Template",
+    "confidence": 70,
+    "notes": "PSD file, likely a web template page",
+    "_source_name": "09-404",
+    "_batch_index": 2102
+  },
+  {
+    "name": "09-About-04",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "About Page Template",
+    "confidence": 70,
+    "notes": "PSD file, likely a web/about page design",
+    "_source_name": "09-About-04",
+    "_batch_index": 2103
+  },
+  {
+    "name": "09-Blog-01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Blog Template 01",
+    "confidence": 70,
+    "notes": "PSD file, blog page design",
+    "_source_name": "09-Blog-01",
+    "_batch_index": 2104
+  },
+  {
+    "name": "09-Blog-02",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Blog Template 02",
+    "confidence": 70,
+    "notes": "PSD file, blog page design",
+    "_source_name": "09-Blog-02",
+    "_batch_index": 2105
+  },
+  {
+    "name": "09-Categorie",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Category Template",
+    "confidence": 70,
+    "notes": "PSD file, category page design",
+    "_source_name": "09-Categorie",
+    "_batch_index": 2106
+  },
+  {
+    "name": "09",
+    "category": "Photoshop - Other",
+    "clean_name": "09",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "09",
+    "_batch_index": 2107
+  },
+  {
+    "name": "091247700-3dsocialicon",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "3D Social Icon",
+    "confidence": 85,
+    "notes": "AEP file, name suggests 3D social icon animation",
+    "_source_name": "091247700-3dsocialicon",
+    "_batch_index": 2108
+  },
+  {
+    "name": "092489882-cinematic-parallax-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Cinematic Parallax Slideshow",
+    "confidence": 90,
+    "notes": "AEP file, name and contains hint indicate slideshow",
+    "_source_name": "092489882-cinematic-parallax-slideshow",
+    "_batch_index": 2109
+  },
+  {
+    "name": "093026533-projector-film-slides",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Projector Film Slides",
+    "confidence": 90,
+    "notes": "AEP file, film slides slideshow",
+    "_source_name": "093026533-projector-film-slides",
+    "_batch_index": 2110
+  },
+  {
+    "name": "093184943-happy-moments",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Happy Moments",
+    "confidence": 85,
+    "notes": "AEP file, name suggests photo slideshow",
+    "_source_name": "093184943-happy-moments",
+    "_batch_index": 2111
+  },
+  {
+    "name": "093552674-royal-wedding",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Royal Wedding",
+    "confidence": 95,
+    "notes": "AEP file, wedding theme",
+    "_source_name": "093552674-royal-wedding",
+    "_batch_index": 2112
+  },
+  {
+    "name": "097_001",
+    "category": "Photoshop - Other",
+    "clean_name": "097_001",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_001",
+    "_batch_index": 2113
+  },
+  {
+    "name": "097_002",
+    "category": "Photoshop - Other",
+    "clean_name": "097_002",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_002",
+    "_batch_index": 2114
+  },
+  {
+    "name": "097_003",
+    "category": "Photoshop - Other",
+    "clean_name": "097_003",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_003",
+    "_batch_index": 2115
+  },
+  {
+    "name": "097_004",
+    "category": "Photoshop - Other",
+    "clean_name": "097_004",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_004",
+    "_batch_index": 2116
+  },
+  {
+    "name": "097_005",
+    "category": "Photoshop - Other",
+    "clean_name": "097_005",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_005",
+    "_batch_index": 2117
+  },
+  {
+    "name": "097_006",
+    "category": "Photoshop - Other",
+    "clean_name": "097_006",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_006",
+    "_batch_index": 2118
+  },
+  {
+    "name": "097_007",
+    "category": "Photoshop - Other",
+    "clean_name": "097_007",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_007",
+    "_batch_index": 2119
+  },
+  {
+    "name": "097_008",
+    "category": "Photoshop - Other",
+    "clean_name": "097_008",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_008",
+    "_batch_index": 2120
+  },
+  {
+    "name": "097_009",
+    "category": "Photoshop - Other",
+    "clean_name": "097_009",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_009",
+    "_batch_index": 2121
+  },
+  {
+    "name": "097_010",
+    "category": "Photoshop - Other",
+    "clean_name": "097_010",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_010",
+    "_batch_index": 2122
+  },
+  {
+    "name": "097_011",
+    "category": "Photoshop - Other",
+    "clean_name": "097_011",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_011",
+    "_batch_index": 2123
+  },
+  {
+    "name": "097_012",
+    "category": "Photoshop - Other",
+    "clean_name": "097_012",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_012",
+    "_batch_index": 2124
+  },
+  {
+    "name": "097_013",
+    "category": "Photoshop - Other",
+    "clean_name": "097_013",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_013",
+    "_batch_index": 2125
+  },
+  {
+    "name": "097_014",
+    "category": "Photoshop - Other",
+    "clean_name": "097_014",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_014",
+    "_batch_index": 2126
+  },
+  {
+    "name": "097_015",
+    "category": "Photoshop - Other",
+    "clean_name": "097_015",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_015",
+    "_batch_index": 2127
+  },
+  {
+    "name": "097_016",
+    "category": "Photoshop - Other",
+    "clean_name": "097_016",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_016",
+    "_batch_index": 2128
+  },
+  {
+    "name": "097_017",
+    "category": "Photoshop - Other",
+    "clean_name": "097_017",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_017",
+    "_batch_index": 2129
+  },
+  {
+    "name": "097_018",
+    "category": "Photoshop - Other",
+    "clean_name": "097_018",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_018",
+    "_batch_index": 2130
+  },
+  {
+    "name": "097_019",
+    "category": "Photoshop - Other",
+    "clean_name": "097_019",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_019",
+    "_batch_index": 2131
+  },
+  {
+    "name": "097_020",
+    "category": "Photoshop - Other",
+    "clean_name": "097_020",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_020",
+    "_batch_index": 2132
+  },
+  {
+    "name": "097_021",
+    "category": "Photoshop - Other",
+    "clean_name": "097_021",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_021",
+    "_batch_index": 2133
+  },
+  {
+    "name": "097_022",
+    "category": "Photoshop - Other",
+    "clean_name": "097_022",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_022",
+    "_batch_index": 2134
+  },
+  {
+    "name": "097_023",
+    "category": "Photoshop - Other",
+    "clean_name": "097_023",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_023",
+    "_batch_index": 2135
+  },
+  {
+    "name": "097_024",
+    "category": "Photoshop - Other",
+    "clean_name": "097_024",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_024",
+    "_batch_index": 2136
+  },
+  {
+    "name": "097_025",
+    "category": "Photoshop - Other",
+    "clean_name": "097_025",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_025",
+    "_batch_index": 2137
+  },
+  {
+    "name": "097_026",
+    "category": "Photoshop - Other",
+    "clean_name": "097_026",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_026",
+    "_batch_index": 2138
+  },
+  {
+    "name": "097_027",
+    "category": "Photoshop - Other",
+    "clean_name": "097_027",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_027",
+    "_batch_index": 2139
+  },
+  {
+    "name": "097_028",
+    "category": "Photoshop - Other",
+    "clean_name": "097_028",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_028",
+    "_batch_index": 2140
+  },
+  {
+    "name": "097_029",
+    "category": "Photoshop - Other",
+    "clean_name": "097_029",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_029",
+    "_batch_index": 2141
+  },
+  {
+    "name": "097_030",
+    "category": "Photoshop - Other",
+    "clean_name": "097_030",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_030",
+    "_batch_index": 2142
+  },
+  {
+    "name": "097_031",
+    "category": "Photoshop - Other",
+    "clean_name": "097_031",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_031",
+    "_batch_index": 2143
+  },
+  {
+    "name": "097_032",
+    "category": "Photoshop - Other",
+    "clean_name": "097_032",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_032",
+    "_batch_index": 2144
+  },
+  {
+    "name": "097_033",
+    "category": "Photoshop - Other",
+    "clean_name": "097_033",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_033",
+    "_batch_index": 2145
+  },
+  {
+    "name": "097_034",
+    "category": "Photoshop - Other",
+    "clean_name": "097_034",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_034",
+    "_batch_index": 2146
+  },
+  {
+    "name": "097_035",
+    "category": "Photoshop - Other",
+    "clean_name": "097_035",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_035",
+    "_batch_index": 2147
+  },
+  {
+    "name": "097_036",
+    "category": "Photoshop - Other",
+    "clean_name": "097_036",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_036",
+    "_batch_index": 2148
+  },
+  {
+    "name": "097_037",
+    "category": "Photoshop - Other",
+    "clean_name": "097_037",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_037",
+    "_batch_index": 2149
+  },
+  {
+    "name": "097_038",
+    "category": "Photoshop - Other",
+    "clean_name": "097_038",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_038",
+    "_batch_index": 2150
+  },
+  {
+    "name": "097_039",
+    "category": "Photoshop - Other",
+    "clean_name": "097_039",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_039",
+    "_batch_index": 2151
+  },
+  {
+    "name": "097_040",
+    "category": "Photoshop - Other",
+    "clean_name": "097_040",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_040",
+    "_batch_index": 2152
+  },
+  {
+    "name": "097_041",
+    "category": "Photoshop - Other",
+    "clean_name": "097_041",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_041",
+    "_batch_index": 2153
+  },
+  {
+    "name": "097_042",
+    "category": "Photoshop - Other",
+    "clean_name": "097_042",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_042",
+    "_batch_index": 2154
+  },
+  {
+    "name": "097_043",
+    "category": "Photoshop - Other",
+    "clean_name": "097_043",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_043",
+    "_batch_index": 2155
+  },
+  {
+    "name": "097_044",
+    "category": "Photoshop - Other",
+    "clean_name": "097_044",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_044",
+    "_batch_index": 2156
+  },
+  {
+    "name": "097_045",
+    "category": "Photoshop - Other",
+    "clean_name": "097_045",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_045",
+    "_batch_index": 2157
+  },
+  {
+    "name": "097_046",
+    "category": "Photoshop - Other",
+    "clean_name": "097_046",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_046",
+    "_batch_index": 2158
+  },
+  {
+    "name": "097_047",
+    "category": "Photoshop - Other",
+    "clean_name": "097_047",
+    "confidence": 50,
+    "notes": "Only .psd, no context",
+    "_source_name": "097_047",
+    "_batch_index": 2159
+  }
+]

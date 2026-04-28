@@ -1,0 +1,542 @@
+[
+  {
+    "name": "180x150",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "180x150 Template",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object for a specific size",
+    "_source_name": "180x150",
+    "_batch_index": 3600
+  },
+  {
+    "name": "181",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "181 Template",
+    "confidence": 80,
+    "notes": "PSD file, numeric name suggests template",
+    "_source_name": "181",
+    "_batch_index": 3601
+  },
+  {
+    "name": "1810.i032.009.P.m005.c26.isometric_forecasters_meteorological_weather_center_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Meteorological Weather Center Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric weather illustration set",
+    "_source_name": "1810.i032.009.P.m005.c26.isometric_forecasters_meteorological_weather_center_set",
+    "_batch_index": 3602
+  },
+  {
+    "name": "1810.i032.011.S.m005.c13.isometric_meteorological_weather_center_design_concept",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Meteorological Weather Center Design Concept",
+    "confidence": 95,
+    "notes": "EPS vector, isometric weather concept",
+    "_source_name": "1810.i032.011.S.m005.c13.isometric_meteorological_weather_center_design_concept",
+    "_batch_index": 3603
+  },
+  {
+    "name": "1810.i039.005.S.m004.c15.street_artist_isometric_peope_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Street Artist Isometric People 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, isometric people illustration",
+    "_source_name": "1810.i039.005.S.m004.c15.street_artist_isometric_peope_2x2",
+    "_batch_index": 3604
+  },
+  {
+    "name": "1810.i039.022.S.m004.c15.musicians_people_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Musicians People Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric musicians",
+    "_source_name": "1810.i039.022.S.m004.c15.musicians_people_isometric_composition",
+    "_batch_index": 3605
+  },
+  {
+    "name": "1810.i039.023.F.m004.c8.musicians_people_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Musicians People Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric musicians",
+    "_source_name": "1810.i039.023.F.m004.c8.musicians_people_isometric_composition",
+    "_batch_index": 3606
+  },
+  {
+    "name": "1810.i101.002.S.m004.c15.internet_online_banking_isometric_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Internet Online Banking Isometric 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, isometric banking illustration",
+    "_source_name": "1810.i101.002.S.m004.c15.internet_online_banking_isometric_2x2",
+    "_batch_index": 3607
+  },
+  {
+    "name": "1810.i101.007.S.m004.c15.investment_funding_isometric_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Investment Funding Isometric 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, isometric investment illustration",
+    "_source_name": "1810.i101.007.S.m004.c15.investment_funding_isometric_2x2",
+    "_batch_index": 3608
+  },
+  {
+    "name": "1810.i101.019.F.m004.c8.investment_funding_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Investment Funding Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric investment composition",
+    "_source_name": "1810.i101.019.F.m004.c8.investment_funding_isometric_composition",
+    "_batch_index": 3609
+  },
+  {
+    "name": "1810.i101.020.F.m004.c8.investment_funding_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Investment Funding Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric investment composition",
+    "_source_name": "1810.i101.020.F.m004.c8.investment_funding_isometric_composition",
+    "_batch_index": 3610
+  },
+  {
+    "name": "1810.i101.042.F.m004.c8.gadgets_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Gadgets Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric gadgets",
+    "_source_name": "1810.i101.042.F.m004.c8.gadgets_isometric_composition",
+    "_batch_index": 3611
+  },
+  {
+    "name": "1810.i101.043.F.m004.c8.isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Composition",
+    "confidence": 90,
+    "notes": "EPS vector, generic isometric composition",
+    "_source_name": "1810.i101.043.F.m004.c8.isometric_composition",
+    "_batch_index": 3612
+  },
+  {
+    "name": "1810.i105.010.S.m005.c15.isometric_circus_profession_design_concept",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Circus Profession Design Concept",
+    "confidence": 95,
+    "notes": "EPS vector, isometric circus illustration",
+    "_source_name": "1810.i105.010.S.m005.c15.isometric_circus_profession_design_concept",
+    "_batch_index": 3613
+  },
+  {
+    "name": "1810.i105.013.S.m005.c15.isometric_restaurant_waiter_illustration",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Restaurant Waiter Illustration",
+    "confidence": 95,
+    "notes": "EPS vector, isometric restaurant illustration",
+    "_source_name": "1810.i105.013.S.m005.c15.isometric_restaurant_waiter_illustration",
+    "_batch_index": 3614
+  },
+  {
+    "name": "1810.i105.015.S.m005.c15.isometric_restaurant_waiter_flowchart",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Restaurant Waiter Flowchart",
+    "confidence": 95,
+    "notes": "EPS vector, isometric restaurant flowchart",
+    "_source_name": "1810.i105.015.S.m005.c15.isometric_restaurant_waiter_flowchart",
+    "_batch_index": 3615
+  },
+  {
+    "name": "1810.i105.024.P.m005.c30.isometric_mechanic_professional_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Mechanic Professional Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric mechanic set",
+    "_source_name": "1810.i105.024.P.m005.c30.isometric_mechanic_professional_set",
+    "_batch_index": 3616
+  },
+  {
+    "name": "1810.i105.030.P.m005.c30.isometric_barber_hairdresser_professional_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Barber Hairdresser Professional Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric barber set",
+    "_source_name": "1810.i105.030.P.m005.c30.isometric_barber_hairdresser_professional_set",
+    "_batch_index": 3617
+  },
+  {
+    "name": "1810.i107.008.S.m005.c15.investor_business_winner_loser_characters_design_concept",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Investor Business Winner Loser Characters Design Concept",
+    "confidence": 95,
+    "notes": "EPS vector, business character concept",
+    "_source_name": "1810.i107.008.S.m005.c15.investor_business_winner_loser_characters_design_concept",
+    "_batch_index": 3618
+  },
+  {
+    "name": "1810.i109.002.S.m004.c15.digital_mobile_health_telemedecine_isometric_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Digital Mobile Health Telemedicine Isometric 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, isometric telemedicine",
+    "_source_name": "1810.i109.002.S.m004.c15.digital_mobile_health_telemedecine_isometric_2x2",
+    "_batch_index": 3619
+  },
+  {
+    "name": "1810.i109.011.S.m004.c15.street_workout_isometric_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Street Workout Isometric 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, isometric workout",
+    "_source_name": "1810.i109.011.S.m004.c15.street_workout_isometric_2x2",
+    "_batch_index": 3620
+  },
+  {
+    "name": "1810.i109.030.F.m004.c8.digital_mobile_health_telemedecine_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Digital Mobile Health Telemedicine Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric telemedicine composition",
+    "_source_name": "1810.i109.030.F.m004.c8.digital_mobile_health_telemedecine_isometric_composition",
+    "_batch_index": 3621
+  },
+  {
+    "name": "1810.i109.035.F.m004.c8.wealth_management_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Wealth Management Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric wealth management",
+    "_source_name": "1810.i109.035.F.m004.c8.wealth_management_isometric_composition",
+    "_batch_index": 3622
+  },
+  {
+    "name": "1810.i109.039.F.m004.c8.smart_industry_intelligent_manufacturing_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Smart Industry Intelligent Manufacturing Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric industry composition",
+    "_source_name": "1810.i109.039.F.m004.c8.smart_industry_intelligent_manufacturing_isometric_composition",
+    "_batch_index": 3623
+  },
+  {
+    "name": "1810.i121.008.F.m005.c8.isometric_antiquarian_antique_white_background",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Antiquarian Antique White Background",
+    "confidence": 95,
+    "notes": "EPS vector, isometric antique illustration",
+    "_source_name": "1810.i121.008.F.m005.c8.isometric_antiquarian_antique_white_background",
+    "_batch_index": 3624
+  },
+  {
+    "name": "1810.i121.032.P.m005.c30.isometric_corruption_money_laundering_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Corruption Money Laundering Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric corruption set",
+    "_source_name": "1810.i121.032.P.m005.c30.isometric_corruption_money_laundering_set",
+    "_batch_index": 3625
+  },
+  {
+    "name": "1810.i121.048.P.m005.c30.isometric_water_sport_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Water Sport Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric water sports",
+    "_source_name": "1810.i121.048.P.m005.c30.isometric_water_sport_set",
+    "_batch_index": 3626
+  },
+  {
+    "name": "1810.i201.003.S.m004.c15.STEM_education_isometric_flowchart",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "STEM Education Isometric Flowchart",
+    "confidence": 95,
+    "notes": "EPS vector, isometric STEM education",
+    "_source_name": "1810.i201.003.S.m004.c15.STEM_education_isometric_flowchart",
+    "_batch_index": 3627
+  },
+  {
+    "name": "1810.i201.008.S.m004.c15.concrete_production_isometric_flowchart",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Concrete Production Isometric Flowchart",
+    "confidence": 95,
+    "notes": "EPS vector, isometric concrete production",
+    "_source_name": "1810.i201.008.S.m004.c15.concrete_production_isometric_flowchart",
+    "_batch_index": 3628
+  },
+  {
+    "name": "1810.i201.022.S.m004.c15.industrial_buildings_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Industrial Buildings Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric industrial buildings",
+    "_source_name": "1810.i201.022.S.m004.c15.industrial_buildings_isometric_composition",
+    "_batch_index": 3629
+  },
+  {
+    "name": "1810.i201.028.F.m004.c8.STEM_education_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "STEM Education Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric STEM composition",
+    "_source_name": "1810.i201.028.F.m004.c8.STEM_education_isometric_composition",
+    "_batch_index": 3630
+  },
+  {
+    "name": "1810.i201.034.S.m004.c15.suburbian_buildings_isometric",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Suburban Buildings Isometric",
+    "confidence": 95,
+    "notes": "EPS vector, isometric suburban buildings",
+    "_source_name": "1810.i201.034.S.m004.c15.suburbian_buildings_isometric",
+    "_batch_index": 3631
+  },
+  {
+    "name": "1810.i201.038.P.m004.c30.townhouse_buildings_isometric_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Townhouse Buildings Isometric Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric townhouse set",
+    "_source_name": "1810.i201.038.P.m004.c30.townhouse_buildings_isometric_set",
+    "_batch_index": 3632
+  },
+  {
+    "name": "1810.i201.044.S.m004.c15.townhouse_buildings_isometric",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Townhouse Buildings Isometric",
+    "confidence": 95,
+    "notes": "EPS vector, isometric townhouse",
+    "_source_name": "1810.i201.044.S.m004.c15.townhouse_buildings_isometric",
+    "_batch_index": 3633
+  },
+  {
+    "name": "1810.i301.009.S.m004.c10.People_at_home_on_weekends_isometric_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "People at Home on Weekends Isometric 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, isometric people at home",
+    "_source_name": "1810.i301.009.S.m004.c10.People_at_home_on_weekends_isometric_2x2",
+    "_batch_index": 3634
+  },
+  {
+    "name": "1810.i305.001.P.m005.c20.isometric_online_library_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Online Library Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric library set",
+    "_source_name": "1810.i305.001.P.m005.c20.isometric_online_library_set",
+    "_batch_index": 3635
+  },
+  {
+    "name": "1810.i402.003.S.m004.c11.Artificial_food_isometric_flowchart",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Artificial Food Isometric Flowchart",
+    "confidence": 95,
+    "notes": "EPS vector, isometric food flowchart",
+    "_source_name": "1810.i402.003.S.m004.c11.Artificial_food_isometric_flowchart",
+    "_batch_index": 3636
+  },
+  {
+    "name": "1810.i402.014.S.m004.c11.Office_isometric_people_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Office Isometric People 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, isometric office people",
+    "_source_name": "1810.i402.014.S.m004.c11.Office_isometric_people_2x2",
+    "_batch_index": 3637
+  },
+  {
+    "name": "1810.i402.028.S.m004.c11.Flower_girls_nature_beauty_flat_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Flower Girls Nature Beauty Flat 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, flat flower girls illustration",
+    "_source_name": "1810.i402.028.S.m004.c11.Flower_girls_nature_beauty_flat_2x2",
+    "_batch_index": 3638
+  },
+  {
+    "name": "1810.i403.002.S.m004.c13.Toxic_waste__radioactivity__biological_hazard_isometric_2x2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Toxic Waste Radioactivity Biological Hazard Isometric 2x2",
+    "confidence": 95,
+    "notes": "EPS vector, isometric hazard illustration",
+    "_source_name": "1810.i403.002.S.m004.c13.Toxic_waste__radioactivity__biological_hazard_isometric_2x2",
+    "_batch_index": 3639
+  },
+  {
+    "name": "1810.i403.012.S.m004.c13.Activists_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Activists Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric activists",
+    "_source_name": "1810.i403.012.S.m004.c13.Activists_isometric_composition",
+    "_batch_index": 3640
+  },
+  {
+    "name": "1810.i403.032.S.m004.c13.Travel_people_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Travel People Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric travel people",
+    "_source_name": "1810.i403.032.S.m004.c13.Travel_people_isometric_composition",
+    "_batch_index": 3641
+  },
+  {
+    "name": "1810.i406.018.S.m004.c8.Townhouse_building_isometric_composition_1",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Townhouse Building Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric townhouse composition",
+    "_source_name": "1810.i406.018.S.m004.c8.Townhouse_building_isometric_composition_1",
+    "_batch_index": 3642
+  },
+  {
+    "name": "1810.i406.023.P.m004.c15.suburbia_buildings_isometric_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Suburbia Buildings Isometric Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric suburbia set",
+    "_source_name": "1810.i406.023.P.m004.c15.suburbia_buildings_isometric_set",
+    "_batch_index": 3643
+  },
+  {
+    "name": "1810.i406.031.S.m004.c8.modern_park_isometric_concept",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Modern Park Isometric Concept",
+    "confidence": 95,
+    "notes": "EPS vector, isometric park concept",
+    "_source_name": "1810.i406.031.S.m004.c8.modern_park_isometric_concept",
+    "_batch_index": 3644
+  },
+  {
+    "name": "1811.i032.017.P.m005.c23.isometric_ecology_pollution_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Isometric Ecology Pollution Set",
+    "confidence": 95,
+    "notes": "EPS vector, isometric ecology set",
+    "_source_name": "1811.i032.017.P.m005.c23.isometric_ecology_pollution_set",
+    "_batch_index": 3645
+  },
+  {
+    "name": "1811.i101.005.S.m004.c13.neurology_neural_surgery_implantology_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Neurology Neural Surgery Implantology Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric medical illustration",
+    "_source_name": "1811.i101.005.S.m004.c13.neurology_neural_surgery_implantology_isometric_composition",
+    "_batch_index": 3646
+  },
+  {
+    "name": "1811.i101.011.S.m004.c13.elections_voting_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Elections Voting Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric voting illustration",
+    "_source_name": "1811.i101.011.S.m004.c13.elections_voting_isometric_composition",
+    "_batch_index": 3647
+  },
+  {
+    "name": "1811.i101.017.S.m004.c13.car_wash_isometric_composition",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Car Wash Isometric Composition",
+    "confidence": 95,
+    "notes": "EPS vector, isometric car wash",
+    "_source_name": "1811.i101.017.S.m004.c13.car_wash_isometric_composition",
+    "_batch_index": 3648
+  },
+  {
+    "name": "1816",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "1816 Template",
+    "confidence": 80,
+    "notes": "PSD file, numeric name suggests template",
+    "_source_name": "1816",
+    "_batch_index": 3649
+  },
+  {
+    "name": "181_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "181_2 Template",
+    "confidence": 80,
+    "notes": "PSD file, numeric name suggests template",
+    "_source_name": "181_2",
+    "_batch_index": 3650
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDc",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 007",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDc",
+    "_batch_index": 3651
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDE",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 001",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDE",
+    "_batch_index": 3652
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDI",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 002",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDI",
+    "_batch_index": 3653
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDk",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 009",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDk",
+    "_batch_index": 3654
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDM",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 003",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDM",
+    "_batch_index": 3655
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 004",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDQ",
+    "_batch_index": 3656
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDU",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 005",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDU",
+    "_batch_index": 3657
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDY",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 006",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMDY",
+    "_batch_index": 3658
+  },
+  {
+    "name": "181_U25hcFZfUHIwMzdfMTYgLSAwMjA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snap Pro 037 16 020",
+    "confidence": 85,
+    "notes": "EPS vector, encoded name likely from a set",
+    "_source_name": "181_U25hcFZfUHIwMzdfMTYgLSAwMjA",
+    "_batch_index": 3659
+  }
+]
