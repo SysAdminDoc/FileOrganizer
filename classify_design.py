@@ -1,28 +1,57 @@
 #!/usr/bin/env python3
 r"""
-classify_design.py — Batch classifier for G:\Design Unorganized (7102 dirs)
+classify_design.py — Batch classifier for design asset directories.
 
-Reads design_unorg_index.json, peeks at file extensions inside each dir,
+Reads an index JSON, peeks at file extensions inside each dir,
 then sends batches of 60 to DeepSeek for classification into G:\Organized categories.
 
 Usage:
-    python classify_design.py --preview       # show batches without calling API
-    python classify_design.py --run           # classify all unprocessed batches
-    python classify_design.py --run --batch 5 # classify only batch 5
-    python classify_design.py --stats         # show progress
-    python classify_design.py --show-cats     # print full category taxonomy
+    python classify_design.py --preview                      # show batches
+    python classify_design.py --run                          # classify all pending batches
+    python classify_design.py --run --batch 5                # classify only batch 5
+    python classify_design.py --stats                        # show progress
+    python classify_design.py --show-cats                    # print full category taxonomy
+    python classify_design.py --source design_org --run      # classify G:\Design Organized
+    python classify_design.py --source loose_files --run     # classify root loose files
 
-Results saved to classification_results/design_batch_NNN.json
+Results saved to classification_results/<prefix>NNN.json
 """
 import os, sys, json, re, argparse
 from pathlib import Path
 from datetime import datetime
 
-# ── Config ────────────────────────────────────────────────────────────────────
+# ── Source configs ────────────────────────────────────────────────────────────
+SOURCE_CONFIGS = {
+    'design_unorg': {
+        'index_file':   'design_unorg_index.json',
+        'batch_prefix': 'design_batch_',
+        'source_dir':   r'G:\Design Unorganized',
+        'has_legacy':   False,
+        'file_mode':    False,
+    },
+    'design_org': {
+        'index_file':   'design_org_index.json',
+        'batch_prefix': 'design_org_batch_',
+        'source_dir':   r'G:\Design Organized',
+        'has_legacy':   True,
+        'file_mode':    False,
+    },
+    'loose_files': {
+        'index_file':   'loose_files_index.json',
+        'batch_prefix': 'loose_batch_',
+        'source_dir':   r'G:\Design Unorganized',
+        'has_legacy':   False,
+        'file_mode':    True,
+    },
+}
+
+# ── Config (defaults; overridden at parse time) ───────────────────────────────
 BATCH_SIZE   = 60
-INDEX_FILE   = Path(__file__).parent / 'design_unorg_index.json'
 RESULTS_DIR  = Path(__file__).parent / 'classification_results'
 RESULTS_DIR.mkdir(exist_ok=True)
+
+# These are set dynamically in main() based on --source; defaults = design_unorg
+INDEX_FILE   = Path(__file__).parent / 'design_unorg_index.json'
 BATCH_PREFIX = 'design_batch_'
 
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
@@ -387,24 +416,47 @@ def build_prompt(batch_items: list[dict]) -> str:
     lines = []
     for i, item in enumerate(batch_items, 1):
         name = item['name']
-        path = os.path.join(item['folder'], item['name'])
-        exts, filenames = peek_extensions(path)
+        # Resolve full path: new sources store 'path', legacy stores 'folder'+'name'
+        full_path = item.get('path') or os.path.join(item.get('folder', ''), name)
+        legacy_cat = item.get('legacy_category')
+        file_ext   = item.get('file_ext')
+        is_file    = item.get('is_file', False)
+
         hints = []
-        if exts:
-            hints.append(f"files: {', '.join(exts)}")
-        # Include filename hints when: folder name is generic, OR filenames are clearly
-        # more informative (significantly longer than the folder name), OR no ext hint
-        use_filenames = (
-            filenames and (
-                looks_generic(name) or
-                not exts or
-                any(len(f) > len(name) + 10 for f in filenames)
+
+        if is_file:
+            # Loose file: no directory to scan
+            hints.append(f"file type: {file_ext}")
+            if file_ext in ('.zip', '.rar', '.7z'):
+                try:
+                    inner, zip_exts = peek_inside_zip(full_path)
+                    if zip_exts:
+                        hints.append(f"files: {', '.join(zip_exts)}")
+                    if inner and len(inner) > 4:
+                        hints.append(f"contains: {inner}")
+                except Exception:
+                    pass
+        else:
+            # Directory: use existing peek logic
+            exts, filenames = peek_extensions(full_path)
+            if exts:
+                hints.append(f"files: {', '.join(exts)}")
+            use_filenames = (
+                filenames and (
+                    looks_generic(name) or
+                    not exts or
+                    any(len(f) > len(name) + 10 for f in filenames)
+                )
             )
-        )
-        if use_filenames:
-            hints.append(f"contains: {' | '.join(filenames[:3])}")
+            if use_filenames:
+                hints.append(f"contains: {' | '.join(filenames[:3])}")
+
         hint_str = f"  [{'; '.join(hints)}]" if hints else ''
-        lines.append(f"{i}. {name}{hint_str}")
+
+        entry_lines = [f"{i}. {name}{hint_str}"]
+        if legacy_cat:
+            entry_lines.append(f"   Legacy category: {legacy_cat}")
+        lines.append('\n'.join(entry_lines))
 
     items_block = '\n'.join(lines)
 
@@ -433,6 +485,9 @@ RULES:
 16. For folders matching `XXXXXXXXX-INTRO-HD.NET` (numeric ID only, no title):
     - If "contains:" hint reveals an informative name → classify normally using that name
     - If "contains:" hint is still just the numeric ID → "After Effects - Other" (confidence 65)
+17. If 'Legacy category:' is present, treat it as a STRONG HINT — the new category should usually
+    be in the same domain (e.g. "Posters" → "Print - Flyers & Posters",
+    "Backgrounds" → "Photoshop - Patterns & Textures", "Cards" → "Print - Business Cards & Stationery").
 
 ITEMS TO CLASSIFY:
 {items_block}
@@ -584,10 +639,19 @@ def main():
     ap.add_argument('--stats',     action='store_true', help='Show progress stats')
     ap.add_argument('--show-cats', action='store_true', help='Print full category list')
     ap.add_argument('--batch',     type=int, default=0, help='Process only batch N (with --run)')
+    ap.add_argument('--source',    type=str, default='design_unorg',
+                    choices=list(SOURCE_CONFIGS.keys()),
+                    help='Source to classify (default: design_unorg)')
     args = ap.parse_args()
 
+    # Wire up globals for the selected source
+    cfg = SOURCE_CONFIGS[args.source]
+    global INDEX_FILE, BATCH_PREFIX
+    INDEX_FILE   = Path(__file__).parent / cfg['index_file']
+    BATCH_PREFIX = cfg['batch_prefix']
+
     if not INDEX_FILE.exists():
-        print(f"ERROR: {INDEX_FILE} not found. Run build step first.")
+        print(f"ERROR: {INDEX_FILE} not found. Run build_source_index.py --source {args.source} first.")
         sys.exit(1)
 
     index = load_index()
