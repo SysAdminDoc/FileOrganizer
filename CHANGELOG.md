@@ -200,6 +200,36 @@ All notable changes to FileOrganizer will be documented in this file.
   2 Videohive AE items (VH-6185510, Parallax Footage Reel) in G:\Stock\Stock Footage & Photos will be
   moved by merge_stock; may land in Stock Footage category — verify post-apply.
 
+### Added (session 2026-04-28 resumed — deduplication & tooling)
+- `fix_stock_ae_items.py` — Post-apply scanner for AE templates misrouted to non-AE categories.
+  - Scans: `Stock Footage - General`, `Stock Photos - General`, `Stock Music & Audio`, `Print - Templates & Layouts`.
+  - 30+ `AE_KEYWORD_RULES`: keyword→AE-subcategory evaluated in order; DeepSeek fallback for unmatched.
+  - `has_ae_files()` checks folder tree for `.aep/.aet/.ffx/.mogrt/.aex`.
+  - `--scan`, `--analyze`, `--apply [--dry-run]`, `--scan-dirs` CLI flags.
+  - Applied: 21 AE templates corrected (6 keyword-rule, 15 DeepSeek). All journaled in DB.
+  - Must be re-run after `merge_stock` completes to catch VH items landing in Stock Footage.
+- `status.py` — Single-command pipeline health dashboard.
+  - Displays: batch counts per source, DB move counts, running PIDs (Python + robocopy children), error counts.
+  - `--errors`: dumps all items from all `organize_errors_*.json` files.
+  - `--review`: breakdown of `G:\Organized\_Review` subcategories and file counts.
+- `fix_duplicates.py` — Merger for 563 collision-pair duplicate folders in `G:\Organized`.
+  - Root cause discovered: `design_org` pipeline pre-populated `G:\Organized\AE-*\<Name>` from G:\Design Organized;
+    AE pipeline then re-moved same items (different source: I:\After Effects\*) to the same `clean_name`
+    destination, triggering collision suffix `Name (1)` / `Name (2)`.
+  - 994 total collision dirs, 46,670 files. Top affected: After Effects - Slideshow (148), Intro & Opener (127).
+  - Strategy: `robocopy /E /COPYALL` merge collision → original (union), then `shutil.rmtree` collision, update DB.
+  - `--scan`, `--analyze`, `--apply [--dry-run]` CLI flags.
+  - Blocked: do NOT run while AE apply (PID 22500) is actively writing. Run after apply + retry-errors exits.
+
+### Fixed (session 2026-04-28 resumed)
+- `reclassify_unorg.py` — SQL LIKE double-backslash bug: `"I:\\\\Unorganized%"` produced SQL pattern
+  `I:\\Unorganized%` (double backslash) matching 0 rows. Fixed to single-backslash Python string
+  `"I:\\Unorganized%"` → SQL pattern `I:\Unorganized%` → matches 56 rows correctly.
+- `organize_run.py` — Added `journal_src_set()` preload + `src in already_moved` skip in `apply_moves()`.
+  Prevents items already journaled in the DB from being re-processed across sessions. This eliminates
+  future collision duplicates at the source level. Retroactive fix for 563 existing collision pairs:
+  use `fix_duplicates.py --apply` after all active apply processes have exited.
+
 
 
 ### Added
