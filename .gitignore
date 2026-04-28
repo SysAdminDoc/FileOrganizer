@@ -4,6 +4,10 @@ __pycache__/
 CLAUDE.md
 CODEX_CHANGELOG.md
 .claude/
+.env
+.env.*
+deepseek_key.txt
+github_token.txt
 
 # Generated index files (machine-specific disk contents)
 org_index.json

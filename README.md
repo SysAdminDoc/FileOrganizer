@@ -1,5 +1,5 @@
 <!-- codex-branding:start -->
-<p align="center"><img src="icon.png" width="128" alt="File Organizer"></p>
+<p align="center"><img src="icon.ico" width="128" alt="File Organizer"></p>
 
 <p align="center">
   <img alt="Version" src="https://img.shields.io/badge/version-8.1.0-58A6FF?style=for-the-badge">

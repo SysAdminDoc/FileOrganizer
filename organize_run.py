@@ -763,7 +763,7 @@ def main():
         for fp in files:
             items = load_one(str(fp))
             offset = batch_offset(fp.name, source_mode)
-            print(f"  {fp.name:<35} {len(items):>4} items  [index {offset}–{offset+len(items)-1}]")
+            print(f"  {fp.name:<35} {len(items):>4} items  [index {offset}-{offset+len(items)-1}]")
             total += len(items)
         print(f"\n  Total: {total} items across {len(files)} files")
         if os.path.exists(JOURNAL_FILE):
