@@ -66,7 +66,9 @@ def get_running_pids() -> list[dict]:
             parts = line.strip().split(',', 3)
             if len(parts) < 4:
                 continue
-            _, cmd, pid, ppid = parts
+            # wmic /format:csv outputs fields alphabetically after the node name:
+            # Node, CommandLine, ParentProcessId, ProcessId
+            _, cmd, _ppid, pid = parts
             if 'organize_run.py' in cmd or 'classify_design.py' in cmd or 'merge_stock.py' in cmd:
                 src_hint = ''
                 for flag in ['--source ae', '--source loose', '--source stock', '--source design']:
