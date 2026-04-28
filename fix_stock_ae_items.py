@@ -35,7 +35,8 @@ DEFAULT_SCAN_DIRS = [
     ORGANIZED / 'Stock Footage - General',
     ORGANIZED / 'Stock Photos - General',
     ORGANIZED / 'Stock Music & Audio',
-    ORGANIZED / 'Print - Templates & Layouts',
+    ORGANIZED / 'Print - Other',
+    ORGANIZED / 'Print - Flyers & Posters',
 ]
 
 AE_EXTENSIONS = {'.aep', '.aet', '.ffx', '.mogrt', '.aex'}
