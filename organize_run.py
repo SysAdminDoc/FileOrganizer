@@ -33,6 +33,7 @@ from datetime import datetime, timezone
 DEST_PRIMARY     = r'G:\Organized'
 DEST_OVERFLOW    = r'I:\Organized'   # used automatically when G:\ free < MIN_FREE_GB
 MIN_FREE_GB      = 50
+_FORCE_OVERFLOW  = False             # set True via --overflow-now CLI flag
 REVIEW_SUBDIR    = '_Review'       # low-confidence items land here
 MIN_CONFIDENCE   = 50
 
@@ -529,6 +530,9 @@ def load_all_with_index(source_mode: str = 'ae') -> list:
 # ── Destination helpers ───────────────────────────────────────────────────────
 def get_dest_root() -> str:
     """Return primary destination, or overflow if primary is running low on space."""
+    if _FORCE_OVERFLOW:
+        os.makedirs(DEST_OVERFLOW, exist_ok=True)
+        return DEST_OVERFLOW
     try:
         free_bytes = shutil.disk_usage(DEST_PRIMARY[:3]).free
         if free_bytes > MIN_FREE_GB * 1_073_741_824:
@@ -1076,7 +1080,13 @@ def main():
     ap.add_argument('--stats',         action='store_true', help='Show batch file counts')
     ap.add_argument('--summary',       action='store_true', help='Category/marketplace breakdown')
     ap.add_argument('--quiet',         action='store_true', help='Suppress per-item output')
+    ap.add_argument('--overflow-now',  action='store_true',
+                    help='Force all moves to I:\\Organized immediately (bypass G:\\ free-space check)')
     args = ap.parse_args()
+
+    if args.overflow_now:
+        global _FORCE_OVERFLOW
+        _FORCE_OVERFLOW = True
 
     if args.report:
         out = generate_report(args.report, args.output or '')
