@@ -1,0 +1,563 @@
+[
+  {
+    "name": "casino for buyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Casino Flyer",
+    "confidence": 90,
+    "notes": "PSD file, name suggests casino flyer design",
+    "_source_name": "casino for buyer",
+    "_batch_index": 10500
+  },
+  {
+    "name": "Casino",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Casino",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer or poster",
+    "_source_name": "Casino",
+    "_batch_index": 10501
+  },
+  {
+    "name": "casino_psd_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Casino PSD Flyer",
+    "confidence": 95,
+    "notes": "Explicitly named flyer in PSD format",
+    "_source_name": "casino_psd_flyer",
+    "_batch_index": 10502
+  },
+  {
+    "name": "Casino_psd_flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Casino PSD Flyer 2",
+    "confidence": 95,
+    "notes": "Explicitly named flyer in PSD format",
+    "_source_name": "Casino_psd_flyer_2",
+    "_batch_index": 10503
+  },
+  {
+    "name": "cassette tape players line art",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cassette Tape Players Line Art",
+    "confidence": 85,
+    "notes": "PSD file but line art suggests vector/illustration style",
+    "_source_name": "cassette tape players line art",
+    "_batch_index": 10504
+  },
+  {
+    "name": "cassette tape players",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cassette Tape Players",
+    "confidence": 80,
+    "notes": "PSD file, likely vector-style illustration",
+    "_source_name": "cassette tape players",
+    "_batch_index": 10505
+  },
+  {
+    "name": "Cat Hair Don't Care",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cat Hair Don't Care",
+    "confidence": 90,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "Cat Hair Don't Care",
+    "_batch_index": 10506
+  },
+  {
+    "name": "Cat Mom",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cat Mom",
+    "confidence": 90,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "Cat Mom",
+    "_batch_index": 10507
+  },
+  {
+    "name": "Cat with clocks",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cat with Clocks",
+    "confidence": 90,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "Cat with clocks",
+    "_batch_index": 10508
+  },
+  {
+    "name": "catacombs-level",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Catacombs Level",
+    "confidence": 70,
+    "notes": "PSD file, possibly a game level template",
+    "_source_name": "catacombs-level",
+    "_batch_index": 10509
+  },
+  {
+    "name": "catch you on the flipside",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Catch You on the Flipside",
+    "confidence": 90,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "catch you on the flipside",
+    "_batch_index": 10510
+  },
+  {
+    "name": "categories",
+    "category": "Photoshop - Other",
+    "clean_name": "Categories",
+    "confidence": 60,
+    "notes": "PSD file, ambiguous name",
+    "_source_name": "categories",
+    "_batch_index": 10511
+  },
+  {
+    "name": "Cats Are My Favorite People",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cats Are My Favorite People",
+    "confidence": 90,
+    "notes": "EPS file, vector illustration",
+    "_source_name": "Cats Are My Favorite People",
+    "_batch_index": 10512
+  },
+  {
+    "name": "cauldron",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cauldron",
+    "confidence": 70,
+    "notes": "PSD file, likely a design template",
+    "_source_name": "cauldron",
+    "_batch_index": 10513
+  },
+  {
+    "name": "Caviar",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Caviar",
+    "confidence": 75,
+    "notes": "PSD file, possibly a menu or flyer",
+    "_source_name": "Caviar",
+    "_batch_index": 10514
+  },
+  {
+    "name": "CB-EnvelopeC4-229x324mm",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C4 Mockup",
+    "confidence": 95,
+    "notes": "PSD envelope mockup with dimensions",
+    "_source_name": "CB-EnvelopeC4-229x324mm",
+    "_batch_index": 10515
+  },
+  {
+    "name": "CB-EnvelopeC4-229x324mm_2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C4 Mockup 2",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC4-229x324mm_2",
+    "_batch_index": 10516
+  },
+  {
+    "name": "CB-EnvelopeC4-229x324mm_3",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C4 Mockup 3",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC4-229x324mm_3",
+    "_batch_index": 10517
+  },
+  {
+    "name": "CB-EnvelopeC4-229x324mm_4",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C4 Mockup 4",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC4-229x324mm_4",
+    "_batch_index": 10518
+  },
+  {
+    "name": "CB-EnvelopeC4-229x324mm_5",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C4 Mockup 5",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC4-229x324mm_5",
+    "_batch_index": 10519
+  },
+  {
+    "name": "CB-EnvelopeC4-229x324mm_6",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C4 Mockup 6",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC4-229x324mm_6",
+    "_batch_index": 10520
+  },
+  {
+    "name": "CB-EnvelopeC4-229x324mm_7",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C4 Mockup 7",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC4-229x324mm_7",
+    "_batch_index": 10521
+  },
+  {
+    "name": "CB-EnvelopeC4-229x324mm_8",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C4 Mockup 8",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC4-229x324mm_8",
+    "_batch_index": 10522
+  },
+  {
+    "name": "CB-EnvelopeC5-162x229mm",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C5 Mockup",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC5-162x229mm",
+    "_batch_index": 10523
+  },
+  {
+    "name": "CB-EnvelopeC5-162x229mm_2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C5 Mockup 2",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC5-162x229mm_2",
+    "_batch_index": 10524
+  },
+  {
+    "name": "CB-EnvelopeC5-162x229mm_3",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C5 Mockup 3",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC5-162x229mm_3",
+    "_batch_index": 10525
+  },
+  {
+    "name": "CB-EnvelopeC5-162x229mm_4",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C5 Mockup 4",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC5-162x229mm_4",
+    "_batch_index": 10526
+  },
+  {
+    "name": "CB-EnvelopeC5-162x229mm_5",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C5 Mockup 5",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC5-162x229mm_5",
+    "_batch_index": 10527
+  },
+  {
+    "name": "CB-EnvelopeC5-162x229mm_6",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C5 Mockup 6",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC5-162x229mm_6",
+    "_batch_index": 10528
+  },
+  {
+    "name": "CB-EnvelopeC5-162x229mm_7",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C5 Mockup 7",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC5-162x229mm_7",
+    "_batch_index": 10529
+  },
+  {
+    "name": "CB-EnvelopeC5-162x229mm_8",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C5 Mockup 8",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC5-162x229mm_8",
+    "_batch_index": 10530
+  },
+  {
+    "name": "CB-EnvelopeC6-114x162mm",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C6 Mockup",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC6-114x162mm",
+    "_batch_index": 10531
+  },
+  {
+    "name": "CB-EnvelopeC6-114x162mm_2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C6 Mockup 2",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC6-114x162mm_2",
+    "_batch_index": 10532
+  },
+  {
+    "name": "CB-EnvelopeC6-114x162mm_3",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C6 Mockup 3",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC6-114x162mm_3",
+    "_batch_index": 10533
+  },
+  {
+    "name": "CB-EnvelopeC6-114x162mm_4",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C6 Mockup 4",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC6-114x162mm_4",
+    "_batch_index": 10534
+  },
+  {
+    "name": "CB-EnvelopeC6-114x162mm_5",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C6 Mockup 5",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC6-114x162mm_5",
+    "_batch_index": 10535
+  },
+  {
+    "name": "CB-EnvelopeC6-114x162mm_6",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C6 Mockup 6",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC6-114x162mm_6",
+    "_batch_index": 10536
+  },
+  {
+    "name": "CB-EnvelopeC6-114x162mm_7",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C6 Mockup 7",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC6-114x162mm_7",
+    "_batch_index": 10537
+  },
+  {
+    "name": "CB-EnvelopeC6-114x162mm_8",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope C6 Mockup 8",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeC6-114x162mm_8",
+    "_batch_index": 10538
+  },
+  {
+    "name": "CB-EnvelopeDL-220x110mm",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope DL Mockup",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeDL-220x110mm",
+    "_batch_index": 10539
+  },
+  {
+    "name": "CB-EnvelopeDL-220x110mm_2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope DL Mockup 2",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeDL-220x110mm_2",
+    "_batch_index": 10540
+  },
+  {
+    "name": "CB-EnvelopeDL-220x110mm_3",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope DL Mockup 3",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeDL-220x110mm_3",
+    "_batch_index": 10541
+  },
+  {
+    "name": "CB-EnvelopeDL-220x110mm_4",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope DL Mockup 4",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeDL-220x110mm_4",
+    "_batch_index": 10542
+  },
+  {
+    "name": "CB-EnvelopeDL-220x110mm_5",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope DL Mockup 5",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeDL-220x110mm_5",
+    "_batch_index": 10543
+  },
+  {
+    "name": "CB-EnvelopeDL-220x110mm_6",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope DL Mockup 6",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeDL-220x110mm_6",
+    "_batch_index": 10544
+  },
+  {
+    "name": "CB-EnvelopeDL-220x110mm_7",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope DL Mockup 7",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeDL-220x110mm_7",
+    "_batch_index": 10545
+  },
+  {
+    "name": "CB-EnvelopeDL-220x110mm_8",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Envelope DL Mockup 8",
+    "confidence": 95,
+    "notes": "PSD envelope mockup",
+    "_source_name": "CB-EnvelopeDL-220x110mm_8",
+    "_batch_index": 10546
+  },
+  {
+    "name": "CB-FolderA4-Back-220x310mm",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Back Mockup",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Back-220x310mm",
+    "_batch_index": 10547
+  },
+  {
+    "name": "CB-FolderA4-Back-220x310mm_2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Back Mockup 2",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Back-220x310mm_2",
+    "_batch_index": 10548
+  },
+  {
+    "name": "CB-FolderA4-Back-220x310mm_3",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Back Mockup 3",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Back-220x310mm_3",
+    "_batch_index": 10549
+  },
+  {
+    "name": "CB-FolderA4-Back-220x310mm_4",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Back Mockup 4",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Back-220x310mm_4",
+    "_batch_index": 10550
+  },
+  {
+    "name": "CB-FolderA4-Back-220x310mm_5",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Back Mockup 5",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Back-220x310mm_5",
+    "_batch_index": 10551
+  },
+  {
+    "name": "CB-FolderA4-Back-220x310mm_6",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Back Mockup 6",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Back-220x310mm_6",
+    "_batch_index": 10552
+  },
+  {
+    "name": "CB-FolderA4-Back-220x310mm_7",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Back Mockup 7",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Back-220x310mm_7",
+    "_batch_index": 10553
+  },
+  {
+    "name": "CB-FolderA4-Back-220x310mm_8",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Back Mockup 8",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Back-220x310mm_8",
+    "_batch_index": 10554
+  },
+  {
+    "name": "CB-FolderA4-Front-220x310mm",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Front Mockup",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Front-220x310mm",
+    "_batch_index": 10555
+  },
+  {
+    "name": "CB-FolderA4-Front-220x310mm_2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Front Mockup 2",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Front-220x310mm_2",
+    "_batch_index": 10556
+  },
+  {
+    "name": "CB-FolderA4-Front-220x310mm_3",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Front Mockup 3",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Front-220x310mm_3",
+    "_batch_index": 10557
+  },
+  {
+    "name": "CB-FolderA4-Front-220x310mm_4",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Front Mockup 4",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Front-220x310mm_4",
+    "_batch_index": 10558
+  },
+  {
+    "name": "CB-FolderA4-Front-220x310mm_5",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Front Mockup 5",
+    "confidence": 95,
+    "notes": "PSD folder mockup",
+    "_source_name": "CB-FolderA4-Front-220x310mm_5",
+    "_batch_index": 10559
+  },
+  {
+    "name": "CB-FolderA4-Front-220x310mm_6",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Front Mockup 6",
+    "confidence": 95,
+    "notes": "PSD folder mockup"
+  },
+  {
+    "name": "CB-FolderA4-Front-220x310mm_7",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Front Mockup 7",
+    "confidence": 95,
+    "notes": "PSD folder mockup"
+  },
+  {
+    "name": "CB-FolderA4-Front-220x310mm_8",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Folder A4 Front Mockup 8",
+    "confidence": 95,
+    "notes": "PSD folder mockup"
+  }
+]

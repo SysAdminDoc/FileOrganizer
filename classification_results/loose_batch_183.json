@@ -1,0 +1,542 @@
+[
+  {
+    "name": "CMYK_Inside",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "CMYK Inside",
+    "confidence": 85,
+    "notes": "PSD file, likely a print template",
+    "_source_name": "CMYK_Inside",
+    "_batch_index": 10920
+  },
+  {
+    "name": "coachella",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Coachella",
+    "confidence": 80,
+    "notes": "PSD file, event flyer likely",
+    "_source_name": "coachella",
+    "_batch_index": 10921
+  },
+  {
+    "name": "Cocktail_Bash",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cocktail Bash",
+    "confidence": 80,
+    "notes": "PSD file, party flyer",
+    "_source_name": "Cocktail_Bash",
+    "_batch_index": 10922
+  },
+  {
+    "name": "Cocktails Bottles",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cocktails Bottles",
+    "confidence": 75,
+    "notes": "PSD file, likely a mockup or template",
+    "_source_name": "Cocktails Bottles",
+    "_batch_index": 10923
+  },
+  {
+    "name": "cocktails",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cocktails",
+    "confidence": 75,
+    "notes": "PSD file, generic template",
+    "_source_name": "cocktails",
+    "_batch_index": 10924
+  },
+  {
+    "name": "Coded Timeline Cover",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Coded Timeline Cover",
+    "confidence": 80,
+    "notes": "PSD file, social media cover template",
+    "_source_name": "Coded Timeline Cover",
+    "_batch_index": 10925
+  },
+  {
+    "name": "coimco",
+    "category": "Photoshop - Other",
+    "clean_name": "Coimco",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "coimco",
+    "_batch_index": 10926
+  },
+  {
+    "name": "cola",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Cola",
+    "confidence": 75,
+    "notes": "PSD file, likely a product template",
+    "_source_name": "cola",
+    "_batch_index": 10927
+  },
+  {
+    "name": "Collection 01_3",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Collection 01 3",
+    "confidence": 70,
+    "notes": "PSD file, likely a pattern/texture collection",
+    "_source_name": "Collection 01_3",
+    "_batch_index": 10928
+  },
+  {
+    "name": "Collection 02_4",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Collection 02 4",
+    "confidence": 70,
+    "notes": "PSD file, likely a pattern/texture collection",
+    "_source_name": "Collection 02_4",
+    "_batch_index": 10929
+  },
+  {
+    "name": "Collection wallpapers to your desktop #947",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Collection Wallpapers to Your Desktop #947",
+    "confidence": 90,
+    "notes": "Contains wallpapers, likely PSD or image files",
+    "_source_name": "Collection wallpapers to your desktop #947",
+    "_batch_index": 10930
+  },
+  {
+    "name": "Collection wallpapers to your desktop #948",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Collection Wallpapers to Your Desktop #948",
+    "confidence": 90,
+    "notes": "Contains wallpapers, likely PSD or image files",
+    "_source_name": "Collection wallpapers to your desktop #948",
+    "_batch_index": 10931
+  },
+  {
+    "name": "Collection wallpapers to your desktop #950",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Collection Wallpapers to Your Desktop #950",
+    "confidence": 90,
+    "notes": "Contains wallpapers, likely PSD or image files",
+    "_source_name": "Collection wallpapers to your desktop #950",
+    "_batch_index": 10932
+  },
+  {
+    "name": "Collection wallpapers to your desktop #953",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Collection Wallpapers to Your Desktop #953",
+    "confidence": 90,
+    "notes": "Contains wallpapers, likely PSD or image files",
+    "_source_name": "Collection wallpapers to your desktop #953",
+    "_batch_index": 10933
+  },
+  {
+    "name": "Collection wallpapers to your desktop #954",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Collection Wallpapers to Your Desktop #954",
+    "confidence": 90,
+    "notes": "Contains wallpapers, likely PSD or image files",
+    "_source_name": "Collection wallpapers to your desktop #954",
+    "_batch_index": 10934
+  },
+  {
+    "name": "College Graduation Invitation Template 4x6",
+    "category": "Print - Invitations & Events",
+    "clean_name": "College Graduation Invitation Template 4x6",
+    "confidence": 95,
+    "notes": "PSD file, invitation template",
+    "_source_name": "College Graduation Invitation Template 4x6",
+    "_batch_index": 10935
+  },
+  {
+    "name": "College Graduation Invitation Template 5x7",
+    "category": "Print - Invitations & Events",
+    "clean_name": "College Graduation Invitation Template 5x7",
+    "confidence": 95,
+    "notes": "PSD file, invitation template",
+    "_source_name": "College Graduation Invitation Template 5x7",
+    "_batch_index": 10936
+  },
+  {
+    "name": "College_Fair",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "College Fair",
+    "confidence": 80,
+    "notes": "PSD file, event flyer",
+    "_source_name": "College_Fair",
+    "_batch_index": 10937
+  },
+  {
+    "name": "Color 01",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color 01",
+    "confidence": 70,
+    "notes": "PSD file, likely a color swatch or texture",
+    "_source_name": "Color 01",
+    "_batch_index": 10938
+  },
+  {
+    "name": "Color 02",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color 02",
+    "confidence": 70,
+    "notes": "PSD file, likely a color swatch or texture",
+    "_source_name": "Color 02",
+    "_batch_index": 10939
+  },
+  {
+    "name": "Color 03",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color 03",
+    "confidence": 70,
+    "notes": "PSD file, likely a color swatch or texture",
+    "_source_name": "Color 03",
+    "_batch_index": 10940
+  },
+  {
+    "name": "Color Effects Template",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Color Effects Template",
+    "confidence": 80,
+    "notes": "PSD file, color effects overlay",
+    "_source_name": "Color Effects Template",
+    "_batch_index": 10941
+  },
+  {
+    "name": "Color Genesys Mix Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Color Genesys Mix Flyer 2",
+    "confidence": 90,
+    "notes": "PSD file, flyer",
+    "_source_name": "Color Genesys Mix Flyer_2",
+    "_batch_index": 10942
+  },
+  {
+    "name": "Color Letterpress",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Color Letterpress",
+    "confidence": 85,
+    "notes": "PSD file, letterpress effect style",
+    "_source_name": "Color Letterpress",
+    "_batch_index": 10943
+  },
+  {
+    "name": "Color Run Flyer_1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Color Run Flyer 1",
+    "confidence": 90,
+    "notes": "PSD file, flyer",
+    "_source_name": "Color Run Flyer_1",
+    "_batch_index": 10944
+  },
+  {
+    "name": "Color Run Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Color Run Flyer 2",
+    "confidence": 90,
+    "notes": "PSD file, flyer",
+    "_source_name": "Color Run Flyer_2",
+    "_batch_index": 10945
+  },
+  {
+    "name": "Color-01 (10)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (10)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (10)",
+    "_batch_index": 10946
+  },
+  {
+    "name": "Color-01 (11)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (11)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (11)",
+    "_batch_index": 10947
+  },
+  {
+    "name": "Color-01 (12)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (12)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (12)",
+    "_batch_index": 10948
+  },
+  {
+    "name": "Color-01 (13)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (13)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (13)",
+    "_batch_index": 10949
+  },
+  {
+    "name": "Color-01 (14)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (14)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (14)",
+    "_batch_index": 10950
+  },
+  {
+    "name": "Color-01 (15)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (15)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (15)",
+    "_batch_index": 10951
+  },
+  {
+    "name": "Color-01 (16)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (16)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (16)",
+    "_batch_index": 10952
+  },
+  {
+    "name": "Color-01 (17)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (17)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (17)",
+    "_batch_index": 10953
+  },
+  {
+    "name": "Color-01 (18)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (18)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (18)",
+    "_batch_index": 10954
+  },
+  {
+    "name": "Color-01 (19)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (19)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (19)",
+    "_batch_index": 10955
+  },
+  {
+    "name": "Color-01 (22)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (22)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (22)",
+    "_batch_index": 10956
+  },
+  {
+    "name": "Color-01 (23)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (23)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (23)",
+    "_batch_index": 10957
+  },
+  {
+    "name": "Color-01 (3)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (3)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (3)",
+    "_batch_index": 10958
+  },
+  {
+    "name": "Color-01 (8)",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 (8)",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01 (8)",
+    "_batch_index": 10959
+  },
+  {
+    "name": "Color-01",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01",
+    "_batch_index": 10960
+  },
+  {
+    "name": "Color-01_10",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 10",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_10",
+    "_batch_index": 10961
+  },
+  {
+    "name": "Color-01_13",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 13",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_13",
+    "_batch_index": 10962
+  },
+  {
+    "name": "Color-01_15",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 15",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_15",
+    "_batch_index": 10963
+  },
+  {
+    "name": "Color-01_17",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 17",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_17",
+    "_batch_index": 10964
+  },
+  {
+    "name": "Color-01_18",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 18",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_18",
+    "_batch_index": 10965
+  },
+  {
+    "name": "Color-01_19",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 19",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_19",
+    "_batch_index": 10966
+  },
+  {
+    "name": "Color-01_20",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 20",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_20",
+    "_batch_index": 10967
+  },
+  {
+    "name": "Color-01_21",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 21",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_21",
+    "_batch_index": 10968
+  },
+  {
+    "name": "Color-01_25",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 25",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_25",
+    "_batch_index": 10969
+  },
+  {
+    "name": "Color-01_26",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 26",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_26",
+    "_batch_index": 10970
+  },
+  {
+    "name": "Color-01_27",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 27",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_27",
+    "_batch_index": 10971
+  },
+  {
+    "name": "Color-01_28",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 28",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_28",
+    "_batch_index": 10972
+  },
+  {
+    "name": "Color-01_29",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 29",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_29",
+    "_batch_index": 10973
+  },
+  {
+    "name": "Color-01_33",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 33",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_33",
+    "_batch_index": 10974
+  },
+  {
+    "name": "Color-01_34",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 34",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_34",
+    "_batch_index": 10975
+  },
+  {
+    "name": "Color-01_35",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 35",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_35",
+    "_batch_index": 10976
+  },
+  {
+    "name": "Color-01_36",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 36",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_36",
+    "_batch_index": 10977
+  },
+  {
+    "name": "Color-01_4",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 4",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_4",
+    "_batch_index": 10978
+  },
+  {
+    "name": "Color-01_40",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Color-01 40",
+    "confidence": 70,
+    "notes": "PSD file, likely a color pattern",
+    "_source_name": "Color-01_40",
+    "_batch_index": 10979
+  }
+]
