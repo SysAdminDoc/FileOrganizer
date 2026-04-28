@@ -78,7 +78,8 @@ AE_KEYWORD_RULES: list[tuple[list[str], str]] = [
     (['event', 'party', 'celebration', 'concert', 'festival'], 'After Effects - Event & Party'),
     (['social media', 'instagram', 'facebook', 'twitter',
       'youtube thumbnail', 'tiktok'],                          'After Effects - Social Media'),
-    (['product promo', 'product showcase', 'e-commerce'],      'After Effects - Product Promo'),
+    (['product promo', 'product showcase', 'e-commerce',
+      'promo', 'advertising', 'ad '],                          'After Effects - Product Promo'),
     (['trailer', 'teaser', 'coming soon'],                     'After Effects - Trailer & Teaser'),
     (['cinematic', 'film', 'movie', 'blockbuster'],            'After Effects - Cinematic & Film'),
     (['corporate', 'business', 'company', 'presentation',
@@ -88,7 +89,6 @@ AE_KEYWORD_RULES: list[tuple[list[str], str]] = [
     (['character', 'explainer', 'animation', 'mascot'],        'After Effects - Character & Explainer'),
     (['liquid', 'fluid', 'water', 'ink', 'splash'],            'After Effects - Liquid & Fluid'),
     (['intro', 'opener', 'open', 'ident'],                     'After Effects - Intro & Opener'),
-    (['promo', 'advertising', 'ad '],                          'After Effects - Promo & Advertising'),
     (['title', 'typography', 'text', 'kinetic', 'headline'],   'After Effects - Title & Typography'),
     (['motion graphic', 'motion pack'],                        'After Effects - Motion Graphics Pack'),
     (['preset', 'presets', 'plugin', 'script'],                'After Effects - Preset Pack'),
@@ -357,7 +357,10 @@ def cmd_apply(dry_run: bool = False) -> None:
         if not dry_run:
             try:
                 cat_dir.mkdir(parents=True, exist_ok=True)
-                shutil.move(str(src), str(dest))
+                # Use organize_run.robust_move for cross-drive + long-path safety
+                from organize_run import robust_move, strip_trailing_spaces
+                strip_trailing_spaces(str(src))
+                robust_move(str(src), str(dest))
                 journal_correction(str(src), str(dest), clean_nm, new_cat, confidence)
                 moved += 1
             except Exception as e:
