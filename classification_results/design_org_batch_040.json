@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Minimal Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Minimal Titles",
+    "confidence": 85,
+    "notes": "Legacy category 'Titles' and name implies typography/title animation.",
+    "_source_name": "Minimal Titles",
+    "_batch_index": 2340
+  },
+  {
+    "name": "Mixkit Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Mixkit Titles",
+    "confidence": 85,
+    "notes": "Legacy category 'Titles' and name implies title pack.",
+    "_source_name": "Mixkit Titles",
+    "_batch_index": 2341
+  },
+  {
+    "name": "Modern Animated Titles- Premiere Pro Templates (Videohive)",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Modern Animated Titles Premiere Pro Templates",
+    "confidence": 90,
+    "notes": "Name says 'Premiere Pro Templates' and likely .mogrt files.",
+    "_source_name": "Modern Animated Titles- Premiere Pro Templates (Videohive)",
+    "_batch_index": 2342
+  },
+  {
+    "name": "Modern Liquid Title Animation in Adobe After Effects",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Modern Liquid Title Animation",
+    "confidence": 90,
+    "notes": "Name includes 'Liquid Title Animation' and 'After Effects'.",
+    "_source_name": "Modern Liquid Title Animation in Adobe After Effects",
+    "_batch_index": 2343
+  },
+  {
+    "name": "Modern-valentine-titles-416591",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Modern Valentine Titles",
+    "confidence": 85,
+    "notes": "Valentine theme implies romance/wedding category.",
+    "_source_name": "Modern-valentine-titles-416591",
+    "_batch_index": 2344
+  },
+  {
+    "name": "MotionArray - Corporate Titles - 842627",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "MotionArray Corporate Titles",
+    "confidence": 90,
+    "notes": "Corporate in name, legacy 'Titles'.",
+    "_source_name": "MotionArray - Corporate Titles - 842627",
+    "_batch_index": 2345
+  },
+  {
+    "name": "MotionArray - Gradient Titles (with BG) - 842535",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "MotionArray Gradient Titles",
+    "confidence": 85,
+    "notes": "Gradient titles, legacy 'Titles'.",
+    "_source_name": "MotionArray - Gradient Titles (with BG) - 842535",
+    "_batch_index": 2346
+  },
+  {
+    "name": "MotionArray - Riddle Board Titles - 846704",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "MotionArray Riddle Board Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles', no specific subcategory.",
+    "_source_name": "MotionArray - Riddle Board Titles - 846704",
+    "_batch_index": 2347
+  },
+  {
+    "name": "MotionArray - Stylish Titles IV - 844881",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "MotionArray Stylish Titles IV",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "MotionArray - Stylish Titles IV - 844881",
+    "_batch_index": 2348
+  },
+  {
+    "name": "MotionArray - Thanksgiving Day Titles - 849309",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "MotionArray Thanksgiving Day Titles",
+    "confidence": 85,
+    "notes": "Thanksgiving is a holiday.",
+    "_source_name": "MotionArray - Thanksgiving Day Titles - 849309",
+    "_batch_index": 2349
+  },
+  {
+    "name": "MotionArray - Titles & Lower Thirds V2 624491",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "MotionArray Titles & Lower Thirds V2",
+    "confidence": 90,
+    "notes": "Includes 'Lower Thirds' in name.",
+    "_source_name": "MotionArray - Titles & Lower Thirds V2 624491",
+    "_batch_index": 2350
+  },
+  {
+    "name": "MotionArray - Titles Animator - Christmas Balls - 879643",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "MotionArray Titles Animator Christmas Balls",
+    "confidence": 90,
+    "notes": "Christmas in name.",
+    "_source_name": "MotionArray - Titles Animator - Christmas Balls - 879643",
+    "_batch_index": 2351
+  },
+  {
+    "name": "MotionArray - Titles V5 - 858255",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "MotionArray Titles V5",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "MotionArray - Titles V5 - 858255",
+    "_batch_index": 2352
+  },
+  {
+    "name": "MotionArray - Trendy Colorful Titles - 850349",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "MotionArray Trendy Colorful Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "MotionArray - Trendy Colorful Titles - 850349",
+    "_batch_index": 2353
+  },
+  {
+    "name": "MotionArray Corporate Titles 4k Bundle",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "MotionArray Corporate Titles 4k Bundle",
+    "confidence": 90,
+    "notes": "Corporate in name.",
+    "_source_name": "MotionArray Corporate Titles 4k Bundle",
+    "_batch_index": 2354
+  },
+  {
+    "name": "MotionArray Free Christmas And New Year Titles Pack 340727",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "MotionArray Free Christmas And New Year Titles Pack",
+    "confidence": 90,
+    "notes": "Christmas and New Year in name.",
+    "_source_name": "MotionArray Free Christmas And New Year Titles Pack 340727",
+    "_batch_index": 2355
+  },
+  {
+    "name": "MotionElements Glitch Titles 12711788",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "MotionElements Glitch Titles",
+    "confidence": 90,
+    "notes": "Glitch in name.",
+    "_source_name": "MotionElements Glitch Titles 12711788",
+    "_batch_index": 2356
+  },
+  {
+    "name": "MotionElements Wedding Titles 12595490",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "MotionElements Wedding Titles",
+    "confidence": 90,
+    "notes": "Wedding in name.",
+    "_source_name": "MotionElements Wedding Titles 12595490",
+    "_batch_index": 2357
+  },
+  {
+    "name": "MotionVFX-0305 Mycast Title After Effect Template",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "MotionVFX Mycast Title After Effect Template",
+    "confidence": 85,
+    "notes": "After Effects template, legacy 'Titles'.",
+    "_source_name": "MotionVFX-0305 Mycast Title After Effect Template",
+    "_batch_index": 2358
+  },
+  {
+    "name": "MotionVFX-0306 Cinematic Opening Titles After Effect Template",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "MotionVFX Cinematic Opening Titles",
+    "confidence": 90,
+    "notes": "Cinematic in name.",
+    "_source_name": "MotionVFX-0306 Cinematic Opening Titles After Effect Template",
+    "_batch_index": 2359
+  },
+  {
+    "name": "Mountain-Title-18142332-110x75",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Mountain Title",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "Mountain-Title-18142332-110x75",
+    "_batch_index": 2360
+  },
+  {
+    "name": "Pond5 - Titles 40 Mogrt 089777751",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Pond5 Titles 40 Mogrt",
+    "confidence": 95,
+    "notes": "Name includes 'Mogrt'.",
+    "_source_name": "Pond5 - Titles 40 Mogrt 089777751",
+    "_batch_index": 2361
+  },
+  {
+    "name": "POND5 Comicverse Title Reveal 102188905",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "POND5 Comicverse Title Reveal",
+    "confidence": 85,
+    "notes": "Contains After Effects and Footage hints, legacy 'Titles'.",
+    "_source_name": "POND5 Comicverse Title Reveal 102188905",
+    "_batch_index": 2362
+  },
+  {
+    "name": "POND5 Holiday Titles 100229928",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "POND5 Holiday Titles",
+    "confidence": 90,
+    "notes": "Holiday in name.",
+    "_source_name": "POND5 Holiday Titles 100229928",
+    "_batch_index": 2363
+  },
+  {
+    "name": "POND5 Spaceguy Title Reveal 109574933",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "POND5 Spaceguy Title Reveal",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "POND5 Spaceguy Title Reveal 109574933",
+    "_batch_index": 2364
+  },
+  {
+    "name": "POND5 Virtual Kid Title Reveal 110808728",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "POND5 Virtual Kid Title Reveal",
+    "confidence": 85,
+    "notes": "Kid in name suggests kids/cartoon style.",
+    "_source_name": "POND5 Virtual Kid Title Reveal 110808728",
+    "_batch_index": 2365
+  },
+  {
+    "name": "Pond5-cinematic-titles-88675066",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Pond5 Cinematic Titles",
+    "confidence": 90,
+    "notes": "Cinematic in name.",
+    "_source_name": "Pond5-cinematic-titles-88675066",
+    "_batch_index": 2366
+  },
+  {
+    "name": "Pond5-Modern-quotes-titles-121738176",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Pond5 Modern Quotes Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "Pond5-Modern-quotes-titles-121738176",
+    "_batch_index": 2367
+  },
+  {
+    "name": "Promo Titles Intro",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Promo Titles Intro",
+    "confidence": 90,
+    "notes": "Name includes 'Intro'.",
+    "_source_name": "Promo Titles Intro",
+    "_batch_index": 2368
+  },
+  {
+    "name": "quotes-trendy-titles-82E9FPR",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Quotes Trendy Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "quotes-trendy-titles-82E9FPR",
+    "_batch_index": 2369
+  },
+  {
+    "name": "Real-estate-sale-titles-319797",
+    "category": "After Effects - Real Estate",
+    "clean_name": "Real Estate Sale Titles",
+    "confidence": 90,
+    "notes": "Real estate in name.",
+    "_source_name": "Real-estate-sale-titles-319797",
+    "_batch_index": 2370
+  },
+  {
+    "name": "Sci-Fi Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Sci-Fi Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles', no specific subcategory for sci-fi.",
+    "_source_name": "Sci-Fi Titles",
+    "_batch_index": 2371
+  },
+  {
+    "name": "Simple - Titles And Typography 26322417",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Simple Titles And Typography",
+    "confidence": 90,
+    "notes": "Name includes 'Titles And Typography'.",
+    "_source_name": "Simple - Titles And Typography 26322417",
+    "_batch_index": 2372
+  },
+  {
+    "name": "slot machine title text effect GFXTRA",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Slot Machine Title Text Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "slot machine title text effect GFXTRA",
+    "_batch_index": 2373
+  },
+  {
+    "name": "Smoke-Elements-And-Titles-165383-110x75",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Smoke Elements And Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "Smoke-Elements-And-Titles-165383-110x75",
+    "_batch_index": 2374
+  },
+  {
+    "name": "Snow-Titles-28749674-110x75",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Snow Titles",
+    "confidence": 85,
+    "notes": "Snow suggests winter/holiday theme.",
+    "_source_name": "Snow-Titles-28749674-110x75",
+    "_batch_index": 2375
+  },
+  {
+    "name": "Text Popups - 400 Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Text Popups 400 Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "Text Popups - 400 Titles",
+    "_batch_index": 2376
+  },
+  {
+    "name": "the-titles-22417403",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "The Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "the-titles-22417403",
+    "_batch_index": 2377
+  },
+  {
+    "name": "Title Animation 58123840",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Title Animation",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "Title Animation 58123840",
+    "_batch_index": 2378
+  },
+  {
+    "name": "Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles', contains 3D Cartoon Titles hint but generic.",
+    "_source_name": "Titles",
+    "_batch_index": 2379
+  },
+  {
+    "name": "Titles 1759218",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Titles 1759218",
+    "confidence": 85,
+    "notes": "Contains 'Lower Thirds_upload folder' hint.",
+    "_source_name": "Titles 1759218",
+    "_batch_index": 2380
+  },
+  {
+    "name": "Titles and Call-Outs Pack 621025 - Project for After Effects",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles and Call-Outs Pack",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "Titles and Call-Outs Pack 621025 - Project for After Effects",
+    "_batch_index": 2381
+  },
+  {
+    "name": "ToleratedCinematics-5 Classy Wedding Titles After Effects Template",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "ToleratedCinematics 5 Classy Wedding Titles",
+    "confidence": 95,
+    "notes": "Wedding in name.",
+    "_source_name": "ToleratedCinematics-5 Classy Wedding Titles After Effects Template",
+    "_batch_index": 2382
+  },
+  {
+    "name": "Triangle Titles Pack",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Triangle Titles Pack",
+    "confidence": 90,
+    "notes": "Contains 'MOGRT Files' hint.",
+    "_source_name": "Triangle Titles Pack",
+    "_batch_index": 2383
+  },
+  {
+    "name": "Typography Titles 560 - Project for After Effects",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Titles 560",
+    "confidence": 90,
+    "notes": "Typography in name.",
+    "_source_name": "Typography Titles 560 - Project for After Effects",
+    "_batch_index": 2384
+  },
+  {
+    "name": "unique-quote-titles-29352501-vfxdownload net",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Unique Quote Titles",
+    "confidence": 85,
+    "notes": "Contains both AE and MOGRT files, but name implies AE.",
+    "_source_name": "unique-quote-titles-29352501-vfxdownload net",
+    "_batch_index": 2385
+  },
+  {
+    "name": "VH Call Out Title 12992705",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "VH Call Out Title",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "VH Call Out Title 12992705",
+    "_batch_index": 2386
+  },
+  {
+    "name": "VH Conflict Opening Titles 10296992",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "VH Conflict Opening Titles",
+    "confidence": 90,
+    "notes": "Opening in name.",
+    "_source_name": "VH Conflict Opening Titles 10296992",
+    "_batch_index": 2387
+  },
+  {
+    "name": "VH The Titles 16452285",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "VH The Titles",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "VH The Titles 16452285",
+    "_batch_index": 2388
+  },
+  {
+    "name": "Videohive + 50 Motion Titles Pack - After Effects Templates",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Videohive 50 Motion Titles Pack",
+    "confidence": 85,
+    "notes": "Legacy 'Titles'.",
+    "_source_name": "Videohive + 50 Motion Titles Pack - After Effects Templates",
+    "_batch_index": 2389
+  },
+  {
+    "name": "Videohive - 20 Qoutes Titles Instagram Pack 1 29331548",
+    "category": "After Effects - Social Media",
+    "clean_name": "Videohive 20 Quotes Titles Instagram Pack 1",
+    "confidence": 90,
+    "notes": "Instagram in name.",
+    "_source_name": "Videohive - 20 Qoutes Titles Instagram Pack 1 29331548",
+    "_batch_index": 2390
+  },
+  {
+    "name": "Videohive - 20 Qoutes Titles Instagram Pack 2 29384645",
+    "category": "After Effects - Social Media",
+    "clean_name": "Videohive 20 Quotes Titles Instagram Pack 2",
+    "confidence": 90,
+    "notes": "Instagram in name.",
+    "_source_name": "Videohive - 20 Qoutes Titles Instagram Pack 2 29384645",
+    "_batch_index": 2391
+  },
+  {
+    "name": "Videohive - 26 Corporate Titles 17929371",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Videohive 26 Corporate Titles",
+    "confidence": 90,
+    "notes": "Corporate in name.",
+    "_source_name": "Videohive - 26 Corporate Titles 17929371",
+    "_batch_index": 2392
+  },
+  {
+    "name": "Videohive - 30 Christmas Title Animations 21095942",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Videohive 30 Christmas Title Animations",
+    "confidence": 95,
+    "notes": "Christmas in name.",
+    "_source_name": "Videohive - 30 Christmas Title Animations 21095942",
+    "_batch_index": 2393
+  },
+  {
+    "name": "Videohive - 30 gradient titles for premiere pro 23840983",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Videohive 30 Gradient Titles for Premiere Pro",
+    "confidence": 95,
+    "notes": "Name says 'for premiere pro'.",
+    "_source_name": "Videohive - 30 gradient titles for premiere pro 23840983",
+    "_batch_index": 2394
+  },
+  {
+    "name": "Videohive - 9 Corporate Titles 22434677",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Videohive 9 Corporate Titles",
+    "confidence": 90,
+    "notes": "Corporate in name.",
+    "_source_name": "Videohive - 9 Corporate Titles 22434677",
+    "_batch_index": 2395
+  },
+  {
+    "name": "Videohive - Action Titles  After Effects 29314785",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Videohive Action Titles",
+    "confidence": 90,
+    "notes": "Action in name.",
+    "_source_name": "Videohive - Action Titles  After Effects 29314785",
+    "_batch_index": 2396
+  },
+  {
+    "name": "Videohive - Big Titles & Lower Thirds II 21951929",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Videohive Big Titles & Lower Thirds II",
+    "confidence": 90,
+    "notes": "Lower Thirds in name.",
+    "_source_name": "Videohive - Big Titles & Lower Thirds II 21951929",
+    "_batch_index": 2397
+  },
+  {
+    "name": "Videohive - Big Titles & Lower Thirds III 22107887",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Videohive Big Titles & Lower Thirds III",
+    "confidence": 90,
+    "notes": "Lower Thirds in name.",
+    "_source_name": "Videohive - Big Titles & Lower Thirds III 22107887",
+    "_batch_index": 2398
+  },
+  {
+    "name": "Videohive - Bouncing Ball Titles - 22043160",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Videohive Bouncing Ball Titles",
+    "confidence": 85,
+    "notes": "Bouncing ball suggests playful/kids style.",
+    "_source_name": "Videohive - Bouncing Ball Titles - 22043160",
+    "_batch_index": 2399
+  }
+]

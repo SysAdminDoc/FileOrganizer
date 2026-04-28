@@ -1,0 +1,542 @@
+[
+  {
+    "name": "100 dollars",
+    "category": "Stock Photos - General",
+    "clean_name": "100 dollars",
+    "confidence": 70,
+    "notes": "Single .psd file, likely a stock photo of money",
+    "_source_name": "100 dollars",
+    "_batch_index": 2400
+  },
+  {
+    "name": "100",
+    "category": "Stock Photos - General",
+    "clean_name": "100",
+    "confidence": 60,
+    "notes": "Single .psd file, no context",
+    "_source_name": "100",
+    "_batch_index": 2401
+  },
+  {
+    "name": "10003843_MotionElements_moments-of-life-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Moments Of Life",
+    "confidence": 85,
+    "notes": "Contains .aep, name suggests photo gallery",
+    "_source_name": "10003843_MotionElements_moments-of-life-aep",
+    "_batch_index": 2402
+  },
+  {
+    "name": "100_2",
+    "category": "Stock Photos - General",
+    "clean_name": "100_2",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "100_2",
+    "_batch_index": 2403
+  },
+  {
+    "name": "100_Leggings_Mock-Up_n20.part1",
+    "category": "Mockups - Apparel",
+    "clean_name": "100 Leggings Mock-Up n20",
+    "confidence": 95,
+    "notes": "Mockup of leggings, .psd files",
+    "_source_name": "100_Leggings_Mock-Up_n20.part1",
+    "_batch_index": 2404
+  },
+  {
+    "name": "100_Leggings_Mock-Up_n20.part2",
+    "category": "_Skip",
+    "clean_name": "100 Leggings Mock-Up n20 part2",
+    "confidence": 100,
+    "notes": "Fragment archive (.part2)",
+    "_source_name": "100_Leggings_Mock-Up_n20.part2",
+    "_batch_index": 2405
+  },
+  {
+    "name": "101-200",
+    "category": "Stock Photos - General",
+    "clean_name": "101-200",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "101-200",
+    "_batch_index": 2406
+  },
+  {
+    "name": "101",
+    "category": "Stock Photos - General",
+    "clean_name": "101",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "101",
+    "_batch_index": 2407
+  },
+  {
+    "name": "1018",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1018",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "1018",
+    "_batch_index": 2408
+  },
+  {
+    "name": "101_2",
+    "category": "Stock Photos - General",
+    "clean_name": "101_2",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "101_2",
+    "_batch_index": 2409
+  },
+  {
+    "name": "101_3",
+    "category": "Stock Photos - General",
+    "clean_name": "101_3",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "101_3",
+    "_batch_index": 2410
+  },
+  {
+    "name": "101_4",
+    "category": "Stock Photos - General",
+    "clean_name": "101_4",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "101_4",
+    "_batch_index": 2411
+  },
+  {
+    "name": "101_5",
+    "category": "Stock Photos - General",
+    "clean_name": "101_5",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "101_5",
+    "_batch_index": 2412
+  },
+  {
+    "name": "102",
+    "category": "Stock Photos - General",
+    "clean_name": "102",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "102",
+    "_batch_index": 2413
+  },
+  {
+    "name": "1020",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1020",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "1020",
+    "_batch_index": 2414
+  },
+  {
+    "name": "1021",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1021",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "1021",
+    "_batch_index": 2415
+  },
+  {
+    "name": "1023",
+    "category": "Stock Photos - General",
+    "clean_name": "1023",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "1023",
+    "_batch_index": 2416
+  },
+  {
+    "name": "1024",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1024",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "1024",
+    "_batch_index": 2417
+  },
+  {
+    "name": "1026",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1026",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "1026",
+    "_batch_index": 2418
+  },
+  {
+    "name": "1027",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1027",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "1027",
+    "_batch_index": 2419
+  },
+  {
+    "name": "10286922_MotionElements_romantic-collection-hand-aep",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Romantic Collection Hand-drawn Titles",
+    "confidence": 85,
+    "notes": "Contains .aep, name indicates hand-drawn titles",
+    "_source_name": "10286922_MotionElements_romantic-collection-hand-aep",
+    "_batch_index": 2420
+  },
+  {
+    "name": "103131653-epic-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Epic Opener",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Epic Opener'",
+    "_source_name": "103131653-epic-opener",
+    "_batch_index": 2421
+  },
+  {
+    "name": "10359980_MotionElements_7-in-1-gold-backgrounds-aep",
+    "category": "After Effects - Other",
+    "clean_name": "7 in 1 Gold Backgrounds Pack",
+    "confidence": 80,
+    "notes": "Contains .aep, background pack",
+    "_source_name": "10359980_MotionElements_7-in-1-gold-backgrounds-aep",
+    "_batch_index": 2422
+  },
+  {
+    "name": "10367562_MotionElements_happy-valentine-day-aep",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Happy Valentine Day Project",
+    "confidence": 90,
+    "notes": "Valentine's Day themed .aep project",
+    "_source_name": "10367562_MotionElements_happy-valentine-day-aep",
+    "_batch_index": 2423
+  },
+  {
+    "name": "103801540-corporate-timeline-slideshow",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Business Timeline Slideshow",
+    "confidence": 90,
+    "notes": "Corporate timeline slideshow .aep",
+    "_source_name": "103801540-corporate-timeline-slideshow",
+    "_batch_index": 2424
+  },
+  {
+    "name": "104",
+    "category": "Stock Photos - General",
+    "clean_name": "104",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "104",
+    "_batch_index": 2425
+  },
+  {
+    "name": "10445257_MotionElements_ink-slideshow-aep",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Ink Slideshow",
+    "confidence": 85,
+    "notes": "Contains .aep, name says 'ink slideshow'",
+    "_source_name": "10445257_MotionElements_ink-slideshow-aep",
+    "_batch_index": 2426
+  },
+  {
+    "name": "10462160_MotionElements_the-conspiracy-theorist-aep",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Conspiracy Theorist Intro",
+    "confidence": 85,
+    "notes": "Contains .aep, name says 'Intro'",
+    "_source_name": "10462160_MotionElements_the-conspiracy-theorist-aep",
+    "_batch_index": 2427
+  },
+  {
+    "name": "10492755_MotionElements_anchored-underwater-aep",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Anchored Logo Stinger",
+    "confidence": 85,
+    "notes": "Contains .aep, name says 'LogoStinger'",
+    "_source_name": "10492755_MotionElements_anchored-underwater-aep",
+    "_batch_index": 2428
+  },
+  {
+    "name": "10493543_MotionElements_underground-creepy-aep",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Underground Logo Stinger",
+    "confidence": 85,
+    "notes": "Contains .aep, name says 'LogoStinger'",
+    "_source_name": "10493543_MotionElements_underground-creepy-aep",
+    "_batch_index": 2429
+  },
+  {
+    "name": "10493545_MotionElements_shallow-grave-buried-aep",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Shallow Grave Logo Stinger",
+    "confidence": 85,
+    "notes": "Contains .aep, name says 'LogoStinger'",
+    "_source_name": "10493545_MotionElements_shallow-grave-buried-aep",
+    "_batch_index": 2430
+  },
+  {
+    "name": "10493708_MotionElements_pressured-steampunk-aep",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Pressured Logo Opener",
+    "confidence": 85,
+    "notes": "Contains .aep, name says 'LogoOpener'",
+    "_source_name": "10493708_MotionElements_pressured-steampunk-aep",
+    "_batch_index": 2431
+  },
+  {
+    "name": "105",
+    "category": "Stock Photos - General",
+    "clean_name": "105",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "105",
+    "_batch_index": 2432
+  },
+  {
+    "name": "10551641_MotionElements_steampunk-cockpit-aep",
+    "category": "After Effects - Other",
+    "clean_name": "Steampunk Cockpit",
+    "confidence": 70,
+    "notes": "Contains .aep, unclear subcategory",
+    "_source_name": "10551641_MotionElements_steampunk-cockpit-aep",
+    "_batch_index": 2433
+  },
+  {
+    "name": "10568438_MotionElements_mosaic-slide-aep",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Mosaic Slide",
+    "confidence": 85,
+    "notes": "Contains .aep, name says 'Mosaic Slide'",
+    "_source_name": "10568438_MotionElements_mosaic-slide-aep",
+    "_batch_index": 2434
+  },
+  {
+    "name": "105_2",
+    "category": "Stock Photos - General",
+    "clean_name": "105_2",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "105_2",
+    "_batch_index": 2435
+  },
+  {
+    "name": "105_TmV3X3llYXJfYmFja2dyb3VuZC0wMQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "New Year Background 01",
+    "confidence": 70,
+    "notes": ".eps file, likely vector background",
+    "_source_name": "105_TmV3X3llYXJfYmFja2dyb3VuZC0wMQ",
+    "_batch_index": 2436
+  },
+  {
+    "name": "10718685_MotionElements_mosaic-abstract-background-aep",
+    "category": "After Effects - Other",
+    "clean_name": "Mosaic Abstract Background",
+    "confidence": 80,
+    "notes": "Contains .aep, abstract background",
+    "_source_name": "10718685_MotionElements_mosaic-abstract-background-aep",
+    "_batch_index": 2437
+  },
+  {
+    "name": "108-01",
+    "category": "Stock Photos - General",
+    "clean_name": "108-01",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "108-01",
+    "_batch_index": 2438
+  },
+  {
+    "name": "108",
+    "category": "Stock Photos - General",
+    "clean_name": "108",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "108",
+    "_batch_index": 2439
+  },
+  {
+    "name": "1080x1080",
+    "category": "Stock Photos - General",
+    "clean_name": "1080x1080",
+    "confidence": 60,
+    "notes": "Single .psd file, likely a square image",
+    "_source_name": "1080x1080",
+    "_batch_index": 2440
+  },
+  {
+    "name": "1080x1920",
+    "category": "Stock Photos - General",
+    "clean_name": "1080x1920",
+    "confidence": 60,
+    "notes": "Single .psd file, likely a portrait image",
+    "_source_name": "1080x1920",
+    "_batch_index": 2441
+  },
+  {
+    "name": "1088",
+    "category": "Stock Photos - General",
+    "clean_name": "1088",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "1088",
+    "_batch_index": 2442
+  },
+  {
+    "name": "109-01",
+    "category": "Stock Photos - General",
+    "clean_name": "109-01",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "109-01",
+    "_batch_index": 2443
+  },
+  {
+    "name": "109",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "109",
+    "confidence": 70,
+    "notes": ".eps file, vector asset",
+    "_source_name": "109",
+    "_batch_index": 2444
+  },
+  {
+    "name": "10982886_MotionElements_photo-gallery-flowers-and-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Flowers and Sunny",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10982886_MotionElements_photo-gallery-flowers-and-aep",
+    "_batch_index": 2445
+  },
+  {
+    "name": "10982894_MotionElements_photo-gallery-flowers-yet-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Flowers yet Sunny",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10982894_MotionElements_photo-gallery-flowers-yet-aep",
+    "_batch_index": 2446
+  },
+  {
+    "name": "10983085_MotionElements_picture-gallery-dreamy-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Picture Gallery Dreamy Muse",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Picture Gallery'",
+    "_source_name": "10983085_MotionElements_picture-gallery-dreamy-aep",
+    "_batch_index": 2447
+  },
+  {
+    "name": "10983203_MotionElements_romantic-tree-photo-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Romantic Tree Photo Gallery",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10983203_MotionElements_romantic-tree-photo-aep",
+    "_batch_index": 2448
+  },
+  {
+    "name": "10983337_MotionElements_sunny-memories-photo-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Sunny Memories Photo Gallery",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10983337_MotionElements_sunny-memories-photo-aep",
+    "_batch_index": 2449
+  },
+  {
+    "name": "10983538_MotionElements_the-tree-of-life-photo-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "The Tree of Life Photo Gallery",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10983538_MotionElements_the-tree-of-life-photo-aep",
+    "_batch_index": 2450
+  },
+  {
+    "name": "10983890_MotionElements_photo-gallery-in-a-sunny-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery In a Sunny Orchard",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10983890_MotionElements_photo-gallery-in-a-sunny-aep",
+    "_batch_index": 2451
+  },
+  {
+    "name": "10983919_MotionElements_photo-gallery-in-a-sunny-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery in a Sunny Park",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10983919_MotionElements_photo-gallery-in-a-sunny-aep",
+    "_batch_index": 2452
+  },
+  {
+    "name": "10983934_MotionElements_photo-gallery-on-a-sunny-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery On A Sunny Day",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10983934_MotionElements_photo-gallery-on-a-sunny-aep",
+    "_batch_index": 2453
+  },
+  {
+    "name": "10983935_MotionElements_photo-gallery-on-a-nice-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery on a Nice Day",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10983935_MotionElements_photo-gallery-on-a-nice-aep",
+    "_batch_index": 2454
+  },
+  {
+    "name": "10983998_MotionElements_photo-gallery-our-aep",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Photo Gallery Our Beautiful Moments",
+    "confidence": 90,
+    "notes": "Contains .aep, name says 'Photo Gallery'",
+    "_source_name": "10983998_MotionElements_photo-gallery-our-aep",
+    "_batch_index": 2455
+  },
+  {
+    "name": "10_10 Branding Identitny Mockup 2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "10_10 Branding Identity Mockup 2",
+    "confidence": 95,
+    "notes": "Branding mockup .psd",
+    "_source_name": "10_10 Branding Identitny Mockup 2",
+    "_batch_index": 2456
+  },
+  {
+    "name": "10_10",
+    "category": "Stock Photos - General",
+    "clean_name": "10_10",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "10_10",
+    "_batch_index": 2457
+  },
+  {
+    "name": "10_11",
+    "category": "Stock Photos - General",
+    "clean_name": "10_11",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "10_11",
+    "_batch_index": 2458
+  },
+  {
+    "name": "10_12",
+    "category": "Stock Photos - General",
+    "clean_name": "10_12",
+    "confidence": 60,
+    "notes": "Single .psd file",
+    "_source_name": "10_12",
+    "_batch_index": 2459
+  }
+]
