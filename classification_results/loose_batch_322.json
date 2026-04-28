@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Virus_Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Virus Flyer",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "Virus_Flyer",
+    "_batch_index": 19260
+  },
+  {
+    "name": "VirusAlert",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Virus Alert",
+    "confidence": 70,
+    "notes": "PSD file, likely a flyer template",
+    "_source_name": "VirusAlert",
+    "_batch_index": 19261
+  },
+  {
+    "name": "visual-identity-template",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Visual Identity Template",
+    "confidence": 85,
+    "notes": "PSD file, name indicates identity template",
+    "_source_name": "visual-identity-template",
+    "_batch_index": 19262
+  },
+  {
+    "name": "viva_fridays_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Viva Fridays 2",
+    "confidence": 70,
+    "notes": "PSD file, likely event flyer",
+    "_source_name": "viva_fridays_2",
+    "_batch_index": 19263
+  },
+  {
+    "name": "Vlog_Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Vlog Flyer",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "Vlog_Flyer",
+    "_batch_index": 19264
+  },
+  {
+    "name": "vol6",
+    "category": "Photoshop - Other",
+    "clean_name": "Vol 6",
+    "confidence": 60,
+    "notes": "PSD file, no clear subcategory",
+    "_source_name": "vol6",
+    "_batch_index": 19265
+  },
+  {
+    "name": "Volt7Template",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Volt 7 Template",
+    "confidence": 75,
+    "notes": "PSD file, name includes 'Template'",
+    "_source_name": "Volt7Template",
+    "_batch_index": 19266
+  },
+  {
+    "name": "Vopoo - Business Template Prensentation",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Vopoo Business Template Presentation",
+    "confidence": 85,
+    "notes": "ZIP with PSD, business presentation template",
+    "_source_name": "Vopoo - Business Template Prensentation",
+    "_batch_index": 19267
+  },
+  {
+    "name": "W",
+    "category": "Photoshop - Other",
+    "clean_name": "W",
+    "confidence": 50,
+    "notes": "PSD file, ambiguous name",
+    "_source_name": "W",
+    "_batch_index": 19268
+  },
+  {
+    "name": "W1",
+    "category": "Photoshop - Other",
+    "clean_name": "W1",
+    "confidence": 50,
+    "notes": "PSD file, ambiguous name",
+    "_source_name": "W1",
+    "_batch_index": 19269
+  },
+  {
+    "name": "w1_2",
+    "category": "Photoshop - Other",
+    "clean_name": "W1 2",
+    "confidence": 50,
+    "notes": "PSD file, ambiguous name",
+    "_source_name": "w1_2",
+    "_batch_index": 19270
+  },
+  {
+    "name": "W2",
+    "category": "Photoshop - Other",
+    "clean_name": "W2",
+    "confidence": 50,
+    "notes": "PSD file, ambiguous name",
+    "_source_name": "W2",
+    "_batch_index": 19271
+  },
+  {
+    "name": "w2_2",
+    "category": "Photoshop - Other",
+    "clean_name": "W2 2",
+    "confidence": 50,
+    "notes": "PSD file, ambiguous name",
+    "_source_name": "w2_2",
+    "_batch_index": 19272
+  },
+  {
+    "name": "walk away cm_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Walk Away CM 2",
+    "confidence": 60,
+    "notes": "PSD file, likely flyer",
+    "_source_name": "walk away cm_2",
+    "_batch_index": 19273
+  },
+  {
+    "name": "Walkthrough",
+    "category": "Photoshop - Other",
+    "clean_name": "Walkthrough",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "Walkthrough",
+    "_batch_index": 19274
+  },
+  {
+    "name": "Walkthrough_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Walkthrough 2",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "Walkthrough_2",
+    "_batch_index": 19275
+  },
+  {
+    "name": "Wall 3 Proxy",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Wall 3 Proxy",
+    "confidence": 75,
+    "notes": "PSD file, likely wall mockup",
+    "_source_name": "Wall 3 Proxy",
+    "_batch_index": 19276
+  },
+  {
+    "name": "Wall 4 Proxy",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Wall 4 Proxy",
+    "confidence": 75,
+    "notes": "PSD file, likely wall mockup",
+    "_source_name": "Wall 4 Proxy",
+    "_batch_index": 19277
+  },
+  {
+    "name": "Wall Frame FB Timeline Cover 01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Wall Frame Facebook Timeline Cover 01",
+    "confidence": 85,
+    "notes": "PSD file, social media cover template",
+    "_source_name": "Wall Frame FB Timeline Cover 01",
+    "_batch_index": 19278
+  },
+  {
+    "name": "Wall Frame FB Timeline Cover 02",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Wall Frame Facebook Timeline Cover 02",
+    "confidence": 85,
+    "notes": "PSD file, social media cover template",
+    "_source_name": "Wall Frame FB Timeline Cover 02",
+    "_batch_index": 19279
+  },
+  {
+    "name": "Wall Frame FB Timeline Cover",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Wall Frame Facebook Timeline Cover",
+    "confidence": 85,
+    "notes": "PSD file, social media cover template",
+    "_source_name": "Wall Frame FB Timeline Cover",
+    "_batch_index": 19280
+  },
+  {
+    "name": "wall-clock",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Wall Clock",
+    "confidence": 80,
+    "notes": "PSD file, likely wall clock mockup",
+    "_source_name": "wall-clock",
+    "_batch_index": 19281
+  },
+  {
+    "name": "Wall_2 Proxy",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Wall 2 Proxy",
+    "confidence": 75,
+    "notes": "PSD file, likely wall mockup",
+    "_source_name": "Wall_2 Proxy",
+    "_batch_index": 19282
+  },
+  {
+    "name": "wallcalendar",
+    "category": "Print - Other",
+    "clean_name": "Wall Calendar",
+    "confidence": 80,
+    "notes": "PSD file, calendar design",
+    "_source_name": "wallcalendar",
+    "_batch_index": 19283
+  },
+  {
+    "name": "Wanted Flyer Template - 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wanted Flyer Template 1",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "Wanted Flyer Template - 1",
+    "_batch_index": 19284
+  },
+  {
+    "name": "Wanted Flyer Template - 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wanted Flyer Template 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "Wanted Flyer Template - 2",
+    "_batch_index": 19285
+  },
+  {
+    "name": "Wanted Poster",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wanted Poster",
+    "confidence": 90,
+    "notes": "PSD file, name includes 'Poster'",
+    "_source_name": "Wanted Poster",
+    "_batch_index": 19286
+  },
+  {
+    "name": "Ware House 8.5x11.93",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Ware House 8.5x11.93",
+    "confidence": 80,
+    "notes": "PSD file, standard flyer size",
+    "_source_name": "Ware House 8.5x11.93",
+    "_batch_index": 19287
+  },
+  {
+    "name": "WAREN Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "WAREN Flyer Template",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "WAREN Flyer Template",
+    "_batch_index": 19288
+  },
+  {
+    "name": "warzone",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Warzone",
+    "confidence": 60,
+    "notes": "PSD file, likely flyer",
+    "_source_name": "warzone",
+    "_batch_index": 19289
+  },
+  {
+    "name": "Wash Your Hand 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wash Your Hand 2",
+    "confidence": 80,
+    "notes": "PSD file, likely informational flyer",
+    "_source_name": "Wash Your Hand 2",
+    "_batch_index": 19290
+  },
+  {
+    "name": "Wash Your Hand",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wash Your Hand",
+    "confidence": 80,
+    "notes": "PSD file, likely informational flyer",
+    "_source_name": "Wash Your Hand",
+    "_batch_index": 19291
+  },
+  {
+    "name": "Wasted_Thursdays",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wasted Thursdays",
+    "confidence": 80,
+    "notes": "PSD file, event flyer",
+    "_source_name": "Wasted_Thursdays",
+    "_batch_index": 19292
+  },
+  {
+    "name": "Watch",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Watch",
+    "confidence": 80,
+    "notes": "PSD file, likely watch mockup",
+    "_source_name": "Watch",
+    "_batch_index": 19293
+  },
+  {
+    "name": "Water Drop Line_2",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Water Drop Line 2",
+    "confidence": 70,
+    "notes": "PSD file, likely overlay effect",
+    "_source_name": "Water Drop Line_2",
+    "_batch_index": 19294
+  },
+  {
+    "name": "Water-Drops",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Water Drops",
+    "confidence": 70,
+    "notes": "PSD file, likely overlay effect",
+    "_source_name": "Water-Drops",
+    "_batch_index": 19295
+  },
+  {
+    "name": "water",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Water",
+    "confidence": 60,
+    "notes": "PSD file, likely water effect",
+    "_source_name": "water",
+    "_batch_index": 19296
+  },
+  {
+    "name": "Watercolor elegant rose decorative flowers for invitational design",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Watercolor Elegant Rose Decorative Flowers for Invitational Design",
+    "confidence": 85,
+    "notes": "ZIP with EPS, vector floral elements",
+    "_source_name": "Watercolor elegant rose decorative flowers for invitational design",
+    "_batch_index": 19297
+  },
+  {
+    "name": "watercolor-effect",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Watercolor Effect",
+    "confidence": 80,
+    "notes": "PSD file, watercolor effect",
+    "_source_name": "watercolor-effect",
+    "_batch_index": 19298
+  },
+  {
+    "name": "Watercolor_Kit_For_Photoshop",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Watercolor Kit for Photoshop",
+    "confidence": 90,
+    "notes": "RAR with .abr, .atn, .pat, .psd - brush kit",
+    "_source_name": "Watercolor_Kit_For_Photoshop",
+    "_batch_index": 19299
+  },
+  {
+    "name": "Watercolor_washes_2",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Watercolor Washes 2",
+    "confidence": 75,
+    "notes": "PSD file, watercolor overlay",
+    "_source_name": "Watercolor_washes_2",
+    "_batch_index": 19300
+  },
+  {
+    "name": "WATZ Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "WATZ Flyer Template",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Template'",
+    "_source_name": "WATZ Flyer Template",
+    "_batch_index": 19301
+  },
+  {
+    "name": "Wave-opener-13844709",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Wave Opener",
+    "confidence": 90,
+    "notes": "ZIP with .aep, name includes 'opener'",
+    "_source_name": "Wave-opener-13844709",
+    "_batch_index": 19302
+  },
+  {
+    "name": "wb2",
+    "category": "Photoshop - Other",
+    "clean_name": "WB2",
+    "confidence": 50,
+    "notes": "PSD file, ambiguous name",
+    "_source_name": "wb2",
+    "_batch_index": 19303
+  },
+  {
+    "name": "We Are Moving Flyer Templates 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "We Are Moving Flyer Templates 1",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Templates'",
+    "_source_name": "We Are Moving Flyer Templates 1",
+    "_batch_index": 19304
+  },
+  {
+    "name": "We Are Moving Flyer Templates 1_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "We Are Moving Flyer Templates 1 3",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Templates'",
+    "_source_name": "We Are Moving Flyer Templates 1_3",
+    "_batch_index": 19305
+  },
+  {
+    "name": "We Are Moving Flyer Templates 2_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "We Are Moving Flyer Templates 2 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Templates'",
+    "_source_name": "We Are Moving Flyer Templates 2_2",
+    "_batch_index": 19306
+  },
+  {
+    "name": "We Are Moving Flyer Templates 2_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "We Are Moving Flyer Templates 2 3",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Templates'",
+    "_source_name": "We Are Moving Flyer Templates 2_3",
+    "_batch_index": 19307
+  },
+  {
+    "name": "We Are Moving Flyer Templates 3_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "We Are Moving Flyer Templates 3 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Templates'",
+    "_source_name": "We Are Moving Flyer Templates 3_2",
+    "_batch_index": 19308
+  },
+  {
+    "name": "We Are Moving Flyer Templates 3_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "We Are Moving Flyer Templates 3 3",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer Templates'",
+    "_source_name": "We Are Moving Flyer Templates 3_3",
+    "_batch_index": 19309
+  },
+  {
+    "name": "We Are Starting. Best online Course_Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "We Are Starting Best Online Course Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "We Are Starting. Best online Course_Flyer",
+    "_batch_index": 19310
+  },
+  {
+    "name": "We're Hiring",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "We're Hiring",
+    "confidence": 80,
+    "notes": "PSD file, recruitment flyer",
+    "_source_name": "We're Hiring",
+    "_batch_index": 19311
+  },
+  {
+    "name": "Weapon",
+    "category": "Photoshop - Other",
+    "clean_name": "Weapon",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "Weapon",
+    "_batch_index": 19312
+  },
+  {
+    "name": "Wear Red Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wear Red Day",
+    "confidence": 80,
+    "notes": "PSD file, event flyer",
+    "_source_name": "Wear Red Day",
+    "_batch_index": 19313
+  },
+  {
+    "name": "weather",
+    "category": "Photoshop - Other",
+    "clean_name": "Weather",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "weather",
+    "_batch_index": 19314
+  },
+  {
+    "name": "Weave 1",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Weave 1",
+    "confidence": 80,
+    "notes": "PSD file, likely weave pattern/texture",
+    "_source_name": "Weave 1",
+    "_batch_index": 19315
+  },
+  {
+    "name": "Weave 2",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Weave 2",
+    "confidence": 80,
+    "notes": "PSD file, likely weave pattern/texture",
+    "_source_name": "Weave 2",
+    "_batch_index": 19316
+  },
+  {
+    "name": "Weave 3",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Weave 3",
+    "confidence": 80,
+    "notes": "PSD file, likely weave pattern/texture",
+    "_source_name": "Weave 3",
+    "_batch_index": 19317
+  },
+  {
+    "name": "Weave 4",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Weave 4",
+    "confidence": 80,
+    "notes": "PSD file, likely weave pattern/texture",
+    "_source_name": "Weave 4",
+    "_batch_index": 19318
+  },
+  {
+    "name": "Weave 5",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Weave 5",
+    "confidence": 80,
+    "notes": "PSD file, likely weave pattern/texture",
+    "_source_name": "Weave 5",
+    "_batch_index": 19319
+  }
+]
