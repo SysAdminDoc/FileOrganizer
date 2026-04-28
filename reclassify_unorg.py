@@ -33,8 +33,8 @@ RESULTS_FILE    = Path(__file__).parent / 'unorg_reclassify_results.json'
 # Correct category mapping by dominant file type
 # .psd → Photoshop, .ai → Illustrator, .jpg/.eps → Stock Photos, .zip → needs deep inspect
 EXTENSION_MAP = {
-    '.psd':  'Photoshop - Other',
-    '.psb':  'Photoshop - Other',
+    '.psd':  'Photoshop - Smart Objects & Templates',
+    '.psb':  'Photoshop - Smart Objects & Templates',
     '.ai':   'Illustrator - Vectors & Assets',
     '.eps':  'Stock Photos - General',
     '.svg':  'Illustrator - Vectors & Assets',
@@ -43,7 +43,7 @@ EXTENSION_MAP = {
     '.png':  'Stock Photos - General',
     '.tif':  'Stock Photos - General',
     '.tiff': 'Stock Photos - General',
-    '.indd': 'Print - Templates & Layouts',
+    '.indd': 'Print - Brochures & Books',
     '.mp4':  'Stock Footage - General',
     '.mov':  'Stock Footage - General',
     '.aep':  None,  # AE file — these belong in AE categories, don't move
@@ -125,10 +125,8 @@ def simple_classify(info: dict) -> Optional[str]:
     # Check for Photoshop-heavy
     psd_count = exts.get('.psd', 0) + exts.get('.psb', 0)
     if psd_count / total > 0.6:
-        return 'Photoshop - Social Media' if any(
-            kw in info['path'].lower()
-            for kw in ('social', 'instagram', 'facebook', 'post', 'story', 'banner')
-        ) else 'Photoshop - Templates & Mockups'
+        # All PSD-heavy items → Smart Objects & Templates (no "Social Media" Photoshop cat)
+        return 'Photoshop - Smart Objects & Templates'
     # Stock photos
     stock_count = sum(exts.get(e, 0) for e in ('.jpg','.jpeg','.eps','.tif','.tiff','.png'))
     if stock_count / total > 0.5:
@@ -162,10 +160,15 @@ def deepseek_classify_batch(items: list[dict]) -> list[dict]:
     )
 
     categories = [
-        'Photoshop - Templates & Mockups', 'Photoshop - Social Media', 'Photoshop - Overlays & FX',
-        'Photoshop - Patterns & Textures', 'Illustrator - Vectors & Assets', 'Print - Templates & Layouts',
-        'Stock Photos - General', 'Stock Footage - General', 'Stock Music & Audio',
-        'Fonts & Typography', 'UI Resources & Icon Sets', 'After Effects - Other',
+        'Photoshop - Smart Objects & Templates', 'Photoshop - Mockups', 'Photoshop - Overlays & FX',
+        'Photoshop - Patterns & Textures', 'Photoshop - Other',
+        'Illustrator - Vectors & Assets', 'Illustrator - Icons & UI Kits',
+        'Print - Flyers & Posters', 'Print - Brochures & Books', 'Print - Business Cards & Stationery',
+        'Print - Social Media Graphics', 'Print - Other',
+        'Stock Photos - General', 'Stock Photos - Food & Drink', 'Stock Photos - Nature & Outdoors',
+        'Stock Footage - General', 'Stock Music & Audio',
+        'Fonts & Typography', 'UI Resources & Icon Sets', 'Mockups - Branding & Stationery',
+        'After Effects - Other',
     ]
 
     prompt = f"""You are classifying design asset folders. Each folder has been moved into an INCORRECT "After Effects" category. 
