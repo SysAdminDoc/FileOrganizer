@@ -88,6 +88,29 @@ All notable changes to FileOrganizer will be documented in this file.
     → `_Review\Orphaned Documentation\` (detached doc files, no parent packages)
   Updates organize_moves.db with corrected destinations.
 
+### Added (session 2026-04-28 continued)
+- `marketplace_enrich.py` — Stage 2 of 4-stage classification pipeline: zero-AI-cost ID lookup
+  - `extract_id(folder_name)` — 9 regex patterns covering Videohive (VH- prefix, leading-zero 9-digit,
+    7–9 digit numeric prefix), MotionElements (nnnnnnnn_MotionElements_ prefix), CreativeMarket (cm_),
+    DesignBundles (db_/designbundles_), Motion Array (ma_), Envato/GraphicRiver (ID-at-end pattern)
+  - `enrich(folder_name)` — fetches marketplace metadata from public APIs/scraping; DeepSeek fallback
+    when scraping fails; caches all results in `marketplace_cache.json`
+  - `CATEGORY_MAP` — 60+ marketplace category strings mapped to our 84-category taxonomy
+  - Fetchers: `fetch_videohive()` (og: tag scrape), `fetch_motionelements()` (API + scrape fallback),
+    `fetch_creativemarket()`, `fetch_envato()` (tries Videohive then GraphicRiver)
+  - `enrich_results_glob(pattern, min_improvement, dry_run)` — post-processes existing batch JSONs
+    in-place without interrupting running pipelines; upgrades items that gain ≥5 conf points
+  - CLI: `--scan-index`, `--scan-folder`, `--lookup NAME`, `--enrich-results GLOB`,
+    `--stats`, `--export-unmapped`
+  - ID coverage: 481/1224 AE items (39%), 223/2625 design_org items (8%), 129/19531 loose files (0.7%)
+- `classify_design.py` — marketplace pre-enrichment integration in `cmd_run()`:
+  - `_try_marketplace_enrich(batch_items)` called before DeepSeek for each batch
+  - Items with marketplace ID + conf ≥ 95 are pre-classified; remaining items go to AI
+  - Merged back in original order, preserving position-based index mapping invariant
+  - Saves `_marketplace_id` annotation in batch JSON for audit trail
+  - Shows `[MKT]` tag in per-batch sample output for pre-classified items
+- `.gitignore` updated: `organize_errors_*.json`, `marketplace_cache.json`, `unmapped_ids.json`
+
 ### Known Issues (as of 2026-04-28)
 - 5 trailing-space/long-path errors in `organize_errors_ae.json` — pending
   `--retry-errors --source ae` after current AE apply run (PID 22500) completes.
@@ -95,8 +118,10 @@ All notable changes to FileOrganizer will be documented in this file.
   auto-skip them ("src gone") and clear the error file.
 - `G:\Organized\_Review\After Effects - Other\` (35 dirs): 32 untracked detached AE project
   subfolders (no DB records) + 3 VH templates (low confidence). Need parent-matching pass.
-- loose_files classify: ~73/326 batches — overnight run in progress (PID 22848)
-- design_org classify: 32/44 batches — nearly complete (PID 13488)
+- loose_files classify: ~246/326 batches remaining — pipeline running (PID 22848)
+- design_org apply: ~1691/2625 items moved — pipeline running (PID 17144)
+- AE apply (PID 22500): phantom nested-path storm on `fast-typography-promo-25863265` item —
+  robocopy exit 9 (>= 8 = actual error), item will land in `organize_errors_ae.json` for retry
 
 
 
