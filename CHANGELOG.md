@@ -89,7 +89,11 @@ All notable changes to FileOrganizer will be documented in this file.
   Updates organize_moves.db with corrected destinations.
 
 ### Added (session 2026-04-28 continued)
-- `marketplace_enrich.py` — Stage 2 of 4-stage classification pipeline: zero-AI-cost ID lookup
+- `organize_run.py` — `_lp(path)` helper: prepends `\\?\` extended-length path prefix to both
+  `src` and `dst` passed to robocopy. Previous code only passed `/256` flag which handles the
+  *destination* side; source directory scanning still hit MAX_PATH (260 chars) causing ERROR 3
+  on deeply nested AE template items (e.g. fast-typography-promo-25863265, 263-char src path).
+  `_lp()` normalises slashes and handles UNC paths correctly.
   - `extract_id(folder_name)` — 9 regex patterns covering Videohive (VH- prefix, leading-zero 9-digit,
     7–9 digit numeric prefix), MotionElements (nnnnnnnn_MotionElements_ prefix), CreativeMarket (cm_),
     DesignBundles (db_/designbundles_), Motion Array (ma_), Envato/GraphicRiver (ID-at-end pattern)

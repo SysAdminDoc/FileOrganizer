@@ -318,11 +318,25 @@ def is_cross_drive(src: str, dst: str) -> bool:
     return os.path.splitdrive(src)[0].upper() != os.path.splitdrive(dst)[0].upper()
 
 # ── Robocopy-based move (reliable for cross-drive, Unicode, long paths) ────────
+def _lp(path: str) -> str:
+    """Return a \\\\?\\-prefixed extended-length path for Win32 robocopy calls.
+    Normalises forward slashes and strips any existing \\\\?\\ prefix first.
+    """
+    p = os.path.abspath(path).replace('/', '\\')
+    if p.startswith('\\\\?\\'):
+        return p
+    if p.startswith('\\\\'):          # UNC path
+        return '\\\\?\\UNC\\' + p[2:]
+    return '\\\\?\\' + p
+
+
 def robust_move(src: str, dst: str) -> None:
     """
     Move `src` directory to `dst`.
     - Same drive: os.rename (atomic).
     - Cross-drive: robocopy /MOVE /256 (long-path aware), then remove emptied src.
+    Both src and dst are passed with \\\\?\\ prefix so robocopy source-scanning
+    also honours extended path lengths (not just the destination).
     Raises RuntimeError if robocopy exit code >= 8 (actual failure).
     Robocopy exit codes: 0=nothing to do, 1=files copied, 2=extra files,
     3=mismatched, 4=mismatched+copied, 5-7=combinations — all < 8 = success.
@@ -333,7 +347,7 @@ def robust_move(src: str, dst: str) -> None:
 
     os.makedirs(dst, exist_ok=True)
     result = subprocess.run([
-        'robocopy', src, dst,
+        'robocopy', _lp(src), _lp(dst),
         '/MOVE',   # move (delete source files after copy)
         '/E',      # include empty subdirs
         '/256',    # disable 260-char path limit (long path support)
