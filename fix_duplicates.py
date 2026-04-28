@@ -39,7 +39,7 @@ def robocopy_merge(src: Path, dst: Path, dry_run: bool = False) -> tuple[int, li
         'robocopy',
         str(src), str(dst),
         '/E',          # copy all subdirs including empty
-        '/COPYALL',    # preserve timestamps/attrs
+        '/COPY:DAT',   # preserve data/attributes/timestamps (no audit rights needed)
         '/R:1', '/W:1',
         '/NP',         # no progress percentage
         '/NS', '/NC',  # no size/class in output
