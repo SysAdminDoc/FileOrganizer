@@ -246,14 +246,60 @@ def infer_category_from_name(name: str, asset_type: str) -> str:
     return base
 
 
+# ── Community fingerprint DB lookup ───────────────────────────────────────────
+
+def lookup_by_fingerprint(folder_path: str) -> dict | None:
+    """
+    Query the community asset fingerprint database for an exact or near-exact
+    match by file hash.  Returns a result dict with 'source': 'fingerprint_db'
+    if found, otherwise None.
+
+    This runs before any AI call — a fingerprint match needs no network round-trip
+    and is more reliable than name-based heuristics.
+
+    Requires asset_fingerprints.db to exist (built with asset_db.py --build).
+    """
+    try:
+        import importlib.util, os
+        # Locate asset_db.py relative to this package (one level up)
+        db_mod_path = os.path.join(os.path.dirname(__file__), '..', 'asset_db.py')
+        db_file     = os.path.join(os.path.dirname(__file__), '..', 'asset_fingerprints.db')
+        if not os.path.exists(db_file) or not os.path.exists(db_mod_path):
+            return None
+        spec = importlib.util.spec_from_file_location('asset_db', db_mod_path)
+        asset_db = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(asset_db)
+        hit = asset_db.lookup_folder(folder_path, db_file)
+        if not hit or hit.get('match_type') == 'none':
+            return None
+        return {
+            'display_name': hit['clean_name'],
+            'category':     hit['category'],
+            'marketplace':  hit['marketplace'] or 'Unknown',
+            'asset_type':   'Other',
+            'confidence':   hit['confidence'],
+            'match_type':   hit['match_type'],
+            'source':       'fingerprint_db',
+        }
+    except Exception as e:
+        log.debug("fingerprint DB lookup error: %s", e)
+        return None
+
+
 # ── Single-item lookup ─────────────────────────────────────────────────────────
 
 def lookup_single(name: str, path: str = '', provider=None) -> dict:
     """
     Identify a single design asset by name.
     Returns: {display_name, category, marketplace, asset_type, confidence, source}
-    source: 'cache' | 'heuristic' | 'ai'
+    source: 'fingerprint_db' | 'cache' | 'heuristic' | 'ai'
     """
+    # Try community fingerprint DB first (folder_path match, strongest signal)
+    if path and os.path.isdir(path):
+        fp_result = lookup_by_fingerprint(path)
+        if fp_result and fp_result['confidence'] >= 75:
+            return fp_result
+
     # Try cache first
     cached = _cache_get(name)
     if cached:
@@ -337,10 +383,17 @@ def lookup_batch(items: list, provider=None, batch_size: int = 20,
             path = getattr(item, 'full_source_path', None) or getattr(item, 'full_src', '')
             pairs.append((name, path))
 
-    # Check cache first, collect uncached
+    # Check fingerprint DB first (strongest signal, no API cost),
+    # then cache, collect still-uncached for AI
     uncached_idx = []
     pre_results = {}
     for i, (name, path) in enumerate(pairs):
+        # Fingerprint DB — hits are high-confidence, skip AI for them
+        if path and os.path.isdir(path):
+            fp_result = lookup_by_fingerprint(path)
+            if fp_result and fp_result['confidence'] >= 75:
+                pre_results[i] = fp_result
+                continue
         cached = _cache_get(name)
         if cached:
             cached['source'] = 'cache'
