@@ -30,6 +30,11 @@ unmapped_ids.json
 review_research_results.json
 _patch_research.py
 migrate_*.log
+fix_phantom_categories_log.json
+fix_duplicates_log.json
+fix_stock_ae_results.json
+unorg_reclassify_results.json
+ae_review_results.json
 
 # DB files (export JSON is the shareable artifact)
 asset_fingerprints.db
