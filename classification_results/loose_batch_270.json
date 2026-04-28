@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Photography Workshop Flyer Template Back",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Workshop Flyer Template Back",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography Workshop Flyer Template Back",
+    "_batch_index": 16140
+  },
+  {
+    "name": "Photography Workshop Flyer Template Front",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Workshop Flyer Template Front",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography Workshop Flyer Template Front",
+    "_batch_index": 16141
+  },
+  {
+    "name": "Photography-Collage-Flyer-Orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Orange",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Orange",
+    "_batch_index": 16142
+  },
+  {
+    "name": "Photography-Collage-Flyer-Orange_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Orange 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Orange_2",
+    "_batch_index": 16143
+  },
+  {
+    "name": "Photography-Collage-Flyer-Orange_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Orange 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Orange_3",
+    "_batch_index": 16144
+  },
+  {
+    "name": "Photography-Collage-Flyer-Orange_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Orange 4",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Orange_4",
+    "_batch_index": 16145
+  },
+  {
+    "name": "Photography-Collage-Flyer-Purple",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Purple",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Purple",
+    "_batch_index": 16146
+  },
+  {
+    "name": "Photography-Collage-Flyer-Purple_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Purple 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Purple_2",
+    "_batch_index": 16147
+  },
+  {
+    "name": "Photography-Collage-Flyer-Purple_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Purple 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Purple_3",
+    "_batch_index": 16148
+  },
+  {
+    "name": "Photography-Collage-Flyer-Purple_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Purple 4",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Purple_4",
+    "_batch_index": 16149
+  },
+  {
+    "name": "Photography-Collage-Flyer-Teal",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Teal",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Teal",
+    "_batch_index": 16150
+  },
+  {
+    "name": "Photography-Collage-Flyer-Teal_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Teal 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Teal_2",
+    "_batch_index": 16151
+  },
+  {
+    "name": "Photography-Collage-Flyer-Teal_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Teal 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Teal_3",
+    "_batch_index": 16152
+  },
+  {
+    "name": "Photography-Collage-Flyer-Teal_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Collage Flyer Teal 4",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Photography-Collage-Flyer-Teal_4",
+    "_batch_index": 16153
+  },
+  {
+    "name": "photography_1",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 1",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_1",
+    "_batch_index": 16154
+  },
+  {
+    "name": "photography_10",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 10",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_10",
+    "_batch_index": 16155
+  },
+  {
+    "name": "photography_2",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 2",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_2",
+    "_batch_index": 16156
+  },
+  {
+    "name": "photography_3",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 3",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_3",
+    "_batch_index": 16157
+  },
+  {
+    "name": "photography_4",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 4",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_4",
+    "_batch_index": 16158
+  },
+  {
+    "name": "photography_5",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 5",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_5",
+    "_batch_index": 16159
+  },
+  {
+    "name": "photography_6",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 6",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_6",
+    "_batch_index": 16160
+  },
+  {
+    "name": "photography_7",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 7",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_7",
+    "_batch_index": 16161
+  },
+  {
+    "name": "photography_8",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 8",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_8",
+    "_batch_index": 16162
+  },
+  {
+    "name": "photography_9",
+    "category": "Stock Photos - General",
+    "clean_name": "Photography 9",
+    "confidence": 70,
+    "notes": "PSD file, likely a stock photo or image file",
+    "_source_name": "photography_9",
+    "_batch_index": 16163
+  },
+  {
+    "name": "Photoshop File_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Photoshop File 2",
+    "confidence": 60,
+    "notes": "Generic PSD file, no clear subcategory",
+    "_source_name": "Photoshop File_2",
+    "_batch_index": 16164
+  },
+  {
+    "name": "photoshop-text-effects_2",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Photoshop Text Effects 2",
+    "confidence": 85,
+    "notes": "PSD text effects file",
+    "_source_name": "photoshop-text-effects_2",
+    "_batch_index": 16165
+  },
+  {
+    "name": "pichic",
+    "category": "Photoshop - Other",
+    "clean_name": "Pichic",
+    "confidence": 50,
+    "notes": "Unclear PSD file",
+    "_source_name": "pichic",
+    "_batch_index": 16166
+  },
+  {
+    "name": "Picnic",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Picnic",
+    "confidence": 70,
+    "notes": "Likely a flyer or poster PSD",
+    "_source_name": "Picnic",
+    "_batch_index": 16167
+  },
+  {
+    "name": "picnic_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Picnic 2",
+    "confidence": 70,
+    "notes": "Likely a flyer or poster PSD",
+    "_source_name": "picnic_2",
+    "_batch_index": 16168
+  },
+  {
+    "name": "picnic_time_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Picnic Time Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "picnic_time_flyer",
+    "_batch_index": 16169
+  },
+  {
+    "name": "pictures",
+    "category": "Stock Photos - General",
+    "clean_name": "Pictures",
+    "confidence": 60,
+    "notes": "Generic PSD, likely images",
+    "_source_name": "pictures",
+    "_batch_index": 16170
+  },
+  {
+    "name": "picu nurse",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "PICU Nurse",
+    "confidence": 85,
+    "notes": "EPS vector file",
+    "_source_name": "picu nurse",
+    "_batch_index": 16171
+  },
+  {
+    "name": "pikbest.1002608.chinese.style.ink.painting.the.most.beautiful.ancient.village.film.ae.template",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Chinese Style Ink Painting Ancient Village Film AE Template",
+    "confidence": 85,
+    "notes": "AEP template with ink painting style, cinematic",
+    "_source_name": "pikbest.1002608.chinese.style.ink.painting.the.most.beautiful.ancient.village.film.ae.template",
+    "_batch_index": 16172
+  },
+  {
+    "name": "pikbest.1012229.2019.shocking.annual.meeting.opening.ae.template",
+    "category": "After Effects - Event & Party",
+    "clean_name": "2019 Shocking Annual Meeting Opening AE Template",
+    "confidence": 90,
+    "notes": "AEP annual meeting opener",
+    "_source_name": "pikbest.1012229.2019.shocking.annual.meeting.opening.ae.template",
+    "_batch_index": 16173
+  },
+  {
+    "name": "pikbest.1020190.chinese.style.ink.painting.chinese.traditional.culture.civilization.display.ae.template",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Chinese Style Ink Painting Culture Display AE Template",
+    "confidence": 85,
+    "notes": "AEP ink painting cultural display",
+    "_source_name": "pikbest.1020190.chinese.style.ink.painting.chinese.traditional.culture.civilization.display.ae.template",
+    "_batch_index": 16174
+  },
+  {
+    "name": "pikbest.1036542.golden.light.2019.corporate.annual.awards.ceremony.ae.template",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Golden Light 2019 Corporate Annual Awards Ceremony AE Template",
+    "confidence": 90,
+    "notes": "AEP awards ceremony template",
+    "_source_name": "pikbest.1036542.golden.light.2019.corporate.annual.awards.ceremony.ae.template",
+    "_batch_index": 16175
+  },
+  {
+    "name": "pikbest.1053219.e3d.golden.award.medal.show.ae.template",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "E3D Golden Award Medal Show AE Template",
+    "confidence": 85,
+    "notes": "AEP with E3D, award medal reveal",
+    "_source_name": "pikbest.1053219.e3d.golden.award.medal.show.ae.template",
+    "_batch_index": 16176
+  },
+  {
+    "name": "pikbest.1148192.2019.annual.awards.presentation.and.opening.ae.template",
+    "category": "After Effects - Event & Party",
+    "clean_name": "2019 Annual Awards Presentation and Opening AE Template",
+    "confidence": 90,
+    "notes": "AEP awards presentation opener",
+    "_source_name": "pikbest.1148192.2019.annual.awards.presentation.and.opening.ae.template",
+    "_batch_index": 16177
+  },
+  {
+    "name": "pikbest.1169077.golden.business.enterprise.annual.meeting.outstanding.staff.awards.ceremony.ae.template",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Golden Business Annual Meeting Awards Ceremony AE Template",
+    "confidence": 90,
+    "notes": "AEP corporate awards ceremony",
+    "_source_name": "pikbest.1169077.golden.business.enterprise.annual.meeting.outstanding.staff.awards.ceremony.ae.template",
+    "_batch_index": 16178
+  },
+  {
+    "name": "pikbest.1183529.large.tree.and.water.flower.gathering.sign.ae.template.for.growing.grassland",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Large Tree and Water Flower Gathering Sign AE Template",
+    "confidence": 85,
+    "notes": "AEP nature logo reveal",
+    "_source_name": "pikbest.1183529.large.tree.and.water.flower.gathering.sign.ae.template.for.growing.grassland",
+    "_batch_index": 16179
+  },
+  {
+    "name": "pikbest.1205496.awards.ceremony.fashion.unveiled.golden.particle.special.effects.packaging.ae.template",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Awards Ceremony Fashion Unveiled Golden Particle AE Template",
+    "confidence": 90,
+    "notes": "AEP awards ceremony with particles",
+    "_source_name": "pikbest.1205496.awards.ceremony.fashion.unveiled.golden.particle.special.effects.packaging.ae.template",
+    "_batch_index": 16180
+  },
+  {
+    "name": "pikbest.1613536.2020.year.of.the.rat.new.year.new.year._s.greetings.ae.template",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "2020 Year of the Rat New Year Greetings AE Template",
+    "confidence": 90,
+    "notes": "AEP Chinese New Year template",
+    "_source_name": "pikbest.1613536.2020.year.of.the.rat.new.year.new.year._s.greetings.ae.template",
+    "_batch_index": 16181
+  },
+  {
+    "name": "pikbest.1613792.shocking.launch.ceremony.palm.start.ball.video.title.ae.template",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Shocking Launch Ceremony Palm Start Ball Video Title AE Template",
+    "confidence": 85,
+    "notes": "AEP launch ceremony opener",
+    "_source_name": "pikbest.1613792.shocking.launch.ceremony.palm.start.ball.video.title.ae.template",
+    "_batch_index": 16182
+  },
+  {
+    "name": "pikbest.1617047.e3d.shocking.golden.10.second.countdown.explosion.ae.template",
+    "category": "After Effects - Event & Party",
+    "clean_name": "E3D Shocking Golden 10 Second Countdown Explosion AE Template",
+    "confidence": 85,
+    "notes": "AEP countdown with E3D",
+    "_source_name": "pikbest.1617047.e3d.shocking.golden.10.second.countdown.explosion.ae.template",
+    "_batch_index": 16183
+  },
+  {
+    "name": "pikbest.1617287.opening.ae.template.for.2020.annual.conference",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Opening AE Template for 2020 Annual Conference",
+    "confidence": 90,
+    "notes": "AEP annual conference opener",
+    "_source_name": "pikbest.1617287.opening.ae.template.for.2020.annual.conference",
+    "_batch_index": 16184
+  },
+  {
+    "name": "pikbest.1617349.2020.chinese.wind.mouse.year.film.ae.template",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "2020 Chinese Wind Mouse Year Film AE Template",
+    "confidence": 90,
+    "notes": "AEP Chinese New Year template",
+    "_source_name": "pikbest.1617349.2020.chinese.wind.mouse.year.film.ae.template",
+    "_batch_index": 16185
+  },
+  {
+    "name": "pikbest.1617419.historical.timeline.wall.photo.display.ae.template",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Historical Timeline Wall Photo Display AE Template",
+    "confidence": 90,
+    "notes": "AEP photo timeline display",
+    "_source_name": "pikbest.1617419.historical.timeline.wall.photo.display.ae.template",
+    "_batch_index": 16186
+  },
+  {
+    "name": "pikbest.1617793.2020.new.year.and.new.year.fan.shaped.ae.template",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "2020 New Year Fan Shaped AE Template",
+    "confidence": 90,
+    "notes": "AEP New Year template",
+    "_source_name": "pikbest.1617793.2020.new.year.and.new.year.fan.shaped.ae.template",
+    "_batch_index": 16187
+  },
+  {
+    "name": "pikbest.1617903.chinese.style.festive.rat.year.box.ae.template",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Chinese Style Festive Rat Year Box AE Template",
+    "confidence": 90,
+    "notes": "AEP Chinese New Year box template",
+    "_source_name": "pikbest.1617903.chinese.style.festive.rat.year.box.ae.template",
+    "_batch_index": 16188
+  },
+  {
+    "name": "pikbest.1618102.opening.ae.template.of.particle.enterprise.annual.meeting",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Opening AE Template of Particle Enterprise Annual Meeting",
+    "confidence": 90,
+    "notes": "AEP particle annual meeting opener",
+    "_source_name": "pikbest.1618102.opening.ae.template.of.particle.enterprise.annual.meeting",
+    "_batch_index": 16189
+  },
+  {
+    "name": "pikbest.1618166.new.years.new.years.opening.film.ae.template",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "New Years Opening Film AE Template",
+    "confidence": 90,
+    "notes": "AEP New Year opener",
+    "_source_name": "pikbest.1618166.new.years.new.years.opening.film.ae.template",
+    "_batch_index": 16190
+  },
+  {
+    "name": "pikbest.1618285.chinese.style.2020.chinese.new.year.festive.element.skewer.ae.mold",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Chinese Style 2020 Chinese New Year Festive Element Skewer AE Mold",
+    "confidence": 90,
+    "notes": "AEP Chinese New Year template",
+    "_source_name": "pikbest.1618285.chinese.style.2020.chinese.new.year.festive.element.skewer.ae.mold",
+    "_batch_index": 16191
+  },
+  {
+    "name": "pikbest.1618288.golden.rat.spring.festival.2020.spring.festival.festive.new.year.ae.template",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Golden Rat Spring Festival 2020 Festive New Year AE Template",
+    "confidence": 90,
+    "notes": "AEP Spring Festival template",
+    "_source_name": "pikbest.1618288.golden.rat.spring.festival.2020.spring.festival.festive.new.year.ae.template",
+    "_batch_index": 16192
+  },
+  {
+    "name": "pikbest.1618674.2020.red.festive.chinese.year.of.the.rat.new.year.ae.template",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "2020 Red Festive Chinese Year of the Rat New Year AE Template",
+    "confidence": 90,
+    "notes": "AEP Chinese New Year template",
+    "_source_name": "pikbest.1618674.2020.red.festive.chinese.year.of.the.rat.new.year.ae.template",
+    "_batch_index": 16193
+  },
+  {
+    "name": "pikbest.172707.cool.dot.particle.effects.special.effects.metal.head",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Cool Dot Particle Effects Special Effects Metal Head",
+    "confidence": 85,
+    "notes": "AEP particle effects template",
+    "_source_name": "pikbest.172707.cool.dot.particle.effects.special.effects.metal.head",
+    "_batch_index": 16194
+  },
+  {
+    "name": "pikbest.204418.kitchen.gourmet.grill.cooking.show.video.advertising.video",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Kitchen Gourmet Grill Cooking Show Video Advertising Video",
+    "confidence": 80,
+    "notes": "AEP cooking show opener",
+    "_source_name": "pikbest.204418.kitchen.gourmet.grill.cooking.show.video.advertising.video",
+    "_batch_index": 16195
+  },
+  {
+    "name": "pikbest.239965.ae.template.real.shot.kitchen.vegetable.composite.title.header",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Real Shot Kitchen Vegetable Composite Title Header AE Template",
+    "confidence": 85,
+    "notes": "AEP title header template",
+    "_source_name": "pikbest.239965.ae.template.real.shot.kitchen.vegetable.composite.title.header",
+    "_batch_index": 16196
+  },
+  {
+    "name": "pikbest.307116.chinese.wind.ink.smoke.blooming.effects.show.ae.template",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Chinese Wind Ink Smoke Blooming Effects Show AE Template",
+    "confidence": 85,
+    "notes": "AEP ink slideshow template",
+    "_source_name": "pikbest.307116.chinese.wind.ink.smoke.blooming.effects.show.ae.template",
+    "_batch_index": 16197
+  },
+  {
+    "name": "pikbest.446368.chinese.style.ink.painting.chinese.painting.and.calligraphy.landscape.history.original.ae.template",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Chinese Style Ink Painting Calligraphy Landscape History AE Template",
+    "confidence": 85,
+    "notes": "AEP ink painting cinematic template",
+    "_source_name": "pikbest.446368.chinese.style.ink.painting.chinese.painting.and.calligraphy.landscape.history.original.ae.template",
+    "_batch_index": 16198
+  },
+  {
+    "name": "Pin Button Badges PSD Mockups Templates",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Pin Button Badges PSD Mockups Templates",
+    "confidence": 95,
+    "notes": "PSD mockup templates for badges",
+    "_source_name": "Pin Button Badges PSD Mockups Templates",
+    "_batch_index": 16199
+  }
+]

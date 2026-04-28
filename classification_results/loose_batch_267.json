@@ -1,0 +1,542 @@
+[
+  {
+    "name": "page_5-6",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Page 5-6",
+    "confidence": 85,
+    "notes": "PSD file, likely a page template",
+    "_source_name": "page_5-6",
+    "_batch_index": 15960
+  },
+  {
+    "name": "page_5-6_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Page 5-6 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a page template",
+    "_source_name": "page_5-6_2",
+    "_batch_index": 15961
+  },
+  {
+    "name": "page_7-8",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Page 7-8",
+    "confidence": 85,
+    "notes": "PSD file, likely a page template",
+    "_source_name": "page_7-8",
+    "_batch_index": 15962
+  },
+  {
+    "name": "page_7-8_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Page 7-8 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a page template",
+    "_source_name": "page_7-8_2",
+    "_batch_index": 15963
+  },
+  {
+    "name": "page_9-10",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Page 9-10",
+    "confidence": 85,
+    "notes": "PSD file, likely a page template",
+    "_source_name": "page_9-10",
+    "_batch_index": 15964
+  },
+  {
+    "name": "page_9-10_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Page 9-10 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a page template",
+    "_source_name": "page_9-10_2",
+    "_batch_index": 15965
+  },
+  {
+    "name": "pain_main file",
+    "category": "Photoshop - Other",
+    "clean_name": "Pain Main File",
+    "confidence": 70,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "pain_main file",
+    "_batch_index": 15966
+  },
+  {
+    "name": "Paint Texture",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paint Texture",
+    "confidence": 90,
+    "notes": "PSD texture file",
+    "_source_name": "Paint Texture",
+    "_batch_index": 15967
+  },
+  {
+    "name": "Paintball Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Paintball Flyer",
+    "confidence": 95,
+    "notes": "Flyer template in PSD",
+    "_source_name": "Paintball Flyer",
+    "_batch_index": 15968
+  },
+  {
+    "name": "Paintball-Flyer-CMYK",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Paintball Flyer CMYK",
+    "confidence": 95,
+    "notes": "CMYK flyer template",
+    "_source_name": "Paintball-Flyer-CMYK",
+    "_batch_index": 15969
+  },
+  {
+    "name": "Paintball-Flyer-RGB",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Paintball Flyer RGB",
+    "confidence": 95,
+    "notes": "RGB flyer template",
+    "_source_name": "Paintball-Flyer-RGB",
+    "_batch_index": 15970
+  },
+  {
+    "name": "Painted Effect",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Painted Effect",
+    "confidence": 85,
+    "notes": "PSD effect file",
+    "_source_name": "Painted Effect",
+    "_batch_index": 15971
+  },
+  {
+    "name": "Painted PRO Painting Action",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Painted PRO Painting Action",
+    "confidence": 95,
+    "notes": "Contains .atn action file",
+    "_source_name": "Painted PRO Painting Action",
+    "_batch_index": 15972
+  },
+  {
+    "name": "painted_text_effect1",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Painted Text Effect 1",
+    "confidence": 90,
+    "notes": "PSD text effect",
+    "_source_name": "painted_text_effect1",
+    "_batch_index": 15973
+  },
+  {
+    "name": "painted_text_effect2",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Painted Text Effect 2",
+    "confidence": 90,
+    "notes": "PSD text effect",
+    "_source_name": "painted_text_effect2",
+    "_batch_index": 15974
+  },
+  {
+    "name": "painted_text_effect3",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Painted Text Effect 3",
+    "confidence": 90,
+    "notes": "PSD text effect",
+    "_source_name": "painted_text_effect3",
+    "_batch_index": 15975
+  },
+  {
+    "name": "painted_text_effect4",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Painted Text Effect 4",
+    "confidence": 90,
+    "notes": "PSD text effect",
+    "_source_name": "painted_text_effect4",
+    "_batch_index": 15976
+  },
+  {
+    "name": "painted_text_effect5",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Painted Text Effect 5",
+    "confidence": 90,
+    "notes": "PSD text effect",
+    "_source_name": "painted_text_effect5",
+    "_batch_index": 15977
+  },
+  {
+    "name": "painted_text_effect6",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Painted Text Effect 6",
+    "confidence": 90,
+    "notes": "PSD text effect",
+    "_source_name": "painted_text_effect6",
+    "_batch_index": 15978
+  },
+  {
+    "name": "painted_text_effect7",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Painted Text Effect 7",
+    "confidence": 90,
+    "notes": "PSD text effect",
+    "_source_name": "painted_text_effect7",
+    "_batch_index": 15979
+  },
+  {
+    "name": "PaintIt_landscape_updt",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "PaintIt Landscape Update",
+    "confidence": 80,
+    "notes": "PSD template",
+    "_source_name": "PaintIt_landscape_updt",
+    "_batch_index": 15980
+  },
+  {
+    "name": "PaintIt_portrait_updt",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "PaintIt Portrait Update",
+    "confidence": 80,
+    "notes": "PSD template",
+    "_source_name": "PaintIt_portrait_updt",
+    "_batch_index": 15981
+  },
+  {
+    "name": "Palm Sunday",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Palm Sunday",
+    "confidence": 85,
+    "notes": "PSD flyer for religious event",
+    "_source_name": "Palm Sunday",
+    "_batch_index": 15982
+  },
+  {
+    "name": "Palm",
+    "category": "Photoshop - Other",
+    "clean_name": "Palm",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "Palm",
+    "_batch_index": 15983
+  },
+  {
+    "name": "Palm_Sunday",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Palm Sunday",
+    "confidence": 85,
+    "notes": "PSD flyer for religious event",
+    "_source_name": "Palm_Sunday",
+    "_batch_index": 15984
+  },
+  {
+    "name": "pancake_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Pancake 2",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "pancake_2",
+    "_batch_index": 15985
+  },
+  {
+    "name": "pancake_day_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Pancake Day Flyer",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "pancake_day_flyer",
+    "_batch_index": 15986
+  },
+  {
+    "name": "paochezulin",
+    "category": "Photoshop - Other",
+    "clean_name": "Paochezulin",
+    "confidence": 50,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "paochezulin",
+    "_batch_index": 15987
+  },
+  {
+    "name": "Paper Bag",
+    "category": "Mockups - Packaging",
+    "clean_name": "Paper Bag",
+    "confidence": 90,
+    "notes": "Mockup of paper bag",
+    "_source_name": "Paper Bag",
+    "_batch_index": 15988
+  },
+  {
+    "name": "Paper-Big Canvas",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper Big Canvas",
+    "confidence": 90,
+    "notes": "Paper texture",
+    "_source_name": "Paper-Big Canvas",
+    "_batch_index": 15989
+  },
+  {
+    "name": "Paper-Fibrous",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper Fibrous",
+    "confidence": 90,
+    "notes": "Paper texture",
+    "_source_name": "Paper-Fibrous",
+    "_batch_index": 15990
+  },
+  {
+    "name": "Paper-Fine",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper Fine",
+    "confidence": 90,
+    "notes": "Paper texture",
+    "_source_name": "Paper-Fine",
+    "_batch_index": 15991
+  },
+  {
+    "name": "Paper-Regular",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper Regular",
+    "confidence": 90,
+    "notes": "Paper texture",
+    "_source_name": "Paper-Regular",
+    "_batch_index": 15992
+  },
+  {
+    "name": "Paper-Rough",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper Rough",
+    "confidence": 90,
+    "notes": "Paper texture",
+    "_source_name": "Paper-Rough",
+    "_batch_index": 15993
+  },
+  {
+    "name": "Paper-Rougher",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper Rougher",
+    "confidence": 90,
+    "notes": "Paper texture",
+    "_source_name": "Paper-Rougher",
+    "_batch_index": 15994
+  },
+  {
+    "name": "Paper-Watercolor",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper Watercolor",
+    "confidence": 90,
+    "notes": "Paper texture",
+    "_source_name": "Paper-Watercolor",
+    "_batch_index": 15995
+  },
+  {
+    "name": "Paper-XRough",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper XRough",
+    "confidence": 90,
+    "notes": "Paper texture",
+    "_source_name": "Paper-XRough",
+    "_batch_index": 15996
+  },
+  {
+    "name": "Paper",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Paper",
+    "confidence": 85,
+    "notes": "Paper texture",
+    "_source_name": "Paper",
+    "_batch_index": 15997
+  },
+  {
+    "name": "Parents' Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Parents' Day",
+    "confidence": 85,
+    "notes": "PSD flyer",
+    "_source_name": "Parents' Day",
+    "_batch_index": 15998
+  },
+  {
+    "name": "Parents_Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Parents Day",
+    "confidence": 85,
+    "notes": "PSD flyer",
+    "_source_name": "Parents_Day",
+    "_batch_index": 15999
+  },
+  {
+    "name": "Park Clean Up Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Park Clean Up Flyer",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "Park Clean Up Flyer",
+    "_batch_index": 16000
+  },
+  {
+    "name": "particles bg",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Particles Background",
+    "confidence": 80,
+    "notes": "PSD background with particles",
+    "_source_name": "particles bg",
+    "_batch_index": 16001
+  },
+  {
+    "name": "Partners #1",
+    "category": "Photoshop - Other",
+    "clean_name": "Partners 1",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "Partners #1",
+    "_batch_index": 16002
+  },
+  {
+    "name": "Partners #2",
+    "category": "Photoshop - Other",
+    "clean_name": "Partners 2",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "Partners #2",
+    "_batch_index": 16003
+  },
+  {
+    "name": "Party_text_effect",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Party Text Effect",
+    "confidence": 85,
+    "notes": "EPS vector text effect",
+    "_source_name": "Party_text_effect",
+    "_batch_index": 16004
+  },
+  {
+    "name": "Passion Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passion Flyer Template",
+    "confidence": 95,
+    "notes": "Flyer template in PSD",
+    "_source_name": "Passion Flyer Template",
+    "_batch_index": 16005
+  },
+  {
+    "name": "Passion in yo' Panties",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passion in yo' Panties",
+    "confidence": 80,
+    "notes": "PSD flyer",
+    "_source_name": "Passion in yo' Panties",
+    "_batch_index": 16006
+  },
+  {
+    "name": "PASSOVER DINNER FLYER",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passover Dinner Flyer",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "PASSOVER DINNER FLYER",
+    "_batch_index": 16007
+  },
+  {
+    "name": "Passover Dinner_01",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passover Dinner 01",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "Passover Dinner_01",
+    "_batch_index": 16008
+  },
+  {
+    "name": "Passover Dinner_02",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passover Dinner 02",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "Passover Dinner_02",
+    "_batch_index": 16009
+  },
+  {
+    "name": "Passover Dinner_03",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passover Dinner 03",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "Passover Dinner_03",
+    "_batch_index": 16010
+  },
+  {
+    "name": "Passover Seder",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passover Seder",
+    "confidence": 90,
+    "notes": "PSD flyer",
+    "_source_name": "Passover Seder",
+    "_batch_index": 16011
+  },
+  {
+    "name": "Passover",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passover",
+    "confidence": 85,
+    "notes": "PSD flyer",
+    "_source_name": "Passover",
+    "_batch_index": 16012
+  },
+  {
+    "name": "pasta_time",
+    "category": "Photoshop - Other",
+    "clean_name": "Pasta Time",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "pasta_time",
+    "_batch_index": 16013
+  },
+  {
+    "name": "PATCHWORK-Effect Photoshop-TOOLKIT_2",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Patchwork Effect Photoshop Toolkit",
+    "confidence": 95,
+    "notes": "Contains .atn, .abr, .pat, .psd - action toolkit",
+    "_source_name": "PATCHWORK-Effect Photoshop-TOOLKIT_2",
+    "_batch_index": 16014
+  },
+  {
+    "name": "pathway_of_faith_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Pathway of Faith Flyer",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "pathway_of_faith_flyer",
+    "_batch_index": 16015
+  },
+  {
+    "name": "Patriot's Day_psd_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Patriot's Day PSD Flyer",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "Patriot's Day_psd_flyer",
+    "_batch_index": 16016
+  },
+  {
+    "name": "Patriot's Day_psd_flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Patriot's Day PSD Flyer 3",
+    "confidence": 95,
+    "notes": "Flyer template",
+    "_source_name": "Patriot's Day_psd_flyer_3",
+    "_batch_index": 16017
+  },
+  {
+    "name": "Patriot'sDay",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Patriot's Day",
+    "confidence": 90,
+    "notes": "PSD flyer",
+    "_source_name": "Patriot'sDay",
+    "_batch_index": 16018
+  },
+  {
+    "name": "Pattern_6063",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Pattern 6063",
+    "confidence": 85,
+    "notes": "EPS vector pattern",
+    "_source_name": "Pattern_6063",
+    "_batch_index": 16019
+  }
+]
