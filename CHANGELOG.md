@@ -149,6 +149,42 @@ All notable changes to FileOrganizer will be documented in this file.
     journals each correction back to `organize_moves.db`; `safe_dest()` handles name collisions.
   - `unorg_reclassify_results.json` — audit record of all analyze recommendations.
 
+### Added (session 2026-04-28 design_elements)
+- `build_source_index.py --source design_elements` — new indexer for `G:\Design Organized\Design Elements\`
+  - Treats each non-empty first-level subfolder as one directory-move item (not file-level).
+  - Profiles file extensions for each subfolder (`ext_profile`, `dominant_ext`, `file_count`).
+  - Skips 40 empty folders; produces 18-item `design_elements_index.json`.
+  - `is_file_batch: true` flag distinguishes these dir-of-files items from normal nested dirs.
+- `classify_design.py` + `organize_run.py` — `design_elements` source config added to `SOURCE_CONFIGS`.
+  - Batch prefix `de_batch_`, index `design_elements_index.json`, source dir `G:\Design Organized\Design Elements`.
+  - `organize_run.py --source design_elements` choice added to argparse and `_SOURCE_DIRS` map.
+  - `load_index_for_source('design_elements')`, `batch_offset()` de_batch_ handler, `load_all_with_index()`
+    filter all updated.
+- Design Elements classification + apply — COMPLETE:
+  - `de_batch_001.json` — 18 items classified in 1 DeepSeek batch (all ≥70% confidence, 0 _Review).
+  - 18 moves applied (same-drive G: → G:, instant via os.rename):
+    - Backgrounds (95 JPG) → `Photoshop - Patterns & Textures`
+    - Business Cards (164 JPG) → `Print - Business Cards & Stationery\Business Cards (2)`
+    - Cards (168 PSD) → `Print - Business Cards & Stationery`
+    - Indesign (295 INDD) → `Print - Brochures & Books`
+    - Print Inspiration Pack 7200 images (2330 JPG/PSD/INDD) → `Print - Other`
+    - Cover Action Pro v1.3, v2.0 and v2.5 → `Photoshop - Actions & Presets`
+    - Facebook Covers (73 JPG) → `Photoshop - Smart Objects & Templates`
+    - The Big Bundle - Photoshop Brushes & Elements → `Photoshop - Brushes`
+    - Isolated Food Items (47 JPG) → `Stock Photos - Food & Drink`
+    - Polaroid Photo Template (9 PSD) → `Photoshop - Mockups`
+    - JuiceDrops (15 PSD) → `Photoshop - Overlays & FX\Juice Drops`
+    - + 7 more (Banners, Buttons, Ribbons, Infographics, Titles, CoverActionPro-rar-2008-Bandit,
+      Main File Editorial Template Bundle)
+  - G:\Design Organized\Design Elements\ fully cleared (18 non-empty → organized; 40 empty skipped).
+
+### Fixed (session 2026-04-28 design_elements)
+- `organize_run.py` — `datetime.utcnow()` DeprecationWarning replaced with
+  `datetime.now(timezone.utc)` in both journal insert and undo update paths.
+- `build_source_index.py` — removed `Design Elements` from `BRANCHES` dict (depth=2 config was broken:
+  Design Elements has files at level 2, not directories — so depth=2 produced 0 items). Replaced with
+  dedicated `build_design_elements_index()` that correctly treats level-1 subfolders as items.
+
 ### Known Issues (as of 2026-04-28)
 - 5 trailing-space/long-path errors in `organize_errors_ae.json` — all 5 source paths now GONE from I:\;
   pending `--retry-errors --source ae` after AE apply (PID 22500) completes (will auto-skip + clear).
@@ -157,11 +193,12 @@ All notable changes to FileOrganizer will be documented in this file.
 - `_Review\After Effects - Other\` 5 remaining (keep-in-review): `Unknown LP Video 2`, `Unknown VH Template`,
   `Unknown VH Template (2)`, `Unknown VH Template 2 (1)`, `Unknown VH Template 3` — insufficient context.
 - `_Review\Orphaned Documentation\` — 4 detached doc items, no parent packages.
-- `G:\Design Organized\Design Elements\` — 3,219 loose files (10.52 GB): PSD/JPG/ZIP at category level
-  not indexed by design_org_index.json. Need separate classify + apply pass.
-- loose_files classify: 142/326 batches done — pipeline still running (PID 22848).
+- loose_files classify: 152/326 batches done — pipeline still running (PID 22848).
 - I:\Unorganized reclassification: 88 stock/design items routed into AE categories by AE pipeline;
   `reclassify_unorg.py --analyze` + `--apply` ready to run after AE apply (PID 22500) exits.
+- merge_stock (PID 23164): copying `Stock_Footage` folder (358 GB at ~63 MB/s, ~95 min remaining).
+  2 Videohive AE items (VH-6185510, Parallax Footage Reel) in G:\Stock\Stock Footage & Photos will be
+  moved by merge_stock; may land in Stock Footage category — verify post-apply.
 
 
 
