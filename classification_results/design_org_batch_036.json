@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Fog",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Fog",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements; contains brush-related files",
+    "_source_name": "Fog",
+    "_batch_index": 2100
+  },
+  {
+    "name": "Grunge",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Grunge",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Grunge",
+    "_batch_index": 2101
+  },
+  {
+    "name": "Grunge 2",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Grunge 2",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Grunge 2",
+    "_batch_index": 2102
+  },
+  {
+    "name": "Grunge Edges",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Grunge Edges",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Grunge Edges",
+    "_batch_index": 2103
+  },
+  {
+    "name": "Grunge Overlay",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Grunge Overlay",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Grunge Overlay",
+    "_batch_index": 2104
+  },
+  {
+    "name": "Hi-Tech Cityscape",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Hi-Tech Cityscape",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Hi-Tech Cityscape",
+    "_batch_index": 2105
+  },
+  {
+    "name": "Natural Grunge Patterns",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Natural Grunge Patterns",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Natural Grunge Patterns",
+    "_batch_index": 2106
+  },
+  {
+    "name": "Nuts Bolts And Holes",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Nuts Bolts And Holes",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Nuts Bolts And Holes",
+    "_batch_index": 2107
+  },
+  {
+    "name": "Old Style Patterns",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Old Style Patterns",
+    "confidence": 85,
+    "notes": "Contains .jpg and .txt; legacy category suggests patterns, but no .abr files",
+    "_source_name": "Old Style Patterns",
+    "_batch_index": 2108
+  },
+  {
+    "name": "Pinstriping",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Pinstriping",
+    "confidence": 90,
+    "notes": "Contains .abr files; legacy category indicates Photoshop Brushes",
+    "_source_name": "Pinstriping",
+    "_batch_index": 2109
+  },
+  {
+    "name": "Rons Condensation",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Rons Condensation",
+    "confidence": 95,
+    "notes": "Contains .abr file; legacy category indicates Photoshop Brushes",
+    "_source_name": "Rons Condensation",
+    "_batch_index": 2110
+  },
+  {
+    "name": "Rons Designs",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Rons Designs",
+    "confidence": 85,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements; contains .db, .jpg, .png",
+    "_source_name": "Rons Designs",
+    "_batch_index": 2111
+  },
+  {
+    "name": "Rons Hydro Explosion",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Rons Hydro Explosion",
+    "confidence": 95,
+    "notes": "Contains .abr file; legacy category indicates Photoshop Brushes",
+    "_source_name": "Rons Hydro Explosion",
+    "_batch_index": 2112
+  },
+  {
+    "name": "Rusty Metal",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Rusty Metal",
+    "confidence": 85,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements; contains .jpg, .png",
+    "_source_name": "Rusty Metal",
+    "_batch_index": 2113
+  },
+  {
+    "name": "Sci-Fi",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Sci-Fi",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Sci-Fi",
+    "_batch_index": 2114
+  },
+  {
+    "name": "Scratches",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Scratches",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Scratches",
+    "_batch_index": 2115
+  },
+  {
+    "name": "Severe And Nasty Patterns",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Severe And Nasty Patterns",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Severe And Nasty Patterns",
+    "_batch_index": 2116
+  },
+  {
+    "name": "Skulls",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Skulls",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Skulls",
+    "_batch_index": 2117
+  },
+  {
+    "name": "Skulls II",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Skulls II",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Skulls II",
+    "_batch_index": 2118
+  },
+  {
+    "name": "Smoke",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Smoke",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Smoke",
+    "_batch_index": 2119
+  },
+  {
+    "name": "Smoke 2",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Smoke 2",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Smoke 2",
+    "_batch_index": 2120
+  },
+  {
+    "name": "Spider Webs",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Spider Webs",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Spider Webs",
+    "_batch_index": 2121
+  },
+  {
+    "name": "Splash 2",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Splash 2",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Splash 2",
+    "_batch_index": 2122
+  },
+  {
+    "name": "Splashes",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Splashes",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Splashes",
+    "_batch_index": 2123
+  },
+  {
+    "name": "Stains Splatters Drips And Washes",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Stains Splatters Drips And Washes",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Stains Splatters Drips And Washes",
+    "_batch_index": 2124
+  },
+  {
+    "name": "Statues",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Statues",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Statues",
+    "_batch_index": 2125
+  },
+  {
+    "name": "Suds",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Suds",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Suds",
+    "_batch_index": 2126
+  },
+  {
+    "name": "Trees",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Trees",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Trees",
+    "_batch_index": 2127
+  },
+  {
+    "name": "Vector Grunge 1",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Vector Grunge 1",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Vector Grunge 1",
+    "_batch_index": 2128
+  },
+  {
+    "name": "Vector Grunge 2",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Vector Grunge 2",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Vector Grunge 2",
+    "_batch_index": 2129
+  },
+  {
+    "name": "Vines",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Vines",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Vines",
+    "_batch_index": 2130
+  },
+  {
+    "name": "Wall Works 4",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Wall Works 4",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Wall Works 4",
+    "_batch_index": 2131
+  },
+  {
+    "name": "Water",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Water",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Water",
+    "_batch_index": 2132
+  },
+  {
+    "name": "Watercolor",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Watercolor",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Watercolor",
+    "_batch_index": 2133
+  },
+  {
+    "name": "Waterfalls",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Waterfalls",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Waterfalls",
+    "_batch_index": 2134
+  },
+  {
+    "name": "Wings Of Water",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Wings Of Water",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Wings Of Water",
+    "_batch_index": 2135
+  },
+  {
+    "name": "Winter Collection",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Winter Collection",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Winter Collection",
+    "_batch_index": 2136
+  },
+  {
+    "name": "Wires And Gadgets",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Wires And Gadgets",
+    "confidence": 90,
+    "notes": "Legacy category indicates Photoshop Brushes & Elements",
+    "_source_name": "Wires And Gadgets",
+    "_batch_index": 2137
+  },
+  {
+    "name": "045150157 prairie title text",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Prairie Title Text",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "045150157 prairie title text",
+    "_batch_index": 2138
+  },
+  {
+    "name": "045187511 snowball hit titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Snowball Hit Titles",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "045187511 snowball hit titles",
+    "_batch_index": 2139
+  },
+  {
+    "name": "062780150-animated-simple-modern-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Animated Simple Modern Titles",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "062780150-animated-simple-modern-titles",
+    "_batch_index": 2140
+  },
+  {
+    "name": "063645867-65-typography-title",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "65 Typography Title",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "063645867-65-typography-title",
+    "_batch_index": 2141
+  },
+  {
+    "name": "065809754-drown-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Drown Titles",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "065809754-drown-titles",
+    "_batch_index": 2142
+  },
+  {
+    "name": "085399185-breaking-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Breaking Titles",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "085399185-breaking-titles",
+    "_batch_index": 2143
+  },
+  {
+    "name": "085774626-minimal-titles-4k",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Minimal Titles 4K",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "085774626-minimal-titles-4k",
+    "_batch_index": 2144
+  },
+  {
+    "name": "085824216-35-minimal-title-pack",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "35 Minimal Title Pack",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "085824216-35-minimal-title-pack",
+    "_batch_index": 2145
+  },
+  {
+    "name": "085905137-40-typography-text-title",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "40 Typography Text Title",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "085905137-40-typography-text-title",
+    "_batch_index": 2146
+  },
+  {
+    "name": "085965549-18-fast-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "18 Fast Titles",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "085965549-18-fast-titles",
+    "_batch_index": 2147
+  },
+  {
+    "name": "086168621-black-white-titles-pack1",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Black White Titles Pack 1",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "086168621-black-white-titles-pack1",
+    "_batch_index": 2148
+  },
+  {
+    "name": "086226176-title-pack",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Title Pack",
+    "confidence": 85,
+    "notes": "Contains .mov and .rtf; legacy category 'Titles'",
+    "_source_name": "086226176-title-pack",
+    "_batch_index": 2149
+  },
+  {
+    "name": "086275496-tri-title-design",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Tri Title Design",
+    "confidence": 85,
+    "notes": "Legacy category 'Titles'; no file info but name suggests title design",
+    "_source_name": "086275496-tri-title-design",
+    "_batch_index": 2150
+  },
+  {
+    "name": "086409543-22-minimal-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "22 Minimal Titles",
+    "confidence": 90,
+    "notes": "Contains .aep files; legacy category 'Titles'",
+    "_source_name": "086409543-22-minimal-titles",
+    "_batch_index": 2151
+  },
+  {
+    "name": "086417672-modern-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Modern Titles",
+    "confidence": 90,
+    "notes": "Contains 'Modern Titles' hint; legacy category 'Titles'",
+    "_source_name": "086417672-modern-titles",
+    "_batch_index": 2152
+  },
+  {
+    "name": "087976472-minimal-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Minimal Titles",
+    "confidence": 85,
+    "notes": "Legacy category 'Titles'; no file info but name suggests titles",
+    "_source_name": "087976472-minimal-titles",
+    "_batch_index": 2153
+  },
+  {
+    "name": "088728165-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles",
+    "confidence": 90,
+    "notes": "Contains 'Titles' and 'Essential Panel Files' hint; legacy category 'Titles'",
+    "_source_name": "088728165-titles",
+    "_batch_index": 2154
+  },
+  {
+    "name": "088911279-slides-3d-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Slides 3D Titles",
+    "confidence": 85,
+    "notes": "Legacy category 'Titles'; name suggests 3D titles",
+    "_source_name": "088911279-slides-3d-titles",
+    "_batch_index": 2155
+  },
+  {
+    "name": "088986047-cinematic-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Cinematic Titles",
+    "confidence": 90,
+    "notes": "Contains 'Cinematic Titles CS6 folder' hint; legacy category 'Titles'",
+    "_source_name": "088986047-cinematic-titles",
+    "_batch_index": 2156
+  },
+  {
+    "name": "089141572-dark-sky-titles-intro-cinemati",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Dark Sky Titles Intro Cinematic",
+    "confidence": 90,
+    "notes": "Contains 'DARK SKY TITLES INTRO' hint; legacy category 'Titles'",
+    "_source_name": "089141572-dark-sky-titles-intro-cinemati",
+    "_batch_index": 2157
+  },
+  {
+    "name": "089216575-modern-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Modern Titles",
+    "confidence": 90,
+    "notes": "Contains 'Modern Titles' hint; legacy category 'Titles'",
+    "_source_name": "089216575-modern-titles",
+    "_batch_index": 2158
+  },
+  {
+    "name": "090097077-opener-and-titles-and-intros",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Opener and Titles and Intros",
+    "confidence": 85,
+    "notes": "Legacy category 'Titles' but name includes 'opener' and 'intros'; more appropriate for Intro & Opener",
+    "_source_name": "090097077-opener-and-titles-and-intros",
+    "_batch_index": 2159
+  }
+]

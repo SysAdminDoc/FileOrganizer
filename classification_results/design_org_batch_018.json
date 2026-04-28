@@ -1,0 +1,542 @@
+[
+  {
+    "name": "My Diary - UI Mobile Kit",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "My Diary - UI Mobile Kit",
+    "confidence": 85,
+    "notes": "Contains PSD files for mobile UI kit, legacy category Mobile suggests UI resources.",
+    "_source_name": "My Diary - UI Mobile Kit",
+    "_batch_index": 1020
+  },
+  {
+    "name": "MyShop - Ecommerce Mobile App UI Kit",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "MyShop - Ecommerce Mobile App UI Kit",
+    "confidence": 85,
+    "notes": "Ecommerce mobile app UI kit, legacy Mobile category.",
+    "_source_name": "MyShop - Ecommerce Mobile App UI Kit",
+    "_batch_index": 1021
+  },
+  {
+    "name": "Profile Mobile UI Kit for iphoneX",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Profile Mobile UI Kit for iphoneX",
+    "confidence": 85,
+    "notes": "Contains .sketch and .pdf, mobile UI kit.",
+    "_source_name": "Profile Mobile UI Kit for iphoneX",
+    "_batch_index": 1022
+  },
+  {
+    "name": "PSD Kata Mobile UI KIT",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "PSD Kata Mobile UI KIT",
+    "confidence": 80,
+    "notes": "Contains .jpg, .pdf, .txt; likely UI kit despite no PSD listed.",
+    "_source_name": "PSD Kata Mobile UI KIT",
+    "_batch_index": 1023
+  },
+  {
+    "name": "PSD Mobile App - Payme",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "PSD Mobile App - Payme",
+    "confidence": 85,
+    "notes": "PSD file for mobile app UI.",
+    "_source_name": "PSD Mobile App - Payme",
+    "_batch_index": 1024
+  },
+  {
+    "name": "PSD Web Design - Spool - 6 Mobile UI Templates",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "PSD Web Design - Spool - 6 Mobile UI Templates",
+    "confidence": 85,
+    "notes": "PSD mobile UI templates.",
+    "_source_name": "PSD Web Design - Spool - 6 Mobile UI Templates",
+    "_batch_index": 1025
+  },
+  {
+    "name": "Social Mobile UI Kit for iphoneX",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Social Mobile UI Kit for iphoneX",
+    "confidence": 85,
+    "notes": "Contains .sketch and .pdf, mobile UI kit.",
+    "_source_name": "Social Mobile UI Kit for iphoneX",
+    "_batch_index": 1026
+  },
+  {
+    "name": "the-mobile-advertising-38988-GFXTRA.COM-ARSENIC",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "The Mobile Advertising",
+    "confidence": 80,
+    "notes": "PSD file for mobile advertising, likely UI kit.",
+    "_source_name": "the-mobile-advertising-38988-GFXTRA.COM-ARSENIC",
+    "_batch_index": 1027
+  },
+  {
+    "name": "Vera Block Mobile UI Kit",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Vera Block Mobile UI Kit",
+    "confidence": 85,
+    "notes": "Contains .pdf and .psd, mobile UI kit.",
+    "_source_name": "Vera Block Mobile UI Kit",
+    "_batch_index": 1028
+  },
+  {
+    "name": "Wooden GUI for Mobile Game",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Wooden GUI for Mobile Game",
+    "confidence": 85,
+    "notes": "PSD and JPG for mobile game GUI.",
+    "_source_name": "Wooden GUI for Mobile Game",
+    "_batch_index": 1029
+  },
+  {
+    "name": "WOW Modern MobileAppUI 5PSD 140218",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "WOW Modern MobileAppUI",
+    "confidence": 85,
+    "notes": "PSD files for mobile app UI.",
+    "_source_name": "WOW Modern MobileAppUI 5PSD 140218",
+    "_batch_index": 1030
+  },
+  {
+    "name": "Automotive Newsletter Template",
+    "category": "Print - Other",
+    "clean_name": "Automotive Newsletter Template",
+    "confidence": 80,
+    "notes": "Newsletter template, legacy category Newsletter, best mapped to Print - Other.",
+    "_source_name": "Automotive Newsletter Template",
+    "_batch_index": 1031
+  },
+  {
+    "name": "Beauty Clininc Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Beauty Clinic Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Beauty Clininc Newsletter",
+    "_batch_index": 1032
+  },
+  {
+    "name": "Biking Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Biking Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Biking Newsletter",
+    "_batch_index": 1033
+  },
+  {
+    "name": "Business Newsletter Template V02 3330143",
+    "category": "Print - Other",
+    "clean_name": "Business Newsletter Template V02",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Business Newsletter Template V02 3330143",
+    "_batch_index": 1034
+  },
+  {
+    "name": "Clean E-Newsletter Bundle",
+    "category": "Print - Other",
+    "clean_name": "Clean E-Newsletter Bundle",
+    "confidence": 75,
+    "notes": "Only .jpg files, but name suggests newsletter template.",
+    "_source_name": "Clean E-Newsletter Bundle",
+    "_batch_index": 1035
+  },
+  {
+    "name": "Clinic Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Clinic Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Clinic Newsletter",
+    "_batch_index": 1036
+  },
+  {
+    "name": "CM_E-MAIL_NEWSLETTERS_BUNDLE___BUILDER_299820_",
+    "category": "Print - Other",
+    "clean_name": "CM E-Mail Newsletters Bundle Builder",
+    "confidence": 75,
+    "notes": "ZIP file, likely newsletter templates.",
+    "_source_name": "CM_E-MAIL_NEWSLETTERS_BUNDLE___BUILDER_299820_",
+    "_batch_index": 1037
+  },
+  {
+    "name": "Coffe Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Coffee Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Coffe Newsletter",
+    "_batch_index": 1038
+  },
+  {
+    "name": "Exhibition Newsletter Template",
+    "category": "Print - Other",
+    "clean_name": "Exhibition Newsletter Template",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Exhibition Newsletter Template",
+    "_batch_index": 1039
+  },
+  {
+    "name": "Fashio Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Fashion Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Fashio Newsletter",
+    "_batch_index": 1040
+  },
+  {
+    "name": "FashioBrand Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Fashion Brand Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "FashioBrand Newsletter",
+    "_batch_index": 1041
+  },
+  {
+    "name": "GR Colors E newsletter 2188169",
+    "category": "Print - Other",
+    "clean_name": "Colors E-newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "GR Colors E newsletter 2188169",
+    "_batch_index": 1042
+  },
+  {
+    "name": "Hospitaly Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Hospitality Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Hospitaly Newsletter",
+    "_batch_index": 1043
+  },
+  {
+    "name": "Kate - Newsletter Templates",
+    "category": "Print - Other",
+    "clean_name": "Kate - Newsletter Templates",
+    "confidence": 80,
+    "notes": "Contains .pdf and .rtf, newsletter templates.",
+    "_source_name": "Kate - Newsletter Templates",
+    "_batch_index": 1044
+  },
+  {
+    "name": "Law Firm Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Law Firm Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Law Firm Newsletter",
+    "_batch_index": 1045
+  },
+  {
+    "name": "Let s Donut Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Let's Donut Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Let s Donut Newsletter",
+    "_batch_index": 1046
+  },
+  {
+    "name": "Superpremium Print Templates Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Superpremium Print Templates Newsletter",
+    "confidence": 85,
+    "notes": "Contains .indd, .inx, .psd, .pdf; print newsletter template.",
+    "_source_name": "Superpremium Print Templates Newsletter",
+    "_batch_index": 1047
+  },
+  {
+    "name": "Trendy Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Trendy Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Trendy Newsletter",
+    "_batch_index": 1048
+  },
+  {
+    "name": "Wondercare Newsletter",
+    "category": "Print - Other",
+    "clean_name": "Wondercare Newsletter",
+    "confidence": 80,
+    "notes": "Newsletter template.",
+    "_source_name": "Wondercare Newsletter",
+    "_batch_index": 1049
+  },
+  {
+    "name": "Freezeron-295 Photo Overlays",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Freezeron-295 Photo Overlays",
+    "confidence": 85,
+    "notes": "Contains .atn, .jpg, .png; photo overlays for Photoshop.",
+    "_source_name": "Freezeron-295 Photo Overlays",
+    "_batch_index": 1050
+  },
+  {
+    "name": "Packaging Inspiration Pack No.1 - over 6400 images",
+    "category": "Stock Photos - General",
+    "clean_name": "Packaging Inspiration Pack No.1",
+    "confidence": 75,
+    "notes": "Collection of images for packaging inspiration, likely stock photos.",
+    "_source_name": "Packaging Inspiration Pack No.1 - over 6400 images",
+    "_batch_index": 1051
+  },
+  {
+    "name": "Packaging Inspiration Pack No.2 - over 6000 images",
+    "category": "Stock Photos - General",
+    "clean_name": "Packaging Inspiration Pack No.2",
+    "confidence": 75,
+    "notes": "Collection of images for packaging inspiration.",
+    "_source_name": "Packaging Inspiration Pack No.2 - over 6000 images",
+    "_batch_index": 1052
+  },
+  {
+    "name": "Pixelsquid-Airport.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Airport Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid collections are typically 3D models.",
+    "_source_name": "Pixelsquid-Airport.Collection",
+    "_batch_index": 1053
+  },
+  {
+    "name": "Pixelsquid-Love Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Love Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Love Collection",
+    "_batch_index": 1054
+  },
+  {
+    "name": "Pixelsquid-Retro.Travel.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Retro Travel Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Retro.Travel.Collection",
+    "_batch_index": 1055
+  },
+  {
+    "name": "Pixelsquid-Roads.And.Highways.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Roads and Highways Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Roads.And.Highways.Collection",
+    "_batch_index": 1056
+  },
+  {
+    "name": "Pixelsquid-Rubble.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Rubble Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Rubble.Collection",
+    "_batch_index": 1057
+  },
+  {
+    "name": "Pixelsquid-Savings.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Savings Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Savings.Collection",
+    "_batch_index": 1058
+  },
+  {
+    "name": "Pixelsquid-Sketch.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Sketch Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Sketch.Collection",
+    "_batch_index": 1059
+  },
+  {
+    "name": "Pixelsquid-Spring.Meadow.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Spring Meadow Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Spring.Meadow.Collection",
+    "_batch_index": 1060
+  },
+  {
+    "name": "Pixelsquid-Summer.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Summer Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Summer.Collection",
+    "_batch_index": 1061
+  },
+  {
+    "name": "Pixelsquid-Voodoo.Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Voodoo Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Voodoo.Collection",
+    "_batch_index": 1062
+  },
+  {
+    "name": "Pixelsquid-Vote Collection",
+    "category": "3D - Models & Objects",
+    "clean_name": "Pixelsquid Vote Collection",
+    "confidence": 80,
+    "notes": "Pixelsquid 3D model collection.",
+    "_source_name": "Pixelsquid-Vote Collection",
+    "_batch_index": 1063
+  },
+  {
+    "name": "5 in 1 Postcard Template Bundle",
+    "category": "Print - Invitations & Events",
+    "clean_name": "5 in 1 Postcard Template Bundle",
+    "confidence": 80,
+    "notes": "Postcard templates, legacy category Postcards.",
+    "_source_name": "5 in 1 Postcard Template Bundle",
+    "_batch_index": 1064
+  },
+  {
+    "name": "852091-Vintage-Greetings-Postcard-Generator",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Vintage Greetings Postcard Generator",
+    "confidence": 85,
+    "notes": "PSD and PDF for postcard generator.",
+    "_source_name": "852091-Vintage-Greetings-Postcard-Generator",
+    "_batch_index": 1065
+  },
+  {
+    "name": "Aerobics Center Postcard Template",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Aerobics Center Postcard Template",
+    "confidence": 85,
+    "notes": "PSD postcard template.",
+    "_source_name": "Aerobics Center Postcard Template",
+    "_batch_index": 1066
+  },
+  {
+    "name": "Blue",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Blue Postcard",
+    "confidence": 70,
+    "notes": "Single PSD file, likely a postcard template based on legacy category.",
+    "_source_name": "Blue",
+    "_batch_index": 1067
+  },
+  {
+    "name": "CM - 2 Postcard Flyers lodie 2272403",
+    "category": "Print - Invitations & Events",
+    "clean_name": "CM - 2 Postcard Flyers Élodie",
+    "confidence": 85,
+    "notes": "Postcard flyer set.",
+    "_source_name": "CM - 2 Postcard Flyers lodie 2272403",
+    "_batch_index": 1068
+  },
+  {
+    "name": "CM - Post Card 37 2372589",
+    "category": "Print - Invitations & Events",
+    "clean_name": "CM - Post Card 37",
+    "confidence": 80,
+    "notes": "Postcard template.",
+    "_source_name": "CM - Post Card 37 2372589",
+    "_batch_index": 1069
+  },
+  {
+    "name": "CM - Postcard Rackcard DL Flyer v3 2432870",
+    "category": "Print - Invitations & Events",
+    "clean_name": "CM - Postcard Rackcard DL Flyer v3",
+    "confidence": 85,
+    "notes": "Postcard and rackcard flyer.",
+    "_source_name": "CM - Postcard Rackcard DL Flyer v3 2432870",
+    "_batch_index": 1070
+  },
+  {
+    "name": "CM - Postcard Template 2073032",
+    "category": "Print - Invitations & Events",
+    "clean_name": "CM - Postcard Template",
+    "confidence": 85,
+    "notes": "Postcard template.",
+    "_source_name": "CM - Postcard Template 2073032",
+    "_batch_index": 1071
+  },
+  {
+    "name": "CM - Postcard Template 2073045",
+    "category": "Print - Invitations & Events",
+    "clean_name": "CM - Postcard Template",
+    "confidence": 85,
+    "notes": "Postcard template.",
+    "_source_name": "CM - Postcard Template 2073045",
+    "_batch_index": 1072
+  },
+  {
+    "name": "CM - Womens Clothing Store Postcard 567253",
+    "category": "Print - Invitations & Events",
+    "clean_name": "CM - Womens Clothing Store Postcard",
+    "confidence": 85,
+    "notes": "Postcard for clothing store.",
+    "_source_name": "CM - Womens Clothing Store Postcard 567253",
+    "_batch_index": 1073
+  },
+  {
+    "name": "CreativeMarket Postcard Flyers 2073823",
+    "category": "Print - Invitations & Events",
+    "clean_name": "CreativeMarket Postcard Flyers",
+    "confidence": 85,
+    "notes": "Postcard flyers with PSD and PDF.",
+    "_source_name": "CreativeMarket Postcard Flyers 2073823",
+    "_batch_index": 1074
+  },
+  {
+    "name": "Delivery-Shipment-Postcard-Template",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Delivery Shipment Postcard Template",
+    "confidence": 85,
+    "notes": "Postcard template.",
+    "_source_name": "Delivery-Shipment-Postcard-Template",
+    "_batch_index": 1075
+  },
+  {
+    "name": "flyer-postcard-template",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Flyer Postcard Template",
+    "confidence": 80,
+    "notes": "Postcard/flyer template.",
+    "_source_name": "flyer-postcard-template",
+    "_batch_index": 1076
+  },
+  {
+    "name": "GR Creative Winter Holidays Postcard 794198",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Creative Winter Holidays Postcard",
+    "confidence": 85,
+    "notes": "Holiday postcard template.",
+    "_source_name": "GR Creative Winter Holidays Postcard 794198",
+    "_batch_index": 1077
+  },
+  {
+    "name": "GR Food Love Postcard 6065940",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Food Love Postcard",
+    "confidence": 85,
+    "notes": "Food-themed postcard.",
+    "_source_name": "GR Food Love Postcard 6065940",
+    "_batch_index": 1078
+  },
+  {
+    "name": "GR Fresh Save The Date Postcard Card 6680734",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Fresh Save The Date Postcard Card",
+    "confidence": 85,
+    "notes": "Save the date postcard.",
+    "_source_name": "GR Fresh Save The Date Postcard Card 6680734",
+    "_batch_index": 1079
+  }
+]

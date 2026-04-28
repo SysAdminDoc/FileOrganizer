@@ -1,0 +1,542 @@
+[
+  {
+    "name": "36_5",
+    "category": "Photoshop - Other",
+    "clean_name": "36_5",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "36_5",
+    "_batch_index": 5280
+  },
+  {
+    "name": "36_6",
+    "category": "Photoshop - Other",
+    "clean_name": "36_6",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "36_6",
+    "_batch_index": 5281
+  },
+  {
+    "name": "36_7",
+    "category": "Photoshop - Other",
+    "clean_name": "36_7",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "36_7",
+    "_batch_index": 5282
+  },
+  {
+    "name": "36_MjAxNC0xMC0wNS0xMy5qcGc",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "36_MjAxNC0xMC0wNS0xMy5qcGc",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "36_MjAxNC0xMC0wNS0xMy5qcGc",
+    "_batch_index": 5283
+  },
+  {
+    "name": "36_Settings_Cash Drawer",
+    "category": "Photoshop - Other",
+    "clean_name": "36_Settings_Cash Drawer",
+    "confidence": 65,
+    "notes": "Only .psd file, name suggests UI element but no subcategory fits",
+    "_source_name": "36_Settings_Cash Drawer",
+    "_batch_index": 5284
+  },
+  {
+    "name": "36_Vomited",
+    "category": "Photoshop - Other",
+    "clean_name": "36_Vomited",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "36_Vomited",
+    "_batch_index": 5285
+  },
+  {
+    "name": "37 Music List",
+    "category": "Photoshop - Other",
+    "clean_name": "37 Music List",
+    "confidence": 65,
+    "notes": "Only .psd file, name suggests list design",
+    "_source_name": "37 Music List",
+    "_batch_index": 5286
+  },
+  {
+    "name": "37",
+    "category": "Photoshop - Other",
+    "clean_name": "37",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "37",
+    "_batch_index": 5287
+  },
+  {
+    "name": "371",
+    "category": "Photoshop - Other",
+    "clean_name": "371",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "371",
+    "_batch_index": 5288
+  },
+  {
+    "name": "375",
+    "category": "Photoshop - Other",
+    "clean_name": "375",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "375",
+    "_batch_index": 5289
+  },
+  {
+    "name": "376",
+    "category": "Photoshop - Other",
+    "clean_name": "376",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "376",
+    "_batch_index": 5290
+  },
+  {
+    "name": "377",
+    "category": "Photoshop - Other",
+    "clean_name": "377",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "377",
+    "_batch_index": 5291
+  },
+  {
+    "name": "378",
+    "category": "Photoshop - Other",
+    "clean_name": "378",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "378",
+    "_batch_index": 5292
+  },
+  {
+    "name": "37_2",
+    "category": "Photoshop - Other",
+    "clean_name": "37_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "37_2",
+    "_batch_index": 5293
+  },
+  {
+    "name": "37_3",
+    "category": "Photoshop - Other",
+    "clean_name": "37_3",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "37_3",
+    "_batch_index": 5294
+  },
+  {
+    "name": "37_4",
+    "category": "Photoshop - Other",
+    "clean_name": "37_4",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "37_4",
+    "_batch_index": 5295
+  },
+  {
+    "name": "37_5",
+    "category": "Photoshop - Other",
+    "clean_name": "37_5",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "37_5",
+    "_batch_index": 5296
+  },
+  {
+    "name": "37_6",
+    "category": "Photoshop - Other",
+    "clean_name": "37_6",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "37_6",
+    "_batch_index": 5297
+  },
+  {
+    "name": "37_7",
+    "category": "Photoshop - Other",
+    "clean_name": "37_7",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "37_7",
+    "_batch_index": 5298
+  },
+  {
+    "name": "37_8",
+    "category": "Photoshop - Other",
+    "clean_name": "37_8",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "37_8",
+    "_batch_index": 5299
+  },
+  {
+    "name": "37_Elements",
+    "category": "Photoshop - Other",
+    "clean_name": "37_Elements",
+    "confidence": 65,
+    "notes": "Only .psd file, name suggests design elements",
+    "_source_name": "37_Elements",
+    "_batch_index": 5300
+  },
+  {
+    "name": "38 Music Play",
+    "category": "Photoshop - Other",
+    "clean_name": "38 Music Play",
+    "confidence": 65,
+    "notes": "Only .psd file, name suggests music UI",
+    "_source_name": "38 Music Play",
+    "_batch_index": 5301
+  },
+  {
+    "name": "38",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "38",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "38",
+    "_batch_index": 5302
+  },
+  {
+    "name": "38",
+    "category": "Photoshop - Other",
+    "clean_name": "38",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38",
+    "_batch_index": 5303
+  },
+  {
+    "name": "382",
+    "category": "Photoshop - Other",
+    "clean_name": "382",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "382",
+    "_batch_index": 5304
+  },
+  {
+    "name": "3820",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "3820",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "3820",
+    "_batch_index": 5305
+  },
+  {
+    "name": "3824-08",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "3824-08",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "3824-08",
+    "_batch_index": 5306
+  },
+  {
+    "name": "384",
+    "category": "Photoshop - Other",
+    "clean_name": "384",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "384",
+    "_batch_index": 5307
+  },
+  {
+    "name": "389",
+    "category": "Photoshop - Other",
+    "clean_name": "389",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "389",
+    "_batch_index": 5308
+  },
+  {
+    "name": "38_10",
+    "category": "Photoshop - Other",
+    "clean_name": "38_10",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_10",
+    "_batch_index": 5309
+  },
+  {
+    "name": "38_2",
+    "category": "Photoshop - Other",
+    "clean_name": "38_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_2",
+    "_batch_index": 5310
+  },
+  {
+    "name": "38_3",
+    "category": "Photoshop - Other",
+    "clean_name": "38_3",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_3",
+    "_batch_index": 5311
+  },
+  {
+    "name": "38_4",
+    "category": "Photoshop - Other",
+    "clean_name": "38_4",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_4",
+    "_batch_index": 5312
+  },
+  {
+    "name": "38_5",
+    "category": "Photoshop - Other",
+    "clean_name": "38_5",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_5",
+    "_batch_index": 5313
+  },
+  {
+    "name": "38_6",
+    "category": "Photoshop - Other",
+    "clean_name": "38_6",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_6",
+    "_batch_index": 5314
+  },
+  {
+    "name": "38_7",
+    "category": "Photoshop - Other",
+    "clean_name": "38_7",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_7",
+    "_batch_index": 5315
+  },
+  {
+    "name": "38_8",
+    "category": "Photoshop - Other",
+    "clean_name": "38_8",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_8",
+    "_batch_index": 5316
+  },
+  {
+    "name": "38_9",
+    "category": "Photoshop - Other",
+    "clean_name": "38_9",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "38_9",
+    "_batch_index": 5317
+  },
+  {
+    "name": "39 Location AR",
+    "category": "Photoshop - Other",
+    "clean_name": "39 Location AR",
+    "confidence": 65,
+    "notes": "Only .psd file, name suggests location/AR design",
+    "_source_name": "39 Location AR",
+    "_batch_index": 5318
+  },
+  {
+    "name": "39",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "39",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "39",
+    "_batch_index": 5319
+  },
+  {
+    "name": "39",
+    "category": "Photoshop - Other",
+    "clean_name": "39",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "39",
+    "_batch_index": 5320
+  },
+  {
+    "name": "390",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "390",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "390",
+    "_batch_index": 5321
+  },
+  {
+    "name": "390",
+    "category": "Photoshop - Other",
+    "clean_name": "390",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "390",
+    "_batch_index": 5322
+  },
+  {
+    "name": "390_2",
+    "category": "Photoshop - Other",
+    "clean_name": "390_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "390_2",
+    "_batch_index": 5323
+  },
+  {
+    "name": "391",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "391",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "391",
+    "_batch_index": 5324
+  },
+  {
+    "name": "391",
+    "category": "Photoshop - Other",
+    "clean_name": "391",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "391",
+    "_batch_index": 5325
+  },
+  {
+    "name": "392",
+    "category": "Photoshop - Other",
+    "clean_name": "392",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "392",
+    "_batch_index": 5326
+  },
+  {
+    "name": "393",
+    "category": "Photoshop - Other",
+    "clean_name": "393",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "393",
+    "_batch_index": 5327
+  },
+  {
+    "name": "395",
+    "category": "Photoshop - Other",
+    "clean_name": "395",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "395",
+    "_batch_index": 5328
+  },
+  {
+    "name": "396",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "396",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "396",
+    "_batch_index": 5329
+  },
+  {
+    "name": "396",
+    "category": "Photoshop - Other",
+    "clean_name": "396",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "396",
+    "_batch_index": 5330
+  },
+  {
+    "name": "397",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "397",
+    "confidence": 70,
+    "notes": ".eps file indicates vector asset",
+    "_source_name": "397",
+    "_batch_index": 5331
+  },
+  {
+    "name": "397",
+    "category": "Photoshop - Other",
+    "clean_name": "397",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "397",
+    "_batch_index": 5332
+  },
+  {
+    "name": "397_2",
+    "category": "Photoshop - Other",
+    "clean_name": "397_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "397_2",
+    "_batch_index": 5333
+  },
+  {
+    "name": "39_10",
+    "category": "Photoshop - Other",
+    "clean_name": "39_10",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "39_10",
+    "_batch_index": 5334
+  },
+  {
+    "name": "39_2",
+    "category": "Photoshop - Other",
+    "clean_name": "39_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "39_2",
+    "_batch_index": 5335
+  },
+  {
+    "name": "39_3",
+    "category": "Photoshop - Other",
+    "clean_name": "39_3",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "39_3",
+    "_batch_index": 5336
+  },
+  {
+    "name": "39_4",
+    "category": "Photoshop - Other",
+    "clean_name": "39_4",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "39_4",
+    "_batch_index": 5337
+  },
+  {
+    "name": "39_5",
+    "category": "Photoshop - Other",
+    "clean_name": "39_5",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "39_5",
+    "_batch_index": 5338
+  },
+  {
+    "name": "39_6",
+    "category": "Photoshop - Other",
+    "clean_name": "39_6",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "39_6",
+    "_batch_index": 5339
+  }
+]

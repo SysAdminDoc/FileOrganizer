@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Events",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Events Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains PSD flyer files",
+    "_source_name": "Events",
+    "_batch_index": 2520
+  },
+  {
+    "name": "Fitness, Gym",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Fitness Gym Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains fitness poster/gym flyer",
+    "_source_name": "Fitness, Gym",
+    "_batch_index": 2521
+  },
+  {
+    "name": "Food",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Food Flyers",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, contains restaurant brochures and menu pack",
+    "_source_name": "Food",
+    "_batch_index": 2522
+  },
+  {
+    "name": "Garage Sale, Yard Sale, Sale",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Garage Sale Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, PSD flyer files",
+    "_source_name": "Garage Sale, Yard Sale, Sale",
+    "_batch_index": 2523
+  },
+  {
+    "name": "Gift Voucher, Coupon, Gift Certificate",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Gift Voucher Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, gift certificate template",
+    "_source_name": "Gift Voucher, Coupon, Gift Certificate",
+    "_batch_index": 2524
+  },
+  {
+    "name": "Interior Design",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Interior Design Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, interior catalog flyer",
+    "_source_name": "Interior Design",
+    "_batch_index": 2525
+  },
+  {
+    "name": "Invoice",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Invoice Template",
+    "confidence": 80,
+    "notes": "Legacy category Flyers, but contains invoice templates",
+    "_source_name": "Invoice",
+    "_batch_index": 2526
+  },
+  {
+    "name": "Jazz",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Jazz Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, jazz flyer template",
+    "_source_name": "Jazz",
+    "_batch_index": 2527
+  },
+  {
+    "name": "Jew",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Jewish Holiday Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, Yom Kippur flyer",
+    "_source_name": "Jew",
+    "_batch_index": 2528
+  },
+  {
+    "name": "Job Fair",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Job Fair Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, employment agency flyer",
+    "_source_name": "Job Fair",
+    "_batch_index": 2529
+  },
+  {
+    "name": "Job Vacancy",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Job Vacancy Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, job vacancy flyer",
+    "_source_name": "Job Vacancy",
+    "_batch_index": 2530
+  },
+  {
+    "name": "Jobs, Trades",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Jobs Trades Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, trade-related flyers",
+    "_source_name": "Jobs, Trades",
+    "_batch_index": 2531
+  },
+  {
+    "name": "Karaoke",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Karaoke Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, multiple file types",
+    "_source_name": "Karaoke",
+    "_batch_index": 2532
+  },
+  {
+    "name": "Kentucky",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Kentucky Derby Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, Kentucky derby flyer",
+    "_source_name": "Kentucky",
+    "_batch_index": 2533
+  },
+  {
+    "name": "Kids",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Kids Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, kids summer camp flyer",
+    "_source_name": "Kids",
+    "_batch_index": 2534
+  },
+  {
+    "name": "Kwanzaa",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Kwanzaa Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, Kwanzaa flyer",
+    "_source_name": "Kwanzaa",
+    "_batch_index": 2535
+  },
+  {
+    "name": "Labor Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Labor Day Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, PSD flyer files",
+    "_source_name": "Labor Day",
+    "_batch_index": 2536
+  },
+  {
+    "name": "Ladies Night",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Ladies Night Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, ladies night flyer template",
+    "_source_name": "Ladies Night",
+    "_batch_index": 2537
+  },
+  {
+    "name": "Laundry",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Laundry Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, laundry service flyer",
+    "_source_name": "Laundry",
+    "_batch_index": 2538
+  },
+  {
+    "name": "Lawn Care",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Lawn Care Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, PSD flyer files",
+    "_source_name": "Lawn Care",
+    "_batch_index": 2539
+  },
+  {
+    "name": "Lawyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Lawyer Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, lawyer flyer template",
+    "_source_name": "Lawyer",
+    "_batch_index": 2540
+  },
+  {
+    "name": "Light",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Light Refractions Pack",
+    "confidence": 70,
+    "notes": "Legacy category Flyers, but contains light refraction overlays; could be Photoshop Overlays",
+    "_source_name": "Light",
+    "_batch_index": 2541
+  },
+  {
+    "name": "Love",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Love Story LUTs",
+    "confidence": 60,
+    "notes": "Legacy category Flyers, but contains LUTs pack; reclassified to Color Grading",
+    "_source_name": "Love",
+    "_batch_index": 2542
+  },
+  {
+    "name": "Music",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Music Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, music store flyer",
+    "_source_name": "Music",
+    "_batch_index": 2543
+  },
+  {
+    "name": "Nature",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Nature Vintage Badges",
+    "confidence": 70,
+    "notes": "Legacy category Flyers, but contains badges and layer styles; could be Illustrator Vectors",
+    "_source_name": "Nature",
+    "_batch_index": 2544
+  },
+  {
+    "name": "Neon",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Neon Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, neon CD cover flyer",
+    "_source_name": "Neon",
+    "_batch_index": 2545
+  },
+  {
+    "name": "New Year",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "New Year Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, New Year flyer templates",
+    "_source_name": "New Year",
+    "_batch_index": 2546
+  },
+  {
+    "name": "Olympic",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Olympic Party Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, Olympic party flyer template",
+    "_source_name": "Olympic",
+    "_batch_index": 2547
+  },
+  {
+    "name": "Oscars, Grammy Award",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Oscar Party Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, Oscar party flyer",
+    "_source_name": "Oscars, Grammy Award",
+    "_batch_index": 2548
+  },
+  {
+    "name": "Outdoor",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Outdoor Advertising Mockups",
+    "confidence": 80,
+    "notes": "Legacy category Flyers, but contains outdoor mockups; reclassified to Mockups",
+    "_source_name": "Outdoor",
+    "_batch_index": 2549
+  },
+  {
+    "name": "Paintball",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Paintball Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, paintball flyer template",
+    "_source_name": "Paintball",
+    "_batch_index": 2550
+  },
+  {
+    "name": "Party",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Party Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, party flyer design",
+    "_source_name": "Party",
+    "_batch_index": 2551
+  },
+  {
+    "name": "Passover",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Passover Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, Passover flyer",
+    "_source_name": "Passover",
+    "_batch_index": 2552
+  },
+  {
+    "name": "Pet Shop",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Pet Shop Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, pet store brochure",
+    "_source_name": "Pet Shop",
+    "_batch_index": 2553
+  },
+  {
+    "name": "Photography",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photography Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, photography flyer template",
+    "_source_name": "Photography",
+    "_batch_index": 2554
+  },
+  {
+    "name": "Piano",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Piano Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, piano concerto flyer",
+    "_source_name": "Piano",
+    "_batch_index": 2555
+  },
+  {
+    "name": "Pizza",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Pizza Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, pizza flyer design",
+    "_source_name": "Pizza",
+    "_batch_index": 2556
+  },
+  {
+    "name": "Plumber",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Plumber Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, plumber service flyer",
+    "_source_name": "Plumber",
+    "_batch_index": 2557
+  },
+  {
+    "name": "Poker, Gambling, Casino",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Poker Casino Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, casino flyer files",
+    "_source_name": "Poker, Gambling, Casino",
+    "_batch_index": 2558
+  },
+  {
+    "name": "Polar Plunge",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Polar Plunge Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, polar plunge flyer template",
+    "_source_name": "Polar Plunge",
+    "_batch_index": 2559
+  },
+  {
+    "name": "Political",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Political Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, political backdrop and flyer",
+    "_source_name": "Political",
+    "_batch_index": 2560
+  },
+  {
+    "name": "Pool Party",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Pool Party Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, pool party flyer files",
+    "_source_name": "Pool Party",
+    "_batch_index": 2561
+  },
+  {
+    "name": "Presidents Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Presidents Day Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, Presidents Day flyer",
+    "_source_name": "Presidents Day",
+    "_batch_index": 2562
+  },
+  {
+    "name": "Prom",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Prom Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, prom night flyer",
+    "_source_name": "Prom",
+    "_batch_index": 2563
+  },
+  {
+    "name": "Promo",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Product Promotion Flyer",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, product promotion flyer with AEP files but primarily print",
+    "_source_name": "Promo",
+    "_batch_index": 2564
+  },
+  {
+    "name": "Ramadan",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Ramadan Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, Ramadan flyer",
+    "_source_name": "Ramadan",
+    "_batch_index": 2565
+  },
+  {
+    "name": "Rap Battle",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rap Battle Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, rap battle flyer bundle",
+    "_source_name": "Rap Battle",
+    "_batch_index": 2566
+  },
+  {
+    "name": "Rave",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rave Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, rave night flyer",
+    "_source_name": "Rave",
+    "_batch_index": 2567
+  },
+  {
+    "name": "Real Estate",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Real Estate Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, real estate flyer",
+    "_source_name": "Real Estate",
+    "_batch_index": 2568
+  },
+  {
+    "name": "Red Carpet",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Red Carpet Party Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, red carpet party flyer",
+    "_source_name": "Red Carpet",
+    "_batch_index": 2569
+  },
+  {
+    "name": "Reggae",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Reggae Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, reggae fest flyer",
+    "_source_name": "Reggae",
+    "_batch_index": 2570
+  },
+  {
+    "name": "Remembrance Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Remembrance Day Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, remembrance day flyer",
+    "_source_name": "Remembrance Day",
+    "_batch_index": 2571
+  },
+  {
+    "name": "Resume, CV",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Resume CV Pack",
+    "confidence": 80,
+    "notes": "Legacy category Flyers, but contains resume/CV templates",
+    "_source_name": "Resume, CV",
+    "_batch_index": 2572
+  },
+  {
+    "name": "Retirement",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Retirement Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, retirement invitation flyer",
+    "_source_name": "Retirement",
+    "_batch_index": 2573
+  },
+  {
+    "name": "Retro",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Retro Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, retro party flyer",
+    "_source_name": "Retro",
+    "_batch_index": 2574
+  },
+  {
+    "name": "Rock",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rock Music Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, rock music flyer",
+    "_source_name": "Rock",
+    "_batch_index": 2575
+  },
+  {
+    "name": "Rodeo",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rodeo Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, rodeo flyer",
+    "_source_name": "Rodeo",
+    "_batch_index": 2576
+  },
+  {
+    "name": "Roller Skating",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Roller Skating Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, roller skating party flyer",
+    "_source_name": "Roller Skating",
+    "_batch_index": 2577
+  },
+  {
+    "name": "Rugby",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rugby Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, rugby flyer",
+    "_source_name": "Rugby",
+    "_batch_index": 2578
+  },
+  {
+    "name": "Running",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Running Marathon Flyer",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, 5k marathon flyer",
+    "_source_name": "Running",
+    "_batch_index": 2579
+  }
+]

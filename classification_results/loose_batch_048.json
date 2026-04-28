@@ -1,0 +1,542 @@
+[
+  {
+    "name": "1230796.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1230796",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1230796.RW",
+    "_batch_index": 2820
+  },
+  {
+    "name": "1230813.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1230813",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1230813.RW",
+    "_batch_index": 2821
+  },
+  {
+    "name": "1230885.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1230885",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1230885.RW",
+    "_batch_index": 2822
+  },
+  {
+    "name": "1230895.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1230895",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1230895.RW",
+    "_batch_index": 2823
+  },
+  {
+    "name": "1231151.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1231151",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1231151.RW",
+    "_batch_index": 2824
+  },
+  {
+    "name": "1231182.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1231182",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1231182.RW",
+    "_batch_index": 2825
+  },
+  {
+    "name": "1231223.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1231223",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1231223.RW",
+    "_batch_index": 2826
+  },
+  {
+    "name": "1231354.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1231354",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1231354.RW",
+    "_batch_index": 2827
+  },
+  {
+    "name": "1231409.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1231409",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1231409.RW",
+    "_batch_index": 2828
+  },
+  {
+    "name": "1231796.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1231796",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1231796.RW",
+    "_batch_index": 2829
+  },
+  {
+    "name": "1232616.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1232616",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1232616.RW",
+    "_batch_index": 2830
+  },
+  {
+    "name": "1233176.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1233176",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1233176.RW",
+    "_batch_index": 2831
+  },
+  {
+    "name": "1233235.RW",
+    "category": "Photoshop - Other",
+    "clean_name": "1233235",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1233235.RW",
+    "_batch_index": 2832
+  },
+  {
+    "name": "1234",
+    "category": "Photoshop - Other",
+    "clean_name": "1234",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1234",
+    "_batch_index": 2833
+  },
+  {
+    "name": "123_2",
+    "category": "Photoshop - Other",
+    "clean_name": "123_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "123_2",
+    "_batch_index": 2834
+  },
+  {
+    "name": "123_MTMyMg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "123_MTMyMg",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "123_MTMyMg",
+    "_batch_index": 2835
+  },
+  {
+    "name": "123_MTMyMw",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "123_MTMyMw",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "123_MTMyMw",
+    "_batch_index": 2836
+  },
+  {
+    "name": "123_MTMyNA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "123_MTMyNA",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "123_MTMyNA",
+    "_batch_index": 2837
+  },
+  {
+    "name": "124",
+    "category": "Photoshop - Other",
+    "clean_name": "124",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "124",
+    "_batch_index": 2838
+  },
+  {
+    "name": "12415854_MotionElements_realistic-water-wave-aep",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Realistic Water Wave",
+    "confidence": 90,
+    "notes": "Contains .aep and 'Water_Wave_Transitions_Pack' hint",
+    "_source_name": "12415854_MotionElements_realistic-water-wave-aep",
+    "_batch_index": 2839
+  },
+  {
+    "name": "124_1",
+    "category": "Photoshop - Other",
+    "clean_name": "124_1",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "124_1",
+    "_batch_index": 2840
+  },
+  {
+    "name": "124_dGl0YW5zX2xhbmRpbmdfYm93bGluZ18x",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Bowling",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector illustration",
+    "_source_name": "124_dGl0YW5zX2xhbmRpbmdfYm93bGluZ18x",
+    "_batch_index": 2841
+  },
+  {
+    "name": "124_dGl0YW5zX2xhbmRpbmdfYm9keWFydF8x",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Body Art",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector illustration",
+    "_source_name": "124_dGl0YW5zX2xhbmRpbmdfYm9keWFydF8x",
+    "_batch_index": 2842
+  },
+  {
+    "name": "124_MTMyNw",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "124_MTMyNw",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "124_MTMyNw",
+    "_batch_index": 2843
+  },
+  {
+    "name": "124_MTMzMg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "124_MTMzMg",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "124_MTMzMg",
+    "_batch_index": 2844
+  },
+  {
+    "name": "124_MTMzMw",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "124_MTMzMw",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "124_MTMzMw",
+    "_batch_index": 2845
+  },
+  {
+    "name": "124_MTMzNA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "124_MTMzNA",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "124_MTMzNA",
+    "_batch_index": 2846
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX25ld3M",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing News",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX25ld3M",
+    "_batch_index": 2847
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX2FydF9nYWxsZXJ5XzM",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Art Gallery",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX2FydF9nYWxsZXJ5XzM",
+    "_batch_index": 2848
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9hcnRfc2V0",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Car Art Set",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9hcnRfc2V0",
+    "_batch_index": 2849
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9zYWxlXzM",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Car Sale",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9zYWxlXzM",
+    "_batch_index": 2850
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9zZXJ2aWNlbWFuXzI",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Car Serviceman",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9zZXJ2aWNlbWFuXzI",
+    "_batch_index": 2851
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9zZXJ2aWNlXzI",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Car Service",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9zZXJ2aWNlXzI",
+    "_batch_index": 2852
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9zZXJ2aWNlXzM",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Car Service",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX2Nhcl9zZXJ2aWNlXzM",
+    "_batch_index": 2853
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX2VsZWN0cm9jYXI",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Electrocar",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX2VsZWN0cm9jYXI",
+    "_batch_index": 2854
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX3JlcG9ydGVyXzE",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Reporter",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX3JlcG9ydGVyXzE",
+    "_batch_index": 2855
+  },
+  {
+    "name": "124_Y2FydG9vbl9sYW5kaW5nX3N1cGVybWFya2V0",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cartoon Landing Supermarket",
+    "confidence": 75,
+    "notes": ".eps file, base64 decoded suggests vector cartoon",
+    "_source_name": "124_Y2FydG9vbl9sYW5kaW5nX3N1cGVybWFya2V0",
+    "_batch_index": 2856
+  },
+  {
+    "name": "125",
+    "category": "Photoshop - Other",
+    "clean_name": "125",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "125",
+    "_batch_index": 2857
+  },
+  {
+    "name": "125X125",
+    "category": "Photoshop - Other",
+    "clean_name": "125X125",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "125X125",
+    "_batch_index": 2858
+  },
+  {
+    "name": "125x125_3",
+    "category": "Photoshop - Other",
+    "clean_name": "125x125_3",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "125x125_3",
+    "_batch_index": 2859
+  },
+  {
+    "name": "126",
+    "category": "Photoshop - Other",
+    "clean_name": "126",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "126",
+    "_batch_index": 2860
+  },
+  {
+    "name": "126_2",
+    "category": "Photoshop - Other",
+    "clean_name": "126_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "126_2",
+    "_batch_index": 2861
+  },
+  {
+    "name": "127",
+    "category": "Photoshop - Other",
+    "clean_name": "127",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "127",
+    "_batch_index": 2862
+  },
+  {
+    "name": "127_2",
+    "category": "Photoshop - Other",
+    "clean_name": "127_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "127_2",
+    "_batch_index": 2863
+  },
+  {
+    "name": "127_3",
+    "category": "Photoshop - Other",
+    "clean_name": "127_3",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "127_3",
+    "_batch_index": 2864
+  },
+  {
+    "name": "127_4",
+    "category": "Photoshop - Other",
+    "clean_name": "127_4",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "127_4",
+    "_batch_index": 2865
+  },
+  {
+    "name": "128",
+    "category": "Photoshop - Other",
+    "clean_name": "128",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "128",
+    "_batch_index": 2866
+  },
+  {
+    "name": "1283_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1283_01",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "1283_01",
+    "_batch_index": 2867
+  },
+  {
+    "name": "1284_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1284_01",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "1284_01",
+    "_batch_index": 2868
+  },
+  {
+    "name": "1285_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1285_01",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "1285_01",
+    "_batch_index": 2869
+  },
+  {
+    "name": "1286_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1286_01",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "1286_01",
+    "_batch_index": 2870
+  },
+  {
+    "name": "1287_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1287_01",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "1287_01",
+    "_batch_index": 2871
+  },
+  {
+    "name": "129",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "129",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "129",
+    "_batch_index": 2872
+  },
+  {
+    "name": "129",
+    "category": "Photoshop - Other",
+    "clean_name": "129",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "129",
+    "_batch_index": 2873
+  },
+  {
+    "name": "1290_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1290_01",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "1290_01",
+    "_batch_index": 2874
+  },
+  {
+    "name": "1291_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "1291_01",
+    "confidence": 70,
+    "notes": ".eps file, likely vector asset",
+    "_source_name": "1291_01",
+    "_batch_index": 2875
+  },
+  {
+    "name": "1295",
+    "category": "Photoshop - Other",
+    "clean_name": "1295",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "1295",
+    "_batch_index": 2876
+  },
+  {
+    "name": "129_2",
+    "category": "Photoshop - Other",
+    "clean_name": "129_2",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "129_2",
+    "_batch_index": 2877
+  },
+  {
+    "name": "12_10",
+    "category": "Photoshop - Other",
+    "clean_name": "12_10",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "12_10",
+    "_batch_index": 2878
+  },
+  {
+    "name": "12_11",
+    "category": "Photoshop - Other",
+    "clean_name": "12_11",
+    "confidence": 65,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "12_11",
+    "_batch_index": 2879
+  }
+]

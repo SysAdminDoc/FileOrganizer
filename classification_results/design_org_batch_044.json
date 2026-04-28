@@ -1,0 +1,407 @@
+[
+  {
+    "name": "Saint Patricks Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Saint Patrick's Day Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains flyer templates",
+    "_source_name": "Saint Patricks Day",
+    "_batch_index": 2580
+  },
+  {
+    "name": "Save the date",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date Invitations",
+    "confidence": 90,
+    "notes": "Legacy category Flyers but content is save-the-date postcards/invitations",
+    "_source_name": "Save the date",
+    "_batch_index": 2581
+  },
+  {
+    "name": "Senior Care",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Senior Care Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains flyer templates",
+    "_source_name": "Senior Care",
+    "_batch_index": 2582
+  },
+  {
+    "name": "SEO",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "SEO Agency Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains flyer template",
+    "_source_name": "SEO",
+    "_batch_index": 2583
+  },
+  {
+    "name": "Sexy",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sexy Woman Portraits Flyers",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains flyer templates and stock photos",
+    "_source_name": "Sexy",
+    "_batch_index": 2584
+  },
+  {
+    "name": "Shop",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Shop Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains flower shop and bicycle shop flyers",
+    "_source_name": "Shop",
+    "_batch_index": 2585
+  },
+  {
+    "name": "Skateboard",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Skateboard Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains skate flyer templates",
+    "_source_name": "Skateboard",
+    "_batch_index": 2586
+  },
+  {
+    "name": "Smartphone",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Smartphone Repair Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains smartphone service flyer",
+    "_source_name": "Smartphone",
+    "_batch_index": 2587
+  },
+  {
+    "name": "Snow",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Snow Event Flyers",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains snow-themed flyer and Photoshop templates",
+    "_source_name": "Snow",
+    "_batch_index": 2588
+  },
+  {
+    "name": "Soccer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Soccer Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains soccer tournament flyer templates",
+    "_source_name": "Soccer",
+    "_batch_index": 2589
+  },
+  {
+    "name": "Social Media",
+    "category": "After Effects - Social Media",
+    "clean_name": "Social Media Stories and Templates",
+    "confidence": 85,
+    "notes": "Contains .aep and .mov files for social media stories, also includes PHP script but main content is AE social media templates",
+    "_source_name": "Social Media",
+    "_batch_index": 2590
+  },
+  {
+    "name": "Solar",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Solar Energy Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains solar energy flyer template",
+    "_source_name": "Solar",
+    "_batch_index": 2591
+  },
+  {
+    "name": "Space",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Space Flyers and Textures",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, contains space lower thirds and texture packs but primarily flyer content",
+    "_source_name": "Space",
+    "_batch_index": 2592
+  },
+  {
+    "name": "Spelling Bee",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Spelling Bee Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains spelling bee flyer templates",
+    "_source_name": "Spelling Bee",
+    "_batch_index": 2593
+  },
+  {
+    "name": "Sports",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sports Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains pickleball and sport flyer templates",
+    "_source_name": "Sports",
+    "_batch_index": 2594
+  },
+  {
+    "name": "Spring",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Spring Party Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains spring break and festival flyer templates",
+    "_source_name": "Spring",
+    "_batch_index": 2595
+  },
+  {
+    "name": "Standup",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Stand Up Comedy Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains stand up comedy flyer templates",
+    "_source_name": "Standup",
+    "_batch_index": 2596
+  },
+  {
+    "name": "Star Wars",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Star Wars Party Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains Star Wars night flyer templates",
+    "_source_name": "Star Wars",
+    "_batch_index": 2597
+  },
+  {
+    "name": "Steakhouse",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Steakhouse Flyer and Menu",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains steak house flyer and menu templates",
+    "_source_name": "Steakhouse",
+    "_batch_index": 2598
+  },
+  {
+    "name": "Storyboard",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Storyboard Templates",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains storyboard template sets",
+    "_source_name": "Storyboard",
+    "_batch_index": 2599
+  },
+  {
+    "name": "Summer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Summer Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains summer party and event flyer templates",
+    "_source_name": "Summer",
+    "_batch_index": 2600
+  },
+  {
+    "name": "Surfing",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Surfing Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains surf competition and league flyer templates",
+    "_source_name": "Surfing",
+    "_batch_index": 2601
+  },
+  {
+    "name": "Sushi",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sushi Flyer Template",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains sushi delight flyer template",
+    "_source_name": "Sushi",
+    "_batch_index": 2602
+  },
+  {
+    "name": "Sweet 16",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sweet 16 Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains sweet 16 flyer templates",
+    "_source_name": "Sweet 16",
+    "_batch_index": 2603
+  },
+  {
+    "name": "Swim",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Swim Party Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains pool party and swimming festival flyer templates",
+    "_source_name": "Swim",
+    "_batch_index": 2604
+  },
+  {
+    "name": "Taco Tuesday",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Taco Tuesday Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains taco Tuesday flyer templates",
+    "_source_name": "Taco Tuesday",
+    "_batch_index": 2605
+  },
+  {
+    "name": "Talent Show",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Talent Show Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains talent show flyer templates",
+    "_source_name": "Talent Show",
+    "_batch_index": 2606
+  },
+  {
+    "name": "Tattoo",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Tattoo Convention Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains tattoo convention flyer templates",
+    "_source_name": "Tattoo",
+    "_batch_index": 2607
+  },
+  {
+    "name": "Tax Refund",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Tax Preparation Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains accounting and tax preparation flyer templates",
+    "_source_name": "Tax Refund",
+    "_batch_index": 2608
+  },
+  {
+    "name": "Taxi",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Taxi App and Brochure",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains taxi app design and brochure template",
+    "_source_name": "Taxi",
+    "_batch_index": 2609
+  },
+  {
+    "name": "Technology",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Technology Web Banners",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains networking technology web ad banners",
+    "_source_name": "Technology",
+    "_batch_index": 2610
+  },
+  {
+    "name": "Thanksgiving, Fall, Autumn",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Autumn Party Flyers and Presets",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, contains autumn/fall flyer templates and Lightroom presets",
+    "_source_name": "Thanksgiving, Fall, Autumn",
+    "_batch_index": 2611
+  },
+  {
+    "name": "Toy Drive",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Toy Drive Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains toy drive flyer templates",
+    "_source_name": "Toy Drive",
+    "_batch_index": 2612
+  },
+  {
+    "name": "Training",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Training Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains training flyer templates",
+    "_source_name": "Training",
+    "_batch_index": 2613
+  },
+  {
+    "name": "Travel",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Travel Flyers and Presets",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains travel flyer templates and LUTs/presets",
+    "_source_name": "Travel",
+    "_batch_index": 2614
+  },
+  {
+    "name": "Tropical",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Tropical Flyers and Overlays",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, contains tropical leaf overlays and travel commercial templates",
+    "_source_name": "Tropical",
+    "_batch_index": 2615
+  },
+  {
+    "name": "TV",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "TV Channel Broadcast Flyers",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains TV channel broadcast flyer templates",
+    "_source_name": "TV",
+    "_batch_index": 2616
+  },
+  {
+    "name": "Twitter",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Twitter Profile Headers",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, contains Twitter profile header bundle and mood board templates",
+    "_source_name": "Twitter",
+    "_batch_index": 2617
+  },
+  {
+    "name": "Typography",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Typography Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains typography flyer bundle",
+    "_source_name": "Typography",
+    "_batch_index": 2618
+  },
+  {
+    "name": "Urban",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Urban Party Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains urban party flyer template",
+    "_source_name": "Urban",
+    "_batch_index": 2619
+  },
+  {
+    "name": "Valentines Day, Vday, Sweetest Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Valentine's Day Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains Valentine's Day flyer templates",
+    "_source_name": "Valentines Day, Vday, Sweetest Day",
+    "_batch_index": 2620
+  },
+  {
+    "name": "Vintage",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Vintage Print Pack",
+    "confidence": 90,
+    "notes": "Legacy category Flyers, contains vintage print pack and insignias bundle",
+    "_source_name": "Vintage",
+    "_batch_index": 2621
+  },
+  {
+    "name": "Volleyball",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Volleyball Flyers",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains volleyball night flyer templates",
+    "_source_name": "Volleyball",
+    "_batch_index": 2622
+  },
+  {
+    "name": "Volunteer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Volunteer Flyer",
+    "confidence": 95,
+    "notes": "Legacy category Flyers, contains volunteer flyer templates",
+    "_source_name": "Volunteer",
+    "_batch_index": 2623
+  },
+  {
+    "name": "Wedding",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Wedding Flyers and Presets",
+    "confidence": 85,
+    "notes": "Legacy category Flyers, contains wedding flyer templates and Lightroom presets",
+    "_source_name": "Wedding",
+    "_batch_index": 2624
+  }
+]

@@ -1,0 +1,542 @@
+[
+  {
+    "name": "color full text effects style GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Color Full Text Effects Style",
+    "confidence": 85,
+    "notes": "Legacy category 'Text Effects' and name suggest Photoshop text style effects.",
+    "_source_name": "color full text effects style GFXTRA",
+    "_batch_index": 1740
+  },
+  {
+    "name": "colorful-textures-pack",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Colorful Textures Pack",
+    "confidence": 90,
+    "notes": "Legacy category 'Text Effects' but name clearly indicates textures; reclassified to textures.",
+    "_source_name": "colorful-textures-pack",
+    "_batch_index": 1741
+  },
+  {
+    "name": "ColorType Text Effects",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "ColorType Text Effects",
+    "confidence": 85,
+    "notes": "Legacy category 'Text Effects' and name imply Photoshop text effect styles.",
+    "_source_name": "ColorType Text Effects",
+    "_batch_index": 1742
+  },
+  {
+    "name": "create 3d purple text effect psd GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Create 3D Purple Text Effect PSD",
+    "confidence": 90,
+    "notes": "Contains .psd and 'text effect' in name; Photoshop text style.",
+    "_source_name": "create 3d purple text effect psd GFXTRA",
+    "_batch_index": 1743
+  },
+  {
+    "name": "create golden effects editable text-GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Create Golden Effects Editable Text",
+    "confidence": 90,
+    "notes": "Editable text effect, likely PSD; Photoshop styles.",
+    "_source_name": "create golden effects editable text-GFXTRA",
+    "_batch_index": 1744
+  },
+  {
+    "name": "Creative Effects Textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Creative Effects Textures",
+    "confidence": 85,
+    "notes": "Contains 'Backgrounds | Overlays | Textures' hint; reclassified to textures.",
+    "_source_name": "Creative Effects Textures",
+    "_batch_index": 1745
+  },
+  {
+    "name": "Creativemarket 6 posters with editable text 228098",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "6 Posters with Editable Text",
+    "confidence": 80,
+    "notes": "Name says 'posters'; legacy 'Text Effects' but primary use is print.",
+    "_source_name": "Creativemarket 6 posters with editable text 228098",
+    "_batch_index": 1746
+  },
+  {
+    "name": "CreativeMarket 80 s Metal Photoshop Text Effect 2138793",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "80s Metal Photoshop Text Effect",
+    "confidence": 95,
+    "notes": "Explicitly 'Photoshop Text Effect'; legacy category matches.",
+    "_source_name": "CreativeMarket 80 s Metal Photoshop Text Effect 2138793",
+    "_batch_index": 1747
+  },
+  {
+    "name": "CreativeMarket 80s Text Effects Minibundle 2346725",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "80s Text Effects Minibundle",
+    "confidence": 90,
+    "notes": "Legacy 'Text Effects' and name indicates text effects bundle.",
+    "_source_name": "CreativeMarket 80s Text Effects Minibundle 2346725",
+    "_batch_index": 1748
+  },
+  {
+    "name": "CreativeMarket LEDs Lights Text Effects 242282",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "LEDs Lights Text Effects",
+    "confidence": 90,
+    "notes": "Legacy 'Text Effects'; likely Photoshop styles.",
+    "_source_name": "CreativeMarket LEDs Lights Text Effects 242282",
+    "_batch_index": 1749
+  },
+  {
+    "name": "CreativeMarket Neon text effect 257994",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Neon Text Effect",
+    "confidence": 90,
+    "notes": "Legacy 'Text Effects'; typical Photoshop text effect.",
+    "_source_name": "CreativeMarket Neon text effect 257994",
+    "_batch_index": 1750
+  },
+  {
+    "name": "Crocodilo-Text-Effect",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Crocodilo Text Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; likely Photoshop style.",
+    "_source_name": "Crocodilo-Text-Effect",
+    "_batch_index": 1751
+  },
+  {
+    "name": "custom-text-retro-style-effect-editable-style-vintage",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Custom Text Retro Style Effect Editable Style Vintage",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; editable style suggests Photoshop.",
+    "_source_name": "custom-text-retro-style-effect-editable-style-vintage",
+    "_batch_index": 1752
+  },
+  {
+    "name": "cut down text effect design-GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Cut Down Text Effect Design",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; Photoshop text effect.",
+    "_source_name": "cut down text effect design-GFXTRA",
+    "_batch_index": 1753
+  },
+  {
+    "name": "cutlas text style effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Cutlas Text Style Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; text style effect.",
+    "_source_name": "cutlas text style effect GFXTRA",
+    "_batch_index": 1754
+  },
+  {
+    "name": "Dark-Grunge-Text-Effect",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Dark Grunge Text Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; grunge style likely Photoshop.",
+    "_source_name": "Dark-Grunge-Text-Effect",
+    "_batch_index": 1755
+  },
+  {
+    "name": "diamond-cube-texture-illustrator-graphic-style-104391",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Diamond Cube Texture Illustrator Graphic Style",
+    "confidence": 90,
+    "notes": "Name says 'illustrator graphic style'; legacy 'Text Effects' but clearly Illustrator.",
+    "_source_name": "diamond-cube-texture-illustrator-graphic-style-104391",
+    "_batch_index": 1756
+  },
+  {
+    "name": "Dofont-Text-Effect",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Dofont Text Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; likely Photoshop.",
+    "_source_name": "Dofont-Text-Effect",
+    "_batch_index": 1757
+  },
+  {
+    "name": "Dub Text",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Dub Text",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; text effect style.",
+    "_source_name": "Dub Text",
+    "_batch_index": 1758
+  },
+  {
+    "name": "dynamic editable psd text style effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Dynamic Editable PSD Text Style Effect",
+    "confidence": 95,
+    "notes": "Explicitly 'psd text style effect'; Photoshop.",
+    "_source_name": "dynamic editable psd text style effect GFXTRA",
+    "_batch_index": 1759
+  },
+  {
+    "name": "echo bang boost text effect print template-GFXTRA",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Echo Bang Boost Text Effect Print Template",
+    "confidence": 80,
+    "notes": "Name includes 'print template'; legacy 'Text Effects' but print-oriented.",
+    "_source_name": "echo bang boost text effect print template-GFXTRA",
+    "_batch_index": 1760
+  },
+  {
+    "name": "editable 3d luxury golden text style effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable 3D Luxury Golden Text Style Effect",
+    "confidence": 90,
+    "notes": "Editable text style, likely PSD; Photoshop.",
+    "_source_name": "editable 3d luxury golden text style effect GFXTRA",
+    "_batch_index": 1761
+  },
+  {
+    "name": "editable egg yolk text effect template GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Egg Yolk Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable egg yolk text effect template GFXTRA",
+    "_batch_index": 1762
+  },
+  {
+    "name": "editable glossy candy text effect template-GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Glossy Candy Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable glossy candy text effect template-GFXTRA",
+    "_batch_index": 1763
+  },
+  {
+    "name": "editable papercut text effect-GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Papercut Text Effect",
+    "confidence": 90,
+    "notes": "Editable text effect; Photoshop.",
+    "_source_name": "editable papercut text effect-GFXTRA",
+    "_batch_index": 1764
+  },
+  {
+    "name": "editable psd text effect touch soft style GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable PSD Text Effect Touch Soft Style",
+    "confidence": 95,
+    "notes": "Explicitly 'psd text effect'; Photoshop.",
+    "_source_name": "editable psd text effect touch soft style GFXTRA",
+    "_batch_index": 1765
+  },
+  {
+    "name": "editable pure sand text effect template GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Pure Sand Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable pure sand text effect template GFXTRA",
+    "_batch_index": 1766
+  },
+  {
+    "name": "editable retro text effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Retro Text Effect",
+    "confidence": 90,
+    "notes": "Editable text effect; Photoshop.",
+    "_source_name": "editable retro text effect GFXTRA",
+    "_batch_index": 1767
+  },
+  {
+    "name": "editable sky blue text effect template GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Sky Blue Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable sky blue text effect template GFXTRA",
+    "_batch_index": 1768
+  },
+  {
+    "name": "editable sugar candy text effect template GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Sugar Candy Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable sugar candy text effect template GFXTRA",
+    "_batch_index": 1769
+  },
+  {
+    "name": "editable text effect cut GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Text Effect Cut",
+    "confidence": 90,
+    "notes": "Editable text effect; Photoshop.",
+    "_source_name": "editable text effect cut GFXTRA",
+    "_batch_index": 1770
+  },
+  {
+    "name": "editable text effect treasure hunt game style-GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Text Effect Treasure Hunt Game Style",
+    "confidence": 90,
+    "notes": "Editable text effect; Photoshop.",
+    "_source_name": "editable text effect treasure hunt game style-GFXTRA",
+    "_batch_index": 1771
+  },
+  {
+    "name": "editable text style effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Text Style Effect",
+    "confidence": 90,
+    "notes": "Editable text style; Photoshop.",
+    "_source_name": "editable text style effect GFXTRA",
+    "_batch_index": 1772
+  },
+  {
+    "name": "editable-dark-pink-chocolate-text-effect-template",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Dark Pink Chocolate Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable-dark-pink-chocolate-text-effect-template",
+    "_batch_index": 1773
+  },
+  {
+    "name": "editable-fresh-3d-text-effect-template",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Fresh 3D Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable-fresh-3d-text-effect-template",
+    "_batch_index": 1774
+  },
+  {
+    "name": "editable-led-sign-board-text-effect-template",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable LED Sign Board Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable-led-sign-board-text-effect-template",
+    "_batch_index": 1775
+  },
+  {
+    "name": "editable-mango-candy-3d-text-effect-template",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Mango Candy 3D Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable-mango-candy-3d-text-effect-template",
+    "_batch_index": 1776
+  },
+  {
+    "name": "editable-painting-colour-text-effect-template",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Editable Painting Colour Text Effect Template",
+    "confidence": 90,
+    "notes": "Editable text effect template; Photoshop.",
+    "_source_name": "editable-painting-colour-text-effect-template",
+    "_batch_index": 1777
+  },
+  {
+    "name": "efecto texto editable equipo batalla 3d GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Efecto Texto Editable Equipo Batalla 3D",
+    "confidence": 90,
+    "notes": "Editable text effect; Photoshop.",
+    "_source_name": "efecto texto editable equipo batalla 3d GFXTRA",
+    "_batch_index": 1778
+  },
+  {
+    "name": "efecto-texto-rojo-blanco-estilo-3d",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Efecto Texto Rojo Blanco Estilo 3D",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; likely Photoshop.",
+    "_source_name": "efecto-texto-rojo-blanco-estilo-3d",
+    "_batch_index": 1779
+  },
+  {
+    "name": "efeitos de texto premium de luzes de neon coloridas GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Efeitos de Texto Premium de Luzes de Neon Coloridas",
+    "confidence": 90,
+    "notes": "Premium text effects; likely Photoshop.",
+    "_source_name": "efeitos de texto premium de luzes de neon coloridas GFXTRA",
+    "_batch_index": 1780
+  },
+  {
+    "name": "elegant clean leather emboss 3d editable text effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Elegant Clean Leather Emboss 3D Editable Text Effect",
+    "confidence": 90,
+    "notes": "Editable text effect; Photoshop.",
+    "_source_name": "elegant clean leather emboss 3d editable text effect GFXTRA",
+    "_batch_index": 1781
+  },
+  {
+    "name": "elegant text effect-GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Elegant Text Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; Photoshop.",
+    "_source_name": "elegant text effect-GFXTRA",
+    "_batch_index": 1782
+  },
+  {
+    "name": "elements-doodles-text-effect-UWKWFF-2018-02-16",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Doodles Text Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; doodles text effect.",
+    "_source_name": "elements-doodles-text-effect-UWKWFF-2018-02-16",
+    "_batch_index": 1783
+  },
+  {
+    "name": "elements-flourish-text-dividers-bonus-SFLMKM-2018-03-01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Flourish Text Dividers Bonus",
+    "confidence": 85,
+    "notes": "Contains 'Vector EPS 10'; vector dividers, not text effects.",
+    "_source_name": "elements-flourish-text-dividers-bonus-SFLMKM-2018-03-01",
+    "_batch_index": 1784
+  },
+  {
+    "name": "elements-vintage-text-effects-for-illustrator-K339VP-2019-02-20",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vintage Text Effects for Illustrator",
+    "confidence": 95,
+    "notes": "Explicitly 'for illustrator'; Illustrator vectors.",
+    "_source_name": "elements-vintage-text-effects-for-illustrator-K339VP-2019-02-20",
+    "_batch_index": 1785
+  },
+  {
+    "name": "emboss pressed bevel text effect print template-GFXTRA",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Emboss Pressed Bevel Text Effect Print Template",
+    "confidence": 80,
+    "notes": "Name includes 'print template'; print-oriented.",
+    "_source_name": "emboss pressed bevel text effect print template-GFXTRA",
+    "_batch_index": 1786
+  },
+  {
+    "name": "Event Flyer Layout with Bold Red and Black Text Elements 315944792",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Event Flyer Layout with Bold Red and Black Text Elements",
+    "confidence": 90,
+    "notes": "Name says 'Event Flyer Layout'; print flyer.",
+    "_source_name": "Event Flyer Layout with Bold Red and Black Text Elements 315944792",
+    "_batch_index": 1787
+  },
+  {
+    "name": "Fire Font Alphabet - Static Version",
+    "category": "Fonts & Typography",
+    "clean_name": "Fire Font Alphabet - Static Version",
+    "confidence": 85,
+    "notes": "Name says 'Font Alphabet'; likely font files.",
+    "_source_name": "Fire Font Alphabet - Static Version",
+    "_batch_index": 1788
+  },
+  {
+    "name": "FlatPackFx-Text Message Effect",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "FlatPackFx Text Message Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; text effect style.",
+    "_source_name": "FlatPackFx-Text Message Effect",
+    "_batch_index": 1789
+  },
+  {
+    "name": "fonts",
+    "category": "Fonts & Typography",
+    "clean_name": "Fonts",
+    "confidence": 95,
+    "notes": "Folder named 'fonts'; contains font files.",
+    "_source_name": "fonts",
+    "_batch_index": 1790
+  },
+  {
+    "name": "Fontself Maker Bundle for PS AI",
+    "category": "Plugins & Extensions",
+    "clean_name": "Fontself Maker Bundle for PS AI",
+    "confidence": 90,
+    "notes": "Font creation plugin for Photoshop/Illustrator; plugin.",
+    "_source_name": "Fontself Maker Bundle for PS AI",
+    "_batch_index": 1791
+  },
+  {
+    "name": "forced editable psd text style effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Forced Editable PSD Text Style Effect",
+    "confidence": 95,
+    "notes": "Explicitly 'psd text style effect'; Photoshop.",
+    "_source_name": "forced editable psd text style effect GFXTRA",
+    "_batch_index": 1792
+  },
+  {
+    "name": "found editable text style effect-GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Found Editable Text Style Effect",
+    "confidence": 90,
+    "notes": "Editable text style; Photoshop.",
+    "_source_name": "found editable text style effect-GFXTRA",
+    "_batch_index": 1793
+  },
+  {
+    "name": "frozen editable text style effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Frozen Editable Text Style Effect",
+    "confidence": 90,
+    "notes": "Editable text style; Photoshop.",
+    "_source_name": "frozen editable text style effect GFXTRA",
+    "_batch_index": 1794
+  },
+  {
+    "name": "fruit text-effect-template pack",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Fruit Text Effect Template Pack",
+    "confidence": 90,
+    "notes": "Text effect template pack; Photoshop.",
+    "_source_name": "fruit text-effect-template pack",
+    "_batch_index": 1795
+  },
+  {
+    "name": "game editable text effect GFXTRA",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Game Editable Text Effect",
+    "confidence": 90,
+    "notes": "Editable text effect; Photoshop.",
+    "_source_name": "game editable text effect GFXTRA",
+    "_batch_index": 1796
+  },
+  {
+    "name": "game-text-effect",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Game Text Effect",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; Photoshop.",
+    "_source_name": "game-text-effect",
+    "_batch_index": 1797
+  },
+  {
+    "name": "GfXtra-Modern-Text-Effects",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "GfXtra Modern Text Effects",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; modern text effects.",
+    "_source_name": "GfXtra-Modern-Text-Effects",
+    "_batch_index": 1798
+  },
+  {
+    "name": "GfXtra-Vintage-Text-Effects-Vol",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "GfXtra Vintage Text Effects Vol",
+    "confidence": 85,
+    "notes": "Legacy 'Text Effects'; vintage text effects.",
+    "_source_name": "GfXtra-Vintage-Text-Effects-Vol",
+    "_batch_index": 1799
+  }
+]

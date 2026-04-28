@@ -1,0 +1,542 @@
+[
+  {
+    "name": "1718131",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "3-1-2 Logo Reveal",
+    "confidence": 70,
+    "notes": "Contains .aep and .ttf, likely a logo reveal template",
+    "_source_name": "1718131",
+    "_batch_index": 3420
+  },
+  {
+    "name": "1718356",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Women's Day Opener",
+    "confidence": 85,
+    "notes": "Chinese text indicates Women's Day event opener template",
+    "_source_name": "1718356",
+    "_batch_index": 3421
+  },
+  {
+    "name": "1718564",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Reflection Logo Reveal",
+    "confidence": 75,
+    "notes": "Contains .aep and .psd, name suggests reflection effect",
+    "_source_name": "1718564",
+    "_batch_index": 3422
+  },
+  {
+    "name": "1718574",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects Project",
+    "confidence": 60,
+    "notes": "Contains .aep, .psd, .ttf but name is garbled",
+    "_source_name": "1718574",
+    "_batch_index": 3423
+  },
+  {
+    "name": "172",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Photoshop Mockup",
+    "confidence": 65,
+    "notes": "Single .psd file, likely a mockup",
+    "_source_name": "172",
+    "_batch_index": 3424
+  },
+  {
+    "name": "1726864",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects Project",
+    "confidence": 60,
+    "notes": "Contains .aep and .ttf, garbled name",
+    "_source_name": "1726864",
+    "_batch_index": 3425
+  },
+  {
+    "name": "1727453",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Reflection Logo Reveal",
+    "confidence": 75,
+    "notes": "Contains .aep and .psd, name suggests reflection",
+    "_source_name": "1727453",
+    "_batch_index": 3426
+  },
+  {
+    "name": "1727577",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Underwater Rocks",
+    "confidence": 80,
+    "notes": "Contains .aep, underwater scene suggests cinematic",
+    "_source_name": "1727577",
+    "_batch_index": 3427
+  },
+  {
+    "name": "1727611",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects Project",
+    "confidence": 60,
+    "notes": "Contains .aep and .ttf, garbled name",
+    "_source_name": "1727611",
+    "_batch_index": 3428
+  },
+  {
+    "name": "1727727",
+    "category": "After Effects - Other",
+    "clean_name": "Mask Material Effect",
+    "confidence": 65,
+    "notes": "Contains .aep and .c4d, garbled Chinese text about mask materials",
+    "_source_name": "1727727",
+    "_batch_index": 3429
+  },
+  {
+    "name": "1727826",
+    "category": "After Effects - Other",
+    "clean_name": "Qingming Festival Template",
+    "confidence": 70,
+    "notes": "Contains .aep, Chinese text indicates Qingming Festival",
+    "_source_name": "1727826",
+    "_batch_index": 3430
+  },
+  {
+    "name": "173-01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "173-01",
+    "_batch_index": 3431
+  },
+  {
+    "name": "175_Vk0gMDQwXzIwMTYgLSAwMTA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "175_Vk0gMDQwXzIwMTYgLSAwMTA",
+    "_batch_index": 3432
+  },
+  {
+    "name": "175_Vk0gMDQwXzIwMTYgLSAwMTg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "175_Vk0gMDQwXzIwMTYgLSAwMTg",
+    "_batch_index": 3433
+  },
+  {
+    "name": "176",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "176",
+    "_batch_index": 3434
+  },
+  {
+    "name": "177",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "177",
+    "_batch_index": 3435
+  },
+  {
+    "name": "1787",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Photoshop Mockup",
+    "confidence": 65,
+    "notes": "Single .psd file",
+    "_source_name": "1787",
+    "_batch_index": 3436
+  },
+  {
+    "name": "178_U25hcFZfUHIwMzZfMTYgLSAwMjA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "178_U25hcFZfUHIwMzZfMTYgLSAwMjA",
+    "_batch_index": 3437
+  },
+  {
+    "name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTc",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTc",
+    "_batch_index": 3438
+  },
+  {
+    "name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTg (2)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTg (2)",
+    "_batch_index": 3439
+  },
+  {
+    "name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTg",
+    "_batch_index": 3440
+  },
+  {
+    "name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTI",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTI",
+    "_batch_index": 3441
+  },
+  {
+    "name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTM",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTM",
+    "_batch_index": 3442
+  },
+  {
+    "name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTQ",
+    "_batch_index": 3443
+  },
+  {
+    "name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTY",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Asset",
+    "confidence": 80,
+    "notes": "Single .eps file",
+    "_source_name": "178_U25hcFZfUHIwMzZfMTYgLSAwMTY",
+    "_batch_index": 3444
+  },
+  {
+    "name": "179",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Photoshop Mockup",
+    "confidence": 65,
+    "notes": "Single .psd file",
+    "_source_name": "179",
+    "_batch_index": 3445
+  },
+  {
+    "name": "17_10",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set, likely web template",
+    "_source_name": "17_10",
+    "_batch_index": 3446
+  },
+  {
+    "name": "17_11",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_11",
+    "_batch_index": 3447
+  },
+  {
+    "name": "17_12",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_12",
+    "_batch_index": 3448
+  },
+  {
+    "name": "17_14",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_14",
+    "_batch_index": 3449
+  },
+  {
+    "name": "17_15",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_15",
+    "_batch_index": 3450
+  },
+  {
+    "name": "17_16",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_16",
+    "_batch_index": 3451
+  },
+  {
+    "name": "17_16th",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_16th",
+    "_batch_index": 3452
+  },
+  {
+    "name": "17_17",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_17",
+    "_batch_index": 3453
+  },
+  {
+    "name": "17_18",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_18",
+    "_batch_index": 3454
+  },
+  {
+    "name": "17_19",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_19",
+    "_batch_index": 3455
+  },
+  {
+    "name": "17_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_2",
+    "_batch_index": 3456
+  },
+  {
+    "name": "17_21",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_21",
+    "_batch_index": 3457
+  },
+  {
+    "name": "17_22",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_22",
+    "_batch_index": 3458
+  },
+  {
+    "name": "17_23",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_23",
+    "_batch_index": 3459
+  },
+  {
+    "name": "17_24",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_24",
+    "_batch_index": 3460
+  },
+  {
+    "name": "17_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_3",
+    "_batch_index": 3461
+  },
+  {
+    "name": "17_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_4",
+    "_batch_index": 3462
+  },
+  {
+    "name": "17_5",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_5",
+    "_batch_index": 3463
+  },
+  {
+    "name": "17_7",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_7",
+    "_batch_index": 3464
+  },
+  {
+    "name": "17_8",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_8",
+    "_batch_index": 3465
+  },
+  {
+    "name": "17_9",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Web Template Part",
+    "confidence": 70,
+    "notes": "Part of a numbered PSD set",
+    "_source_name": "17_9",
+    "_batch_index": 3466
+  },
+  {
+    "name": "17_About",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "About Page Template",
+    "confidence": 75,
+    "notes": "PSD named 'About', likely web template section",
+    "_source_name": "17_About",
+    "_batch_index": 3467
+  },
+  {
+    "name": "17_Activities",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Activities Page Template",
+    "confidence": 75,
+    "notes": "PSD named 'Activities', likely web template section",
+    "_source_name": "17_Activities",
+    "_batch_index": 3468
+  },
+  {
+    "name": "17_aGVhZGVyXzEy",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Header Vector",
+    "confidence": 80,
+    "notes": "Single .eps file, header design",
+    "_source_name": "17_aGVhZGVyXzEy",
+    "_batch_index": 3469
+  },
+  {
+    "name": "17_Alternative_Menu",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Alternative Menu Template",
+    "confidence": 75,
+    "notes": "PSD named 'Alternative Menu', likely web template",
+    "_source_name": "17_Alternative_Menu",
+    "_batch_index": 3470
+  },
+  {
+    "name": "17_article",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Article Template",
+    "confidence": 75,
+    "notes": "PSD named 'article', likely web template section",
+    "_source_name": "17_article",
+    "_batch_index": 3471
+  },
+  {
+    "name": "17_article_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Article Template 2",
+    "confidence": 75,
+    "notes": "PSD named 'article_2', likely web template section",
+    "_source_name": "17_article_2",
+    "_batch_index": 3472
+  },
+  {
+    "name": "17_article_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Article Template 3",
+    "confidence": 75,
+    "notes": "PSD named 'article_3', likely web template section",
+    "_source_name": "17_article_3",
+    "_batch_index": 3473
+  },
+  {
+    "name": "17_article_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Article Template 4",
+    "confidence": 75,
+    "notes": "PSD named 'article_4', likely web template section",
+    "_source_name": "17_article_4",
+    "_batch_index": 3474
+  },
+  {
+    "name": "17_Audio_Post",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Audio Post Template",
+    "confidence": 75,
+    "notes": "PSD named 'Audio_Post', likely web template",
+    "_source_name": "17_Audio_Post",
+    "_batch_index": 3475
+  },
+  {
+    "name": "17_Balcony New Outdoor-01",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Balcony Outdoor Mockup",
+    "confidence": 70,
+    "notes": "PSD named 'Balcony New Outdoor', likely mockup",
+    "_source_name": "17_Balcony New Outdoor-01",
+    "_batch_index": 3476
+  },
+  {
+    "name": "17_Balcony New Outdoor_editable txt-01",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Balcony Outdoor Editable Mockup",
+    "confidence": 70,
+    "notes": "PSD with editable text, likely mockup",
+    "_source_name": "17_Balcony New Outdoor_editable txt-01",
+    "_batch_index": 3477
+  },
+  {
+    "name": "17_bura_about_v4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "About Page Template v4",
+    "confidence": 75,
+    "notes": "PSD named 'bura_about_v4', likely web template",
+    "_source_name": "17_bura_about_v4",
+    "_batch_index": 3478
+  },
+  {
+    "name": "17_Contact_Me",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Contact Page Template",
+    "confidence": 75,
+    "notes": "PSD named 'Contact_Me', likely web template section",
+    "_source_name": "17_Contact_Me",
+    "_batch_index": 3479
+  }
+]

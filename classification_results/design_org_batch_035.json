@@ -1,0 +1,542 @@
+[
+  {
+    "name": "37224-Shirt-Design-Texture-Pack",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Shirt Design Texture Pack",
+    "confidence": 85,
+    "notes": "Legacy category Texture, likely raster textures for Photoshop",
+    "_source_name": "37224-Shirt-Design-Texture-Pack",
+    "_batch_index": 2040
+  },
+  {
+    "name": "50 Ultra 4K Bokeh Textures Pack One",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Ultra 4K Bokeh Textures Pack One",
+    "confidence": 85,
+    "notes": "Legacy category Texture, bokeh textures for Photoshop",
+    "_source_name": "50 Ultra 4K Bokeh Textures Pack One",
+    "_batch_index": 2041
+  },
+  {
+    "name": "54355-Seamless-Grass-Texture",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Seamless Grass Texture",
+    "confidence": 85,
+    "notes": "Legacy category Texture, seamless texture",
+    "_source_name": "54355-Seamless-Grass-Texture",
+    "_batch_index": 2042
+  },
+  {
+    "name": "54794 Watercolor Seamless Web Textures-15062018",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Watercolor Seamless Web Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, watercolor seamless textures",
+    "_source_name": "54794 Watercolor Seamless Web Textures-15062018",
+    "_batch_index": 2043
+  },
+  {
+    "name": "54794-Watercolor-Seamless-Web-Textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Watercolor Seamless Web Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, watercolor seamless textures",
+    "_source_name": "54794-Watercolor-Seamless-Web-Textures",
+    "_batch_index": 2044
+  },
+  {
+    "name": "59015-Thrift-Shop-Vintage-T-Shirt-Texture",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Thrift Shop Vintage T-Shirt Texture",
+    "confidence": 85,
+    "notes": "Legacy category Texture, includes displacement maps",
+    "_source_name": "59015-Thrift-Shop-Vintage-T-Shirt-Texture",
+    "_batch_index": 2045
+  },
+  {
+    "name": "8c7KD-crumpled-paper-textures-YR_40_21l",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Crumpled Paper Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, paper textures",
+    "_source_name": "8c7KD-crumpled-paper-textures-YR_40_21l",
+    "_batch_index": 2046
+  },
+  {
+    "name": "9 Authentic World War II Era Paper Supply Textures PSD GFXTRA",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Authentic World War II Era Paper Supply Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, PSD textures",
+    "_source_name": "9 Authentic World War II Era Paper Supply Textures PSD GFXTRA",
+    "_batch_index": 2047
+  },
+  {
+    "name": "Acrylic Abstraction Textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Acrylic Abstraction Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, JPG textures and patterns",
+    "_source_name": "Acrylic Abstraction Textures",
+    "_batch_index": 2048
+  },
+  {
+    "name": "Blush Pink - Glam Textures Collection",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Blush Pink Glam Textures Collection",
+    "confidence": 85,
+    "notes": "Legacy category Texture, glam textures",
+    "_source_name": "Blush Pink - Glam Textures Collection",
+    "_batch_index": 2049
+  },
+  {
+    "name": "CM - Photoshop Texture Brushes 306548",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Photoshop Texture Brushes",
+    "confidence": 85,
+    "notes": "Legacy category Texture but contains brushes, classified as brushes",
+    "_source_name": "CM - Photoshop Texture Brushes 306548",
+    "_batch_index": 2050
+  },
+  {
+    "name": "CM - Textured Photo Montage 31280",
+    "category": "Photoshop - Other",
+    "clean_name": "Textured Photo Montage",
+    "confidence": 80,
+    "notes": "Legacy category Texture, but montage implies composite/overlay work",
+    "_source_name": "CM - Textured Photo Montage 31280",
+    "_batch_index": 2051
+  },
+  {
+    "name": "CM - Watercolor Texture Bundle 1541237",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Watercolor Texture Bundle",
+    "confidence": 85,
+    "notes": "Legacy category Texture, watercolor textures",
+    "_source_name": "CM - Watercolor Texture Bundle 1541237",
+    "_batch_index": 2052
+  },
+  {
+    "name": "CM - Watercolor Texture Pack 792537",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Watercolor Texture Pack",
+    "confidence": 85,
+    "notes": "Legacy category Texture, watercolor textures",
+    "_source_name": "CM - Watercolor Texture Pack 792537",
+    "_batch_index": 2053
+  },
+  {
+    "name": "CM 30 Textured Watercolor Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Textured Watercolor Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy category Texture, watercolor backgrounds",
+    "_source_name": "CM 30 Textured Watercolor Backgrounds",
+    "_batch_index": 2054
+  },
+  {
+    "name": "CreativeMarket - 29 vector texture brushes 5601816",
+    "category": "Illustrator - Brushes & Swatches",
+    "clean_name": "Vector Texture Brushes",
+    "confidence": 85,
+    "notes": "Legacy category Texture, but vector brushes for Illustrator",
+    "_source_name": "CreativeMarket - 29 vector texture brushes 5601816",
+    "_batch_index": 2055
+  },
+  {
+    "name": "CreativeMarket - Holographic Foil Gradient Textures 4061718",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Holographic Foil Gradient Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, gradient textures",
+    "_source_name": "CreativeMarket - Holographic Foil Gradient Textures 4061718",
+    "_batch_index": 2056
+  },
+  {
+    "name": "Essential-Texture-Kit-2396907",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Essential Texture Kit",
+    "confidence": 85,
+    "notes": "Legacy category Texture, includes wood/masonry/grunge textures",
+    "_source_name": "Essential-Texture-Kit-2396907",
+    "_batch_index": 2057
+  },
+  {
+    "name": "Film-Grain-Textures-Light-4226004",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Film Grain Textures Light",
+    "confidence": 85,
+    "notes": "Legacy category Texture, film grain and light leaks overlays",
+    "_source_name": "Film-Grain-Textures-Light-4226004",
+    "_batch_index": 2058
+  },
+  {
+    "name": "Goldfoil-Photoshop-TexturesBrushes",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Goldfoil Photoshop Textures Brushes",
+    "confidence": 85,
+    "notes": "Legacy category Texture, but includes brushes",
+    "_source_name": "Goldfoil-Photoshop-TexturesBrushes",
+    "_batch_index": 2059
+  },
+  {
+    "name": "Got3D Tree and Vine 90 Textures with Alpha Files GFXTRA",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Tree and Vine Textures with Alpha",
+    "confidence": 85,
+    "notes": "Legacy category Texture, textures with alpha",
+    "_source_name": "Got3D Tree and Vine 90 Textures with Alpha Files GFXTRA",
+    "_batch_index": 2060
+  },
+  {
+    "name": "GR 10 HQ Texture Backgrounds 147907",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "HQ Texture Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy category Texture, background textures",
+    "_source_name": "GR 10 HQ Texture Backgrounds 147907",
+    "_batch_index": 2061
+  },
+  {
+    "name": "GR Old Film Cuttings - Scratches Dust Textures Vol1",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Old Film Cuttings Scratches Dust Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, scratches and dust overlays",
+    "_source_name": "GR Old Film Cuttings - Scratches Dust Textures Vol1",
+    "_batch_index": 2062
+  },
+  {
+    "name": "GR Rough Paper Texture 2566390",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Rough Paper Texture",
+    "confidence": 85,
+    "notes": "Legacy category Texture, paper texture",
+    "_source_name": "GR Rough Paper Texture 2566390",
+    "_batch_index": 2063
+  },
+  {
+    "name": "GR Torn Paper Backgrounds Textures 5 Themes 84212",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Torn Paper Backgrounds Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, torn paper textures",
+    "_source_name": "GR Torn Paper Backgrounds Textures 5 Themes 84212",
+    "_batch_index": 2064
+  },
+  {
+    "name": "Gradient Abstract Textures Vector Collection",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Gradient Abstract Textures Vector Collection",
+    "confidence": 85,
+    "notes": "Legacy category Texture, but vector collection for Illustrator",
+    "_source_name": "Gradient Abstract Textures Vector Collection",
+    "_batch_index": 2065
+  },
+  {
+    "name": "graphicriver-1150602-15-old-paper-textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Old Paper Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, old paper textures",
+    "_source_name": "graphicriver-1150602-15-old-paper-textures",
+    "_batch_index": 2066
+  },
+  {
+    "name": "Just Good Textures - T-Shirt Fabric",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "T-Shirt Fabric Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, fabric textures",
+    "_source_name": "Just Good Textures - T-Shirt Fabric",
+    "_batch_index": 2067
+  },
+  {
+    "name": "light-subtle-textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Light Subtle Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, subtle textures",
+    "_source_name": "light-subtle-textures",
+    "_batch_index": 2068
+  },
+  {
+    "name": "Marble Paint Texture Background Set",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Marble Paint Texture Background Set",
+    "confidence": 85,
+    "notes": "Legacy category Texture, marble textures",
+    "_source_name": "Marble Paint Texture Background Set",
+    "_batch_index": 2069
+  },
+  {
+    "name": "Modern Pattern Texture card-2290248",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Modern Pattern Texture Card",
+    "confidence": 85,
+    "notes": "Legacy category Texture, pattern textures",
+    "_source_name": "Modern Pattern Texture card-2290248",
+    "_batch_index": 2070
+  },
+  {
+    "name": "old-isolated-papers-and-textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Old Isolated Papers and Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, paper textures",
+    "_source_name": "old-isolated-papers-and-textures",
+    "_batch_index": 2071
+  },
+  {
+    "name": "Rainbow-overlays-textures",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Rainbow Overlays Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, overlays",
+    "_source_name": "Rainbow-overlays-textures",
+    "_batch_index": 2072
+  },
+  {
+    "name": "Rusted metal textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Rusted Metal Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, metal textures",
+    "_source_name": "Rusted metal textures",
+    "_batch_index": 2073
+  },
+  {
+    "name": "Superior Textures Pack Bonus",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Superior Textures Pack Bonus",
+    "confidence": 85,
+    "notes": "Legacy category Texture, texture pack",
+    "_source_name": "Superior Textures Pack Bonus",
+    "_batch_index": 2074
+  },
+  {
+    "name": "Textile Textures Vol 1",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Textile Textures Vol 1",
+    "confidence": 85,
+    "notes": "Legacy category Texture, textile textures",
+    "_source_name": "Textile Textures Vol 1",
+    "_batch_index": 2075
+  },
+  {
+    "name": "Texture Flyer Layout with Tan Sidebar Element 333031505",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Texture Flyer Layout with Tan Sidebar Element",
+    "confidence": 85,
+    "notes": "Legacy category Texture, but flyer layout for print",
+    "_source_name": "Texture Flyer Layout with Tan Sidebar Element 333031505",
+    "_batch_index": 2076
+  },
+  {
+    "name": "The Ultimate Texture Toolkit",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "The Ultimate Texture Toolkit",
+    "confidence": 85,
+    "notes": "Legacy category Texture, includes chalkboard textures",
+    "_source_name": "The Ultimate Texture Toolkit",
+    "_batch_index": 2077
+  },
+  {
+    "name": "thriller-dramatic-background-textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Thriller Dramatic Background Textures",
+    "confidence": 85,
+    "notes": "Legacy category Texture, background textures",
+    "_source_name": "thriller-dramatic-background-textures",
+    "_batch_index": 2078
+  },
+  {
+    "name": "VectGrunge-Texture-Pack-Vol-1",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "VectGrunge Texture Pack Vol 1",
+    "confidence": 85,
+    "notes": "Legacy category Texture, vector grunge textures",
+    "_source_name": "VectGrunge-Texture-Pack-Vol-1",
+    "_batch_index": 2079
+  },
+  {
+    "name": "Vintage Blurred and Curved Wood Texture PSD Template-25062018",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Vintage Blurred and Curved Wood Texture PSD Template",
+    "confidence": 85,
+    "notes": "Legacy category Texture, PSD wood texture",
+    "_source_name": "Vintage Blurred and Curved Wood Texture PSD Template-25062018",
+    "_batch_index": 2080
+  },
+  {
+    "name": "Vintage-Blurred-and-Curved-Wood-Texture-PSD-Template",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Vintage Blurred and Curved Wood Texture PSD Template",
+    "confidence": 85,
+    "notes": "Legacy category Texture, PSD wood texture",
+    "_source_name": "Vintage-Blurred-and-Curved-Wood-Texture-PSD-Template",
+    "_batch_index": 2081
+  },
+  {
+    "name": "Watercolor Textures Creation Kit",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Watercolor Textures Creation Kit",
+    "confidence": 80,
+    "notes": "Legacy category Texture, but 'creation kit' suggests brushes/tools",
+    "_source_name": "Watercolor Textures Creation Kit",
+    "_batch_index": 2082
+  },
+  {
+    "name": "ABRView Portable Photoshop Brush Viewer",
+    "category": "Software & Utilities",
+    "clean_name": "ABRView Portable Photoshop Brush Viewer",
+    "confidence": 90,
+    "notes": "Utility software for viewing Photoshop brushes",
+    "_source_name": "ABRView Portable Photoshop Brush Viewer",
+    "_batch_index": 2083
+  },
+  {
+    "name": "ABRViewer.NET Portable Photoshop Brush Viewer",
+    "category": "Software & Utilities",
+    "clean_name": "ABRViewer.NET Portable Photoshop Brush Viewer",
+    "confidence": 90,
+    "notes": "Utility software for viewing Photoshop brushes",
+    "_source_name": "ABRViewer.NET Portable Photoshop Brush Viewer",
+    "_batch_index": 2084
+  },
+  {
+    "name": "Aging Dirt And Grit",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Aging Dirt And Grit",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Aging Dirt And Grit",
+    "_batch_index": 2085
+  },
+  {
+    "name": "Artistic Edges",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Artistic Edges",
+    "confidence": 80,
+    "notes": "Legacy category brushes, likely edge brushes",
+    "_source_name": "Artistic Edges",
+    "_batch_index": 2086
+  },
+  {
+    "name": "Birds",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Birds",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Birds",
+    "_batch_index": 2087
+  },
+  {
+    "name": "Blood",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Blood",
+    "confidence": 80,
+    "notes": "Legacy category brushes, contains .psd and .png",
+    "_source_name": "Blood",
+    "_batch_index": 2088
+  },
+  {
+    "name": "Bokeh",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Bokeh",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Bokeh",
+    "_batch_index": 2089
+  },
+  {
+    "name": "Clearwater",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Clearwater",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Clearwater",
+    "_batch_index": 2090
+  },
+  {
+    "name": "Cobwebs",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Cobwebs",
+    "confidence": 80,
+    "notes": "Legacy category brushes, no .abr but likely brush set",
+    "_source_name": "Cobwebs",
+    "_batch_index": 2091
+  },
+  {
+    "name": "Concrete Patterns And Brushes",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Concrete Patterns And Brushes",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Concrete Patterns And Brushes",
+    "_batch_index": 2092
+  },
+  {
+    "name": "Cracks",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Cracks",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Cracks",
+    "_batch_index": 2093
+  },
+  {
+    "name": "Cracks II",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Cracks II",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Cracks II",
+    "_batch_index": 2094
+  },
+  {
+    "name": "Darkside Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Darkside Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy category brushes, but contains .psd backgrounds",
+    "_source_name": "Darkside Backgrounds",
+    "_batch_index": 2095
+  },
+  {
+    "name": "Dead Tech",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Dead Tech",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Dead Tech",
+    "_batch_index": 2096
+  },
+  {
+    "name": "Extreme Grunge",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Extreme Grunge",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Extreme Grunge",
+    "_batch_index": 2097
+  },
+  {
+    "name": "Flames",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Flames",
+    "confidence": 85,
+    "notes": "Legacy category brushes, contains .abr files",
+    "_source_name": "Flames",
+    "_batch_index": 2098
+  },
+  {
+    "name": "Flourishes",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Flourishes",
+    "confidence": 80,
+    "notes": "Legacy category brushes, contains .png files",
+    "_source_name": "Flourishes",
+    "_batch_index": 2099
+  }
+]

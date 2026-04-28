@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Scrap-Glass-3D-Lettering-4284959",
+    "category": "Fonts & Typography",
+    "clean_name": "Scrap Glass 3D Lettering",
+    "confidence": 80,
+    "notes": "Legacy category 'Lettering' and name suggests 3D lettering, but only .txt files; likely font/typography asset.",
+    "_source_name": "Scrap-Glass-3D-Lettering-4284959",
+    "_batch_index": 840
+  },
+  {
+    "name": "The-Net-3D-Lettering-4276605",
+    "category": "Fonts & Typography",
+    "clean_name": "The Net 3D Lettering",
+    "confidence": 80,
+    "notes": "Legacy category 'Lettering' and name suggests 3D lettering, but only .txt files; likely font/typography asset.",
+    "_source_name": "The-Net-3D-Lettering-4276605",
+    "_batch_index": 841
+  },
+  {
+    "name": "The-Wire-3D-Lettering-4276641",
+    "category": "Fonts & Typography",
+    "clean_name": "The Wire 3D Lettering",
+    "confidence": 80,
+    "notes": "Legacy category 'Lettering' and name suggests 3D lettering, but only .txt files; likely font/typography asset.",
+    "_source_name": "The-Wire-3D-Lettering-4276641",
+    "_batch_index": 842
+  },
+  {
+    "name": "Blue Wave V1",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Blue Wave V1",
+    "confidence": 85,
+    "notes": "Contains .ai, .eps, .psd; legacy category 'Logo' but files are vector/PSD, likely a vector asset.",
+    "_source_name": "Blue Wave V1",
+    "_batch_index": 843
+  },
+  {
+    "name": "CM - Logo Creators Megabundle 1359542",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "CM Logo Creators Megabundle",
+    "confidence": 80,
+    "notes": "Legacy category 'Logo', likely vector logo assets.",
+    "_source_name": "CM - Logo Creators Megabundle 1359542",
+    "_batch_index": 844
+  },
+  {
+    "name": "design",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Design",
+    "confidence": 75,
+    "notes": "Contains .ai, .eps, .jpg; legacy category 'Logo', likely vector design assets.",
+    "_source_name": "design",
+    "_batch_index": 845
+  },
+  {
+    "name": "Logo Design Process",
+    "category": "Tutorial & Education",
+    "clean_name": "Logo Design Process",
+    "confidence": 85,
+    "notes": "Contains .pdf and .txt; name suggests educational content about logo design.",
+    "_source_name": "Logo Design Process",
+    "_batch_index": 846
+  },
+  {
+    "name": "Logo Inspiration Pack",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Logo Inspiration Pack",
+    "confidence": 80,
+    "notes": "Contains image files; legacy category 'Logo', likely logo inspiration images.",
+    "_source_name": "Logo Inspiration Pack",
+    "_batch_index": 847
+  },
+  {
+    "name": "Logos",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Logos",
+    "confidence": 85,
+    "notes": "Contains .aep files and 'sparks-logo-reveal' in contains hint; legacy category 'Logo'.",
+    "_source_name": "Logos",
+    "_batch_index": 848
+  },
+  {
+    "name": "21162885-magazine-promo",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Promo",
+    "confidence": 80,
+    "notes": "Contains .jpg and .mp4; legacy category 'Magazine', likely a promo flyer/poster.",
+    "_source_name": "21162885-magazine-promo",
+    "_batch_index": 849
+  },
+  {
+    "name": "89 in 1 Magazine Bundle 1643630",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "89 in 1 Magazine Bundle",
+    "confidence": 80,
+    "notes": "Legacy category 'Magazine', bundle of magazine templates likely print.",
+    "_source_name": "89 in 1 Magazine Bundle 1643630",
+    "_batch_index": 850
+  },
+  {
+    "name": "appetizer-magazine-cover-indesign-template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Appetizer Magazine Cover",
+    "confidence": 85,
+    "notes": "Contains hint 'Appetizer Magazine Cover'; InDesign template for magazine cover.",
+    "_source_name": "appetizer-magazine-cover-indesign-template",
+    "_batch_index": 851
+  },
+  {
+    "name": "Artistic Photo Magazine - A4 US Letter - 28 pgs",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Artistic Photo Magazine",
+    "confidence": 85,
+    "notes": "Contains hint 'Multipurpose Photo Magazine'; multi-page magazine template.",
+    "_source_name": "Artistic Photo Magazine - A4 US Letter - 28 pgs",
+    "_batch_index": 852
+  },
+  {
+    "name": "BONUS-magazine-ads-bonus-flyer-v1-indesign-a4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Bonus Magazine Ads Flyer",
+    "confidence": 85,
+    "notes": "Contains InDesign files; legacy category 'Magazine', likely print ad/flyer.",
+    "_source_name": "BONUS-magazine-ads-bonus-flyer-v1-indesign-a4",
+    "_batch_index": 853
+  },
+  {
+    "name": "building-magazine-cover-indesign-template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Building Magazine Cover",
+    "confidence": 85,
+    "notes": "Contains hint 'Building Magazine Cover'; InDesign template.",
+    "_source_name": "building-magazine-cover-indesign-template",
+    "_batch_index": 854
+  },
+  {
+    "name": "Bzine - News Portal and Magazine PSD Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Bzine News Portal Magazine",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', likely print template.",
+    "_source_name": "Bzine - News Portal and Magazine PSD Template",
+    "_batch_index": 855
+  },
+  {
+    "name": "cake-diy-magazine-cover-indesign-template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cake DIY Magazine Cover",
+    "confidence": 85,
+    "notes": "Contains hint 'Cake DIY Magazine Cover'; InDesign template.",
+    "_source_name": "cake-diy-magazine-cover-indesign-template",
+    "_batch_index": 856
+  },
+  {
+    "name": "Clean Magazine Design 10759",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Clean Magazine Design",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', likely print design.",
+    "_source_name": "Clean Magazine Design 10759",
+    "_batch_index": 857
+  },
+  {
+    "name": "Clean Magazine Design 10760",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Clean Magazine Design",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', likely print design.",
+    "_source_name": "Clean Magazine Design 10760",
+    "_batch_index": 858
+  },
+  {
+    "name": "Clean Magazine Template Vol 02 10686",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Clean Magazine Template Vol 02",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', likely print template.",
+    "_source_name": "Clean Magazine Template Vol 02 10686",
+    "_batch_index": 859
+  },
+  {
+    "name": "CM - Art-Ist Magazine Template vol 26 2381841",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "CM Art-Ist Magazine Template",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', likely print template.",
+    "_source_name": "CM - Art-Ist Magazine Template vol 26 2381841",
+    "_batch_index": 860
+  },
+  {
+    "name": "CM - Studio Photography Magazine Template 1129362",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "CM Studio Photography Magazine Template",
+    "confidence": 85,
+    "notes": "Contains hint 'Studio_Photography_Magazine_Template'; print template.",
+    "_source_name": "CM - Studio Photography Magazine Template 1129362",
+    "_batch_index": 861
+  },
+  {
+    "name": "CM - WAVERIDER MAGAZINE 1994933",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "CM Waverider Magazine",
+    "confidence": 85,
+    "notes": "Contains hint 'WAVE RIDER MAGAZINE'; print magazine.",
+    "_source_name": "CM - WAVERIDER MAGAZINE 1994933",
+    "_batch_index": 862
+  },
+  {
+    "name": "cm-14-Pages-Photoshop-Magazine-Template",
+    "category": "Print - Brochures & Books",
+    "clean_name": "14 Pages Photoshop Magazine Template",
+    "confidence": 85,
+    "notes": "Multi-page .psd template; legacy category 'Magazine'.",
+    "_source_name": "cm-14-Pages-Photoshop-Magazine-Template",
+    "_batch_index": 863
+  },
+  {
+    "name": "CM_Photography_Magazine_Template_311976",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "CM Photography Magazine Template",
+    "confidence": 75,
+    "notes": "Contains .zip; legacy category 'Magazine', likely print template.",
+    "_source_name": "CM_Photography_Magazine_Template_311976",
+    "_batch_index": 864
+  },
+  {
+    "name": "Cozy UI Kit for Blog Magazine",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Cozy UI Kit for Blog Magazine",
+    "confidence": 85,
+    "notes": "Contains .css, .html, .psd; UI kit for blog/magazine website.",
+    "_source_name": "Cozy UI Kit for Blog Magazine",
+    "_batch_index": 865
+  },
+  {
+    "name": "CreativeMarket - Multipurpose Magazine Template 4636507",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Multipurpose Magazine Template",
+    "confidence": 85,
+    "notes": "Contains hint 'Multipurpose Magazine Template'; print template.",
+    "_source_name": "CreativeMarket - Multipurpose Magazine Template 4636507",
+    "_batch_index": 866
+  },
+  {
+    "name": "engineering-magazine-cover-indesign-template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Engineering Magazine Cover",
+    "confidence": 85,
+    "notes": "Contains hint 'Engineering Magazine Cover'; InDesign template.",
+    "_source_name": "engineering-magazine-cover-indesign-template",
+    "_batch_index": 867
+  },
+  {
+    "name": "entertainment-magazine-cover-indesign-template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Entertainment Magazine Cover",
+    "confidence": 85,
+    "notes": "Contains hint 'Entertainment Magazine Cover'; InDesign template.",
+    "_source_name": "entertainment-magazine-cover-indesign-template",
+    "_batch_index": 868
+  },
+  {
+    "name": "FlatPackFx-Magazine Slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "FlatPackFx Magazine Slideshow",
+    "confidence": 80,
+    "notes": "Contains .rar; name suggests After Effects slideshow for magazine.",
+    "_source_name": "FlatPackFx-Magazine Slideshow",
+    "_batch_index": 869
+  },
+  {
+    "name": "floral-magazine-cover-template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Floral Magazine Cover",
+    "confidence": 85,
+    "notes": "Contains hint 'Floral Magazine Cover'; print template.",
+    "_source_name": "floral-magazine-cover-template",
+    "_batch_index": 870
+  },
+  {
+    "name": "Full page magazine ad or flyer templates",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Full Page Magazine Ad or Flyer Templates",
+    "confidence": 85,
+    "notes": "Contains .psd; legacy category 'Magazine', print ad/flyer.",
+    "_source_name": "Full page magazine ad or flyer templates",
+    "_batch_index": 871
+  },
+  {
+    "name": "full-page-magazine-ad-or-flyer-templates",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Full Page Magazine Ad or Flyer Templates",
+    "confidence": 85,
+    "notes": "Contains .psd; legacy category 'Magazine', print ad/flyer.",
+    "_source_name": "full-page-magazine-ad-or-flyer-templates",
+    "_batch_index": 872
+  },
+  {
+    "name": "full-page-magazine-ad-or-flyer-templates-76133",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Full Page Magazine Ad or Flyer Templates",
+    "confidence": 85,
+    "notes": "Contains .rtf; legacy category 'Magazine', print ad/flyer.",
+    "_source_name": "full-page-magazine-ad-or-flyer-templates-76133",
+    "_batch_index": 873
+  },
+  {
+    "name": "full-page-magazine-ad-or-flyer-templates-76133-GFXTRA.COM-ARSENIC",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Full Page Magazine Ad or Flyer Templates",
+    "confidence": 85,
+    "notes": "Contains .psd; legacy category 'Magazine', print ad/flyer.",
+    "_source_name": "full-page-magazine-ad-or-flyer-templates-76133-GFXTRA.COM-ARSENIC",
+    "_batch_index": 874
+  },
+  {
+    "name": "Gizmod - News Magazine Blog PSD Templates",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Gizmod News Magazine Blog PSD Templates",
+    "confidence": 85,
+    "notes": "Contains hint 'Gizmod_-_News__Magazine__Blog_PSD_Templates'; print template.",
+    "_source_name": "Gizmod - News Magazine Blog PSD Templates",
+    "_batch_index": 875
+  },
+  {
+    "name": "GR Full Page Magazine Ad or Flyer Templates 76133",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "GR Full Page Magazine Ad or Flyer Templates",
+    "confidence": 85,
+    "notes": "Contains hint 'Full Page Magazine Ad or Flyer Templates'; print ad/flyer.",
+    "_source_name": "GR Full Page Magazine Ad or Flyer Templates 76133",
+    "_batch_index": 876
+  },
+  {
+    "name": "GR General Purpose Magazine Ad Template 02 621476",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "GR General Purpose Magazine Ad Template",
+    "confidence": 85,
+    "notes": "Contains hint 'General Purpose Magazine Ad Template'; print ad.",
+    "_source_name": "GR General Purpose Magazine Ad Template 02 621476",
+    "_batch_index": 877
+  },
+  {
+    "name": "GR Product Flyer Magazine AD 4450329",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "GR Product Flyer Magazine AD",
+    "confidence": 85,
+    "notes": "Contains .psd; legacy category 'Magazine', print ad/flyer.",
+    "_source_name": "GR Product Flyer Magazine AD 4450329",
+    "_batch_index": 878
+  },
+  {
+    "name": "GR Pulp Magazine Vol 2 6644725",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "GR Pulp Magazine Vol 2",
+    "confidence": 85,
+    "notes": "Contains hint 'Pulp Magazine Vol. 2'; print magazine.",
+    "_source_name": "GR Pulp Magazine Vol 2 6644725",
+    "_batch_index": 879
+  },
+  {
+    "name": "GraphicRiver - 80 Pages Photoshop Magazine 10470060",
+    "category": "Print - Brochures & Books",
+    "clean_name": "80 Pages Photoshop Magazine",
+    "confidence": 85,
+    "notes": "Multi-page magazine template; legacy category 'Magazine'.",
+    "_source_name": "GraphicRiver - 80 Pages Photoshop Magazine 10470060",
+    "_batch_index": 880
+  },
+  {
+    "name": "Graphicriver - Cool Modern Style Magazine 20448744",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cool Modern Style Magazine",
+    "confidence": 80,
+    "notes": "Contains .pdf; legacy category 'Magazine', likely print template.",
+    "_source_name": "Graphicriver - Cool Modern Style Magazine 20448744",
+    "_batch_index": 881
+  },
+  {
+    "name": "Graphicriver - Cosmetic Flyer Magazine Ad 10944344",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Cosmetic Flyer Magazine Ad",
+    "confidence": 85,
+    "notes": "Contains .txt; legacy category 'Magazine', print ad/flyer.",
+    "_source_name": "Graphicriver - Cosmetic Flyer Magazine Ad 10944344",
+    "_batch_index": 882
+  },
+  {
+    "name": "Graphicriver - Magazine Cover Template 7586803",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Cover Template",
+    "confidence": 85,
+    "notes": "Contains .txt; legacy category 'Magazine', print cover template.",
+    "_source_name": "Graphicriver - Magazine Cover Template 7586803",
+    "_batch_index": 883
+  },
+  {
+    "name": "graphicriver-20185377-artist-magazine-template-v2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Artist Magazine Template v2",
+    "confidence": 85,
+    "notes": "Contains .psd; legacy category 'Magazine', print template.",
+    "_source_name": "graphicriver-20185377-artist-magazine-template-v2",
+    "_batch_index": 884
+  },
+  {
+    "name": "graphicriver-20466139-magazine-ad",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Ad",
+    "confidence": 85,
+    "notes": "Contains .psd; legacy category 'Magazine', print ad.",
+    "_source_name": "graphicriver-20466139-magazine-ad",
+    "_batch_index": 885
+  },
+  {
+    "name": "InDesign Magazine Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "InDesign Magazine Template",
+    "confidence": 80,
+    "notes": "Contains .txt; legacy category 'Magazine', likely InDesign template.",
+    "_source_name": "InDesign Magazine Template",
+    "_batch_index": 886
+  },
+  {
+    "name": "industrial-magazine-cover-template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Industrial Magazine Cover Template",
+    "confidence": 85,
+    "notes": "Contains hint 'Industrial Magazine Cover Template'; print template.",
+    "_source_name": "industrial-magazine-cover-template",
+    "_batch_index": 887
+  },
+  {
+    "name": "JOSSUA - Minimal Blog Magazine Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "JOSSUA Minimal Blog Magazine Template",
+    "confidence": 85,
+    "notes": "Contains hint 'JOSSUA_-_Minimal_Blog___Magazine_Template'; print template.",
+    "_source_name": "JOSSUA - Minimal Blog Magazine Template",
+    "_batch_index": 888
+  },
+  {
+    "name": "Light-Hearted and Funny Magazine Layout 387207223",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Light-Hearted and Funny Magazine Layout",
+    "confidence": 85,
+    "notes": "Contains hint 'Light-Hearted and Funny Magazine Layout'; print layout.",
+    "_source_name": "Light-Hearted and Funny Magazine Layout 387207223",
+    "_batch_index": 889
+  },
+  {
+    "name": "Magazine Cover Templates 136168",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Cover Templates",
+    "confidence": 85,
+    "notes": "Contains hint 'Magazine_Cover_Templates_136168'; print cover templates.",
+    "_source_name": "Magazine Cover Templates 136168",
+    "_batch_index": 890
+  },
+  {
+    "name": "Magazine Design V2 10663",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Design V2",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', print design.",
+    "_source_name": "Magazine Design V2 10663",
+    "_batch_index": 891
+  },
+  {
+    "name": "Magazine Design Vol2 10684",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Design Vol2",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', print design.",
+    "_source_name": "Magazine Design Vol2 10684",
+    "_batch_index": 892
+  },
+  {
+    "name": "Magazine Lookbook 4095267",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Magazine Lookbook",
+    "confidence": 80,
+    "notes": "Contains .txt; legacy category 'Magazine', likely lookbook print.",
+    "_source_name": "Magazine Lookbook 4095267",
+    "_batch_index": 893
+  },
+  {
+    "name": "Magazine Mock-Up Glamour Edition",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Magazine Mock-Up Glamour Edition",
+    "confidence": 85,
+    "notes": "Contains .psd; name includes 'Mock-Up', legacy category 'Magazine'.",
+    "_source_name": "Magazine Mock-Up Glamour Edition",
+    "_batch_index": 894
+  },
+  {
+    "name": "Magazine Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Template",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', print template.",
+    "_source_name": "Magazine Template",
+    "_batch_index": 895
+  },
+  {
+    "name": "Magazine Template 12",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Template 12",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', print template.",
+    "_source_name": "Magazine Template 12",
+    "_batch_index": 896
+  },
+  {
+    "name": "Magazine Template 13",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Template 13",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', print template.",
+    "_source_name": "Magazine Template 13",
+    "_batch_index": 897
+  },
+  {
+    "name": "Magazine Template 14",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Template 14",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', print template.",
+    "_source_name": "Magazine Template 14",
+    "_batch_index": 898
+  },
+  {
+    "name": "Magazine Template 15",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Magazine Template 15",
+    "confidence": 80,
+    "notes": "Contains .psd; legacy category 'Magazine', print template.",
+    "_source_name": "Magazine Template 15",
+    "_batch_index": 899
+  }
+]

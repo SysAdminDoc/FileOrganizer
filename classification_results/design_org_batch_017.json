@@ -1,0 +1,542 @@
+[
+  {
+    "name": "07_Resume",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Resume",
+    "confidence": 85,
+    "notes": "Legacy category suggests editorial template bundle, files are InDesign formats for print layout.",
+    "_source_name": "07_Resume",
+    "_batch_index": 960
+  },
+  {
+    "name": "08_Stationery",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Stationery",
+    "confidence": 90,
+    "notes": "Legacy category and file types indicate stationery design.",
+    "_source_name": "08_Stationery",
+    "_batch_index": 961
+  },
+  {
+    "name": "09_Logos",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Logos",
+    "confidence": 85,
+    "notes": "Contains logo vector files in AI/EPS format.",
+    "_source_name": "09_Logos",
+    "_batch_index": 962
+  },
+  {
+    "name": "Corporate Mega",
+    "category": "Stock Photos - General",
+    "clean_name": "Corporate Mega",
+    "confidence": 70,
+    "notes": "Only JPG files, likely stock photos for corporate use.",
+    "_source_name": "Corporate Mega",
+    "_batch_index": 963
+  },
+  {
+    "name": "Marketing Graphics Toolkit V1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Marketing Graphics Toolkit V1",
+    "confidence": 80,
+    "notes": "Contains PSD, ASL, ATN files typical of Photoshop templates.",
+    "_source_name": "Marketing Graphics Toolkit V1",
+    "_batch_index": 964
+  },
+  {
+    "name": "Marketing Graphics Toolkit V2",
+    "category": "Web Template",
+    "clean_name": "Marketing Graphics Toolkit V2",
+    "confidence": 75,
+    "notes": "Contains mini site templates and icon maker, suggests web templates.",
+    "_source_name": "Marketing Graphics Toolkit V2",
+    "_batch_index": 965
+  },
+  {
+    "name": "Marketing Graphics Toolkit V3",
+    "category": "Stock Footage - General",
+    "clean_name": "Marketing Graphics Toolkit V3",
+    "confidence": 70,
+    "notes": "Contains MOV files, likely stock footage.",
+    "_source_name": "Marketing Graphics Toolkit V3",
+    "_batch_index": 966
+  },
+  {
+    "name": "18 Grungy Paint Photoshop Masks",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Grungy Paint Photoshop Masks",
+    "confidence": 85,
+    "notes": "Legacy category Masks, PSD files for masking effects.",
+    "_source_name": "18 Grungy Paint Photoshop Masks",
+    "_batch_index": 967
+  },
+  {
+    "name": "195489-Geometric-Masks-Shapes-Collection",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Geometric Masks Shapes Collection",
+    "confidence": 85,
+    "notes": "PSD and TIF mask files.",
+    "_source_name": "195489-Geometric-Masks-Shapes-Collection",
+    "_batch_index": 968
+  },
+  {
+    "name": "CM - 20 Photo Masks 405090",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "20 Photo Masks",
+    "confidence": 80,
+    "notes": "PNG masks for photo editing.",
+    "_source_name": "CM - 20 Photo Masks 405090",
+    "_batch_index": 969
+  },
+  {
+    "name": "elements-grid-shape-masks-R4X4ZS-2019-02-14",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Grid Shape Masks",
+    "confidence": 80,
+    "notes": "Contains grid shape masks.",
+    "_source_name": "elements-grid-shape-masks-R4X4ZS-2019-02-14",
+    "_batch_index": 970
+  },
+  {
+    "name": "elements-mask-its-lie-6XH69G-2018-12-26",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Mask Its Lie",
+    "confidence": 70,
+    "notes": "Contains READ ME, likely mask assets.",
+    "_source_name": "elements-mask-its-lie-6XH69G-2018-12-26",
+    "_batch_index": 971
+  },
+  {
+    "name": "GR Pro Artist Creation Kit Template Creative Mask FX 13100902",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Pro Artist Creation Kit Template Creative Mask FX",
+    "confidence": 85,
+    "notes": "Creative mask FX template for Photoshop.",
+    "_source_name": "GR Pro Artist Creation Kit Template Creative Mask FX 13100902",
+    "_batch_index": 972
+  },
+  {
+    "name": "GraphicRiver - Creative Mask Photo FX 13065757",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Creative Mask Photo FX",
+    "confidence": 85,
+    "notes": "Creative mask photo effects.",
+    "_source_name": "GraphicRiver - Creative Mask Photo FX 13065757",
+    "_batch_index": 973
+  },
+  {
+    "name": "mask isolated with clipping path GFXTRA",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Mask Isolated with Clipping Path",
+    "confidence": 80,
+    "notes": "Mask with clipping path.",
+    "_source_name": "mask isolated with clipping path GFXTRA",
+    "_batch_index": 974
+  },
+  {
+    "name": "mask off",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Mask Off",
+    "confidence": 80,
+    "notes": "JPG and PSD mask files.",
+    "_source_name": "mask off",
+    "_batch_index": 975
+  },
+  {
+    "name": "mask party flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mask Party Flyer",
+    "confidence": 85,
+    "notes": "PSD flyer template.",
+    "_source_name": "mask party flyer",
+    "_batch_index": 976
+  },
+  {
+    "name": "mask V1",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Mask V1",
+    "confidence": 75,
+    "notes": "PNG mask files.",
+    "_source_name": "mask V1",
+    "_batch_index": 977
+  },
+  {
+    "name": "Old Shmold Vintage Photoshop Masks",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Old Shmold Vintage Photoshop Masks",
+    "confidence": 85,
+    "notes": "Vintage mask set for Photoshop.",
+    "_source_name": "Old Shmold Vintage Photoshop Masks",
+    "_batch_index": 978
+  },
+  {
+    "name": "Raiqah Branding Main Files",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Raiqah Branding Main Files",
+    "confidence": 85,
+    "notes": "Branding identity pack with EPS, INDD, PSD files.",
+    "_source_name": "Raiqah Branding Main Files",
+    "_batch_index": 979
+  },
+  {
+    "name": "Menu Inspiration Pack over 1700 images",
+    "category": "Stock Photos - General",
+    "clean_name": "Menu Inspiration Pack",
+    "confidence": 80,
+    "notes": "Collection of menu images for inspiration.",
+    "_source_name": "Menu Inspiration Pack over 1700 images",
+    "_batch_index": 980
+  },
+  {
+    "name": "36_Mobile Apps Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile Apps Flyer",
+    "confidence": 85,
+    "notes": "EPS flyer for mobile apps.",
+    "_source_name": "36_Mobile Apps Flyer",
+    "_batch_index": 981
+  },
+  {
+    "name": "Appify Mobile AppUIKit Vol 1 17Psd 060417GX",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Appify Mobile App UI Kit Vol 1",
+    "confidence": 85,
+    "notes": "PSD UI kit for mobile apps.",
+    "_source_name": "Appify Mobile AppUIKit Vol 1 17Psd 060417GX",
+    "_batch_index": 982
+  },
+  {
+    "name": "Bastion Mobile UI Kit 01Walkthroughs",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Bastion Mobile UI Kit Walkthroughs",
+    "confidence": 80,
+    "notes": "Pages file for mobile UI walkthroughs.",
+    "_source_name": "Bastion Mobile UI Kit 01Walkthroughs",
+    "_batch_index": 983
+  },
+  {
+    "name": "Bastion Mobile UI Kit 02Login-Signup",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Bastion Mobile UI Kit Login Signup",
+    "confidence": 80,
+    "notes": "Pages file for login/signup screens.",
+    "_source_name": "Bastion Mobile UI Kit 02Login-Signup",
+    "_batch_index": 984
+  },
+  {
+    "name": "CM - Social App PSD for mobile app 2174615",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Social App PSD for Mobile App",
+    "confidence": 85,
+    "notes": "PSD social app UI design.",
+    "_source_name": "CM - Social App PSD for mobile app 2174615",
+    "_batch_index": 985
+  },
+  {
+    "name": "Collection_of_different_mobile_login_and_app__Mobile_screens_Premium_Vector_-GraphicEx.com",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Mobile Login and App Screens Vector Collection",
+    "confidence": 85,
+    "notes": "EPS vector mobile screens.",
+    "_source_name": "Collection_of_different_mobile_login_and_app__Mobile_screens_Premium_Vector_-GraphicEx.com",
+    "_batch_index": 986
+  },
+  {
+    "name": "Computer-Mobile-Repair-Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Computer Mobile Repair Flyer",
+    "confidence": 85,
+    "notes": "PSD flyer template.",
+    "_source_name": "Computer-Mobile-Repair-Flyer",
+    "_batch_index": 987
+  },
+  {
+    "name": "Ecommerce App - Mobile UI Kit",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Ecommerce App Mobile UI Kit",
+    "confidence": 85,
+    "notes": "PSD ecommerce UI kit.",
+    "_source_name": "Ecommerce App - Mobile UI Kit",
+    "_batch_index": 988
+  },
+  {
+    "name": "Empty State Mobile UI Example",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Empty State Mobile UI Example",
+    "confidence": 80,
+    "notes": "PDF and Sketch file for UI example.",
+    "_source_name": "Empty State Mobile UI Example",
+    "_batch_index": 989
+  },
+  {
+    "name": "GlobalNews - News and Media Mobile APP",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "GlobalNews News and Media Mobile APP",
+    "confidence": 85,
+    "notes": "Mobile app UI package.",
+    "_source_name": "GlobalNews - News and Media Mobile APP",
+    "_batch_index": 990
+  },
+  {
+    "name": "GR Bootstrap Mobile Phone UI iPhone iOS App Dark 5167300",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Bootstrap Mobile Phone UI iPhone iOS App Dark",
+    "confidence": 85,
+    "notes": "Dark edition mobile UI kit.",
+    "_source_name": "GR Bootstrap Mobile Phone UI iPhone iOS App Dark 5167300",
+    "_batch_index": 991
+  },
+  {
+    "name": "GR Flat Phone Mobile App Bootstrap UI 5543620",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Flat Phone Mobile App Bootstrap UI",
+    "confidence": 85,
+    "notes": "Flat mobile app bootstrap UI.",
+    "_source_name": "GR Flat Phone Mobile App Bootstrap UI 5543620",
+    "_batch_index": 992
+  },
+  {
+    "name": "GR FlatApp Mobile Phone App Bootstrap 5063659",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "FlatApp Mobile Phone App Bootstrap",
+    "confidence": 85,
+    "notes": "FlatApp mobile bootstrap UI.",
+    "_source_name": "GR FlatApp Mobile Phone App Bootstrap 5063659",
+    "_batch_index": 993
+  },
+  {
+    "name": "GR Hexagon Mobile UI Kit 13534251",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Hexagon Mobile UI Kit",
+    "confidence": 85,
+    "notes": "Hexagon themed mobile UI kit.",
+    "_source_name": "GR Hexagon Mobile UI Kit 13534251",
+    "_batch_index": 994
+  },
+  {
+    "name": "GR Muzk Mobile App UI 5196259",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Muzk Mobile App UI",
+    "confidence": 85,
+    "notes": "Muzk mobile app UI design.",
+    "_source_name": "GR Muzk Mobile App UI 5196259",
+    "_batch_index": 995
+  },
+  {
+    "name": "GR Professional Mobile App Icon 1848767",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Professional Mobile App Icon",
+    "confidence": 85,
+    "notes": "Professional mobile app icon set.",
+    "_source_name": "GR Professional Mobile App Icon 1848767",
+    "_batch_index": 996
+  },
+  {
+    "name": "GR UI KIT Mobile 4 Color Creative 6024032",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "UI KIT Mobile 4 Color Creative",
+    "confidence": 85,
+    "notes": "4 color creative mobile UI kit.",
+    "_source_name": "GR UI KIT Mobile 4 Color Creative 6024032",
+    "_batch_index": 997
+  },
+  {
+    "name": "GR UI7 - Flat Bootstrap Mobile UI Phone App",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "UI7 Flat Bootstrap Mobile UI Phone App",
+    "confidence": 85,
+    "notes": "Flat bootstrap mobile UI.",
+    "_source_name": "GR UI7 - Flat Bootstrap Mobile UI Phone App",
+    "_batch_index": 998
+  },
+  {
+    "name": "GraphicRiver - Bundle - Mobile  Tablet Ui 12257427",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Bundle Mobile Tablet UI",
+    "confidence": 85,
+    "notes": "Mobile and tablet UI bundle.",
+    "_source_name": "GraphicRiver - Bundle - Mobile  Tablet Ui 12257427",
+    "_batch_index": 999
+  },
+  {
+    "name": "GraphicRiver - Mobile App Flyer Template 12649951",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer Template",
+    "confidence": 85,
+    "notes": "Flyer template for mobile app.",
+    "_source_name": "GraphicRiver - Mobile App Flyer Template 12649951",
+    "_batch_index": 1000
+  },
+  {
+    "name": "Graphicriver - Mobile Apps Bundle Print Templates 20597839",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile Apps Bundle Print Templates",
+    "confidence": 85,
+    "notes": "Print templates for mobile apps.",
+    "_source_name": "Graphicriver - Mobile Apps Bundle Print Templates 20597839",
+    "_batch_index": 1001
+  },
+  {
+    "name": "Graphicriver 8 Part 3 Mobile UI Kit 9447664",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "8 Part 3 Mobile UI Kit",
+    "confidence": 80,
+    "notes": "Mobile UI kit part 3.",
+    "_source_name": "Graphicriver 8 Part 3 Mobile UI Kit 9447664",
+    "_batch_index": 1002
+  },
+  {
+    "name": "GraphicRiver Computer Mobile Repair Flyer Template 6217430",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Computer Mobile Repair Flyer Template",
+    "confidence": 85,
+    "notes": "Repair flyer template.",
+    "_source_name": "GraphicRiver Computer Mobile Repair Flyer Template 6217430",
+    "_batch_index": 1003
+  },
+  {
+    "name": "Graphicriver Mobile App Flyer Template 20692404",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer Template",
+    "confidence": 85,
+    "notes": "Mobile app flyer template.",
+    "_source_name": "Graphicriver Mobile App Flyer Template 20692404",
+    "_batch_index": 1004
+  },
+  {
+    "name": "graphicriver-11316761-new-ready-genality-mobile-ui-kit",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "New Ready Genality Mobile UI Kit",
+    "confidence": 80,
+    "notes": "Mobile UI kit.",
+    "_source_name": "graphicriver-11316761-new-ready-genality-mobile-ui-kit",
+    "_batch_index": 1005
+  },
+  {
+    "name": "Graphicriver_Mobile_Apps_Banner_Pack_19599482",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile Apps Banner Pack",
+    "confidence": 80,
+    "notes": "ZIP file likely contains banner templates.",
+    "_source_name": "Graphicriver_Mobile_Apps_Banner_Pack_19599482",
+    "_batch_index": 1006
+  },
+  {
+    "name": "kolorit-mobile-ui-kit",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Kolorit Mobile UI Kit",
+    "confidence": 80,
+    "notes": "PDF documentation for UI kit.",
+    "_source_name": "kolorit-mobile-ui-kit",
+    "_batch_index": 1007
+  },
+  {
+    "name": "Mobile App Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer",
+    "confidence": 85,
+    "notes": "PSD flyer template.",
+    "_source_name": "Mobile App Flyer",
+    "_batch_index": 1008
+  },
+  {
+    "name": "Mobile App Flyer 2172364",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer",
+    "confidence": 85,
+    "notes": "PSD flyer template.",
+    "_source_name": "Mobile App Flyer 2172364",
+    "_batch_index": 1009
+  },
+  {
+    "name": "Mobile App Flyer Template 1902834",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer Template",
+    "confidence": 85,
+    "notes": "AI, JPG, PSD flyer template.",
+    "_source_name": "Mobile App Flyer Template 1902834",
+    "_batch_index": 1010
+  },
+  {
+    "name": "Mobile App Flyer Template 2172369",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer Template",
+    "confidence": 85,
+    "notes": "PSD flyer template.",
+    "_source_name": "Mobile App Flyer Template 2172369",
+    "_batch_index": 1011
+  },
+  {
+    "name": "Mobile App Flyer Template v2 1902821",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer Template v2",
+    "confidence": 85,
+    "notes": "AI, JPG, PSD flyer template.",
+    "_source_name": "Mobile App Flyer Template v2 1902821",
+    "_batch_index": 1012
+  },
+  {
+    "name": "Mobile App Poster Template 1902817",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Poster Template",
+    "confidence": 85,
+    "notes": "AI, JPG, PSD poster template.",
+    "_source_name": "Mobile App Poster Template 1902817",
+    "_batch_index": 1013
+  },
+  {
+    "name": "Mobile App Templates Pack",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Templates Pack",
+    "confidence": 80,
+    "notes": "Contains documentation, likely print templates.",
+    "_source_name": "Mobile App Templates Pack",
+    "_batch_index": 1014
+  },
+  {
+    "name": "Mobile Creative Shop",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Mobile Creative Shop",
+    "confidence": 75,
+    "notes": "PSD file for mobile creative shop UI.",
+    "_source_name": "Mobile Creative Shop",
+    "_batch_index": 1015
+  },
+  {
+    "name": "Mobile UI KIT",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Mobile UI KIT",
+    "confidence": 85,
+    "notes": "PSD mobile UI kit.",
+    "_source_name": "Mobile UI KIT",
+    "_batch_index": 1016
+  },
+  {
+    "name": "mobile-app-flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer",
+    "confidence": 85,
+    "notes": "JPG, PSD flyer template.",
+    "_source_name": "mobile-app-flyer",
+    "_batch_index": 1017
+  },
+  {
+    "name": "mobile-app-flyer-template-18012836",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Mobile App Flyer Template",
+    "confidence": 85,
+    "notes": "PSD flyer template.",
+    "_source_name": "mobile-app-flyer-template-18012836",
+    "_batch_index": 1018
+  },
+  {
+    "name": "Modda - E-Commerce Mobile UI Kit",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Modda E-Commerce Mobile UI Kit",
+    "confidence": 85,
+    "notes": "Sketch and TXT files for e-commerce UI kit.",
+    "_source_name": "Modda - E-Commerce Mobile UI Kit",
+    "_batch_index": 1019
+  }
+]

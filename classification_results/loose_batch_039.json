@@ -1,0 +1,542 @@
+[
+  {
+    "name": "09_side_bar",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Side Bar",
+    "confidence": 90,
+    "notes": ".psd file, likely a UI element template",
+    "_source_name": "09_side_bar",
+    "_batch_index": 2280
+  },
+  {
+    "name": "09_side_bar_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Side Bar 2",
+    "confidence": 90,
+    "notes": ".psd file, likely a UI element template",
+    "_source_name": "09_side_bar_2",
+    "_batch_index": 2281
+  },
+  {
+    "name": "09_side_bar_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Side Bar 3",
+    "confidence": 90,
+    "notes": ".psd file, likely a UI element template",
+    "_source_name": "09_side_bar_3",
+    "_batch_index": 2282
+  },
+  {
+    "name": "09_side_bar_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Side Bar 4",
+    "confidence": 90,
+    "notes": ".psd file, likely a UI element template",
+    "_source_name": "09_side_bar_4",
+    "_batch_index": 2283
+  },
+  {
+    "name": "09_size_option",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Size Option",
+    "confidence": 90,
+    "notes": ".psd file, likely a template for size options",
+    "_source_name": "09_size_option",
+    "_batch_index": 2284
+  },
+  {
+    "name": "09_size_option_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Size Option 2",
+    "confidence": 90,
+    "notes": ".psd file, likely a template for size options",
+    "_source_name": "09_size_option_2",
+    "_batch_index": 2285
+  },
+  {
+    "name": "09_size_option_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Size Option 3",
+    "confidence": 90,
+    "notes": ".psd file, likely a template for size options",
+    "_source_name": "09_size_option_3",
+    "_batch_index": 2286
+  },
+  {
+    "name": "09_Slide_Show_Post",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Slide Show Post",
+    "confidence": 90,
+    "notes": ".psd file, social media post template",
+    "_source_name": "09_Slide_Show_Post",
+    "_batch_index": 2287
+  },
+  {
+    "name": "09_Slide_Show_Post_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Slide Show Post 2",
+    "confidence": 90,
+    "notes": ".psd file, social media post template",
+    "_source_name": "09_Slide_Show_Post_2",
+    "_batch_index": 2288
+  },
+  {
+    "name": "09_Slide_Show_Post_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Slide Show Post 3",
+    "confidence": 90,
+    "notes": ".psd file, social media post template",
+    "_source_name": "09_Slide_Show_Post_3",
+    "_batch_index": 2289
+  },
+  {
+    "name": "09_Video Guide",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Video Guide",
+    "confidence": 85,
+    "notes": ".psd file, likely a template for video thumbnails or guides",
+    "_source_name": "09_Video Guide",
+    "_batch_index": 2290
+  },
+  {
+    "name": "09_winter",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Winter",
+    "confidence": 85,
+    "notes": ".psd file, seasonal themed template",
+    "_source_name": "09_winter",
+    "_batch_index": 2291
+  },
+  {
+    "name": "0_Flyer - Red",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Red",
+    "confidence": 95,
+    "notes": ".psd file, name explicitly says flyer",
+    "_source_name": "0_Flyer - Red",
+    "_batch_index": 2292
+  },
+  {
+    "name": "0_MDA5Ny5DaHJpc3RtYXM",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Christmas",
+    "confidence": 80,
+    "notes": ".eps file, base64 name decodes to 'Christmas'",
+    "_source_name": "0_MDA5Ny5DaHJpc3RtYXM",
+    "_batch_index": 2293
+  },
+  {
+    "name": "0_MDEwMS5DaHJpc3RtYXMgYmFubmVycw",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Christmas Banners",
+    "confidence": 80,
+    "notes": ".eps file, base64 name decodes to 'Christmas banners'",
+    "_source_name": "0_MDEwMS5DaHJpc3RtYXMgYmFubmVycw",
+    "_batch_index": 2294
+  },
+  {
+    "name": "0_MDEzNy5QdXJwbGUgbGlnaHRzLjM",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Purple Lights 3",
+    "confidence": 80,
+    "notes": ".eps file, base64 name decodes to 'Purple lights.3'",
+    "_source_name": "0_MDEzNy5QdXJwbGUgbGlnaHRzLjM",
+    "_batch_index": 2295
+  },
+  {
+    "name": "0_MDQ2NA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 464",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ2NA",
+    "_batch_index": 2296
+  },
+  {
+    "name": "0_MDQ2NQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 465",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ2NQ",
+    "_batch_index": 2297
+  },
+  {
+    "name": "0_MDQ2OA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 468",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ2OA",
+    "_batch_index": 2298
+  },
+  {
+    "name": "0_MDQ2OQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 469",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ2OQ",
+    "_batch_index": 2299
+  },
+  {
+    "name": "0_MDQ3MA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 470",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ3MA",
+    "_batch_index": 2300
+  },
+  {
+    "name": "0_MDQ4Mg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 482",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ4Mg",
+    "_batch_index": 2301
+  },
+  {
+    "name": "0_MDQ5Nw",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 497",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ5Nw",
+    "_batch_index": 2302
+  },
+  {
+    "name": "0_MDQ5OA",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 498",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ5OA",
+    "_batch_index": 2303
+  },
+  {
+    "name": "0_MDQ5OQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 499",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDQ5OQ",
+    "_batch_index": 2304
+  },
+  {
+    "name": "0_MDUwOQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 509",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDUwOQ",
+    "_batch_index": 2305
+  },
+  {
+    "name": "0_MDUzMQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 531",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_MDUzMQ",
+    "_batch_index": 2306
+  },
+  {
+    "name": "0_NDg5NQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 4895",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0_NDg5NQ",
+    "_batch_index": 2307
+  },
+  {
+    "name": "0_Q2hyaXN0bWFzIEJsdWUgQm9rZWg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Christmas Blue Bokeh",
+    "confidence": 80,
+    "notes": ".eps file, base64 decodes to 'Christmas Blue Bokeh'",
+    "_source_name": "0_Q2hyaXN0bWFzIEJsdWUgQm9rZWg",
+    "_batch_index": 2308
+  },
+  {
+    "name": "0_UmVkIENocmlzdG1hcyBCYWxscw",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Red Christmas Balls",
+    "confidence": 80,
+    "notes": ".eps file, base64 decodes to 'Red Christmas Balls'",
+    "_source_name": "0_UmVkIENocmlzdG1hcyBCYWxscw",
+    "_batch_index": 2309
+  },
+  {
+    "name": "0Z_0571",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0571",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0571",
+    "_batch_index": 2310
+  },
+  {
+    "name": "0Z_0572",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0572",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0572",
+    "_batch_index": 2311
+  },
+  {
+    "name": "0Z_0574",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0574",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0574",
+    "_batch_index": 2312
+  },
+  {
+    "name": "0Z_0575",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0575",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0575",
+    "_batch_index": 2313
+  },
+  {
+    "name": "0Z_0578",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0578",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0578",
+    "_batch_index": 2314
+  },
+  {
+    "name": "0Z_0580",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0580",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0580",
+    "_batch_index": 2315
+  },
+  {
+    "name": "0Z_0593",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0593",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0593",
+    "_batch_index": 2316
+  },
+  {
+    "name": "0Z_0594",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0594",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0594",
+    "_batch_index": 2317
+  },
+  {
+    "name": "0Z_0597",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 0597",
+    "confidence": 70,
+    "notes": ".eps file, numeric ID",
+    "_source_name": "0Z_0597",
+    "_batch_index": 2318
+  },
+  {
+    "name": "0Z_titans_landing_astronomy_2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Astronomy 2",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_astronomy_2",
+    "_batch_index": 2319
+  },
+  {
+    "name": "0Z_titans_landing_astronomy_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Astronomy Set",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_astronomy_set",
+    "_batch_index": 2320
+  },
+  {
+    "name": "0Z_titans_landing_cosmetics_1",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Cosmetics 1",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_cosmetics_1",
+    "_batch_index": 2321
+  },
+  {
+    "name": "0Z_titans_landing_cosmetics_4",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Cosmetics 4",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_cosmetics_4",
+    "_batch_index": 2322
+  },
+  {
+    "name": "0Z_titans_landing_cosmetics_set",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Cosmetics Set",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_cosmetics_set",
+    "_batch_index": 2323
+  },
+  {
+    "name": "0Z_titans_landing_paintball_3",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Paintball 3",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_paintball_3",
+    "_batch_index": 2324
+  },
+  {
+    "name": "0Z_titans_landing_paintball_4",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Paintball 4",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_paintball_4",
+    "_batch_index": 2325
+  },
+  {
+    "name": "0Z_titans_landing_pasta_2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Pasta 2",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_pasta_2",
+    "_batch_index": 2326
+  },
+  {
+    "name": "0Z_titans_landing_pasta_4",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Pasta 4",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_pasta_4",
+    "_batch_index": 2327
+  },
+  {
+    "name": "0Z_titans_landing_rock_2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Rock 2",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_rock_2",
+    "_batch_index": 2328
+  },
+  {
+    "name": "0Z_titans_landing_rock_3",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Titans Landing Rock 3",
+    "confidence": 85,
+    "notes": ".eps file, themed vector set",
+    "_source_name": "0Z_titans_landing_rock_3",
+    "_batch_index": 2329
+  },
+  {
+    "name": "1 (-18,4 degrees) - hard_3",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Mockup -18.4 Degrees Hard 3",
+    "confidence": 85,
+    "notes": ".psd file, likely a mockup with temperature theme",
+    "_source_name": "1 (-18,4 degrees) - hard_3",
+    "_batch_index": 2330
+  },
+  {
+    "name": "1 (-18,4 degrees) - soft_3",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Mockup -18.4 Degrees Soft 3",
+    "confidence": 85,
+    "notes": ".psd file, likely a mockup with temperature theme",
+    "_source_name": "1 (-18,4 degrees) - soft_3",
+    "_batch_index": 2331
+  },
+  {
+    "name": "1 (1)(1)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 1",
+    "confidence": 70,
+    "notes": ".eps file, generic numbered vector",
+    "_source_name": "1 (1)(1)",
+    "_batch_index": 2332
+  },
+  {
+    "name": "1 (1)(2)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 2",
+    "confidence": 70,
+    "notes": ".eps file, generic numbered vector",
+    "_source_name": "1 (1)(2)",
+    "_batch_index": 2333
+  },
+  {
+    "name": "1 (1)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 3",
+    "confidence": 70,
+    "notes": ".eps file, generic numbered vector",
+    "_source_name": "1 (1)",
+    "_batch_index": 2334
+  },
+  {
+    "name": "1 (2)(1)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 4",
+    "confidence": 70,
+    "notes": ".eps file, generic numbered vector",
+    "_source_name": "1 (2)(1)",
+    "_batch_index": 2335
+  },
+  {
+    "name": "1 (2)(2)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 5",
+    "confidence": 70,
+    "notes": ".eps file, generic numbered vector",
+    "_source_name": "1 (2)(2)",
+    "_batch_index": 2336
+  },
+  {
+    "name": "1 (2)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 6",
+    "confidence": 70,
+    "notes": ".eps file, generic numbered vector",
+    "_source_name": "1 (2)",
+    "_batch_index": 2337
+  },
+  {
+    "name": "1 (2)",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Template 2",
+    "confidence": 70,
+    "notes": ".psd file, generic numbered template",
+    "_source_name": "1 (2)",
+    "_batch_index": 2338
+  },
+  {
+    "name": "1 (3)",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Vector Graphic 7",
+    "confidence": 70,
+    "notes": ".eps file, generic numbered vector",
+    "_source_name": "1 (3)",
+    "_batch_index": 2339
+  }
+]
