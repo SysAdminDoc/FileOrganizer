@@ -115,17 +115,38 @@ All notable changes to FileOrganizer will be documented in this file.
   - Shows `[MKT]` tag in per-batch sample output for pre-classified items
 - `.gitignore` updated: `organize_errors_*.json`, `marketplace_cache.json`, `unmapped_ids.json`
 
+### Added (session 2026-04-28 AE review)
+- `research_ae_review.py` — resolver for 35 detached AE subfolders in `_Review\After Effects - Other\`
+  - `inspect_item()` — enumerates AEP filenames and dir structure for each item
+  - `find_parent_candidates()` — token-overlap search across all `G:\Organized\After Effects - *` categories
+  - `build_batch_prompt()` / `cmd_analyze()` — batched DeepSeek analysis (4 batches × 10 items)
+  - `cmd_apply()` — three actions: `merge` (into existing parent template), `categorize` (new standalone),
+    `keep-in-review` (insufficient context); `safe_dest()` handles name collisions
+  - Journal-writes all moves to `organize_moves.db`; `--dry-run` preview mode
+  - `ae_review_results.json` — full audit record of all 35 DeepSeek recommendations
+  - Results: 30 moved (24 categorize, 6 merge), 5 kept in review
+  - Chinese AE template items (11 items): decoded via AEP internal filenames → correctly classified to
+    Cinematic, Photo Slideshow, Sport & Action, Titles & Typography, Christmas & Holiday, Corporate & Business
+  - `tmpAEtoAMEProject-*` items (7 items): AEP project names decoded project identity (Christmas, slideshow,
+    race game, travel memories) → moved to matching categories
+  - 6 merged items: `Chinese AE Template Open` → `Event & Party\Open Event`,
+    `Chinese Metal 2017 Template 2` → `Intro & Opener\Gold Metal and Particles`,
+    `Master Photo Pages Comps` → `Christmas & Holiday\Christmas Photo Tree`,
+    `Race Machine Main Composition` → `Intro & Opener\Drift Car Race Automotive Opener`,
+    `Unknown VH Template 4 (2)` → `Product Promo\Minimal Product Display`,
+    `Warming Display` → `Slideshow\Leaves Relaxing Photo and Video Display`
+
 ### Known Issues (as of 2026-04-28)
-- 5 trailing-space/long-path errors in `organize_errors_ae.json` — pending
-  `--retry-errors --source ae` after current AE apply run (PID 22500) completes.
-  Note: all 5 sources are GONE from I:\; destinations exist in G:\Organized. Retry will
-  auto-skip them ("src gone") and clear the error file.
-- `G:\Organized\_Review\After Effects - Other\` (35 dirs): 32 untracked detached AE project
-  subfolders (no DB records) + 3 VH templates (low confidence). Need parent-matching pass.
-- loose_files classify: ~246/326 batches remaining — pipeline running (PID 22848)
-- design_org apply: ~1691/2625 items moved — pipeline running (PID 17144)
-- AE apply (PID 22500): phantom nested-path storm on `fast-typography-promo-25863265` item —
-  robocopy exit 9 (>= 8 = actual error), item will land in `organize_errors_ae.json` for retry
+- 5 trailing-space/long-path errors in `organize_errors_ae.json` — all 5 source paths now GONE from I:\;
+  pending `--retry-errors --source ae` after AE apply (PID 22500) completes (will auto-skip + clear).
+- AE apply (PID 22500): `fast-typography-promo-25863265` (263-char path) and `light-streaks-logo-reveal`
+  will fail with old robocopy code; both will land in errors file; fixed via `--retry-errors` with _lp().
+- `_Review\After Effects - Other\` 5 remaining (keep-in-review): `Unknown LP Video 2`, `Unknown VH Template`,
+  `Unknown VH Template (2)`, `Unknown VH Template 2 (1)`, `Unknown VH Template 3` — insufficient context.
+- `_Review\Orphaned Documentation\` — 4 detached doc items, no parent packages.
+- `G:\Design Organized\Design Elements\` — 3,219 loose files (10.52 GB): PSD/JPG/ZIP at category level
+  not indexed by design_org_index.json. Need separate classify + apply pass.
+- loose_files classify: ~200/326 batches remaining — pipeline running (PID 22848).
 
 
 
