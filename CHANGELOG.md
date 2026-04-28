@@ -262,8 +262,29 @@ All notable changes to FileOrganizer will be documented in this file.
   cp1252 consoles. Fix: `line.encode('cp1252', errors='replace').decode('cp1252')` before print.
   Log file still written with full UTF-8.
 
+### Fixed (session 3)
 
+- `verify_organized.py` — `detect_issues(path: Path)` function definition line was missing; its body
+  (5 lines: `issues = []`, two `if COLLISION_PAT/REPLACEMENT_CHARS` appends, `return issues`) existed
+  as unreachable dead code inside `category_quick_counts()` after its `return counts` statement.
+  Python accepted the orphaned code as dead code (no SyntaxError), but any call to `detect_issues()`
+  raised `NameError: name 'detect_issues' is not defined`, crashing `--collisions`, `--missing`,
+  `--orphans`, and `--review` scan modes. Only `--summary` worked because it returns before the call site.
+  Fix: extracted the 5-line body out of `category_quick_counts()` and wrapped it in a proper
+  `def detect_issues(path: Path) -> list[str]:` definition after that function.
 
+### Known Issues (as of session 3)
+
+- AE apply (PID 22500): still running — processing `I:\Unorganized` items (Sports + ~27 more folders).
+  Orchestrator (PID 18092) watching; steps 0–6 trigger automatically on exit.
+- loose_files classify: 277/326 batches (84.9%), PID 22848 still running.
+  Orchestrator step 4 polls for 326/326 before triggering apply.
+- merge_stock (PID 23164): copying `G:\Stock\Stock Footage & Photos` → `G:\Organized\Stock Footage - General`.
+  Orchestrator step 6 (fix_stock_ae_items) conditional on this exiting.
+- fix_duplicates / reclassify_unorg / loose_files apply: all blocked pending AE apply exit (handled by orchestrator).
+- `_Review\After Effects - Other\` 5 remaining items: insufficient context for automated resolution.
+- `_Review\Orphaned Documentation\` — 4 detached doc items, no parent packages.
+- 2 VH AE items (VH-6185510, Parallax Footage Reel) in G:\Stock may land in Stock Footage after merge_stock; verify post-apply with fix_stock_ae_items.
 
 
 ### Added
