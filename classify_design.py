@@ -182,42 +182,73 @@ def already_done(n: int) -> bool:
 
 _JUNK_STEM_RE = re.compile(
     r'(?:INTRO-HD\.NET|AIDOWNLOAD\.NET|aidownload\.net|ShareAE\.com|'
-    r'share\.ae|GFXDRUG\.COM|freegfx|graphicux)',
+    r'share\.ae|GFXDRUG\.COM|freegfx|graphicux|'
+    r'Thumbs|desktop\.ini|__MACOSX|\.DS_Store|\.dropbox|ehthumbs)',
     re.IGNORECASE
 )
+# Junk top-level zip entries (exact name match, case-insensitive)
+_JUNK_ZIP_NAMES = frozenset({
+    'thumbs.db', '.ds_store', 'desktop.ini', '__macosx', 'ehthumbs.db',
+    '.dropbox', '.gitkeep', 'read this first.pdf', 'read me.pdf',
+    'readme.txt', 'readme.md', 'license.txt', 'license.pdf',
+})
 _DESIGN_EXTS = frozenset([
     '.aep', '.psd', '.ai', '.eps', '.mogrt', '.prproj',
     '.rar', '.zip', '.7z', '.mov', '.mp4', '.lut', '.cube',
     '.otf', '.ttf', '.woff',
 ])
 
-def peek_inside_zip(zip_path: str) -> str:
-    """Return the most informative name found inside a zip (without extracting).
-    Priority: .aep/.prproj/.psd stem > top-level folder name > empty string."""
+def peek_inside_zip(zip_path: str) -> tuple[str, list[str]]:
+    """Return (most_informative_name, internal_extensions) from a zip without extracting.
+    Name priority: .aep/.prproj/.psd/.ai stem > top-level dir name > empty string.
+    Extensions: all unique meaningful extensions found anywhere in the archive."""
+    _DESIGN_INNER_EXTS = {
+        '.aep', '.prproj', '.psd', '.psb', '.ai', '.eps', '.svg',
+        '.otf', '.ttf', '.woff', '.woff2',
+        '.lut', '.cube', '.3dl', '.xmp', '.dng', '.lrtemplate',
+        '.atn', '.pat', '.abr', '.grd', '.ase',
+        '.brushset', '.procreate',
+        '.mogrt', '.mlt',
+        '.c4d', '.blend', '.fbx', '.obj',
+    }
     try:
         import zipfile
         with zipfile.ZipFile(zip_path, 'r') as zf:
             names = zf.namelist()
+            inner_exts: set[str] = set()
+            for n in names:
+                ext = Path(n).suffix.lower()
+                if ext in _DESIGN_INNER_EXTS:
+                    inner_exts.add(ext)
             # Priority 1: project files with informative stems
             for name in names:
                 low = name.lower()
                 if any(low.endswith(e) for e in ('.aep', '.prproj', '.psd', '.ai')):
                     stem = Path(name).stem
                     if len(stem) > 4 and not _JUNK_STEM_RE.search(stem):
-                        return stem
-            # Priority 2: top-level folder name if informative
-            tops = set()
+                        return stem, sorted(inner_exts)
+            # Priority 2: top-level folder names (prefer dirs over loose files)
+            top_dirs: set[str] = set()
+            top_files: set[str] = set()
             for name in names:
-                parts = name.split('/')
-                if parts[0]:
-                    tops.add(parts[0])
-            best = sorted(tops, key=len, reverse=True)[:3]
+                parts = name.rstrip('/').split('/')
+                top = parts[0]
+                if not top or top.lower() in _JUNK_ZIP_NAMES:
+                    continue
+                if name.endswith('/') or len(parts) > 1:
+                    top_dirs.add(top)   # it's a directory or has children
+                else:
+                    top_files.add(top)  # loose top-level file
+            # Prefer directories; fall back to files only if no dirs found
+            candidates = top_dirs or top_files
+            best = sorted(candidates, key=len, reverse=True)[:3]
             for t in best:
                 if not _JUNK_STEM_RE.search(t) and len(t) > 4:
-                    return t
+                    return t, sorted(inner_exts)
+            return '', sorted(inner_exts)
     except Exception:
         pass
-    return ''
+    return '', []
 
 
 def peek_extensions(folder_path: str, max_files: int = 40) -> tuple[list[str], list[str]]:
@@ -247,7 +278,8 @@ def peek_extensions(folder_path: str, max_files: int = 40) -> tuple[list[str], l
                     exts.add(ext)
                 if any(entry.name.lower().endswith(s) for s in _DESIGN_EXTS):
                     if entry.name.lower().endswith(('.zip', '.rar', '.7z')):
-                        inner = peek_inside_zip(entry.path)
+                        inner, zip_exts = peek_inside_zip(entry.path)
+                        exts.update(zip_exts)  # surface internal extensions
                         if inner and is_informative(inner):
                             filenames.append(inner)
                             continue
@@ -271,7 +303,8 @@ def peek_extensions(folder_path: str, max_files: int = 40) -> tuple[list[str], l
                                 exts.add(ext)
                             # Surface informative zip/archive names at L2
                             if sub.name.lower().endswith(('.zip', '.rar', '.7z')):
-                                inner = peek_inside_zip(sub.path)
+                                inner, zip_exts = peek_inside_zip(sub.path)
+                                exts.update(zip_exts)  # surface internal extensions
                                 if inner and is_informative(inner):
                                     filenames.append(inner)
                         elif sub.is_dir():

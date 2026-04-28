@@ -150,6 +150,22 @@ Videohive ID rules:
 39. "fast_renamer", "file_hunter", "Internet Download Manager", "Declutter", "Express Table" → Software & Utilities (confidence 95)
 40. App installer names (e.g. ".exe", "Setup", "Portable", "Multilingual/Multilingua") → Software & Utilities
 41. "Extrude", "Evolution", "Coco Color" without clear design context → Software & Utilities or Plugins & Extensions
+42. Hints contain "LUT", "LUTs", "LUTs for", "Film Lut", "Cinema LUT" → Color Grading & LUTs (confidence 90)
+43. "MASTER BUNDLE" + LUT hints → Color Grading & LUTs (confidence 92)
+44. Hint contains "Floral", "Autumn", "Christmas Floral", "Floral Handwriting", "Floral Medley" → likely a Procreate brush pack or font family; if .otf/.ttf/woff hints → Fonts & Typography; otherwise Procreate - Brushes & Stamps (confidence 75)
+45. "Main" folder name alone with floral subdir hints → Procreate - Brushes & Stamps (the subdir names are brush set names)
+46. Hint contains "vscode", "node_modules", "META-INF", "package.json" without design context → Software & Utilities (confidence 90)
+47. "match_v" or similar versioned plugin with VS Code hints → Software & Utilities (confidence 90)
+48. Hint contains "ornamet", "ornament" → likely an ornament font or vector → Fonts & Typography or Illustrator - Vectors & Assets
+49. Hint is only "fseventsd" (macOS artifact) with no other context → _Review (confidence 30)
+50. Name "logging-NNNNN" with hint "_Logging" → Plugins & Extensions (After Effects/Premiere logging plugin, confidence 65)
+51. "MWNW" or short alphanumeric names with no hints → _Review (confidence 30)
+52. Hint text contains "Photoshop Action" anywhere → Photoshop - Actions & Presets (confidence 92)
+53. Hint text contains "typeface" or "The typeface" or "font" → Fonts & Typography (confidence 95)
+54. "memleak", "memleak_" — memory leak / profiling tool → Software & Utilities (confidence 85)
+55. Hint "Uploaded by INTRO HD Website" → this is an INTROHD.NET item; classify by name if possible, else After Effects - Other
+56. "mMovements" → After Effects - Motion Graphics (motion movement pack name pattern, confidence 65)
+57. "misc" folder with only image hints and no other context → _Review (genuinely ambiguous)
 
 Items with only numbered JPGs/PNGs inside zip and no other hints → Stock Photos - General (confidence 55)"""
 
