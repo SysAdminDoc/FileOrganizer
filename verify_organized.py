@@ -93,7 +93,8 @@ def category_quick_counts() -> Counter:
     return counts
 
 
-
+def detect_issues(path: Path) -> list[str]:
+    """Return list of issue tags for a file path."""
     issues = []
     if REPLACEMENT_CHARS.search(path.name):
         issues.append('encoding-garbage')
