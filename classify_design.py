@@ -43,6 +43,13 @@ SOURCE_CONFIGS = {
         'has_legacy':   False,
         'file_mode':    True,
     },
+    'design_elements': {
+        'index_file':   'design_elements_index.json',
+        'batch_prefix': 'de_batch_',
+        'source_dir':   r'G:\Design Organized\Design Elements',
+        'has_legacy':   True,   # legacy_category = subfolder name
+        'file_mode':    False,  # move whole directories
+    },
 }
 
 # ── Config (defaults; overridden at parse time) ───────────────────────────────
