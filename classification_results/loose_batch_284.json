@@ -1,0 +1,542 @@
+[
+  {
+    "name": "save_the_date_flyer",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save The Date Flyer",
+    "confidence": 90,
+    "notes": "PSD file, name indicates save the date flyer",
+    "_source_name": "save_the_date_flyer",
+    "_batch_index": 16980
+  },
+  {
+    "name": "Saved By Love",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Saved By Love",
+    "confidence": 85,
+    "notes": "EPS file, vector asset",
+    "_source_name": "Saved By Love",
+    "_batch_index": 16981
+  },
+  {
+    "name": "savethedate",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save The Date",
+    "confidence": 90,
+    "notes": "PSD file, name indicates save the date",
+    "_source_name": "savethedate",
+    "_batch_index": 16982
+  },
+  {
+    "name": "Say yes to new adventures",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Say Yes To New Adventures",
+    "confidence": 85,
+    "notes": "EPS file, vector asset",
+    "_source_name": "Say yes to new adventures",
+    "_batch_index": 16983
+  },
+  {
+    "name": "sbhcfm (2)",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM (2)",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm (2)",
+    "_batch_index": 16984
+  },
+  {
+    "name": "sbhcfm (2)_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM (2)_2",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm (2)_2",
+    "_batch_index": 16985
+  },
+  {
+    "name": "sbhcfm",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm",
+    "_batch_index": 16986
+  },
+  {
+    "name": "sbhcfm1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM1",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm1",
+    "_batch_index": 16987
+  },
+  {
+    "name": "sbhcfm1_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM1_2",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm1_2",
+    "_batch_index": 16988
+  },
+  {
+    "name": "sbhcfm1_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM1_3",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm1_3",
+    "_batch_index": 16989
+  },
+  {
+    "name": "sbhcfm1_5",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM1_5",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm1_5",
+    "_batch_index": 16990
+  },
+  {
+    "name": "sbhcfm2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM2",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm2",
+    "_batch_index": 16991
+  },
+  {
+    "name": "sbhcfm2_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM2_2",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm2_2",
+    "_batch_index": 16992
+  },
+  {
+    "name": "sbhcfm2_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM2_3",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm2_3",
+    "_batch_index": 16993
+  },
+  {
+    "name": "sbhcfm6",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM6",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm6",
+    "_batch_index": 16994
+  },
+  {
+    "name": "sbhcfm_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM_2",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm_2",
+    "_batch_index": 16995
+  },
+  {
+    "name": "sbhcfm_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM_3",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm_3",
+    "_batch_index": 16996
+  },
+  {
+    "name": "sbhcfm_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCFM_4",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhcfm_4",
+    "_batch_index": 16997
+  },
+  {
+    "name": "sbhczt",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SBHCZT",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "sbhczt",
+    "_batch_index": 16998
+  },
+  {
+    "name": "Scary Beats Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Scary Beats Flyer",
+    "confidence": 90,
+    "notes": "PSD file, name indicates flyer",
+    "_source_name": "Scary Beats Flyer",
+    "_batch_index": 16999
+  },
+  {
+    "name": "Scene 01 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 01 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 01 SV",
+    "_batch_index": 17000
+  },
+  {
+    "name": "Scene 02 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 02 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 02 SV",
+    "_batch_index": 17001
+  },
+  {
+    "name": "Scene 03 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 03 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 03 SV",
+    "_batch_index": 17002
+  },
+  {
+    "name": "Scene 04 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 04 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 04 SV",
+    "_batch_index": 17003
+  },
+  {
+    "name": "Scene 05 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 05 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 05 SV",
+    "_batch_index": 17004
+  },
+  {
+    "name": "Scene 06 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 06 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 06 SV",
+    "_batch_index": 17005
+  },
+  {
+    "name": "Scene 07 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 07 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 07 SV",
+    "_batch_index": 17006
+  },
+  {
+    "name": "Scene 08 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 08 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 08 SV",
+    "_batch_index": 17007
+  },
+  {
+    "name": "Scene 09 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 09 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 09 SV",
+    "_batch_index": 17008
+  },
+  {
+    "name": "Scene 1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 1",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 1",
+    "_batch_index": 17009
+  },
+  {
+    "name": "Scene 10 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 10 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 10 SV",
+    "_batch_index": 17010
+  },
+  {
+    "name": "Scene 11 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 11 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 11 SV",
+    "_batch_index": 17011
+  },
+  {
+    "name": "Scene 12 SV",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 12 SV",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 12 SV",
+    "_batch_index": 17012
+  },
+  {
+    "name": "Scene 2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 2",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 2",
+    "_batch_index": 17013
+  },
+  {
+    "name": "Scene 3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 3",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 3",
+    "_batch_index": 17014
+  },
+  {
+    "name": "Scene 4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 4",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 4",
+    "_batch_index": 17015
+  },
+  {
+    "name": "Scene 5",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 5",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 5",
+    "_batch_index": 17016
+  },
+  {
+    "name": "Scene 6",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 6",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "Scene 6",
+    "_batch_index": 17017
+  },
+  {
+    "name": "scene1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 1",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "scene1",
+    "_batch_index": 17018
+  },
+  {
+    "name": "scene2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 2",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "scene2",
+    "_batch_index": 17019
+  },
+  {
+    "name": "scene3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 3",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "scene3",
+    "_batch_index": 17020
+  },
+  {
+    "name": "scene4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 4",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "scene4",
+    "_batch_index": 17021
+  },
+  {
+    "name": "scene5",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 5",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "scene5",
+    "_batch_index": 17022
+  },
+  {
+    "name": "scene6",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 6",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "scene6",
+    "_batch_index": 17023
+  },
+  {
+    "name": "scene7",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 7",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "scene7",
+    "_batch_index": 17024
+  },
+  {
+    "name": "scene8",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scene 8",
+    "confidence": 75,
+    "notes": "PSD file, likely a scene template",
+    "_source_name": "scene8",
+    "_batch_index": 17025
+  },
+  {
+    "name": "scifi-shooter-sprite-sheet",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Sci-Fi Shooter Sprite Sheet",
+    "confidence": 80,
+    "notes": "PSD file, sprite sheet for game design",
+    "_source_name": "scifi-shooter-sprite-sheet",
+    "_batch_index": 17026
+  },
+  {
+    "name": "scout3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Scout 3",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "scout3",
+    "_batch_index": 17027
+  },
+  {
+    "name": "scouts_flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Scouts Flyer 3",
+    "confidence": 90,
+    "notes": "PSD file, name indicates flyer",
+    "_source_name": "scouts_flyer_3",
+    "_batch_index": 17028
+  },
+  {
+    "name": "Screen Door",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Screen Door",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "Screen Door",
+    "_batch_index": 17029
+  },
+  {
+    "name": "scrub life",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Scrub Life",
+    "confidence": 85,
+    "notes": "EPS file, vector asset",
+    "_source_name": "scrub life",
+    "_batch_index": 17030
+  },
+  {
+    "name": "Scuba Diving",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Scuba Diving",
+    "confidence": 80,
+    "notes": "PSD file, likely a themed flyer or poster",
+    "_source_name": "Scuba Diving",
+    "_batch_index": 17031
+  },
+  {
+    "name": "SD001",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SD001",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "SD001",
+    "_batch_index": 17032
+  },
+  {
+    "name": "SD002",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SD002",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "SD002",
+    "_batch_index": 17033
+  },
+  {
+    "name": "SD003",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SD003",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "SD003",
+    "_batch_index": 17034
+  },
+  {
+    "name": "SD004",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SD004",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "SD004",
+    "_batch_index": 17035
+  },
+  {
+    "name": "SD005",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SD005",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "SD005",
+    "_batch_index": 17036
+  },
+  {
+    "name": "SD006",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SD006",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "SD006",
+    "_batch_index": 17037
+  },
+  {
+    "name": "SD007",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SD007",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "SD007",
+    "_batch_index": 17038
+  },
+  {
+    "name": "SD008",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "SD008",
+    "confidence": 70,
+    "notes": "PSD file, likely a template",
+    "_source_name": "SD008",
+    "_batch_index": 17039
+  }
+]
