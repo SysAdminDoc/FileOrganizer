@@ -243,6 +243,25 @@ def peek_inside_zip(zip_path: str) -> tuple[str, list[str]]:
         for t in best:
             if not _JUNK_STEM_RE.search(t) and len(t) > 4:
                 return t, sorted(inner_exts)
+
+        # Priority 3: all top-level names are junk — try second-level entries (inner ZIP/folder names)
+        # Handles: VH-28331308-INTRO-HD.NET/videohive-OadzdaaH-modern-food-menu-instagram-stories.zip
+        _VIDEOHIVE_PREFIX_RE = re.compile(r'^videohive-[A-Za-z0-9]+-', re.IGNORECASE)
+        for name in names:
+            parts = name.rstrip('/').split('/')
+            if len(parts) < 2:
+                continue
+            inner = parts[1]
+            if not inner or inner.lower() in _JUNK_ZIP_NAMES:
+                continue
+            if _JUNK_STEM_RE.search(inner):
+                continue
+            # Strip videohive-XXXXXXXX- prefixes from inner zip filenames
+            stem = Path(inner).stem
+            stem = _VIDEOHIVE_PREFIX_RE.sub('', stem)
+            if len(stem) > 4:
+                return stem, sorted(inner_exts)
+
         return '', sorted(inner_exts)
 
     # Try ZIP first
@@ -272,7 +291,14 @@ def peek_extensions(folder_path: str, max_files: int = 40) -> tuple[list[str], l
     folder_stem = Path(folder_path).name.lower().rstrip()
 
     def is_informative(name: str) -> bool:
-        stem = re.sub(r'\.part\d+$', '', Path(name).stem, flags=re.IGNORECASE)
+        path = Path(name)
+        # Only strip suffix if it looks like a real file extension (2-5 alphanum chars).
+        # Without this guard, pathlib splits "01. Fade-Grid 1920x1080" into
+        # stem="01" and suffix=". Fade-Grid 1920x1080" — falsely short.
+        if re.fullmatch(r'\.[a-zA-Z0-9]{2,6}', path.suffix or ''):
+            stem = re.sub(r'\.part\d+$', '', path.stem, flags=re.IGNORECASE)
+        else:
+            stem = str(name)
         if stem.lower().rstrip() == folder_stem:
             return False
         if _JUNK_STEM_RE.search(stem):
