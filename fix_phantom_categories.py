@@ -28,6 +28,7 @@ Usage:
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -38,11 +39,27 @@ REPO = Path(__file__).parent
 sys.path.insert(0, str(REPO))
 
 from classify_design import CATEGORIES                # noqa: E402
-from organize_run import CATEGORY_ALIASES, _lp        # noqa: E402
+from organize_run import CATEGORY_ALIASES, _lp, robust_move  # noqa: E402
 
 CANON = set(CATEGORIES)
 ROOTS = [Path(r"G:\Organized"), Path(r"I:\Organized")]
 LOG_FILE = REPO / "fix_phantom_categories_log.json"
+
+
+def same_drive(a: Path, b: Path) -> bool:
+    return os.path.splitdrive(str(a))[0].upper() == os.path.splitdrive(str(b))[0].upper()
+
+
+def safe_dest(target_dir: Path, name: str) -> Path:
+    base = target_dir / name
+    if not base.exists():
+        return base
+    i = 1
+    while True:
+        cand = target_dir / f"{name} ({i})"
+        if not cand.exists():
+            return cand
+        i += 1
 
 
 def is_phantom_dir(name: str) -> bool:
@@ -60,19 +77,41 @@ def map_phantom(name: str) -> str | None:
     return None
 
 
-def robocopy_merge(src: Path, dst: Path, dry_run: bool) -> tuple[int, str]:
-    """Move all subdirs and files from src into dst. Returns (rc, stderr)."""
+def merge_per_child(src: Path, dst: Path, dry_run: bool) -> tuple[int, int, list[str]]:
+    """Move every child of src into dst, one at a time.
+
+    Same-drive children → os.rename (instant, metadata-only).
+    Cross-drive children → robust_move (robocopy /256 internally).
+    Collisions get a "Name (N)" suffix on the destination.
+
+    Returns (children_moved, errors, error_messages).
+    """
+    moved = errors = 0
+    err_msgs: list[str] = []
     if dry_run:
-        return 0, ""
+        try:
+            return sum(1 for _ in src.iterdir()), 0, []
+        except Exception as e:
+            return 0, 1, [str(e)]
+
     dst.mkdir(parents=True, exist_ok=True)
-    cmd = [
-        "robocopy", _lp(str(src)), _lp(str(dst)),
-        "/E", "/MOVE", "/256",
-        "/COPY:DAT", "/R:1", "/W:1",
-        "/NP", "/NS", "/NC", "/NFL", "/NDL", "/NJH", "/NJS",
-    ]
-    res = subprocess.run(cmd, capture_output=True, text=True, errors="replace")
-    return res.returncode, (res.stderr or res.stdout or "").strip()
+    try:
+        children = list(src.iterdir())
+    except Exception as e:
+        return 0, 1, [f"iterdir({src}): {e}"]
+
+    for child in children:
+        target = safe_dest(dst, child.name)
+        try:
+            if same_drive(child, target):
+                os.rename(str(child), str(target))
+            else:
+                robust_move(str(child), str(target))
+            moved += 1
+        except Exception as e:
+            errors += 1
+            err_msgs.append(f"{child} -> {target}: {e}")
+    return moved, errors, err_msgs
 
 
 def remove_empty_tree(path: Path) -> None:
@@ -162,13 +201,14 @@ def cmd_apply(roots: list[Path], dry_run: bool) -> None:
 
             target_dir = root / target_cat
             print(f"  {tag} MERGE  {root.drive} {d.name!r} ({len(contents)} items) -> {target_cat}")
-            rc, err = robocopy_merge(d, target_dir, dry_run)
-            if rc >= 8:
-                print(f"    ROBOCOPY ERROR rc={rc}: {err[:200]}")
-                errors += 1
+            child_moved, child_errors, err_msgs = merge_per_child(d, target_dir, dry_run)
+            if child_errors:
+                print(f"    {child_errors} child errors (first: {err_msgs[0][:200]})")
+                errors += child_errors
                 log_entries.append({
-                    "action": "merge-failed", "src": str(d), "dst": str(target_dir),
-                    "rc": rc, "err": err[:500],
+                    "action": "merge-partial", "src": str(d), "dst": str(target_dir),
+                    "moved": child_moved, "errors": child_errors,
+                    "err_sample": err_msgs[:5],
                 })
                 continue
 
@@ -177,7 +217,7 @@ def cmd_apply(roots: list[Path], dry_run: bool) -> None:
             moved += 1
             log_entries.append({
                 "action": "merge", "src": str(d), "dst": str(target_dir),
-                "items": len(contents), "rc": rc,
+                "items": child_moved,
             })
 
     print("\n=== Summary ===")

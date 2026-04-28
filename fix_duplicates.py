@@ -19,6 +19,59 @@ import os, re, sys, json, sqlite3, shutil, subprocess, argparse
 from pathlib import Path
 from collections import defaultdict
 
+
+def _same_drive(a: Path, b: Path) -> bool:
+    return os.path.splitdrive(str(a))[0].upper() == os.path.splitdrive(str(b))[0].upper()
+
+
+def os_rename_merge(src: Path, dst: Path) -> tuple[int, int, list[str]]:
+    """Recursive same-drive merge using os.rename (metadata-only).
+
+    Walks src bottom-up. For each entry under src:
+      - If the corresponding path under dst is free, os.rename it across.
+      - If dst already has the same name, leave src's copy in place (src is
+        the duplicate; dst is the canonical version).
+    After traversal, removes any now-empty directories under src.
+
+    Returns (moved, conflicts, errors) where:
+      moved     = number of files+dirs successfully renamed into dst
+      conflicts = number of entries that already existed in dst (kept dst)
+      errors    = list of unexpected exceptions
+    """
+    moved = 0
+    conflicts = 0
+    errors: list[str] = []
+    if not src.exists():
+        return 0, 0, []
+
+    # Bottom-up walk so we can rmdir leaves after their files have moved.
+    for root, dirs, files in os.walk(str(src), topdown=False):
+        rel = os.path.relpath(root, str(src))
+        dst_root = str(dst) if rel in ('.', '') else os.path.join(str(dst), rel)
+        os.makedirs(dst_root, exist_ok=True)
+
+        for name in files:
+            src_p = os.path.join(root, name)
+            dst_p = os.path.join(dst_root, name)
+            if os.path.exists(dst_p):
+                conflicts += 1
+                continue
+            try:
+                os.rename(src_p, dst_p)
+                moved += 1
+            except OSError as e:
+                errors.append(f"{src_p} -> {dst_p}: {e}")
+
+        for name in dirs:
+            sub = os.path.join(root, name)
+            try:
+                if os.path.exists(sub) and not os.listdir(sub):
+                    os.rmdir(sub)
+            except OSError:
+                pass
+
+    return moved, conflicts, errors
+
 REPO      = Path(__file__).parent
 DB        = REPO / 'organize_moves.db'
 ORGANIZED = Path(r'G:\Organized')
@@ -226,16 +279,32 @@ def cmd_apply(dry_run: bool = False) -> None:
                 results.append({'action': 'rename', 'from': str(coll), 'to': str(orig)})
                 continue
 
-            # Case 2: Both exist — robocopy merge collision into original, then delete collision
+            # Case 2: Both exist — merge collision contents into original, then delete collision.
+            # Same-drive: per-file os.rename (metadata-only, near-instant).
+            # Cross-drive: robocopy /E (must copy file bytes anyway).
             log(f'{tag} MERGE   {coll.name}  ({coll_files} files) -> {orig.name} ({orig_files} files)')
 
-            rc, err_lines = robocopy_merge(coll, orig, dry_run=dry_run)
-            if rc > 7:
-                log(f'  ROBOCOPY ERROR rc={rc}: {err_lines}')
-                errors += 1
-                results.append({'action': 'merge_failed', 'src': str(coll), 'dst': str(orig), 'rc': rc})
-                skipped += 1
-                continue
+            if dry_run:
+                rc, err_lines = 0, []
+            elif _same_drive(coll, orig):
+                m, c, errs = os_rename_merge(coll, orig)
+                if errs:
+                    log(f'  rename merge: {len(errs)} errors (first: {errs[0][:200]})')
+                    errors += 1
+                    results.append({'action': 'merge_failed', 'src': str(coll), 'dst': str(orig),
+                                    'errors': errs[:5]})
+                    skipped += 1
+                    continue
+                rc = 0
+                err_lines = []
+            else:
+                rc, err_lines = robocopy_merge(coll, orig, dry_run=dry_run)
+                if rc > 7:
+                    log(f'  ROBOCOPY ERROR rc={rc}: {err_lines}')
+                    errors += 1
+                    results.append({'action': 'merge_failed', 'src': str(coll), 'dst': str(orig), 'rc': rc})
+                    skipped += 1
+                    continue
 
             # Remove collision
             removed = rmtree_safe(coll, dry_run=dry_run)
@@ -265,9 +334,13 @@ def cmd_apply(dry_run: bool = False) -> None:
                 'rc': rc,
             })
 
+            # Incremental log save every 50 merges so a kill mid-run preserves audit trail
+            if not dry_run and len(results) % 50 == 0:
+                LOG_FILE.write_text(json.dumps(results, indent=2), encoding='utf-8')
+
     con.close()
 
-    # Save results
+    # Save results (final)
     if not dry_run:
         LOG_FILE.write_text(json.dumps(results, indent=2), encoding='utf-8')
         log(f'\nResults saved to {LOG_FILE.name}')
