@@ -28,8 +28,8 @@ jobs:
       - name: Build EXE (PyInstaller)
         run: |
           pyinstaller --onefile --windowed --name FileOrganizer `
-            --icon icon.png `
-            --add-data "icon.png;." `
+            --icon icon.ico `
+            --add-data "icon.ico;." `
             fileorganizer/__main__.py
 
       - name: Package CLI tools
