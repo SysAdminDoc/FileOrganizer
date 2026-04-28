@@ -180,8 +180,43 @@ Videohive ID rules:
 69. Folder name contains "Payhip" or "Payhip –" → classify by content hints; "overlays"/"particles"/"transitions" → After Effects - Overlay & Transition; "SFX"/"overlay pack" → Cinematic FX (confidence 85)
 70. Hint contains "BAT OVERLAY" or "BAT SFX" → Cinematic FX (bat/Halloween overlay pack, confidence 82)
 71. Hint contains "overlays" + "particles" + "transitions" → After Effects - Overlay & Transition (confidence 85)
+72. Folder named "Place Holder" or "PlaceHolder" with hints "PSD Files" or "Preview" → Photoshop - Smart Objects & Templates (confidence 75)
+73. Folder named "PNG" or "PNGs" with icon-pack hints (e.g. "IconShock", "Icons_", "Icon Pack", "Pixy.Dust", "Junior") → UI Resources & Icon Sets (confidence 90)
+74. Hints containing multiple "Icons_NNNN" or "IconShock" or "RealVista" patterns → UI Resources & Icon Sets (confidence 92)
 
-Items with only numbered JPGs/PNGs inside zip and no other hints → Stock Photos - General (confidence 55)"""
+Items with only numbered JPGs/PNGs inside zip and no other hints → Stock Photos - General (confidence 55)
+
+CONFIRMED ground-truth overrides (verified by inspecting archive contents):
+75. Folder name starts with "3P95ESD" → Photoshop - Print & Stationery (confirmed: "Vintage Blue Floral Wedding Invitation Set" PSD files, confidence 97)
+76. Folder name starts with "5VAEUJ4" → Photoshop - Print & Stationery (confirmed: ban.psd, menu.psd, rsvp.psd — wedding/event stationery, confidence 97)
+77. Folder name starts with "FZ3Y3N9" → Photoshop - Social Media Templates (confirmed: SALE.psd promotional template, confidence 97)
+78. Folder name starts with "HFU549S" → Fonts & Typography (confirmed: Districtside graffiti OTF/TTF/WOFF font, confidence 99)
+79. Folder name starts with "NGHQJCU" → Fonts & Typography (confirmed: Bambosa modern sans-serif OTF/TTF, confidence 99)
+80. Folder name starts with "P-7854reaCP" → Software & Utilities (confirmed: reaConverter Pro 7.854 portable app, confidence 99)
+81. Folder name starts with "CreativeMarket-7158301" → Photoshop - Actions & Presets (confirmed: Screenprint-Halftone-Effect-for-Posters.psd, confidence 97)
+82. Folder name is "Extrude" → Software & Utilities (confirmed: Extrude.aex = After Effects plugin binary, not a template, confidence 98)
+83. Folder name starts with "EzraCohen" → Tutorial & Education (confirmed: EzraCohen.Tv full-site source download with AE templates + tutorials, confidence 90)
+84. Folder name starts with "IS_Brilliant" → Software & Utilities (confirmed: ISO file = Windows software installer, confidence 98)
+85. Folder name starts with "MDrtsMvfx" → Cinematic FX & Overlays (confirmed: mDirts Dust PNG overlay files, confidence 97)
+86. Folder name is "gleri6" → Software & Utilities (confirmed: Glary Utilities 6.20 Portable .exe, confidence 99)
+87. Folder name starts with "mCuisine" → Software & Utilities (confirmed: macOS .pkg app installer, confidence 98)
+88. Folder name is "Evolution" with .aep hint in Bonus → After Effects - Elements (confirmed: Design Templates 1-10.aep, confidence 95)
+89. Folder name is "Dealova" → Photoshop - Print & Stationery (confirmed: Office XML color-scheme bonus files + JPG previews, invitation/stationery design set, confidence 87)
+90. Folder contains only sequentially numbered JPEG/JPG files (e.g. "632 (1).jpg", "970 (1).jpg") with no other file types → Stock Photos - General (confidence 72)
+91. Folder name is "Documentation" → _Review (confidence 30) — it is a documentation/help folder, not a design asset
+92. Folder name contains "Help File" → _Review (confidence 30) — it is a help document, not a creative asset
+93. Folder name starts with "Main print" with only README.txt → _Review (confidence 30) — incomplete/corrupted download
+94. Folder name is "Reach" with .jsxbin hint → Plugins & Extensions (confirmed: Reach.jsxbin = Adobe ExtendScript binary/plugin, confidence 97)
+95. Folder name starts with "graphicriver-37791226" → Photoshop - Actions & Presets (confirmed: Magical Cartoon Art Photoshop Action .atn files, confidence 99)
+96. Folder name starts with "SRBSA8N" → Fonts & Typography (confirmed: Querygrand condensed bold sans OTF/TTF/WOFF, confidence 99)
+97. Folder name starts with "studio-" + Videohive ID and hint "Virtual Studio" or "Multi Virtual" → After Effects - Backgrounds (virtual studio backdrop template, confidence 90)
+98. Folder name starts with "storyboard-" + Videohive ID and hint "Sneaker Logo" → Illustrator - Logos & Branding (logo asset, confidence 85)
+99. Folder name "Stratify" or "StyleX" or "Shifter" or "Shortcakes" with version number → Software & Utilities (versioned GUI apps, confidence 90)
+100. Folder name is "subway" with no hints → _Review (confidence 30, genuinely ambiguous without hints)
+101. Folder name is "subway" and internal .aep found → After Effects - Other (confirmed: Subway AE template with textures + tutorial MP4s, confidence 92)
+102. Folder name is "template74" → After Effects - Intro & Opener (confirmed: AEP + C4D + intro.MP4 + Sound.wav, confidence 95)
+103. Folder name is "tissue" with hint "tissue-master" and .py files → Plugins & Extensions (confirmed: Tissue Blender addon GitHub repo download, confidence 95)
+104. Folder name starts with "ToothPaste" with hints including META-INF → Software & Utilities (confirmed: Java/Android app with META-INF directory structure, confidence 95)"""
 
 
 def build_prompt(items: list[dict]) -> str:

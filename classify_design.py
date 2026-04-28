@@ -195,11 +195,11 @@ _JUNK_ZIP_NAMES = frozenset({
 _DESIGN_EXTS = frozenset([
     '.aep', '.psd', '.ai', '.eps', '.mogrt', '.prproj',
     '.rar', '.zip', '.7z', '.mov', '.mp4', '.lut', '.cube',
-    '.otf', '.ttf', '.woff',
+    '.otf', '.ttf', '.woff', '.jsxbin', '.jsx', '.aex',
 ])
 
 def peek_inside_zip(zip_path: str) -> tuple[str, list[str]]:
-    """Return (most_informative_name, internal_extensions) from a zip without extracting.
+    """Return (most_informative_name, internal_extensions) from a zip/rar without extracting.
     Name priority: .aep/.prproj/.psd/.ai stem > top-level dir name > empty string.
     Extensions: all unique meaningful extensions found anywhere in the archive."""
     _DESIGN_INNER_EXTS = {
@@ -210,44 +210,57 @@ def peek_inside_zip(zip_path: str) -> tuple[str, list[str]]:
         '.brushset', '.procreate',
         '.mogrt', '.mlt',
         '.c4d', '.blend', '.fbx', '.obj',
+        '.jsxbin', '.jsx',
     }
+
+    def _process_namelist(names: list[str]) -> tuple[str, list[str]]:
+        inner_exts: set[str] = set()
+        for n in names:
+            ext = Path(n).suffix.lower()
+            if ext in _DESIGN_INNER_EXTS:
+                inner_exts.add(ext)
+        # Priority 1: project files with informative stems
+        for name in names:
+            low = name.lower()
+            if any(low.endswith(e) for e in ('.aep', '.prproj', '.psd', '.ai')):
+                stem = Path(name).stem
+                if len(stem) > 4 and not _JUNK_STEM_RE.search(stem):
+                    return stem, sorted(inner_exts)
+        # Priority 2: top-level folder names (prefer dirs over loose files)
+        top_dirs: set[str] = set()
+        top_files: set[str] = set()
+        for name in names:
+            parts = name.rstrip('/').split('/')
+            top = parts[0]
+            if not top or top.lower() in _JUNK_ZIP_NAMES:
+                continue
+            if name.endswith('/') or len(parts) > 1:
+                top_dirs.add(top)
+            else:
+                top_files.add(top)
+        candidates = top_dirs or top_files
+        best = sorted(candidates, key=len, reverse=True)[:3]
+        for t in best:
+            if not _JUNK_STEM_RE.search(t) and len(t) > 4:
+                return t, sorted(inner_exts)
+        return '', sorted(inner_exts)
+
+    # Try ZIP first
     try:
         import zipfile
         with zipfile.ZipFile(zip_path, 'r') as zf:
-            names = zf.namelist()
-            inner_exts: set[str] = set()
-            for n in names:
-                ext = Path(n).suffix.lower()
-                if ext in _DESIGN_INNER_EXTS:
-                    inner_exts.add(ext)
-            # Priority 1: project files with informative stems
-            for name in names:
-                low = name.lower()
-                if any(low.endswith(e) for e in ('.aep', '.prproj', '.psd', '.ai')):
-                    stem = Path(name).stem
-                    if len(stem) > 4 and not _JUNK_STEM_RE.search(stem):
-                        return stem, sorted(inner_exts)
-            # Priority 2: top-level folder names (prefer dirs over loose files)
-            top_dirs: set[str] = set()
-            top_files: set[str] = set()
-            for name in names:
-                parts = name.rstrip('/').split('/')
-                top = parts[0]
-                if not top or top.lower() in _JUNK_ZIP_NAMES:
-                    continue
-                if name.endswith('/') or len(parts) > 1:
-                    top_dirs.add(top)   # it's a directory or has children
-                else:
-                    top_files.add(top)  # loose top-level file
-            # Prefer directories; fall back to files only if no dirs found
-            candidates = top_dirs or top_files
-            best = sorted(candidates, key=len, reverse=True)[:3]
-            for t in best:
-                if not _JUNK_STEM_RE.search(t) and len(t) > 4:
-                    return t, sorted(inner_exts)
-            return '', sorted(inner_exts)
+            return _process_namelist(zf.namelist())
     except Exception:
         pass
+
+    # Try RAR (requires rarfile + unrar CLI)
+    try:
+        import rarfile
+        with rarfile.RarFile(zip_path, 'r') as rf:
+            return _process_namelist(rf.namelist())
+    except Exception:
+        pass
+
     return '', []
 
 
