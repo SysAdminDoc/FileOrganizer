@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """review_resolver.py — Targeted re-classifier for _Review items in done batch files.
 
-Reads all completed design_batch_NNN.json files, finds _Review items, fetches
+Reads all completed batch JSON files for a given source, finds _Review items, fetches
 enriched file hints (via improved peek_extensions/peek_inside_zip), then sends
 them to DeepSeek in batches of 30 for re-classification. Updates batch files in place.
 
 Usage:
-  python review_resolver.py --preview        # show what would change
-  python review_resolver.py --run            # resolve all _Review items
-  python review_resolver.py --stats          # show review item counts per batch
-  python review_resolver.py --batch N        # only resolve batch N
+  python review_resolver.py --preview                       # design_unorg default
+  python review_resolver.py --run --source design_org       # design_org batches
+  python review_resolver.py --run --source loose_files      # loose files batches
+  python review_resolver.py --stats                         # show review counts
+  python review_resolver.py --batch N                       # only batch N
 """
 
 import argparse
@@ -31,13 +32,36 @@ _bootstrap()
 
 from openai import OpenAI
 
-# ── Config ────────────────────────────────────────────────────────────────────
+# ── Source configs ────────────────────────────────────────────────────────────
+SOURCE_CONFIGS = {
+    'design_unorg': {
+        'index_file':   Path('design_unorg_index.json'),
+        'batch_prefix': 'design_batch_',
+        'source_root':  Path(r'G:\Design Unorganized'),
+        'file_mode':    False,
+    },
+    'design_org': {
+        'index_file':   Path('design_org_index.json'),
+        'batch_prefix': 'design_org_batch_',
+        'source_root':  Path(r'G:\Design Organized'),
+        'file_mode':    False,
+    },
+    'loose_files': {
+        'index_file':   Path('loose_files_index.json'),
+        'batch_prefix': 'loose_batch_',
+        'source_root':  Path(r'G:\Design Unorganized'),
+        'file_mode':    True,
+    },
+}
+
+# ── Config (populated at runtime from --source) ───────────────────────────────
 RESULTS_DIR   = Path('classification_results')
-INDEX_FILE    = Path('design_unorg_index.json')
-DESIGN_ROOT   = Path(r'G:\Design Unorganized')
-BATCH_PREFIX  = 'design_batch_'
-BATCH_SIZE    = 30       # items per DeepSeek call
-CONF_THRESHOLD = 55      # confidence below this stays _Review
+INDEX_FILE    = SOURCE_CONFIGS['design_unorg']['index_file']
+DESIGN_ROOT   = SOURCE_CONFIGS['design_unorg']['source_root']
+BATCH_PREFIX  = SOURCE_CONFIGS['design_unorg']['batch_prefix']
+FILE_MODE     = False     # set True when source is loose_files
+BATCH_SIZE    = 30        # items per DeepSeek call
+CONF_THRESHOLD = 55       # confidence below this stays _Review
 API_BASE      = 'https://api.deepseek.com'
 MODEL         = 'deepseek-chat'
 
@@ -53,7 +77,7 @@ def get_api_key():
     return key
 
 # ── Category list ──────────────────────────────────────────────────────────────
-from classify_design import CATEGORIES, peek_extensions
+from classify_design import CATEGORIES, peek_extensions, peek_inside_zip
 CATEGORY_HINT = '\n'.join(f'  {c}' for c in CATEGORIES)
 
 # ── Index loading ──────────────────────────────────────────────────────────────
@@ -63,6 +87,7 @@ def load_index() -> dict[str, dict]:
     global _index_cache
     if _index_cache is None:
         items = json.load(open(INDEX_FILE, encoding='utf-8'))
+        # Key by name; for loose files, also key by path stem
         _index_cache = {item['name']: item for item in items}
     return _index_cache
 
@@ -272,15 +297,30 @@ def item_name(item: dict) -> str:
 
 
 def enrich_item(item: dict) -> dict:
-    """Add file hints to a _Review item by peeking inside its folder."""
+    """Add file hints to a _Review item by peeking inside its folder or file."""
+    from classify_design import peek_inside_zip
     name = item_name(item)
-    # Normalize to folder_name so downstream code is consistent
     item = dict(item)
     item['folder_name'] = name
-    path = DESIGN_ROOT / name
     exts, content_hints = [], []
-    if path.exists():
-        exts, content_hints = peek_extensions(str(path))
+
+    if FILE_MODE:
+        # Item is a file, not a directory
+        file_path = Path(item.get('path', '')) if item.get('path') else DESIGN_ROOT / (name + item.get('file_ext', ''))
+        if file_path.exists():
+            ext = file_path.suffix.lower()
+            exts = [ext]
+            # Peek inside archives for more hints
+            if ext in ('.zip', '.rar', '.7z'):
+                content_hints = peek_inside_zip(str(file_path))
+    else:
+        path = DESIGN_ROOT / name
+        if path.exists():
+            exts, content_hints = peek_extensions(str(path))
+        # Include legacy_category as a hint if present
+        if item.get('legacy_category'):
+            content_hints = [f"legacy: {item['legacy_category']}"] + content_hints
+
     item['exts'] = exts
     item['content_hints'] = content_hints
     return item
@@ -384,7 +424,17 @@ def main():
     ap.add_argument('--run',     action='store_true')
     ap.add_argument('--stats',   action='store_true')
     ap.add_argument('--batch',   type=int)
+    ap.add_argument('--source',  choices=list(SOURCE_CONFIGS.keys()), default='design_unorg',
+                    help='Which source batch files to operate on (default: design_unorg)')
     args = ap.parse_args()
+
+    # Apply source config to module globals
+    cfg = SOURCE_CONFIGS[args.source]
+    global INDEX_FILE, DESIGN_ROOT, BATCH_PREFIX, FILE_MODE
+    INDEX_FILE   = cfg['index_file']
+    DESIGN_ROOT  = cfg['source_root']
+    BATCH_PREFIX = cfg['batch_prefix']
+    FILE_MODE    = cfg['file_mode']
 
     if args.stats:
         cmd_stats()

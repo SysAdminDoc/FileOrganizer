@@ -1,0 +1,542 @@
+[
+  {
+    "name": "01_Job Fair Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Job Fair Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "01_Job Fair Flyer",
+    "_batch_index": 360
+  },
+  {
+    "name": "01_jueve_home",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Jueve Home",
+    "confidence": 70,
+    "notes": "PSD file, likely a web/home template",
+    "_source_name": "01_jueve_home",
+    "_batch_index": 361
+  },
+  {
+    "name": "01_Large",
+    "category": "Photoshop - Other",
+    "clean_name": "Large",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Large",
+    "_batch_index": 362
+  },
+  {
+    "name": "01_Large_Extrude",
+    "category": "Photoshop - Other",
+    "clean_name": "Large Extrude",
+    "confidence": 60,
+    "notes": "PSD file, likely a 3D extrusion effect",
+    "_source_name": "01_Large_Extrude",
+    "_batch_index": 363
+  },
+  {
+    "name": "01_Launch Screen",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Launch Screen",
+    "confidence": 80,
+    "notes": "PSD file, likely a mobile app launch screen template",
+    "_source_name": "01_Launch Screen",
+    "_batch_index": 364
+  },
+  {
+    "name": "01_Letterhead Template_Blue",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Letterhead Template Blue",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Letterhead Template'",
+    "_source_name": "01_Letterhead Template_Blue",
+    "_batch_index": 365
+  },
+  {
+    "name": "01_Letterhead Template_Blue_2",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Letterhead Template Blue 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Letterhead Template'",
+    "_source_name": "01_Letterhead Template_Blue_2",
+    "_batch_index": 366
+  },
+  {
+    "name": "01_Letterhead Template_Blue_3",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Letterhead Template Blue 3",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Letterhead Template'",
+    "_source_name": "01_Letterhead Template_Blue_3",
+    "_batch_index": 367
+  },
+  {
+    "name": "01_Letterhead_Blue",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Letterhead Blue",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Letterhead'",
+    "_source_name": "01_Letterhead_Blue",
+    "_batch_index": 368
+  },
+  {
+    "name": "01_Letterhead_Blue_2",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Letterhead Blue 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Letterhead'",
+    "_source_name": "01_Letterhead_Blue_2",
+    "_batch_index": 369
+  },
+  {
+    "name": "01_Letterhead_Blue_3",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Letterhead Blue 3",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Letterhead'",
+    "_source_name": "01_Letterhead_Blue_3",
+    "_batch_index": 370
+  },
+  {
+    "name": "01_Letterhead_Blue_4",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Letterhead Blue 4",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Letterhead'",
+    "_source_name": "01_Letterhead_Blue_4",
+    "_batch_index": 371
+  },
+  {
+    "name": "01_Letterhead_Template_Blue",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Letterhead Template Blue",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Letterhead Template'",
+    "_source_name": "01_Letterhead_Template_Blue",
+    "_batch_index": 372
+  },
+  {
+    "name": "01_Main Background_Light",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Main Background Light",
+    "confidence": 75,
+    "notes": "PSD file, likely a background texture",
+    "_source_name": "01_Main Background_Light",
+    "_batch_index": 373
+  },
+  {
+    "name": "01_March Madness Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "March Madness Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "01_March Madness Flyer",
+    "_batch_index": 374
+  },
+  {
+    "name": "01_monday",
+    "category": "Photoshop - Other",
+    "clean_name": "Monday",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_monday",
+    "_batch_index": 375
+  },
+  {
+    "name": "01_Orange Color_Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Orange Color Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "01_Orange Color_Flyer",
+    "_batch_index": 376
+  },
+  {
+    "name": "01_Orange Color_Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Orange Color Flyer 2",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "01_Orange Color_Flyer_2",
+    "_batch_index": 377
+  },
+  {
+    "name": "01_Orange Color_Flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Orange Color Flyer 3",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "01_Orange Color_Flyer_3",
+    "_batch_index": 378
+  },
+  {
+    "name": "01_Orange Color_Flyer_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Orange Color Flyer 6",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "01_Orange Color_Flyer_6",
+    "_batch_index": 379
+  },
+  {
+    "name": "01_Orange",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange",
+    "confidence": 60,
+    "notes": "PSD file, generic color name",
+    "_source_name": "01_Orange",
+    "_batch_index": 380
+  },
+  {
+    "name": "01_Orange_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange 2",
+    "confidence": 60,
+    "notes": "PSD file, generic color name",
+    "_source_name": "01_Orange_2",
+    "_batch_index": 381
+  },
+  {
+    "name": "01_Orange_3",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange 3",
+    "confidence": 60,
+    "notes": "PSD file, generic color name",
+    "_source_name": "01_Orange_3",
+    "_batch_index": 382
+  },
+  {
+    "name": "01_Orange_4",
+    "category": "Photoshop - Other",
+    "clean_name": "Orange 4",
+    "confidence": 60,
+    "notes": "PSD file, generic color name",
+    "_source_name": "01_Orange_4",
+    "_batch_index": 383
+  },
+  {
+    "name": "01_Out Side",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out Side",
+    "_batch_index": 384
+  },
+  {
+    "name": "01_out-side",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_out-side",
+    "_batch_index": 385
+  },
+  {
+    "name": "01_out-side_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 2",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_out-side_2",
+    "_batch_index": 386
+  },
+  {
+    "name": "01_out-side_3",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 3",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_out-side_3",
+    "_batch_index": 387
+  },
+  {
+    "name": "01_out-side_4",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 4",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_out-side_4",
+    "_batch_index": 388
+  },
+  {
+    "name": "01_Out_Side",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side",
+    "_batch_index": 389
+  },
+  {
+    "name": "01_Out_Side_10",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 10",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_10",
+    "_batch_index": 390
+  },
+  {
+    "name": "01_Out_Side_11",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 11",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_11",
+    "_batch_index": 391
+  },
+  {
+    "name": "01_Out_Side_12",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 12",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_12",
+    "_batch_index": 392
+  },
+  {
+    "name": "01_Out_Side_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 2",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_2",
+    "_batch_index": 393
+  },
+  {
+    "name": "01_Out_Side_3",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 3",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_3",
+    "_batch_index": 394
+  },
+  {
+    "name": "01_Out_Side_4",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 4",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_4",
+    "_batch_index": 395
+  },
+  {
+    "name": "01_Out_Side_5",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 5",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_5",
+    "_batch_index": 396
+  },
+  {
+    "name": "01_Out_Side_6",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 6",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_6",
+    "_batch_index": 397
+  },
+  {
+    "name": "01_Out_Side_7",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 7",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_7",
+    "_batch_index": 398
+  },
+  {
+    "name": "01_Out_Side_8",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 8",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_8",
+    "_batch_index": 399
+  },
+  {
+    "name": "01_Out_Side_9",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side 9",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Out_Side_9",
+    "_batch_index": 400
+  },
+  {
+    "name": "01_Out_Side_Landscape_Blue",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side Landscape Blue",
+    "confidence": 65,
+    "notes": "PSD file, likely a landscape template",
+    "_source_name": "01_Out_Side_Landscape_Blue",
+    "_batch_index": 401
+  },
+  {
+    "name": "01_Out_Side_Landscape_Green",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side Landscape Green",
+    "confidence": 65,
+    "notes": "PSD file, likely a landscape template",
+    "_source_name": "01_Out_Side_Landscape_Green",
+    "_batch_index": 402
+  },
+  {
+    "name": "01_Out_Side_Landscape_Orange",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side Landscape Orange",
+    "confidence": 65,
+    "notes": "PSD file, likely a landscape template",
+    "_source_name": "01_Out_Side_Landscape_Orange",
+    "_batch_index": 403
+  },
+  {
+    "name": "01_Out_Side_Landscape_Red",
+    "category": "Photoshop - Other",
+    "clean_name": "Out Side Landscape Red",
+    "confidence": 65,
+    "notes": "PSD file, likely a landscape template",
+    "_source_name": "01_Out_Side_Landscape_Red",
+    "_batch_index": 404
+  },
+  {
+    "name": "01_Outside",
+    "category": "Photoshop - Other",
+    "clean_name": "Outside",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Outside",
+    "_batch_index": 405
+  },
+  {
+    "name": "01_Overview",
+    "category": "Photoshop - Other",
+    "clean_name": "Overview",
+    "confidence": 60,
+    "notes": "PSD file, generic name",
+    "_source_name": "01_Overview",
+    "_batch_index": 406
+  },
+  {
+    "name": "01_phone_design",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Phone Design",
+    "confidence": 80,
+    "notes": "PSD file, name suggests phone mockup",
+    "_source_name": "01_phone_design",
+    "_batch_index": 407
+  },
+  {
+    "name": "01_Pipe Show Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Pipe Show Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'Flyer'",
+    "_source_name": "01_Pipe Show Flyer",
+    "_batch_index": 408
+  },
+  {
+    "name": "01_Presentation_Folder",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Presentation Folder",
+    "confidence": 85,
+    "notes": "PSD file, name suggests stationery item",
+    "_source_name": "01_Presentation_Folder",
+    "_batch_index": 409
+  },
+  {
+    "name": "01_Product flyers design",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Product Flyers Design",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'flyers'",
+    "_source_name": "01_Product flyers design",
+    "_batch_index": 410
+  },
+  {
+    "name": "01_Real estateflyer (1)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Real Estate Flyer",
+    "confidence": 95,
+    "notes": "PSD file, name includes 'flyer'",
+    "_source_name": "01_Real estateflyer (1)",
+    "_batch_index": 411
+  },
+  {
+    "name": "01_Resume Page One",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Resume Page One",
+    "confidence": 85,
+    "notes": "PSD file, resume template",
+    "_source_name": "01_Resume Page One",
+    "_batch_index": 412
+  },
+  {
+    "name": "01_Resume Page One_2",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Resume Page One 2",
+    "confidence": 85,
+    "notes": "PSD file, resume template",
+    "_source_name": "01_Resume Page One_2",
+    "_batch_index": 413
+  },
+  {
+    "name": "01_Sarashop",
+    "category": "Photoshop - Other",
+    "clean_name": "Sarashop",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "01_Sarashop",
+    "_batch_index": 414
+  },
+  {
+    "name": "01_Sarashop2",
+    "category": "Photoshop - Other",
+    "clean_name": "Sarashop 2",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "01_Sarashop2",
+    "_batch_index": 415
+  },
+  {
+    "name": "01_Sarashop3",
+    "category": "Photoshop - Other",
+    "clean_name": "Sarashop 3",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "01_Sarashop3",
+    "_batch_index": 416
+  },
+  {
+    "name": "01_Sarashop4",
+    "category": "Photoshop - Other",
+    "clean_name": "Sarashop 4",
+    "confidence": 60,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "01_Sarashop4",
+    "_batch_index": 417
+  },
+  {
+    "name": "01_splash",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Splash",
+    "confidence": 70,
+    "notes": "PSD file, likely a splash effect overlay",
+    "_source_name": "01_splash",
+    "_batch_index": 418
+  },
+  {
+    "name": "01_splash_2",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Splash 2",
+    "confidence": 70,
+    "notes": "PSD file, likely a splash effect overlay",
+    "_source_name": "01_splash_2",
+    "_batch_index": 419
+  }
+]
