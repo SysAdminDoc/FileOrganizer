@@ -26,9 +26,18 @@ from collections import Counter
 from typing import Optional
 
 # ── Config ────────────────────────────────────────────────────────────────────
-ORGANIZED     = Path(r'G:\Organized')
+ORGANIZED          = Path(r'G:\Organized')
+ORGANIZED_OVERFLOW = Path(r'I:\Organized')   # overflow destination when G:\ is low
 JOURNAL_FILE  = Path(__file__).parent / 'organize_moves.db'
 RESULTS_FILE  = Path(__file__).parent / 'fix_stock_ae_results.json'
+
+def _overflow_scan_dirs() -> list[Path]:
+    """Extra scan dirs from I:\\Organized if the overflow root exists."""
+    if not ORGANIZED_OVERFLOW.exists():
+        return []
+    names = ['Stock Footage - General', 'Stock Photos - General',
+             'Stock Music & Audio', 'Print - Other', 'Print - Flyers & Posters']
+    return [ORGANIZED_OVERFLOW / n for n in names if (ORGANIZED_OVERFLOW / n).exists()]
 
 # Non-AE destination directories to scan for misplaced AE templates
 DEFAULT_SCAN_DIRS = [
@@ -37,7 +46,7 @@ DEFAULT_SCAN_DIRS = [
     ORGANIZED / 'Stock Music & Audio',
     ORGANIZED / 'Print - Other',
     ORGANIZED / 'Print - Flyers & Posters',
-]
+] + _overflow_scan_dirs()
 
 AE_EXTENSIONS = {'.aep', '.aet', '.ffx', '.mogrt', '.aex'}
 

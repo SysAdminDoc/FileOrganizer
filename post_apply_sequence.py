@@ -30,15 +30,20 @@ REPO = Path(__file__).parent
 
 AE_APPLY_PID    = 22500  # Python ae apply (PID confirmed from WMI, robocopy child is 17596)
 PYTHON          = sys.executable
-ORGANIZED       = Path(r'G:\Organized')
+ORGANIZED          = Path(r'G:\Organized')
+ORGANIZED_OVERFLOW = Path(r'I:\Organized')   # overflow destination when G:\ is low
 LOOSE_INDEX     = REPO / 'loose_files_index.json'
 LOOSE_RESULTS   = REPO / 'classification_results'
 TOTAL_LOOSE_BATCHES = 326
 
 # Category directories that should be merged into canonical names.
+# Applied to BOTH organized roots if they exist.
 CATEGORY_MERGES = [
     ('After Effects - Titles & Typography', 'After Effects - Title & Typography'),
 ]
+
+def all_org_roots() -> list[Path]:
+    return [r for r in (ORGANIZED, ORGANIZED_OVERFLOW) if r.exists()]
 
 def is_pid_running(pid: int) -> bool:
     try:
@@ -112,30 +117,31 @@ def main():
         print('\n' + '='*62)
         print('  [Step 0] Merging variant category directories')
         print('='*62)
-        for src_name, dst_name in CATEGORY_MERGES:
-            src_dir = ORGANIZED / src_name
-            dst_dir = ORGANIZED / dst_name
-            if not src_dir.exists():
-                print(f'  [SKIP] {src_name} — not found')
-                continue
-            src_count = sum(1 for _ in src_dir.rglob('*') if _.is_file())
-            print(f'  Merging {src_name} ({src_count} files) -> {dst_name}')
-            if not args.dry_run:
-                dst_dir.mkdir(parents=True, exist_ok=True)
-                rc = subprocess.run([
-                    'robocopy', str(src_dir), str(dst_dir),
-                    '/E', '/MOVE', '/COPYALL', '/R:1', '/W:1', '/NP', '/NS', '/NC', '/NFL', '/NDL'
-                ]).returncode
-                if rc > 7:
-                    print(f'  [WARN] robocopy rc={rc} for {src_name}')
+        for root in all_org_roots():
+            for src_name, dst_name in CATEGORY_MERGES:
+                src_dir = root / src_name
+                dst_dir = root / dst_name
+                if not src_dir.exists():
+                    print(f'  [SKIP] {root.drive} {src_name} — not found')
+                    continue
+                src_count = sum(1 for _ in src_dir.rglob('*') if _.is_file())
+                print(f'  Merging [{root.drive}] {src_name} ({src_count} files) -> {dst_name}')
+                if not args.dry_run:
+                    dst_dir.mkdir(parents=True, exist_ok=True)
+                    rc = subprocess.run([
+                        'robocopy', str(src_dir), str(dst_dir),
+                        '/E', '/MOVE', '/COPYALL', '/R:1', '/W:1', '/NP', '/NS', '/NC', '/NFL', '/NDL'
+                    ]).returncode
+                    if rc > 7:
+                        print(f'  [WARN] robocopy rc={rc} for {src_name}')
+                    else:
+                        try:
+                            shutil.rmtree(str(src_dir))
+                            print(f'  -> merged and removed {root.drive} {src_name}')
+                        except Exception as e:
+                            print(f'  [WARN] Could not remove {src_name}: {e}')
                 else:
-                    try:
-                        shutil.rmtree(str(src_dir))
-                        print(f'  -> merged and removed {src_name}')
-                    except Exception as e:
-                        print(f'  [WARN] Could not remove {src_name}: {e}')
-            else:
-                print(f'  [DRY] Would robocopy /MOVE {src_name} -> {dst_name}')
+                    print(f'  [DRY] Would robocopy /MOVE [{root.drive}] {src_name} -> {dst_name}')
 
     # Define all steps
     steps = {
