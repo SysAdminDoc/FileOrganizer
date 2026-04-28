@@ -136,6 +136,19 @@ All notable changes to FileOrganizer will be documented in this file.
     `Unknown VH Template 4 (2)` → `Product Promo\Minimal Product Display`,
     `Warming Display` → `Slideshow\Leaves Relaxing Photo and Video Display`
 
+### Added (session 2026-04-28 unorg reclassify)
+- `reclassify_unorg.py` — Post-processing corrector for 88 I:\Unorganized items that were incorrectly
+  routed through the AE apply pipeline into After Effects category folders.
+  - Root cause: `org_index.json` (AE pipeline) included 88 stock/design folders from I:\Unorganized
+    (Shutterstock EPS/JPG, PSD bundles, ZIP packs) — these are NOT AE templates.
+  - `--status`: shows all I:\Unorganized moves from `organize_moves.db` journal grouped by AE category.
+  - `--analyze`: inspects each moved folder's extension profile; rule-based classification for clear
+    cases (PSD-heavy → Photoshop, JPG/EPS-heavy → Stock Photos, etc.); DeepSeek for ambiguous/ZIP-only.
+    Has-AE-files guard: folders with `.aep`/`.mogrt`/`.ffx` files are kept in AE category unchanged.
+  - `--apply [--dry-run]`: moves each reclassified item to correct `G:\Organized\<new_category>` dir;
+    journals each correction back to `organize_moves.db`; `safe_dest()` handles name collisions.
+  - `unorg_reclassify_results.json` — audit record of all analyze recommendations.
+
 ### Known Issues (as of 2026-04-28)
 - 5 trailing-space/long-path errors in `organize_errors_ae.json` — all 5 source paths now GONE from I:\;
   pending `--retry-errors --source ae` after AE apply (PID 22500) completes (will auto-skip + clear).
@@ -146,7 +159,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - `_Review\Orphaned Documentation\` — 4 detached doc items, no parent packages.
 - `G:\Design Organized\Design Elements\` — 3,219 loose files (10.52 GB): PSD/JPG/ZIP at category level
   not indexed by design_org_index.json. Need separate classify + apply pass.
-- loose_files classify: ~200/326 batches remaining — pipeline running (PID 22848).
+- loose_files classify: 142/326 batches done — pipeline still running (PID 22848).
+- I:\Unorganized reclassification: 88 stock/design items routed into AE categories by AE pipeline;
+  `reclassify_unorg.py --analyze` + `--apply` ready to run after AE apply (PID 22500) exits.
 
 
 
