@@ -1,0 +1,257 @@
+#!/usr/bin/env python3
+r"""
+fix_duplicates.py -- Merge collision-named folders in G:\Organized back into originals.
+
+When organize_run.py creates "Name (1)" because "Name" already exists (e.g., from
+a prior design_org pipeline run), this tool:
+  1. Robocopy-merges the collision into the original (union of all files)
+  2. Removes the now-empty collision folder
+  3. Updates organize_moves.db to point collision entries to the original path
+
+Usage:
+    python fix_duplicates.py --scan              # report all collision pairs
+    python fix_duplicates.py --analyze           # show what would change
+    python fix_duplicates.py --apply             # merge + clean (logs everything)
+    python fix_duplicates.py --apply --dry-run   # show without changing
+"""
+
+import os, re, sys, json, sqlite3, shutil, subprocess, argparse
+from pathlib import Path
+from collections import defaultdict
+
+REPO      = Path(__file__).parent
+DB        = REPO / 'organize_moves.db'
+ORGANIZED = Path(r'G:\Organized')
+LOG_FILE  = REPO / 'fix_duplicates_log.json'
+
+def log(msg: str) -> None:
+    print(msg)
+
+def robocopy_merge(src: Path, dst: Path, dry_run: bool = False) -> tuple[int, list[str]]:
+    """
+    Copy all files from src into dst using robocopy.
+    Returns (exit_code, error_lines).
+    Exit codes 0-7 are success (0=no files, 1=files copied, 3=extra+files, etc.)
+    """
+    if dry_run:
+        return 0, []
+    cmd = [
+        'robocopy',
+        str(src), str(dst),
+        '/E',          # copy all subdirs including empty
+        '/COPYALL',    # preserve timestamps/attrs
+        '/R:1', '/W:1',
+        '/NP',         # no progress percentage
+        '/NS', '/NC',  # no size/class in output
+        '/NFL', '/NDL' # no file/dir lists — just summary
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    errors = [l for l in result.stderr.splitlines() if l.strip()]
+    return result.returncode, errors
+
+
+def rmtree_safe(path: Path, dry_run: bool = False) -> bool:
+    """Remove a directory tree. Returns True on success."""
+    if dry_run:
+        return True
+    try:
+        shutil.rmtree(str(path))
+        return True
+    except Exception as e:
+        log(f'  ERROR rmtree {path}: {e}')
+        return False
+
+
+def find_collisions() -> dict[str, list[dict]]:
+    r"""
+    Scan G:\Organized for folders matching 'Name (N)' pattern.
+    Returns a dict: original_path -> list of collision infos sorted by N ascending.
+    """
+    collisions: dict[str, list[dict]] = defaultdict(list)
+
+    for cat_dir in sorted(ORGANIZED.iterdir()):
+        if not cat_dir.is_dir() or cat_dir.name.startswith('_'):
+            continue
+        for item_dir in sorted(cat_dir.iterdir()):
+            if not item_dir.is_dir():
+                continue
+            m = re.match(r'^(.+) \((\d+)\)$', item_dir.name)
+            if not m:
+                continue
+            base = m.group(1)
+            n    = int(m.group(2))
+            orig = cat_dir / base
+            collisions[str(orig)].append({
+                'path':  str(item_dir),
+                'n':     n,
+                'files': sum(1 for _ in item_dir.rglob('*') if _.is_file()),
+            })
+
+    # Sort each collision list by N
+    for k in collisions:
+        collisions[k].sort(key=lambda x: x['n'])
+
+    return dict(collisions)
+
+
+def get_orig_file_count(orig_path: str) -> int:
+    p = Path(orig_path)
+    if not p.exists():
+        return -1
+    return sum(1 for _ in p.rglob('*') if _.is_file())
+
+
+def cmd_scan() -> None:
+    collisions = find_collisions()
+    total_coll  = sum(len(v) for v in collisions.values())
+    total_files = sum(c['files'] for v in collisions.values() for c in v)
+
+    print(f'Collision pairs:        {len(collisions)}')
+    print(f'Total collision dirs:   {total_coll}')
+    print(f'Total files in colls:   {total_files:,}')
+
+    # Breakdown by category
+    by_cat: dict[str, int] = defaultdict(int)
+    for orig_path, colls in collisions.items():
+        cat = Path(orig_path).parent.name
+        by_cat[cat] += len(colls)
+
+    print('\nBy category (top 15):')
+    for cat, n in sorted(by_cat.items(), key=lambda x: -x[1])[:15]:
+        print(f'  {n:4d}  {cat}')
+
+
+def cmd_analyze(limit: int = 20) -> None:
+    collisions = find_collisions()
+    print(f'Analyzing {len(collisions)} collision pairs...\n')
+    shown = 0
+    for orig_path, colls in sorted(collisions.items()):
+        if shown >= limit:
+            print(f'  ... {len(collisions) - shown} more pairs not shown.')
+            break
+        orig = Path(orig_path)
+        orig_files = get_orig_file_count(orig_path)
+        status = 'PRESENT' if orig_files >= 0 else 'MISSING'
+        print(f'  [{status}] {orig.parent.name}/{orig.name}')
+        print(f'    Original: {orig_files} files')
+        for c in colls:
+            print(f'    Collision ({c["n"]}): {c["files"]} files  -> {Path(c["path"]).name}')
+        shown += 1
+
+
+def cmd_apply(dry_run: bool = False) -> None:
+    collisions = find_collisions()
+    con = sqlite3.connect(str(DB))
+
+    results = []
+    merged = 0
+    deleted = 0
+    skipped = 0
+    db_updates = 0
+    errors = 0
+
+    tag = '[DRY]' if dry_run else '[APPLY]'
+
+    for orig_path, colls in sorted(collisions.items()):
+        orig = Path(orig_path)
+        orig_files = get_orig_file_count(orig_path)
+
+        for coll_info in colls:
+            coll      = Path(coll_info['path'])
+            coll_n    = coll_info['n']
+            coll_files = coll_info['files']
+
+            # Case 1: Original is MISSING — rename collision to original name
+            if orig_files < 0:
+                log(f'{tag} RENAME  {coll.name} -> {orig.name}  ({coll_files} files)')
+                if not dry_run:
+                    try:
+                        coll.rename(orig)
+                        # Update DB entry
+                        con.execute(
+                            'UPDATE moves SET dest = ? WHERE dest = ?',
+                            (str(orig), str(coll))
+                        )
+                        con.commit()
+                        db_updates += 1
+                        orig_files = coll_files  # now exists
+                        merged += 1
+                    except Exception as e:
+                        log(f'  ERROR rename: {e}')
+                        errors += 1
+                results.append({'action': 'rename', 'from': str(coll), 'to': str(orig)})
+                continue
+
+            # Case 2: Both exist — robocopy merge collision into original, then delete collision
+            log(f'{tag} MERGE   {coll.name}  ({coll_files} files) -> {orig.name} ({orig_files} files)')
+
+            rc, err_lines = robocopy_merge(coll, orig, dry_run=dry_run)
+            if rc > 7:
+                log(f'  ROBOCOPY ERROR rc={rc}: {err_lines}')
+                errors += 1
+                results.append({'action': 'merge_failed', 'src': str(coll), 'dst': str(orig), 'rc': rc})
+                skipped += 1
+                continue
+
+            # Remove collision
+            removed = rmtree_safe(coll, dry_run=dry_run)
+            if removed:
+                deleted += 1
+                if not dry_run:
+                    # Update DB: redirect collision's dest to original
+                    con.execute(
+                        'UPDATE moves SET dest = ? WHERE dest = ?',
+                        (str(orig), str(coll))
+                    )
+                    con.commit()
+                    db_updates += 1
+                # Recount orig files after merge
+                orig_files = get_orig_file_count(orig_path)
+                log(f'  -> merged, original now has {orig_files} files')
+                merged += 1
+            else:
+                errors += 1
+
+            results.append({
+                'action': 'merge',
+                'collision': str(coll),
+                'original': str(orig),
+                'coll_files': coll_files,
+                'orig_files_after': orig_files if not dry_run else '?',
+                'rc': rc,
+            })
+
+    con.close()
+
+    # Save results
+    if not dry_run:
+        LOG_FILE.write_text(json.dumps(results, indent=2), encoding='utf-8')
+        log(f'\nResults saved to {LOG_FILE.name}')
+
+    print(f'\n{"[DRY RUN] " if dry_run else ""}Summary:')
+    print(f'  Merged/renamed:  {merged}')
+    print(f'  Deleted colls:   {deleted}')
+    print(f'  DB updated:      {db_updates}')
+    print(f'  Skipped/errors:  {errors}')
+
+
+def main():
+    ap = argparse.ArgumentParser(description='Merge collision-named duplicate folders')
+    ap.add_argument('--scan',    action='store_true', help='Report all collision pairs')
+    ap.add_argument('--analyze', action='store_true', help='Show what would be merged')
+    ap.add_argument('--apply',   action='store_true', help='Perform merge + cleanup')
+    ap.add_argument('--dry-run', action='store_true', help='With --apply: show without changing')
+    args = ap.parse_args()
+
+    if args.scan:
+        cmd_scan()
+    elif args.analyze:
+        cmd_analyze()
+    elif args.apply:
+        cmd_apply(dry_run=args.dry_run)
+    else:
+        ap.print_help()
+
+
+if __name__ == '__main__':
+    main()
