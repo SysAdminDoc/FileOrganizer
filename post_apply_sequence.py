@@ -142,7 +142,7 @@ def main():
         5: ('Fix stock AE items',       None),  # conditional — checked below
     }
 
-    selected = [args.step] if args.step else sorted(steps.keys())
+    selected = [args.step] if args.step is not None and args.step > 0 else sorted(steps.keys())
     if args.skip:
         selected = [s for s in selected if s != args.skip]
 
