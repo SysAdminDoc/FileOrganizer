@@ -96,6 +96,22 @@ def category_quick_counts() -> Counter:
     return counts
 
 
+def find_collision_dirs() -> list[Path]:
+    """Fast scan for top-level collision directories named 'Name (N)'."""
+    collisions: list[Path] = []
+    for root in all_org_roots():
+        for cat_dir in sorted(root.iterdir()):
+            if not cat_dir.is_dir():
+                continue
+            try:
+                for item_dir in sorted(cat_dir.iterdir()):
+                    if item_dir.is_dir() and COLLISION_PAT.match(item_dir.name):
+                        collisions.append(item_dir)
+            except PermissionError:
+                continue
+    return collisions
+
+
 def detect_issues(path: Path) -> list[str]:
     """Return list of issue tags for a file path."""
     issues = []
@@ -121,21 +137,21 @@ def report_summary(category_counts: Counter, output: list) -> None:
         output.append(f'{cat:<50} {n:>7,}\n')
 
 
-def report_collisions(collision_files: list[Path], output: list) -> None:
-    output.append('\n## Remaining Collision-Suffix Files\n')
-    if not collision_files:
+def report_collisions(collision_paths: list[Path], output: list) -> None:
+    output.append('\n## Remaining Collision-Suffix Directories\n')
+    if not collision_paths:
         output.append('None — all (N) collisions have been resolved. ✓\n')
         return
     by_cat: dict[str, list] = defaultdict(list)
     roots = all_org_roots()
-    for f in collision_files:
+    for f in collision_paths:
         cat = '?'
         for root in roots:
             if f.is_relative_to(root):
                 cat = f.parent.relative_to(root).parts[0]
                 break
         by_cat[cat].append(f.name)
-    output.append(f'{len(collision_files)} collision files remaining across {len(by_cat)} categories.\n')
+    output.append(f'{len(collision_paths)} collision directories remaining across {len(by_cat)} categories.\n')
     output.append('Run: python fix_duplicates.py --apply  to resolve.\n\n')
     for cat, names in sorted(by_cat.items(), key=lambda x: -len(x[1])):
         output.append(f'  [{len(names)}] {cat}\n')
@@ -177,15 +193,16 @@ def report_orphans(db_dest_set: set, disk_cat_dirs: dict, output: list) -> None:
 
 def report_review(output: list) -> None:
     output.append('\n## _Review Breakdown\n')
-    review_dir = ORGANIZED / '_Review'
-    if not review_dir.exists():
+    review_dirs = [root / '_Review' for root in all_org_roots() if (root / '_Review').exists()]
+    if not review_dirs:
         output.append('_Review directory does not exist — no items queued for review. ✓\n')
         return
-    cats = {}
-    for d in sorted(review_dir.iterdir()):
-        if d.is_dir():
-            count = sum(1 for _ in d.rglob('*') if _.is_file())
-            cats[d.name] = count
+    cats: Counter = Counter()
+    for review_dir in review_dirs:
+        for d in sorted(review_dir.iterdir()):
+            if d.is_dir():
+                count = sum(1 for _ in d.rglob('*') if _.is_file())
+                cats[d.name] += count
     if not cats:
         output.append('_Review is empty. ✓\n')
         return
@@ -245,6 +262,33 @@ def main():
         output = [f'# FileOrganizer — Category Summary\n',
                   f'Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n\n']
         report_summary(category_counts, output)
+        report_text = ''.join(output)
+        for line in report_text.splitlines():
+            safe_print(line)
+        if args.export:
+            Path(args.export).write_text(report_text, encoding='utf-8')
+            print(f'\nReport saved to: {args.export}')
+        return
+
+    if args.collisions and not run_all:
+        print('Scanning G:\\Organized for collision directories (targeted)...')
+        collision_dirs = find_collision_dirs()
+        output = [f'# FileOrganizer — Collision Report\n',
+                  f'Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n\n']
+        report_collisions(collision_dirs, output)
+        report_text = ''.join(output)
+        for line in report_text.splitlines():
+            safe_print(line)
+        if args.export:
+            Path(args.export).write_text(report_text, encoding='utf-8')
+            print(f'\nReport saved to: {args.export}')
+        return
+
+    if args.review and not run_all:
+        print('Scanning G:\\Organized _Review directories (targeted)...')
+        output = [f'# FileOrganizer — Review Queue Report\n',
+                  f'Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n\n']
+        report_review(output)
         report_text = ''.join(output)
         for line in report_text.splitlines():
             safe_print(line)

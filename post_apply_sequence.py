@@ -208,6 +208,8 @@ def main():
                         try:
                             shutil.rmtree(str(src_dir))
                             print(f'  -> merged and removed {root.drive} {src_name}')
+                        except FileNotFoundError:
+                            print(f'  -> merged and source already removed {root.drive} {src_name}')
                         except Exception as e:
                             print(f'  [WARN] Could not remove {src_name}: {e}')
                 else:

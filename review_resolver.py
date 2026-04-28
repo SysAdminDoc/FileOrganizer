@@ -79,6 +79,38 @@ def get_api_key():
 # ── Category list ──────────────────────────────────────────────────────────────
 from classify_design import CATEGORIES, peek_extensions, peek_inside_zip
 CATEGORY_HINT = '\n'.join(f'  {c}' for c in CATEGORIES)
+_CATEGORY_SET = set(CATEGORIES)
+
+# Phantom categories that prior runs hallucinated; map to canonical equivalents
+# so already-written batch JSONs and any future model lapses get repaired
+# automatically before they hit the disk.
+PHANTOM_TO_CANONICAL = {
+    'Photoshop - Print & Stationery':       'Print - Business Cards & Stationery',
+    'Photoshop - Social Media Templates':   'Print - Social Media Graphics',
+    'Photoshop - Templates & Mockups':      'Photoshop - Smart Objects & Templates',
+    'Illustrator - Logos & Branding':       'Illustrator - Vectors & Assets',
+    'After Effects - Backgrounds':          'After Effects - News & Broadcast',
+    'After Effects - Elements':             'After Effects - Motion Graphics Pack',
+    'After Effects - Film Grain & Overlays':'Cinematic FX & Overlays',
+    'After Effects - Overlay & Transition': 'After Effects - Transition Pack',
+    'After Effects - Motion Graphics':      'After Effects - Motion Graphics Pack',
+    'After Effects - Promo & Advertising':  'After Effects - Product Promo',
+    'After Effects - Photo Slideshow':      'After Effects - Slideshow',
+    'After Effects - CINEPUNCH.V20':        'After Effects - Motion Graphics Pack',
+    'Cinematic FX':                         'Cinematic FX & Overlays',
+}
+
+def canonicalize(category: str) -> str:
+    """Resolve a possibly-phantom category to its canonical taxonomy name."""
+    cat = (category or '').strip()
+    if cat in _CATEGORY_SET:
+        return cat
+    if cat in PHANTOM_TO_CANONICAL:
+        return PHANTOM_TO_CANONICAL[cat]
+    # "Web Template - <subcat>" → "Web Template" (only top-level is canonical)
+    if cat.startswith('Web Template -'):
+        return 'Web Template'
+    return cat  # leave unknown values alone — the caller decides whether to reject
 
 # ── Index loading ──────────────────────────────────────────────────────────────
 _index_cache: dict[str, dict] | None = None
@@ -152,7 +184,7 @@ Content keyword rules (apply to hints and folder names):
 21. "texture", "textures", "pattern" in hint → Photoshop - Patterns & Textures
 22. "action", "actions", "photoshop action" in hint → Photoshop - Actions & Presets
 23. "mockup", "mockups" in hint → Photoshop - Mockups
-24. "motion graphics" hint → Motion Graphics - Multi-Tool Pack
+24. "motion graphics" hint → After Effects - Motion Graphics Pack
 25. "brush", "brushes", "pencil", "ink" in hint (without Procreate) → Photoshop - Brushes
 26. "How To Use Actions" or "How To Install Actions" in hint → Photoshop - Actions & Presets (confidence 85)
 27. "How To Use Presets" in hint → Lightroom - Presets & Profiles (confidence 80)
@@ -189,12 +221,12 @@ Videohive ID rules:
 53. Hint text contains "typeface" or "The typeface" or "font" → Fonts & Typography (confidence 95)
 54. "memleak", "memleak_" — memory leak / profiling tool → Software & Utilities (confidence 85)
 55. Hint "Uploaded by INTRO HD Website" → this is an INTROHD.NET item; classify by name if possible, else After Effects - Other
-56. "mMovements" → After Effects - Motion Graphics (motion movement pack name pattern, confidence 65)
+56. "mMovements" → After Effects - Motion Graphics Pack (motion movement pack name pattern, confidence 65)
 57. "misc" folder with only image hints and no other context → _Review (genuinely ambiguous)
 58. Hints contain "MOGRTs" or "MOGRT" → After Effects - Motion Graphics Pack (confidence 90)
-59. Hints contain "Film Mattes" + After Effects context → After Effects - Film Grain & Overlays (confidence 82)
-60. "Nostalgia" name + After Effects/Film Mattes hints → After Effects - Film Grain & Overlays (confidence 78)
-61. Folder named "Need Sorted" — classify by its hints content: Photoshop Action hints → Photoshop - Actions & Presets; Flyer hints → Photoshop - Templates & Mockups
+59. Hints contain "Film Mattes" + After Effects context → Cinematic FX & Overlays (confidence 82)
+60. "Nostalgia" name + After Effects/Film Mattes hints → Cinematic FX & Overlays (confidence 78)
+61. Folder named "Need Sorted" — classify by its hints content: Photoshop Action hints → Photoshop - Actions & Presets; Flyer hints → Photoshop - Smart Objects & Templates
 62. "Parallel v1.1.1" with hints 'fonts', 'icons', 'custom', 'dialog' → UI Resources & Icon Sets (confidence 72)
 63. Hint text contains a filename ending in ".ttf", ".otf", ".woff", ".woff2" → Fonts & Typography (confidence 95)
 64. "negoziodifoto" in name → Stock Photos - General (confidence 60)
@@ -202,9 +234,9 @@ Videohive ID rules:
 66. Any folder name starting with "photo-gallery" or "Photo-gallery" → After Effects - Photo Album & Gallery (confidence 90)
 67. Any folder name starting with "photo-memories" → After Effects - Slideshow (confidence 88)
 68. Any folder name starting with "photo-album" or "photo-pile-collage" → After Effects - Slideshow (confidence 87)
-69. Folder name contains "Payhip" or "Payhip –" → classify by content hints; "overlays"/"particles"/"transitions" → After Effects - Overlay & Transition; "SFX"/"overlay pack" → Cinematic FX (confidence 85)
-70. Hint contains "BAT OVERLAY" or "BAT SFX" → Cinematic FX (bat/Halloween overlay pack, confidence 82)
-71. Hint contains "overlays" + "particles" + "transitions" → After Effects - Overlay & Transition (confidence 85)
+69. Folder name contains "Payhip" or "Payhip –" → classify by content hints; "overlays"/"particles"/"transitions" → After Effects - Transition Pack; "SFX"/"overlay pack" → Cinematic FX & Overlays (confidence 85)
+70. Hint contains "BAT OVERLAY" or "BAT SFX" → Cinematic FX & Overlays (bat/Halloween overlay pack, confidence 82)
+71. Hint contains "overlays" + "particles" + "transitions" → After Effects - Transition Pack (confidence 85)
 72. Folder named "Place Holder" or "PlaceHolder" with hints "PSD Files" or "Preview" → Photoshop - Smart Objects & Templates (confidence 75)
 73. Folder named "PNG" or "PNGs" with icon-pack hints (e.g. "IconShock", "Icons_", "Icon Pack", "Pixy.Dust", "Junior") → UI Resources & Icon Sets (confidence 90)
 74. Hints containing multiple "Icons_NNNN" or "IconShock" or "RealVista" patterns → UI Resources & Icon Sets (confidence 92)
@@ -212,9 +244,9 @@ Videohive ID rules:
 Items with only numbered JPGs/PNGs inside zip and no other hints → Stock Photos - General (confidence 55)
 
 CONFIRMED ground-truth overrides (verified by inspecting archive contents):
-75. Folder name starts with "3P95ESD" → Photoshop - Print & Stationery (confirmed: "Vintage Blue Floral Wedding Invitation Set" PSD files, confidence 97)
-76. Folder name starts with "5VAEUJ4" → Photoshop - Print & Stationery (confirmed: ban.psd, menu.psd, rsvp.psd — wedding/event stationery, confidence 97)
-77. Folder name starts with "FZ3Y3N9" → Photoshop - Social Media Templates (confirmed: SALE.psd promotional template, confidence 97)
+75. Folder name starts with "3P95ESD" → Print - Business Cards & Stationery (confirmed: "Vintage Blue Floral Wedding Invitation Set" PSD files, confidence 97)
+76. Folder name starts with "5VAEUJ4" → Print - Business Cards & Stationery (confirmed: ban.psd, menu.psd, rsvp.psd — wedding/event stationery, confidence 97)
+77. Folder name starts with "FZ3Y3N9" → Print - Social Media Graphics (confirmed: SALE.psd promotional template, confidence 97)
 78. Folder name starts with "HFU549S" → Fonts & Typography (confirmed: Districtside graffiti OTF/TTF/WOFF font, confidence 99)
 79. Folder name starts with "NGHQJCU" → Fonts & Typography (confirmed: Bambosa modern sans-serif OTF/TTF, confidence 99)
 80. Folder name starts with "P-7854reaCP" → Software & Utilities (confirmed: reaConverter Pro 7.854 portable app, confidence 99)
@@ -225,8 +257,8 @@ CONFIRMED ground-truth overrides (verified by inspecting archive contents):
 85. Folder name starts with "MDrtsMvfx" → Cinematic FX & Overlays (confirmed: mDirts Dust PNG overlay files, confidence 97)
 86. Folder name is "gleri6" → Software & Utilities (confirmed: Glary Utilities 6.20 Portable .exe, confidence 99)
 87. Folder name starts with "mCuisine" → Software & Utilities (confirmed: macOS .pkg app installer, confidence 98)
-88. Folder name is "Evolution" with .aep hint in Bonus → After Effects - Elements (confirmed: Design Templates 1-10.aep, confidence 95)
-89. Folder name is "Dealova" → Photoshop - Print & Stationery (confirmed: Office XML color-scheme bonus files + JPG previews, invitation/stationery design set, confidence 87)
+88. Folder name is "Evolution" with .aep hint in Bonus → After Effects - Motion Graphics Pack (confirmed: Design Templates 1-10.aep, confidence 95)
+89. Folder name is "Dealova" → Print - Business Cards & Stationery (confirmed: Office XML color-scheme bonus files + JPG previews, invitation/stationery design set, confidence 87)
 90. Folder contains only sequentially numbered JPEG/JPG files (e.g. "632 (1).jpg", "970 (1).jpg") with no other file types → Stock Photos - General (confidence 72)
 91. Folder name is "Documentation" → _Review (confidence 30) — it is a documentation/help folder, not a design asset
 92. Folder name contains "Help File" → _Review (confidence 30) — it is a help document, not a creative asset
@@ -234,8 +266,8 @@ CONFIRMED ground-truth overrides (verified by inspecting archive contents):
 94. Folder name is "Reach" with .jsxbin hint → Plugins & Extensions (confirmed: Reach.jsxbin = Adobe ExtendScript binary/plugin, confidence 97)
 95. Folder name starts with "graphicriver-37791226" → Photoshop - Actions & Presets (confirmed: Magical Cartoon Art Photoshop Action .atn files, confidence 99)
 96. Folder name starts with "SRBSA8N" → Fonts & Typography (confirmed: Querygrand condensed bold sans OTF/TTF/WOFF, confidence 99)
-97. Folder name starts with "studio-" + Videohive ID and hint "Virtual Studio" or "Multi Virtual" → After Effects - Backgrounds (virtual studio backdrop template, confidence 90)
-98. Folder name starts with "storyboard-" + Videohive ID and hint "Sneaker Logo" → Illustrator - Logos & Branding (logo asset, confidence 85)
+97. Folder name starts with "studio-" + Videohive ID and hint "Virtual Studio" or "Multi Virtual" → After Effects - News & Broadcast (virtual studio backdrop template, confidence 90)
+98. Folder name starts with "storyboard-" + Videohive ID and hint "Sneaker Logo" → Illustrator - Vectors & Assets (logo asset, confidence 85)
 99. Folder name "Stratify" or "StyleX" or "Shifter" or "Shortcakes" with version number → Software & Utilities (versioned GUI apps, confidence 90)
 100. Folder name is "subway" with no hints → _Review (confidence 30, genuinely ambiguous without hints)
 101. Folder name is "subway" and internal .aep found → After Effects - Other (confirmed: Subway AE template with textures + tutorial MP4s, confidence 92)
@@ -359,7 +391,8 @@ def resolve_batch(batch_num: int, dry_run: bool) -> tuple[int, int]:
             cat = api_item.get('category', '_Review')
             conf = api_item.get('confidence', 0)
 
-            if cat not in ('_Review', 'Review') and conf >= CONF_THRESHOLD:
+            cat = canonicalize(cat)
+            if cat not in ('_Review', 'Review') and conf >= CONF_THRESHOLD and cat in _CATEGORY_SET:
                 folder_name = item_name(results[orig_idx])
                 print(f'  [RESOLVED +{conf}%] {folder_name[:50]} -> {cat}')
                 resolved_count += 1

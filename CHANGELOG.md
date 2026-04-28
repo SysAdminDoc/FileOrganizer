@@ -4,6 +4,84 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
+### Audit (session 2026-04-28 — phantom-category cleanup)
+
+A full project audit uncovered three source-code bugs that produced
+non-canonical "phantom" category folders and a fourth oversight that left
+the I:\Organized legacy library un-reclassified. The on-disk damage at
+audit time:
+
+- **G:\Organized**: 13 phantom top-level dirs (57 items)
+  - `After Effects - Promo & Advertising` (2 items, from `fix_stock_ae_items.py`)
+  - `After Effects - CINEPUNCH.V20`, `After Effects - Photo Slideshow` (3 items, from `merge_stock.py` fallback)
+  - 10x `Web Template - <subcat>` (52 items, from review_resolver bad rules)
+- **I:\Organized**: 253 phantom top-level dirs (~11,400+ items in just the 19
+  largest), all leftover from the pre-existing legacy library that Phase 4
+  never reclassified into the canonical taxonomy.
+- **fix_duplicates.py** had only logged 2 of 1,229+ collision pairs — the
+  prior session's apply was interrupted before completion.
+
+### Fixed (session 2026-04-28 — phantom categories)
+
+- `fix_stock_ae_items.py` — keyword rule `(['promo', 'advertising', 'ad '],
+  'After Effects - Promo & Advertising')` produced a phantom category not in
+  `classify_design.CATEGORIES`. Merged into the legitimate
+  `After Effects - Product Promo` rule.
+- `fix_stock_ae_items.py` — `cmd_apply()` now uses `organize_run.robust_move`
+  + `strip_trailing_spaces` instead of bare `shutil.move`, gaining
+  `\\?\` long-path support and trailing-space safety on cross-drive moves.
+- `merge_stock.py` — AE Organized fallback `f"After Effects - {sub.name}"`
+  invented phantom categories from arbitrary subdirectory names. Replaced
+  with a strict `AE_ORGANIZED_REMAP` allowlist plus
+  `AE_ORGANIZED_FALLBACK = "After Effects - Other"`. Added entries for
+  Slideshows, Intros & Openers, Transitions, Wedding & Events, Templates,
+  Logo Reveals so common legacy names now round-trip cleanly.
+- `review_resolver.py` — SYSTEM_PROMPT contained 11 ground-truth rules
+  pointing to non-existent categories (`Photoshop - Print & Stationery`,
+  `Photoshop - Social Media Templates`, `Illustrator - Logos & Branding`,
+  `After Effects - Backgrounds`, `After Effects - Elements`,
+  `After Effects - Film Grain & Overlays`, `After Effects - Overlay & Transition`,
+  `After Effects - Motion Graphics`, `Photoshop - Templates & Mockups`,
+  `Cinematic FX`, `Motion Graphics - Multi-Tool Pack` mapping). DeepSeek would
+  have faithfully returned these names on every re-resolved batch. All
+  rewritten to canonical taxonomy entries.
+- `review_resolver.py` — added defensive `canonicalize()` + `_CATEGORY_SET`
+  validator. Any category from DeepSeek that isn't in the canonical set or
+  the explicit phantom→canonical map is rejected and the item stays in
+  `_Review` (instead of silently writing a new phantom into batch JSON).
+  `Web Template - <subcat>` collapses to `Web Template`.
+- `organize_run.py` — `CATEGORY_ALIASES` expanded by ~190 entries covering
+  every phantom found at audit time: AE phantoms (`After Effects - Slideshows`,
+  `After Effects - Logo Reveals`, `After Effects - Intros & Openers`, etc.),
+  Photoshop/Illustrator phantoms, the entire I:\Organized legacy hierarchy
+  (Flyers & Print, Resume & CV, Logo & Identity, holiday/event/industry
+  buckets, mockup variants, etc.), and a `_web_template_collapse()` helper
+  that folds `Web Template - <subcat>` into the canonical `Web Template`.
+
+### Added (session 2026-04-28 — phantom categories)
+
+- `fix_phantom_categories.py` — top-level migration tool. Walks every
+  non-canonical dir under G:\Organized and I:\Organized, looks each up in
+  the expanded `CATEGORY_ALIASES`, and either (a) `robocopy /E /MOVE /256
+  /COPY:DAT` merges it into the canonical destination or (b) removes the
+  empty stub. Writes an audit log to `fix_phantom_categories_log.json`.
+  CLI: `--scan`, `--apply [--dry-run]`, `--root G:|I:|all`.
+
+### Documented (session 2026-04-28 — audit findings)
+
+- I:\Organized legacy reclassification (Phase 4) was never executed. The
+  pre-existing 18,742-asset library is still in old folder names. Audit
+  decision: do not bulk-migrate via aliases (too coarse for AE/Photoshop
+  decisions); instead, run a future `build_source_index.py --source
+  i_organized_legacy` pass with the existing folder name as
+  `legacy_category` hint, then route through the normal classify_design
+  pipeline. Logged to ROADMAP.md as Phase 4.
+- `fix_duplicates.py` interrupted-run hazard: the script writes its log
+  file only at the end of `cmd_apply`. If the process is killed mid-run,
+  any merges it did complete are still on disk but unrecorded. Future
+  enhancement: write log incrementally (every N merges).
+
+
 ### Added
 - `build_source_index.py` — index builder for additional source directories
   - `--source design_org` → walks G:\Design Organized, captures `legacy_category` (parent folder name)
@@ -80,6 +158,18 @@ All notable changes to FileOrganizer will be documented in this file.
     `I:\Organized\After Effects - Titles & Typography` -> `I:\Organized\After Effects - Title & Typography`.
   - Emergency stock migrations had completed by the restart check; `G:\` free space had recovered
     to roughly `129.5 GB` and `I:\` free space was roughly `2301.3 GB`.
+
+### Fixed (session 2026-04-28 post-apply follow-up)
+- `fix_duplicates.py` — Windows cleanup hardening after live step-5 failure:
+  - `log()` now uses CP1252-safe console output so garbled/trailing-space paths cannot crash the
+    dedupe pass while reporting an error.
+  - `robocopy_merge()` and the new purge helper decode subprocess output with replacement, avoiding
+    secondary Unicode decode failures on odd filenames.
+  - `rmtree_safe()` now treats already-missing collision folders as success and falls back to
+    `robocopy EMPTY -> collision /MIR` before a second delete attempt for directories that contain
+    trailing-space or non-standard filenames that `shutil.rmtree()` cannot remove directly.
+- `post_apply_sequence.py` — step 0 now treats the post-`/MOVE` source-already-gone case as a clean
+  success instead of emitting a misleading warning.
 
 ### Fixed (session 2026-04-28)
 - `organize_run.py` — `_Review-CategoryName` flat folder bug: `sanitize()` was stripping the

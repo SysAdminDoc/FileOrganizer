@@ -22,10 +22,16 @@ from collections import defaultdict
 REPO      = Path(__file__).parent
 DB        = REPO / 'organize_moves.db'
 ORGANIZED = Path(r'G:\Organized')
+ORGANIZED_OVERFLOW = Path(r'I:\Organized')
 LOG_FILE  = REPO / 'fix_duplicates_log.json'
+EMPTY_DIR = REPO / '.robocopy-empty'
+
+def all_org_roots() -> list[Path]:
+    return [r for r in (ORGANIZED, ORGANIZED_OVERFLOW) if r.exists()]
 
 def log(msg: str) -> None:
-    print(msg)
+    safe = msg.encode('cp1252', errors='replace').decode('cp1252')
+    print(safe)
 
 def robocopy_merge(src: Path, dst: Path, dry_run: bool = False) -> tuple[int, list[str]]:
     """
@@ -45,7 +51,29 @@ def robocopy_merge(src: Path, dst: Path, dry_run: bool = False) -> tuple[int, li
         '/NS', '/NC',  # no size/class in output
         '/NFL', '/NDL' # no file/dir lists — just summary
     ]
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, capture_output=True, text=True, errors='replace')
+    errors = [l for l in result.stderr.splitlines() if l.strip()]
+    return result.returncode, errors
+
+
+def robocopy_purge(path: Path, dry_run: bool = False) -> tuple[int, list[str]]:
+    """
+    Mirror an empty directory into `path` to delete troublesome contents that
+    shutil.rmtree may not handle cleanly on Windows (trailing spaces, odd Unicode).
+    """
+    if dry_run:
+        return 0, []
+    EMPTY_DIR.mkdir(exist_ok=True)
+    cmd = [
+        'robocopy',
+        str(EMPTY_DIR), str(path),
+        '/MIR',
+        '/R:1', '/W:1',
+        '/NP',
+        '/NS', '/NC',
+        '/NFL', '/NDL',
+    ]
+    result = subprocess.run(cmd, capture_output=True, text=True, errors='replace')
     errors = [l for l in result.stderr.splitlines() if l.strip()]
     return result.returncode, errors
 
@@ -54,38 +82,54 @@ def rmtree_safe(path: Path, dry_run: bool = False) -> bool:
     """Remove a directory tree. Returns True on success."""
     if dry_run:
         return True
+    if not path.exists():
+        return True
     try:
         shutil.rmtree(str(path))
         return True
     except Exception as e:
-        log(f'  ERROR rmtree {path}: {e}')
-        return False
+        log(f'  WARN rmtree {path}: {e}')
+        rc, err_lines = robocopy_purge(path, dry_run=dry_run)
+        if rc > 7:
+            log(f'  ERROR robocopy purge {path} rc={rc}: {err_lines}')
+            return False
+        try:
+            shutil.rmtree(str(path))
+            return True
+        except FileNotFoundError:
+            return True
+        except Exception as e2:
+            if not path.exists():
+                return True
+            log(f'  ERROR rmtree after purge {path}: {e2}')
+            return False
 
 
 def find_collisions() -> dict[str, list[dict]]:
     r"""
-    Scan G:\Organized for folders matching 'Name (N)' pattern.
+    Scan all organized roots for folders matching 'Name (N)' pattern.
     Returns a dict: original_path -> list of collision infos sorted by N ascending.
     """
     collisions: dict[str, list[dict]] = defaultdict(list)
 
-    for cat_dir in sorted(ORGANIZED.iterdir()):
-        if not cat_dir.is_dir() or cat_dir.name.startswith('_'):
-            continue
-        for item_dir in sorted(cat_dir.iterdir()):
-            if not item_dir.is_dir():
+    for root in all_org_roots():
+        for cat_dir in sorted(root.iterdir()):
+            if not cat_dir.is_dir() or cat_dir.name.startswith('_'):
                 continue
-            m = re.match(r'^(.+) \((\d+)\)$', item_dir.name)
-            if not m:
-                continue
-            base = m.group(1)
-            n    = int(m.group(2))
-            orig = cat_dir / base
-            collisions[str(orig)].append({
-                'path':  str(item_dir),
-                'n':     n,
-                'files': sum(1 for _ in item_dir.rglob('*') if _.is_file()),
-            })
+            for item_dir in sorted(cat_dir.iterdir()):
+                if not item_dir.is_dir():
+                    continue
+                m = re.match(r'^(.+) \((\d+)\)$', item_dir.name)
+                if not m:
+                    continue
+                base = m.group(1)
+                n    = int(m.group(2))
+                orig = cat_dir / base
+                collisions[str(orig)].append({
+                    'path':  str(item_dir),
+                    'n':     n,
+                    'files': sum(1 for _ in item_dir.rglob('*') if _.is_file()),
+                })
 
     # Sort each collision list by N
     for k in collisions:
