@@ -66,6 +66,8 @@ CATEGORY_ALIASES = {
     'Design Tools & Resources':         'Plugins & Extensions',
     'Audio Resources':                  'Stock Music & Audio',
     'Video Editing - General':          'After Effects - Other',
+    # G:\Stock bucket category — maps to general stock footage
+    'Stock Footage & Photos':           'Stock Footage - General',
 }
 
 def normalize_category(cat: str) -> str:
