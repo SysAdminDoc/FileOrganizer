@@ -94,6 +94,10 @@ CATEGORIES = [
     "Illustrator - Vectors & Assets",
     "Illustrator - Other",
 
+    # ── Procreate ─────────────────────────────────────────────────────────────
+    "Procreate - Brushes & Stamps",
+    "Procreate - Templates & Canvases",
+
     # ── Color Grading ─────────────────────────────────────────────────────────
     "Color Grading & LUTs",           # standalone .cube/.3dl/.look packs
     "Lightroom - Presets & Profiles",
@@ -134,9 +138,12 @@ CATEGORIES = [
     "Stock Footage - General",
     "Stock Footage - Nature & Landscape",
     "Stock Footage - People & Lifestyle",
+    "Stock Footage - Timelapse",
     "Stock Music & Audio",
     "Sound Effects & SFX",
+    "Stock Photos - Food & Drink",
     "Stock Photos - General",
+    "Stock Photos - Nature & Outdoors",
 
     # ── Video & Film Tools ────────────────────────────────────────────────────
     "Video Editing - General",        # misc video tools/packs not fitting above
@@ -145,6 +152,12 @@ CATEGORIES = [
 
     # ── Web ───────────────────────────────────────────────────────────────────
     "Web Template",                   # HTML/CSS/JS site templates
+
+    # ── UI / Icons ────────────────────────────────────────────────────────────
+    "UI Resources & Icon Sets",       # .ico packs, .iconpackage, UI kits, app icon sets
+
+    # ── Software & Utilities ──────────────────────────────────────────────────
+    "Software & Utilities",           # non-design software (apps, tools, scripts) that landed here by mistake
 
     # ── Education ────────────────────────────────────────────────────────────
     "Tutorial & Education",           # course materials, tutorial projects
@@ -167,22 +180,40 @@ def batch_file(n: int) -> Path:
 def already_done(n: int) -> bool:
     return batch_file(n).exists()
 
+_JUNK_STEM_RE = re.compile(
+    r'(?:INTRO-HD\.NET|AIDOWNLOAD\.NET|aidownload\.net|ShareAE\.com|'
+    r'share\.ae|GFXDRUG\.COM|freegfx|graphicux)',
+    re.IGNORECASE
+)
+_DESIGN_EXTS = frozenset([
+    '.aep', '.psd', '.ai', '.eps', '.mogrt', '.prproj',
+    '.rar', '.zip', '.7z', '.mov', '.mp4', '.lut', '.cube',
+    '.otf', '.ttf', '.woff',
+])
+
 def peek_inside_zip(zip_path: str) -> str:
-    """Return the first .aep filename found inside a zip (without extracting)."""
+    """Return the most informative name found inside a zip (without extracting).
+    Priority: .aep/.prproj/.psd stem > top-level folder name > empty string."""
     try:
         import zipfile
         with zipfile.ZipFile(zip_path, 'r') as zf:
-            for name in zf.namelist():
-                if name.lower().endswith('.aep'):
-                    return Path(name).stem
-            # Fallback: return the top-level folder name if it's informative
+            names = zf.namelist()
+            # Priority 1: project files with informative stems
+            for name in names:
+                low = name.lower()
+                if any(low.endswith(e) for e in ('.aep', '.prproj', '.psd', '.ai')):
+                    stem = Path(name).stem
+                    if len(stem) > 4 and not _JUNK_STEM_RE.search(stem):
+                        return stem
+            # Priority 2: top-level folder name if informative
             tops = set()
-            for name in zf.namelist():
+            for name in names:
                 parts = name.split('/')
                 if parts[0]:
                     tops.add(parts[0])
-            for t in tops:
-                if not re.match(r'^\d+[-_]INTRO', t, re.IGNORECASE) and len(t) > 4:
+            best = sorted(tops, key=len, reverse=True)[:3]
+            for t in best:
+                if not _JUNK_STEM_RE.search(t) and len(t) > 4:
                     return t
     except Exception:
         pass
@@ -190,46 +221,74 @@ def peek_inside_zip(zip_path: str) -> str:
 
 
 def peek_extensions(folder_path: str, max_files: int = 40) -> tuple[list[str], list[str]]:
-    """Return (extensions, sample_filenames) from the top level of the folder.
-    For folders with generic/numeric names, the filenames reveal the actual content."""
-    exts = set()
-    filenames = []
+    """Return (extensions, sample_filenames) from the folder.
+    Surfaces subdirectory names when they're more informative than the parent."""
+    exts: set[str] = set()
+    filenames: list[str] = []
+    folder_stem = Path(folder_path).name.lower().rstrip()
+
+    def is_informative(name: str) -> bool:
+        stem = re.sub(r'\.part\d+$', '', Path(name).stem, flags=re.IGNORECASE)
+        if stem.lower().rstrip() == folder_stem:
+            return False
+        if _JUNK_STEM_RE.search(stem):
+            return False
+        if len(stem.strip()) <= 4:
+            return False
+        return True
+
     try:
         entries = list(os.scandir(folder_path))
+
         for entry in entries:
             if entry.is_file():
                 ext = Path(entry.name).suffix.lower()
                 if ext:
                     exts.add(ext)
-                # Capture archive and media filenames (they reveal content)
-                if any(entry.name.lower().endswith(s) for s in
-                       ('.rar','.zip','.7z','.part1.rar','.mov','.mp4','.aep','.psd','.ai')):
-                    # For a single zip matching the folder name (INTRO-HD.NET pattern),
-                    # peek inside for the .aep filename
-                    if entry.name.lower().endswith('.zip'):
-                        inner_name = peek_inside_zip(entry.path)
-                        if inner_name and not re.match(r'^\d+[-_]INTRO', inner_name, re.IGNORECASE):
-                            filenames.append(inner_name)
+                if any(entry.name.lower().endswith(s) for s in _DESIGN_EXTS):
+                    if entry.name.lower().endswith(('.zip', '.rar', '.7z')):
+                        inner = peek_inside_zip(entry.path)
+                        if inner and is_informative(inner):
+                            filenames.append(inner)
                             continue
-                    # Strip common junk suffixes from the stem for readability
-                    stem = Path(entry.name).stem
-                    stem = re.sub(r'\.part\d+$', '', stem, flags=re.IGNORECASE)
-                    # Skip stems that are just the folder name (no extra info)
-                    if stem.lower().rstrip() != Path(folder_path).name.lower().rstrip():
-                        filenames.append(stem)
+                    if is_informative(entry.name):
+                        filenames.append(Path(entry.name).stem)
 
-        if not exts:
-            # go one level deeper if top is empty
-            for entry in entries:
-                if entry.is_dir():
+            elif entry.is_dir():
+                # Surface informative subdirectory names as hints
+                if is_informative(entry.name):
+                    # Strip junk domain suffix from subdir name for cleaner hint
+                    clean = _JUNK_STEM_RE.sub('', entry.name).strip(' .-_')
+                    clean = re.sub(r'^\d+[-_]', '', clean).strip(' .-_')
+                    if clean and len(clean) > 4:
+                        filenames.append(clean)
+                # Always descend one level for extensions + L2 subdir names
+                try:
                     for sub in os.scandir(entry.path):
                         if sub.is_file():
                             ext = Path(sub.name).suffix.lower()
                             if ext:
                                 exts.add(ext)
+                            # Surface informative zip/archive names at L2
+                            if sub.name.lower().endswith(('.zip', '.rar', '.7z')):
+                                inner = peek_inside_zip(sub.path)
+                                if inner and is_informative(inner):
+                                    filenames.append(inner)
+                        elif sub.is_dir():
+                            # L2 subdir names (e.g., "wonderful-pencils-for-procreate-Aidownload.net"
+                            # hidden two levels deep inside a double-nested piracy folder)
+                            if is_informative(sub.name) and sub.name.lower() != entry.name.lower():
+                                clean = _JUNK_STEM_RE.sub('', sub.name).strip(' .-_')
+                                clean = re.sub(r'^\d+[-_]', '', clean).strip(' .-_')
+                                if clean and len(clean) > 4:
+                                    filenames.append(clean)
+                except (PermissionError, OSError):
+                    pass
+
     except (PermissionError, OSError):
         pass
-    return sorted(exts)[:12], filenames[:4]  # cap both
+
+    return sorted(exts)[:12], filenames[:5]
 
 
 _PIRACY_DOMAIN_RE = re.compile(
