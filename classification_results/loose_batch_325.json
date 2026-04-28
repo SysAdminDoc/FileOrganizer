@@ -1,0 +1,542 @@
+[
+  {
+    "name": "wufeng",
+    "category": "Photoshop - Other",
+    "clean_name": "wufeng",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "wufeng",
+    "_batch_index": 19440
+  },
+  {
+    "name": "X",
+    "category": "Photoshop - Other",
+    "clean_name": "X",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "X",
+    "_batch_index": 19441
+  },
+  {
+    "name": "X1",
+    "category": "Photoshop - Other",
+    "clean_name": "X1",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "X1",
+    "_batch_index": 19442
+  },
+  {
+    "name": "x1_2",
+    "category": "Photoshop - Other",
+    "clean_name": "x1_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "x1_2",
+    "_batch_index": 19443
+  },
+  {
+    "name": "X2",
+    "category": "Photoshop - Other",
+    "clean_name": "X2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "X2",
+    "_batch_index": 19444
+  },
+  {
+    "name": "x2_2",
+    "category": "Photoshop - Other",
+    "clean_name": "x2_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "x2_2",
+    "_batch_index": 19445
+  },
+  {
+    "name": "xin0",
+    "category": "Photoshop - Other",
+    "clean_name": "xin0",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin0",
+    "_batch_index": 19446
+  },
+  {
+    "name": "xin00",
+    "category": "Photoshop - Other",
+    "clean_name": "xin00",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin00",
+    "_batch_index": 19447
+  },
+  {
+    "name": "xin00_2",
+    "category": "Photoshop - Other",
+    "clean_name": "xin00_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin00_2",
+    "_batch_index": 19448
+  },
+  {
+    "name": "xin00_3",
+    "category": "Photoshop - Other",
+    "clean_name": "xin00_3",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin00_3",
+    "_batch_index": 19449
+  },
+  {
+    "name": "xin0_2",
+    "category": "Photoshop - Other",
+    "clean_name": "xin0_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin0_2",
+    "_batch_index": 19450
+  },
+  {
+    "name": "xin1",
+    "category": "Photoshop - Other",
+    "clean_name": "xin1",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin1",
+    "_batch_index": 19451
+  },
+  {
+    "name": "xin1_2",
+    "category": "Photoshop - Other",
+    "clean_name": "xin1_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin1_2",
+    "_batch_index": 19452
+  },
+  {
+    "name": "xin2",
+    "category": "Photoshop - Other",
+    "clean_name": "xin2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin2",
+    "_batch_index": 19453
+  },
+  {
+    "name": "xin2_2",
+    "category": "Photoshop - Other",
+    "clean_name": "xin2_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin2_2",
+    "_batch_index": 19454
+  },
+  {
+    "name": "xin3",
+    "category": "Photoshop - Other",
+    "clean_name": "xin3",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin3",
+    "_batch_index": 19455
+  },
+  {
+    "name": "xin3_2",
+    "category": "Photoshop - Other",
+    "clean_name": "xin3_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin3_2",
+    "_batch_index": 19456
+  },
+  {
+    "name": "xin4",
+    "category": "Photoshop - Other",
+    "clean_name": "xin4",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin4",
+    "_batch_index": 19457
+  },
+  {
+    "name": "xin4_2",
+    "category": "Photoshop - Other",
+    "clean_name": "xin4_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin4_2",
+    "_batch_index": 19458
+  },
+  {
+    "name": "xin5",
+    "category": "Photoshop - Other",
+    "clean_name": "xin5",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin5",
+    "_batch_index": 19459
+  },
+  {
+    "name": "xin6",
+    "category": "Photoshop - Other",
+    "clean_name": "xin6",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin6",
+    "_batch_index": 19460
+  },
+  {
+    "name": "xin6_2",
+    "category": "Photoshop - Other",
+    "clean_name": "xin6_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "xin6_2",
+    "_batch_index": 19461
+  },
+  {
+    "name": "XIX Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "XIX Flyer Template",
+    "confidence": 90,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "XIX Flyer Template",
+    "_batch_index": 19462
+  },
+  {
+    "name": "Xobritt",
+    "category": "Photoshop - Other",
+    "clean_name": "Xobritt",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Xobritt ",
+    "_batch_index": 19463
+  },
+  {
+    "name": "XTREM Sounds Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "XTREM Sounds Flyer Template",
+    "confidence": 90,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "XTREM Sounds Flyer Template",
+    "_batch_index": 19464
+  },
+  {
+    "name": "Y",
+    "category": "Photoshop - Other",
+    "clean_name": "Y",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Y",
+    "_batch_index": 19465
+  },
+  {
+    "name": "Y1",
+    "category": "Photoshop - Other",
+    "clean_name": "Y1",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Y1",
+    "_batch_index": 19466
+  },
+  {
+    "name": "y1_2",
+    "category": "Photoshop - Other",
+    "clean_name": "y1_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "y1_2",
+    "_batch_index": 19467
+  },
+  {
+    "name": "Y2",
+    "category": "Photoshop - Other",
+    "clean_name": "Y2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Y2",
+    "_batch_index": 19468
+  },
+  {
+    "name": "y2_2",
+    "category": "Photoshop - Other",
+    "clean_name": "y2_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "y2_2",
+    "_batch_index": 19469
+  },
+  {
+    "name": "Yay_Samples",
+    "category": "Photoshop - Other",
+    "clean_name": "Yay_Samples",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Yay_Samples",
+    "_batch_index": 19470
+  },
+  {
+    "name": "YELLOW",
+    "category": "Photoshop - Other",
+    "clean_name": "YELLOW",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "YELLOW",
+    "_batch_index": 19471
+  },
+  {
+    "name": "Yoga Clipart PNG, Woman Abstract Clipart 9235862",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Yoga Clipart PNG, Woman Abstract Clipart",
+    "confidence": 85,
+    "notes": "Contains .ai and .eps vector files, clipart",
+    "_source_name": "Yoga Clipart PNG, Woman Abstract Clipart 9235862",
+    "_batch_index": 19472
+  },
+  {
+    "name": "Yoga Flyer Template-20-01",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Yoga Flyer Template 20-01",
+    "confidence": 90,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "Yoga Flyer Template-20-01",
+    "_batch_index": 19473
+  },
+  {
+    "name": "Yoga Flyer Template-20-02",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Yoga Flyer Template 20-02",
+    "confidence": 90,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "Yoga Flyer Template-20-02",
+    "_batch_index": 19474
+  },
+  {
+    "name": "Yoga Flyer Template-21-01",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Yoga Flyer Template 21-01",
+    "confidence": 90,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "Yoga Flyer Template-21-01",
+    "_batch_index": 19475
+  },
+  {
+    "name": "Yoga Flyer Template-21-02",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Yoga Flyer Template 21-02",
+    "confidence": 90,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "Yoga Flyer Template-21-02",
+    "_batch_index": 19476
+  },
+  {
+    "name": "Yoga Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Yoga Flyer",
+    "confidence": 90,
+    "notes": "Flyer in .psd format",
+    "_source_name": "Yoga Flyer",
+    "_batch_index": 19477
+  },
+  {
+    "name": "YOGA_ACTIVITY_print_ad_MAIN_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "YOGA ACTIVITY print ad MAIN 2",
+    "confidence": 85,
+    "notes": "Print ad in .psd format",
+    "_source_name": "YOGA_ACTIVITY_print_ad_MAIN_2",
+    "_batch_index": 19478
+  },
+  {
+    "name": "YooTheme - Yoo Widgetkit v3.0.10 - Toolkit For Joomla",
+    "category": "Web Template",
+    "clean_name": "YooTheme Yoo Widgetkit v3.0.10 Toolkit For Joomla",
+    "confidence": 90,
+    "notes": "Joomla widget toolkit, contains .svg files",
+    "_source_name": "YooTheme - Yoo Widgetkit v3.0.10 - Toolkit For Joomla",
+    "_batch_index": 19479
+  },
+  {
+    "name": "YooTheme Pro v2.4.1 - Joomla Theme & Page Builder",
+    "category": "Web Template",
+    "clean_name": "YooTheme Pro v2.4.1 Joomla Theme & Page Builder",
+    "confidence": 90,
+    "notes": "Joomla theme and page builder, contains .svg and font files",
+    "_source_name": "YooTheme Pro v2.4.1 - Joomla Theme & Page Builder",
+    "_batch_index": 19480
+  },
+  {
+    "name": "you_win_after_bonus",
+    "category": "Photoshop - Other",
+    "clean_name": "you win after bonus",
+    "confidence": 60,
+    "notes": "Only .psd file, likely game asset but unclear",
+    "_source_name": "you_win_after_bonus",
+    "_batch_index": 19481
+  },
+  {
+    "name": "you_win_coins",
+    "category": "Photoshop - Other",
+    "clean_name": "you win coins",
+    "confidence": 60,
+    "notes": "Only .psd file, likely game asset but unclear",
+    "_source_name": "you_win_coins",
+    "_batch_index": 19482
+  },
+  {
+    "name": "you_win_wheel",
+    "category": "Photoshop - Other",
+    "clean_name": "you win wheel",
+    "confidence": 60,
+    "notes": "Only .psd file, likely game asset but unclear",
+    "_source_name": "you_win_wheel",
+    "_batch_index": 19483
+  },
+  {
+    "name": "Young Rich & Flirtatious",
+    "category": "Photoshop - Other",
+    "clean_name": "Young Rich & Flirtatious",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Young Rich & Flirtatious",
+    "_batch_index": 19484
+  },
+  {
+    "name": "Your amazing dream house Not Image",
+    "category": "Photoshop - Other",
+    "clean_name": "Your amazing dream house Not Image",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Your amazing dream house Not Image",
+    "_batch_index": 19485
+  },
+  {
+    "name": "Your Design Solution Flyer Not Image",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Your Design Solution Flyer",
+    "confidence": 85,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "Your Design Solution Flyer Not Image",
+    "_batch_index": 19486
+  },
+  {
+    "name": "youth_day",
+    "category": "Photoshop - Other",
+    "clean_name": "youth day",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "youth_day",
+    "_batch_index": 19487
+  },
+  {
+    "name": "Youtube Subscribe",
+    "category": "After Effects - Social Media",
+    "clean_name": "Youtube Subscribe",
+    "confidence": 85,
+    "notes": ".aep file for YouTube subscribe animation",
+    "_source_name": "Youtube Subscribe",
+    "_batch_index": 19488
+  },
+  {
+    "name": "Z",
+    "category": "Photoshop - Other",
+    "clean_name": "Z",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Z",
+    "_batch_index": 19489
+  },
+  {
+    "name": "Z1",
+    "category": "Photoshop - Other",
+    "clean_name": "Z1",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Z1",
+    "_batch_index": 19490
+  },
+  {
+    "name": "z1_2",
+    "category": "Photoshop - Other",
+    "clean_name": "z1_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "z1_2",
+    "_batch_index": 19491
+  },
+  {
+    "name": "Z2",
+    "category": "Photoshop - Other",
+    "clean_name": "Z2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "Z2",
+    "_batch_index": 19492
+  },
+  {
+    "name": "z2_2",
+    "category": "Photoshop - Other",
+    "clean_name": "z2_2",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "z2_2",
+    "_batch_index": 19493
+  },
+  {
+    "name": "Zen Sound Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Zen Sound Flyer Template",
+    "confidence": 90,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "Zen Sound Flyer Template",
+    "_batch_index": 19494
+  },
+  {
+    "name": "Zender Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Zender Flyer Template",
+    "confidence": 90,
+    "notes": "Flyer template in .psd format",
+    "_source_name": "Zender Flyer Template",
+    "_batch_index": 19495
+  },
+  {
+    "name": "Zenith - Business Template Prensentation",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Zenith Business Template Presentation",
+    "confidence": 85,
+    "notes": "Business presentation template, likely print",
+    "_source_name": "Zenith - Business Template Prensentation",
+    "_batch_index": 19496
+  },
+  {
+    "name": "Zero Geometric Sans Typeface",
+    "category": "Fonts & Typography",
+    "clean_name": "Zero Geometric Sans Typeface",
+    "confidence": 95,
+    "notes": "Contains .ttf font files",
+    "_source_name": "Zero Geometric Sans Typeface",
+    "_batch_index": 19497
+  },
+  {
+    "name": "zigzagSample",
+    "category": "Photoshop - Other",
+    "clean_name": "zigzagSample",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "zigzagSample",
+    "_batch_index": 19498
+  },
+  {
+    "name": "zombie_madness",
+    "category": "Photoshop - Other",
+    "clean_name": "zombie madness",
+    "confidence": 60,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "zombie_madness",
+    "_batch_index": 19499
+  }
+]

@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Smuges 01",
+    "category": "Photoshop - Other",
+    "clean_name": "Smuges 01",
+    "confidence": 80,
+    "notes": "PSD file, likely a graphic or texture, no specific subcategory matches",
+    "_source_name": "Smuges 01",
+    "_batch_index": 18360
+  },
+  {
+    "name": "Smuges 02",
+    "category": "Photoshop - Other",
+    "clean_name": "Smuges 02",
+    "confidence": 80,
+    "notes": "PSD file, likely a graphic or texture, no specific subcategory matches",
+    "_source_name": "Smuges 02",
+    "_batch_index": 18361
+  },
+  {
+    "name": "Snake Skin",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Snake Skin",
+    "confidence": 90,
+    "notes": "PSD file, name implies a texture pattern",
+    "_source_name": "Snake Skin",
+    "_batch_index": 18362
+  },
+  {
+    "name": "snap_chat_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Snap Chat Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "snap_chat_flyer",
+    "_batch_index": 18363
+  },
+  {
+    "name": "snap_date_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Snap Date 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer or poster",
+    "_source_name": "snap_date_2",
+    "_batch_index": 18364
+  },
+  {
+    "name": "SnapOrbital - Notes for LearnDash v1.6.7 - Take Notes on Any LearnDash Course, Lesson or Topic",
+    "category": "Plugins & Extensions",
+    "clean_name": "SnapOrbital Notes for LearnDash",
+    "confidence": 95,
+    "notes": "WordPress plugin for LearnDash, contains SVG and font files",
+    "_source_name": "SnapOrbital - Notes for LearnDash v1.6.7 - Take Notes on Any LearnDash Course, Lesson or Topic",
+    "_batch_index": 18365
+  },
+  {
+    "name": "SnapOrbital - Private Sessions for LearnDash v1.2.2 - Private 1 on 1 Coaching Sessions for LearnDash",
+    "category": "Plugins & Extensions",
+    "clean_name": "SnapOrbital Private Sessions for LearnDash",
+    "confidence": 95,
+    "notes": "WordPress plugin for LearnDash",
+    "_source_name": "SnapOrbital - Private Sessions for LearnDash v1.2.2 - Private 1 on 1 Coaching Sessions for LearnDash",
+    "_batch_index": 18366
+  },
+  {
+    "name": "SnapOrbital - Visual Customizer for LearnDash v2.3.6.1 - Enhance and Customize the LearnDash Design",
+    "category": "Plugins & Extensions",
+    "clean_name": "SnapOrbital Visual Customizer for LearnDash",
+    "confidence": 95,
+    "notes": "WordPress plugin for LearnDash, contains font files",
+    "_source_name": "SnapOrbital - Visual Customizer for LearnDash v2.3.6.1 - Enhance and Customize the LearnDash Design",
+    "_batch_index": 18367
+  },
+  {
+    "name": "Snow_globe-02",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snow Globe 02",
+    "confidence": 90,
+    "notes": "EPS vector file",
+    "_source_name": "Snow_globe-02",
+    "_batch_index": 18368
+  },
+  {
+    "name": "Snow_globe_gift",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snow Globe Gift",
+    "confidence": 90,
+    "notes": "EPS vector file",
+    "_source_name": "Snow_globe_gift",
+    "_batch_index": 18369
+  },
+  {
+    "name": "Snow_globe_gift_1",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snow Globe Gift 1",
+    "confidence": 90,
+    "notes": "EPS vector file",
+    "_source_name": "Snow_globe_gift_1",
+    "_batch_index": 18370
+  },
+  {
+    "name": "Snow_globe_sale_1",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snow Globe Sale 1",
+    "confidence": 90,
+    "notes": "EPS vector file",
+    "_source_name": "Snow_globe_sale_1",
+    "_batch_index": 18371
+  },
+  {
+    "name": "Snowflakes_PSD_Graphics",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Snowflakes PSD Graphics",
+    "confidence": 90,
+    "notes": "PSD file, snowflake graphics likely for textures",
+    "_source_name": "Snowflakes_PSD_Graphics",
+    "_batch_index": 18372
+  },
+  {
+    "name": "SnowGlobe PSD",
+    "category": "Photoshop - Other",
+    "clean_name": "SnowGlobe PSD",
+    "confidence": 85,
+    "notes": "PSD file, likely a graphic design element",
+    "_source_name": "SnowGlobe PSD",
+    "_batch_index": 18373
+  },
+  {
+    "name": "snowman_reindeer_renna_jerry_santa_claus_balls_xmas_isolated_facce_face",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Snowman Reindeer Santa Claus Christmas Faces",
+    "confidence": 90,
+    "notes": "EPS vector file with Christmas characters",
+    "_source_name": "snowman_reindeer_renna_jerry_santa_claus_balls_xmas_isolated_facce_face",
+    "_batch_index": 18374
+  },
+  {
+    "name": "SOFT_UI",
+    "category": "Photoshop - Other",
+    "clean_name": "Soft UI",
+    "confidence": 80,
+    "notes": "PSD file, likely a UI design element",
+    "_source_name": "SOFT_UI",
+    "_batch_index": 18375
+  },
+  {
+    "name": "Softarchive Wallpapers Part 56",
+    "category": "Stock Photos - General",
+    "clean_name": "Softarchive Wallpapers Part 56",
+    "confidence": 85,
+    "notes": "Wallpaper collection, likely stock photos",
+    "_source_name": "Softarchive Wallpapers Part 56",
+    "_batch_index": 18376
+  },
+  {
+    "name": "Softarchive Wallpapers Part 57",
+    "category": "Stock Photos - General",
+    "clean_name": "Softarchive Wallpapers Part 57",
+    "confidence": 85,
+    "notes": "Wallpaper collection, likely stock photos",
+    "_source_name": "Softarchive Wallpapers Part 57",
+    "_batch_index": 18377
+  },
+  {
+    "name": "Softie Cover Letter",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Softie Cover Letter",
+    "confidence": 90,
+    "notes": "PSD cover letter template",
+    "_source_name": "Softie Cover Letter",
+    "_batch_index": 18378
+  },
+  {
+    "name": "Solitude Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Solitude Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Solitude Flyer Template",
+    "_batch_index": 18379
+  },
+  {
+    "name": "Some Bunny Loves You",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Some Bunny Loves You",
+    "confidence": 90,
+    "notes": "EPS vector file, likely a quote design",
+    "_source_name": "Some Bunny Loves You",
+    "_batch_index": 18380
+  },
+  {
+    "name": "some call it chaos we call it family",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Some Call It Chaos We Call It Family",
+    "confidence": 90,
+    "notes": "EPS vector file, quote design",
+    "_source_name": "some call it chaos we call it family",
+    "_batch_index": 18381
+  },
+  {
+    "name": "some come to sit and think others come to just poop and shine",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Some Come to Sit and Think Others Come to Just Poop and Shine",
+    "confidence": 90,
+    "notes": "EPS vector file, humorous quote design",
+    "_source_name": "some come to sit and think others come to just poop and shine",
+    "_batch_index": 18382
+  },
+  {
+    "name": "sometimes it's better to  let the silence do the talking",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sometimes It's Better to Let the Silence Do the Talking",
+    "confidence": 90,
+    "notes": "EPS vector file, quote design",
+    "_source_name": "sometimes it's better to  let the silence do the talking",
+    "_batch_index": 18383
+  },
+  {
+    "name": "son",
+    "category": "Photoshop - Other",
+    "clean_name": "Son",
+    "confidence": 80,
+    "notes": "PSD file, likely a text or graphic design",
+    "_source_name": "son",
+    "_batch_index": 18384
+  },
+  {
+    "name": "sore but worth it",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sore But Worth It",
+    "confidence": 90,
+    "notes": "EPS vector file, quote design",
+    "_source_name": "sore but worth it",
+    "_batch_index": 18385
+  },
+  {
+    "name": "Sorry My Mommy Is Taken",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sorry My Mommy Is Taken",
+    "confidence": 90,
+    "notes": "EPS vector file, quote design",
+    "_source_name": "Sorry My Mommy Is Taken",
+    "_batch_index": 18386
+  },
+  {
+    "name": "sorry the  nice  nurse is on vacation",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sorry the Nice Nurse Is on Vacation",
+    "confidence": 90,
+    "notes": "EPS vector file, humorous quote design",
+    "_source_name": "sorry the  nice  nurse is on vacation",
+    "_batch_index": 18387
+  },
+  {
+    "name": "Sorta Sweet Sorta Savage",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sorta Sweet Sorta Savage",
+    "confidence": 90,
+    "notes": "EPS vector file, quote design",
+    "_source_name": "Sorta Sweet Sorta Savage",
+    "_batch_index": 18388
+  },
+  {
+    "name": "Soul of a Mermaid Mouth of a Sailor",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Soul of a Mermaid Mouth of a Sailor",
+    "confidence": 90,
+    "notes": "EPS vector file, quote design",
+    "_source_name": "Soul of a Mermaid Mouth of a Sailor",
+    "_batch_index": 18389
+  },
+  {
+    "name": "Sound - PSD Flyer Template_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sound PSD Flyer Template 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Sound - PSD Flyer Template_3",
+    "_batch_index": 18390
+  },
+  {
+    "name": "Sound Blast Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sound Blast Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Sound Blast Flyer Template",
+    "_batch_index": 18391
+  },
+  {
+    "name": "sound city psd flyer cm_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sound City PSD Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "sound city psd flyer cm_2",
+    "_batch_index": 18392
+  },
+  {
+    "name": "sound effect",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Sound Effect",
+    "confidence": 85,
+    "notes": "Name implies audio sound effect, though file is PSD (possibly a cover)",
+    "_source_name": "sound effect",
+    "_batch_index": 18393
+  },
+  {
+    "name": "sound psd flyer template cm_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sound PSD Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "sound psd flyer template cm_3",
+    "_batch_index": 18394
+  },
+  {
+    "name": "SOUNDCHECK",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Soundcheck",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer or poster",
+    "_source_name": "SOUNDCHECK",
+    "_batch_index": 18395
+  },
+  {
+    "name": "Sounds of Sweden Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sounds of Sweden Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Sounds of Sweden Flyer Template",
+    "_batch_index": 18396
+  },
+  {
+    "name": "Sounds of the Ocean",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Sounds of the Ocean",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer or poster",
+    "_source_name": "Sounds of the Ocean",
+    "_batch_index": 18397
+  },
+  {
+    "name": "soundwave",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Soundwave",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer or poster",
+    "_source_name": "soundwave",
+    "_batch_index": 18398
+  },
+  {
+    "name": "soup_day_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Soup Day Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "soup_day_flyer",
+    "_batch_index": 18399
+  },
+  {
+    "name": "Space Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Space Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Space Flyer Template",
+    "_batch_index": 18400
+  },
+  {
+    "name": "SPACE ODYSSEY Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Space Odyssey Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "SPACE ODYSSEY Flyer Template",
+    "_batch_index": 18401
+  },
+  {
+    "name": "Space_Jet",
+    "category": "Photoshop - Other",
+    "clean_name": "Space Jet",
+    "confidence": 80,
+    "notes": "PSD file, likely a graphic design element",
+    "_source_name": "Space_Jet",
+    "_batch_index": 18402
+  },
+  {
+    "name": "SPACEMAN Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Spaceman Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "SPACEMAN Flyer Template",
+    "_batch_index": 18403
+  },
+  {
+    "name": "spades_tournament_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Spades Tournament 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "spades_tournament_2",
+    "_batch_index": 18404
+  },
+  {
+    "name": "Sparkle every day design 2",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Sparkle Every Day Design 2",
+    "confidence": 90,
+    "notes": "EPS vector file, quote design",
+    "_source_name": "Sparkle every day design 2",
+    "_batch_index": 18405
+  },
+  {
+    "name": "Speaker_3_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Speaker 3 2",
+    "confidence": 80,
+    "notes": "PSD file, likely a graphic design element",
+    "_source_name": "Speaker_3_2",
+    "_batch_index": 18406
+  },
+  {
+    "name": "Special Offer Flyer - v054",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Special Offer Flyer v054",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Special Offer Flyer - v054",
+    "_batch_index": 18407
+  },
+  {
+    "name": "Special Offer Product - Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Special Offer Product Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Special Offer Product - Flyer",
+    "_batch_index": 18408
+  },
+  {
+    "name": "special_guest_avida",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Special Guest Avida",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "special_guest_avida",
+    "_batch_index": 18409
+  },
+  {
+    "name": "special_guest_dj_david",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Special Guest DJ David",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "special_guest_dj_david",
+    "_batch_index": 18410
+  },
+  {
+    "name": "special_guest_dj_garfild",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Special Guest DJ Garfild",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "special_guest_dj_garfild",
+    "_batch_index": 18411
+  },
+  {
+    "name": "spectrum_design_bc_2",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Spectrum Design Business Card 2",
+    "confidence": 90,
+    "notes": "PSD file, likely a business card design",
+    "_source_name": "spectrum_design_bc_2",
+    "_batch_index": 18412
+  },
+  {
+    "name": "Speech bubbles",
+    "category": "Photoshop - Other",
+    "clean_name": "Speech Bubbles",
+    "confidence": 85,
+    "notes": "PSD file, speech bubble graphics",
+    "_source_name": "Speech bubbles",
+    "_batch_index": 18413
+  },
+  {
+    "name": "Speech bubbles_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Speech Bubbles 2",
+    "confidence": 85,
+    "notes": "PSD file, speech bubble graphics",
+    "_source_name": "Speech bubbles_2",
+    "_batch_index": 18414
+  },
+  {
+    "name": "Speed The Beat Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Speed The Beat Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Speed The Beat Flyer Template",
+    "_batch_index": 18415
+  },
+  {
+    "name": "Sphere Grid",
+    "category": "Photoshop - Other",
+    "clean_name": "Sphere Grid",
+    "confidence": 80,
+    "notes": "PSD file, likely a graphic design element",
+    "_source_name": "Sphere Grid",
+    "_batch_index": 18416
+  },
+  {
+    "name": "Spicy-Chicken-Flyer-Template-Awesomeflyer-com",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Spicy Chicken Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Spicy-Chicken-Flyer-Template-Awesomeflyer-com",
+    "_batch_index": 18417
+  },
+  {
+    "name": "SpiritTemplate_7",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Spirit Template 7",
+    "confidence": 85,
+    "notes": "PSD file, likely a flyer or poster template",
+    "_source_name": "SpiritTemplate_7",
+    "_batch_index": 18418
+  },
+  {
+    "name": "splash beat cm flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Splash Beat Flyer 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "splash beat cm flyer_3",
+    "_batch_index": 18419
+  }
+]
