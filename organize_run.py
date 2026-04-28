@@ -27,6 +27,7 @@ from datetime import datetime, timezone
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DEST_PRIMARY     = r'G:\Organized'
+DEST_OVERFLOW    = r'I:\Organized'   # used automatically when G:\ free < MIN_FREE_GB
 MIN_FREE_GB      = 50
 REVIEW_SUBDIR    = '_Review'       # low-confidence items land here
 MIN_CONFIDENCE   = 50
@@ -459,13 +460,15 @@ def load_all_with_index(source_mode: str = 'ae') -> list:
 
 # ── Destination helpers ───────────────────────────────────────────────────────
 def get_dest_root() -> str:
+    """Return primary destination, or overflow if primary is running low on space."""
     try:
-        free = shutil.disk_usage(DEST_PRIMARY[:3]).free
-        if free > MIN_FREE_GB * 1_073_741_824:
+        free_bytes = shutil.disk_usage(DEST_PRIMARY[:3]).free
+        if free_bytes > MIN_FREE_GB * 1_073_741_824:
             return DEST_PRIMARY
     except Exception:
         pass
-    return DEST_PRIMARY
+    os.makedirs(DEST_OVERFLOW, exist_ok=True)
+    return DEST_OVERFLOW
 
 def sanitize(s: str, maxlen: int = 120) -> str:
     return re.sub(r'[<>:"/\\|?*]', '-', s).strip()[:maxlen]
@@ -514,11 +517,18 @@ def apply_moves(pairs: list, source_override: str,
     category_counts = defaultdict(int)
     not_found  = []
     error_log  = []   # written to source-specific errors file on completion
+    _last_dest_root = None  # track overflow transitions for logging
 
     # Preload already-moved src paths so we can skip duplicates without per-item DB hits
     already_moved = journal_src_set()
 
     for item, org_entry in pairs:
+        # Re-evaluate dest_root each item so overflow kicks in mid-run if G:\ fills
+        dest_root = get_dest_root()
+        if dest_root != _last_dest_root:
+            if _last_dest_root is not None:
+                log(f"  [OVERFLOW] G:\\ free < {MIN_FREE_GB} GB — redirecting remaining writes to {dest_root}")
+            _last_dest_root = dest_root
         clean    = (item.get('clean_name') or item.get('name', '')).strip()
         category = normalize_category(item.get('category', 'After Effects - Other').strip())
         conf     = int(item.get('confidence', 0))
@@ -642,7 +652,19 @@ def retry_errors(source_mode: str = 'ae'):
     remaining = []
     for e in errors:
         src  = e['src']
-        dest = e['dest']
+        # Recompute destination using current dest root so disk-full retries
+        # automatically redirect to I:\Organized when G:\ is still low.
+        dest_root   = get_dest_root()
+        eff_cat     = e.get('category', '')
+        clean       = e.get('clean_name', '')
+        conf        = int(e.get('confidence', 0))
+        if conf < MIN_CONFIDENCE:
+            eff_cat = os.path.join(REVIEW_SUBDIR, eff_cat)
+        # Prefer recomputed dest; fall back to stored dest if category data missing
+        if eff_cat and clean:
+            dest = safe_dest_path(dest_root, eff_cat, clean)
+        else:
+            dest = e['dest']
         if not os.path.exists(src):
             log(f"  SKIP (src gone): {e['disk_name']!r}")
             retried += 1
