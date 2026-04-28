@@ -65,7 +65,7 @@ def load_unorg_moves() -> list[dict]:
     con = sqlite3.connect(str(JOURNAL_FILE))
     con.row_factory = sqlite3.Row
     rows = con.execute(
-        "SELECT * FROM moves WHERE src LIKE 'I:\\\\Unorganized%' AND undone_at IS NULL"
+        "SELECT * FROM moves WHERE src LIKE 'I:\\Unorganized%' AND undone_at IS NULL"
     ).fetchall()
     con.close()
     return [dict(r) for r in rows]
