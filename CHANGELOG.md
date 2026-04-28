@@ -56,12 +56,29 @@ All notable changes to FileOrganizer will be documented in this file.
 - loose_files classification: 326 batches, file extension is strong signal, ~0% _Review rate
 - design_org classification: legacy_category hint dramatically reduces _Review rate to <1%
 
-### Known Issues
-- `deepseek_research.py` line 3 docstring: `SyntaxWarning: invalid escape sequence '\O'` (harmless)
-- `_Review-_Review` (9 dirs) and `_Review-After Effects - Other` (35 dirs) need investigation
-  — AE template subfolders that got detached from parent during move, NOT standalone templates
-- 5 trailing-space path errors in `organize_errors.json` — need Rename-Item fix + --retry-errors
-- loose_files classify run: 312/326 batches remaining — overnight run expected
+### Fixed (session 2026-04-28)
+- `organize_run.py` — `_Review-CategoryName` flat folder bug: `sanitize()` was stripping the
+  backslash from `_Review\Category` (produced by `os.path.join(REVIEW_SUBDIR, category)`),
+  collapsing it to `_Review-Category` as a top-level flat folder instead of a nested subdirectory.
+  Root cause: `sanitize()` regex `[<>:"/\\|?*]` includes `\\` (backslash), which ate the separator.
+  Fix: new `_cat_path()` helper splits category on `/` and `\\` BEFORE sanitizing each component,
+  then re-joins with `os.path.join()`. Both `safe_dest_path()` and `safe_dest_path_file()` updated.
+- Migrated 45 items from three malformed flat folders at G:\Organized root into correct
+  `G:\Organized\_Review\` subdirectories:
+  - `_Review-_Review` (9 dirs) → `G:\Organized\_Review\_Review\` (cm_*, Help File, etc.)
+  - `_Review-After Effects - Other` (35 dirs) → `G:\Organized\_Review\After Effects - Other\`
+    (detached AE template subfolders — queued for manual parent-matching)
+  - `_Review-After Effects - Sport & Action` (1 dir) → `G:\Organized\_Review\After Effects - Sport & Action\`
+- `deepseek_research.py` SyntaxWarning: confirmed already resolved (double-backslash in docstring
+  is valid; no warning emitted by Python 3.12)
+
+### Known Issues (as of 2026-04-28)
+- 5 trailing-space/long-path errors in `organize_errors.json` — pending `--retry-errors --source ae`
+  after current AE apply run (PID 22500) completes
+- `G:\Organized\_Review\After Effects - Other\` (35 dirs): detached AE project subfolders —
+  need manual parent-matching; cannot blindly re-classify as standalone templates
+- loose_files classify: ~43/326 batches done — overnight run in progress (PID 22848)
+- design_org classify: 14/44 batches done — resumed (PID 13488)
 
 
 

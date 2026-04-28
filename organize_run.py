@@ -415,8 +415,23 @@ def get_dest_root() -> str:
 def sanitize(s: str, maxlen: int = 120) -> str:
     return re.sub(r'[<>:"/\\|?*]', '-', s).strip()[:maxlen]
 
+def _cat_path(dest_root: str, category: str) -> str:
+    """
+    Build the category sub-path under dest_root, preserving multi-level categories.
+
+    category may be a single name  ('After Effects - Slideshow')
+    or a path-joined two-level str ('_Review\\After Effects - Slideshow')
+    as produced by os.path.join(REVIEW_SUBDIR, category) in apply_moves.
+
+    Each component is sanitized independently so the backslash separator is
+    never eaten by sanitize() — which previously collapsed
+    '_Review\\After Effects - Other' → '_Review-After Effects - Other'.
+    """
+    parts = [p for p in category.replace('\\', '/').split('/') if p]
+    return os.path.join(dest_root, *[sanitize(p) for p in parts])
+
 def safe_dest_path(dest_root: str, category: str, clean_name: str) -> str:
-    dest = os.path.join(dest_root, sanitize(category), sanitize(clean_name))
+    dest = os.path.join(_cat_path(dest_root, category), sanitize(clean_name))
     if os.path.exists(dest):
         base, i = dest, 1
         while os.path.exists(dest):
@@ -426,12 +441,13 @@ def safe_dest_path(dest_root: str, category: str, clean_name: str) -> str:
 
 def safe_dest_path_file(dest_root: str, category: str, clean_name: str, ext: str) -> str:
     """Build collision-safe destination path for a flat file (not a directory)."""
-    stem = sanitize(clean_name)
-    dest = os.path.join(dest_root, sanitize(category), f"{stem}{ext}")
+    cat_dir = _cat_path(dest_root, category)
+    stem    = sanitize(clean_name)
+    dest    = os.path.join(cat_dir, f"{stem}{ext}")
     if os.path.exists(dest):
         i = 1
         while os.path.exists(dest):
-            dest = os.path.join(dest_root, sanitize(category), f"{stem} ({i}){ext}")
+            dest = os.path.join(cat_dir, f"{stem} ({i}){ext}")
             i += 1
     return dest
 
