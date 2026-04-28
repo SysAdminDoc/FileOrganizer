@@ -10,16 +10,17 @@ def _branding_icon_path() -> Path:
     candidates = []
     if getattr(sys, "frozen", False):
         exe_dir = Path(sys.executable).resolve().parent
-        candidates.append(exe_dir / "icon.png")
+        candidates.extend([exe_dir / "icon.ico", exe_dir / "icon.png"])
         meipass = getattr(sys, "_MEIPASS", None)
         if meipass:
-            candidates.append(Path(meipass) / "icon.png")
+            candidates.extend([Path(meipass) / "icon.ico", Path(meipass) / "icon.png"])
     current = Path(__file__).resolve()
-    candidates.extend([current.parent / "icon.png", current.parent.parent / "icon.png", current.parent.parent.parent / "icon.png"])
+    for base in (current.parent, current.parent.parent, current.parent.parent.parent):
+        candidates.extend([base / "icon.ico", base / "icon.png"])
     for candidate in candidates:
         if candidate.exists():
             return candidate
-    return Path("icon.png")
+    return Path("icon.ico")
 # codex-branding:end
 
 
