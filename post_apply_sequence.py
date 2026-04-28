@@ -130,7 +130,7 @@ def main():
                     dst_dir.mkdir(parents=True, exist_ok=True)
                     rc = subprocess.run([
                         'robocopy', str(src_dir), str(dst_dir),
-                        '/E', '/MOVE', '/COPYALL', '/R:1', '/W:1', '/NP', '/NS', '/NC', '/NFL', '/NDL'
+                        '/E', '/MOVE', '/COPY:DAT', '/R:1', '/W:1', '/NP', '/NS', '/NC', '/NFL', '/NDL'
                     ]).returncode
                     if rc > 7:
                         print(f'  [WARN] robocopy rc={rc} for {src_name}')
