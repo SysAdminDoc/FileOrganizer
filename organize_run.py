@@ -83,7 +83,8 @@ def log(msg, also_print=True):
     ts = datetime.now().strftime('%H:%M:%S')
     line = f"[{ts}] {msg}"
     if also_print:
-        print(line)
+        # Encode to cp1252 safely (replace unmappable chars) for Windows consoles
+        print(line.encode('cp1252', errors='replace').decode('cp1252'))
     with open(LOG_FILE, 'a', encoding='utf-8') as f:
         f.write(line + '\n')
 
@@ -549,7 +550,13 @@ def apply_moves(pairs: list, source_override: str,
         # Build destination path
         if is_file_item:
             file_ext = org_entry.get('file_ext', Path(src).suffix.lower())
-            dest = safe_dest_path_file(dest_root, eff_category, clean, file_ext)
+            # File-mode: use original filename stem for uniqueness.
+            # clean_name from AI is optimised for directory names (full project titles);
+            # individual files already have unique disk names, so preserve them.
+            # Fall back to clean only if disk stem would be empty after sanitize.
+            disk_stem = sanitize(Path(disk_name).stem)
+            dest_stem = disk_stem if disk_stem else clean
+            dest = safe_dest_path_file(dest_root, eff_category, dest_stem, file_ext)
         else:
             dest = safe_dest_path(dest_root, eff_category, clean)
 
