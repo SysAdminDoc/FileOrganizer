@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Main File 20",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 20",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File 20",
+    "_batch_index": 15000
+  },
+  {
+    "name": "Main File 22",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 22",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File 22",
+    "_batch_index": 15001
+  },
+  {
+    "name": "Main File 27",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 27",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File 27",
+    "_batch_index": 15002
+  },
+  {
+    "name": "Main File 32",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 32",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File 32",
+    "_batch_index": 15003
+  },
+  {
+    "name": "Main File 34",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 34",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File 34",
+    "_batch_index": 15004
+  },
+  {
+    "name": "main file",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main file",
+    "_batch_index": 15005
+  },
+  {
+    "name": "main file_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main file_2",
+    "_batch_index": 15006
+  },
+  {
+    "name": "Main File_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 3",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File_3",
+    "_batch_index": 15007
+  },
+  {
+    "name": "Main File_5",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 5",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File_5",
+    "_batch_index": 15008
+  },
+  {
+    "name": "Main File_6",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 6",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File_6",
+    "_batch_index": 15009
+  },
+  {
+    "name": "Main File_7",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 7",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File_7",
+    "_batch_index": 15010
+  },
+  {
+    "name": "Main File_8",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 8",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File_8",
+    "_batch_index": 15011
+  },
+  {
+    "name": "Main File_9",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main File 9",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main File_9",
+    "_batch_index": 15012
+  },
+  {
+    "name": "Main Files",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Files",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main Files",
+    "_batch_index": 15013
+  },
+  {
+    "name": "MAIN PRINT",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Main Print",
+    "confidence": 80,
+    "notes": "PSD file with 'PRINT' in name, suggests print design",
+    "_source_name": "MAIN PRINT",
+    "_batch_index": 15014
+  },
+  {
+    "name": "Main PSD",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main PSD",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main PSD",
+    "_batch_index": 15015
+  },
+  {
+    "name": "Main PSd_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main PSD 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main PSd_2",
+    "_batch_index": 15016
+  },
+  {
+    "name": "Main PSd_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main PSD 3",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main PSd_3",
+    "_batch_index": 15017
+  },
+  {
+    "name": "Main PSd_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main PSD 4",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main PSd_4",
+    "_batch_index": 15018
+  },
+  {
+    "name": "Main Template",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Template",
+    "confidence": 90,
+    "notes": "PSD file with 'Template' in name",
+    "_source_name": "Main Template",
+    "_batch_index": 15019
+  },
+  {
+    "name": "Main Template_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Template 2",
+    "confidence": 90,
+    "notes": "PSD file with 'Template' in name",
+    "_source_name": "Main Template_2",
+    "_batch_index": 15020
+  },
+  {
+    "name": "Main Template_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Template 3",
+    "confidence": 90,
+    "notes": "PSD file with 'Template' in name",
+    "_source_name": "Main Template_3",
+    "_batch_index": 15021
+  },
+  {
+    "name": "Main Template_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Template 4",
+    "confidence": 90,
+    "notes": "PSD file with 'Template' in name",
+    "_source_name": "Main Template_4",
+    "_batch_index": 15022
+  },
+  {
+    "name": "Main-Blue_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Blue 3",
+    "confidence": 85,
+    "notes": "PSD file, color variant of a template",
+    "_source_name": "Main-Blue_3",
+    "_batch_index": 15023
+  },
+  {
+    "name": "Main-Blue_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Blue 4",
+    "confidence": 85,
+    "notes": "PSD file, color variant of a template",
+    "_source_name": "Main-Blue_4",
+    "_batch_index": 15024
+  },
+  {
+    "name": "Main-Green_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Green 2",
+    "confidence": 85,
+    "notes": "PSD file, color variant of a template",
+    "_source_name": "Main-Green_2",
+    "_batch_index": 15025
+  },
+  {
+    "name": "Main-Red",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Red",
+    "confidence": 85,
+    "notes": "PSD file, color variant of a template",
+    "_source_name": "Main-Red",
+    "_batch_index": 15026
+  },
+  {
+    "name": "Main-Red_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Red 4",
+    "confidence": 85,
+    "notes": "PSD file, color variant of a template",
+    "_source_name": "Main-Red_4",
+    "_batch_index": 15027
+  },
+  {
+    "name": "Main-Voilet_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main Violet 2",
+    "confidence": 85,
+    "notes": "PSD file, color variant of a template",
+    "_source_name": "Main-Voilet_2",
+    "_batch_index": 15028
+  },
+  {
+    "name": "main",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main",
+    "confidence": 80,
+    "notes": "PSD file, generic main file",
+    "_source_name": "main",
+    "_batch_index": 15029
+  },
+  {
+    "name": "Main_01",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 01",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_01",
+    "_batch_index": 15030
+  },
+  {
+    "name": "Main_01_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 01 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_01_2",
+    "_batch_index": 15031
+  },
+  {
+    "name": "Main_01_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 01 3",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_01_3",
+    "_batch_index": 15032
+  },
+  {
+    "name": "Main_01_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 01 4",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_01_4",
+    "_batch_index": 15033
+  },
+  {
+    "name": "Main_02",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 02",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_02",
+    "_batch_index": 15034
+  },
+  {
+    "name": "Main_02_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 02 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_02_2",
+    "_batch_index": 15035
+  },
+  {
+    "name": "Main_02_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 02 3",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_02_3",
+    "_batch_index": 15036
+  },
+  {
+    "name": "Main_02_4",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 02 4",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_02_4",
+    "_batch_index": 15037
+  },
+  {
+    "name": "Main_03",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 03",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_03",
+    "_batch_index": 15038
+  },
+  {
+    "name": "Main_03_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 03 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_03_2",
+    "_batch_index": 15039
+  },
+  {
+    "name": "Main_03_3",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 03 3",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_03_3",
+    "_batch_index": 15040
+  },
+  {
+    "name": "Main_04",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 04",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_04",
+    "_batch_index": 15041
+  },
+  {
+    "name": "Main_04_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 04 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_04_2",
+    "_batch_index": 15042
+  },
+  {
+    "name": "Main_05",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 05",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_05",
+    "_batch_index": 15043
+  },
+  {
+    "name": "Main_05_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 05 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_05_2",
+    "_batch_index": 15044
+  },
+  {
+    "name": "Main_06",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 06",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_06",
+    "_batch_index": 15045
+  },
+  {
+    "name": "Main_06_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 06 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "Main_06_2",
+    "_batch_index": 15046
+  },
+  {
+    "name": "main_1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 1",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_1",
+    "_batch_index": 15047
+  },
+  {
+    "name": "main_10",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 10",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_10",
+    "_batch_index": 15048
+  },
+  {
+    "name": "main_11",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 11",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_11",
+    "_batch_index": 15049
+  },
+  {
+    "name": "main_12",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 12",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_12",
+    "_batch_index": 15050
+  },
+  {
+    "name": "main_13",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 13",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_13",
+    "_batch_index": 15051
+  },
+  {
+    "name": "main_14",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 14",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_14",
+    "_batch_index": 15052
+  },
+  {
+    "name": "main_15",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 15",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_15",
+    "_batch_index": 15053
+  },
+  {
+    "name": "main_16",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 16",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_16",
+    "_batch_index": 15054
+  },
+  {
+    "name": "main_17",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 17",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_17",
+    "_batch_index": 15055
+  },
+  {
+    "name": "main_18",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 18",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_18",
+    "_batch_index": 15056
+  },
+  {
+    "name": "main_19",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 19",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_19",
+    "_batch_index": 15057
+  },
+  {
+    "name": "main_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 2",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_2",
+    "_batch_index": 15058
+  },
+  {
+    "name": "main_20",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Main 20",
+    "confidence": 85,
+    "notes": "PSD file, likely a template or smart object",
+    "_source_name": "main_20",
+    "_batch_index": 15059
+  }
+]

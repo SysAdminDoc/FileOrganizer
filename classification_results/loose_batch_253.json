@@ -1,0 +1,542 @@
+[
+  {
+    "name": "MARK Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "MARK Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "MARK Flyer Template",
+    "_batch_index": 15120
+  },
+  {
+    "name": "Marketing Agency psd flyer template 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing Agency PSD Flyer Template 1",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Marketing Agency psd flyer template 1",
+    "_batch_index": 15121
+  },
+  {
+    "name": "Marketing Agency psd flyer template 2_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing Agency PSD Flyer Template 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Marketing Agency psd flyer template 2_3",
+    "_batch_index": 15122
+  },
+  {
+    "name": "Marketing Agency psd flyer template_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing Agency PSD Flyer Template 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Marketing Agency psd flyer template_2",
+    "_batch_index": 15123
+  },
+  {
+    "name": "marketing psd flyer template 1_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing PSD Flyer Template 1",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "marketing psd flyer template 1_2",
+    "_batch_index": 15124
+  },
+  {
+    "name": "marketing psd flyer template 2_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing PSD Flyer Template 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "marketing psd flyer template 2_2",
+    "_batch_index": 15125
+  },
+  {
+    "name": "marketing psd flyer template_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing PSD Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "marketing psd flyer template_2",
+    "_batch_index": 15126
+  },
+  {
+    "name": "Marketing-Flyer (2)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Marketing-Flyer (2)",
+    "_batch_index": 15127
+  },
+  {
+    "name": "Marketing-Flyer (3)",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Marketing-Flyer (3)",
+    "_batch_index": 15128
+  },
+  {
+    "name": "Marketing-Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Marketing-Flyer",
+    "_batch_index": 15129
+  },
+  {
+    "name": "Marketing",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Marketing",
+    "confidence": 80,
+    "notes": "PSD file, likely flyer based on naming pattern",
+    "_source_name": "Marketing",
+    "_batch_index": 15130
+  },
+  {
+    "name": "MARMOR_A4_form_template-01",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "MARMOR A4 Form Template",
+    "confidence": 90,
+    "notes": "PSD form template, stationery",
+    "_source_name": "MARMOR_A4_form_template-01",
+    "_batch_index": 15131
+  },
+  {
+    "name": "MARMOR_envelope_template-01",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "MARMOR Envelope Template",
+    "confidence": 90,
+    "notes": "PSD envelope template, stationery",
+    "_source_name": "MARMOR_envelope_template-01",
+    "_batch_index": 15132
+  },
+  {
+    "name": "MARMOR_envelope_template-02",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "MARMOR Envelope Template",
+    "confidence": 90,
+    "notes": "PSD envelope template, stationery",
+    "_source_name": "MARMOR_envelope_template-02",
+    "_batch_index": 15133
+  },
+  {
+    "name": "MARMOR_folder_template-01",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "MARMOR Folder Template",
+    "confidence": 90,
+    "notes": "PSD folder template, stationery",
+    "_source_name": "MARMOR_folder_template-01",
+    "_batch_index": 15134
+  },
+  {
+    "name": "MARMOR_folder_template-02",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "MARMOR Folder Template",
+    "confidence": 90,
+    "notes": "PSD folder template, stationery",
+    "_source_name": "MARMOR_folder_template-02",
+    "_batch_index": 15135
+  },
+  {
+    "name": "MarqueeLightBulbsChaosScene01_2",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Marquee Light Bulbs Chaos Scene 01",
+    "confidence": 85,
+    "notes": "PSD scene mockup",
+    "_source_name": "MarqueeLightBulbsChaosScene01_2",
+    "_batch_index": 15136
+  },
+  {
+    "name": "MarqueeLightBulbsChaosScene02_2",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Marquee Light Bulbs Chaos Scene 02",
+    "confidence": 85,
+    "notes": "PSD scene mockup",
+    "_source_name": "MarqueeLightBulbsChaosScene02_2",
+    "_batch_index": 15137
+  },
+  {
+    "name": "MarqueeLightBulbsChaosScene03",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Marquee Light Bulbs Chaos Scene 03",
+    "confidence": 85,
+    "notes": "PSD scene mockup",
+    "_source_name": "MarqueeLightBulbsChaosScene03",
+    "_batch_index": 15138
+  },
+  {
+    "name": "MarqueeLightBulbsChaosScene04_2",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Marquee Light Bulbs Chaos Scene 04",
+    "confidence": 85,
+    "notes": "PSD scene mockup",
+    "_source_name": "MarqueeLightBulbsChaosScene04_2",
+    "_batch_index": 15139
+  },
+  {
+    "name": "MarqueeLightBulbsChaosScene05_2",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Marquee Light Bulbs Chaos Scene 05",
+    "confidence": 85,
+    "notes": "PSD scene mockup",
+    "_source_name": "MarqueeLightBulbsChaosScene05_2",
+    "_batch_index": 15140
+  },
+  {
+    "name": "Martin Luther King Jr. Day_psd_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Martin Luther King Jr. Day PSD Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Martin Luther King Jr. Day_psd_flyer",
+    "_batch_index": 15141
+  },
+  {
+    "name": "Martini glass",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Martini Glass",
+    "confidence": 80,
+    "notes": "PSD file, likely a mockup or object",
+    "_source_name": "Martini glass",
+    "_batch_index": 15142
+  },
+  {
+    "name": "Masks",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Masks",
+    "confidence": 75,
+    "notes": "PSD file, likely mask overlays",
+    "_source_name": "Masks",
+    "_batch_index": 15143
+  },
+  {
+    "name": "Masonry #1",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Masonry 1",
+    "confidence": 85,
+    "notes": "PSD masonry texture/pattern",
+    "_source_name": "Masonry #1",
+    "_batch_index": 15144
+  },
+  {
+    "name": "Masonry #2",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Masonry 2",
+    "confidence": 85,
+    "notes": "PSD masonry texture/pattern",
+    "_source_name": "Masonry #2",
+    "_batch_index": 15145
+  },
+  {
+    "name": "Masonry #3",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Masonry 3",
+    "confidence": 85,
+    "notes": "PSD masonry texture/pattern",
+    "_source_name": "Masonry #3",
+    "_batch_index": 15146
+  },
+  {
+    "name": "Masonry #4",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Masonry 4",
+    "confidence": 85,
+    "notes": "PSD masonry texture/pattern",
+    "_source_name": "Masonry #4",
+    "_batch_index": 15147
+  },
+  {
+    "name": "Masonry #5",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Masonry 5",
+    "confidence": 85,
+    "notes": "PSD masonry texture/pattern",
+    "_source_name": "Masonry #5",
+    "_batch_index": 15148
+  },
+  {
+    "name": "Masonry #6",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Masonry 6",
+    "confidence": 85,
+    "notes": "PSD masonry texture/pattern",
+    "_source_name": "Masonry #6",
+    "_batch_index": 15149
+  },
+  {
+    "name": "Masonry #7",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Masonry 7",
+    "confidence": 85,
+    "notes": "PSD masonry texture/pattern",
+    "_source_name": "Masonry #7",
+    "_batch_index": 15150
+  },
+  {
+    "name": "Masonry #8",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Masonry 8",
+    "confidence": 85,
+    "notes": "PSD masonry texture/pattern",
+    "_source_name": "Masonry #8",
+    "_batch_index": 15151
+  },
+  {
+    "name": "Masquerade Ball",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Masquerade Ball",
+    "confidence": 90,
+    "notes": "PSD event invitation/flyer",
+    "_source_name": "Masquerade Ball",
+    "_batch_index": 15152
+  },
+  {
+    "name": "masquerade_ball",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Masquerade Ball",
+    "confidence": 90,
+    "notes": "PSD event invitation/flyer",
+    "_source_name": "masquerade_ball",
+    "_batch_index": 15153
+  },
+  {
+    "name": "master-page-1",
+    "category": "Print - Other",
+    "clean_name": "Master Page 1",
+    "confidence": 70,
+    "notes": "PSD file, likely a print layout master page",
+    "_source_name": "master-page-1",
+    "_batch_index": 15154
+  },
+  {
+    "name": "master-page-2",
+    "category": "Print - Other",
+    "clean_name": "Master Page 2",
+    "confidence": 70,
+    "notes": "PSD file, likely a print layout master page",
+    "_source_name": "master-page-2",
+    "_batch_index": 15155
+  },
+  {
+    "name": "master",
+    "category": "Photoshop - Other",
+    "clean_name": "Master",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "master",
+    "_batch_index": 15156
+  },
+  {
+    "name": "MasterBundles 20,000+ Mega bundle Mobile and Desktop Lightroom Presets.part2",
+    "category": "_Skip",
+    "clean_name": "MasterBundles 20,000+ Mega Bundle Mobile and Desktop Lightroom Presets",
+    "confidence": 100,
+    "notes": "Part 2 of a multi-part RAR archive, skip fragment",
+    "_source_name": "MasterBundles 20,000+ Mega bundle Mobile and Desktop Lightroom Presets.part2",
+    "_batch_index": 15157
+  },
+  {
+    "name": "mastering",
+    "category": "Photoshop - Other",
+    "clean_name": "Mastering",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "mastering",
+    "_batch_index": 15158
+  },
+  {
+    "name": "mastering_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Mastering 2",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "mastering_2",
+    "_batch_index": 15159
+  },
+  {
+    "name": "Matchbook-Print-Machine_2",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Matchbook Print Machine",
+    "confidence": 90,
+    "notes": "PSD matchbook print mockup",
+    "_source_name": "Matchbook-Print-Machine_2",
+    "_batch_index": 15160
+  },
+  {
+    "name": "matchpress",
+    "category": "Photoshop - Other",
+    "clean_name": "Matchpress",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "matchpress",
+    "_batch_index": 15161
+  },
+  {
+    "name": "Mavra",
+    "category": "Photoshop - Other",
+    "clean_name": "Mavra",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "Mavra",
+    "_batch_index": 15162
+  },
+  {
+    "name": "maxresdefault",
+    "category": "Photoshop - Other",
+    "clean_name": "Maxresdefault",
+    "confidence": 60,
+    "notes": "Generic PSD file, likely a thumbnail",
+    "_source_name": "maxresdefault",
+    "_batch_index": 15163
+  },
+  {
+    "name": "Maxtoy",
+    "category": "Photoshop - Other",
+    "clean_name": "Maxtoy",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "Maxtoy",
+    "_batch_index": 15164
+  },
+  {
+    "name": "may love be the heart of this home",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "May Love Be the Heart of This Home",
+    "confidence": 85,
+    "notes": "EPS vector artwork",
+    "_source_name": "may love be the heart of this home",
+    "_batch_index": 15165
+  },
+  {
+    "name": "May",
+    "category": "Photoshop - Other",
+    "clean_name": "May",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "May",
+    "_batch_index": 15166
+  },
+  {
+    "name": "May_2",
+    "category": "Photoshop - Other",
+    "clean_name": "May 2",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "May_2",
+    "_batch_index": 15167
+  },
+  {
+    "name": "May_3",
+    "category": "Photoshop - Other",
+    "clean_name": "May 3",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "May_3",
+    "_batch_index": 15168
+  },
+  {
+    "name": "May_4",
+    "category": "Photoshop - Other",
+    "clean_name": "May 4",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "May_4",
+    "_batch_index": 15169
+  },
+  {
+    "name": "May_5",
+    "category": "Photoshop - Other",
+    "clean_name": "May 5",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "May_5",
+    "_batch_index": 15170
+  },
+  {
+    "name": "May_6",
+    "category": "Photoshop - Other",
+    "clean_name": "May 6",
+    "confidence": 60,
+    "notes": "Generic PSD file, unclear purpose",
+    "_source_name": "May_6",
+    "_batch_index": 15171
+  },
+  {
+    "name": "MC-01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "MC-01",
+    "confidence": 85,
+    "notes": "EPS vector file",
+    "_source_name": "MC-01",
+    "_batch_index": 15172
+  },
+  {
+    "name": "MC",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "MC",
+    "confidence": 85,
+    "notes": "EPS vector file",
+    "_source_name": "MC",
+    "_batch_index": 15173
+  },
+  {
+    "name": "MCHNY-02",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "MCHNY-02",
+    "confidence": 85,
+    "notes": "EPS vector file",
+    "_source_name": "MCHNY-02",
+    "_batch_index": 15174
+  },
+  {
+    "name": "MCHNY-03-01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "MCHNY-03-01",
+    "confidence": 85,
+    "notes": "EPS vector file",
+    "_source_name": "MCHNY-03-01",
+    "_batch_index": 15175
+  },
+  {
+    "name": "MDW_flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "MDW Flyer",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "MDW_flyer_2",
+    "_batch_index": 15176
+  },
+  {
+    "name": "me sarcastic never",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Me Sarcastic Never",
+    "confidence": 85,
+    "notes": "EPS vector artwork",
+    "_source_name": "me sarcastic never",
+    "_batch_index": 15177
+  },
+  {
+    "name": "ME-10681617",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Golden Wedding Titles",
+    "confidence": 90,
+    "notes": "Contains .aep and .ai, title template for wedding",
+    "_source_name": "ME-10681617",
+    "_batch_index": 15178
+  },
+  {
+    "name": "ME-10685684",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Cinematic Copy",
+    "confidence": 90,
+    "notes": "Contains .aep, cinematic style",
+    "_source_name": "ME-10685684",
+    "_batch_index": 15179
+  }
+]
