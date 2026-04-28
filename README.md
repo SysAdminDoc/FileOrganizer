@@ -2,7 +2,7 @@
 <p align="center"><img src="icon.png" width="128" alt="File Organizer"></p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-preview-58A6FF?style=for-the-badge">
+  <img alt="Version" src="https://img.shields.io/badge/version-8.1.0-58A6FF?style=for-the-badge">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-4ade80?style=for-the-badge">
   <img alt="Platform" src="https://img.shields.io/badge/platform-Python%20GUI-58A6FF?style=for-the-badge">
 </p>
@@ -10,14 +10,14 @@
 
 # FileOrganizer
 
-![Version](https://img.shields.io/badge/version-7.5.0-blue)
+![Version](https://img.shields.io/badge/version-8.1.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
 ![Status](https://img.shields.io/badge/status-active-success)
-![AI Powered](https://img.shields.io/badge/AI-Ollama%20LLM-e879f9)
+![AI Powered](https://img.shields.io/badge/AI-DeepSeek%20%7C%20GitHub%20Models%20%7C%20Ollama-e879f9)
 
-> AI-powered desktop tool that automatically classifies, renames, and organizes files and folders using a local LLM, a 7-level rule engine, cleanup tools, duplicate detection, and a premium dark-themed GUI.
+> AI-powered desktop tool that automatically classifies, renames, and organizes design asset folders at scale using multi-provider AI (DeepSeek, GitHub Models, Ollama), a community fingerprint database, and a robust CLI batch runner with undo support.
 
 ![Screenshot](screenshot.png)
 
@@ -177,7 +177,51 @@ fileorganizer/
 └── main_window.py       # Main application window
 ```
 
+## CLI Batch Runner (v8+)
+
+```bash
+# AE pipeline (I:\After Effects → G:\Organized)
+python organize_run.py --stats                    # Show all classified batches
+python organize_run.py --preview --quiet          # Dry run: see what would move
+python organize_run.py --apply --quiet            # Apply all moves
+python organize_run.py --retry-errors             # Retry failed items
+
+# Design pipeline (G:\Design Unorganized → G:\Organized)
+python organize_run.py --source design --preview --quiet
+python organize_run.py --source design --apply --quiet
+
+# Undo support
+python organize_run.py --undo-last 10             # Reverse last 10 moves
+python organize_run.py --undo-all                 # Reverse everything
+
+# Validate sources before moving
+python organize_run.py --validate                 # Report trailing-space/long-path issues
+```
+
+## Community Fingerprint Database (v8.1+)
+
+```bash
+python asset_db.py --build G:\Organized          # Hash every file, build SQLite DB
+python asset_db.py --stats                       # Show DB summary
+python asset_db.py --export                      # Export asset_fingerprints.json
+python asset_db.py --lookup "path/to/folder"     # Look up a folder in the DB
+```
+
+The fingerprint DB enables any FileOrganizer user to match their locally-downloaded templates against a community-curated catalog of already-classified assets by SHA-256 hash — getting clean names and categories instantly without an AI API call.
+
 ## Configuration
+
+### AI Providers (v8+)
+
+Click **Settings > AI Providers** to configure:
+
+| Provider | Use | Model |
+|----------|-----|-------|
+| DeepSeek | Heavy classification batches | `deepseek-chat` |
+| GitHub Models | Fast lightweight checks | `claude-3-5-haiku` |
+| Ollama | Local/offline fallback | Any local model |
+
+Set `DEEPSEEK_API_KEY` in your environment to enable DeepSeek routing.
 
 ### Ollama Settings
 
@@ -196,7 +240,6 @@ Click **Settings > Ollama LLM** to configure:
 | `qwen2.5:7b` | 4.7 GB | Medium | Best | `ollama pull qwen2.5:7b` |
 | `llama3.2:3b` | 2.0 GB | Fastest | Good | `ollama pull llama3.2:3b` |
 | `gemma3:4b` | 3.3 GB | Fast | Good | `ollama pull gemma3:4b` |
-| `mistral:7b` | 4.1 GB | Medium | Good | `ollama pull mistral:7b` |
 
 ### Themes
 
@@ -208,28 +251,23 @@ Click **Settings > Color Theme** to choose from 6 dark themes with live preview:
 - **Nord** — Arctic blue-gray palette
 - **Dracula** — Classic purple-accented dark theme
 
-### Protected Paths
+## Architecture (v8+)
 
-Click **Settings > Protected Paths** to manage system folder protection. Platform-aware defaults include Windows system directories, AppData, and common dotfiles. Custom paths can be added.
-
-## Prerequisites
-
-- **Python 3.10+**
-- **8 GB RAM** minimum (for Ollama LLM models)
-- **~5 GB disk space** for the default `qwen2.5:7b` model
-- **Internet connection** for first launch only (Ollama install + model download)
-- Works without Ollama — falls back to rule-based engine automatically
-
-Auto-installed dependencies: PyQt6, rapidfuzz, psd-tools, Pillow, and more.
-
-## CLI Usage
-
-```bash
-python run.py                                    # Launch GUI
-python run.py --source "C:/Users/You/Downloads"  # Auto-scan a folder
-python run.py --profile MyProfile --auto-apply   # Automated profile scan
-python run.py --dry-run --profile MyProfile --auto-apply  # Simulate without moving
-python -m fileorganizer                           # Alternative launch
+```
+FileOrganizer/
+├── fileorganizer/           # GUI package
+│   ├── providers.py         # Multi-provider AI router (DeepSeek, GitHub Models, Ollama)
+│   ├── catalog.py           # Marketplace lookup + fingerprint DB pre-check
+│   ├── archive_extractor.py # ZIP/RAR/7z inspection without full extraction
+│   ├── categories.py        # 84+ canonical category definitions
+│   ├── workers.py           # QThread workers
+│   └── main_window.py       # Main GUI window
+├── organize_run.py          # CLI batch runner (Phase 1+2 apply)
+├── classify_design.py       # DeepSeek batch classifier for design assets
+├── asset_db.py              # Community SHA-256 fingerprint DB
+├── org_index.json           # Master index: I:\After Effects items
+├── design_unorg_index.json  # Master index: G:\Design Unorganized items
+└── classification_results/  # batch_NNN.json + design_batch_NNN.json outputs
 ```
 
 ## FAQ
@@ -238,9 +276,11 @@ python -m fileorganizer                           # Alternative launch
 
 **LLM shows "unavailable"** — Start the server manually: `ollama serve`, then restart.
 
-**Classification is slow** — Each item takes 2-5s with LLM. Use rule-based mode (uncheck LLM) for bulk scans. A GPU (RTX 3060+) processes items in under 1s.
+**Classification is slow** — Use DeepSeek for bulk batches (60 items/call, ~1-2s). Ollama is per-item; use it only for small jobs.
 
 **How do I add categories?** — Settings > Edit Categories. Add categories with keywords. Saved to JSON and available immediately.
+
+**Why position-based batch mapping?** — AI agents may clean or reformat folder names in their response. The only reliable mapping is by position: `batch_NNN.json[i]` always corresponds to `org_index[(N-1)*60 + i]` regardless of name changes.
 
 ## Related Tools
 
@@ -253,7 +293,7 @@ If you want tag-based organization with hierarchical tags, TMDb/TVMaze metadata,
 
 ## Contributing
 
-Issues and PRs welcome. The codebase is modular — categories in `categories.py`, classification in `classifier.py`, UI in `main_window.py` and `dialogs.py`.
+Issues and PRs welcome. The codebase is modular — categories in `categories.py`, classification in `catalog.py`, UI in `main_window.py`.
 
 ## License
 
