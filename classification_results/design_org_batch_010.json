@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Cover Action Pro 2.0",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Cover Action Pro 2.0",
+    "confidence": 95,
+    "notes": "Legacy category indicates Photoshop actions, files are .atn (Photoshop action format)",
+    "_source_name": "Cover Action Pro 2.0",
+    "_batch_index": 540
+  },
+  {
+    "name": "Cover Action Pro 2.5",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Cover Action Pro 2.5",
+    "confidence": 95,
+    "notes": "Same as above, .atn files",
+    "_source_name": "Cover Action Pro 2.5",
+    "_batch_index": 541
+  },
+  {
+    "name": "CoverAction Pro",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "CoverAction Pro",
+    "confidence": 80,
+    "notes": "Legacy category suggests action set, though files are .db and .pdf",
+    "_source_name": "CoverAction Pro",
+    "_batch_index": 542
+  },
+  {
+    "name": "24 Business Facebook Covers",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "24 Business Facebook Covers",
+    "confidence": 85,
+    "notes": "Facebook covers are social media graphics, .jpeg files",
+    "_source_name": "24 Business Facebook Covers",
+    "_batch_index": 543
+  },
+  {
+    "name": "6-Business-Facebook-Covers",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "6 Business Facebook Covers",
+    "confidence": 85,
+    "notes": "Facebook covers, .png files",
+    "_source_name": "6-Business-Facebook-Covers",
+    "_batch_index": 544
+  },
+  {
+    "name": "6-Business-Facebook-Covers (1)",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "6 Business Facebook Covers (1)",
+    "confidence": 85,
+    "notes": "Facebook covers with .psd and .txt",
+    "_source_name": "6-Business-Facebook-Covers (1)",
+    "_batch_index": 545
+  },
+  {
+    "name": "6-Business-Facebook-Covers (1) (1)",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "6 Business Facebook Covers (1) (1)",
+    "confidence": 85,
+    "notes": "Facebook covers, .png files",
+    "_source_name": "6-Business-Facebook-Covers (1) (1)",
+    "_batch_index": 546
+  },
+  {
+    "name": "6-Business-Facebook-Covers (2)",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "6 Business Facebook Covers (2)",
+    "confidence": 85,
+    "notes": "Facebook covers, .png files",
+    "_source_name": "6-Business-Facebook-Covers (2)",
+    "_batch_index": 547
+  },
+  {
+    "name": "6-Business-Facebook-Covers (2) (1)",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "6 Business Facebook Covers (2) (1)",
+    "confidence": 85,
+    "notes": "Facebook covers with .jpg, .psd, .txt",
+    "_source_name": "6-Business-Facebook-Covers (2) (1)",
+    "_batch_index": 548
+  },
+  {
+    "name": "6-Business-Facebook-Covers (3)",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "6 Business Facebook Covers (3)",
+    "confidence": 85,
+    "notes": "Facebook covers, .png files",
+    "_source_name": "6-Business-Facebook-Covers (3)",
+    "_batch_index": 549
+  },
+  {
+    "name": "6-Business-Facebook-Covers (4)",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "6 Business Facebook Covers (4)",
+    "confidence": 85,
+    "notes": "Facebook covers, .png files",
+    "_source_name": "6-Business-Facebook-Covers (4)",
+    "_batch_index": 550
+  },
+  {
+    "name": "flag-creator-108604",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Flag Creator",
+    "confidence": 80,
+    "notes": "Legacy category 'Flags', contains .psd template for flag creation",
+    "_source_name": "flag-creator-108604",
+    "_batch_index": 551
+  },
+  {
+    "name": "GraphicRiver - Rippled Flag Generator 2830574 GFXTRA.COM!",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Rippled Flag Generator",
+    "confidence": 80,
+    "notes": "Flag generator template, .psd file",
+    "_source_name": "GraphicRiver - Rippled Flag Generator 2830574 GFXTRA.COM!",
+    "_batch_index": 552
+  },
+  {
+    "name": "CreativeMarket - Sun Flare Overlays Photoshop 4942999",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Sun Flare Overlays Photoshop",
+    "confidence": 95,
+    "notes": "Legacy category 'Flares', Photoshop overlays",
+    "_source_name": "CreativeMarket - Sun Flare Overlays Photoshop 4942999",
+    "_batch_index": 553
+  },
+  {
+    "name": "Eyes Flare II",
+    "category": "After Effects - Other",
+    "clean_name": "Eyes Flare II",
+    "confidence": 70,
+    "notes": "Contains .aep file, likely an AE project with flare effects",
+    "_source_name": "Eyes Flare II",
+    "_batch_index": 554
+  },
+  {
+    "name": "Lens Flare Overlays 2295180",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Lens Flare Overlays",
+    "confidence": 95,
+    "notes": "Legacy category 'Flares', contains .jpg and .pdf, overlay set",
+    "_source_name": "Lens Flare Overlays 2295180",
+    "_batch_index": 555
+  },
+  {
+    "name": "Video Copilot Optical Flares",
+    "category": "Plugins & Extensions",
+    "clean_name": "Video Copilot Optical Flares",
+    "confidence": 90,
+    "notes": "Famous AE plugin, .dmg installer",
+    "_source_name": "Video Copilot Optical Flares",
+    "_batch_index": 556
+  },
+  {
+    "name": "JPEG",
+    "category": "Stock Photos - General",
+    "clean_name": "JPEG",
+    "confidence": 60,
+    "notes": "Only .jpg files, likely stock images from Flat Design Concepts Package",
+    "_source_name": "JPEG",
+    "_batch_index": 557
+  },
+  {
+    "name": "PSD",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "PSD",
+    "confidence": 70,
+    "notes": "Contains .psd files with web development/graphic design themes",
+    "_source_name": "PSD",
+    "_batch_index": 558
+  },
+  {
+    "name": "Wismay - Modern Script Font",
+    "category": "Fonts & Typography",
+    "clean_name": "Wismay Modern Script Font",
+    "confidence": 95,
+    "notes": "Legacy category 'Fonts', script font",
+    "_source_name": "Wismay - Modern Script Font",
+    "_batch_index": 559
+  },
+  {
+    "name": "World´s largest font collection 600 000+",
+    "category": "Fonts & Typography",
+    "clean_name": "World's Largest Font Collection",
+    "confidence": 90,
+    "notes": "Legacy category 'Fonts', contains .fon and other font files",
+    "_source_name": "World´s largest font collection 600 000+",
+    "_batch_index": 560
+  },
+  {
+    "name": "3-forms-for-web-136393",
+    "category": "Web Template",
+    "clean_name": "3 Forms for Web",
+    "confidence": 80,
+    "notes": "Legacy category 'Forms', contains web form templates",
+    "_source_name": "3-forms-for-web-136393",
+    "_batch_index": 561
+  },
+  {
+    "name": "CM - Session Contract Form Template SC002 2281562",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Session Contract Form Template",
+    "confidence": 75,
+    "notes": "Legacy category 'Forms', contract template likely printable",
+    "_source_name": "CM - Session Contract Form Template SC002 2281562",
+    "_batch_index": 562
+  },
+  {
+    "name": "Form Poster Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Form Poster Flyer",
+    "confidence": 85,
+    "notes": "Legacy category 'Forms', contains .psd flyer/poster",
+    "_source_name": "Form Poster Flyer",
+    "_batch_index": 563
+  },
+  {
+    "name": "Formal-Invitation-Template_Psd",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Formal Invitation Template",
+    "confidence": 90,
+    "notes": "Legacy category 'Forms', invitation template in .psd",
+    "_source_name": "Formal-Invitation-Template_Psd",
+    "_batch_index": 564
+  },
+  {
+    "name": "GraphicRiver - Form Poster Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Form Poster Flyer",
+    "confidence": 85,
+    "notes": "Same as item 24, flyer/poster template",
+    "_source_name": "GraphicRiver - Form Poster Flyer",
+    "_batch_index": 565
+  },
+  {
+    "name": "GraphicRiver - Pro Login Forms",
+    "category": "Web Template",
+    "clean_name": "Pro Login Forms",
+    "confidence": 85,
+    "notes": "Legacy category 'Forms', login form design for web",
+    "_source_name": "GraphicRiver - Pro Login Forms",
+    "_batch_index": 566
+  },
+  {
+    "name": "graphicriver-10379487-registration-form",
+    "category": "Web Template",
+    "clean_name": "Registration Form",
+    "confidence": 85,
+    "notes": "Registration form template with multiple file formats",
+    "_source_name": "graphicriver-10379487-registration-form",
+    "_batch_index": 567
+  },
+  {
+    "name": "professional-login-form-design-in-9-colorstyles-130525-GFXTRA.COM-ARSENIC",
+    "category": "Web Template",
+    "clean_name": "Professional Login Form Design",
+    "confidence": 85,
+    "notes": "Login form design, .psd files",
+    "_source_name": "professional-login-form-design-in-9-colorstyles-130525-GFXTRA.COM-ARSENIC",
+    "_batch_index": 568
+  },
+  {
+    "name": "Quality_Of_Design_User_Registration_Form_Template",
+    "category": "Web Template",
+    "clean_name": "User Registration Form Template",
+    "confidence": 85,
+    "notes": "Registration form template, .psd",
+    "_source_name": "Quality_Of_Design_User_Registration_Form_Template",
+    "_batch_index": 569
+  },
+  {
+    "name": "River_FormPosterFlyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Form Poster Flyer",
+    "confidence": 85,
+    "notes": "Flyer/poster template, .psd",
+    "_source_name": "River_FormPosterFlyer",
+    "_batch_index": 570
+  },
+  {
+    "name": "Sleek Login Forms 520857",
+    "category": "Web Template",
+    "clean_name": "Sleek Login Forms",
+    "confidence": 85,
+    "notes": "Login form templates",
+    "_source_name": "Sleek Login Forms 520857",
+    "_batch_index": 571
+  },
+  {
+    "name": "GoMedia Arsenal Font Collection",
+    "category": "Fonts & Typography",
+    "clean_name": "GoMedia Arsenal Font Collection",
+    "confidence": 95,
+    "notes": "Legacy category indicates font collection",
+    "_source_name": "GoMedia Arsenal Font Collection",
+    "_batch_index": 572
+  },
+  {
+    "name": "GoMedia_Arsenal_1-17",
+    "category": "Fonts & Typography",
+    "clean_name": "GoMedia Arsenal 1-17",
+    "confidence": 95,
+    "notes": "Font collection with multiple formats",
+    "_source_name": "GoMedia_Arsenal_1-17",
+    "_batch_index": 573
+  },
+  {
+    "name": "114-flat-round-icons",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "114 Flat Round Icons",
+    "confidence": 85,
+    "notes": "Legacy category 'Icons', flat icons in .png and .psd",
+    "_source_name": "114-flat-round-icons",
+    "_batch_index": 574
+  },
+  {
+    "name": "11453830-flat-animated-icons-library- last-update-29-June-18",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Flat Animated Icons Library",
+    "confidence": 80,
+    "notes": "Animated icons, likely AE project",
+    "_source_name": "11453830-flat-animated-icons-library- last-update-29-June-18",
+    "_batch_index": 575
+  },
+  {
+    "name": "150-business-application-icons-85303",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "150 Business Application Icons",
+    "confidence": 85,
+    "notes": "Business icons, .png and .jpg",
+    "_source_name": "150-business-application-icons-85303",
+    "_batch_index": 576
+  },
+  {
+    "name": "20 Chalkboard Insta Stories Icons",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "20 Chalkboard Insta Stories Icons",
+    "confidence": 85,
+    "notes": "Icons for Instagram Stories",
+    "_source_name": "20 Chalkboard Insta Stories Icons",
+    "_batch_index": 577
+  },
+  {
+    "name": "20-flat-icons",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "20 Flat Icons",
+    "confidence": 85,
+    "notes": "Flat icons in .png and .psd",
+    "_source_name": "20-flat-icons",
+    "_batch_index": 578
+  },
+  {
+    "name": "20-hotel-restaurant-icons",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "20 Hotel Restaurant Icons",
+    "confidence": 85,
+    "notes": "Hotel/restaurant themed icons",
+    "_source_name": "20-hotel-restaurant-icons",
+    "_batch_index": 579
+  },
+  {
+    "name": "24-Linear-Icons-and-seamless-pattern",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "24 Linear Icons and Seamless Pattern",
+    "confidence": 85,
+    "notes": "Linear icons with pattern, .ai/.eps",
+    "_source_name": "24-Linear-Icons-and-seamless-pattern",
+    "_batch_index": 580
+  },
+  {
+    "name": "30-linear-icons",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "30 Linear Icons",
+    "confidence": 85,
+    "notes": "Linear icons in vector formats",
+    "_source_name": "30-linear-icons",
+    "_batch_index": 581
+  },
+  {
+    "name": "300-line-animated-icons NWQ4YzUxOTcyMWJhMTMwMDNkYTUzYzM0",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "300 Line Animated Icons",
+    "confidence": 85,
+    "notes": "Animated icons, .aep and .mp4 files",
+    "_source_name": "300-line-animated-icons NWQ4YzUxOTcyMWJhMTMwMDNkYTUzYzM0",
+    "_batch_index": 582
+  },
+  {
+    "name": "3d-achievement-medals-and-icons-customizable-110375",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "3D Achievement Medals and Icons",
+    "confidence": 80,
+    "notes": "3D style icons, .psd",
+    "_source_name": "3d-achievement-medals-and-icons-customizable-110375",
+    "_batch_index": 583
+  },
+  {
+    "name": "50-cool-matte-icons-37836",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "50 Cool Matte Icons",
+    "confidence": 85,
+    "notes": "Matte icons in multiple formats",
+    "_source_name": "50-cool-matte-icons-37836",
+    "_batch_index": 584
+  },
+  {
+    "name": "80-web-ribbon-icons-154879",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "80 Web Ribbon Icons",
+    "confidence": 85,
+    "notes": "Web ribbon icons",
+    "_source_name": "80-web-ribbon-icons-154879",
+    "_batch_index": 585
+  },
+  {
+    "name": "Animated Icons V 1-0",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Animated Icons V 1.0",
+    "confidence": 80,
+    "notes": "Animated icons in .mov format",
+    "_source_name": "Animated Icons V 1-0",
+    "_batch_index": 586
+  },
+  {
+    "name": "Apparel Icons Vol 01",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Apparel Icons Vol 01",
+    "confidence": 85,
+    "notes": "Apparel themed icons",
+    "_source_name": "Apparel Icons Vol 01",
+    "_batch_index": 587
+  },
+  {
+    "name": "Character Avatar Icons - Modern",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Character Avatar Icons Modern",
+    "confidence": 85,
+    "notes": "Avatar icons",
+    "_source_name": "Character Avatar Icons - Modern",
+    "_batch_index": 588
+  },
+  {
+    "name": "cheese-icon-113796",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Cheese Icon",
+    "confidence": 85,
+    "notes": "Single cheese icon, .psd",
+    "_source_name": "cheese-icon-113796",
+    "_batch_index": 589
+  },
+  {
+    "name": "cheese-icon-113796-GFXTRA.COM-ARSENIC",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Cheese Icon",
+    "confidence": 85,
+    "notes": "Same cheese icon",
+    "_source_name": "cheese-icon-113796-GFXTRA.COM-ARSENIC",
+    "_batch_index": 590
+  },
+  {
+    "name": "CM - Outline Icons Pack 2119231",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Outline Icons Pack",
+    "confidence": 85,
+    "notes": "Outline icons pack",
+    "_source_name": "CM - Outline Icons Pack 2119231",
+    "_batch_index": 591
+  },
+  {
+    "name": "Cosmetics-and-beauty-icons",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Cosmetics and Beauty Icons",
+    "confidence": 85,
+    "notes": "Beauty icons in vector formats",
+    "_source_name": "Cosmetics-and-beauty-icons",
+    "_batch_index": 592
+  },
+  {
+    "name": "CreativeMarket - icons-1200 vector pack",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "1200 Vector Icons Pack",
+    "confidence": 85,
+    "notes": "Large icon pack",
+    "_source_name": "CreativeMarket - icons-1200 vector pack",
+    "_batch_index": 593
+  },
+  {
+    "name": "CreativeMarket - Simple Line Icons Pro",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Simple Line Icons Pro",
+    "confidence": 85,
+    "notes": "Line icons in multiple formats",
+    "_source_name": "CreativeMarket - Simple Line Icons Pro",
+    "_batch_index": 594
+  },
+  {
+    "name": "CreativeMarket - The Icon Bundle 1000",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "The Icon Bundle 1000",
+    "confidence": 85,
+    "notes": "Icon bundle",
+    "_source_name": "CreativeMarket - The Icon Bundle 1000",
+    "_batch_index": 595
+  },
+  {
+    "name": "Deposit-Credit-Animation-Icons-29201860-110x75",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Deposit Credit Animation Icons",
+    "confidence": 70,
+    "notes": "Animated icons, likely AE, but only .jpg preview",
+    "_source_name": "Deposit-Credit-Animation-Icons-29201860-110x75",
+    "_batch_index": 596
+  },
+  {
+    "name": "Education-flat-icons",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Education Flat Icons",
+    "confidence": 85,
+    "notes": "Education icons in vector formats",
+    "_source_name": "Education-flat-icons",
+    "_batch_index": 597
+  },
+  {
+    "name": "freshy-icons-156559",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Freshy Icons",
+    "confidence": 85,
+    "notes": "Icon set",
+    "_source_name": "freshy-icons-156559",
+    "_batch_index": 598
+  },
+  {
+    "name": "freshy-icons-156559-GFXTRA.COM-ARSENIC",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "Freshy Icons",
+    "confidence": 85,
+    "notes": "Same icon set",
+    "_source_name": "freshy-icons-156559-GFXTRA.COM-ARSENIC",
+    "_batch_index": 599
+  }
+]

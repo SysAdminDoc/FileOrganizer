@@ -1,0 +1,542 @@
+[
+  {
+    "name": "CM - Help Post Card Template 589722",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Help Post Card Template",
+    "confidence": 90,
+    "notes": "Post card template in PSD, legacy category Cards maps to Print - Flyers & Posters",
+    "_source_name": "CM - Help Post Card Template 589722",
+    "_batch_index": 300
+  },
+  {
+    "name": "CM - HomeCare Post Card Template 589719",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "HomeCare Post Card Template",
+    "confidence": 90,
+    "notes": "Post card template in PSD, legacy category Cards",
+    "_source_name": "CM - HomeCare Post Card Template 589719",
+    "_batch_index": 301
+  },
+  {
+    "name": "CM - ID Card 611808",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template, legacy category Cards, but ID cards are business/stationery",
+    "_source_name": "CM - ID Card 611808",
+    "_batch_index": 302
+  },
+  {
+    "name": "CM - Invitation Card Template 2153238",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Invitation Card Template",
+    "confidence": 90,
+    "notes": "Invitation card, legacy category Cards",
+    "_source_name": "CM - Invitation Card Template 2153238",
+    "_batch_index": 303
+  },
+  {
+    "name": "CM - Kebab Post Card Template 589725",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Kebab Post Card Template",
+    "confidence": 90,
+    "notes": "Post card template in PSD",
+    "_source_name": "CM - Kebab Post Card Template 589725",
+    "_batch_index": 304
+  },
+  {
+    "name": "CM - Minimalist professional elegant card 2223118",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Minimalist Professional Elegant Card",
+    "confidence": 85,
+    "notes": "Includes .otf and .psd, likely business card, legacy category Cards",
+    "_source_name": "CM - Minimalist professional elegant card 2223118",
+    "_batch_index": 305
+  },
+  {
+    "name": "CM - Modeling Comp Card V04 1944105",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Modeling Comp Card V04",
+    "confidence": 85,
+    "notes": "Modeling comp card is a type of business card, legacy category Cards",
+    "_source_name": "CM - Modeling Comp Card V04 1944105",
+    "_batch_index": 306
+  },
+  {
+    "name": "CM - Multipurpose Minimal - Bizz Card 1 5388",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Multipurpose Minimal Bizz Card",
+    "confidence": 95,
+    "notes": "Bizz Card = Business Card, PSD files",
+    "_source_name": "CM - Multipurpose Minimal - Bizz Card 1 5388",
+    "_batch_index": 307
+  },
+  {
+    "name": "CM - PINK COLLAGE GREETING CARDS 2261516",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Pink Collage Greeting Cards",
+    "confidence": 85,
+    "notes": "Greeting cards, legacy category Cards",
+    "_source_name": "CM - PINK COLLAGE GREETING CARDS 2261516",
+    "_batch_index": 308
+  },
+  {
+    "name": "CM - Post Card 37 2372589",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Post Card 37",
+    "confidence": 90,
+    "notes": "Post card template, legacy category Cards",
+    "_source_name": "CM - Post Card 37 2372589",
+    "_batch_index": 309
+  },
+  {
+    "name": "CM - PSD Photo Rack Card Template 2 2140389",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "PSD Photo Rack Card Template 2",
+    "confidence": 90,
+    "notes": "Rack card is a type of flyer/postcard",
+    "_source_name": "CM - PSD Photo Rack Card Template 2 2140389",
+    "_batch_index": 310
+  },
+  {
+    "name": "CM - PSD Photo Rack Card Template 4 2140445",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "PSD Photo Rack Card Template 4",
+    "confidence": 90,
+    "notes": "Rack card template",
+    "_source_name": "CM - PSD Photo Rack Card Template 4 2140445",
+    "_batch_index": 311
+  },
+  {
+    "name": "CM - RoyalSpa Post Card Template 589716",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "RoyalSpa Post Card Template",
+    "confidence": 90,
+    "notes": "Post card template in PSD",
+    "_source_name": "CM - RoyalSpa Post Card Template 589716",
+    "_batch_index": 312
+  },
+  {
+    "name": "CM - Simple elegant pinkish card 2223104",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Simple Elegant Pinkish Card",
+    "confidence": 85,
+    "notes": "Includes .otf and .psd, likely business card",
+    "_source_name": "CM - Simple elegant pinkish card 2223104",
+    "_batch_index": 313
+  },
+  {
+    "name": "codegrape-10982-id-card",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template in PSD",
+    "_source_name": "codegrape-10982-id-card",
+    "_batch_index": 314
+  },
+  {
+    "name": "coming-soon-pregnancy-announcement-card-template Psd",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Coming Soon Pregnancy Announcement Card Template",
+    "confidence": 90,
+    "notes": "Announcement card, legacy category Cards",
+    "_source_name": "coming-soon-pregnancy-announcement-card-template Psd",
+    "_batch_index": 315
+  },
+  {
+    "name": "Conference Post Card PSD Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Conference Post Card PSD Template",
+    "confidence": 90,
+    "notes": "Post card for conference",
+    "_source_name": "Conference Post Card PSD Template",
+    "_batch_index": 316
+  },
+  {
+    "name": "construction-business-card-design",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Construction Business Card Design",
+    "confidence": 95,
+    "notes": "Business card design in PSD",
+    "_source_name": "construction-business-card-design",
+    "_batch_index": 317
+  },
+  {
+    "name": "CreativeMarket Post Card 36 2372484",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "CreativeMarket Post Card 36",
+    "confidence": 90,
+    "notes": "Post card in AI/EPS",
+    "_source_name": "CreativeMarket Post Card 36 2372484",
+    "_batch_index": 318
+  },
+  {
+    "name": "CreativeMarket PSD Photo Rack Card Template 1 2140334",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "PSD Photo Rack Card Template 1",
+    "confidence": 90,
+    "notes": "Rack card template",
+    "_source_name": "CreativeMarket PSD Photo Rack Card Template 1 2140334",
+    "_batch_index": 319
+  },
+  {
+    "name": "Dark Bussines Card Template-19102018",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Dark Business Card Template",
+    "confidence": 95,
+    "notes": "Business card template",
+    "_source_name": "Dark Bussines Card Template-19102018",
+    "_batch_index": 320
+  },
+  {
+    "name": "Department-Store-ID-Card-Template Psd",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Department Store ID Card Template",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "Department-Store-ID-Card-Template Psd",
+    "_batch_index": 321
+  },
+  {
+    "name": "Designer Card",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Designer Card",
+    "confidence": 85,
+    "notes": "PSD file, likely business card",
+    "_source_name": "Designer Card",
+    "_batch_index": 322
+  },
+  {
+    "name": "DesignOptimal.com - ID Card 6CB8C3D",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "DesignOptimal.com - ID Card 6CB8C3D",
+    "_batch_index": 323
+  },
+  {
+    "name": "DesignOptimal.com - ID Card 89938SX",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "DesignOptimal.com - ID Card 89938SX",
+    "_batch_index": 324
+  },
+  {
+    "name": "Digital Products Postcard PSD Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Digital Products Postcard PSD Template",
+    "confidence": 90,
+    "notes": "Postcard template",
+    "_source_name": "Digital Products Postcard PSD Template",
+    "_batch_index": 325
+  },
+  {
+    "name": "Discount-Coupon-Card-Template Psd",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Discount Coupon Card Template",
+    "confidence": 85,
+    "notes": "Coupon card, similar to flyer",
+    "_source_name": "Discount-Coupon-Card-Template Psd",
+    "_batch_index": 326
+  },
+  {
+    "name": "Double Sided Invitation Cards",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Double Sided Invitation Cards",
+    "confidence": 95,
+    "notes": "Invitation cards",
+    "_source_name": "Double Sided Invitation Cards",
+    "_batch_index": 327
+  },
+  {
+    "name": "elements-12-editable-recipe-cards-3JQ2K4L-2019-10-02",
+    "category": "Print - Other",
+    "clean_name": "12 Editable Recipe Cards",
+    "confidence": 85,
+    "notes": "Recipe cards, not fitting other print subcategories exactly",
+    "_source_name": "elements-12-editable-recipe-cards-3JQ2K4L-2019-10-02",
+    "_batch_index": 328
+  },
+  {
+    "name": "elements-art-director-greeting-card-8GT3JD7-2020-05-10",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Art Director Greeting Card",
+    "confidence": 85,
+    "notes": "Greeting card",
+    "_source_name": "elements-art-director-greeting-card-8GT3JD7-2020-05-10",
+    "_batch_index": 329
+  },
+  {
+    "name": "elements-charlotte-hairstyle-postcard-template-2MSF4HW-2019-07-03-sk",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Charlotte Hairstyle Postcard Template",
+    "confidence": 90,
+    "notes": "Postcard template",
+    "_source_name": "elements-charlotte-hairstyle-postcard-template-2MSF4HW-2019-07-03-sk",
+    "_batch_index": 330
+  },
+  {
+    "name": "elements-creative-agency-postcard-GYQAPT4-2019-04-10",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Creative Agency Postcard",
+    "confidence": 90,
+    "notes": "Postcard",
+    "_source_name": "elements-creative-agency-postcard-GYQAPT4-2019-04-10",
+    "_batch_index": 331
+  },
+  {
+    "name": "elements-dent-bussines-card-gr-9DM5B5Y-2019-12-28",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Dent Business Card",
+    "confidence": 95,
+    "notes": "Business card",
+    "_source_name": "elements-dent-bussines-card-gr-9DM5B5Y-2019-12-28",
+    "_batch_index": 332
+  },
+  {
+    "name": "elements-drone-product-showcase-dl-rack-card-LMK3P4D-2019-09-12",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Drone Product Showcase DL Rack Card",
+    "confidence": 90,
+    "notes": "Rack card",
+    "_source_name": "elements-drone-product-showcase-dl-rack-card-LMK3P4D-2019-09-12",
+    "_batch_index": 333
+  },
+  {
+    "name": "elements-id-card-HDJW3WG-2020-12-27",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "elements-id-card-HDJW3WG-2020-12-27",
+    "_batch_index": 334
+  },
+  {
+    "name": "elements-id-card-template-DXPM4L-2019-02-24",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Template",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "elements-id-card-template-DXPM4L-2019-02-24",
+    "_batch_index": 335
+  },
+  {
+    "name": "elements-id-card-template-YFUGA8-2018-03-20",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Template",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "elements-id-card-template-YFUGA8-2018-03-20",
+    "_batch_index": 336
+  },
+  {
+    "name": "elements-id-card-vol-5-CLUGQVD-2020-02-25",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Vol 5",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "elements-id-card-vol-5-CLUGQVD-2020-02-25",
+    "_batch_index": 337
+  },
+  {
+    "name": "elements-id-card-vol-6-Y2MYXL2-2020-02-27",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "ID Card Vol 6",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "elements-id-card-vol-6-Y2MYXL2-2020-02-27",
+    "_batch_index": 338
+  },
+  {
+    "name": "elements-invitation-post-card-AHAEJR-2018-02-28",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Invitation Post Card",
+    "confidence": 90,
+    "notes": "Invitation postcard",
+    "_source_name": "elements-invitation-post-card-AHAEJR-2018-02-28",
+    "_batch_index": 339
+  },
+  {
+    "name": "elements-lovaed-creative-black-friday-postcard-hr-BRGVVG4-2020-01-27",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Lovaed Creative Black Friday Postcard",
+    "confidence": 90,
+    "notes": "Postcard",
+    "_source_name": "elements-lovaed-creative-black-friday-postcard-hr-BRGVVG4-2020-01-27",
+    "_batch_index": 340
+  },
+  {
+    "name": "elements-minimal-postcard-template-23447J-2018-03-07",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Minimal Postcard Template",
+    "confidence": 90,
+    "notes": "Postcard template",
+    "_source_name": "elements-minimal-postcard-template-23447J-2018-03-07",
+    "_batch_index": 341
+  },
+  {
+    "name": "elements-name-card-6AUWT7F-2020-02-28",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Name Card",
+    "confidence": 90,
+    "notes": "Name card = business card",
+    "_source_name": "elements-name-card-6AUWT7F-2020-02-28",
+    "_batch_index": 342
+  },
+  {
+    "name": "elements-photographer-rack-card-pricing-guide-TR6MGSK-2019-10-16",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Photographer Rack Card Pricing Guide",
+    "confidence": 90,
+    "notes": "Rack card",
+    "_source_name": "elements-photographer-rack-card-pricing-guide-TR6MGSK-2019-10-16",
+    "_batch_index": 343
+  },
+  {
+    "name": "elements-postcard-9NE3TJ-2019-02-05",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Postcard",
+    "confidence": 90,
+    "notes": "Postcard in EPS",
+    "_source_name": "elements-postcard-9NE3TJ-2019-02-05",
+    "_batch_index": 344
+  },
+  {
+    "name": "elements-postcard-XEC9M39-2020-02-13",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Postcard",
+    "confidence": 90,
+    "notes": "Postcard",
+    "_source_name": "elements-postcard-XEC9M39-2020-02-13",
+    "_batch_index": 345
+  },
+  {
+    "name": "elements-properties-postcard-RZKEGC-2018-07-24",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Properties Postcard",
+    "confidence": 90,
+    "notes": "Postcard in InDesign",
+    "_source_name": "elements-properties-postcard-RZKEGC-2018-07-24",
+    "_batch_index": 346
+  },
+  {
+    "name": "elements-save-the-date-post-card-3GXKDV4-2019-10-08",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date Post Card",
+    "confidence": 90,
+    "notes": "Save the date card",
+    "_source_name": "elements-save-the-date-post-card-3GXKDV4-2019-10-08",
+    "_batch_index": 347
+  },
+  {
+    "name": "elements-save-the-date-post-card-7QENDF5-2019-10-10",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date Post Card",
+    "confidence": 90,
+    "notes": "Save the date card",
+    "_source_name": "elements-save-the-date-post-card-7QENDF5-2019-10-10",
+    "_batch_index": 348
+  },
+  {
+    "name": "elements-save-the-date-post-card-9LRCNDQ-2019-10-10",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date Post Card",
+    "confidence": 90,
+    "notes": "Save the date card",
+    "_source_name": "elements-save-the-date-post-card-9LRCNDQ-2019-10-10",
+    "_batch_index": 349
+  },
+  {
+    "name": "elements-save-the-date-post-card-DTHQVS-2018-03-15",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date Post Card",
+    "confidence": 90,
+    "notes": "Save the date card",
+    "_source_name": "elements-save-the-date-post-card-DTHQVS-2018-03-15",
+    "_batch_index": 350
+  },
+  {
+    "name": "elements-simple-bussiness-card-HR4NVQ9-2019-07-13",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Simple Business Card",
+    "confidence": 95,
+    "notes": "Business card",
+    "_source_name": "elements-simple-bussiness-card-HR4NVQ9-2019-07-13",
+    "_batch_index": 351
+  },
+  {
+    "name": "elements-vintage-postcard-flyer-vol-04-Q4VNP87-2020-05-30",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Vintage Postcard Flyer Vol 04",
+    "confidence": 90,
+    "notes": "Postcard flyer",
+    "_source_name": "elements-vintage-postcard-flyer-vol-04-Q4VNP87-2020-05-30",
+    "_batch_index": 352
+  },
+  {
+    "name": "elements-vintage-rsvp-invitation-card-8XCV395-2020-01-11",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Vintage RSVP Invitation Card",
+    "confidence": 95,
+    "notes": "Invitation card",
+    "_source_name": "elements-vintage-rsvp-invitation-card-8XCV395-2020-01-11",
+    "_batch_index": 353
+  },
+  {
+    "name": "Employee Identity Card Template PSD",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Employee Identity Card Template",
+    "confidence": 85,
+    "notes": "ID card template",
+    "_source_name": "Employee Identity Card Template PSD",
+    "_batch_index": 354
+  },
+  {
+    "name": "Engagement Party Invitation Cards",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Engagement Party Invitation Cards",
+    "confidence": 95,
+    "notes": "Invitation cards",
+    "_source_name": "Engagement Party Invitation Cards",
+    "_batch_index": 355
+  },
+  {
+    "name": "Floral Card Collection 2129908",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Floral Card Collection",
+    "confidence": 85,
+    "notes": "Card collection, likely greeting/invitation",
+    "_source_name": "Floral Card Collection 2129908",
+    "_batch_index": 356
+  },
+  {
+    "name": "Florence Card Notes",
+    "category": "Print - Other",
+    "clean_name": "Florence Card Notes",
+    "confidence": 80,
+    "notes": "PDF only, unclear type",
+    "_source_name": "Florence Card Notes",
+    "_batch_index": 357
+  },
+  {
+    "name": "Flyer design for diwali festival  Diwali greeting card",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Diwali Festival Flyer Greeting Card",
+    "confidence": 85,
+    "notes": "Flyer design, also greeting card",
+    "_source_name": "Flyer design for diwali festival  Diwali greeting card",
+    "_batch_index": 358
+  },
+  {
+    "name": "Flyerpost card template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Post Card Template",
+    "confidence": 90,
+    "notes": "Flyer/postcard template",
+    "_source_name": "Flyerpost card template",
+    "_batch_index": 359
+  }
+]

@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Rose Petals Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Rose Petals Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy category Backgrounds, contains PSD and EPS files for patterns/textures",
+    "_source_name": "Rose Petals Backgrounds",
+    "_batch_index": 180
+  },
+  {
+    "name": "space-starscape-backgrounds-1-107346",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Space Starscape Backgrounds",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, likely raster backgrounds",
+    "_source_name": "space-starscape-backgrounds-1-107346",
+    "_batch_index": 181
+  },
+  {
+    "name": "space-starscape-backgrounds-1-107346-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Space Starscape Backgrounds",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, duplicate with site tag",
+    "_source_name": "space-starscape-backgrounds-1-107346-GFXTRA.COM-ARSENIC",
+    "_batch_index": 182
+  },
+  {
+    "name": "SRTP Abstract Background v2 4",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "SRTP Abstract Background v2.4",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, abstract background textures",
+    "_source_name": "SRTP Abstract Background v2 4",
+    "_batch_index": 183
+  },
+  {
+    "name": "starry-sky-background-50443",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Starry Sky Background",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds",
+    "_source_name": "starry-sky-background-50443",
+    "_batch_index": 184
+  },
+  {
+    "name": "starry-sky-background-50443-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Starry Sky Background",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, duplicate with site tag",
+    "_source_name": "starry-sky-background-50443-GFXTRA.COM-ARSENIC",
+    "_batch_index": 185
+  },
+  {
+    "name": "starry-waves-web-backgrounds-139238",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Starry Waves Web Backgrounds",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds",
+    "_source_name": "starry-waves-web-backgrounds-139238",
+    "_batch_index": 186
+  },
+  {
+    "name": "starry-waves-web-backgrounds-139238-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Starry Waves Web Backgrounds",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, duplicate with site tag",
+    "_source_name": "starry-waves-web-backgrounds-139238-GFXTRA.COM-ARSENIC",
+    "_batch_index": 187
+  },
+  {
+    "name": "sticker-twitter-background-40884",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Sticker Twitter Background",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds",
+    "_source_name": "sticker-twitter-background-40884",
+    "_batch_index": 188
+  },
+  {
+    "name": "sticker-twitter-background-40884-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Sticker Twitter Background",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, duplicate with site tag",
+    "_source_name": "sticker-twitter-background-40884-GFXTRA.COM-ARSENIC",
+    "_batch_index": 189
+  },
+  {
+    "name": "Stock Vector - Autumn Backgrounds 4",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Autumn Backgrounds 4",
+    "confidence": 85,
+    "notes": "Stock Vector implies Illustrator vector assets, legacy Backgrounds",
+    "_source_name": "Stock Vector - Autumn Backgrounds 4",
+    "_batch_index": 190
+  },
+  {
+    "name": "thriller-dramatic-background-textures",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Thriller Dramatic Background Textures",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, texture backgrounds",
+    "_source_name": "thriller-dramatic-background-textures",
+    "_batch_index": 191
+  },
+  {
+    "name": "Vegetables on a transparent background",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Vegetables on a Transparent Background",
+    "confidence": 75,
+    "notes": "Likely stock photos of vegetables with transparent background",
+    "_source_name": "Vegetables on a transparent background",
+    "_batch_index": 192
+  },
+  {
+    "name": "venera-night-sky-abstract-background-50357",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Venera Night Sky Abstract Background",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds",
+    "_source_name": "venera-night-sky-abstract-background-50357",
+    "_batch_index": 193
+  },
+  {
+    "name": "web-20-bokeh-background-120874",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Web 2.0 Bokeh Background",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds",
+    "_source_name": "web-20-bokeh-background-120874",
+    "_batch_index": 194
+  },
+  {
+    "name": "web-20-bokeh-background-120874-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Web 2.0 Bokeh Background",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, duplicate with site tag",
+    "_source_name": "web-20-bokeh-background-120874-GFXTRA.COM-ARSENIC",
+    "_batch_index": 195
+  },
+  {
+    "name": "web-design-background-nebula-128248",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Web Design Background Nebula",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds",
+    "_source_name": "web-design-background-nebula-128248",
+    "_batch_index": 196
+  },
+  {
+    "name": "web-design-background-nebula-128248-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Web Design Background Nebula",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds, duplicate with site tag",
+    "_source_name": "web-design-background-nebula-128248-GFXTRA.COM-ARSENIC",
+    "_batch_index": 197
+  },
+  {
+    "name": "Web_2.0_Bokeh_Background__GraphicRiver_",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Web 2.0 Bokeh Background",
+    "confidence": 80,
+    "notes": "Legacy category Backgrounds",
+    "_source_name": "Web_2.0_Bokeh_Background__GraphicRiver_",
+    "_batch_index": 198
+  },
+  {
+    "name": "white-background-remover-112366",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "White Background Remover",
+    "confidence": 85,
+    "notes": "Contains Action File, legacy Backgrounds but action for removing background",
+    "_source_name": "white-background-remover-112366",
+    "_batch_index": 199
+  },
+  {
+    "name": "white-background-remover-112366-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "White Background Remover",
+    "confidence": 85,
+    "notes": "Contains Action File, duplicate with site tag",
+    "_source_name": "white-background-remover-112366-GFXTRA.COM-ARSENIC",
+    "_batch_index": 200
+  },
+  {
+    "name": "10 Black Friday Sale Banner Bundle",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "10 Black Friday Sale Banner Bundle",
+    "confidence": 75,
+    "notes": "Legacy Banners, .jpg files, likely print/social banners",
+    "_source_name": "10 Black Friday Sale Banner Bundle",
+    "_batch_index": 201
+  },
+  {
+    "name": "10 Music Banner Set",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "10 Music Banner Set",
+    "confidence": 80,
+    "notes": "Legacy Banners, .psd files, likely print banners",
+    "_source_name": "10 Music Banner Set",
+    "_batch_index": 202
+  },
+  {
+    "name": "10 new banners",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "10 New Banners",
+    "confidence": 80,
+    "notes": "Legacy Banners, .psd and .pdf files",
+    "_source_name": "10 new banners",
+    "_batch_index": 203
+  },
+  {
+    "name": "10 Youtube Channel Art Banners vol 1 1967216",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "10 Youtube Channel Art Banners Vol 1",
+    "confidence": 85,
+    "notes": "Legacy Banners, specifically YouTube channel art",
+    "_source_name": "10 Youtube Channel Art Banners vol 1 1967216",
+    "_batch_index": 204
+  },
+  {
+    "name": "14-beauty-spa-and-wellness-google-adsense-banner",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "14 Beauty Spa and Wellness Google AdSense Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, Google AdSense banners",
+    "_source_name": "14-beauty-spa-and-wellness-google-adsense-banner",
+    "_batch_index": 205
+  },
+  {
+    "name": "14-corporate-startup-google-adsense-web-banner",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "14 Corporate Startup Google AdSense Web Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, Google AdSense banners",
+    "_source_name": "14-corporate-startup-google-adsense-web-banner",
+    "_batch_index": 206
+  },
+  {
+    "name": "14-online-business-solution-google-adsense-banner",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "14 Online Business Solution Google AdSense Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, Google AdSense banners",
+    "_source_name": "14-online-business-solution-google-adsense-banner",
+    "_batch_index": 207
+  },
+  {
+    "name": "1473120-Roll-Up-Banner",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Roll-Up Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll-up banner for print",
+    "_source_name": "1473120-Roll-Up-Banner",
+    "_batch_index": 208
+  },
+  {
+    "name": "15 MuliBusiness Rollup Banner Bundle",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "15 MultiBusiness Rollup Banner Bundle",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll-up banner bundle",
+    "_source_name": "15 MuliBusiness Rollup Banner Bundle",
+    "_batch_index": 209
+  },
+  {
+    "name": "16 Vintage Typography Banners PSDAiEPS 280118",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "16 Vintage Typography Banners",
+    "confidence": 85,
+    "notes": "Legacy Banners, includes .ai, .eps, .psd for print banners",
+    "_source_name": "16 Vintage Typography Banners PSDAiEPS 280118",
+    "_batch_index": 210
+  },
+  {
+    "name": "20356442-web-graphic-banners",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Web Graphic Banners",
+    "confidence": 80,
+    "notes": "Legacy Banners, web graphic banners",
+    "_source_name": "20356442-web-graphic-banners",
+    "_batch_index": 211
+  },
+  {
+    "name": "2in1-banner-products-list-66881",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "2in1 Banner Products List",
+    "confidence": 80,
+    "notes": "Legacy Banners, includes HTML files for web banners",
+    "_source_name": "2in1-banner-products-list-66881",
+    "_batch_index": 212
+  },
+  {
+    "name": "2multipurpose-business-startup-banners-ad-8PYNVE3-2019-07-10",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Multipurpose Business Startup Banners",
+    "confidence": 80,
+    "notes": "Legacy Banners, multipurpose banners",
+    "_source_name": "2multipurpose-business-startup-banners-ad-8PYNVE3-2019-07-10",
+    "_batch_index": 213
+  },
+  {
+    "name": "30 Banners Bundle 2277545",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "30 Banners Bundle",
+    "confidence": 80,
+    "notes": "Legacy Banners, .psd and .jpg files",
+    "_source_name": "30 Banners Bundle 2277545",
+    "_batch_index": 214
+  },
+  {
+    "name": "30 Multipurpose Banners",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "30 Multipurpose Banners",
+    "confidence": 80,
+    "notes": "Legacy Banners, square banners",
+    "_source_name": "30 Multipurpose Banners",
+    "_batch_index": 215
+  },
+  {
+    "name": "3d social background banner",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "3D Social Background Banner",
+    "confidence": 80,
+    "notes": "Legacy Banners, social media banner",
+    "_source_name": "3d social background banner",
+    "_batch_index": 216
+  },
+  {
+    "name": "3multipurpose-business-startup-banners-ad-D35MTGE-2019-07-10",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Multipurpose Business Startup Banners",
+    "confidence": 80,
+    "notes": "Legacy Banners",
+    "_source_name": "3multipurpose-business-startup-banners-ad-D35MTGE-2019-07-10",
+    "_batch_index": 217
+  },
+  {
+    "name": "461632-Banner-Creator",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banner Creator",
+    "confidence": 80,
+    "notes": "Legacy Banners, .psd file for creating banners",
+    "_source_name": "461632-Banner-Creator",
+    "_batch_index": 218
+  },
+  {
+    "name": "4Grand Opening Sale Roll Up Banner",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "4 Grand Opening Sale Roll Up Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll-up banner",
+    "_source_name": "4Grand Opening Sale Roll Up Banner",
+    "_batch_index": 219
+  },
+  {
+    "name": "5 Creator on the Rise-Youtube Banners Template",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "5 Creator on the Rise YouTube Banners Template",
+    "confidence": 85,
+    "notes": "Legacy Banners, YouTube banner templates",
+    "_source_name": "5 Creator on the Rise-Youtube Banners Template",
+    "_batch_index": 220
+  },
+  {
+    "name": "Banners Pack Hair Accessories",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banners Pack Hair Accessories",
+    "confidence": 80,
+    "notes": "Legacy Banners, includes Google ad sizes",
+    "_source_name": "Banners Pack Hair Accessories",
+    "_batch_index": 221
+  },
+  {
+    "name": "Black Friday banner with golden halftone texture",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Black Friday Banner with Golden Halftone Texture",
+    "confidence": 80,
+    "notes": "Legacy Banners, print banner",
+    "_source_name": "Black Friday banner with golden halftone texture",
+    "_batch_index": 222
+  },
+  {
+    "name": "elements-opera-music-roll-up-banner-2R3HQ9L-2020-01-05",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Opera Music Roll Up Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll-up banner",
+    "_source_name": "elements-opera-music-roll-up-banner-2R3HQ9L-2020-01-05",
+    "_batch_index": 223
+  },
+  {
+    "name": "elements-perfume-cosmetic-banners-ad-VZE78ST-2019-07-07sk",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Perfume Cosmetic Banners",
+    "confidence": 80,
+    "notes": "Legacy Banners, cosmetic banners",
+    "_source_name": "elements-perfume-cosmetic-banners-ad-VZE78ST-2019-07-07sk",
+    "_batch_index": 224
+  },
+  {
+    "name": "elements-pharma-teuical-medical-roll-up-banner-QPG77XP-2020-01-09",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Pharmaceutical Medical Roll Up Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll-up banner",
+    "_source_name": "elements-pharma-teuical-medical-roll-up-banner-QPG77XP-2020-01-09",
+    "_batch_index": 225
+  },
+  {
+    "name": "elements-product-sale-banners-ad-93KJV25-2019-07-09sk",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Product Sale Banners",
+    "confidence": 80,
+    "notes": "Legacy Banners, product sale banners",
+    "_source_name": "elements-product-sale-banners-ad-93KJV25-2019-07-09sk",
+    "_batch_index": 226
+  },
+  {
+    "name": "elements-products-sale-banners-ad-Q9ML7E2-2019-07-09sk",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Products Sale Banners",
+    "confidence": 80,
+    "notes": "Legacy Banners",
+    "_source_name": "elements-products-sale-banners-ad-Q9ML7E2-2019-07-09sk",
+    "_batch_index": 227
+  },
+  {
+    "name": "elements-roll-banner-properties-LCP-2018-07-03",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Roll Banner Properties",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll banner",
+    "_source_name": "elements-roll-banner-properties-LCP-2018-07-03",
+    "_batch_index": 228
+  },
+  {
+    "name": "elements-roll-up-banner-properties-29AWSC-2018-07-16",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Roll Up Banner Properties",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll-up banner",
+    "_source_name": "elements-roll-up-banner-properties-29AWSC-2018-07-16",
+    "_batch_index": 229
+  },
+  {
+    "name": "elements-roll-up-banner-WCJQYD-2019-02-01",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Roll Up Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll-up banner",
+    "_source_name": "elements-roll-up-banner-WCJQYD-2019-02-01",
+    "_batch_index": 230
+  },
+  {
+    "name": "elements-rollup-banner-PYATA44-2019-11-15",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Rollup Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, rollup banner",
+    "_source_name": "elements-rollup-banner-PYATA44-2019-11-15",
+    "_batch_index": 231
+  },
+  {
+    "name": "elements-social-ads-banner-pack-v03-RGTRE56-2020-01-31",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Social Ads Banner Pack v03",
+    "confidence": 85,
+    "notes": "Legacy Banners, social ads banner pack",
+    "_source_name": "elements-social-ads-banner-pack-v03-RGTRE56-2020-01-31",
+    "_batch_index": 232
+  },
+  {
+    "name": "elements-stay-at-home-roll-up-banner-88NQPFG-2020-04-28",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Stay at Home Roll Up Banner",
+    "confidence": 85,
+    "notes": "Legacy Banners, roll-up banner",
+    "_source_name": "elements-stay-at-home-roll-up-banner-88NQPFG-2020-04-28",
+    "_batch_index": 233
+  },
+  {
+    "name": "Bella Instagram Stories for Bloggers",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Bella Instagram Stories for Bloggers",
+    "confidence": 85,
+    "notes": "Legacy Blog, Instagram stories for social media",
+    "_source_name": "Bella Instagram Stories for Bloggers",
+    "_batch_index": 234
+  },
+  {
+    "name": "Blog Featured Graphics 3rd Edition 520550",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Blog Featured Graphics 3rd Edition",
+    "confidence": 85,
+    "notes": "Legacy Blog, blog banners/graphics for social",
+    "_source_name": "Blog Featured Graphics 3rd Edition 520550",
+    "_batch_index": 235
+  },
+  {
+    "name": "Blog Media Kit 01 3 pages",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Blog Media Kit 01 3 Pages",
+    "confidence": 80,
+    "notes": "Legacy Blog, media kit template for print",
+    "_source_name": "Blog Media Kit 01 3 pages",
+    "_batch_index": 236
+  },
+  {
+    "name": "blog media kit template a4 us letter 976473",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Blog Media Kit Template A4 US Letter",
+    "confidence": 85,
+    "notes": "Legacy Blog, media kit template in PSD",
+    "_source_name": "blog media kit template a4 us letter 976473",
+    "_batch_index": 237
+  },
+  {
+    "name": "Blog Media Kit Template Two Pages 798949",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Blog Media Kit Template Two Pages",
+    "confidence": 85,
+    "notes": "Legacy Blog, media kit template",
+    "_source_name": "Blog Media Kit Template Two Pages 798949",
+    "_batch_index": 238
+  },
+  {
+    "name": "Blog Media Pack Adventure Awaits",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Blog Media Pack Adventure Awaits",
+    "confidence": 85,
+    "notes": "Legacy Blog, media pack with .psd and .otf files",
+    "_source_name": "Blog Media Pack Adventure Awaits",
+    "_batch_index": 239
+  }
+]
