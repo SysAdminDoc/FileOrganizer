@@ -1,0 +1,542 @@
+[
+  {
+    "name": "GraphicRiver - Nebula Backgrounds",
+    "category": "Stock Photos - Nature & Outdoors",
+    "clean_name": "Nebula Backgrounds",
+    "confidence": 80,
+    "notes": "Backgrounds with nebula imagery, likely stock photos or textures.",
+    "_source_name": "GraphicRiver - Nebula Backgrounds",
+    "_batch_index": 120
+  },
+  {
+    "name": "GraphicRiver - Perforated Metal Grid Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Perforated Metal Grid Backgrounds",
+    "confidence": 85,
+    "notes": "Legacy category Backgrounds, likely pattern/texture files for Photoshop.",
+    "_source_name": "GraphicRiver - Perforated Metal Grid Backgrounds",
+    "_batch_index": 121
+  },
+  {
+    "name": "GraphicRiver - Powerful Background Template",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Powerful Background Template",
+    "confidence": 80,
+    "notes": "Background template, likely PSD-based.",
+    "_source_name": "GraphicRiver - Powerful Background Template",
+    "_batch_index": 122
+  },
+  {
+    "name": "GraphicRiver - Product Display Backgrounds",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Backgrounds",
+    "confidence": 85,
+    "notes": "Product display backgrounds are often used for mockups.",
+    "_source_name": "GraphicRiver - Product Display Backgrounds",
+    "_batch_index": 123
+  },
+  {
+    "name": "GraphicRiver - Product Display Backgrounds 2",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Backgrounds 2",
+    "confidence": 85,
+    "notes": "Product display backgrounds are often used for mockups.",
+    "_source_name": "GraphicRiver - Product Display Backgrounds 2",
+    "_batch_index": 124
+  },
+  {
+    "name": "GraphicRiver - Product Display Backgrounds 3",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Backgrounds 3",
+    "confidence": 85,
+    "notes": "Product display backgrounds are often used for mockups.",
+    "_source_name": "GraphicRiver - Product Display Backgrounds 3",
+    "_batch_index": 125
+  },
+  {
+    "name": "GraphicRiver - Product Display Backgrounds 4",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Backgrounds 4",
+    "confidence": 85,
+    "notes": "Product display backgrounds are often used for mockups.",
+    "_source_name": "GraphicRiver - Product Display Backgrounds 4",
+    "_batch_index": 126
+  },
+  {
+    "name": "GraphicRiver - Rays Background",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Rays Background",
+    "confidence": 80,
+    "notes": "Background with rays, likely a texture or pattern.",
+    "_source_name": "GraphicRiver - Rays Background",
+    "_batch_index": 127
+  },
+  {
+    "name": "GraphicRiver - Satin Curtain Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Satin Curtain Backgrounds",
+    "confidence": 80,
+    "notes": "Background texture, likely for Photoshop.",
+    "_source_name": "GraphicRiver - Satin Curtain Backgrounds",
+    "_batch_index": 128
+  },
+  {
+    "name": "GraphicRiver - Starry Sky Backgrounds",
+    "category": "Stock Photos - Nature & Outdoors",
+    "clean_name": "Starry Sky Backgrounds",
+    "confidence": 80,
+    "notes": "Starry sky imagery, likely stock photos.",
+    "_source_name": "GraphicRiver - Starry Sky Backgrounds",
+    "_batch_index": 129
+  },
+  {
+    "name": "GraphicRiver - Starry Waves Backgrounds",
+    "category": "Stock Photos - Nature & Outdoors",
+    "clean_name": "Starry Waves Backgrounds",
+    "confidence": 80,
+    "notes": "Starry waves imagery, likely stock photos.",
+    "_source_name": "GraphicRiver - Starry Waves Backgrounds",
+    "_batch_index": 130
+  },
+  {
+    "name": "GraphicRiver - Sticker-Twitter Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Sticker-Twitter Backgrounds",
+    "confidence": 75,
+    "notes": "Backgrounds for social media, likely PSD files.",
+    "_source_name": "GraphicRiver - Sticker-Twitter Backgrounds",
+    "_batch_index": 131
+  },
+  {
+    "name": "GraphicRiver - White Background Remover",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "White Background Remover",
+    "confidence": 85,
+    "notes": "Tool to remove white background, likely a Photoshop action.",
+    "_source_name": "GraphicRiver - White Background Remover",
+    "_batch_index": 132
+  },
+  {
+    "name": "GraphicRiver Product Display Backgrounds",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Backgrounds",
+    "confidence": 85,
+    "notes": "Product display backgrounds for mockups.",
+    "_source_name": "GraphicRiver Product Display Backgrounds",
+    "_batch_index": 133
+  },
+  {
+    "name": "graphicriver-10815889-modern-4k-grunge-backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Modern 4K Grunge Backgrounds",
+    "confidence": 85,
+    "notes": "Grunge backgrounds, likely textures for Photoshop.",
+    "_source_name": "graphicriver-10815889-modern-4k-grunge-backgrounds",
+    "_batch_index": 134
+  },
+  {
+    "name": "graphicriver-164699-sidewalk-bg-modern-grunge-background",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Sidewalk Modern Grunge Background",
+    "confidence": 85,
+    "notes": "Grunge background texture.",
+    "_source_name": "graphicriver-164699-sidewalk-bg-modern-grunge-background",
+    "_batch_index": 135
+  },
+  {
+    "name": "graphicriver-46213-texture-backgrounds-pack-3",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Texture Backgrounds Pack 3",
+    "confidence": 90,
+    "notes": "Contains CMYK_300ppi and RGB_72ppi folders, typical for print textures.",
+    "_source_name": "graphicriver-46213-texture-backgrounds-pack-3",
+    "_batch_index": 136
+  },
+  {
+    "name": "GraphicRiver_-_20_Material_Design_Backgrounds_13745604",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "20 Material Design Backgrounds",
+    "confidence": 85,
+    "notes": "Material design backgrounds, likely PSD textures.",
+    "_source_name": "GraphicRiver_-_20_Material_Design_Backgrounds_13745604",
+    "_batch_index": 137
+  },
+  {
+    "name": "GraphicRiver_-_Abstract_Background_#1",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Abstract Background #1",
+    "confidence": 80,
+    "notes": "Abstract background, likely a texture.",
+    "_source_name": "GraphicRiver_-_Abstract_Background_#1",
+    "_batch_index": 138
+  },
+  {
+    "name": "graphicriver_heated-background_102505",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Heated Background",
+    "confidence": 80,
+    "notes": "Background texture.",
+    "_source_name": "graphicriver_heated-background_102505",
+    "_batch_index": 139
+  },
+  {
+    "name": "Green trees on a transparent background",
+    "category": "Stock Photos - Nature & Outdoors",
+    "clean_name": "Green Trees on Transparent Background",
+    "confidence": 85,
+    "notes": "Trees on transparent background, likely stock PNGs.",
+    "_source_name": "Green trees on a transparent background",
+    "_batch_index": 140
+  },
+  {
+    "name": "hd-backgrounds",
+    "category": "Stock Photos - General",
+    "clean_name": "HD Backgrounds",
+    "confidence": 80,
+    "notes": "Contains resolution folders, likely stock photos.",
+    "_source_name": "hd-backgrounds",
+    "_batch_index": 141
+  },
+  {
+    "name": "heated-background-102505",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Heated Background",
+    "confidence": 80,
+    "notes": "Background texture.",
+    "_source_name": "heated-background-102505",
+    "_batch_index": 142
+  },
+  {
+    "name": "heated-background-102505-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Heated Background",
+    "confidence": 80,
+    "notes": "Background texture.",
+    "_source_name": "heated-background-102505-GFXTRA.COM-ARSENIC",
+    "_batch_index": 143
+  },
+  {
+    "name": "Heated_background",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Heated Background",
+    "confidence": 80,
+    "notes": "Background texture.",
+    "_source_name": "Heated_background",
+    "_batch_index": 144
+  },
+  {
+    "name": "intense-flare-burst-backgrounds-128806",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Intense Flare Burst Backgrounds",
+    "confidence": 85,
+    "notes": "Flare burst backgrounds, likely overlays for Photoshop.",
+    "_source_name": "intense-flare-burst-backgrounds-128806",
+    "_batch_index": 145
+  },
+  {
+    "name": "intense-flare-burst-backgrounds-128806-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Intense Flare Burst Backgrounds",
+    "confidence": 85,
+    "notes": "Flare burst backgrounds, likely overlays for Photoshop.",
+    "_source_name": "intense-flare-burst-backgrounds-128806-GFXTRA.COM-ARSENIC",
+    "_batch_index": 146
+  },
+  {
+    "name": "Invitation is on a transparent background",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Invitation on Transparent Background",
+    "confidence": 85,
+    "notes": "Invitation design, likely for print.",
+    "_source_name": "Invitation is on a transparent background",
+    "_batch_index": 147
+  },
+  {
+    "name": "lightfx-background-creator-3-bokeh-94911",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "LightFX Background Creator 3 Bokeh",
+    "confidence": 85,
+    "notes": "Light effects background creator, likely Photoshop overlays.",
+    "_source_name": "lightfx-background-creator-3-bokeh-94911",
+    "_batch_index": 148
+  },
+  {
+    "name": "lightfx-background-creator-3-bokeh-94911-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "LightFX Background Creator 3 Bokeh",
+    "confidence": 85,
+    "notes": "Light effects background creator, likely Photoshop overlays.",
+    "_source_name": "lightfx-background-creator-3-bokeh-94911-GFXTRA.COM-ARSENIC",
+    "_batch_index": 149
+  },
+  {
+    "name": "lightfx-background-creator-4-95950",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "LightFX Background Creator 4",
+    "confidence": 85,
+    "notes": "Light effects background creator, likely Photoshop overlays.",
+    "_source_name": "lightfx-background-creator-4-95950",
+    "_batch_index": 150
+  },
+  {
+    "name": "lightfx-background-creator-4-95950-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "LightFX Background Creator 4",
+    "confidence": 85,
+    "notes": "Light effects background creator, likely Photoshop overlays.",
+    "_source_name": "lightfx-background-creator-4-95950-GFXTRA.COM-ARSENIC",
+    "_batch_index": 151
+  },
+  {
+    "name": "Lighting Backgrounds V2 68435",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Lighting Backgrounds V2",
+    "confidence": 85,
+    "notes": "Lighting backgrounds, likely overlays.",
+    "_source_name": "Lighting Backgrounds V2 68435",
+    "_batch_index": 152
+  },
+  {
+    "name": "line-backgrounds-x-40-horizontal-diagonal-146095",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Line Backgrounds x40 Horizontal Diagonal",
+    "confidence": 85,
+    "notes": "Line patterns, likely textures.",
+    "_source_name": "line-backgrounds-x-40-horizontal-diagonal-146095",
+    "_batch_index": 153
+  },
+  {
+    "name": "line-backgrounds-x-40-horizontal-diagonal-146095-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Line Backgrounds x40 Horizontal Diagonal",
+    "confidence": 85,
+    "notes": "Line patterns, likely textures.",
+    "_source_name": "line-backgrounds-x-40-horizontal-diagonal-146095-GFXTRA.COM-ARSENIC",
+    "_batch_index": 154
+  },
+  {
+    "name": "Lore - Shape Abstract Background",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Lore Shape Abstract Background",
+    "confidence": 80,
+    "notes": "Abstract shape background, likely a texture.",
+    "_source_name": "Lore - Shape Abstract Background",
+    "_batch_index": 155
+  },
+  {
+    "name": "Love heart on a transparent background",
+    "category": "Stock Photos - General",
+    "clean_name": "Love Heart on Transparent Background",
+    "confidence": 85,
+    "notes": "Heart on transparent background, likely stock PNG.",
+    "_source_name": "Love heart on a transparent background",
+    "_batch_index": 156
+  },
+  {
+    "name": "magic-bubbles-background-141192",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Magic Bubbles Background",
+    "confidence": 85,
+    "notes": "Bubbles background, likely overlays.",
+    "_source_name": "magic-bubbles-background-141192",
+    "_batch_index": 157
+  },
+  {
+    "name": "magic-bubbles-background-141192-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Magic Bubbles Background",
+    "confidence": 85,
+    "notes": "Bubbles background, likely overlays.",
+    "_source_name": "magic-bubbles-background-141192-GFXTRA.COM-ARSENIC",
+    "_batch_index": 158
+  },
+  {
+    "name": "mix different vegetables isolated white background-GFXTRA",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Mix Different Vegetables Isolated White Background",
+    "confidence": 90,
+    "notes": "Vegetables on white background, stock food photos.",
+    "_source_name": "mix different vegetables isolated white background-GFXTRA",
+    "_batch_index": 159
+  },
+  {
+    "name": "Natural Background Post Generator",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Natural Background Post Generator",
+    "confidence": 80,
+    "notes": "Background generator, likely a PSD template.",
+    "_source_name": "Natural Background Post Generator",
+    "_batch_index": 160
+  },
+  {
+    "name": "Night Sky Background Overlays",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Night Sky Background Overlays",
+    "confidence": 90,
+    "notes": "Night sky overlays for Photoshop.",
+    "_source_name": "Night Sky Background Overlays",
+    "_batch_index": 161
+  },
+  {
+    "name": "Oranges on a transparent background",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Oranges on Transparent Background",
+    "confidence": 90,
+    "notes": "Oranges on transparent background, stock food photos.",
+    "_source_name": "Oranges on a transparent background",
+    "_batch_index": 162
+  },
+  {
+    "name": "Podium illuminated with spotlights on transparent background",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Podium Illuminated with Spotlights",
+    "confidence": 85,
+    "notes": "Podium display, likely a mockup.",
+    "_source_name": "Podium illuminated with spotlights on transparent background",
+    "_batch_index": 163
+  },
+  {
+    "name": "powerful-background-108562",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Powerful Background",
+    "confidence": 80,
+    "notes": "Background texture.",
+    "_source_name": "powerful-background-108562",
+    "_batch_index": 164
+  },
+  {
+    "name": "powerful-background-108562-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Powerful Background",
+    "confidence": 80,
+    "notes": "Background texture.",
+    "_source_name": "powerful-background-108562-GFXTRA.COM-ARSENIC",
+    "_batch_index": 165
+  },
+  {
+    "name": "Product Display Backgrounds",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Backgrounds",
+    "confidence": 85,
+    "notes": "Product display backgrounds for mockups.",
+    "_source_name": "Product Display Backgrounds",
+    "_batch_index": 166
+  },
+  {
+    "name": "product-display-background-1-103734",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Background 1",
+    "confidence": 85,
+    "notes": "Product display background for mockups.",
+    "_source_name": "product-display-background-1-103734",
+    "_batch_index": 167
+  },
+  {
+    "name": "product-display-background-1-103734-GFXTRA.COM-ARSENIC",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Background 1",
+    "confidence": 85,
+    "notes": "Product display background for mockups.",
+    "_source_name": "product-display-background-1-103734-GFXTRA.COM-ARSENIC",
+    "_batch_index": 168
+  },
+  {
+    "name": "product-display-background-2-104723",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Background 2",
+    "confidence": 85,
+    "notes": "Product display background for mockups.",
+    "_source_name": "product-display-background-2-104723",
+    "_batch_index": 169
+  },
+  {
+    "name": "product-display-background-2-104723-GFXTRA.COM-ARSENIC",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Background 2",
+    "confidence": 85,
+    "notes": "Product display background for mockups.",
+    "_source_name": "product-display-background-2-104723-GFXTRA.COM-ARSENIC",
+    "_batch_index": 170
+  },
+  {
+    "name": "product-display-background-3-105875",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Background 3",
+    "confidence": 85,
+    "notes": "Product display background for mockups.",
+    "_source_name": "product-display-background-3-105875",
+    "_batch_index": 171
+  },
+  {
+    "name": "product-display-background-3-105875-GFXTRA.COM-ARSENIC",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Background 3",
+    "confidence": 85,
+    "notes": "Product display background for mockups.",
+    "_source_name": "product-display-background-3-105875-GFXTRA.COM-ARSENIC",
+    "_batch_index": 172
+  },
+  {
+    "name": "product-display-background-4-107642",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Background 4",
+    "confidence": 85,
+    "notes": "Product display background for mockups.",
+    "_source_name": "product-display-background-4-107642",
+    "_batch_index": 173
+  },
+  {
+    "name": "product-display-background-4-107642-GFXTRA.COM-ARSENIC",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Product Display Background 4",
+    "confidence": 85,
+    "notes": "Product display background for mockups.",
+    "_source_name": "product-display-background-4-107642-GFXTRA.COM-ARSENIC",
+    "_batch_index": 174
+  },
+  {
+    "name": "PSD Sources - Chinese Backgrounds 2016 - 1",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Chinese Backgrounds 2016",
+    "confidence": 85,
+    "notes": "PSD sources for Chinese backgrounds, likely textures.",
+    "_source_name": "PSD Sources - Chinese Backgrounds 2016 - 1",
+    "_batch_index": 175
+  },
+  {
+    "name": "PSD Sources - Fabulous Backgrounds with Dragon",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Fabulous Backgrounds with Dragon",
+    "confidence": 85,
+    "notes": "PSD sources for dragon backgrounds, likely textures.",
+    "_source_name": "PSD Sources - Fabulous Backgrounds with Dragon",
+    "_batch_index": 176
+  },
+  {
+    "name": "rays-background-49249",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Rays Background",
+    "confidence": 80,
+    "notes": "Background with rays, likely a texture.",
+    "_source_name": "rays-background-49249",
+    "_batch_index": 177
+  },
+  {
+    "name": "rays-background-49249-GFXTRA.COM-ARSENIC",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Rays Background",
+    "confidence": 80,
+    "notes": "Background with rays, likely a texture.",
+    "_source_name": "rays-background-49249-GFXTRA.COM-ARSENIC",
+    "_batch_index": 178
+  },
+  {
+    "name": "Renderosity Fantasy Wings Vol 3 Backgrounds",
+    "category": "Stock Photos - General",
+    "clean_name": "Fantasy Wings Vol 3 Backgrounds",
+    "confidence": 80,
+    "notes": "Fantasy wings backgrounds, likely stock images.",
+    "_source_name": "Renderosity Fantasy Wings Vol 3 Backgrounds",
+    "_batch_index": 179
+  }
+]
