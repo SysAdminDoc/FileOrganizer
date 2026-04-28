@@ -166,6 +166,20 @@ Videohive ID rules:
 55. Hint "Uploaded by INTRO HD Website" → this is an INTROHD.NET item; classify by name if possible, else After Effects - Other
 56. "mMovements" → After Effects - Motion Graphics (motion movement pack name pattern, confidence 65)
 57. "misc" folder with only image hints and no other context → _Review (genuinely ambiguous)
+58. Hints contain "MOGRTs" or "MOGRT" → After Effects - Motion Graphics Pack (confidence 90)
+59. Hints contain "Film Mattes" + After Effects context → After Effects - Film Grain & Overlays (confidence 82)
+60. "Nostalgia" name + After Effects/Film Mattes hints → After Effects - Film Grain & Overlays (confidence 78)
+61. Folder named "Need Sorted" — classify by its hints content: Photoshop Action hints → Photoshop - Actions & Presets; Flyer hints → Photoshop - Templates & Mockups
+62. "Parallel v1.1.1" with hints 'fonts', 'icons', 'custom', 'dialog' → UI Resources & Icon Sets (confidence 72)
+63. Hint text contains a filename ending in ".ttf", ".otf", ".woff", ".woff2" → Fonts & Typography (confidence 95)
+64. "negoziodifoto" in name → Stock Photos - General (confidence 60)
+65. Any folder name starting with "photo-slideshow" or "Photo-slideshow" → After Effects - Slideshow (confidence 90)
+66. Any folder name starting with "photo-gallery" or "Photo-gallery" → After Effects - Photo Album & Gallery (confidence 90)
+67. Any folder name starting with "photo-memories" → After Effects - Slideshow (confidence 88)
+68. Any folder name starting with "photo-album" or "photo-pile-collage" → After Effects - Slideshow (confidence 87)
+69. Folder name contains "Payhip" or "Payhip –" → classify by content hints; "overlays"/"particles"/"transitions" → After Effects - Overlay & Transition; "SFX"/"overlay pack" → Cinematic FX (confidence 85)
+70. Hint contains "BAT OVERLAY" or "BAT SFX" → Cinematic FX (bat/Halloween overlay pack, confidence 82)
+71. Hint contains "overlays" + "particles" + "transitions" → After Effects - Overlay & Transition (confidence 85)
 
 Items with only numbered JPGs/PNGs inside zip and no other hints → Stock Photos - General (confidence 55)"""
 
