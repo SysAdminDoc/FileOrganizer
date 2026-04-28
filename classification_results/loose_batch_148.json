@@ -1,0 +1,542 @@
+[
+  {
+    "name": "9_6",
+    "category": "Photoshop - Other",
+    "clean_name": "9_6",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_6",
+    "_batch_index": 8820
+  },
+  {
+    "name": "9_60",
+    "category": "Photoshop - Other",
+    "clean_name": "9_60",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_60",
+    "_batch_index": 8821
+  },
+  {
+    "name": "9_63",
+    "category": "Photoshop - Other",
+    "clean_name": "9_63",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_63",
+    "_batch_index": 8822
+  },
+  {
+    "name": "9_6_2",
+    "category": "Photoshop - Other",
+    "clean_name": "9_6_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_6_2",
+    "_batch_index": 8823
+  },
+  {
+    "name": "9_7",
+    "category": "Photoshop - Other",
+    "clean_name": "9_7",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_7",
+    "_batch_index": 8824
+  },
+  {
+    "name": "9_7_2",
+    "category": "Photoshop - Other",
+    "clean_name": "9_7_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_7_2",
+    "_batch_index": 8825
+  },
+  {
+    "name": "9_8",
+    "category": "Photoshop - Other",
+    "clean_name": "9_8",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_8",
+    "_batch_index": 8826
+  },
+  {
+    "name": "9_8_2",
+    "category": "Photoshop - Other",
+    "clean_name": "9_8_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_8_2",
+    "_batch_index": 8827
+  },
+  {
+    "name": "9_9",
+    "category": "Photoshop - Other",
+    "clean_name": "9_9",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_9",
+    "_batch_index": 8828
+  },
+  {
+    "name": "9_9_2",
+    "category": "Photoshop - Other",
+    "clean_name": "9_9_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_9_2",
+    "_batch_index": 8829
+  },
+  {
+    "name": "9_aGFsbG93ZWVuX2RlY29y",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Halloween Decor",
+    "confidence": 85,
+    "notes": "Base64 decoded suggests Halloween decor, .eps vector",
+    "_source_name": "9_aGFsbG93ZWVuX2RlY29y",
+    "_batch_index": 8830
+  },
+  {
+    "name": "9_aGFsbG93ZWVuX2ZyYW1l",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Halloween Frame",
+    "confidence": 85,
+    "notes": "Base64 decoded suggests Halloween frame, .eps vector",
+    "_source_name": "9_aGFsbG93ZWVuX2ZyYW1l",
+    "_batch_index": 8831
+  },
+  {
+    "name": "9_aGFsbG93ZWVuX3B1bXBraW5fY2FuZGxlcw",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Halloween Pumpkin Candles",
+    "confidence": 85,
+    "notes": "Base64 decoded suggests Halloween pumpkin candles, .eps vector",
+    "_source_name": "9_aGFsbG93ZWVuX3B1bXBraW5fY2FuZGxlcw",
+    "_batch_index": 8832
+  },
+  {
+    "name": "9_b3dsX2RlY29yX2hhbGxvd2Vlbg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Owl Decor Halloween",
+    "confidence": 85,
+    "notes": "Base64 decoded suggests owl decor Halloween, .eps vector",
+    "_source_name": "9_b3dsX2RlY29yX2hhbGxvd2Vlbg",
+    "_batch_index": 8833
+  },
+  {
+    "name": "9_c2V0X2RlY29yYXRpb25fZm9yX2hhbGxvd2Vlbg",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Set Decoration for Halloween",
+    "confidence": 85,
+    "notes": "Base64 decoded suggests set decoration for Halloween, .eps vector",
+    "_source_name": "9_c2V0X2RlY29yYXRpb25fZm9yX2hhbGxvd2Vlbg",
+    "_batch_index": 8834
+  },
+  {
+    "name": "9_cHVtcGtpbl9oYWxsb3dlZW4",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Pumpkin Halloween",
+    "confidence": 85,
+    "notes": "Base64 decoded suggests pumpkin Halloween, .eps vector",
+    "_source_name": "9_cHVtcGtpbl9oYWxsb3dlZW4",
+    "_batch_index": 8835
+  },
+  {
+    "name": "9_horiz_bands",
+    "category": "Photoshop - Other",
+    "clean_name": "9_horiz_bands",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9_horiz_bands",
+    "_batch_index": 8836
+  },
+  {
+    "name": "9_NzM5",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "9_NzM5",
+    "confidence": 70,
+    "notes": "Base64 decodes to '739', .eps vector, no clear theme",
+    "_source_name": "9_NzM5",
+    "_batch_index": 8837
+  },
+  {
+    "name": "9a19e80cd0292d19ea22803fa8231677",
+    "category": "Photoshop - Other",
+    "clean_name": "9a19e80cd0292d19ea22803fa8231677",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "9a19e80cd0292d19ea22803fa8231677",
+    "_batch_index": 8838
+  },
+  {
+    "name": "[FreeDownloadAE.Com]VH-29599001",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "MAZE_MOGRT",
+    "confidence": 90,
+    "notes": "Contains .mogrt file, name indicates mogrt",
+    "_source_name": "[FreeDownloadAE.Com]VH-29599001",
+    "_batch_index": 8839
+  },
+  {
+    "name": "_MG_2839_2",
+    "category": "Photoshop - Other",
+    "clean_name": "_MG_2839_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "_MG_2839_2",
+    "_batch_index": 8840
+  },
+  {
+    "name": "_MG_2849_2",
+    "category": "Photoshop - Other",
+    "clean_name": "_MG_2849_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "_MG_2849_2",
+    "_batch_index": 8841
+  },
+  {
+    "name": "_MG_2878_2",
+    "category": "Photoshop - Other",
+    "clean_name": "_MG_2878_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "_MG_2878_2",
+    "_batch_index": 8842
+  },
+  {
+    "name": "_MG_2948_2",
+    "category": "Photoshop - Other",
+    "clean_name": "_MG_2948_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "_MG_2948_2",
+    "_batch_index": 8843
+  },
+  {
+    "name": "_MG_2984_2",
+    "category": "Photoshop - Other",
+    "clean_name": "_MG_2984_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "_MG_2984_2",
+    "_batch_index": 8844
+  },
+  {
+    "name": "_VideoHive_Hades_-_Animated_Fire_Typeface_24271311",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Hades Animated Fire Typeface",
+    "confidence": 90,
+    "notes": "Contains .aep and .jsxbin, name indicates animated fire typeface for AE",
+    "_source_name": "_VideoHive_Hades_-_Animated_Fire_Typeface_24271311",
+    "_batch_index": 8845
+  },
+  {
+    "name": "a clean bowl is our goal",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "a clean bowl is our goal",
+    "confidence": 80,
+    "notes": ".eps vector, likely a quote graphic",
+    "_source_name": "a clean bowl is our goal",
+    "_batch_index": 8846
+  },
+  {
+    "name": "A reel expert can tackle anything",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A reel expert can tackle anything",
+    "confidence": 80,
+    "notes": ".eps vector, likely a quote graphic",
+    "_source_name": "A reel expert can tackle anything",
+    "_batch_index": 8847
+  },
+  {
+    "name": "A",
+    "category": "Photoshop - Other",
+    "clean_name": "A",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "A",
+    "_batch_index": 8848
+  },
+  {
+    "name": "A04",
+    "category": "Photoshop - Other",
+    "clean_name": "A04",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "A04",
+    "_batch_index": 8849
+  },
+  {
+    "name": "A06",
+    "category": "Photoshop - Other",
+    "clean_name": "A06",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "A06",
+    "_batch_index": 8850
+  },
+  {
+    "name": "A1",
+    "category": "Photoshop - Other",
+    "clean_name": "A1",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "A1",
+    "_batch_index": 8851
+  },
+  {
+    "name": "A10",
+    "category": "Photoshop - Other",
+    "clean_name": "A10",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "A10",
+    "_batch_index": 8852
+  },
+  {
+    "name": "A10805_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_01",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_01",
+    "_batch_index": 8853
+  },
+  {
+    "name": "A10805_02",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_02",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_02",
+    "_batch_index": 8854
+  },
+  {
+    "name": "A10805_03",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_03",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_03",
+    "_batch_index": 8855
+  },
+  {
+    "name": "A10805_04",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_04",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_04",
+    "_batch_index": 8856
+  },
+  {
+    "name": "A10805_05",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_05",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_05",
+    "_batch_index": 8857
+  },
+  {
+    "name": "A10805_06",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_06",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_06",
+    "_batch_index": 8858
+  },
+  {
+    "name": "A10805_07",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_07",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_07",
+    "_batch_index": 8859
+  },
+  {
+    "name": "A10805_08",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_08",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_08",
+    "_batch_index": 8860
+  },
+  {
+    "name": "A10805_09",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_09",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_09",
+    "_batch_index": 8861
+  },
+  {
+    "name": "A10805_10",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_10",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_10",
+    "_batch_index": 8862
+  },
+  {
+    "name": "A10805_11",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_11",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_11",
+    "_batch_index": 8863
+  },
+  {
+    "name": "A10805_12",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_12",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_12",
+    "_batch_index": 8864
+  },
+  {
+    "name": "A10805_13",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_13",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_13",
+    "_batch_index": 8865
+  },
+  {
+    "name": "A10805_14",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_14",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_14",
+    "_batch_index": 8866
+  },
+  {
+    "name": "A10805_15",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_15",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_15",
+    "_batch_index": 8867
+  },
+  {
+    "name": "A10805_16",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_16",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_16",
+    "_batch_index": 8868
+  },
+  {
+    "name": "A10805_17",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_17",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_17",
+    "_batch_index": 8869
+  },
+  {
+    "name": "A10805_18",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_18",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_18",
+    "_batch_index": 8870
+  },
+  {
+    "name": "A10805_19",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_19",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_19",
+    "_batch_index": 8871
+  },
+  {
+    "name": "A10805_20",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A10805_20",
+    "confidence": 80,
+    "notes": ".ai vector file",
+    "_source_name": "A10805_20",
+    "_batch_index": 8872
+  },
+  {
+    "name": "a10_2",
+    "category": "Photoshop - Other",
+    "clean_name": "a10_2",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "a10_2",
+    "_batch_index": 8873
+  },
+  {
+    "name": "a11",
+    "category": "Photoshop - Other",
+    "clean_name": "a11",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "a11",
+    "_batch_index": 8874
+  },
+  {
+    "name": "A11405-17",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A11405-17",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "A11405-17",
+    "_batch_index": 8875
+  },
+  {
+    "name": "A11405-18",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A11405-18",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "A11405-18",
+    "_batch_index": 8876
+  },
+  {
+    "name": "a12",
+    "category": "Photoshop - Other",
+    "clean_name": "a12",
+    "confidence": 70,
+    "notes": "Only .psd file, no further context",
+    "_source_name": "a12",
+    "_batch_index": 8877
+  },
+  {
+    "name": "A12005_01",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A12005_01",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "A12005_01",
+    "_batch_index": 8878
+  },
+  {
+    "name": "A12005_02",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "A12005_02",
+    "confidence": 80,
+    "notes": ".eps vector file",
+    "_source_name": "A12005_02",
+    "_batch_index": 8879
+  }
+]
