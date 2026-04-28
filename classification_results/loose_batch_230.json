@@ -1,0 +1,542 @@
+[
+  {
+    "name": "hall15-ticketparty",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hall Ticket Party",
+    "confidence": 85,
+    "notes": "EPS file, likely a flyer or ticket design",
+    "_source_name": "hall15-ticketparty",
+    "_batch_index": 13740
+  },
+  {
+    "name": "hall15-ticketretro",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hall Ticket Retro",
+    "confidence": 85,
+    "notes": "EPS file, likely a flyer or ticket design",
+    "_source_name": "hall15-ticketretro",
+    "_batch_index": 13741
+  },
+  {
+    "name": "hall16PARTY1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hall Party 1",
+    "confidence": 85,
+    "notes": "EPS file, party flyer design",
+    "_source_name": "hall16PARTY1",
+    "_batch_index": 13742
+  },
+  {
+    "name": "hallo ween flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Halloween Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "hallo ween flyer_2",
+    "_batch_index": 13743
+  },
+  {
+    "name": "Hallow_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hallow 2",
+    "confidence": 80,
+    "notes": "EPS file, likely Halloween themed",
+    "_source_name": "Hallow_2",
+    "_batch_index": 13744
+  },
+  {
+    "name": "Hallow_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hallow 3",
+    "confidence": 80,
+    "notes": "EPS file, likely Halloween themed",
+    "_source_name": "Hallow_3",
+    "_batch_index": 13745
+  },
+  {
+    "name": "Hallow_set",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hallow Set",
+    "confidence": 80,
+    "notes": "EPS file, Halloween set",
+    "_source_name": "Hallow_set",
+    "_batch_index": 13746
+  },
+  {
+    "name": "hallparty",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hall Party",
+    "confidence": 85,
+    "notes": "EPS file, party flyer design",
+    "_source_name": "hallparty",
+    "_batch_index": 13747
+  },
+  {
+    "name": "hamburger_place",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hamburger Place",
+    "confidence": 85,
+    "notes": "PSD flyer for a restaurant",
+    "_source_name": "hamburger_place",
+    "_batch_index": 13748
+  },
+  {
+    "name": "Hand Drawn Lines Patterns Vol.2 8157637",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Hand Drawn Lines Patterns Vol.2",
+    "confidence": 90,
+    "notes": "AI/EPS vector patterns",
+    "_source_name": "Hand Drawn Lines Patterns Vol.2 8157637",
+    "_batch_index": 13749
+  },
+  {
+    "name": "Hand Picked For Earth",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hand Picked For Earth",
+    "confidence": 80,
+    "notes": "EPS file, likely a poster or flyer",
+    "_source_name": "Hand Picked For Earth",
+    "_batch_index": 13750
+  },
+  {
+    "name": "hand",
+    "category": "Photoshop - Other",
+    "clean_name": "Hand",
+    "confidence": 70,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "hand",
+    "_batch_index": 13751
+  },
+  {
+    "name": "hand_drawn_frames",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Hand Drawn Frames",
+    "confidence": 85,
+    "notes": "PSD frames/overlays",
+    "_source_name": "hand_drawn_frames",
+    "_batch_index": 13752
+  },
+  {
+    "name": "handdrawn-illustrations01_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Handdrawn Illustrations 01",
+    "confidence": 80,
+    "notes": "PSD illustrations",
+    "_source_name": "handdrawn-illustrations01_2",
+    "_batch_index": 13753
+  },
+  {
+    "name": "handdrawn-illustrations02_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Handdrawn Illustrations 02",
+    "confidence": 80,
+    "notes": "PSD illustrations",
+    "_source_name": "handdrawn-illustrations02_2",
+    "_batch_index": 13754
+  },
+  {
+    "name": "handdrawn-illustrations03",
+    "category": "Photoshop - Other",
+    "clean_name": "Handdrawn Illustrations 03",
+    "confidence": 80,
+    "notes": "PSD illustrations",
+    "_source_name": "handdrawn-illustrations03",
+    "_batch_index": 13755
+  },
+  {
+    "name": "handdrawn-swirls-curls01_2",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Handdrawn Swirls Curls 01",
+    "confidence": 85,
+    "notes": "PSD decorative elements",
+    "_source_name": "handdrawn-swirls-curls01_2",
+    "_batch_index": 13756
+  },
+  {
+    "name": "handdrawn-swirls-curls02_2",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Handdrawn Swirls Curls 02",
+    "confidence": 85,
+    "notes": "PSD decorative elements",
+    "_source_name": "handdrawn-swirls-curls02_2",
+    "_batch_index": 13757
+  },
+  {
+    "name": "handdrawn-text01",
+    "category": "Photoshop - Other",
+    "clean_name": "Handdrawn Text 01",
+    "confidence": 80,
+    "notes": "PSD text effects",
+    "_source_name": "handdrawn-text01",
+    "_batch_index": 13758
+  },
+  {
+    "name": "handdrawn-text02_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Handdrawn Text 02",
+    "confidence": 80,
+    "notes": "PSD text effects",
+    "_source_name": "handdrawn-text02_2",
+    "_batch_index": 13759
+  },
+  {
+    "name": "handdrawn-text03_2",
+    "category": "Photoshop - Other",
+    "clean_name": "Handdrawn Text 03",
+    "confidence": 80,
+    "notes": "PSD text effects",
+    "_source_name": "handdrawn-text03_2",
+    "_batch_index": 13760
+  },
+  {
+    "name": "Handmade Flyer - v015",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Handmade Flyer v015",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Handmade Flyer - v015",
+    "_batch_index": 13761
+  },
+  {
+    "name": "HANDS",
+    "category": "Photoshop - Other",
+    "clean_name": "Hands",
+    "confidence": 70,
+    "notes": "PSD file, unclear purpose",
+    "_source_name": "HANDS",
+    "_batch_index": 13762
+  },
+  {
+    "name": "Handyman Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Handyman Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Handyman Flyer",
+    "_batch_index": 13763
+  },
+  {
+    "name": "hanna-about_2",
+    "category": "Web Template",
+    "clean_name": "Hanna About",
+    "confidence": 85,
+    "notes": "PSD web page template",
+    "_source_name": "hanna-about_2",
+    "_batch_index": 13764
+  },
+  {
+    "name": "hanna-blog-single",
+    "category": "Web Template",
+    "clean_name": "Hanna Blog Single",
+    "confidence": 85,
+    "notes": "PSD web page template",
+    "_source_name": "hanna-blog-single",
+    "_batch_index": 13765
+  },
+  {
+    "name": "hanna-blog_2",
+    "category": "Web Template",
+    "clean_name": "Hanna Blog",
+    "confidence": 85,
+    "notes": "PSD web page template",
+    "_source_name": "hanna-blog_2",
+    "_batch_index": 13766
+  },
+  {
+    "name": "hanna-contact_2",
+    "category": "Web Template",
+    "clean_name": "Hanna Contact",
+    "confidence": 85,
+    "notes": "PSD web page template",
+    "_source_name": "hanna-contact_2",
+    "_batch_index": 13767
+  },
+  {
+    "name": "hanna-home_2",
+    "category": "Web Template",
+    "clean_name": "Hanna Home",
+    "confidence": 85,
+    "notes": "PSD web page template",
+    "_source_name": "hanna-home_2",
+    "_batch_index": 13768
+  },
+  {
+    "name": "hanna-project-single",
+    "category": "Web Template",
+    "clean_name": "Hanna Project Single",
+    "confidence": 85,
+    "notes": "PSD web page template",
+    "_source_name": "hanna-project-single",
+    "_batch_index": 13769
+  },
+  {
+    "name": "hanna-projects_2",
+    "category": "Web Template",
+    "clean_name": "Hanna Projects",
+    "confidence": 85,
+    "notes": "PSD web page template",
+    "_source_name": "hanna-projects_2",
+    "_batch_index": 13770
+  },
+  {
+    "name": "Hanukkah Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hanukkah Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Hanukkah Flyer",
+    "_batch_index": 13771
+  },
+  {
+    "name": "Hanukkah Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hanukkah Flyer 2",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Hanukkah Flyer_2",
+    "_batch_index": 13772
+  },
+  {
+    "name": "Hanukkah",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hanukkah",
+    "confidence": 85,
+    "notes": "PSD flyer template",
+    "_source_name": "Hanukkah",
+    "_batch_index": 13773
+  },
+  {
+    "name": "Hanukkah_01_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hanukkah 01",
+    "confidence": 85,
+    "notes": "PSD flyer template",
+    "_source_name": "Hanukkah_01_2",
+    "_batch_index": 13774
+  },
+  {
+    "name": "Hanukkah_02",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hanukkah 02",
+    "confidence": 85,
+    "notes": "PSD flyer template",
+    "_source_name": "Hanukkah_02",
+    "_batch_index": 13775
+  },
+  {
+    "name": "Hanukkah_05",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hanukkah 05",
+    "confidence": 85,
+    "notes": "PSD flyer template",
+    "_source_name": "Hanukkah_05",
+    "_batch_index": 13776
+  },
+  {
+    "name": "happiness is not a destination it is a way of life",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happiness Quote Poster",
+    "confidence": 80,
+    "notes": "EPS file, likely a poster",
+    "_source_name": "happiness is not a destination it is a way of life",
+    "_batch_index": 13777
+  },
+  {
+    "name": "HAPPY DIWALI FLYER",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Diwali Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "HAPPY DIWALI FLYER",
+    "_batch_index": 13778
+  },
+  {
+    "name": "Happy Grandparents Day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Grandparents Day",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Happy Grandparents Day",
+    "_batch_index": 13779
+  },
+  {
+    "name": "Happy Hanukkah",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Hanukkah",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Happy Hanukkah",
+    "_batch_index": 13780
+  },
+  {
+    "name": "Happy National day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy National Day",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Happy National day",
+    "_batch_index": 13781
+  },
+  {
+    "name": "Happy Passover Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Passover Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Happy Passover Flyer",
+    "_batch_index": 13782
+  },
+  {
+    "name": "Happy Passover Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Passover Flyer 2",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Happy Passover Flyer_2",
+    "_batch_index": 13783
+  },
+  {
+    "name": "Happy Sixteen",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Sixteen",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Happy Sixteen",
+    "_batch_index": 13784
+  },
+  {
+    "name": "happy_epiphany_day_free_flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Epiphany Day Free Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "happy_epiphany_day_free_flyer_2",
+    "_batch_index": 13785
+  },
+  {
+    "name": "happy_friendship_day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Friendship Day",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "happy_friendship_day",
+    "_batch_index": 13786
+  },
+  {
+    "name": "happy_groundhog_day_flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Groundhog Day Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "happy_groundhog_day_flyer",
+    "_batch_index": 13787
+  },
+  {
+    "name": "happy_mom_day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Mom Day",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "happy_mom_day",
+    "_batch_index": 13788
+  },
+  {
+    "name": "Happy_New_Year_V108",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Happy New Year V108",
+    "confidence": 85,
+    "notes": "AEP file with PSD, New Year opener",
+    "_source_name": "Happy_New_Year_V108",
+    "_batch_index": 13789
+  },
+  {
+    "name": "happy_womans_day",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Happy Woman's Day",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "happy_womans_day",
+    "_batch_index": 13790
+  },
+  {
+    "name": "Hard Mix Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hard Mix Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Hard Mix Flyer",
+    "_batch_index": 13791
+  },
+  {
+    "name": "Hard Rock Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hard Rock Flyer Template",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Hard Rock Flyer Template",
+    "_batch_index": 13792
+  },
+  {
+    "name": "Hard Rock Underground Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hard Rock Underground Flyer Template",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Hard Rock Underground Flyer Template",
+    "_batch_index": 13793
+  },
+  {
+    "name": "Hardcore Electro Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hardcore Electro Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Hardcore Electro Flyer",
+    "_batch_index": 13794
+  },
+  {
+    "name": "Hari raya aidilfitri flyer template with lanterns",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hari Raya Aidilfitri Flyer with Lanterns",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Hari raya aidilfitri flyer template with lanterns",
+    "_batch_index": 13795
+  },
+  {
+    "name": "Hari raya aidilfitri square flyer template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hari Raya Aidilfitri Square Flyer",
+    "confidence": 90,
+    "notes": "PSD flyer template",
+    "_source_name": "Hari raya aidilfitri square flyer template",
+    "_batch_index": 13796
+  },
+  {
+    "name": "harkers-bazzar",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Harkers Bazaar",
+    "confidence": 80,
+    "notes": "PSD file, likely a flyer or poster",
+    "_source_name": "harkers-bazzar",
+    "_batch_index": 13797
+  },
+  {
+    "name": "HarmonyTemplate",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Harmony Template",
+    "confidence": 80,
+    "notes": "PSD file, likely a flyer template",
+    "_source_name": "HarmonyTemplate",
+    "_batch_index": 13798
+  },
+  {
+    "name": "Harson Soft - Intergalactic Typeface",
+    "category": "Fonts & Typography",
+    "clean_name": "Harson Soft Intergalactic Typeface",
+    "confidence": 95,
+    "notes": "Contains OTF, TTF, WOFF font files",
+    "_source_name": "Harson Soft - Intergalactic Typeface",
+    "_batch_index": 13799
+  }
+]

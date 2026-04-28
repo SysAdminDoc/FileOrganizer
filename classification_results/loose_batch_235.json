@@ -1,0 +1,542 @@
+[
+  {
+    "name": "HorrorBack_3",
+    "category": "Photoshop - Other",
+    "clean_name": "Horror Back",
+    "confidence": 80,
+    "notes": ".psd file, likely a background design",
+    "_source_name": "HorrorBack_3",
+    "_batch_index": 14040
+  },
+  {
+    "name": "HorrorFront_3",
+    "category": "Photoshop - Other",
+    "clean_name": "Horror Front",
+    "confidence": 80,
+    "notes": ".psd file, likely a front design element",
+    "_source_name": "HorrorFront_3",
+    "_batch_index": 14041
+  },
+  {
+    "name": "Hospital Flyer - v014",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hospital Flyer",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Hospital Flyer - v014",
+    "_batch_index": 14042
+  },
+  {
+    "name": "Hosting Banner ad 100x72",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 100x72",
+    "confidence": 85,
+    "notes": "Banner ad .psd, likely for web/social",
+    "_source_name": "Hosting Banner ad 100x72",
+    "_batch_index": 14043
+  },
+  {
+    "name": "Hosting Banner ad 120x600",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 120x600",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 120x600",
+    "_batch_index": 14044
+  },
+  {
+    "name": "Hosting Banner ad 160x600",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 160x600",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 160x600",
+    "_batch_index": 14045
+  },
+  {
+    "name": "Hosting Banner ad 200x125",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 200x125",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 200x125",
+    "_batch_index": 14046
+  },
+  {
+    "name": "Hosting Banner ad 200x200",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 200x200",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 200x200",
+    "_batch_index": 14047
+  },
+  {
+    "name": "Hosting Banner ad 250x250",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 250x250",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 250x250",
+    "_batch_index": 14048
+  },
+  {
+    "name": "Hosting Banner ad 300x250",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 300x250",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 300x250",
+    "_batch_index": 14049
+  },
+  {
+    "name": "Hosting Banner ad 300x600",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 300x600",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 300x600",
+    "_batch_index": 14050
+  },
+  {
+    "name": "Hosting Banner ad 320x50",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 320x50",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 320x50",
+    "_batch_index": 14051
+  },
+  {
+    "name": "Hosting Banner ad 336x280",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 336x280",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 336x280",
+    "_batch_index": 14052
+  },
+  {
+    "name": "Hosting Banner ad 410x125",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 410x125",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 410x125",
+    "_batch_index": 14053
+  },
+  {
+    "name": "Hosting Banner ad 468x60",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 468x60",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 468x60",
+    "_batch_index": 14054
+  },
+  {
+    "name": "Hosting Banner ad 728x90",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 728x90",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 728x90",
+    "_batch_index": 14055
+  },
+  {
+    "name": "Hosting Banner ad 970x90",
+    "category": "Print - Social Media Graphics",
+    "clean_name": "Hosting Banner Ad 970x90",
+    "confidence": 85,
+    "notes": "Banner ad .psd",
+    "_source_name": "Hosting Banner ad 970x90",
+    "_batch_index": 14056
+  },
+  {
+    "name": "hot colors_3",
+    "category": "Photoshop - Other",
+    "clean_name": "Hot Colors",
+    "confidence": 70,
+    "notes": ".psd file, possibly a color resource",
+    "_source_name": "hot colors_3",
+    "_batch_index": 14057
+  },
+  {
+    "name": "Hot Foil",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Hot Foil",
+    "confidence": 80,
+    "notes": ".psd, likely a foil effect overlay",
+    "_source_name": "Hot Foil",
+    "_batch_index": 14058
+  },
+  {
+    "name": "Hot Wings Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hot Wings Flyer Template",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Hot Wings Flyer Template",
+    "_batch_index": 14059
+  },
+  {
+    "name": "hot_salsa",
+    "category": "Photoshop - Other",
+    "clean_name": "Hot Salsa",
+    "confidence": 70,
+    "notes": ".psd file, unclear purpose",
+    "_source_name": "hot_salsa",
+    "_batch_index": 14060
+  },
+  {
+    "name": "hotel-flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hotel Flyer",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "hotel-flyer",
+    "_batch_index": 14061
+  },
+  {
+    "name": "Hottest in the Streets 2 Back CMYK",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hottest in the Streets 2 Back CMYK",
+    "confidence": 90,
+    "notes": "CMYK .psd, likely a flyer back",
+    "_source_name": "Hottest in the Streets 2 Back CMYK",
+    "_batch_index": 14062
+  },
+  {
+    "name": "Hottest in the Streets 2 CMYK",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hottest in the Streets 2 CMYK",
+    "confidence": 90,
+    "notes": "CMYK .psd, likely a flyer",
+    "_source_name": "Hottest in the Streets 2 CMYK",
+    "_batch_index": 14063
+  },
+  {
+    "name": "house mixtapes cm_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "House Mixtapes",
+    "confidence": 80,
+    "notes": ".psd, mixtape cover/flyer",
+    "_source_name": "house mixtapes cm_3",
+    "_batch_index": 14064
+  },
+  {
+    "name": "House of Horrors",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "House of Horrors",
+    "confidence": 80,
+    "notes": ".psd, likely a flyer",
+    "_source_name": "House of Horrors",
+    "_batch_index": 14065
+  },
+  {
+    "name": "house sessions_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "House Sessions",
+    "confidence": 80,
+    "notes": ".psd, likely a flyer",
+    "_source_name": "house sessions_3",
+    "_batch_index": 14066
+  },
+  {
+    "name": "House warming invitation",
+    "category": "Print - Invitations & Events",
+    "clean_name": "House Warming Invitation",
+    "confidence": 95,
+    "notes": "Invitation .psd",
+    "_source_name": "House warming invitation",
+    "_batch_index": 14067
+  },
+  {
+    "name": "house_beat_flyer_template_cmyk_v1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "House Beat Flyer Template",
+    "confidence": 95,
+    "notes": "Flyer template in .psd, CMYK",
+    "_source_name": "house_beat_flyer_template_cmyk_v1",
+    "_batch_index": 14068
+  },
+  {
+    "name": "hunter",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Hunter",
+    "confidence": 85,
+    "notes": ".eps vector file",
+    "_source_name": "hunter",
+    "_batch_index": 14069
+  },
+  {
+    "name": "HYPE Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "HYPE Flyer Template",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "HYPE Flyer Template",
+    "_batch_index": 14070
+  },
+  {
+    "name": "HYPE Flyer Template_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "HYPE Flyer Template 2",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "HYPE Flyer Template_2",
+    "_batch_index": 14071
+  },
+  {
+    "name": "Hype Flyer Template_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hype Flyer Template 3",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Hype Flyer Template_3",
+    "_batch_index": 14072
+  },
+  {
+    "name": "Hype Minimalism Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hype Minimalism Flyer Template",
+    "confidence": 95,
+    "notes": "Flyer template in .psd",
+    "_source_name": "Hype Minimalism Flyer Template",
+    "_batch_index": 14073
+  },
+  {
+    "name": "Hyper Hiro - Stylish Street Influenced Style Vector Pack",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Hyper Hiro Vector Pack",
+    "confidence": 95,
+    "notes": ".zip with .eps, vector pack",
+    "_source_name": "Hyper Hiro - Stylish Street Influenced Style Vector Pack",
+    "_batch_index": 14074
+  },
+  {
+    "name": "hypercolor",
+    "category": "Photoshop - Other",
+    "clean_name": "Hypercolor",
+    "confidence": 70,
+    "notes": ".psd file, possibly a color effect",
+    "_source_name": "hypercolor",
+    "_batch_index": 14075
+  },
+  {
+    "name": "hypnotist_show",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Hypnotist Show",
+    "confidence": 80,
+    "notes": ".psd, likely a flyer",
+    "_source_name": "hypnotist_show",
+    "_batch_index": 14076
+  },
+  {
+    "name": "i am not lazy i am physically conservative",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "I Am Not Lazy",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "i am not lazy i am physically conservative",
+    "_batch_index": 14077
+  },
+  {
+    "name": "i am proof that god answers prayers",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Proof That God Answers Prayers",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "i am proof that god answers prayers",
+    "_batch_index": 14078
+  },
+  {
+    "name": "I can't keep clam I'm a football mom",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Football Mom Clam",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "I can't keep clam I'm a football mom",
+    "_batch_index": 14079
+  },
+  {
+    "name": "I Do A Thing Called What I Want!",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "I Do What I Want",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "I Do A Thing Called What I Want!",
+    "_batch_index": 14080
+  },
+  {
+    "name": "i don't what it is but it's on sale",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "It's On Sale",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "i don't what it is but it's on sale",
+    "_batch_index": 14081
+  },
+  {
+    "name": "i drink until i pass out",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Drink Until Pass Out",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "i drink until i pass out",
+    "_batch_index": 14082
+  },
+  {
+    "name": "I Drop the F-Bomb  kind of mom",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "F-Bomb Mom",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "I Drop the F-Bomb  kind of mom",
+    "_batch_index": 14083
+  },
+  {
+    "name": "i got it from my mama",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Got It From My Mama",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "i got it from my mama",
+    "_batch_index": 14084
+  },
+  {
+    "name": "i have never faked a sarcasm!",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Never Faked Sarcasm",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "i have never faked a sarcasm!",
+    "_batch_index": 14085
+  },
+  {
+    "name": "i hope you drown in main stream",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Drown in Mainstream",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "i hope you drown in main stream",
+    "_batch_index": 14086
+  },
+  {
+    "name": "I Just Want To Go Fishing and ignore all of my adult problems",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Go Fishing Ignore Problems",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "I Just Want To Go Fishing and ignore all of my adult problems",
+    "_batch_index": 14087
+  },
+  {
+    "name": "I Like to Stay Home With My Dog",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Stay Home With My Dog",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "I Like to Stay Home With My Dog",
+    "_batch_index": 14088
+  },
+  {
+    "name": "i love camping",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "I Love Camping",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "i love camping",
+    "_batch_index": 14089
+  },
+  {
+    "name": "i love my bearded daddy",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Love My Bearded Daddy",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "i love my bearded daddy",
+    "_batch_index": 14090
+  },
+  {
+    "name": "i love nursing",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "I Love Nursing",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "i love nursing",
+    "_batch_index": 14091
+  },
+  {
+    "name": "i speak fluent sarcasm",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Fluent Sarcasm",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "i speak fluent sarcasm",
+    "_batch_index": 14092
+  },
+  {
+    "name": "i twirl on my haters",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Twirl on Haters",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "i twirl on my haters",
+    "_batch_index": 14093
+  },
+  {
+    "name": "i woke up this cute",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Woke Up This Cute",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "i woke up this cute",
+    "_batch_index": 14094
+  },
+  {
+    "name": "I Work Hard  My Dog  can have a  Better Life",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Work Hard Dog Better Life",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "I Work Hard  My Dog  can have a  Better Life",
+    "_batch_index": 14095
+  },
+  {
+    "name": "I Wuf You",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "I Wuf You",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "I Wuf You",
+    "_batch_index": 14096
+  },
+  {
+    "name": "I'll always be your biggest fan",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Biggest Fan",
+    "confidence": 85,
+    "notes": ".eps vector quote design",
+    "_source_name": "I'll always be your biggest fan",
+    "_batch_index": 14097
+  },
+  {
+    "name": "I'm EGGstra Handsome",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "EGGstra Handsome",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "I'm EGGstra Handsome",
+    "_batch_index": 14098
+  },
+  {
+    "name": "I'm Here For the Chicks",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Here For the Chicks",
+    "confidence": 85,
+    "notes": ".eps vector design",
+    "_source_name": "I'm Here For the Chicks",
+    "_batch_index": 14099
+  }
+]

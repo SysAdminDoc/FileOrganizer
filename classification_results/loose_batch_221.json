@@ -1,0 +1,542 @@
+[
+  {
+    "name": "fried_chicken",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Fried Chicken",
+    "confidence": 75,
+    "notes": "PSD file, likely a mockup or template for fried chicken packaging or menu",
+    "_source_name": "fried_chicken",
+    "_batch_index": 13200
+  },
+  {
+    "name": "friends_list_1",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Friends List 1",
+    "confidence": 70,
+    "notes": "PSD file, likely a social media or contact list template",
+    "_source_name": "friends_list_1",
+    "_batch_index": 13201
+  },
+  {
+    "name": "friends_list_2",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Friends List 2",
+    "confidence": 70,
+    "notes": "PSD file, likely a social media or contact list template",
+    "_source_name": "friends_list_2",
+    "_batch_index": 13202
+  },
+  {
+    "name": "Friendship Day Flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Friendship Day Flyer 3",
+    "confidence": 85,
+    "notes": "PSD flyer for Friendship Day event",
+    "_source_name": "Friendship Day Flyer_3",
+    "_batch_index": 13203
+  },
+  {
+    "name": "friendship_day_celebration_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Friendship Day Celebration 2",
+    "confidence": 85,
+    "notes": "PSD flyer for Friendship Day celebration",
+    "_source_name": "friendship_day_celebration_2",
+    "_batch_index": 13204
+  },
+  {
+    "name": "Front & back",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front & Back",
+    "confidence": 75,
+    "notes": "PSD file, likely a business card or postcard front/back template",
+    "_source_name": "Front & back",
+    "_batch_index": 13205
+  },
+  {
+    "name": "Front (2)",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 2",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front (2)",
+    "_batch_index": 13206
+  },
+  {
+    "name": "Front 01",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 01",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front 01",
+    "_batch_index": 13207
+  },
+  {
+    "name": "Front 01_2",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 01 2",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front 01_2",
+    "_batch_index": 13208
+  },
+  {
+    "name": "Front 02",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 02",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front 02",
+    "_batch_index": 13209
+  },
+  {
+    "name": "Front 02_2",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 02 2",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front 02_2",
+    "_batch_index": 13210
+  },
+  {
+    "name": "Front Black",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front Black",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front Black",
+    "_batch_index": 13211
+  },
+  {
+    "name": "FRONT COVER",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Cover",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or brochure cover template",
+    "_source_name": "FRONT COVER",
+    "_batch_index": 13212
+  },
+  {
+    "name": "Front Menu",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Front Menu",
+    "confidence": 80,
+    "notes": "PSD file, likely a restaurant menu front template",
+    "_source_name": "Front Menu",
+    "_batch_index": 13213
+  },
+  {
+    "name": "Front Side",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front Side",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front Side",
+    "_batch_index": 13214
+  },
+  {
+    "name": "Front White",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front White",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front White",
+    "_batch_index": 13215
+  },
+  {
+    "name": "Front&Back Cover 10x10",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front & Back Cover 10x10",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or album cover template",
+    "_source_name": "Front&Back Cover 10x10",
+    "_batch_index": 13216
+  },
+  {
+    "name": "Front&Back Cover 12x12",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front & Back Cover 12x12",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or album cover template",
+    "_source_name": "Front&Back Cover 12x12",
+    "_batch_index": 13217
+  },
+  {
+    "name": "Front-Back-Pages_2",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Back Pages 2",
+    "confidence": 80,
+    "notes": "PSD file, likely a multi-page document template",
+    "_source_name": "Front-Back-Pages_2",
+    "_batch_index": 13218
+  },
+  {
+    "name": "front-back",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front Back",
+    "confidence": 75,
+    "notes": "PSD file, likely a business card or postcard front/back template",
+    "_source_name": "front-back",
+    "_batch_index": 13219
+  },
+  {
+    "name": "Front-Page",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page",
+    "_batch_index": 13220
+  },
+  {
+    "name": "Front-Page_11",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 11",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_11",
+    "_batch_index": 13221
+  },
+  {
+    "name": "Front-Page_12",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 12",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_12",
+    "_batch_index": 13222
+  },
+  {
+    "name": "Front-Page_13",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 13",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_13",
+    "_batch_index": 13223
+  },
+  {
+    "name": "Front-Page_19",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 19",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_19",
+    "_batch_index": 13224
+  },
+  {
+    "name": "Front-Page_2",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 2",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_2",
+    "_batch_index": 13225
+  },
+  {
+    "name": "Front-Page_20",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 20",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_20",
+    "_batch_index": 13226
+  },
+  {
+    "name": "Front-Page_27",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 27",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_27",
+    "_batch_index": 13227
+  },
+  {
+    "name": "Front-Page_30",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 30",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_30",
+    "_batch_index": 13228
+  },
+  {
+    "name": "Front-Page_31",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 31",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_31",
+    "_batch_index": 13229
+  },
+  {
+    "name": "Front-Page_35",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 35",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_35",
+    "_batch_index": 13230
+  },
+  {
+    "name": "Front-Page_37",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 37",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_37",
+    "_batch_index": 13231
+  },
+  {
+    "name": "Front-Page_38",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 38",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_38",
+    "_batch_index": 13232
+  },
+  {
+    "name": "Front-Page_39",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 39",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_39",
+    "_batch_index": 13233
+  },
+  {
+    "name": "Front-Page_8",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Front Page 8",
+    "confidence": 80,
+    "notes": "PSD file, likely a book or magazine front page template",
+    "_source_name": "Front-Page_8",
+    "_batch_index": 13234
+  },
+  {
+    "name": "front21x9,9cm",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 21x9.9cm",
+    "confidence": 75,
+    "notes": "PSD file with dimensions, likely a card or document template",
+    "_source_name": "front21x9,9cm",
+    "_batch_index": 13235
+  },
+  {
+    "name": "front9x4",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 9x4",
+    "confidence": 75,
+    "notes": "PSD file with dimensions, likely a card or document template",
+    "_source_name": "front9x4",
+    "_batch_index": 13236
+  },
+  {
+    "name": "Front_10",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 10",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_10",
+    "_batch_index": 13237
+  },
+  {
+    "name": "Front_100",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 100",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_100",
+    "_batch_index": 13238
+  },
+  {
+    "name": "Front_101",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 101",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_101",
+    "_batch_index": 13239
+  },
+  {
+    "name": "Front_102",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 102",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_102",
+    "_batch_index": 13240
+  },
+  {
+    "name": "Front_103",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 103",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_103",
+    "_batch_index": 13241
+  },
+  {
+    "name": "Front_104",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 104",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_104",
+    "_batch_index": 13242
+  },
+  {
+    "name": "Front_105",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 105",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_105",
+    "_batch_index": 13243
+  },
+  {
+    "name": "Front_107",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 107",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_107",
+    "_batch_index": 13244
+  },
+  {
+    "name": "Front_108",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 108",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_108",
+    "_batch_index": 13245
+  },
+  {
+    "name": "Front_11",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 11",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_11",
+    "_batch_index": 13246
+  },
+  {
+    "name": "Front_112",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 112",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_112",
+    "_batch_index": 13247
+  },
+  {
+    "name": "Front_116",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 116",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_116",
+    "_batch_index": 13248
+  },
+  {
+    "name": "Front_118",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 118",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_118",
+    "_batch_index": 13249
+  },
+  {
+    "name": "Front_119",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 119",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_119",
+    "_batch_index": 13250
+  },
+  {
+    "name": "Front_12",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 12",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_12",
+    "_batch_index": 13251
+  },
+  {
+    "name": "Front_125",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 125",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_125",
+    "_batch_index": 13252
+  },
+  {
+    "name": "Front_126",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 126",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_126",
+    "_batch_index": 13253
+  },
+  {
+    "name": "Front_127",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 127",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_127",
+    "_batch_index": 13254
+  },
+  {
+    "name": "Front_13",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 13",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_13",
+    "_batch_index": 13255
+  },
+  {
+    "name": "front_130",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 130",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "front_130",
+    "_batch_index": 13256
+  },
+  {
+    "name": "Front_132",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 132",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_132",
+    "_batch_index": 13257
+  },
+  {
+    "name": "Front_134",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 134",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_134",
+    "_batch_index": 13258
+  },
+  {
+    "name": "Front_139",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Front 139",
+    "confidence": 70,
+    "notes": "PSD file, likely a card or document front template",
+    "_source_name": "Front_139",
+    "_batch_index": 13259
+  }
+]
