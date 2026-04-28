@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Flyer_Front",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Front",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Front",
+    "_batch_index": 13020
+  },
+  {
+    "name": "Flyer_front2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Front 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_front2",
+    "_batch_index": 13021
+  },
+  {
+    "name": "Flyer_Green",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Green",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Green",
+    "_batch_index": 13022
+  },
+  {
+    "name": "Flyer_Green_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Green 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Green_2",
+    "_batch_index": 13023
+  },
+  {
+    "name": "Flyer_Green_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Green 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Green_3",
+    "_batch_index": 13024
+  },
+  {
+    "name": "Flyer_Green_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Green 4",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Green_4",
+    "_batch_index": 13025
+  },
+  {
+    "name": "Flyer_Home_Security_1_Blue",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 1 Blue",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_1_Blue",
+    "_batch_index": 13026
+  },
+  {
+    "name": "Flyer_Home_Security_1_Green",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 1 Green",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_1_Green",
+    "_batch_index": 13027
+  },
+  {
+    "name": "Flyer_Home_Security_1_Orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 1 Orange",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_1_Orange",
+    "_batch_index": 13028
+  },
+  {
+    "name": "Flyer_Home_Security_1_Red",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 1 Red",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_1_Red",
+    "_batch_index": 13029
+  },
+  {
+    "name": "Flyer_Home_Security_1_US_Letter_Blue",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 1 US Letter Blue",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_1_US_Letter_Blue",
+    "_batch_index": 13030
+  },
+  {
+    "name": "Flyer_Home_Security_1_US_Letter_Green",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 1 US Letter Green",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_1_US_Letter_Green",
+    "_batch_index": 13031
+  },
+  {
+    "name": "Flyer_Home_Security_1_US_Letter_Orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 1 US Letter Orange",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_1_US_Letter_Orange",
+    "_batch_index": 13032
+  },
+  {
+    "name": "Flyer_Home_Security_1_US_Letter_Red",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 1 US Letter Red",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_1_US_Letter_Red",
+    "_batch_index": 13033
+  },
+  {
+    "name": "Flyer_Home_Security_2_Blue",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 2 Blue",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_2_Blue",
+    "_batch_index": 13034
+  },
+  {
+    "name": "Flyer_Home_Security_2_Green",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 2 Green",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_2_Green",
+    "_batch_index": 13035
+  },
+  {
+    "name": "Flyer_Home_Security_2_Orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 2 Orange",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_2_Orange",
+    "_batch_index": 13036
+  },
+  {
+    "name": "Flyer_Home_Security_2_Red",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 2 Red",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_2_Red",
+    "_batch_index": 13037
+  },
+  {
+    "name": "Flyer_Home_Security_2_US_Letter_Blue",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 2 US Letter Blue",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_2_US_Letter_Blue",
+    "_batch_index": 13038
+  },
+  {
+    "name": "Flyer_Home_Security_2_US_Letter_Green",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 2 US Letter Green",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_2_US_Letter_Green",
+    "_batch_index": 13039
+  },
+  {
+    "name": "Flyer_Home_Security_2_US_Letter_Orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 2 US Letter Orange",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_2_US_Letter_Orange",
+    "_batch_index": 13040
+  },
+  {
+    "name": "Flyer_Home_Security_2_US_Letter_Red",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Home Security 2 US Letter Red",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Home_Security_2_US_Letter_Red",
+    "_batch_index": 13041
+  },
+  {
+    "name": "Flyer_Interior_Design_1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Interior Design 1",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Interior_Design_1",
+    "_batch_index": 13042
+  },
+  {
+    "name": "Flyer_Interior_Design_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Interior Design 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Interior_Design_2",
+    "_batch_index": 13043
+  },
+  {
+    "name": "Flyer_Mobile_App_Style_1_Blue_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Mobile App Style 1 Blue 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Mobile_App_Style_1_Blue_2",
+    "_batch_index": 13044
+  },
+  {
+    "name": "Flyer_Mobile_App_Style_1_Green_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Mobile App Style 1 Green 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Mobile_App_Style_1_Green_2",
+    "_batch_index": 13045
+  },
+  {
+    "name": "Flyer_Mobile_App_Style_1_Orange_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Mobile App Style 1 Orange 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Mobile_App_Style_1_Orange_2",
+    "_batch_index": 13046
+  },
+  {
+    "name": "Flyer_Mobile_App_Style_1_Red_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Mobile App Style 1 Red 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Mobile_App_Style_1_Red_2",
+    "_batch_index": 13047
+  },
+  {
+    "name": "Flyer_Mobile_App_Style_2_Blue_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Mobile App Style 2 Blue 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Mobile_App_Style_2_Blue_2",
+    "_batch_index": 13048
+  },
+  {
+    "name": "Flyer_Mobile_App_Style_2_Green_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Mobile App Style 2 Green 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Mobile_App_Style_2_Green_2",
+    "_batch_index": 13049
+  },
+  {
+    "name": "Flyer_Mobile_App_Style_2_Orange_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Mobile App Style 2 Orange 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Mobile_App_Style_2_Orange_2",
+    "_batch_index": 13050
+  },
+  {
+    "name": "Flyer_Mobile_App_Style_2_Red",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Mobile App Style 2 Red",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Mobile_App_Style_2_Red",
+    "_batch_index": 13051
+  },
+  {
+    "name": "Flyer_Orange",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Orange",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Orange",
+    "_batch_index": 13052
+  },
+  {
+    "name": "Flyer_Orange_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Orange 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Orange_2",
+    "_batch_index": 13053
+  },
+  {
+    "name": "Flyer_Orange_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Orange 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Orange_3",
+    "_batch_index": 13054
+  },
+  {
+    "name": "Flyer_Orange_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Orange 4",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Orange_4",
+    "_batch_index": 13055
+  },
+  {
+    "name": "flyer_poster_template_v3_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Poster Template v3 4",
+    "confidence": 95,
+    "notes": "PSD flyer/poster template",
+    "_source_name": "flyer_poster_template_v3_4",
+    "_batch_index": 13056
+  },
+  {
+    "name": "Flyer_Red",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Red",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Red",
+    "_batch_index": 13057
+  },
+  {
+    "name": "Flyer_Red_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Red 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Red_2",
+    "_batch_index": 13058
+  },
+  {
+    "name": "Flyer_Red_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Red 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Red_3",
+    "_batch_index": 13059
+  },
+  {
+    "name": "Flyer_Red_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Red 4",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Red_4",
+    "_batch_index": 13060
+  },
+  {
+    "name": "Flyer_StartUp_Agency_1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Startup Agency 1",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_StartUp_Agency_1",
+    "_batch_index": 13061
+  },
+  {
+    "name": "Flyer_StartUp_Agency_1_US_Letter",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Startup Agency 1 US Letter",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_StartUp_Agency_1_US_Letter",
+    "_batch_index": 13062
+  },
+  {
+    "name": "Flyer_StartUp_Agency_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Startup Agency 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_StartUp_Agency_2",
+    "_batch_index": 13063
+  },
+  {
+    "name": "Flyer_StartUp_Agency_2_US_Letter",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Startup Agency 2 US Letter",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_StartUp_Agency_2_US_Letter",
+    "_batch_index": 13064
+  },
+  {
+    "name": "Flyer_template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Template",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_template",
+    "_batch_index": 13065
+  },
+  {
+    "name": "Flyer_Transport_1_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Transport 1 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Transport_1_2",
+    "_batch_index": 13066
+  },
+  {
+    "name": "Flyer_Transport_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Transport 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Transport_2",
+    "_batch_index": 13067
+  },
+  {
+    "name": "Flyer_Transport_Logistic_1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Transport Logistic 1",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Transport_Logistic_1",
+    "_batch_index": 13068
+  },
+  {
+    "name": "Flyer_Transport_Logistic_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Transport Logistic 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Transport_Logistic_2",
+    "_batch_index": 13069
+  },
+  {
+    "name": "Flyer_Transport_Logistic_US_Letter_1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Transport Logistic US Letter 1",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Transport_Logistic_US_Letter_1",
+    "_batch_index": 13070
+  },
+  {
+    "name": "Flyer_Transport_Logistic_US_Letter_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Transport Logistic US Letter 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Transport_Logistic_US_Letter_2",
+    "_batch_index": 13071
+  },
+  {
+    "name": "Flyer_Transport_US_Letter_1_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Transport US Letter 1 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Transport_US_Letter_1_2",
+    "_batch_index": 13072
+  },
+  {
+    "name": "Flyer_Transport_US_Letter_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer Transport US Letter 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyer_Transport_US_Letter_2",
+    "_batch_index": 13073
+  },
+  {
+    "name": "flyerEScruz",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyer EScruz",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "flyerEScruz",
+    "_batch_index": 13074
+  },
+  {
+    "name": "Flyers 1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyers 1",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyers 1",
+    "_batch_index": 13075
+  },
+  {
+    "name": "Flyers 2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyers 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyers 2",
+    "_batch_index": 13076
+  },
+  {
+    "name": "Flyers 3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyers 3",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyers 3",
+    "_batch_index": 13077
+  },
+  {
+    "name": "Flyers",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyers",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyers",
+    "_batch_index": 13078
+  },
+  {
+    "name": "Flyers2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Flyers 2",
+    "confidence": 95,
+    "notes": "PSD flyer template",
+    "_source_name": "Flyers2",
+    "_batch_index": 13079
+  }
+]
