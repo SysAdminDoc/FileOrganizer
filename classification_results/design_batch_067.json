@@ -1,0 +1,542 @@
+[
+  {
+    "name": "INTRO-HD.NET-rise-typeface-22690161",
+    "category": "Fonts & Typography",
+    "clean_name": "Rise Typeface",
+    "confidence": 80,
+    "notes": "Name suggests typeface, .zip likely contains font files",
+    "_source_name": "INTRO-HD.NET-rise-typeface-22690161",
+    "_batch_index": 3960
+  },
+  {
+    "name": "INTRO-HD.NET-romantic-slideshow-mogrt",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Romantic Slideshow Mogrt",
+    "confidence": 85,
+    "notes": "Name includes 'mogrt'",
+    "_source_name": "INTRO-HD.NET-romantic-slideshow-mogrt",
+    "_batch_index": 3961
+  },
+  {
+    "name": "INTRO-HD.NET-saber-light-youtube-channel-27623443",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Saber Light YouTube Channel",
+    "confidence": 75,
+    "notes": "YouTube channel intro likely an After Effects opener",
+    "_source_name": "INTRO-HD.NET-saber-light-youtube-channel-27623443",
+    "_batch_index": 3962
+  },
+  {
+    "name": "INTRO-HD.NET-santa-claus-in-the-midnight-22892797",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Santa Claus in the Midnight",
+    "confidence": 90,
+    "notes": "Santa Claus theme, .aep file confirms After Effects",
+    "_source_name": "INTRO-HD.NET-santa-claus-in-the-midnight-22892797",
+    "_batch_index": 3963
+  },
+  {
+    "name": "INTRO-HD.NET-Saying-Love-Instagram-Story-Apple-Motion-36080371",
+    "category": "After Effects - Social Media",
+    "clean_name": "Saying Love Instagram Story",
+    "confidence": 80,
+    "notes": "Instagram Story, likely After Effects template",
+    "_source_name": "INTRO-HD.NET-Saying-Love-Instagram-Story-Apple-Motion-36080371",
+    "_batch_index": 3964
+  },
+  {
+    "name": "INTRO-HD.NET-SEO-Marketing-Agency-35987722",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "SEO Marketing Agency",
+    "confidence": 85,
+    "notes": "Marketing agency theme, corporate opener",
+    "_source_name": "INTRO-HD.NET-SEO-Marketing-Agency-35987722",
+    "_batch_index": 3965
+  },
+  {
+    "name": "INTRO-HD.NET-simplicity-instagram-typography-stories-25110656",
+    "category": "After Effects - Social Media",
+    "clean_name": "Simplicity Instagram Typography Stories",
+    "confidence": 85,
+    "notes": "Instagram stories with typography",
+    "_source_name": "INTRO-HD.NET-simplicity-instagram-typography-stories-25110656",
+    "_batch_index": 3966
+  },
+  {
+    "name": "INTRO-HD.NET-skate-to-create-35175645",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Skate to Create",
+    "confidence": 80,
+    "notes": "Skateboarding theme, sport/action",
+    "_source_name": "INTRO-HD.NET-skate-to-create-35175645",
+    "_batch_index": 3967
+  },
+  {
+    "name": "INTRO-HD.NET-skill-up-opener-33241078",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Skill Up Opener",
+    "confidence": 85,
+    "notes": "Opener in name, likely After Effects",
+    "_source_name": "INTRO-HD.NET-skill-up-opener-33241078",
+    "_batch_index": 3968
+  },
+  {
+    "name": "INTRO-HD.NET-slide-show-19374280",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Slide Show",
+    "confidence": 85,
+    "notes": "Slideshow in name",
+    "_source_name": "INTRO-HD.NET-slide-show-19374280",
+    "_batch_index": 3969
+  },
+  {
+    "name": "INTRO-HD.NET-Slideshow-11470755",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow in name",
+    "_source_name": "INTRO-HD.NET-Slideshow-11470755",
+    "_batch_index": 3970
+  },
+  {
+    "name": "INTRO-HD.NET-soccer-football-8010864",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Soccer Football",
+    "confidence": 85,
+    "notes": "Soccer theme, sport",
+    "_source_name": "INTRO-HD.NET-soccer-football-8010864",
+    "_batch_index": 3971
+  },
+  {
+    "name": "INTRO-HD.NET-soccer-opener-224036862",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Soccer Opener",
+    "confidence": 85,
+    "notes": "Soccer opener, sport",
+    "_source_name": "INTRO-HD.NET-soccer-opener-224036862",
+    "_batch_index": 3972
+  },
+  {
+    "name": "INTRO-HD.NET-sport-intro-33244341",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Intro",
+    "confidence": 85,
+    "notes": "Sport intro",
+    "_source_name": "INTRO-HD.NET-sport-intro-33244341",
+    "_batch_index": 3973
+  },
+  {
+    "name": "INTRO-HD.NET-sport-opener-22096749",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Opener",
+    "confidence": 85,
+    "notes": "Sport opener",
+    "_source_name": "INTRO-HD.NET-sport-opener-22096749",
+    "_batch_index": 3974
+  },
+  {
+    "name": "INTRO-HD.NET-sport-team-player-introducing-team-intro-32635797",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Team Player Introducing Team Intro",
+    "confidence": 85,
+    "notes": "Team intro, sport",
+    "_source_name": "INTRO-HD.NET-sport-team-player-introducing-team-intro-32635797",
+    "_batch_index": 3975
+  },
+  {
+    "name": "INTRO-HD.NET-star-award-show-package-15592810",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Star Award Show Package",
+    "confidence": 85,
+    "notes": "Award show package, broadcast",
+    "_source_name": "INTRO-HD.NET-star-award-show-package-15592810",
+    "_batch_index": 3976
+  },
+  {
+    "name": "INTRO-HD.NET-startup-character-scene-animation-pack36044995",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Startup Character Scene Animation Pack",
+    "confidence": 85,
+    "notes": "Character animation pack",
+    "_source_name": "INTRO-HD.NET-startup-character-scene-animation-pack36044995",
+    "_batch_index": 3977
+  },
+  {
+    "name": "INTRO-HD.NET-stomp-high-end-fashion-34635259",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Stomp High End Fashion",
+    "confidence": 80,
+    "notes": "Fashion opener, cinematic style",
+    "_source_name": "INTRO-HD.NET-stomp-high-end-fashion-34635259",
+    "_batch_index": 3978
+  },
+  {
+    "name": "INTRO-HD.NET-Stomp-Opener-20539417",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Stomp Opener",
+    "confidence": 85,
+    "notes": "Opener in name",
+    "_source_name": "INTRO-HD.NET-Stomp-Opener-20539417",
+    "_batch_index": 3979
+  },
+  {
+    "name": "INTRO-HD.NET-stomp-opener-36135123",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Stomp Opener",
+    "confidence": 85,
+    "notes": "Opener in name",
+    "_source_name": "INTRO-HD.NET-stomp-opener-36135123",
+    "_batch_index": 3980
+  },
+  {
+    "name": "INTRO-HD.NET-story-maker-explainer-toolkit-25220783",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Story Maker Explainer Toolkit",
+    "confidence": 85,
+    "notes": "Explainer toolkit",
+    "_source_name": "INTRO-HD.NET-story-maker-explainer-toolkit-25220783",
+    "_batch_index": 3981
+  },
+  {
+    "name": "INTRO-HD.NET-stream-intermission-banners-collection-0002-34130597",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Stream Intermission Banners Collection",
+    "confidence": 80,
+    "notes": "Stream intermission banners, broadcast style",
+    "_source_name": "INTRO-HD.NET-stream-intermission-banners-collection-0002-34130597",
+    "_batch_index": 3982
+  },
+  {
+    "name": "INTRO-HD.NET-style-opener-b196-34790000",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Style Opener",
+    "confidence": 85,
+    "notes": "Opener in name",
+    "_source_name": "INTRO-HD.NET-style-opener-b196-34790000",
+    "_batch_index": 3983
+  },
+  {
+    "name": "INTRO-HD.NET-stylish-fashion-opener-32548554",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Stylish Fashion Opener",
+    "confidence": 85,
+    "notes": "Fashion opener",
+    "_source_name": "INTRO-HD.NET-stylish-fashion-opener-32548554",
+    "_batch_index": 3984
+  },
+  {
+    "name": "INTRO-HD.NET-stylish-fashion-trip-13411480",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Stylish Fashion Trip",
+    "confidence": 80,
+    "notes": "Fashion trip opener",
+    "_source_name": "INTRO-HD.NET-stylish-fashion-trip-13411480",
+    "_batch_index": 3985
+  },
+  {
+    "name": "INTRO-HD.NET-teenage-tv-22572104",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Teenage TV",
+    "confidence": 80,
+    "notes": "TV theme, broadcast",
+    "_source_name": "INTRO-HD.NET-teenage-tv-22572104",
+    "_batch_index": 3986
+  },
+  {
+    "name": "INTRO-HD.NET-text-and-backgrounds-24972701",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Text and Backgrounds",
+    "confidence": 80,
+    "notes": "Text and backgrounds, typography",
+    "_source_name": "INTRO-HD.NET-text-and-backgrounds-24972701",
+    "_batch_index": 3987
+  },
+  {
+    "name": "INTRO-HD.NET-Text-Library-Handy-Text-Animations-V3.1-21932974",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Text Library Handy Text Animations V3.1",
+    "confidence": 85,
+    "notes": "Text animations library",
+    "_source_name": "INTRO-HD.NET-Text-Library-Handy-Text-Animations-V3.1-21932974",
+    "_batch_index": 3988
+  },
+  {
+    "name": "INTRO-HD.NET-thanks-giving-slideshow-34815946",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Thanks Giving Slideshow",
+    "confidence": 85,
+    "notes": "Thanksgiving slideshow",
+    "_source_name": "INTRO-HD.NET-thanks-giving-slideshow-34815946",
+    "_batch_index": 3989
+  },
+  {
+    "name": "INTRO-HD.NET-thanksgiving-watercolored-slideshow-24971366",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Thanksgiving Watercolored Slideshow",
+    "confidence": 85,
+    "notes": "Thanksgiving slideshow",
+    "_source_name": "INTRO-HD.NET-thanksgiving-watercolored-slideshow-24971366",
+    "_batch_index": 3990
+  },
+  {
+    "name": "INTRO-HD.NET-the-future-animated-titles-33897913",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "The Future Animated Titles",
+    "confidence": 85,
+    "notes": "Animated titles",
+    "_source_name": "INTRO-HD.NET-the-future-animated-titles-33897913",
+    "_batch_index": 3991
+  },
+  {
+    "name": "INTRO-HD.NET-the-history-l-documentary-photo-24669860",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "The History Documentary Photo",
+    "confidence": 80,
+    "notes": "Documentary style",
+    "_source_name": "INTRO-HD.NET-the-history-l-documentary-photo-24669860",
+    "_batch_index": 3992
+  },
+  {
+    "name": "INTRO-HD.NET-the-movie-photo-slideshow-30597774",
+    "category": "After Effects - Slideshow",
+    "clean_name": "The Movie Photo Slideshow",
+    "confidence": 85,
+    "notes": "Movie photo slideshow",
+    "_source_name": "INTRO-HD.NET-the-movie-photo-slideshow-30597774",
+    "_batch_index": 3993
+  },
+  {
+    "name": "INTRO-HD.NET-the-slideshow-opener-32470728",
+    "category": "After Effects - Slideshow",
+    "clean_name": "The Slideshow Opener",
+    "confidence": 85,
+    "notes": "Slideshow opener",
+    "_source_name": "INTRO-HD.NET-the-slideshow-opener-32470728",
+    "_batch_index": 3994
+  },
+  {
+    "name": "INTRO-HD.NET-timeline-slideshow-25420269",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Timeline Slideshow",
+    "confidence": 85,
+    "notes": "Timeline slideshow",
+    "_source_name": "INTRO-HD.NET-timeline-slideshow-25420269",
+    "_batch_index": 3995
+  },
+  {
+    "name": "INTRO-HD.NET-torn-paper-titles25779361",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Torn Paper Titles",
+    "confidence": 85,
+    "notes": "Torn paper titles",
+    "_source_name": "INTRO-HD.NET-torn-paper-titles25779361",
+    "_batch_index": 3996
+  },
+  {
+    "name": "INTRO-HD.NET-tourism-and-travel-25675698",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Tourism and Travel",
+    "confidence": 80,
+    "notes": "Travel opener",
+    "_source_name": "INTRO-HD.NET-tourism-and-travel-25675698",
+    "_batch_index": 3997
+  },
+  {
+    "name": "INTRO-HD.NET-trailer-19239694",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Trailer",
+    "confidence": 85,
+    "notes": "Trailer in name",
+    "_source_name": "INTRO-HD.NET-trailer-19239694",
+    "_batch_index": 3998
+  },
+  {
+    "name": "INTRO-HD.NET-trailer-19454011",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Trailer",
+    "confidence": 85,
+    "notes": "Trailer in name",
+    "_source_name": "INTRO-HD.NET-trailer-19454011",
+    "_batch_index": 3999
+  },
+  {
+    "name": "INTRO-HD.NET-transitions-39538036",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Transitions",
+    "confidence": 85,
+    "notes": "Transitions in name, .jpg suggests preview",
+    "_source_name": "INTRO-HD.NET-transitions-39538036",
+    "_batch_index": 4000
+  },
+  {
+    "name": "INTRO-HD.NET-travel-instagram-story-pack-34145948",
+    "category": "After Effects - Social Media",
+    "clean_name": "Travel Instagram Story Pack",
+    "confidence": 85,
+    "notes": "Instagram story pack",
+    "_source_name": "INTRO-HD.NET-travel-instagram-story-pack-34145948",
+    "_batch_index": 4001
+  },
+  {
+    "name": "INTRO-HD.NET-trendy-stylish-id-opener-34277360",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Trendy Stylish ID Opener",
+    "confidence": 85,
+    "notes": "Opener in name",
+    "_source_name": "INTRO-HD.NET-trendy-stylish-id-opener-34277360",
+    "_batch_index": 4002
+  },
+  {
+    "name": "INTRO-HD.NET-Trendy-Titles-36571483",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Trendy Titles",
+    "confidence": 85,
+    "notes": "Titles in name",
+    "_source_name": "INTRO-HD.NET-Trendy-Titles-36571483",
+    "_batch_index": 4003
+  },
+  {
+    "name": "INTRO-HD.NET-tv-shop-sales-slideshow-23344417",
+    "category": "After Effects - Slideshow",
+    "clean_name": "TV Shop Sales Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow in name",
+    "_source_name": "INTRO-HD.NET-tv-shop-sales-slideshow-23344417",
+    "_batch_index": 4004
+  },
+  {
+    "name": "INTRO-HD.NET-typography-intro-33917099",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Intro",
+    "confidence": 85,
+    "notes": "Typography intro",
+    "_source_name": "INTRO-HD.NET-typography-intro-33917099",
+    "_batch_index": 4005
+  },
+  {
+    "name": "INTRO-HD.NET-typography-scenes-21691002",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Scenes",
+    "confidence": 85,
+    "notes": "Typography scenes",
+    "_source_name": "INTRO-HD.NET-typography-scenes-21691002",
+    "_batch_index": 4006
+  },
+  {
+    "name": "INTRO-HD.NET-typography-slides-after-effects-33807882",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Slides After Effects",
+    "confidence": 85,
+    "notes": "Typography slides",
+    "_source_name": "INTRO-HD.NET-typography-slides-after-effects-33807882",
+    "_batch_index": 4007
+  },
+  {
+    "name": "INTRO-HD.NET-typography-titles-21347336",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Typography Titles",
+    "confidence": 85,
+    "notes": "Typography titles",
+    "_source_name": "INTRO-HD.NET-typography-titles-21347336",
+    "_batch_index": 4008
+  },
+  {
+    "name": "INTRO-HD.NET-Universal-Blog-Intro-36138474",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Universal Blog Intro",
+    "confidence": 85,
+    "notes": "Blog intro",
+    "_source_name": "INTRO-HD.NET-Universal-Blog-Intro-36138474",
+    "_batch_index": 4009
+  },
+  {
+    "name": "INTRO-HD.NET-upbeat-typo-opener-35322216",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Upbeat Typo Opener",
+    "confidence": 85,
+    "notes": "Typo opener",
+    "_source_name": "INTRO-HD.NET-upbeat-typo-opener-35322216",
+    "_batch_index": 4010
+  },
+  {
+    "name": "INTRO-HD.NET-urban-hiphop-intro-33046841",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Hiphop Intro",
+    "confidence": 85,
+    "notes": "Urban hiphop intro",
+    "_source_name": "INTRO-HD.NET-urban-hiphop-intro-33046841",
+    "_batch_index": 4011
+  },
+  {
+    "name": "INTRO-HD.NET-Urban-Intro-36076222",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Intro",
+    "confidence": 85,
+    "notes": "Urban intro",
+    "_source_name": "INTRO-HD.NET-Urban-Intro-36076222",
+    "_batch_index": 4012
+  },
+  {
+    "name": "INTRO-HD.NET-urban-opener-23131098",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Opener",
+    "confidence": 85,
+    "notes": "Urban opener",
+    "_source_name": "INTRO-HD.NET-urban-opener-23131098",
+    "_batch_index": 4013
+  },
+  {
+    "name": "INTRO-HD.NET-urban-slideshow34092108",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Urban Slideshow",
+    "confidence": 85,
+    "notes": "Urban slideshow",
+    "_source_name": "INTRO-HD.NET-urban-slideshow34092108",
+    "_batch_index": 4014
+  },
+  {
+    "name": "INTRO-HD.NET-Urban-Street-Opener-36138466",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Street Opener",
+    "confidence": 85,
+    "notes": "Urban street opener",
+    "_source_name": "INTRO-HD.NET-Urban-Street-Opener-36138466",
+    "_batch_index": 4015
+  },
+  {
+    "name": "INTRO-HD.NET-urban-stylish-instagram-stories-34193565",
+    "category": "After Effects - Social Media",
+    "clean_name": "Urban Stylish Instagram Stories",
+    "confidence": 85,
+    "notes": "Instagram stories",
+    "_source_name": "INTRO-HD.NET-urban-stylish-instagram-stories-34193565",
+    "_batch_index": 4016
+  },
+  {
+    "name": "INTRO-HD.NET-vacation-and-travel-opener-22484383",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Vacation and Travel Opener",
+    "confidence": 85,
+    "notes": "Travel opener",
+    "_source_name": "INTRO-HD.NET-vacation-and-travel-opener-22484383",
+    "_batch_index": 4017
+  },
+  {
+    "name": "INTRO-HD.NET-vh-15299989-dynamic-1ifesty1e-c0mp0ser-mark-ii",
+    "category": "After Effects - Other",
+    "clean_name": "Dynamic Lifestyle Composer Mark II",
+    "confidence": 70,
+    "notes": "Unclear specific subcategory, likely motion graphics pack",
+    "_source_name": "INTRO-HD.NET-vh-15299989-dynamic-1ifesty1e-c0mp0ser-mark-ii",
+    "_batch_index": 4018
+  },
+  {
+    "name": "INTRO-HD.NET-video-marketing-explainer-real-estate36015807",
+    "category": "After Effects - Real Estate",
+    "clean_name": "Video Marketing Explainer Real Estate",
+    "confidence": 85,
+    "notes": "Real estate explainer",
+    "_source_name": "INTRO-HD.NET-video-marketing-explainer-real-estate36015807",
+    "_batch_index": 4019
+  }
+]

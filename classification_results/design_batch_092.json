@@ -1,0 +1,542 @@
+[
+  {
+    "name": "Save Actions v1.4",
+    "category": "After Effects - Other",
+    "clean_name": "Save Actions v1.4",
+    "confidence": 65,
+    "notes": "Contains .reg, .lnk, .txt, .jpg, .mp4; likely an AE script/action pack but no clear subcategory",
+    "_source_name": "Save Actions v1.4",
+    "_batch_index": 5460
+  },
+  {
+    "name": "Save Objects 1.1.2",
+    "category": "After Effects - Other",
+    "clean_name": "Save Objects 1.1.2",
+    "confidence": 65,
+    "notes": "Contains .reg, .lnk, .txt; likely AE utility but no clear subcategory",
+    "_source_name": "Save Objects 1.1.2",
+    "_batch_index": 5461
+  },
+  {
+    "name": "Save the Date",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Save the Date",
+    "confidence": 85,
+    "notes": "Contains .psd; name suggests wedding/event invitation",
+    "_source_name": "Save the Date",
+    "_batch_index": 5462
+  },
+  {
+    "name": "school-backpacks-mock-up-BLVMAD",
+    "category": "Mockups - Apparel",
+    "clean_name": "School Backpacks Mock Up",
+    "confidence": 90,
+    "notes": "Name includes 'mock-up' and backpacks are apparel",
+    "_source_name": "school-backpacks-mock-up-BLVMAD",
+    "_batch_index": 5463
+  },
+  {
+    "name": "school-education-slideshow-for-after-effects-36598927",
+    "category": "After Effects - Slideshow",
+    "clean_name": "School Education Slideshow for After Effects",
+    "confidence": 95,
+    "notes": "Name says 'slideshow for after effects'",
+    "_source_name": "school-education-slideshow-for-after-effects-36598927",
+    "_batch_index": 5464
+  },
+  {
+    "name": "school-instagram-pack-for-after-effects-36872824",
+    "category": "After Effects - Social Media",
+    "clean_name": "School Instagram Pack for After Effects",
+    "confidence": 95,
+    "notes": "Name says 'instagram pack for after effects'",
+    "_source_name": "school-instagram-pack-for-after-effects-36872824",
+    "_batch_index": 5465
+  },
+  {
+    "name": "school-youtube-thumbnails-9E9N4FH",
+    "category": "After Effects - Social Media",
+    "clean_name": "School YouTube Thumbnails",
+    "confidence": 85,
+    "notes": "YouTube thumbnails are social media assets; likely AE template",
+    "_source_name": "school-youtube-thumbnails-9E9N4FH",
+    "_batch_index": 5466
+  },
+  {
+    "name": "Sci-Fi - Momentum (Construction Kit) [Boom Library]",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Sci-Fi Momentum Construction Kit",
+    "confidence": 95,
+    "notes": "Contains .wav files from Boom Library sound effects",
+    "_source_name": "Sci-Fi - Momentum (Construction Kit) [Boom Library]",
+    "_batch_index": 5467
+  },
+  {
+    "name": "Sci-Fi - Momentum (Designed) [Boom Library]",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Sci-Fi Momentum Designed",
+    "confidence": 95,
+    "notes": "Contains .wav files from Boom Library sound effects",
+    "_source_name": "Sci-Fi - Momentum (Designed) [Boom Library]",
+    "_batch_index": 5468
+  },
+  {
+    "name": "Sci-Fi Business Slideshow 21874773 Videohive",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Sci-Fi Business Slideshow",
+    "confidence": 90,
+    "notes": "Name says 'slideshow' and Videohive implies AE template",
+    "_source_name": "Sci-Fi Business Slideshow 21874773 Videohive",
+    "_batch_index": 5469
+  },
+  {
+    "name": "Sci-Fi_Pulps",
+    "category": "Print - Other",
+    "clean_name": "Sci-Fi Pulps",
+    "confidence": 70,
+    "notes": "Contains .pdf; likely printable pulp magazine covers",
+    "_source_name": "Sci-Fi_Pulps",
+    "_batch_index": 5470
+  },
+  {
+    "name": "sci-fi-thriller-movie-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Sci-Fi Thriller Movie Trailer",
+    "confidence": 90,
+    "notes": "Name says 'movie trailer'",
+    "_source_name": "sci-fi-thriller-movie-trailer",
+    "_batch_index": 5471
+  },
+  {
+    "name": "sci-fi-title-sequence-41983895",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Sci-Fi Title Sequence",
+    "confidence": 95,
+    "notes": "Contains .aep; name says 'title sequence'",
+    "_source_name": "sci-fi-title-sequence-41983895",
+    "_batch_index": 5472
+  },
+  {
+    "name": "science-opener-52972593",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Science Opener",
+    "confidence": 90,
+    "notes": "Name says 'opener'",
+    "_source_name": "science-opener-52972593",
+    "_batch_index": 5473
+  },
+  {
+    "name": "science-titles-46720218",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Science Titles",
+    "confidence": 85,
+    "notes": "Name says 'titles'",
+    "_source_name": "science-titles-46720218",
+    "_batch_index": 5474
+  },
+  {
+    "name": "scientific-documentary-37527782",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Scientific Documentary",
+    "confidence": 80,
+    "notes": "Documentary style likely cinematic",
+    "_source_name": "scientific-documentary-37527782",
+    "_batch_index": 5475
+  },
+  {
+    "name": "scifi-epic-metal-trailer-37588570",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Sci-Fi Epic Metal Trailer",
+    "confidence": 90,
+    "notes": "Name says 'trailer'",
+    "_source_name": "scifi-epic-metal-trailer-37588570",
+    "_batch_index": 5476
+  },
+  {
+    "name": "Scotch-tape-titles-1101538",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Scotch Tape Titles",
+    "confidence": 85,
+    "notes": "Name says 'titles'",
+    "_source_name": "Scotch-tape-titles-1101538",
+    "_batch_index": 5477
+  },
+  {
+    "name": "Scrapbook-alphabet-effects-1392341",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Scrapbook Alphabet Effects",
+    "confidence": 80,
+    "notes": "Scrapbook style suggests kids/cartoons",
+    "_source_name": "Scrapbook-alphabet-effects-1392341",
+    "_batch_index": 5478
+  },
+  {
+    "name": "scribble-alphabet-pack-35853459",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Scribble Alphabet Pack",
+    "confidence": 80,
+    "notes": "Scribble style suggests kids/cartoons",
+    "_source_name": "scribble-alphabet-pack-35853459",
+    "_batch_index": 5479
+  },
+  {
+    "name": "scribbler-brushes-for-adobe-illustrator-XLETNR",
+    "category": "Illustrator - Brushes & Swatches",
+    "clean_name": "Scribbler Brushes for Adobe Illustrator",
+    "confidence": 95,
+    "notes": "Name says 'brushes for adobe illustrator'",
+    "_source_name": "scribbler-brushes-for-adobe-illustrator-XLETNR",
+    "_batch_index": 5480
+  },
+  {
+    "name": "scribbles-hand-drawn-pack-36493998",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Scribbles Hand Drawn Pack",
+    "confidence": 80,
+    "notes": "Hand drawn style suggests kids/cartoons",
+    "_source_name": "scribbles-hand-drawn-pack-36493998",
+    "_batch_index": 5481
+  },
+  {
+    "name": "Scribe v2.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Scribe v2.0",
+    "confidence": 95,
+    "notes": "Contains .jsxbin; likely an AE/PR script/plugin",
+    "_source_name": "Scribe v2.0",
+    "_batch_index": 5482
+  },
+  {
+    "name": "scroll-gallery-44873064",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Scroll Gallery",
+    "confidence": 85,
+    "notes": "Name suggests photo gallery",
+    "_source_name": "scroll-gallery-44873064",
+    "_batch_index": 5483
+  },
+  {
+    "name": "Sea-coast-with-clouds-1026638",
+    "category": "Stock Footage - Nature & Landscape",
+    "clean_name": "Sea Coast with Clouds",
+    "confidence": 95,
+    "notes": "Contains .mov; nature stock footage",
+    "_source_name": "Sea-coast-with-clouds-1026638",
+    "_batch_index": 5484
+  },
+  {
+    "name": "Seamless paper texture pack 2544248",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Seamless Paper Texture Pack",
+    "confidence": 85,
+    "notes": "Name says 'paper texture pack'; likely for Photoshop",
+    "_source_name": "Seamless paper texture pack 2544248",
+    "_batch_index": 5485
+  },
+  {
+    "name": "Seamless Transitions",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Seamless Transitions",
+    "confidence": 95,
+    "notes": "Contains .aep; name says 'transitions'",
+    "_source_name": "Seamless Transitions",
+    "_batch_index": 5486
+  },
+  {
+    "name": "seamless-rotation-transitions-35532490",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Seamless Rotation Transitions",
+    "confidence": 90,
+    "notes": "Name says 'transitions'",
+    "_source_name": "seamless-rotation-transitions-35532490",
+    "_batch_index": 5487
+  },
+  {
+    "name": "seamless-transition-30447730",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Seamless Transition",
+    "confidence": 90,
+    "notes": "Name says 'transition'",
+    "_source_name": "seamless-transition-30447730",
+    "_batch_index": 5488
+  },
+  {
+    "name": "Seamless-transitions-pack-129339",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Seamless Transitions Pack",
+    "confidence": 90,
+    "notes": "Name says 'transitions pack'",
+    "_source_name": "Seamless-transitions-pack-129339",
+    "_batch_index": 5489
+  },
+  {
+    "name": "search-photo-opener-47860208",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Search Photo Opener",
+    "confidence": 90,
+    "notes": "Name says 'opener'",
+    "_source_name": "search-photo-opener-47860208",
+    "_batch_index": 5490
+  },
+  {
+    "name": "Secret Angle  Main Title 24181658 Videohive",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Secret Angle Main Title",
+    "confidence": 85,
+    "notes": "Name says 'main title'",
+    "_source_name": "Secret Angle  Main Title 24181658 Videohive",
+    "_batch_index": 5491
+  },
+  {
+    "name": "secret-investigation-30744135",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Secret Investigation",
+    "confidence": 80,
+    "notes": "Investigation theme suggests cinematic",
+    "_source_name": "secret-investigation-30744135",
+    "_batch_index": 5492
+  },
+  {
+    "name": "security-monitor-presets-50954931",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "Security Monitor Presets",
+    "confidence": 85,
+    "notes": "Name says 'presets'",
+    "_source_name": "security-monitor-presets-50954931",
+    "_batch_index": 5493
+  },
+  {
+    "name": "seize-the-day-create-a-romantic-movie-with-your-16073807",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Seize the Day Romantic Movie",
+    "confidence": 90,
+    "notes": "Name says 'romantic movie'",
+    "_source_name": "seize-the-day-create-a-romantic-movie-with-your-16073807",
+    "_batch_index": 5494
+  },
+  {
+    "name": "selfie-8518859",
+    "category": "After Effects - Social Media",
+    "clean_name": "Selfie",
+    "confidence": 75,
+    "notes": "Selfie theme likely social media",
+    "_source_name": "selfie-8518859",
+    "_batch_index": 5495
+  },
+  {
+    "name": "Sellfy – “MEDICINE” Mega GFX Pack",
+    "category": "After Effects - Other",
+    "clean_name": "MEDICINE Mega GFX Pack",
+    "confidence": 65,
+    "notes": "No file extension info; generic GFX pack",
+    "_source_name": "Sellfy – “MEDICINE” Mega GFX Pack",
+    "_batch_index": 5496
+  },
+  {
+    "name": "Sellfy – SHOTBYNEF Presets",
+    "category": "Color Grading & LUTs",
+    "clean_name": "SHOTBYNEF Presets",
+    "confidence": 85,
+    "notes": "Contains .rar; name says 'presets' likely color presets",
+    "_source_name": "Sellfy – SHOTBYNEF Presets",
+    "_batch_index": 5497
+  },
+  {
+    "name": "seminar-ticket-mockup-AVGDTV8",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Seminar Ticket Mockup",
+    "confidence": 90,
+    "notes": "Name includes 'mockup'; ticket is print",
+    "_source_name": "seminar-ticket-mockup-AVGDTV8",
+    "_batch_index": 5498
+  },
+  {
+    "name": "seo-agency-banners-ad-2LEKN8S",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "SEO Agency Banners Ad",
+    "confidence": 85,
+    "notes": "Business/agency theme",
+    "_source_name": "seo-agency-banners-ad-2LEKN8S",
+    "_batch_index": 5499
+  },
+  {
+    "name": "seo-explainer-pack",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "SEO Explainer Pack",
+    "confidence": 90,
+    "notes": "Name says 'explainer pack'",
+    "_source_name": "seo-explainer-pack",
+    "_batch_index": 5500
+  },
+  {
+    "name": "Sequence Hub v1.1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Sequence Hub v1.1.1",
+    "confidence": 80,
+    "notes": "Name suggests a plugin/extension",
+    "_source_name": "Sequence Hub v1.1.1",
+    "_batch_index": 5501
+  },
+  {
+    "name": "sequence-images-effect-35971522",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Sequence Images Effect",
+    "confidence": 80,
+    "notes": "Sequence images suggests photo gallery",
+    "_source_name": "sequence-images-effect-35971522",
+    "_batch_index": 5502
+  },
+  {
+    "name": "sequence-images-effect-for-ae-36618033",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Sequence Images Effect for AE",
+    "confidence": 85,
+    "notes": "Name says 'for ae' and sequence images",
+    "_source_name": "sequence-images-effect-for-ae-36618033",
+    "_batch_index": 5503
+  },
+  {
+    "name": "serenity-corporate-presentation-pack",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Serenity Corporate Presentation Pack",
+    "confidence": 95,
+    "notes": "Name says 'corporate presentation pack'",
+    "_source_name": "serenity-corporate-presentation-pack",
+    "_batch_index": 5504
+  },
+  {
+    "name": "server-invasion-template-10788366",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Server Invasion Template",
+    "confidence": 80,
+    "notes": "Action theme suggests cinematic",
+    "_source_name": "server-invasion-template-10788366",
+    "_batch_index": 5505
+  },
+  {
+    "name": "set-of-web-design-templates-8799H2",
+    "category": "Web Template",
+    "clean_name": "Set of Web Design Templates",
+    "confidence": 95,
+    "notes": "Name says 'web design templates'",
+    "_source_name": "set-of-web-design-templates-8799H2",
+    "_batch_index": 5506
+  },
+  {
+    "name": "set-of-web-design-templates-KXENND",
+    "category": "Web Template",
+    "clean_name": "Set of Web Design Templates",
+    "confidence": 95,
+    "notes": "Name says 'web design templates'",
+    "_source_name": "set-of-web-design-templates-KXENND",
+    "_batch_index": 5507
+  },
+  {
+    "name": "set-of-web-design-templates-QCYR7W",
+    "category": "Web Template",
+    "clean_name": "Set of Web Design Templates",
+    "confidence": 95,
+    "notes": "Name says 'web design templates'",
+    "_source_name": "set-of-web-design-templates-QCYR7W",
+    "_batch_index": 5508
+  },
+  {
+    "name": "set-of-web-design-templates-R4P99J",
+    "category": "Web Template",
+    "clean_name": "Set of Web Design Templates",
+    "confidence": 95,
+    "notes": "Name says 'web design templates'",
+    "_source_name": "set-of-web-design-templates-R4P99J",
+    "_batch_index": 5509
+  },
+  {
+    "name": "set-of-website-template-designs-_BS3S9",
+    "category": "Web Template",
+    "clean_name": "Set of Website Template Designs",
+    "confidence": 95,
+    "notes": "Name says 'website template designs'",
+    "_source_name": "set-of-website-template-designs-_BS3S9",
+    "_batch_index": 5510
+  },
+  {
+    "name": "set-of-website-template-designs-BXXQ4AT",
+    "category": "Web Template",
+    "clean_name": "Set of Website Template Designs",
+    "confidence": 95,
+    "notes": "Name says 'website template designs'",
+    "_source_name": "set-of-website-template-designs-BXXQ4AT",
+    "_batch_index": 5511
+  },
+  {
+    "name": "set-of-website-template-designs-EZ6XET6",
+    "category": "Web Template",
+    "clean_name": "Set of Website Template Designs",
+    "confidence": 95,
+    "notes": "Name says 'website template designs'",
+    "_source_name": "set-of-website-template-designs-EZ6XET6",
+    "_batch_index": 5512
+  },
+  {
+    "name": "set-of-website-template-designs-NEZWXFC",
+    "category": "Web Template",
+    "clean_name": "Set of Website Template Designs",
+    "confidence": 95,
+    "notes": "Name says 'website template designs'",
+    "_source_name": "set-of-website-template-designs-NEZWXFC",
+    "_batch_index": 5513
+  },
+  {
+    "name": "set-of-website-template-designs-RXQ6HVQ",
+    "category": "Web Template",
+    "clean_name": "Set of Website Template Designs",
+    "confidence": 95,
+    "notes": "Name says 'website template designs'",
+    "_source_name": "set-of-website-template-designs-RXQ6HVQ",
+    "_batch_index": 5514
+  },
+  {
+    "name": "set-of-website-template-designs-T59N9P8",
+    "category": "Web Template",
+    "clean_name": "Set of Website Template Designs",
+    "confidence": 95,
+    "notes": "Name says 'website template designs'",
+    "_source_name": "set-of-website-template-designs-T59N9P8",
+    "_batch_index": 5515
+  },
+  {
+    "name": "set-of-website-template-designs-W2CFVG8",
+    "category": "Web Template",
+    "clean_name": "Set of Website Template Designs",
+    "confidence": 95,
+    "notes": "Name says 'website template designs'",
+    "_source_name": "set-of-website-template-designs-W2CFVG8",
+    "_batch_index": 5516
+  },
+  {
+    "name": "set-of-website-template-designs-WTKZ2JH",
+    "category": "Web Template",
+    "clean_name": "Set of Website Template Designs",
+    "confidence": 95,
+    "notes": "Name says 'website template designs'",
+    "_source_name": "set-of-website-template-designs-WTKZ2JH",
+    "_batch_index": 5517
+  },
+  {
+    "name": "SFXTools_Fighting_Game_WAV-FANTASTiC",
+    "category": "Sound Effects & SFX",
+    "clean_name": "SFXTools Fighting Game WAV",
+    "confidence": 95,
+    "notes": "Name says 'SFX' and 'WAV'",
+    "_source_name": "SFXTools_Fighting_Game_WAV-FANTASTiC",
+    "_batch_index": 5518
+  },
+  {
+    "name": "SFXtools_Gizmos_and_Gadgets_WAV-FANTASTiC",
+    "category": "Sound Effects & SFX",
+    "clean_name": "SFXtools Gizmos and Gadgets WAV",
+    "confidence": 95,
+    "notes": "Name says 'SFX' and 'WAV'",
+    "_source_name": "SFXtools_Gizmos_and_Gadgets_WAV-FANTASTiC",
+    "_batch_index": 5519
+  }
+]

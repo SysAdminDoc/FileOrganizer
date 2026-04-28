@@ -1,0 +1,546 @@
+[
+  {
+    "name": "drawing-memories-4k-slideshow-48362006",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Drawing Memories 4K Slideshow",
+    "confidence": 90,
+    "notes": "Contains .aep file, name indicates slideshow",
+    "_source_name": "drawing-memories-4k-slideshow-48362006",
+    "_batch_index": 2580
+  },
+  {
+    "name": "drawing-toolkit-48441891",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Drawing Toolkit",
+    "confidence": 75,
+    "notes": "Only .zip archive, no content clue",
+    "_source_name": "drawing-toolkit-48441891",
+    "_batch_index": 2581,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Dream_Box_-_Wedding_Bundle",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Dream Box - Wedding Bundle",
+    "confidence": 85,
+    "notes": "Name implies wedding theme, likely AE template",
+    "_source_name": "Dream_Box_-_Wedding_Bundle",
+    "_batch_index": 2582
+  },
+  {
+    "name": "dream-look-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dream Look Opener",
+    "confidence": 80,
+    "notes": "Name suggests opener, .zip likely AE project",
+    "_source_name": "dream-look-opener",
+    "_batch_index": 2583
+  },
+  {
+    "name": "Dream-travel-1946615",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dream Travel",
+    "confidence": 70,
+    "notes": "Name suggests travel opener, .zip likely AE",
+    "_source_name": "Dream-travel-1946615",
+    "_batch_index": 2584
+  },
+  {
+    "name": "dream-villa-real-estate-template-20028714",
+    "category": "After Effects - Real Estate",
+    "clean_name": "Dream Villa Real Estate Template",
+    "confidence": 90,
+    "notes": "Name explicitly real estate template",
+    "_source_name": "dream-villa-real-estate-template-20028714",
+    "_batch_index": 2585
+  },
+  {
+    "name": "dreams-5775959",
+    "category": "After Effects - Other",
+    "clean_name": "Dreams",
+    "confidence": 60,
+    "notes": "Only .zip, no content clue",
+    "_source_name": "dreams-5775959",
+    "_batch_index": 2586,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "dreamy-waves-slideshow-37329787",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dreamy Waves Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "dreamy-waves-slideshow-37329787",
+    "_batch_index": 2587
+  },
+  {
+    "name": "Dresser v1.0.7",
+    "category": "Web Template",
+    "clean_name": "Dresser",
+    "confidence": 85,
+    "notes": "Contains .lnk, .mp4, .reg, .txt - unclear asset type",
+    "_source_name": "Dresser v1.0.7",
+    "_batch_index": 2588,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Dresser_v1.0.5",
+    "category": "Software & Utilities",
+    "clean_name": "Dresser",
+    "confidence": 95,
+    "notes": "Only .rar archive, no content clue",
+    "_source_name": "Dresser_v1.0.5",
+    "_batch_index": 2589,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "drift-car-race-automotive-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Drift Car Race Automotive Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener, automotive theme",
+    "_source_name": "drift-car-race-automotive-opener",
+    "_batch_index": 2590
+  },
+  {
+    "name": "Drill Music Video FX Presets",
+    "category": "After Effects - Lyric & Music Video",
+    "clean_name": "Drill Music Video FX Presets",
+    "confidence": 80,
+    "notes": "Name suggests music video presets",
+    "_source_name": "Drill Music Video FX Presets",
+    "_batch_index": 2591
+  },
+  {
+    "name": "drink-more-water-explainer-after-effects-47675500",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Drink More Water Explainer",
+    "confidence": 90,
+    "notes": "Name explicitly says explainer and After Effects",
+    "_source_name": "drink-more-water-explainer-after-effects-47675500",
+    "_batch_index": 2592
+  },
+  {
+    "name": "Drone Bundle",
+    "category": "Stock Footage - Aerial & Drone",
+    "clean_name": "Drone Bundle",
+    "confidence": 70,
+    "notes": "Name suggests drone footage, but only .pdf - low confidence",
+    "_source_name": "Drone Bundle",
+    "_batch_index": 2593
+  },
+  {
+    "name": "drop-inked-inspiration-slides-21513776",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Drop Inked Inspiration Slides",
+    "confidence": 80,
+    "notes": "Name suggests slideshow",
+    "_source_name": "drop-inked-inspiration-slides-21513776",
+    "_batch_index": 2594
+  },
+  {
+    "name": "dropper-bottle-mockup-8VEJHC9",
+    "category": "Mockups - Packaging",
+    "clean_name": "Dropper Bottle Mockup",
+    "confidence": 90,
+    "notes": "Name includes mockup, bottle packaging",
+    "_source_name": "dropper-bottle-mockup-8VEJHC9",
+    "_batch_index": 2595
+  },
+  {
+    "name": "DSLR Camera Gallery",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "DSLR Camera Gallery",
+    "confidence": 80,
+    "notes": "Name suggests gallery slideshow",
+    "_source_name": "DSLR Camera Gallery",
+    "_batch_index": 2596
+  },
+  {
+    "name": "Dual_Lighting_Photo_Effect_35574438-AIDOWNLOAD.NET",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Dual Lighting Photo Effect",
+    "confidence": 85,
+    "notes": "Name indicates photo effect, likely Photoshop",
+    "_source_name": "Dual_Lighting_Photo_Effect_35574438-AIDOWNLOAD.NET",
+    "_batch_index": 2597
+  },
+  {
+    "name": "duck-in-style-t-shirt-design-LYEP2HQ",
+    "category": "Mockups - Apparel",
+    "clean_name": "Duck in Style T-Shirt Design",
+    "confidence": 85,
+    "notes": "Name suggests t-shirt design mockup",
+    "_source_name": "duck-in-style-t-shirt-design-LYEP2HQ",
+    "_batch_index": 2598
+  },
+  {
+    "name": "Duik_Angela_17.1.11",
+    "category": "Plugins & Extensions",
+    "clean_name": "Duik Angela 17.1.11",
+    "confidence": 95,
+    "notes": "Duik is a well-known AE plugin",
+    "_source_name": "Duik_Angela_17.1.11",
+    "_batch_index": 2599
+  },
+  {
+    "name": "Duik_Angela_17.1.15",
+    "category": "Plugins & Extensions",
+    "clean_name": "Duik Angela 17.1.15",
+    "confidence": 95,
+    "notes": "Duik is a well-known AE plugin",
+    "_source_name": "Duik_Angela_17.1.15",
+    "_batch_index": 2600
+  },
+  {
+    "name": "DUST – 4K Dust Overlays",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "DUST 4K Dust Overlays",
+    "confidence": 85,
+    "notes": "Name indicates dust overlays, stock footage",
+    "_source_name": "DUST – 4K Dust Overlays",
+    "_batch_index": 2601
+  },
+  {
+    "name": "dust-and-scrath-photo-effect-WNRRUDF",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Dust and Scratch Photo Effect",
+    "confidence": 85,
+    "notes": "Name indicates photo effect",
+    "_source_name": "dust-and-scrath-photo-effect-WNRRUDF",
+    "_batch_index": 2602
+  },
+  {
+    "name": "DVLOP - Subtle Art of the Sauce LUTs",
+    "category": "Color Grading & LUTs",
+    "clean_name": "DVLOP Subtle Art of the Sauce LUTs",
+    "confidence": 95,
+    "notes": "Name includes LUTs",
+    "_source_name": "DVLOP - Subtle Art of the Sauce LUTs",
+    "_batch_index": 2603
+  },
+  {
+    "name": "Dynamic 4K Food Menu",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Dynamic 4K Food Menu",
+    "confidence": 80,
+    "notes": "Name suggests motion graphics menu template",
+    "_source_name": "Dynamic 4K Food Menu",
+    "_batch_index": 2604
+  },
+  {
+    "name": "Dynamic Ads Opener MOGRT",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Dynamic Ads Opener MOGRT",
+    "confidence": 90,
+    "notes": "Name includes MOGRT",
+    "_source_name": "Dynamic Ads Opener MOGRT",
+    "_batch_index": 2605
+  },
+  {
+    "name": "dynamic-cardboard-titles-37245917",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Dynamic Cardboard Titles",
+    "confidence": 85,
+    "notes": "Name indicates titles",
+    "_source_name": "dynamic-cardboard-titles-37245917",
+    "_batch_index": 2606
+  },
+  {
+    "name": "dynamic-fashion-intro-38196265",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Fashion Intro",
+    "confidence": 85,
+    "notes": "Name indicates intro",
+    "_source_name": "dynamic-fashion-intro-38196265",
+    "_batch_index": 2607
+  },
+  {
+    "name": "dynamic-frame-slideshow-24566280",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Frame Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "dynamic-frame-slideshow-24566280",
+    "_batch_index": 2608
+  },
+  {
+    "name": "Dynamic-funny-titles-1262197",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Dynamic Funny Titles",
+    "confidence": 85,
+    "notes": "Name indicates titles",
+    "_source_name": "Dynamic-funny-titles-1262197",
+    "_batch_index": 2609
+  },
+  {
+    "name": "dynamic-intro-19636941",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Intro",
+    "confidence": 85,
+    "notes": "Name indicates intro",
+    "_source_name": "dynamic-intro-19636941",
+    "_batch_index": 2610
+  },
+  {
+    "name": "dynamic-intro-41835620",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Intro",
+    "confidence": 85,
+    "notes": "Name indicates intro",
+    "_source_name": "dynamic-intro-41835620",
+    "_batch_index": 2611
+  },
+  {
+    "name": "dynamic-intro-45381778",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Intro",
+    "confidence": 85,
+    "notes": "Name indicates intro",
+    "_source_name": "dynamic-intro-45381778",
+    "_batch_index": 2612
+  },
+  {
+    "name": "dynamic-intro-slideshow-36659030",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Intro Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "dynamic-intro-slideshow-36659030",
+    "_batch_index": 2613
+  },
+  {
+    "name": "dynamic-media-opener-dnmc-38230744",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Media Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-media-opener-dnmc-38230744",
+    "_batch_index": 2614
+  },
+  {
+    "name": "dynamic-multi-screen-opener-36334777",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Multi-Screen Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-multi-screen-opener-36334777",
+    "_batch_index": 2615
+  },
+  {
+    "name": "dynamic-neon-arrows-pack-43368898",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Dynamic Neon Arrows Pack",
+    "confidence": 80,
+    "notes": "Name suggests motion graphics pack, .jpg only",
+    "_source_name": "dynamic-neon-arrows-pack-43368898",
+    "_batch_index": 2616
+  },
+  {
+    "name": "dynamic-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-opener",
+    "_batch_index": 2617
+  },
+  {
+    "name": "dynamic-opener-21344339",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-opener-21344339",
+    "_batch_index": 2618
+  },
+  {
+    "name": "dynamic-opener-21731007",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-opener-21731007",
+    "_batch_index": 2619
+  },
+  {
+    "name": "dynamic-opener-33908275",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-opener-33908275",
+    "_batch_index": 2620
+  },
+  {
+    "name": "dynamic-opener-39824470",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-opener-39824470",
+    "_batch_index": 2621
+  },
+  {
+    "name": "dynamic-opener-creator-36449449",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener Creator",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-opener-creator-36449449",
+    "_batch_index": 2622
+  },
+  {
+    "name": "dynamic-opener-fast-stomp-typography-fashion-e",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Opener Fast Stomp Typography Fashion",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-opener-fast-stomp-typography-fashion-e",
+    "_batch_index": 2623
+  },
+  {
+    "name": "dynamic-reel-opener-43494803",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Reel Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-reel-opener-43494803",
+    "_batch_index": 2624
+  },
+  {
+    "name": "dynamic-reels-stomp-reels-shorts-tik-tok-p-44660088",
+    "category": "After Effects - Social Media",
+    "clean_name": "Dynamic Reels Stomp Reels Shorts TikTok",
+    "confidence": 85,
+    "notes": "Name indicates social media content",
+    "_source_name": "dynamic-reels-stomp-reels-shorts-tik-tok-p-44660088",
+    "_batch_index": 2625
+  },
+  {
+    "name": "dynamic-rhythm-opener-37261226",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Rhythm Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-rhythm-opener-37261226",
+    "_batch_index": 2626
+  },
+  {
+    "name": "dynamic-rhythmic-opener-37263577",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Rhythmic Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-rhythmic-opener-37263577",
+    "_batch_index": 2627
+  },
+  {
+    "name": "dynamic-slide-17735419",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Slide",
+    "confidence": 80,
+    "notes": "Name suggests slideshow",
+    "_source_name": "dynamic-slide-17735419",
+    "_batch_index": 2628
+  },
+  {
+    "name": "dynamic-slide-38999319",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Slide",
+    "confidence": 80,
+    "notes": "Name suggests slideshow",
+    "_source_name": "dynamic-slide-38999319",
+    "_batch_index": 2629
+  },
+  {
+    "name": "dynamic-slideshow-29462460",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "dynamic-slideshow-29462460",
+    "_batch_index": 2630
+  },
+  {
+    "name": "dynamic-slideshow-38787298",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "dynamic-slideshow-38787298",
+    "_batch_index": 2631
+  },
+  {
+    "name": "dynamic-slideshow-45938010",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "dynamic-slideshow-45938010",
+    "_batch_index": 2632
+  },
+  {
+    "name": "dynamic-sport-opener",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Dynamic Sport Opener",
+    "confidence": 90,
+    "notes": "Name indicates sport opener",
+    "_source_name": "dynamic-sport-opener",
+    "_batch_index": 2633
+  },
+  {
+    "name": "dynamic-stomp-opener-24110592",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Stomp Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-stomp-opener-24110592",
+    "_batch_index": 2634
+  },
+  {
+    "name": "dynamic-stomp-opener-24314261",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Stomp Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-stomp-opener-24314261",
+    "_batch_index": 2635
+  },
+  {
+    "name": "dynamic-stomp-opener-37651410",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Stomp Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-stomp-opener-37651410",
+    "_batch_index": 2636
+  },
+  {
+    "name": "dynamic-summer-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Summer Slideshow",
+    "confidence": 85,
+    "notes": "Name indicates slideshow",
+    "_source_name": "dynamic-summer-slideshow",
+    "_batch_index": 2637
+  },
+  {
+    "name": "dynamic-typography-intro-39084543",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Dynamic Typography Intro",
+    "confidence": 85,
+    "notes": "Name indicates typography intro",
+    "_source_name": "dynamic-typography-intro-39084543",
+    "_batch_index": 2638
+  },
+  {
+    "name": "dynamic-upbeat-opener-47690203",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Upbeat Opener",
+    "confidence": 85,
+    "notes": "Name indicates opener",
+    "_source_name": "dynamic-upbeat-opener-47690203",
+    "_batch_index": 2639
+  }
+]

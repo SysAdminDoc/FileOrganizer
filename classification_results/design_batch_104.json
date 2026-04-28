@@ -1,0 +1,545 @@
+[
+  {
+    "name": "Ukramedia - Smart Bundle",
+    "category": "After Effects - Other",
+    "clean_name": "Ukramedia Smart Bundle",
+    "confidence": 60,
+    "notes": "Zip only, no content clues, likely AE bundle",
+    "_source_name": "Ukramedia - Smart Bundle",
+    "_batch_index": 6180
+  },
+  {
+    "name": "ULTIMATE CAMERA SHAKE FX",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Ultimate Camera Shake FX",
+    "confidence": 85,
+    "notes": "Camera shake effects for cinematic use",
+    "_source_name": "ULTIMATE CAMERA SHAKE FX",
+    "_batch_index": 6181
+  },
+  {
+    "name": "ultimate-analog-paper-film-transitions-pack-prem-49823373",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Ultimate Analog Paper Film Transitions Pack",
+    "confidence": 80,
+    "notes": "Name suggests Premiere Pro transitions",
+    "_source_name": "ultimate-analog-paper-film-transitions-pack-prem-49823373",
+    "_batch_index": 6182
+  },
+  {
+    "name": "ultimate-apparel-mockup-vol-11-2021-08-27-10-32-49-utc",
+    "category": "Mockups - Apparel",
+    "clean_name": "Ultimate Apparel Mockup Vol 11",
+    "confidence": 95,
+    "notes": "Apparel mockup volume",
+    "_source_name": "ultimate-apparel-mockup-vol-11-2021-08-27-10-32-49-utc",
+    "_batch_index": 6183
+  },
+  {
+    "name": "ultimate-apparel-mockup-vol-12-6X7FRJ",
+    "category": "Mockups - Apparel",
+    "clean_name": "Ultimate Apparel Mockup Vol 12",
+    "confidence": 95,
+    "notes": "Apparel mockup volume",
+    "_source_name": "ultimate-apparel-mockup-vol-12-6X7FRJ",
+    "_batch_index": 6184
+  },
+  {
+    "name": "ultimate-awards-package-20241366",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Ultimate Awards Package",
+    "confidence": 85,
+    "notes": "Awards broadcast package",
+    "_source_name": "ultimate-awards-package-20241366",
+    "_batch_index": 6185
+  },
+  {
+    "name": "ultimate-collection-400-cinematic-luts-for-filmma-50903685",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Ultimate Collection 400 Cinematic LUTs",
+    "confidence": 95,
+    "notes": "LUTs collection, .jpg preview",
+    "_source_name": "ultimate-collection-400-cinematic-luts-for-filmma-50903685",
+    "_batch_index": 6186
+  },
+  {
+    "name": "Ultimate-Lensflare-Pack-Vamify",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Ultimate Lensflare Pack",
+    "confidence": 80,
+    "notes": "Lens flare overlays/VFX",
+    "_source_name": "Ultimate-Lensflare-Pack-Vamify",
+    "_batch_index": 6187
+  },
+  {
+    "name": "Ultimate-neon-1228321",
+    "category": "After Effects - Other",
+    "clean_name": "Ultimate Neon",
+    "confidence": 60,
+    "notes": "Only .jpg, likely AE neon effect",
+    "_source_name": "Ultimate-neon-1228321",
+    "_batch_index": 6188
+  },
+  {
+    "name": "ultimate-virtual-studio-22832453",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Ultimate Virtual Studio",
+    "confidence": 80,
+    "notes": "Virtual studio broadcast package",
+    "_source_name": "ultimate-virtual-studio-22832453",
+    "_batch_index": 6189
+  },
+  {
+    "name": "UltimateRetouch3",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Ultimate Retouch 3",
+    "confidence": 85,
+    "notes": "Retouching preset/action pack",
+    "_source_name": "UltimateRetouch3",
+    "_batch_index": 6190
+  },
+  {
+    "name": "undead-killer-t-shirt-design-PFZD3JX",
+    "category": "Mockups - Apparel",
+    "clean_name": "Undead Killer T-Shirt Design",
+    "confidence": 85,
+    "notes": "T-shirt design mockup",
+    "_source_name": "undead-killer-t-shirt-design-PFZD3JX",
+    "_batch_index": 6191
+  },
+  {
+    "name": "undercover-agent-media-opener-51380450",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Undercover Agent Media Opener",
+    "confidence": 85,
+    "notes": "Opener for media",
+    "_source_name": "undercover-agent-media-opener-51380450",
+    "_batch_index": 6192
+  },
+  {
+    "name": "Underground-vcr-effects-1425640",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "Underground VCR Effects",
+    "confidence": 90,
+    "notes": "VCR/retro effects",
+    "_source_name": "Underground-vcr-effects-1425640",
+    "_batch_index": 6193
+  },
+  {
+    "name": "underwater-cinematic-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Underwater Cinematic Trailer",
+    "confidence": 85,
+    "notes": "Cinematic trailer",
+    "_source_name": "underwater-cinematic-trailer",
+    "_batch_index": 6194
+  },
+  {
+    "name": "underwater-fantasy-trailer-47640945",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Underwater Fantasy Trailer",
+    "confidence": 85,
+    "notes": "Fantasy trailer",
+    "_source_name": "underwater-fantasy-trailer-47640945",
+    "_batch_index": 6195
+  },
+  {
+    "name": "unfold-paper-animator-52496957",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Unfold Paper Animator",
+    "confidence": 80,
+    "notes": "Paper unfold animation",
+    "_source_name": "unfold-paper-animator-52496957",
+    "_batch_index": 6196
+  },
+  {
+    "name": "unique-call-outs-pack-44568448",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Unique Call Outs Pack",
+    "confidence": 85,
+    "notes": "Call out graphics",
+    "_source_name": "unique-call-outs-pack-44568448",
+    "_batch_index": 6197
+  },
+  {
+    "name": "unique-callout-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Unique Callout Titles",
+    "confidence": 85,
+    "notes": "Callout title styles",
+    "_source_name": "unique-callout-titles",
+    "_batch_index": 6198
+  },
+  {
+    "name": "unique-freeze-frame-39544236",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Unique Freeze Frame",
+    "confidence": 80,
+    "notes": "Freeze frame effect",
+    "_source_name": "unique-freeze-frame-39544236",
+    "_batch_index": 6199
+  },
+  {
+    "name": "unique-movie-titles-pack",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Unique Movie Titles Pack",
+    "confidence": 85,
+    "notes": "Movie title pack",
+    "_source_name": "unique-movie-titles-pack",
+    "_batch_index": 6200
+  },
+  {
+    "name": "unique-opener-after-effects-39253155",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Unique Opener After Effects",
+    "confidence": 90,
+    "notes": "AE opener",
+    "_source_name": "unique-opener-after-effects-39253155",
+    "_batch_index": 6201
+  },
+  {
+    "name": "unique-photo-gallery-after-effects-38919181",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Unique Photo Gallery After Effects",
+    "confidence": 90,
+    "notes": "Photo gallery for AE",
+    "_source_name": "unique-photo-gallery-after-effects-38919181",
+    "_batch_index": 6202
+  },
+  {
+    "name": "unique-youtube-elements-34988043",
+    "category": "After Effects - Social Media",
+    "clean_name": "Unique YouTube Elements",
+    "confidence": 85,
+    "notes": "YouTube elements",
+    "_source_name": "unique-youtube-elements-34988043",
+    "_batch_index": 6203
+  },
+  {
+    "name": "unique-youtube-elements-35557206",
+    "category": "After Effects - Social Media",
+    "clean_name": "Unique YouTube Elements",
+    "confidence": 85,
+    "notes": "YouTube elements",
+    "_source_name": "unique-youtube-elements-35557206",
+    "_batch_index": 6204
+  },
+  {
+    "name": "unique-youtube-pack-premire-pro",
+    "category": "Premiere Pro - Social Media",
+    "clean_name": "Unique YouTube Pack Premiere Pro",
+    "confidence": 85,
+    "notes": "YouTube pack for Premiere Pro",
+    "_source_name": "unique-youtube-pack-premire-pro",
+    "_batch_index": 6205
+  },
+  {
+    "name": "Uniquevfx AMV – Unique’s 30k Editing Pack",
+    "category": "After Effects - Other",
+    "clean_name": "Uniquevfx AMV 30k Editing Pack",
+    "confidence": 70,
+    "notes": "AMV editing pack, likely AE",
+    "_source_name": "Uniquevfx AMV – Unique’s 30k Editing Pack",
+    "_batch_index": 6206
+  },
+  {
+    "name": "Universal Audio v1.7.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Universal Audio v1.7.1",
+    "confidence": 85,
+    "notes": "Audio plugin",
+    "_source_name": "Universal Audio v1.7.1",
+    "_batch_index": 6207
+  },
+  {
+    "name": "universal_audio_v1.9.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "Universal Audio v1.9.2",
+    "confidence": 85,
+    "notes": "Audio plugin",
+    "_source_name": "universal_audio_v1.9.2",
+    "_batch_index": 6208
+  },
+  {
+    "name": "unmask-100-transitions-35136428",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Unmask 100 Transitions",
+    "confidence": 85,
+    "notes": "Transition pack",
+    "_source_name": "unmask-100-transitions-35136428",
+    "_batch_index": 6209
+  },
+  {
+    "name": "Unorganized",
+    "category": "Fonts & Typography",
+    "clean_name": "Magnificent Fonts Bundle",
+    "confidence": 85,
+    "notes": "Mixed file types, no clear category",
+    "_source_name": "Unorganized",
+    "_batch_index": 6210,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "unreal-energy-intro-37259959",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Unreal Energy Intro",
+    "confidence": 85,
+    "notes": "Energy intro",
+    "_source_name": "unreal-energy-intro-37259959",
+    "_batch_index": 6211
+  },
+  {
+    "name": "untipocolto41",
+    "category": "Software & Utilities",
+    "clean_name": "Luminar 4.1 Portable",
+    "confidence": 95,
+    "notes": "Unclear name, .rar only",
+    "_source_name": "untipocolto41",
+    "_batch_index": 6212,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "unziped-trailer-2021-08-27-09-25-54-utc",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Unzipped Trailer",
+    "confidence": 75,
+    "notes": "Trailer project",
+    "_source_name": "unziped-trailer-2021-08-27-09-25-54-utc",
+    "_batch_index": 6213
+  },
+  {
+    "name": "upbeat-opener-44969125 [source]",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Upbeat Opener",
+    "confidence": 85,
+    "notes": "Opener with source",
+    "_source_name": "upbeat-opener-44969125 [source]",
+    "_batch_index": 6214
+  },
+  {
+    "name": "Upload",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects Project",
+    "confidence": 75,
+    "notes": "Only .pdf, unclear",
+    "_source_name": "Upload",
+    "_batch_index": 6215,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "URBAN-918-CINEMATIC-LUTs-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Urban 918 Cinematic LUTs",
+    "confidence": 95,
+    "notes": "LUTs in name",
+    "_source_name": "URBAN-918-CINEMATIC-LUTs-INTRO-HD.NET",
+    "_batch_index": 6216
+  },
+  {
+    "name": "urban-collage-50617771",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Urban Collage",
+    "confidence": 80,
+    "notes": "Collage style",
+    "_source_name": "urban-collage-50617771",
+    "_batch_index": 6217
+  },
+  {
+    "name": "urban-fashion-opener-36189320",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Fashion Opener",
+    "confidence": 85,
+    "notes": "Fashion opener",
+    "_source_name": "urban-fashion-opener-36189320",
+    "_batch_index": 6218
+  },
+  {
+    "name": "urban-hoodie-mockup-51770303",
+    "category": "Mockups - Apparel",
+    "clean_name": "Urban Hoodie Mockup",
+    "confidence": 95,
+    "notes": "Hoodie mockup",
+    "_source_name": "urban-hoodie-mockup-51770303",
+    "_batch_index": 6219
+  },
+  {
+    "name": "urban-intro-21489046",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Intro",
+    "confidence": 85,
+    "notes": "Intro",
+    "_source_name": "urban-intro-21489046",
+    "_batch_index": 6220
+  },
+  {
+    "name": "urban-life-opener-4k-after-effects-38130307",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Life Opener 4K After Effects",
+    "confidence": 90,
+    "notes": "AE opener",
+    "_source_name": "urban-life-opener-4k-after-effects-38130307",
+    "_batch_index": 6221
+  },
+  {
+    "name": "urban-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Opener",
+    "confidence": 85,
+    "notes": "Opener",
+    "_source_name": "urban-opener",
+    "_batch_index": 6222
+  },
+  {
+    "name": "urban-opener-22190871",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Opener",
+    "confidence": 85,
+    "notes": "Opener",
+    "_source_name": "urban-opener-22190871",
+    "_batch_index": 6223
+  },
+  {
+    "name": "urban-opener-37287071",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Opener",
+    "confidence": 85,
+    "notes": "Opener",
+    "_source_name": "urban-opener-37287071",
+    "_batch_index": 6224
+  },
+  {
+    "name": "urban-opener-45270589",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Opener",
+    "confidence": 85,
+    "notes": "Opener",
+    "_source_name": "urban-opener-45270589",
+    "_batch_index": 6225
+  },
+  {
+    "name": "urban-opener-5886862",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Opener",
+    "confidence": 85,
+    "notes": "Opener",
+    "_source_name": "urban-opener-5886862",
+    "_batch_index": 6226
+  },
+  {
+    "name": "urban-opener-fast36785850",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Opener Fast",
+    "confidence": 85,
+    "notes": "Fast opener",
+    "_source_name": "urban-opener-fast36785850",
+    "_batch_index": 6227
+  },
+  {
+    "name": "urban-opener-mogrt-45400581",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Urban Opener Mogrt",
+    "confidence": 90,
+    "notes": "Mogrt in name",
+    "_source_name": "urban-opener-mogrt-45400581",
+    "_batch_index": 6228
+  },
+  {
+    "name": "urban-outfit-slideshow-37715043",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Urban Outfit Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "urban-outfit-slideshow-37715043",
+    "_batch_index": 6229
+  },
+  {
+    "name": "urban-retro",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "Urban Retro",
+    "confidence": 80,
+    "notes": "Retro style",
+    "_source_name": "urban-retro",
+    "_batch_index": 6230
+  },
+  {
+    "name": "urban-slideshow-20596062",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Urban Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "urban-slideshow-20596062",
+    "_batch_index": 6231
+  },
+  {
+    "name": "urban-slideshow-37601960",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Urban Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "urban-slideshow-37601960",
+    "_batch_index": 6232
+  },
+  {
+    "name": "urban-slideshow-melodic",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Urban Slideshow Melodic",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "urban-slideshow-melodic",
+    "_batch_index": 6233
+  },
+  {
+    "name": "urban-style-37219812",
+    "category": "After Effects - Other",
+    "clean_name": "Urban Style",
+    "confidence": 70,
+    "notes": "Unclear, likely AE style pack",
+    "_source_name": "urban-style-37219812",
+    "_batch_index": 6234
+  },
+  {
+    "name": "urban-style-intro-44797857",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Style Intro",
+    "confidence": 85,
+    "notes": "Intro",
+    "_source_name": "urban-style-intro-44797857",
+    "_batch_index": 6235
+  },
+  {
+    "name": "urban-style-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Urban Style Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "urban-style-slideshow",
+    "_batch_index": 6236
+  },
+  {
+    "name": "urban-style-youtube-cover-co-FKMUSCD",
+    "category": "After Effects - Social Media",
+    "clean_name": "Urban Style YouTube Cover",
+    "confidence": 85,
+    "notes": "YouTube cover",
+    "_source_name": "urban-style-youtube-cover-co-FKMUSCD",
+    "_batch_index": 6237
+  },
+  {
+    "name": "urban-t-shirt-mock-up-C6ZZUA",
+    "category": "Mockups - Apparel",
+    "clean_name": "Urban T-Shirt Mockup",
+    "confidence": 95,
+    "notes": "T-shirt mockup",
+    "_source_name": "urban-t-shirt-mock-up-C6ZZUA",
+    "_batch_index": 6238
+  },
+  {
+    "name": "urban-trends-opener-37505260",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Trends Opener",
+    "confidence": 85,
+    "notes": "Opener",
+    "_source_name": "urban-trends-opener-37505260",
+    "_batch_index": 6239
+  }
+]

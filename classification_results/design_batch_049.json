@@ -1,0 +1,546 @@
+[
+  {
+    "name": "fashion-instagram-36782016",
+    "category": "After Effects - Other",
+    "clean_name": "fashion instagram",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative hint",
+    "_source_name": "fashion-instagram-36782016",
+    "_batch_index": 2880
+  },
+  {
+    "name": "fashion-market",
+    "category": "After Effects - Other",
+    "clean_name": "fashion market",
+    "confidence": 60,
+    "notes": "Name suggests generic, no file clues",
+    "_source_name": "fashion-market",
+    "_batch_index": 2881
+  },
+  {
+    "name": "fashion-modern-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "fashion modern slideshow",
+    "confidence": 80,
+    "notes": "Name implies slideshow, likely AE",
+    "_source_name": "fashion-modern-slideshow",
+    "_batch_index": 2882
+  },
+  {
+    "name": "fashion-neon-action-lightrom-presets-FYDQXAR",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "fashion neon action lightroom presets",
+    "confidence": 95,
+    "notes": "Name includes 'lightrom presets'",
+    "_source_name": "fashion-neon-action-lightrom-presets-FYDQXAR",
+    "_batch_index": 2883
+  },
+  {
+    "name": "fashion-of-future-39034826",
+    "category": "After Effects - Other",
+    "clean_name": "fashion of future",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative hint",
+    "_source_name": "fashion-of-future-39034826",
+    "_batch_index": 2884
+  },
+  {
+    "name": "fashion-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fashion opener",
+    "confidence": 85,
+    "notes": "Name clearly 'opener'",
+    "_source_name": "fashion-opener",
+    "_batch_index": 2885
+  },
+  {
+    "name": "fashion-opener-45298075",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fashion opener",
+    "confidence": 85,
+    "notes": "Name includes 'opener'",
+    "_source_name": "fashion-opener-45298075",
+    "_batch_index": 2886
+  },
+  {
+    "name": "fashion-opener-mogrt-45434348",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "fashion opener mogrt",
+    "confidence": 90,
+    "notes": "Name includes 'mogrt'",
+    "_source_name": "fashion-opener-mogrt-45434348",
+    "_batch_index": 2887
+  },
+  {
+    "name": "fashion-opener-slideshow-44727411",
+    "category": "After Effects - Slideshow",
+    "clean_name": "fashion opener slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow opener",
+    "_source_name": "fashion-opener-slideshow-44727411",
+    "_batch_index": 2888
+  },
+  {
+    "name": "fashion-openers",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fashion openers",
+    "confidence": 85,
+    "notes": "Name clearly 'openers'",
+    "_source_name": "fashion-openers",
+    "_batch_index": 2889
+  },
+  {
+    "name": "fashion-photo-slideshow-51984509",
+    "category": "After Effects - Slideshow",
+    "clean_name": "fashion photo slideshow",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "fashion-photo-slideshow-51984509",
+    "_batch_index": 2890
+  },
+  {
+    "name": "fashion-slideshow-20606880",
+    "category": "After Effects - Slideshow",
+    "clean_name": "fashion slideshow",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "fashion-slideshow-20606880",
+    "_batch_index": 2891
+  },
+  {
+    "name": "fashion-sport-hip-hop",
+    "category": "Stock Photos - General",
+    "clean_name": "fashion sport hip hop",
+    "confidence": 70,
+    "notes": "Only .jpg files, likely stock photos",
+    "_source_name": "fashion-sport-hip-hop",
+    "_batch_index": 2892
+  },
+  {
+    "name": "fashion-store-45095868",
+    "category": "After Effects - Other",
+    "clean_name": "fashion store",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative hint",
+    "_source_name": "fashion-store-45095868",
+    "_batch_index": 2893
+  },
+  {
+    "name": "fashion-trendy",
+    "category": "After Effects - Other",
+    "clean_name": "fashion trendy",
+    "confidence": 60,
+    "notes": "Generic name, no file clues",
+    "_source_name": "fashion-trendy",
+    "_batch_index": 2894
+  },
+  {
+    "name": "fashion-vlog-intro-35505322",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fashion vlog intro",
+    "confidence": 85,
+    "notes": "Name includes 'intro'",
+    "_source_name": "fashion-vlog-intro-35505322",
+    "_batch_index": 2895
+  },
+  {
+    "name": "fashion-youtube-thumbnails-9W3HD2F",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "fashion youtube thumbnails",
+    "confidence": 80,
+    "notes": "Thumbnails likely PSD templates",
+    "_source_name": "fashion-youtube-thumbnails-9W3HD2F",
+    "_batch_index": 2896
+  },
+  {
+    "name": "Fast Camera Lens Blur v5.2.1 Win-Mac",
+    "category": "Plugins & Extensions",
+    "clean_name": "Fast Camera Lens Blur",
+    "confidence": 85,
+    "notes": "Plugin-like name, likely .zxp or .aex",
+    "_source_name": "Fast Camera Lens Blur v5.2.1 Win-Mac",
+    "_batch_index": 2897
+  },
+  {
+    "name": "fast_renamer_-_volt_-_1.5",
+    "category": "Software & Utilities",
+    "clean_name": "Fast Renamer Volt",
+    "confidence": 95,
+    "notes": "Unclear if design asset, single zip",
+    "_source_name": "fast_renamer_-_volt_-_1.5",
+    "_batch_index": 2898,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "fast-awesome-titles-39473779",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "fast awesome titles",
+    "confidence": 80,
+    "notes": "Name implies titles",
+    "_source_name": "fast-awesome-titles-39473779",
+    "_batch_index": 2899
+  },
+  {
+    "name": "fast-digital-marketing-34967696",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "fast digital marketing",
+    "confidence": 75,
+    "notes": "Marketing related, likely corporate",
+    "_source_name": "fast-digital-marketing-34967696",
+    "_batch_index": 2900
+  },
+  {
+    "name": "fast-dynamic-slideshow-38127826",
+    "category": "After Effects - Slideshow",
+    "clean_name": "fast dynamic slideshow",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "fast-dynamic-slideshow-38127826",
+    "_batch_index": 2901
+  },
+  {
+    "name": "Fast-film-transitions-1472775",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Fast film transitions",
+    "confidence": 90,
+    "notes": "Name clearly transitions",
+    "_source_name": "Fast-film-transitions-1472775",
+    "_batch_index": 2902
+  },
+  {
+    "name": "fast-food-roll-up-banner-MS2CWY",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "fast food roll up banner",
+    "confidence": 80,
+    "notes": "Banner likely print template",
+    "_source_name": "fast-food-roll-up-banner-MS2CWY",
+    "_batch_index": 2903
+  },
+  {
+    "name": "fast-food-template-20224445",
+    "category": "After Effects - Other",
+    "clean_name": "fast food template",
+    "confidence": 65,
+    "notes": "Generic template, no clear subcategory",
+    "_source_name": "fast-food-template-20224445",
+    "_batch_index": 2904
+  },
+  {
+    "name": "fast-kinetic-typography-intro-ae-51314288",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fast kinetic typography intro",
+    "confidence": 90,
+    "notes": "Name includes 'intro' and 'ae'",
+    "_source_name": "fast-kinetic-typography-intro-ae-51314288",
+    "_batch_index": 2905
+  },
+  {
+    "name": "fast-modern-opener-36809679",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fast modern opener",
+    "confidence": 85,
+    "notes": "Name includes 'opener'",
+    "_source_name": "fast-modern-opener-36809679",
+    "_batch_index": 2906
+  },
+  {
+    "name": "fast-modern-opener-41881224",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fast modern opener",
+    "confidence": 85,
+    "notes": "Name includes 'opener'",
+    "_source_name": "fast-modern-opener-41881224",
+    "_batch_index": 2907
+  },
+  {
+    "name": "fast-opener-20100907",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fast opener",
+    "confidence": 85,
+    "notes": "Name includes 'opener'",
+    "_source_name": "fast-opener-20100907",
+    "_batch_index": 2908
+  },
+  {
+    "name": "fast-opener-pr-38660742",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "fast opener pr",
+    "confidence": 80,
+    "notes": "Name includes 'pr' likely Premiere Pro",
+    "_source_name": "fast-opener-pr-38660742",
+    "_batch_index": 2909
+  },
+  {
+    "name": "fast-slide-typo-intro-19310197",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fast slide typo intro",
+    "confidence": 85,
+    "notes": "Name includes 'intro'",
+    "_source_name": "fast-slide-typo-intro-19310197",
+    "_batch_index": 2910
+  },
+  {
+    "name": "fast-stomp-intro-mogrt-35477357",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "fast stomp intro mogrt",
+    "confidence": 90,
+    "notes": "Name includes 'mogrt'",
+    "_source_name": "fast-stomp-intro-mogrt-35477357",
+    "_batch_index": 2911
+  },
+  {
+    "name": "fast-trailer-19771693",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "fast trailer",
+    "confidence": 85,
+    "notes": "Name includes 'trailer'",
+    "_source_name": "fast-trailer-19771693",
+    "_batch_index": 2912
+  },
+  {
+    "name": "fast-typograhy-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "fast typography opener",
+    "confidence": 85,
+    "notes": "Name includes 'opener'",
+    "_source_name": "fast-typograhy-opener",
+    "_batch_index": 2913
+  },
+  {
+    "name": "faster-better-stronger-dynamic-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "faster better stronger dynamic slideshow",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "faster-better-stronger-dynamic-slideshow",
+    "_batch_index": 2914
+  },
+  {
+    "name": "Faux Parent v1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Faux Parent",
+    "confidence": 85,
+    "notes": "Plugin-like name, likely .zxp or .jsx",
+    "_source_name": "Faux Parent v1.1",
+    "_batch_index": 2915
+  },
+  {
+    "name": "favorite-restaurant-display-v2-11769261",
+    "category": "After Effects - Other",
+    "clean_name": "favorite restaurant display",
+    "confidence": 65,
+    "notes": "Numeric ID, unclear subcategory",
+    "_source_name": "favorite-restaurant-display-v2-11769261",
+    "_batch_index": 2916
+  },
+  {
+    "name": "favorites",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Favorites Icon Set",
+    "confidence": 90,
+    "notes": "Unclear content, .ico and .iconpackage",
+    "_source_name": "favorites",
+    "_batch_index": 2917,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "fearless-2-photoshop-action-YZN6NL",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "fearless 2 photoshop action",
+    "confidence": 95,
+    "notes": "Name includes 'photoshop action'",
+    "_source_name": "fearless-2-photoshop-action-YZN6NL",
+    "_batch_index": 2918
+  },
+  {
+    "name": "fearless-photoshop-action-9V94FP",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "fearless photoshop action",
+    "confidence": 95,
+    "notes": "Name includes 'photoshop action'",
+    "_source_name": "fearless-photoshop-action-9V94FP",
+    "_batch_index": 2919
+  },
+  {
+    "name": "feel-the-music-intro-38600535",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "feel the music intro",
+    "confidence": 85,
+    "notes": "Name includes 'intro'",
+    "_source_name": "feel-the-music-intro-38600535",
+    "_batch_index": 2920
+  },
+  {
+    "name": "feel-your-fashion-35903037",
+    "category": "After Effects - Other",
+    "clean_name": "feel your fashion",
+    "confidence": 65,
+    "notes": "Numeric ID, no clear subcategory",
+    "_source_name": "feel-your-fashion-35903037",
+    "_batch_index": 2921
+  },
+  {
+    "name": "fight-night-51627407",
+    "category": "After Effects - Other",
+    "clean_name": "fight night",
+    "confidence": 65,
+    "notes": "Numeric ID, no clear subcategory",
+    "_source_name": "fight-night-51627407",
+    "_batch_index": 2922
+  },
+  {
+    "name": "fighting-complete-on-air-package-5886862",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "fighting complete on air package",
+    "confidence": 85,
+    "notes": "Name includes 'on air package'",
+    "_source_name": "fighting-complete-on-air-package-5886862",
+    "_batch_index": 2923
+  },
+  {
+    "name": "file_hunter_v1.0.3-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "file hunter",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative hint",
+    "_source_name": "file_hunter_v1.0.3-INTRO-HD.NET",
+    "_batch_index": 2924
+  },
+  {
+    "name": "file_hunter_v1.0.9b",
+    "category": "Software & Utilities",
+    "clean_name": "File Hunter",
+    "confidence": 95,
+    "notes": "Unclear if design asset, single zip",
+    "_source_name": "file_hunter_v1.0.9b",
+    "_batch_index": 2925,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Film Burns Pack",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Film Burns Pack",
+    "confidence": 85,
+    "notes": "Contains .mp4 and .aep, likely VFX overlays",
+    "_source_name": "Film Burns Pack",
+    "_batch_index": 2926
+  },
+  {
+    "name": "Film Burns Package",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Film Burns Package",
+    "confidence": 80,
+    "notes": "Contains .prproj and .mp4, likely Premiere transitions",
+    "_source_name": "Film Burns Package",
+    "_batch_index": 2927
+  },
+  {
+    "name": "Film Composite - The Collection Film",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Film Composite - The Collection Film",
+    "confidence": 75,
+    "notes": "Single .rar, likely VFX stock footage",
+    "_source_name": "Film Composite - The Collection Film",
+    "_batch_index": 2928
+  },
+  {
+    "name": "FILM CRUX Singularity",
+    "category": "Sound Effects & SFX",
+    "clean_name": "FILM CRUX Singularity",
+    "confidence": 85,
+    "notes": "Name suggests sound effects library",
+    "_source_name": "FILM CRUX Singularity",
+    "_batch_index": 2929
+  },
+  {
+    "name": "Film Frame Transition Pack @bryandelimata",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Film Frame Transition Pack",
+    "confidence": 85,
+    "notes": "Name clearly transitions",
+    "_source_name": "Film Frame Transition Pack @bryandelimata",
+    "_batch_index": 2930
+  },
+  {
+    "name": "Film LetterBox Overlays Pack For Premiere Pro",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Film LetterBox Overlays Pack For Premiere Pro",
+    "confidence": 90,
+    "notes": "Name specifies Premiere Pro overlays",
+    "_source_name": "Film LetterBox Overlays Pack For Premiere Pro",
+    "_batch_index": 2931
+  },
+  {
+    "name": "Film Stock & Film inspired LUTs",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Film Stock & Film inspired LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'LUTs'",
+    "_source_name": "Film Stock & Film inspired LUTs",
+    "_batch_index": 2932
+  },
+  {
+    "name": "Film_Crux_Singularity_SINGULARITY_2_Cinematic_Sound_Effects_Library_WAV-FANTASTiC",
+    "category": "Sound Effects & SFX",
+    "clean_name": "Film Crux Singularity 2 Cinematic Sound Effects Library",
+    "confidence": 95,
+    "notes": "Name includes 'Sound Effects Library'",
+    "_source_name": "Film_Crux_Singularity_SINGULARITY_2_Cinematic_Sound_Effects_Library_WAV-FANTASTiC",
+    "_batch_index": 2933
+  },
+  {
+    "name": "Film_Impact_Premium_Video_Effects_V5.0.9_CE",
+    "category": "Plugins & Extensions",
+    "clean_name": "Film Impact Premium Video Effects",
+    "confidence": 85,
+    "notes": "Plugin-like name, likely .aex",
+    "_source_name": "Film_Impact_Premium_Video_Effects_V5.0.9_CE",
+    "_batch_index": 2934
+  },
+  {
+    "name": "FILM_Pipeline",
+    "category": "Color Grading & LUTs",
+    "clean_name": "CineGrain Film Pipeline",
+    "confidence": 75,
+    "notes": "Only .jpg and .lnk, unclear",
+    "_source_name": "FILM_Pipeline",
+    "_batch_index": 2935,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Film_Space_-_Justkay_Blackmagic_Gen_5_LUTs__2022",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Film Space Justkay Blackmagic Gen 5 LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'LUTs'",
+    "_source_name": "Film_Space_-_Justkay_Blackmagic_Gen_5_LUTs__2022",
+    "_batch_index": 2936
+  },
+  {
+    "name": "film-background-3279412",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "film background",
+    "confidence": 75,
+    "notes": "Likely stock footage background",
+    "_source_name": "film-background-3279412",
+    "_batch_index": 2937
+  },
+  {
+    "name": "film-background-3281138",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "film background",
+    "confidence": 75,
+    "notes": "Likely stock footage background",
+    "_source_name": "film-background-3281138",
+    "_batch_index": 2938
+  },
+  {
+    "name": "film-background-3290146",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "film background",
+    "confidence": 75,
+    "notes": "Likely stock footage background",
+    "_source_name": "film-background-3290146",
+    "_batch_index": 2939
+  }
+]

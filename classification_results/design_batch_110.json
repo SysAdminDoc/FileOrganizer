@@ -1,0 +1,556 @@
+[
+  {
+    "name": "Videohive Color Grading Presets 500 LUTs Pro",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Color Grading Presets 500 LUTs Pro",
+    "confidence": 95,
+    "notes": "Name contains 'Color Grading' and 'LUTs'",
+    "_source_name": "Videohive Color Grading Presets 500 LUTs Pro",
+    "_batch_index": 6540
+  },
+  {
+    "name": "Videohive Colorful Dynamic Typography For After Effects 53768593",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Colorful Dynamic Typography For After Effects",
+    "confidence": 90,
+    "notes": "Has .aep files and name says 'Typography'",
+    "_source_name": "Videohive Colorful Dynamic Typography For After Effects 53768593",
+    "_batch_index": 6541
+  },
+  {
+    "name": "Videohive Colorful Map And Route Animations F_x 53841958",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Colorful Map And Route Animations",
+    "confidence": 85,
+    "notes": "Name indicates map animations, likely AE but no .aep; .mp4 only",
+    "_source_name": "Videohive Colorful Map And Route Animations F_x 53841958",
+    "_batch_index": 6542
+  },
+  {
+    "name": "Videohive Colorful Simple Text Transition Pr 53473042",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Colorful Simple Text Transition Pr",
+    "confidence": 90,
+    "notes": "Has .mogrt and .prproj, name says 'Pr' for Premiere",
+    "_source_name": "Videohive Colorful Simple Text Transition Pr 53473042",
+    "_batch_index": 6543
+  },
+  {
+    "name": "Videohive Colorful Slideshow 53935682",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Colorful Slideshow",
+    "confidence": 85,
+    "notes": "Only .mogrt and .pdf, no .aep",
+    "_source_name": "Videohive Colorful Slideshow 53935682",
+    "_batch_index": 6544
+  },
+  {
+    "name": "Videohive Colorful Strokes Backgrounds 53768680",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Colorful Strokes Backgrounds",
+    "confidence": 80,
+    "notes": "Has .aep, backgrounds suitable for motion graphics pack",
+    "_source_name": "Videohive Colorful Strokes Backgrounds 53768680",
+    "_batch_index": 6545
+  },
+  {
+    "name": "Videohive Colorful Transitions Pt. 1 For Davinci Resolve 53812223",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Colorful Transitions Pt. 1 For Davinci Resolve",
+    "confidence": 95,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Colorful Transitions Pt. 1 For Davinci Resolve 53812223",
+    "_batch_index": 6546,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Colorful Transitions Pt. 2 For Davinci Resolve 53812246",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Colorful Transitions Pt. 2 For Davinci Resolve",
+    "confidence": 95,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Colorful Transitions Pt. 2 For Davinci Resolve 53812246",
+    "_batch_index": 6547,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Colorful Typo 53825120",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Colorful Typo",
+    "confidence": 90,
+    "notes": "Only .rtf file, no content clue",
+    "_source_name": "Videohive Colorful Typo 53825120",
+    "_batch_index": 6548,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Construction Business And Labors Premium Character Instagram Story 47440599",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Construction Business And Labors Premium Character Instagram Story",
+    "confidence": 85,
+    "notes": "Has .aep, character animation for explainer style",
+    "_source_name": "Videohive Construction Business And Labors Premium Character Instagram Story 47440599",
+    "_batch_index": 6549
+  },
+  {
+    "name": "Videohive Cool Memphis Titles 53824935",
+    "category": "Premiere Pro - Title & Typography",
+    "clean_name": "Cool Memphis Titles",
+    "confidence": 85,
+    "notes": "Only .mogrt, title style",
+    "_source_name": "Videohive Cool Memphis Titles 53824935",
+    "_batch_index": 6550
+  },
+  {
+    "name": "Videohive Coronavirus Character Animation DIY Kit 26534212",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Coronavirus Character Animation DIY Kit",
+    "confidence": 80,
+    "notes": "Name says character animation, .zip likely contains .aep",
+    "_source_name": "Videohive Coronavirus Character Animation DIY Kit 26534212",
+    "_batch_index": 6551
+  },
+  {
+    "name": "Videohive Corporate Media Unveil 54244850",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Corporate Media Unveil",
+    "confidence": 90,
+    "notes": "Has .aep, name says 'Corporate'",
+    "_source_name": "Videohive Corporate Media Unveil 54244850",
+    "_batch_index": 6552
+  },
+  {
+    "name": "Videohive Cosmetic Display Mockup 54284459",
+    "category": "Mockups - Packaging",
+    "clean_name": "Cosmetic Display Mockup",
+    "confidence": 85,
+    "notes": "Name says 'Mockup', cosmetic display likely packaging",
+    "_source_name": "Videohive Cosmetic Display Mockup 54284459",
+    "_batch_index": 6553
+  },
+  {
+    "name": "Videohive Countdown Ver 2 53851501",
+    "category": "After Effects - Other",
+    "clean_name": "Countdown Ver 2",
+    "confidence": 85,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Countdown Ver 2 53851501",
+    "_batch_index": 6554,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Countdown Ver 3 53848246",
+    "category": "After Effects - Other",
+    "clean_name": "Countdown Ver 3",
+    "confidence": 85,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Countdown Ver 3 53848246",
+    "_batch_index": 6555,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Countdown Version 4 53904516",
+    "category": "After Effects - Other",
+    "clean_name": "Countdown Version 4",
+    "confidence": 85,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Countdown Version 4 53904516",
+    "_batch_index": 6556,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Creative Crumbled Paper Slides For Davinci Resolve 53842479",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Creative Crumbled Paper Slides For Davinci Resolve",
+    "confidence": 70,
+    "notes": "Has .drp (DaVinci Resolve project), but no LUTs; likely transition pack for Resolve",
+    "_source_name": "Videohive Creative Crumbled Paper Slides For Davinci Resolve 53842479",
+    "_batch_index": 6557
+  },
+  {
+    "name": "Videohive Creative Hiring 54302499",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Creative Hiring",
+    "confidence": 85,
+    "notes": "No files listed, cannot classify",
+    "_source_name": "Videohive Creative Hiring 54302499",
+    "_batch_index": 6558,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Creative Talk Show Premium Vector Instagram Story 47453891",
+    "category": "Premiere Pro - Social Media",
+    "clean_name": "Creative Talk Show Premium Vector Instagram Story",
+    "confidence": 85,
+    "notes": "Has .mogrt, Instagram Story format",
+    "_source_name": "Videohive Creative Talk Show Premium Vector Instagram Story 47453891",
+    "_batch_index": 6559
+  },
+  {
+    "name": "Videohive Creative Thinking Flat Design Character Animation Scene 52985694",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Creative Thinking Flat Design Character Animation Scene",
+    "confidence": 90,
+    "notes": "Has .aep, flat design character animation",
+    "_source_name": "Videohive Creative Thinking Flat Design Character Animation Scene 52985694",
+    "_batch_index": 6560
+  },
+  {
+    "name": "Videohive Cricket Bumper 54259966",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Cricket Bumper",
+    "confidence": 85,
+    "notes": "Has .aep, cricket is a sport",
+    "_source_name": "Videohive Cricket Bumper 54259966",
+    "_batch_index": 6561
+  },
+  {
+    "name": "Videohive Cryptocurrency Investors Premium Vector Instagram Story 47440671",
+    "category": "After Effects - Social Media",
+    "clean_name": "Cryptocurrency Investors Premium Vector Instagram Story",
+    "confidence": 85,
+    "notes": "Has .aep, Instagram Story format",
+    "_source_name": "Videohive Cryptocurrency Investors Premium Vector Instagram Story 47440671",
+    "_batch_index": 6562
+  },
+  {
+    "name": "Videohive Currency Exchange 54284519",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Currency Exchange",
+    "confidence": 80,
+    "notes": "Has .aep, business/finance theme",
+    "_source_name": "Videohive Currency Exchange 54284519",
+    "_batch_index": 6563
+  },
+  {
+    "name": "Videohive Customer Feedback Premium Vector Instagram Story 47455012",
+    "category": "Premiere Pro - Social Media",
+    "clean_name": "Customer Feedback Premium Vector Instagram Story",
+    "confidence": 85,
+    "notes": "Has .mogrt, Instagram Story",
+    "_source_name": "Videohive Customer Feedback Premium Vector Instagram Story 47455012",
+    "_batch_index": 6564
+  },
+  {
+    "name": "Videohive Darkness - Main Titles 35440542",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Darkness - Main Titles",
+    "confidence": 80,
+    "notes": "Name says 'Main Titles', .zip likely contains .aep",
+    "_source_name": "Videohive Darkness - Main Titles 35440542",
+    "_batch_index": 6565
+  },
+  {
+    "name": "Videohive De Rhythmic Opener 54272428",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "De Rhythmic Opener",
+    "confidence": 90,
+    "notes": "Only .pdf, no content clue",
+    "_source_name": "Videohive De Rhythmic Opener 54272428",
+    "_batch_index": 6566,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Digital Slideshow 35504245",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Digital Slideshow",
+    "confidence": 80,
+    "notes": "Name says 'Slideshow', .zip likely contains .aep",
+    "_source_name": "Videohive Digital Slideshow 35504245",
+    "_batch_index": 6567
+  },
+  {
+    "name": "Videohive Digital Wallet Transaction Flat Character Design Animation Scene 53385500",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Digital Wallet Transaction Flat Character Design Animation Scene",
+    "confidence": 90,
+    "notes": "Has .aep, flat character animation",
+    "_source_name": "Videohive Digital Wallet Transaction Flat Character Design Animation Scene 53385500",
+    "_batch_index": 6568
+  },
+  {
+    "name": "Videohive Dream Planet_MainTitles 34902533",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Dream Planet Main Titles",
+    "confidence": 80,
+    "notes": "Name says 'MainTitles', .zip likely contains .aep",
+    "_source_name": "Videohive Dream Planet_MainTitles 34902533",
+    "_batch_index": 6569
+  },
+  {
+    "name": "Videohive Dynamic Intro Mogrt 53842386",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Dynamic Intro",
+    "confidence": 95,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Dynamic Intro Mogrt 53842386",
+    "_batch_index": 6570,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Dynamic Multiscreen Opener Instagram 54258979",
+    "category": "After Effects - Social Media",
+    "clean_name": "Dynamic Multiscreen Opener Instagram",
+    "confidence": 90,
+    "notes": "Only .pdf, no content clue",
+    "_source_name": "Videohive Dynamic Multiscreen Opener Instagram 54258979",
+    "_batch_index": 6571,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Dynamic Multiscreen Slideshow 54256901",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Multiscreen Slideshow",
+    "confidence": 85,
+    "notes": "Has .aep, slideshow",
+    "_source_name": "Videohive Dynamic Multiscreen Slideshow 54256901",
+    "_batch_index": 6572
+  },
+  {
+    "name": "Videohive Dynamic Slideshow 54260140",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Slideshow",
+    "confidence": 95,
+    "notes": "Only .pdf, no content clue",
+    "_source_name": "Videohive Dynamic Slideshow 54260140",
+    "_batch_index": 6573,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Dynamic Stories Pack 54307686",
+    "category": "After Effects - Social Media",
+    "clean_name": "Dynamic Stories Pack",
+    "confidence": 85,
+    "notes": "Has .aep, stories pack for social media",
+    "_source_name": "Videohive Dynamic Stories Pack 54307686",
+    "_batch_index": 6574
+  },
+  {
+    "name": "Videohive Dynamic Text Animation F_x 53819452",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Dynamic Text Animation",
+    "confidence": 80,
+    "notes": "Name says 'Text Animation', .mp4 only but likely AE",
+    "_source_name": "Videohive Dynamic Text Animation F_x 53819452",
+    "_batch_index": 6575
+  },
+  {
+    "name": "Videohive Dynamic Typography Opener 54217101",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Typography Opener",
+    "confidence": 85,
+    "notes": "Name says 'Opener' and 'Typography', .mov files",
+    "_source_name": "Videohive Dynamic Typography Opener 54217101",
+    "_batch_index": 6576
+  },
+  {
+    "name": "Videohive Dynamic Upbeat Opener 23367502",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Upbeat Opener",
+    "confidence": 80,
+    "notes": "Name says 'Opener', .zip likely contains .aep",
+    "_source_name": "Videohive Dynamic Upbeat Opener 23367502",
+    "_batch_index": 6577
+  },
+  {
+    "name": "Videohive Echo Abstract Video Filter Effect Template 54231172",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Echo Abstract Video Filter Effect Template",
+    "confidence": 85,
+    "notes": "No files listed, cannot classify",
+    "_source_name": "Videohive Echo Abstract Video Filter Effect Template 54231172",
+    "_batch_index": 6578,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Elegant Vintage Autumn Slideshow 54306926",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Elegant Vintage Autumn Slideshow",
+    "confidence": 90,
+    "notes": "Has .aep, slideshow",
+    "_source_name": "Videohive Elegant Vintage Autumn Slideshow 54306926",
+    "_batch_index": 6579
+  },
+  {
+    "name": "Videohive Email Service Eye Catching Premium Vector Instagram Story 47454158",
+    "category": "Premiere Pro - Social Media",
+    "clean_name": "Email Service Eye Catching Premium Vector Instagram Story",
+    "confidence": 85,
+    "notes": "Has .mogrt, Instagram Story",
+    "_source_name": "Videohive Email Service Eye Catching Premium Vector Instagram Story 47454158",
+    "_batch_index": 6580
+  },
+  {
+    "name": "Videohive Emoji Transitions 53462130",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Emoji Transitions",
+    "confidence": 85,
+    "notes": "Has .mogrt, transitions",
+    "_source_name": "Videohive Emoji Transitions 53462130",
+    "_batch_index": 6581
+  },
+  {
+    "name": "Videohive Epic Flag 22471935",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Epic Flag",
+    "confidence": 75,
+    "notes": "Name suggests flag animation, .zip likely contains .aep",
+    "_source_name": "Videohive Epic Flag 22471935",
+    "_batch_index": 6582
+  },
+  {
+    "name": "Videohive Eye Catching Global Warming Premium Vector Instagram Story 47454489",
+    "category": "Premiere Pro - Social Media",
+    "clean_name": "Eye Catching Global Warming Premium Vector Instagram Story",
+    "confidence": 85,
+    "notes": "Has .mogrt, Instagram Story",
+    "_source_name": "Videohive Eye Catching Global Warming Premium Vector Instagram Story 47454489",
+    "_batch_index": 6583
+  },
+  {
+    "name": "Videohive Fashion Minimalism 54323461",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Fashion Minimalism",
+    "confidence": 75,
+    "notes": "Has .aep, fashion theme but minimal style likely corporate",
+    "_source_name": "Videohive Fashion Minimalism 54323461",
+    "_batch_index": 6584
+  },
+  {
+    "name": "Videohive Fashion Multi Intro Colorful Fashion Intro 22248455",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fashion Multi Intro Colorful Fashion Intro",
+    "confidence": 90,
+    "notes": "Has .aep, name says 'Intro'",
+    "_source_name": "Videohive Fashion Multi Intro Colorful Fashion Intro 22248455",
+    "_batch_index": 6585
+  },
+  {
+    "name": "Videohive Fashion Opener 54246498",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fashion Opener",
+    "confidence": 90,
+    "notes": "Has .aep, name says 'Opener'",
+    "_source_name": "Videohive Fashion Opener 54246498",
+    "_batch_index": 6586
+  },
+  {
+    "name": "Videohive Fashion_Opener_Creative 35448136",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fashion Opener Creative",
+    "confidence": 80,
+    "notes": "Name says 'Opener', .zip likely contains .aep",
+    "_source_name": "Videohive Fashion_Opener_Creative 35448136",
+    "_batch_index": 6587
+  },
+  {
+    "name": "Videohive Fast Intro For F_x 53816066",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fast Intro",
+    "confidence": 80,
+    "notes": "Name says 'Intro', .mp4 and .pdf only but likely AE",
+    "_source_name": "Videohive Fast Intro For F_x 53816066",
+    "_batch_index": 6588
+  },
+  {
+    "name": "Videohive Fast Media Unveil 54276474",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fast Media Unveil",
+    "confidence": 85,
+    "notes": "Has .aep, 'Unveil' suggests opener",
+    "_source_name": "Videohive Fast Media Unveil 54276474",
+    "_batch_index": 6589
+  },
+  {
+    "name": "Videohive Fast Opener Vertical Reel For F_x 53816714",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fast Opener Vertical Reel",
+    "confidence": 80,
+    "notes": "Name says 'Opener', .mp4 and .pdf only but likely AE",
+    "_source_name": "Videohive Fast Opener Vertical Reel For F_x 53816714",
+    "_batch_index": 6590
+  },
+  {
+    "name": "Videohive Fiber Optic Style Backgrounds 53818878",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Fiber Optic Style Backgrounds",
+    "confidence": 85,
+    "notes": "Only .mogrt, backgrounds",
+    "_source_name": "Videohive Fiber Optic Style Backgrounds 53818878",
+    "_batch_index": 6591
+  },
+  {
+    "name": "Videohive Film Burns Package 54306112",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Film Burns Package",
+    "confidence": 90,
+    "notes": "No files listed, cannot classify",
+    "_source_name": "Videohive Film Burns Package 54306112",
+    "_batch_index": 6592,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Film Damage Effect 53817643",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Film Damage Effect",
+    "confidence": 85,
+    "notes": "Has .prproj, effect",
+    "_source_name": "Videohive Film Damage Effect 53817643",
+    "_batch_index": 6593
+  },
+  {
+    "name": "Videohive Financial Audit Process Flat Design Animation Scene 52985771",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Financial Audit Process Flat Design Animation Scene",
+    "confidence": 90,
+    "notes": "Has .aep, flat design explainer",
+    "_source_name": "Videohive Financial Audit Process Flat Design Animation Scene 52985771",
+    "_batch_index": 6594
+  },
+  {
+    "name": "Videohive Flat Design Character Animation For Life Insurance Policy Details 52985639",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Flat Design Character Animation For Life Insurance Policy Details",
+    "confidence": 90,
+    "notes": "Has .aep, character animation",
+    "_source_name": "Videohive Flat Design Character Animation For Life Insurance Policy Details 52985639",
+    "_batch_index": 6595
+  },
+  {
+    "name": "Videohive Flowers Backgrounds 53769761",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Flowers Backgrounds",
+    "confidence": 80,
+    "notes": "Has .aep, background pack",
+    "_source_name": "Videohive Flowers Backgrounds 53769761",
+    "_batch_index": 6596
+  },
+  {
+    "name": "Videohive Fold Pages Slideshow Vertical Transitions 54307455",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Fold Pages Slideshow Vertical Transitions",
+    "confidence": 85,
+    "notes": "Has .aep, slideshow with transitions",
+    "_source_name": "Videohive Fold Pages Slideshow Vertical Transitions 54307455",
+    "_batch_index": 6597
+  },
+  {
+    "name": "Videohive Fold Paper Transitions Mogrt 53438588",
+    "category": "Premiere Pro - Transitions & FX",
+    "clean_name": "Fold Paper Transitions",
+    "confidence": 95,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Videohive Fold Paper Transitions Mogrt 53438588",
+    "_batch_index": 6598,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Videohive Freeze Frame 53769767",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Freeze Frame",
+    "confidence": 80,
+    "notes": "Has .aep, freeze frame effect for cinematic use",
+    "_source_name": "Videohive Freeze Frame 53769767",
+    "_batch_index": 6599
+  }
+]

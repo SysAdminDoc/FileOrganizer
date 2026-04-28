@@ -1,0 +1,545 @@
+[
+  {
+    "name": "Criminal-search-1103490",
+    "category": "After Effects - Other",
+    "clean_name": "Criminal Search",
+    "confidence": 65,
+    "notes": "Numeric ID only, no informative name hint",
+    "_source_name": "Criminal-search-1103490",
+    "_batch_index": 2400
+  },
+  {
+    "name": "Crowds - War & Battle [Boom Library]",
+    "category": "Stock Music & Audio",
+    "clean_name": "Crowds - War & Battle",
+    "confidence": 85,
+    "notes": "Boom Library indicates sound effects/audio pack",
+    "_source_name": "Crowds - War & Battle [Boom Library]",
+    "_batch_index": 2401
+  },
+  {
+    "name": "CRT Master Class- Ezra Cohen",
+    "category": "Tutorial & Education",
+    "clean_name": "CRT Master Class",
+    "confidence": 90,
+    "notes": "Name includes 'Master Class' indicating tutorial",
+    "_source_name": "CRT Master Class- Ezra Cohen",
+    "_batch_index": 2402
+  },
+  {
+    "name": "CRT TEXTURE PRESETS",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "CRT Texture Presets",
+    "confidence": 75,
+    "notes": "Contains .prfpset (Premiere preset) but name says presets; likely AE preset pack",
+    "_source_name": "CRT TEXTURE PRESETS",
+    "_batch_index": 2403
+  },
+  {
+    "name": "crt-transitions-39363867",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "CRT Transitions",
+    "confidence": 80,
+    "notes": "Name implies CRT transitions for After Effects",
+    "_source_name": "crt-transitions-39363867",
+    "_batch_index": 2404
+  },
+  {
+    "name": "crt-tv-effect-45512365",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "CRT TV Effect",
+    "confidence": 85,
+    "notes": "CRT TV effect fits retro/VHS category",
+    "_source_name": "crt-tv-effect-45512365",
+    "_batch_index": 2405
+  },
+  {
+    "name": "crypto-currency-title-design-36353397",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Crypto Currency Title Design",
+    "confidence": 85,
+    "notes": "Title design for After Effects",
+    "_source_name": "crypto-currency-title-design-36353397",
+    "_batch_index": 2406
+  },
+  {
+    "name": "Cryptocurrency Bitcoin Stories Pack",
+    "category": "After Effects - Social Media",
+    "clean_name": "Cryptocurrency Bitcoin Stories Pack",
+    "confidence": 80,
+    "notes": "Stories pack suggests social media format, .aep file",
+    "_source_name": "Cryptocurrency Bitcoin Stories Pack",
+    "_batch_index": 2407
+  },
+  {
+    "name": "crystal-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Crystal Slideshow",
+    "confidence": 85,
+    "notes": "Name clearly indicates slideshow",
+    "_source_name": "crystal-slideshow",
+    "_batch_index": 2408
+  },
+  {
+    "name": "cube-titles-for-davinci-resolve-45167684",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Cube Titles for DaVinci Resolve",
+    "confidence": 90,
+    "notes": "Cube files are LUTs, DaVinci Resolve color grading",
+    "_source_name": "cube-titles-for-davinci-resolve-45167684",
+    "_batch_index": 2409
+  },
+  {
+    "name": "cursed-skull-reveal-48172857",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Cursed Skull Reveal",
+    "confidence": 75,
+    "notes": "Reveal suggests logo reveal or intro",
+    "_source_name": "cursed-skull-reveal-48172857",
+    "_batch_index": 2410
+  },
+  {
+    "name": "cutout-craft-52923471",
+    "category": "After Effects - Other",
+    "clean_name": "Cutout Craft",
+    "confidence": 65,
+    "notes": "Unclear from name, likely AE template",
+    "_source_name": "cutout-craft-52923471",
+    "_batch_index": 2411
+  },
+  {
+    "name": "cuttana_illustrator_v1.0",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Cuttana Illustrator",
+    "confidence": 90,
+    "notes": "Illustrator in name, .rar likely contains vectors",
+    "_source_name": "cuttana_illustrator_v1.0",
+    "_batch_index": 2412
+  },
+  {
+    "name": "cv-resume-modern-and-clean-L8AF85",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "CV Resume Modern and Clean",
+    "confidence": 85,
+    "notes": "Resume/CV is print stationery",
+    "_source_name": "cv-resume-modern-and-clean-L8AF85",
+    "_batch_index": 2413
+  },
+  {
+    "name": "cyber-brush-titles-33708739",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Cyber Brush Titles",
+    "confidence": 80,
+    "notes": "Titles for After Effects",
+    "_source_name": "cyber-brush-titles-33708739",
+    "_batch_index": 2414
+  },
+  {
+    "name": "cyber-monday-smart-gadgets-sale-36709402",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Cyber Monday Smart Gadgets Sale",
+    "confidence": 85,
+    "notes": "Sale promo for products",
+    "_source_name": "cyber-monday-smart-gadgets-sale-36709402",
+    "_batch_index": 2415
+  },
+  {
+    "name": "cyber-monday-smart-gadgets-sale-36914688",
+    "category": "After Effects - Product Promo",
+    "clean_name": "Cyber Monday Smart Gadgets Sale",
+    "confidence": 85,
+    "notes": "Sale promo for products",
+    "_source_name": "cyber-monday-smart-gadgets-sale-36914688",
+    "_batch_index": 2416
+  },
+  {
+    "name": "cyberpunk-futuristic-intro-26566240",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Cyberpunk Futuristic Intro",
+    "confidence": 90,
+    "notes": "Intro in name",
+    "_source_name": "cyberpunk-futuristic-intro-26566240",
+    "_batch_index": 2417
+  },
+  {
+    "name": "cyberpunk-intro-22325637",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Cyberpunk Intro",
+    "confidence": 90,
+    "notes": "Intro in name",
+    "_source_name": "cyberpunk-intro-22325637",
+    "_batch_index": 2418
+  },
+  {
+    "name": "cyberpunk-intros-35831204",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Cyberpunk Intros",
+    "confidence": 90,
+    "notes": "Intros in name",
+    "_source_name": "cyberpunk-intros-35831204",
+    "_batch_index": 2419
+  },
+  {
+    "name": "cyberpunk-life-styles-photoshop-action-2X76SEN",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Cyberpunk Life Styles Photoshop Action",
+    "confidence": 95,
+    "notes": "Photoshop action in name",
+    "_source_name": "cyberpunk-life-styles-photoshop-action-2X76SEN",
+    "_batch_index": 2420
+  },
+  {
+    "name": "cyberpunk-lower-thirds-38335201",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Cyberpunk Lower Thirds",
+    "confidence": 90,
+    "notes": "Lower thirds in name",
+    "_source_name": "cyberpunk-lower-thirds-38335201",
+    "_batch_index": 2421
+  },
+  {
+    "name": "cyberpunk-medical-39473174",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Cyberpunk Medical",
+    "confidence": 70,
+    "notes": "Medical theme, likely corporate template",
+    "_source_name": "cyberpunk-medical-39473174",
+    "_batch_index": 2422
+  },
+  {
+    "name": "cyberpunk-military-39489954",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Cyberpunk Military",
+    "confidence": 70,
+    "notes": "Military theme, cinematic style",
+    "_source_name": "cyberpunk-military-39489954",
+    "_batch_index": 2423
+  },
+  {
+    "name": "cyberpunk-modern-luts-f_x-apple-motion",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Cyberpunk Modern LUTs",
+    "confidence": 95,
+    "notes": "LUTs in name",
+    "_source_name": "cyberpunk-modern-luts-f_x-apple-motion",
+    "_batch_index": 2424
+  },
+  {
+    "name": "cyberpunk-neon-reveal-45177720",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Cyberpunk Neon Reveal",
+    "confidence": 85,
+    "notes": "Reveal suggests logo reveal",
+    "_source_name": "cyberpunk-neon-reveal-45177720",
+    "_batch_index": 2425
+  },
+  {
+    "name": "cyberpunk-photo-effect-for-posters",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Cyberpunk Photo Effect for Posters",
+    "confidence": 85,
+    "notes": "Photo effect for posters, likely Photoshop",
+    "_source_name": "cyberpunk-photo-effect-for-posters",
+    "_batch_index": 2426
+  },
+  {
+    "name": "cyberpunk-portrait-photoshop-actions-9T3V6KF",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Cyberpunk Portrait Photoshop Actions",
+    "confidence": 95,
+    "notes": "Photoshop actions in name",
+    "_source_name": "cyberpunk-portrait-photoshop-actions-9T3V6KF",
+    "_batch_index": 2427
+  },
+  {
+    "name": "Cyclops 2.6.4",
+    "category": "Plugins & Extensions",
+    "clean_name": "Cyclops",
+    "confidence": 85,
+    "notes": "Version number and .reg file suggest plugin/extension",
+    "_source_name": "Cyclops 2.6.4",
+    "_batch_index": 2428
+  },
+  {
+    "name": "Cyclops v.3.0.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Cyclops",
+    "confidence": 85,
+    "notes": "Version number and .reg file suggest plugin/extension",
+    "_source_name": "Cyclops v.3.0.1",
+    "_batch_index": 2429
+  },
+  {
+    "name": "Cyclops v.3.0.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "Cyclops",
+    "confidence": 85,
+    "notes": "Version number and .reg file suggest plugin/extension",
+    "_source_name": "Cyclops v.3.0.2",
+    "_batch_index": 2430
+  },
+  {
+    "name": "cylinder-tube-packaging-mockup-003-BNRQXPU",
+    "category": "Mockups - Packaging",
+    "clean_name": "Cylinder Tube Packaging Mockup",
+    "confidence": 95,
+    "notes": "Packaging mockup in name",
+    "_source_name": "cylinder-tube-packaging-mockup-003-BNRQXPU",
+    "_batch_index": 2431
+  },
+  {
+    "name": "D3ART5R-AIdownload.net",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Letter",
+    "confidence": 75,
+    "notes": "Unclear content, likely generic download",
+    "_source_name": "D3ART5R-AIdownload.net",
+    "_batch_index": 2432,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "D8WXB4G-Aidownload.net",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Neon Light Overlays v3",
+    "confidence": 90,
+    "notes": "Unclear content, likely generic download",
+    "_source_name": "D8WXB4G-Aidownload.net",
+    "_batch_index": 2433,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "daily-news-intro-38000389",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Daily News Intro",
+    "confidence": 95,
+    "notes": "News intro for broadcast",
+    "_source_name": "daily-news-intro-38000389",
+    "_batch_index": 2434
+  },
+  {
+    "name": "daily-newspaper-on-fabric-43278214",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Daily Newspaper on Fabric",
+    "confidence": 85,
+    "notes": "Newspaper mockup on fabric",
+    "_source_name": "daily-newspaper-on-fabric-43278214",
+    "_batch_index": 2435
+  },
+  {
+    "name": "daily-newspaper-on-fabric-43387898",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Daily Newspaper on Fabric",
+    "confidence": 85,
+    "notes": "Newspaper mockup on fabric",
+    "_source_name": "daily-newspaper-on-fabric-43387898",
+    "_batch_index": 2436
+  },
+  {
+    "name": "Damaged-grunge-titles-1256250",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Damaged Grunge Titles",
+    "confidence": 80,
+    "notes": "Titles for After Effects",
+    "_source_name": "Damaged-grunge-titles-1256250",
+    "_batch_index": 2437
+  },
+  {
+    "name": "damaged-tv-looks-47621736",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "Damaged TV Looks",
+    "confidence": 85,
+    "notes": "Damaged TV effect fits retro/VHS",
+    "_source_name": "damaged-tv-looks-47621736",
+    "_batch_index": 2438
+  },
+  {
+    "name": "dancing-typography-22992899",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Dancing Typography",
+    "confidence": 85,
+    "notes": "Typography animation",
+    "_source_name": "dancing-typography-22992899",
+    "_batch_index": 2439
+  },
+  {
+    "name": "Daniel John Peters – LUTs-Overlay Collection",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Daniel John Peters LUTs Overlay Collection",
+    "confidence": 95,
+    "notes": "LUTs in name",
+    "_source_name": "Daniel John Peters – LUTs-Overlay Collection",
+    "_batch_index": 2440
+  },
+  {
+    "name": "Daniel John Peters – Super8 – Film Overlay Pack",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Daniel John Peters Super8 Film Overlay Pack",
+    "confidence": 80,
+    "notes": "Film overlays are stock footage/VFX",
+    "_source_name": "Daniel John Peters – Super8 – Film Overlay Pack",
+    "_batch_index": 2441
+  },
+  {
+    "name": "Dark Cinematic Titles",
+    "category": "Premiere Pro - Title & Typography",
+    "clean_name": "Dark Cinematic Titles",
+    "confidence": 90,
+    "notes": ".mogrt file indicates Premiere Pro template",
+    "_source_name": "Dark Cinematic Titles",
+    "_batch_index": 2442
+  },
+  {
+    "name": "dark-aesthetic-urban-moody-landscape-film-look-cin-48239302",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Dark Aesthetic Urban Moody Landscape Film Look",
+    "confidence": 85,
+    "notes": "Film look suggests LUTs/color grading",
+    "_source_name": "dark-aesthetic-urban-moody-landscape-film-look-cin-48239302",
+    "_batch_index": 2443
+  },
+  {
+    "name": "dark-and-moody-luxury-black-look-car-videography-l-48478103",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Dark and Moody Luxury Black Look Car Videography LUTs",
+    "confidence": 90,
+    "notes": "LUTs implied by 'look' and videography",
+    "_source_name": "dark-and-moody-luxury-black-look-car-videography-l-48478103",
+    "_batch_index": 2444
+  },
+  {
+    "name": "dark-cinematic-hero-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dark Cinematic Hero Opener",
+    "confidence": 90,
+    "notes": "Opener in name",
+    "_source_name": "dark-cinematic-hero-opener",
+    "_batch_index": 2445
+  },
+  {
+    "name": "dark-cinematic-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dark Cinematic Opener",
+    "confidence": 90,
+    "notes": "Opener in name",
+    "_source_name": "dark-cinematic-opener",
+    "_batch_index": 2446
+  },
+  {
+    "name": "dark-cinematic-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Dark Cinematic Trailer",
+    "confidence": 90,
+    "notes": "Trailer in name",
+    "_source_name": "dark-cinematic-trailer",
+    "_batch_index": 2447
+  },
+  {
+    "name": "dark-data-tunnel-34360073",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "Dark Data Tunnel",
+    "confidence": 80,
+    "notes": "Data tunnel suggests data visualization",
+    "_source_name": "dark-data-tunnel-34360073",
+    "_batch_index": 2448
+  },
+  {
+    "name": "dark-ocean-maintitle-38917437",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Dark Ocean Main Title",
+    "confidence": 85,
+    "notes": "Main title typography",
+    "_source_name": "dark-ocean-maintitle-38917437",
+    "_batch_index": 2449
+  },
+  {
+    "name": "dark-ocean-titles-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dark Ocean Titles Opener",
+    "confidence": 90,
+    "notes": "Opener with .aep file",
+    "_source_name": "dark-ocean-titles-opener",
+    "_batch_index": 2450
+  },
+  {
+    "name": "dark-scar-title-trailer-40829524",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Dark Scar Title Trailer",
+    "confidence": 85,
+    "notes": "Trailer in name",
+    "_source_name": "dark-scar-title-trailer-40829524",
+    "_batch_index": 2451
+  },
+  {
+    "name": "dat-dab-G43VYQ",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Dat Dab",
+    "confidence": 85,
+    "notes": "Unclear content, no file hints",
+    "_source_name": "dat-dab-G43VYQ",
+    "_batch_index": 2452,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "data-intro-39161590",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Data Intro",
+    "confidence": 85,
+    "notes": "Intro in name",
+    "_source_name": "data-intro-39161590",
+    "_batch_index": 2453
+  },
+  {
+    "name": "Datamosh 2.5.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Datamosh",
+    "confidence": 85,
+    "notes": "Version number and .reg file suggest plugin",
+    "_source_name": "Datamosh 2.5.0",
+    "_batch_index": 2454
+  },
+  {
+    "name": "datamosh v2.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Datamosh",
+    "confidence": 80,
+    "notes": "Version number suggests plugin",
+    "_source_name": "datamosh v2.0",
+    "_batch_index": 2455
+  },
+  {
+    "name": "David_Dumais_Audio_Magic_Sound_FX_Pack_1_WAV-ViP",
+    "category": "Sound Effects & SFX",
+    "clean_name": "David Dumais Audio Magic Sound FX Pack 1",
+    "confidence": 95,
+    "notes": "Sound FX pack in name",
+    "_source_name": "David_Dumais_Audio_Magic_Sound_FX_Pack_1_WAV-ViP",
+    "_batch_index": 2456
+  },
+  {
+    "name": "David_Dumais_Audio_Magic_Sound_FX_Pack_2_WAV-ViP",
+    "category": "Sound Effects & SFX",
+    "clean_name": "David Dumais Audio Magic Sound FX Pack 2",
+    "confidence": 95,
+    "notes": "Sound FX pack in name",
+    "_source_name": "David_Dumais_Audio_Magic_Sound_FX_Pack_2_WAV-ViP",
+    "_batch_index": 2457
+  },
+  {
+    "name": "DaVinci Color Grading Preset Mononodes – Color Shift DCTLS V3+other",
+    "category": "Color Grading & LUTs",
+    "clean_name": "DaVinci Color Grading Preset Mononodes",
+    "confidence": 95,
+    "notes": "Color grading preset in name",
+    "_source_name": "DaVinci Color Grading Preset Mononodes – Color Shift DCTLS V3+other",
+    "_batch_index": 2458
+  },
+  {
+    "name": "DaVinci_LUTS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "DaVinci LUTS",
+    "confidence": 95,
+    "notes": "LUTS in name",
+    "_source_name": "DaVinci_LUTS",
+    "_batch_index": 2459
+  }
+]

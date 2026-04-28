@@ -1,0 +1,546 @@
+[
+  {
+    "name": "news-studio-b69-28031091",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "News Studio",
+    "confidence": 75,
+    "notes": "Name suggests news broadcast, .jpg only but likely preview",
+    "_source_name": "news-studio-b69-28031091",
+    "_batch_index": 4740
+  },
+  {
+    "name": "Newspaper Constructor",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "Newspaper Constructor",
+    "confidence": 70,
+    "notes": "Newspaper layout likely infographic/data viz template",
+    "_source_name": "Newspaper Constructor",
+    "_batch_index": 4741
+  },
+  {
+    "name": "newspaper-video-template-51103043",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "Newspaper Video Template",
+    "confidence": 70,
+    "notes": "Newspaper themed video template",
+    "_source_name": "newspaper-video-template-51103043",
+    "_batch_index": 4742
+  },
+  {
+    "name": "Newton 3.4.23",
+    "category": "Plugins & Extensions",
+    "clean_name": "Newton 3.4.23",
+    "confidence": 80,
+    "notes": "Newton is a physics plugin for After Effects",
+    "_source_name": "Newton 3.4.23",
+    "_batch_index": 4743
+  },
+  {
+    "name": "NFT - Audio Visualizer Template (videohive)",
+    "category": "After Effects - Music & Audio Visualizer",
+    "clean_name": "NFT Audio Visualizer Template",
+    "confidence": 90,
+    "notes": "Has .aep and .mp4, audio visualizer",
+    "_source_name": "NFT - Audio Visualizer Template (videohive)",
+    "_batch_index": 4744
+  },
+  {
+    "name": "nft-40292726",
+    "category": "After Effects - Other",
+    "clean_name": "NFT",
+    "confidence": 65,
+    "notes": "Numeric ID only, no clear subcategory",
+    "_source_name": "nft-40292726",
+    "_batch_index": 4745
+  },
+  {
+    "name": "nft-card-creator-36641908",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "NFT Card Creator",
+    "confidence": 70,
+    "notes": "Card creator likely logo reveal or motion graphics",
+    "_source_name": "nft-card-creator-36641908",
+    "_batch_index": 4746
+  },
+  {
+    "name": "nft-card-elements-pack-39611783",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "NFT Card Elements Pack",
+    "confidence": 75,
+    "notes": "Elements pack for motion graphics",
+    "_source_name": "nft-card-elements-pack-39611783",
+    "_batch_index": 4747
+  },
+  {
+    "name": "nft-cube-creator-39410643",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "NFT Cube Creator",
+    "confidence": 75,
+    "notes": "Cube creator suggests 3D",
+    "_source_name": "nft-cube-creator-39410643",
+    "_batch_index": 4748
+  },
+  {
+    "name": "nft-gallery36306149",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "NFT Gallery",
+    "confidence": 75,
+    "notes": "Gallery template",
+    "_source_name": "nft-gallery36306149",
+    "_batch_index": 4749
+  },
+  {
+    "name": "nft-instagram-stories-36229080",
+    "category": "After Effects - Social Media",
+    "clean_name": "NFT Instagram Stories",
+    "confidence": 85,
+    "notes": "Instagram stories template",
+    "_source_name": "nft-instagram-stories-36229080",
+    "_batch_index": 4750
+  },
+  {
+    "name": "nft-maker-35949225",
+    "category": "After Effects - Other",
+    "clean_name": "NFT Maker",
+    "confidence": 65,
+    "notes": "Generic NFT maker, no clear subcategory",
+    "_source_name": "nft-maker-35949225",
+    "_batch_index": 4751
+  },
+  {
+    "name": "nft-maker-35949225 [source]",
+    "category": "After Effects - Other",
+    "clean_name": "NFT Maker Source",
+    "confidence": 65,
+    "notes": "Same as above with source tag",
+    "_source_name": "nft-maker-35949225 [source]",
+    "_batch_index": 4752
+  },
+  {
+    "name": "nft-maker-36356583",
+    "category": "After Effects - Other",
+    "clean_name": "NFT Maker",
+    "confidence": 65,
+    "notes": "Generic NFT maker",
+    "_source_name": "nft-maker-36356583",
+    "_batch_index": 4753
+  },
+  {
+    "name": "nft-maker-version-2-39034811",
+    "category": "After Effects - Other",
+    "clean_name": "NFT Maker Version 2",
+    "confidence": 65,
+    "notes": "Generic NFT maker",
+    "_source_name": "nft-maker-version-2-39034811",
+    "_batch_index": 4754
+  },
+  {
+    "name": "nft-mosaic-intro-36834820",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "NFT Mosaic Intro",
+    "confidence": 80,
+    "notes": "Intro opener",
+    "_source_name": "nft-mosaic-intro-36834820",
+    "_batch_index": 4755
+  },
+  {
+    "name": "nft-mosaic-intro-mogrt-36889865",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "NFT Mosaic Intro MOGRT",
+    "confidence": 90,
+    "notes": "Has .mogrt in name",
+    "_source_name": "nft-mosaic-intro-mogrt-36889865",
+    "_batch_index": 4756
+  },
+  {
+    "name": "nft-opener-36218161",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "NFT Opener",
+    "confidence": 80,
+    "notes": "Opener template",
+    "_source_name": "nft-opener-36218161",
+    "_batch_index": 4757
+  },
+  {
+    "name": "nft-opener-for-after-effects-38600256",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "NFT Opener for After Effects",
+    "confidence": 85,
+    "notes": "Explicitly for After Effects, opener",
+    "_source_name": "nft-opener-for-after-effects-38600256",
+    "_batch_index": 4758
+  },
+  {
+    "name": "nft-opener-nft-intro-42464777",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "NFT Opener NFT Intro",
+    "confidence": 85,
+    "notes": "Opener/intro",
+    "_source_name": "nft-opener-nft-intro-42464777",
+    "_batch_index": 4759
+  },
+  {
+    "name": "nft-planet-38507388",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "NFT Planet",
+    "confidence": 75,
+    "notes": "Planet suggests 3D",
+    "_source_name": "nft-planet-38507388",
+    "_batch_index": 4760
+  },
+  {
+    "name": "nft-presentation-36330598",
+    "category": "After Effects - Slideshow",
+    "clean_name": "NFT Presentation",
+    "confidence": 75,
+    "notes": "Presentation likely slideshow",
+    "_source_name": "nft-presentation-36330598",
+    "_batch_index": 4761
+  },
+  {
+    "name": "nft-showroom-37493498",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "NFT Showroom",
+    "confidence": 70,
+    "notes": "Showroom suggests 3D environment",
+    "_source_name": "nft-showroom-37493498",
+    "_batch_index": 4762
+  },
+  {
+    "name": "nft-transition-39516493",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "NFT Transition",
+    "confidence": 80,
+    "notes": "Transition pack",
+    "_source_name": "nft-transition-39516493",
+    "_batch_index": 4763
+  },
+  {
+    "name": "NGHQJCU-aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "Bambosa Modern Sans-Serif Font",
+    "confidence": 99,
+    "notes": "Random ID, single .rar, no content clue",
+    "_source_name": "NGHQJCU-aidownload.net",
+    "_batch_index": 4764,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "nicaragua-animated-map-republic-of-nicaragua-map",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Nicaragua Animated Map",
+    "confidence": 90,
+    "notes": "Animated map",
+    "_source_name": "nicaragua-animated-map-republic-of-nicaragua-map",
+    "_batch_index": 4765
+  },
+  {
+    "name": "night-city-mobile-and-desktop-lightroom-presets-Y48ZWCG",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Night City Lightroom Presets",
+    "confidence": 95,
+    "notes": "Lightroom presets in name",
+    "_source_name": "night-city-mobile-and-desktop-lightroom-presets-Y48ZWCG",
+    "_batch_index": 4766
+  },
+  {
+    "name": "Night-color-grades-1109543",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Night Color Grades",
+    "confidence": 90,
+    "notes": "Color grades in name",
+    "_source_name": "Night-color-grades-1109543",
+    "_batch_index": 4767
+  },
+  {
+    "name": "night-of-murder-trailer-titles-27062414",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Night of Murder Trailer Titles",
+    "confidence": 80,
+    "notes": "Trailer titles",
+    "_source_name": "night-of-murder-trailer-titles-27062414",
+    "_batch_index": 4768
+  },
+  {
+    "name": "night-party-opener-40232865",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Night Party Opener",
+    "confidence": 80,
+    "notes": "Party opener",
+    "_source_name": "night-party-opener-40232865",
+    "_batch_index": 4769
+  },
+  {
+    "name": "night-podcast-twitch-overlay-5WQ9XX6",
+    "category": "After Effects - Social Media",
+    "clean_name": "Night Podcast Twitch Overlay",
+    "confidence": 85,
+    "notes": "Twitch overlay for social/streaming",
+    "_source_name": "night-podcast-twitch-overlay-5WQ9XX6",
+    "_batch_index": 4770
+  },
+  {
+    "name": "Nik_Collection_6_12_0 Mac",
+    "category": "Plugins & Extensions",
+    "clean_name": "Nik Collection 6.12.0 Mac",
+    "confidence": 85,
+    "notes": "Nik Collection is a plugin suite",
+    "_source_name": "Nik_Collection_6_12_0 Mac",
+    "_batch_index": 4771
+  },
+  {
+    "name": "Nik_Collection_by_DxO_6.1.0_macOS",
+    "category": "Plugins & Extensions",
+    "clean_name": "Nik Collection by DxO 6.1.0 macOS",
+    "confidence": 85,
+    "notes": "Plugin suite",
+    "_source_name": "Nik_Collection_by_DxO_6.1.0_macOS",
+    "_batch_index": 4772
+  },
+  {
+    "name": "NL5LSM3-Aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "PhenometricOracles",
+    "confidence": 95,
+    "notes": "Random ID, single .zip, no content clue",
+    "_source_name": "NL5LSM3-Aidownload.net",
+    "_batch_index": 4773,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "No-Budget_Filmmaking_for_Beginners",
+    "category": "Tutorial & Education",
+    "clean_name": "No-Budget Filmmaking for Beginners",
+    "confidence": 95,
+    "notes": "Tutorial/course in name",
+    "_source_name": "No-Budget_Filmmaking_for_Beginners",
+    "_batch_index": 4774
+  },
+  {
+    "name": "Nobe OmniScope v1.10.141 Win",
+    "category": "Plugins & Extensions",
+    "clean_name": "Nobe OmniScope v1.10.141 Win",
+    "confidence": 85,
+    "notes": "OmniScope is a plugin/extension",
+    "_source_name": "Nobe OmniScope v1.10.141 Win",
+    "_batch_index": 4775
+  },
+  {
+    "name": "NobeOmniScope1.10.114",
+    "category": "Plugins & Extensions",
+    "clean_name": "Nobe OmniScope 1.10.114",
+    "confidence": 85,
+    "notes": "Plugin",
+    "_source_name": "NobeOmniScope1.10.114",
+    "_batch_index": 4776
+  },
+  {
+    "name": "Noir Film Titles (MOGRT)",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Noir Film Titles MOGRT",
+    "confidence": 90,
+    "notes": "MOGRT in name, .txt only but likely preview",
+    "_source_name": "Noir Film Titles (MOGRT)",
+    "_batch_index": 4777
+  },
+  {
+    "name": "noise-textures-19411280",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Noise Textures",
+    "confidence": 80,
+    "notes": "Textures likely for Photoshop",
+    "_source_name": "noise-textures-19411280",
+    "_batch_index": 4778
+  },
+  {
+    "name": "Nomadic George - CineLook 4 DaVinci Resolve PowerGrade   LUT (2023)",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Nomadic George CineLook LUT",
+    "confidence": 95,
+    "notes": "LUT and PowerGrade in name",
+    "_source_name": "Nomadic George - CineLook 4 DaVinci Resolve PowerGrade   LUT (2023)",
+    "_batch_index": 4779
+  },
+  {
+    "name": "nomination-award-intro-44335121",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Nomination Award Intro",
+    "confidence": 80,
+    "notes": "Award intro for events",
+    "_source_name": "nomination-award-intro-44335121",
+    "_batch_index": 4780
+  },
+  {
+    "name": "northern-lights-opener-33141886",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Northern Lights Opener",
+    "confidence": 85,
+    "notes": "Opener template",
+    "_source_name": "northern-lights-opener-33141886",
+    "_batch_index": 4781
+  },
+  {
+    "name": "Nostalgia2",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Nostalgia Film Mattes",
+    "confidence": 82,
+    "notes": "Only .jpg, unclear purpose",
+    "_source_name": "Nostalgia2",
+    "_batch_index": 4782,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "notebook-presentation-21751862",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Notebook Presentation",
+    "confidence": 75,
+    "notes": "Presentation likely slideshow",
+    "_source_name": "notebook-presentation-21751862",
+    "_batch_index": 4783
+  },
+  {
+    "name": "Noto (No more tofu)",
+    "category": "Fonts & Typography",
+    "clean_name": "Noto Font",
+    "confidence": 95,
+    "notes": "Contains .otf and .ttf font files",
+    "_source_name": "Noto (No more tofu)",
+    "_batch_index": 4784
+  },
+  {
+    "name": "Nrealistic-water-wave-transitions-4k-25459202",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Realistic Water Wave Transitions",
+    "confidence": 85,
+    "notes": "Water wave transitions, liquid/fluid",
+    "_source_name": "Nrealistic-water-wave-transitions-4k-25459202",
+    "_batch_index": 4785
+  },
+  {
+    "name": "NSYPXUD-aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "Anqok Bajabi",
+    "confidence": 95,
+    "notes": "Random ID, single .zip, no content clue",
+    "_source_name": "NSYPXUD-aidownload.net",
+    "_batch_index": 4786,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "o8rc6w7r6dj7",
+    "category": "_Skip",
+    "clean_name": "o8rc6w7r6dj7",
+    "confidence": 100,
+    "notes": "Random string, no files listed, likely empty or fragment",
+    "_source_name": "o8rc6w7r6dj7",
+    "_batch_index": 4787
+  },
+  {
+    "name": "object-remover-cloning-toolkit-45271860",
+    "category": "Plugins & Extensions",
+    "clean_name": "Object Remover Cloning Toolkit",
+    "confidence": 80,
+    "notes": "Toolkit likely plugin/extension",
+    "_source_name": "object-remover-cloning-toolkit-45271860",
+    "_batch_index": 4788
+  },
+  {
+    "name": "Obscura 29 - Reference pack Collection",
+    "category": "Stock Photos - General",
+    "clean_name": "Obscura 29 Reference Pack",
+    "confidence": 70,
+    "notes": "Reference pack with .png images",
+    "_source_name": "Obscura 29 - Reference pack Collection",
+    "_batch_index": 4789
+  },
+  {
+    "name": "October Cinematic Titles",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "October Cinematic Titles",
+    "confidence": 90,
+    "notes": "Has .mogrt file",
+    "_source_name": "October Cinematic Titles",
+    "_batch_index": 4790
+  },
+  {
+    "name": "Odometer v1.1",
+    "category": "After Effects - Other",
+    "clean_name": "Odometer v1.1",
+    "confidence": 70,
+    "notes": "Odometer counter template, likely AE",
+    "_source_name": "Odometer v1.1",
+    "_batch_index": 4791
+  },
+  {
+    "name": "off-road-adventure-t-shirt-design-5E9PD8",
+    "category": "Mockups - Apparel",
+    "clean_name": "Off-Road Adventure T-Shirt Design",
+    "confidence": 85,
+    "notes": "T-shirt design mockup",
+    "_source_name": "off-road-adventure-t-shirt-design-5E9PD8",
+    "_batch_index": 4792
+  },
+  {
+    "name": "offroad-opener-42710562",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Offroad Opener",
+    "confidence": 85,
+    "notes": "Opener template",
+    "_source_name": "offroad-opener-42710562",
+    "_batch_index": 4793
+  },
+  {
+    "name": "Oil Bottle and Spices Packaging Mockup",
+    "category": "Mockups - Packaging",
+    "clean_name": "Oil Bottle and Spices Packaging Mockup",
+    "confidence": 95,
+    "notes": "Packaging mockup in name",
+    "_source_name": "Oil Bottle and Spices Packaging Mockup",
+    "_batch_index": 4794
+  },
+  {
+    "name": "Oktoberfest_party_2018_g",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Oktoberfest Party 2018",
+    "confidence": 75,
+    "notes": "Party theme, has .psd but likely AE template",
+    "_source_name": "Oktoberfest_party_2018_g",
+    "_batch_index": 4795
+  },
+  {
+    "name": "Old Film - Dust And Scratches On The Screen-12883154",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Old Film Dust and Scratches",
+    "confidence": 80,
+    "notes": "Stock footage of film effects",
+    "_source_name": "Old Film - Dust And Scratches On The Screen-12883154",
+    "_batch_index": 4796
+  },
+  {
+    "name": "Old Film Vintage Luts",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Old Film Vintage LUTs",
+    "confidence": 95,
+    "notes": "Contains .cube LUT files",
+    "_source_name": "Old Film Vintage Luts",
+    "_batch_index": 4797
+  },
+  {
+    "name": "Old Photo Transitions (LLmotion)",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Old Photo Transitions",
+    "confidence": 75,
+    "notes": "Transitions, likely AE",
+    "_source_name": "Old Photo Transitions (LLmotion)",
+    "_batch_index": 4798
+  },
+  {
+    "name": "Old West All Part",
+    "category": "After Effects - Other",
+    "clean_name": "Old West All Part",
+    "confidence": 65,
+    "notes": "Mixed files, unclear subcategory",
+    "_source_name": "Old West All Part",
+    "_batch_index": 4799
+  }
+]

@@ -1,0 +1,543 @@
+[
+  {
+    "name": "cinematic-trailer-50803825",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer",
+    "confidence": 75,
+    "notes": "Name suggests cinematic trailer, .zip likely contains AE project",
+    "_source_name": "cinematic-trailer-50803825",
+    "_batch_index": 1980
+  },
+  {
+    "name": "cinematic-trailer-50807674",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer",
+    "confidence": 75,
+    "notes": "Name suggests cinematic trailer, .zip likely contains AE project",
+    "_source_name": "cinematic-trailer-50807674",
+    "_batch_index": 1981
+  },
+  {
+    "name": "cinematic-trailer-52985367",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer",
+    "confidence": 75,
+    "notes": "Name suggests cinematic trailer, .zip likely contains AE project",
+    "_source_name": "cinematic-trailer-52985367",
+    "_batch_index": 1982
+  },
+  {
+    "name": "cinematic-trailer-i-blockbuster-titles-i-halloween-39609677",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer Blockbuster Titles Halloween",
+    "confidence": 80,
+    "notes": "Halloween themed trailer titles",
+    "_source_name": "cinematic-trailer-i-blockbuster-titles-i-halloween-39609677",
+    "_batch_index": 1983
+  },
+  {
+    "name": "cinematic-trailer-intro-shatter-trailer-movi",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer Intro Shatter Trailer",
+    "confidence": 80,
+    "notes": "Shatter effect trailer intro",
+    "_source_name": "cinematic-trailer-intro-shatter-trailer-movi",
+    "_batch_index": 1984
+  },
+  {
+    "name": "cinematic-trailer-title-39385828",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Cinematic Trailer Title",
+    "confidence": 75,
+    "notes": "Title-focused cinematic trailer asset",
+    "_source_name": "cinematic-trailer-title-39385828",
+    "_batch_index": 1985
+  },
+  {
+    "name": "cinematic-trailer-title-45274426",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Cinematic Trailer Title",
+    "confidence": 75,
+    "notes": "Title-focused cinematic trailer asset",
+    "_source_name": "cinematic-trailer-title-45274426",
+    "_batch_index": 1986
+  },
+  {
+    "name": "cinematic-trailer-titles-bonus",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Cinematic Trailer Titles Bonus",
+    "confidence": 80,
+    "notes": "Bonus trailer titles pack",
+    "_source_name": "cinematic-trailer-titles-bonus",
+    "_batch_index": 1987
+  },
+  {
+    "name": "cinematic-trailer-v-3-42644908",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer V3",
+    "confidence": 75,
+    "notes": "Version 3 of cinematic trailer",
+    "_source_name": "cinematic-trailer-v-3-42644908",
+    "_batch_index": 1988
+  },
+  {
+    "name": "cinematic-trailer-with-countdown-33744780",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Trailer with Countdown",
+    "confidence": 80,
+    "notes": "Includes countdown element",
+    "_source_name": "cinematic-trailer-with-countdown-33744780",
+    "_batch_index": 1989
+  },
+  {
+    "name": "cinematic-urban-street-lightroom-presets-2QSS35P",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Cinematic Urban Street Lightroom Presets",
+    "confidence": 95,
+    "notes": "Lightroom presets for urban street photography",
+    "_source_name": "cinematic-urban-street-lightroom-presets-2QSS35P",
+    "_batch_index": 1990
+  },
+  {
+    "name": "cinematic-urban-street-photoshopo-actions-BGE5ES4",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Cinematic Urban Street Photoshop Actions",
+    "confidence": 95,
+    "notes": "Photoshop actions for urban street style",
+    "_source_name": "cinematic-urban-street-photoshopo-actions-BGE5ES4",
+    "_batch_index": 1991
+  },
+  {
+    "name": "cinematic-urban-titles-movie-opener-23033787",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Cinematic Urban Titles Movie Opener",
+    "confidence": 80,
+    "notes": "Urban themed movie opener titles",
+    "_source_name": "cinematic-urban-titles-movie-opener-23033787",
+    "_batch_index": 1992
+  },
+  {
+    "name": "cinematic-vintage-trailer-49216210",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Cinematic Vintage Trailer",
+    "confidence": 75,
+    "notes": "Vintage style cinematic trailer",
+    "_source_name": "cinematic-vintage-trailer-49216210",
+    "_batch_index": 1993
+  },
+  {
+    "name": "Cinematica-LUTs-The_Preset_Factory-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Cinematica LUTs",
+    "confidence": 95,
+    "notes": "LUTs in name, color grading asset",
+    "_source_name": "Cinematica-LUTs-The_Preset_Factory-INTRO-HD.NET",
+    "_batch_index": 1994
+  },
+  {
+    "name": "CinePack v4 2.2.1",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "CinePack v4 2.2.1",
+    "confidence": 85,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "CinePack v4 2.2.1",
+    "_batch_index": 1995,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "CinePacks Glow FX 2.1",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "CinePacks Glow FX",
+    "confidence": 70,
+    "notes": "Glow effects likely for AE, cinematic style",
+    "_source_name": "CinePacks Glow FX 2.1",
+    "_batch_index": 1996
+  },
+  {
+    "name": "CinePacks-Weed.FX",
+    "category": "Stock Footage - General",
+    "clean_name": "CinePacks Weed FX",
+    "confidence": 65,
+    "notes": "Contains .mov and .pdf, likely stock footage",
+    "_source_name": "CinePacks-Weed.FX",
+    "_batch_index": 1997
+  },
+  {
+    "name": "CinePacks.Super.8.Film",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "CinePacks Super 8 Film",
+    "confidence": 80,
+    "notes": "Super 8 film effect, retro style",
+    "_source_name": "CinePacks.Super.8.Film",
+    "_batch_index": 1998
+  },
+  {
+    "name": "CinePrint16_V2_2022",
+    "category": "Color Grading & LUTs",
+    "clean_name": "CinePrint16 V2",
+    "confidence": 75,
+    "notes": "Film print emulation, likely LUTs/presets",
+    "_source_name": "CinePrint16_V2_2022",
+    "_batch_index": 1999
+  },
+  {
+    "name": "CinePrint35 for Davinci Resolve",
+    "category": "Color Grading & LUTs",
+    "clean_name": "CinePrint35 for DaVinci Resolve",
+    "confidence": 90,
+    "notes": "DaVinci Resolve color grading asset",
+    "_source_name": "CinePrint35 for Davinci Resolve",
+    "_batch_index": 2000
+  },
+  {
+    "name": "cinereveal-cinematic-reveal-effects-41777265",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "CineReveal Cinematic Reveal Effects",
+    "confidence": 80,
+    "notes": "Cinematic reveal effects for AE",
+    "_source_name": "cinereveal-cinematic-reveal-effects-41777265",
+    "_batch_index": 2001
+  },
+  {
+    "name": "Cinetools - Cinematic Hits Horror",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Cinematic Hits Horror",
+    "confidence": 90,
+    "notes": "Audio hits for horror, stock music",
+    "_source_name": "Cinetools - Cinematic Hits Horror",
+    "_batch_index": 2002
+  },
+  {
+    "name": "Cinetools - Cinematic Tension Horror",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Cinematic Tension Horror",
+    "confidence": 90,
+    "notes": "Contains .wav, tension audio",
+    "_source_name": "Cinetools - Cinematic Tension Horror",
+    "_batch_index": 2003
+  },
+  {
+    "name": "Cinetools – Cinematic Hits Epic",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Cinematic Hits Epic",
+    "confidence": 90,
+    "notes": "Epic cinematic audio hits",
+    "_source_name": "Cinetools – Cinematic Hits Epic",
+    "_batch_index": 2004
+  },
+  {
+    "name": "Cinetools Cinematic Hits Sci-Fi",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Cinematic Hits Sci-Fi",
+    "confidence": 90,
+    "notes": "Sci-fi cinematic audio hits",
+    "_source_name": "Cinetools Cinematic Hits Sci-Fi",
+    "_batch_index": 2005
+  },
+  {
+    "name": "Cinetools Climax",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Climax",
+    "confidence": 85,
+    "notes": "Audio climax elements",
+    "_source_name": "Cinetools Climax",
+    "_batch_index": 2006
+  },
+  {
+    "name": "Cinetools Fantasia",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Fantasia",
+    "confidence": 85,
+    "notes": "Fantasia audio pack",
+    "_source_name": "Cinetools Fantasia",
+    "_batch_index": 2007
+  },
+  {
+    "name": "Cinetools Metallium WAV-FANTASTiC",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Metallium",
+    "confidence": 90,
+    "notes": "WAV audio, metallic sounds",
+    "_source_name": "Cinetools Metallium WAV-FANTASTiC",
+    "_batch_index": 2008
+  },
+  {
+    "name": "Cinetools Trailer Strikes WAV-FANTASTiC",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Trailer Strikes",
+    "confidence": 90,
+    "notes": "Trailer strike audio effects",
+    "_source_name": "Cinetools Trailer Strikes WAV-FANTASTiC",
+    "_batch_index": 2009
+  },
+  {
+    "name": "Cinetools_Trailer_Hits_WAV-FANTASTiC",
+    "category": "Stock Music & Audio",
+    "clean_name": "Cinetools Trailer Hits",
+    "confidence": 90,
+    "notes": "Trailer hit audio effects",
+    "_source_name": "Cinetools_Trailer_Hits_WAV-FANTASTiC",
+    "_batch_index": 2010
+  },
+  {
+    "name": "circle_rig_pro_v1.0.0_c",
+    "category": "Plugins & Extensions",
+    "clean_name": "Circle Rig Pro",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, AE plugin",
+    "_source_name": "circle_rig_pro_v1.0.0_c",
+    "_batch_index": 2011
+  },
+  {
+    "name": "circuitFX v1.90",
+    "category": "Plugins & Extensions",
+    "clean_name": "CircuitFX",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, AE plugin",
+    "_source_name": "circuitFX v1.90",
+    "_batch_index": 2012
+  },
+  {
+    "name": "circuitfx_v1.90_c",
+    "category": "Plugins & Extensions",
+    "clean_name": "CircuitFX",
+    "confidence": 90,
+    "notes": "Contains .jsxbin, AE plugin",
+    "_source_name": "circuitfx_v1.90_c",
+    "_batch_index": 2013
+  },
+  {
+    "name": "circus-21241812",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Circus",
+    "confidence": 70,
+    "notes": "Circus theme, likely kids/cartoon style",
+    "_source_name": "circus-21241812",
+    "_batch_index": 2014
+  },
+  {
+    "name": "circusmonkey_v1.08 [INTRO-HD.NET]",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Circus Monkey",
+    "confidence": 75,
+    "notes": "Circus monkey animation, kids theme",
+    "_source_name": "circusmonkey_v1.08 [INTRO-HD.NET]",
+    "_batch_index": 2015
+  },
+  {
+    "name": "city-and-shine-action-lightrom-HN3AFFB",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "City and Shine Lightroom Presets",
+    "confidence": 95,
+    "notes": "Lightroom presets for city photography",
+    "_source_name": "city-and-shine-action-lightrom-HN3AFFB",
+    "_batch_index": 2016
+  },
+  {
+    "name": "city-title-sequence-11815839",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "City Title Sequence",
+    "confidence": 80,
+    "notes": "City themed title sequence",
+    "_source_name": "city-title-sequence-11815839",
+    "_batch_index": 2017
+  },
+  {
+    "name": "CITYColorGrds",
+    "category": "Color Grading & LUTs",
+    "clean_name": "City Color Grades",
+    "confidence": 95,
+    "notes": "Color grading LUTs for city footage",
+    "_source_name": "CITYColorGrds",
+    "_batch_index": 2018
+  },
+  {
+    "name": "civil-war-history-slideshow-35656641",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Civil War History Slideshow",
+    "confidence": 85,
+    "notes": "Historical slideshow presentation",
+    "_source_name": "civil-war-history-slideshow-35656641",
+    "_batch_index": 2019
+  },
+  {
+    "name": "claps-stomp-opener-24457925",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Claps Stomp Opener",
+    "confidence": 80,
+    "notes": "Stomp style opener with claps",
+    "_source_name": "claps-stomp-opener-24457925",
+    "_batch_index": 2020
+  },
+  {
+    "name": "Classic Light Hits 4K",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Classic Light Hits 4K",
+    "confidence": 80,
+    "notes": "Light hit effects in 4K",
+    "_source_name": "Classic Light Hits 4K",
+    "_batch_index": 2021
+  },
+  {
+    "name": "Classical Resto Food Menu",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Classical Restaurant Food Menu",
+    "confidence": 70,
+    "notes": "Only .txt, but name suggests menu design",
+    "_source_name": "Classical Resto Food Menu",
+    "_batch_index": 2022
+  },
+  {
+    "name": "clean-colorful-slideshow-37724742",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Colorful Slideshow",
+    "confidence": 85,
+    "notes": "Colorful slideshow template",
+    "_source_name": "clean-colorful-slideshow-37724742",
+    "_batch_index": 2023
+  },
+  {
+    "name": "clean-dynamic-intro",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Clean Dynamic Intro",
+    "confidence": 85,
+    "notes": "Dynamic intro template",
+    "_source_name": "clean-dynamic-intro",
+    "_batch_index": 2024
+  },
+  {
+    "name": "clean-explainer-kit",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Clean Explainer Kit",
+    "confidence": 85,
+    "notes": "Explainer video kit",
+    "_source_name": "clean-explainer-kit",
+    "_batch_index": 2025
+  },
+  {
+    "name": "clean-film-borders-x-instagram-tik-tok-reels-51699816",
+    "category": "After Effects - Social Media",
+    "clean_name": "Clean Film Borders for Instagram TikTok Reels",
+    "confidence": 90,
+    "notes": "Social media film borders",
+    "_source_name": "clean-film-borders-x-instagram-tik-tok-reels-51699816",
+    "_batch_index": 2026
+  },
+  {
+    "name": "clean-ink-watercolor-slideshow-28340192",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Ink Watercolor Slideshow",
+    "confidence": 85,
+    "notes": "Watercolor style slideshow",
+    "_source_name": "clean-ink-watercolor-slideshow-28340192",
+    "_batch_index": 2027
+  },
+  {
+    "name": "clean-medical-slideshow-parallax-slideshow-38195724",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Medical Slideshow Parallax",
+    "confidence": 85,
+    "notes": "Medical themed parallax slideshow",
+    "_source_name": "clean-medical-slideshow-parallax-slideshow-38195724",
+    "_batch_index": 2028
+  },
+  {
+    "name": "clean-memories-photo-slideshow-38781451",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Memories Photo Slideshow",
+    "confidence": 85,
+    "notes": "Photo slideshow for memories",
+    "_source_name": "clean-memories-photo-slideshow-38781451",
+    "_batch_index": 2029
+  },
+  {
+    "name": "clean-memories-photo-slideshow-mogrt-38846492",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Clean Memories Photo Slideshow",
+    "confidence": 95,
+    "notes": ".mogrt file, Premiere Pro template",
+    "_source_name": "clean-memories-photo-slideshow-mogrt-38846492",
+    "_batch_index": 2030
+  },
+  {
+    "name": "clean-minimal-dynamic-stomp-opener-37909408",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Clean Minimal Dynamic Stomp Opener",
+    "confidence": 85,
+    "notes": "Stomp style opener",
+    "_source_name": "clean-minimal-dynamic-stomp-opener-37909408",
+    "_batch_index": 2031
+  },
+  {
+    "name": "clean-minimal-inspiring-cinematic-slideshow-40091611",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Minimal Inspiring Cinematic Slideshow",
+    "confidence": 85,
+    "notes": "Cinematic slideshow",
+    "_source_name": "clean-minimal-inspiring-cinematic-slideshow-40091611",
+    "_batch_index": 2032
+  },
+  {
+    "name": "clean-minimalistic-photo-slideshow-memories-inst-38891809",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Minimalistic Photo Slideshow Memories",
+    "confidence": 85,
+    "notes": "Minimalistic photo slideshow",
+    "_source_name": "clean-minimalistic-photo-slideshow-memories-inst-38891809",
+    "_batch_index": 2033
+  },
+  {
+    "name": "clean-photo-slideshow-51984543",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Photo Slideshow",
+    "confidence": 85,
+    "notes": "Photo slideshow template",
+    "_source_name": "clean-photo-slideshow-51984543",
+    "_batch_index": 2034
+  },
+  {
+    "name": "clean-presentation-modern-business",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Clean Presentation Modern Business",
+    "confidence": 85,
+    "notes": "Business presentation template",
+    "_source_name": "clean-presentation-modern-business",
+    "_batch_index": 2035
+  },
+  {
+    "name": "clean-slideshow-14580677",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow template",
+    "_source_name": "clean-slideshow-14580677",
+    "_batch_index": 2036
+  },
+  {
+    "name": "clean-slideshow-23474427",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow template",
+    "_source_name": "clean-slideshow-23474427",
+    "_batch_index": 2037
+  },
+  {
+    "name": "clean-weather-forecast-39216953",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Clean Weather Forecast",
+    "confidence": 90,
+    "notes": "Weather forecast broadcast template",
+    "_source_name": "clean-weather-forecast-39216953",
+    "_batch_index": 2038
+  },
+  {
+    "name": "clean-youtube-subscribe-buttons-pack-40189647",
+    "category": "After Effects - Social Media",
+    "clean_name": "Clean YouTube Subscribe Buttons Pack",
+    "confidence": 95,
+    "notes": "Social media subscribe buttons",
+    "_source_name": "clean-youtube-subscribe-buttons-pack-40189647",
+    "_batch_index": 2039
+  }
+]

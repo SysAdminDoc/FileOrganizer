@@ -1,0 +1,618 @@
+[
+  {
+    "name": "3d",
+    "clean_name": "3D",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Abstract",
+    "clean_name": "Abstract",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 90
+  },
+  {
+    "name": "Agriculture",
+    "clean_name": "Agriculture",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Air Conditioner",
+    "clean_name": "Air Conditioner",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Amusement Park",
+    "clean_name": "Amusement Park",
+    "category": "Sport & Recreation",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Anniversary",
+    "clean_name": "Anniversary",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "April Fools",
+    "clean_name": "April Fools",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Bakery",
+    "clean_name": "Bakery",
+    "category": "Food & Lifestyle",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Banners",
+    "clean_name": "Banners",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Baseball",
+    "clean_name": "Baseball",
+    "category": "Sport & Recreation",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Birthday",
+    "clean_name": "Birthday",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Black Friday",
+    "clean_name": "Black Friday",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Cab and Taxi",
+    "clean_name": "Cab and Taxi",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Cake & Chocolate",
+    "clean_name": "Cake & Chocolate",
+    "category": "Food & Lifestyle",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Calendar",
+    "clean_name": "Calendar",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 90
+  },
+  {
+    "name": "Cancer",
+    "clean_name": "Cancer",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Carnival",
+    "clean_name": "Carnival",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Certificate",
+    "clean_name": "Certificate",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Charity",
+    "clean_name": "Charity",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Christmas",
+    "clean_name": "Christmas",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 100
+  },
+  {
+    "name": "Church, Gospel",
+    "clean_name": "Church Gospel",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Communication",
+    "clean_name": "Communication",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 90
+  },
+  {
+    "name": "Community",
+    "clean_name": "Community",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 90
+  },
+  {
+    "name": "Cyber Monday",
+    "clean_name": "Cyber Monday",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Dentist",
+    "clean_name": "Dentist",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Diet Planing",
+    "clean_name": "Diet Planning",
+    "category": "Food & Lifestyle",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Easter",
+    "clean_name": "Easter",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 100
+  },
+  {
+    "name": "Entertainment",
+    "clean_name": "Entertainment",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 85
+  },
+  {
+    "name": "Family",
+    "clean_name": "Family",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 80
+  },
+  {
+    "name": "Fathers Day",
+    "clean_name": "Fathers Day",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 100
+  },
+  {
+    "name": "Fishing",
+    "clean_name": "Fishing",
+    "category": "Sport & Recreation",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Fiverr",
+    "clean_name": "Fiverr",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Football",
+    "clean_name": "Football",
+    "category": "Sport & Recreation",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Fundraiser",
+    "clean_name": "Fundraiser",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Funeral",
+    "clean_name": "Funeral",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Gay, LGBT",
+    "clean_name": "Gay LGBT",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Girls Night",
+    "clean_name": "Girls Night",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 90
+  },
+  {
+    "name": "Golf",
+    "clean_name": "Golf",
+    "category": "Sport & Recreation",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Grand Opening",
+    "clean_name": "Grand Opening",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Halloween",
+    "clean_name": "Halloween",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 100
+  },
+  {
+    "name": "Holidays",
+    "clean_name": "Holidays",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Hotel",
+    "clean_name": "Hotel",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Indesign",
+    "clean_name": "InDesign",
+    "category": "Design Tools & Resources",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Infographic",
+    "clean_name": "Infographic",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 90
+  },
+  {
+    "name": "Insurance",
+    "clean_name": "Insurance",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Isolated Food Items",
+    "clean_name": "Isolated Food Items",
+    "category": "Food & Lifestyle",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Labor Day",
+    "clean_name": "Labor Day",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Letterhead",
+    "clean_name": "Letterhead",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Mothers Day",
+    "clean_name": "Mothers Day",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 100
+  },
+  {
+    "name": "Multipurpose",
+    "clean_name": "Multipurpose",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 70
+  },
+  {
+    "name": "New Year",
+    "clean_name": "New Year",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 100
+  },
+  {
+    "name": "Photoshop, Actions, Styles, Premier",
+    "clean_name": "Photoshop Actions Styles Premier",
+    "category": "Design Tools & Resources",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Posters",
+    "clean_name": "Posters",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Slideshow & Motion Graphics",
+    "clean_name": "Slideshow & Motion Graphics",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Smoke & Fluid FX",
+    "clean_name": "Smoke & Fluid FX",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Smoke & Fog",
+    "clean_name": "Smoke & Fog",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Soccer",
+    "clean_name": "Soccer",
+    "category": "Sport & Recreation",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Social Media",
+    "clean_name": "Social Media",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Sound Effects & SFX",
+    "clean_name": "Sound Effects & SFX",
+    "category": "Audio Resources",
+    "marketplace": "Mixed",
+    "confidence": 100
+  },
+  {
+    "name": "Sparkle & Glitter",
+    "clean_name": "Sparkle & Glitter",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Speed & Action FX",
+    "clean_name": "Speed & Action FX",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Splash & Paint",
+    "clean_name": "Splash & Paint",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Sports",
+    "clean_name": "Sports",
+    "category": "Sport & Recreation",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Spring",
+    "clean_name": "Spring",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Stationary",
+    "clean_name": "Stationary",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Styles",
+    "clean_name": "Styles",
+    "category": "Design Tools & Resources",
+    "marketplace": "Mixed",
+    "confidence": 90
+  },
+  {
+    "name": "Summer & Tropical",
+    "clean_name": "Summer & Tropical",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "TV & Broadcast",
+    "clean_name": "TV & Broadcast",
+    "category": "Design Tools & Resources",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Tattoo",
+    "clean_name": "Tattoo",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Text Effects & Styles",
+    "clean_name": "Text Effects & Styles",
+    "category": "Design Tools & Resources",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Thanksgiving & Fall",
+    "clean_name": "Thanksgiving & Fall",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Toy Drive",
+    "clean_name": "Toy Drive",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Transitions & Motion FX",
+    "clean_name": "Transitions & Motion FX",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Travel & Tourism",
+    "clean_name": "Travel & Tourism",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "VFX & Compositing",
+    "clean_name": "VFX & Compositing",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Vape & Smoke",
+    "clean_name": "Vape & Smoke",
+    "category": "Food & Lifestyle",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Veterans Day",
+    "clean_name": "Veterans Day",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Video Editing - General",
+    "clean_name": "Video Editing General",
+    "category": "Design Tools & Resources",
+    "marketplace": "Mixed",
+    "confidence": 90
+  },
+  {
+    "name": "Volunteer",
+    "clean_name": "Volunteer",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Watercolor & Artistic",
+    "clean_name": "Watercolor & Artistic",
+    "category": "Motion Graphics & VFX",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Website Design",
+    "clean_name": "Website Design",
+    "category": "Services & Industries",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Wedding",
+    "clean_name": "Wedding",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Winter & Snow",
+    "clean_name": "Winter & Snow",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Women Day",
+    "clean_name": "Women Day",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Yoga & Meditation",
+    "clean_name": "Yoga & Meditation",
+    "category": "Food & Lifestyle",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "Yom Kippur",
+    "clean_name": "Yom Kippur",
+    "category": "Holiday & Seasonal",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "YouTube & Video Platform",
+    "clean_name": "YouTube & Video Platform",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  },
+  {
+    "name": "hiring job flyer",
+    "clean_name": "Hiring Job Flyer",
+    "category": "Business & Marketing",
+    "marketplace": "Mixed",
+    "confidence": 95
+  }
+]
