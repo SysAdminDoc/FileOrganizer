@@ -1,0 +1,542 @@
+[
+  {
+    "name": "King",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "King",
+    "confidence": 90,
+    "notes": ".eps file, vector asset",
+    "_source_name": "King",
+    "_batch_index": 14520
+  },
+  {
+    "name": "king_poster",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "King Poster",
+    "confidence": 90,
+    "notes": ".psd poster file",
+    "_source_name": "king_poster",
+    "_batch_index": 14521
+  },
+  {
+    "name": "kingkongsounds",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "King Kong Sounds",
+    "confidence": 75,
+    "notes": ".psd file, likely a poster or flyer",
+    "_source_name": "kingkongsounds",
+    "_batch_index": 14522
+  },
+  {
+    "name": "Kizomba",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Kizomba",
+    "confidence": 75,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "Kizomba",
+    "_batch_index": 14523
+  },
+  {
+    "name": "Kloof",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Kloof",
+    "confidence": 75,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "Kloof",
+    "_batch_index": 14524
+  },
+  {
+    "name": "knock slowly so we have time to put on pants",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Knock Slowly So We Have Time To Put On Pants",
+    "confidence": 90,
+    "notes": ".eps vector file",
+    "_source_name": "knock slowly so we have time to put on pants",
+    "_batch_index": 14525
+  },
+  {
+    "name": "Knockouts_Layout_1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 1",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_1",
+    "_batch_index": 14526
+  },
+  {
+    "name": "Knockouts_Layout_10",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 10",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_10",
+    "_batch_index": 14527
+  },
+  {
+    "name": "Knockouts_Layout_11",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 11",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_11",
+    "_batch_index": 14528
+  },
+  {
+    "name": "Knockouts_Layout_12",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 12",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_12",
+    "_batch_index": 14529
+  },
+  {
+    "name": "Knockouts_Layout_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 2",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_2",
+    "_batch_index": 14530
+  },
+  {
+    "name": "Knockouts_Layout_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 3",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_3",
+    "_batch_index": 14531
+  },
+  {
+    "name": "Knockouts_Layout_4",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 4",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_4",
+    "_batch_index": 14532
+  },
+  {
+    "name": "Knockouts_Layout_5",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 5",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_5",
+    "_batch_index": 14533
+  },
+  {
+    "name": "Knockouts_Layout_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 6",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_6",
+    "_batch_index": 14534
+  },
+  {
+    "name": "Knockouts_Layout_7",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 7",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_7",
+    "_batch_index": 14535
+  },
+  {
+    "name": "Knockouts_Layout_8",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 8",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_8",
+    "_batch_index": 14536
+  },
+  {
+    "name": "Knockouts_Layout_9",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knockouts Layout 9",
+    "confidence": 85,
+    "notes": ".psd layout file, likely a print design",
+    "_source_name": "Knockouts_Layout_9",
+    "_batch_index": 14537
+  },
+  {
+    "name": "Knowing your Purpose Backdrop",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Knowing Your Purpose Backdrop",
+    "confidence": 80,
+    "notes": ".psd backdrop file, likely a print design",
+    "_source_name": "Knowing your Purpose Backdrop",
+    "_batch_index": 14538
+  },
+  {
+    "name": "KYLE ELEKTRON Flyer Template",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "KYLE ELEKTRON Flyer Template",
+    "confidence": 95,
+    "notes": ".psd flyer template",
+    "_source_name": "KYLE ELEKTRON Flyer Template",
+    "_batch_index": 14539
+  },
+  {
+    "name": "L",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "L",
+    "confidence": 70,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "L",
+    "_batch_index": 14540
+  },
+  {
+    "name": "L1",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "L1",
+    "confidence": 70,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "L1",
+    "_batch_index": 14541
+  },
+  {
+    "name": "l1_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "L1_2",
+    "confidence": 70,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "l1_2",
+    "_batch_index": 14542
+  },
+  {
+    "name": "L2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "L2",
+    "confidence": 70,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "L2",
+    "_batch_index": 14543
+  },
+  {
+    "name": "l2_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "L2_2",
+    "confidence": 70,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "l2_2",
+    "_batch_index": 14544
+  },
+  {
+    "name": "L88",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "L88",
+    "confidence": 90,
+    "notes": ".eps vector file",
+    "_source_name": "L88",
+    "_batch_index": 14545
+  },
+  {
+    "name": "L88a",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "L88a",
+    "confidence": 90,
+    "notes": ".eps vector file",
+    "_source_name": "L88a",
+    "_batch_index": 14546
+  },
+  {
+    "name": "L88b",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "L88b",
+    "confidence": 90,
+    "notes": ".eps vector file",
+    "_source_name": "L88b",
+    "_batch_index": 14547
+  },
+  {
+    "name": "L89",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "L89",
+    "confidence": 90,
+    "notes": ".eps vector file",
+    "_source_name": "L89",
+    "_batch_index": 14548
+  },
+  {
+    "name": "L89a",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "L89a",
+    "confidence": 90,
+    "notes": ".eps vector file",
+    "_source_name": "L89a",
+    "_batch_index": 14549
+  },
+  {
+    "name": "L89b",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "L89b",
+    "confidence": 90,
+    "notes": ".eps vector file",
+    "_source_name": "L89b",
+    "_batch_index": 14550
+  },
+  {
+    "name": "LA Sunset PSD Flyer Template_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "LA Sunset PSD Flyer Template 3",
+    "confidence": 95,
+    "notes": ".psd flyer template",
+    "_source_name": "LA Sunset PSD Flyer Template_3",
+    "_batch_index": 14551
+  },
+  {
+    "name": "Label_Option1_B&P_White_Background",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Label Option 1 B&P White Background",
+    "confidence": 85,
+    "notes": ".psd label design, print asset",
+    "_source_name": "Label_Option1_B&P_White_Background",
+    "_batch_index": 14552
+  },
+  {
+    "name": "Label_Option1_B&R_White_Background",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Label Option 1 B&R White Background",
+    "confidence": 85,
+    "notes": ".psd label design, print asset",
+    "_source_name": "Label_Option1_B&R_White_Background",
+    "_batch_index": 14553
+  },
+  {
+    "name": "Label_Option1_B&W_White_Background",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Label Option 1 B&W White Background",
+    "confidence": 85,
+    "notes": ".psd label design, print asset",
+    "_source_name": "Label_Option1_B&W_White_Background",
+    "_batch_index": 14554
+  },
+  {
+    "name": "Label_Option2_B&P_Stitches",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Label Option 2 B&P Stitches",
+    "confidence": 85,
+    "notes": ".psd label design, print asset",
+    "_source_name": "Label_Option2_B&P_Stitches",
+    "_batch_index": 14555
+  },
+  {
+    "name": "Label_Option2_B&R_Stitches",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Label Option 2 B&R Stitches",
+    "confidence": 85,
+    "notes": ".psd label design, print asset",
+    "_source_name": "Label_Option2_B&R_Stitches",
+    "_batch_index": 14556
+  },
+  {
+    "name": "Label_Option2_B&W_Stitches",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Label Option 2 B&W Stitches",
+    "confidence": 85,
+    "notes": ".psd label design, print asset",
+    "_source_name": "Label_Option2_B&W_Stitches",
+    "_batch_index": 14557
+  },
+  {
+    "name": "labor & belivery nurse",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "Labor & Delivery Nurse",
+    "confidence": 90,
+    "notes": ".eps vector file",
+    "_source_name": "labor & belivery nurse",
+    "_batch_index": 14558
+  },
+  {
+    "name": "Labor Day Flyer Template PSD",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Labor Day Flyer Template PSD",
+    "confidence": 95,
+    "notes": ".psd flyer template",
+    "_source_name": "Labor Day Flyer Template PSD",
+    "_batch_index": 14559
+  },
+  {
+    "name": "Labor Day Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Labor Day Flyer",
+    "confidence": 95,
+    "notes": ".psd flyer",
+    "_source_name": "Labor Day Flyer",
+    "_batch_index": 14560
+  },
+  {
+    "name": "Labor Day Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Labor Day Flyer 2",
+    "confidence": 95,
+    "notes": ".psd flyer",
+    "_source_name": "Labor Day Flyer_2",
+    "_batch_index": 14561
+  },
+  {
+    "name": "Laboratory - Flyer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Laboratory Flyer 2",
+    "confidence": 95,
+    "notes": ".psd flyer",
+    "_source_name": "Laboratory - Flyer_2",
+    "_batch_index": 14562
+  },
+  {
+    "name": "Laboratory - Flyer_3",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Laboratory Flyer 3",
+    "confidence": 95,
+    "notes": ".psd flyer",
+    "_source_name": "Laboratory - Flyer_3",
+    "_batch_index": 14563
+  },
+  {
+    "name": "Laboratory - Flyer_6",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Laboratory Flyer 6",
+    "confidence": 95,
+    "notes": ".psd flyer",
+    "_source_name": "Laboratory - Flyer_6",
+    "_batch_index": 14564
+  },
+  {
+    "name": "Laboratory - Flyer_8",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Laboratory Flyer 8",
+    "confidence": 95,
+    "notes": ".psd flyer",
+    "_source_name": "Laboratory - Flyer_8",
+    "_batch_index": 14565
+  },
+  {
+    "name": "Labour Day Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Labour Day Flyer",
+    "confidence": 95,
+    "notes": ".psd flyer",
+    "_source_name": "Labour Day Flyer",
+    "_batch_index": 14566
+  },
+  {
+    "name": "Lag BaOmer_2",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Lag BaOmer 2",
+    "confidence": 80,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "Lag BaOmer_2",
+    "_batch_index": 14567
+  },
+  {
+    "name": "Lagoon_g_2019",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Lagoon G 2019",
+    "confidence": 75,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "Lagoon_g_2019",
+    "_batch_index": 14568
+  },
+  {
+    "name": "LALALU",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "LALALU",
+    "confidence": 75,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "LALALU",
+    "_batch_index": 14569
+  },
+  {
+    "name": "Lamp",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Lamp",
+    "confidence": 70,
+    "notes": ".psd file, likely a flyer or poster",
+    "_source_name": "Lamp",
+    "_batch_index": 14570
+  },
+  {
+    "name": "Laptop - shutterstock_35857927",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Laptop Shutterstock 35857927",
+    "confidence": 90,
+    "notes": ".psd laptop mockup",
+    "_source_name": "Laptop - shutterstock_35857927",
+    "_batch_index": 14571
+  },
+  {
+    "name": "laptop front close",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Laptop Front Close",
+    "confidence": 90,
+    "notes": ".psd laptop mockup",
+    "_source_name": "laptop front close",
+    "_batch_index": 14572
+  },
+  {
+    "name": "laptop front",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Laptop Front",
+    "confidence": 90,
+    "notes": ".psd laptop mockup",
+    "_source_name": "laptop front",
+    "_batch_index": 14573
+  },
+  {
+    "name": "laptop left side close",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Laptop Left Side Close",
+    "confidence": 90,
+    "notes": ".psd laptop mockup",
+    "_source_name": "laptop left side close",
+    "_batch_index": 14574
+  },
+  {
+    "name": "laptop left side open",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Laptop Left Side Open",
+    "confidence": 90,
+    "notes": ".psd laptop mockup",
+    "_source_name": "laptop left side open",
+    "_batch_index": 14575
+  },
+  {
+    "name": "laptop right side close",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Laptop Right Side Close",
+    "confidence": 90,
+    "notes": ".psd laptop mockup",
+    "_source_name": "laptop right side close",
+    "_batch_index": 14576
+  },
+  {
+    "name": "laptop right side open",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Laptop Right Side Open",
+    "confidence": 90,
+    "notes": ".psd laptop mockup",
+    "_source_name": "laptop right side open",
+    "_batch_index": 14577
+  },
+  {
+    "name": "Laptop",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Laptop",
+    "confidence": 90,
+    "notes": ".psd laptop mockup",
+    "_source_name": "Laptop",
+    "_batch_index": 14578
+  },
+  {
+    "name": "large-styles",
+    "category": "Photoshop - Styles & Layer Effects",
+    "clean_name": "Large Styles",
+    "confidence": 85,
+    "notes": ".psd file, likely layer styles",
+    "_source_name": "large-styles",
+    "_batch_index": 14579
+  }
+]
