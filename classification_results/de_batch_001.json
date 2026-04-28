@@ -1,0 +1,164 @@
+[
+  {
+    "name": "Backgrounds",
+    "category": "Photoshop - Patterns & Textures",
+    "clean_name": "Backgrounds",
+    "confidence": 90,
+    "notes": "Legacy category 'Backgrounds' maps to Photoshop - Patterns & Textures; contains .psd and .jpg files.",
+    "_source_name": "Backgrounds",
+    "_batch_index": 0
+  },
+  {
+    "name": "Banners",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Banners",
+    "confidence": 80,
+    "notes": "Legacy category 'Banners' suggests print design; .psd files indicate Photoshop source.",
+    "_source_name": "Banners",
+    "_batch_index": 1
+  },
+  {
+    "name": "Business Cards",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Business Cards",
+    "confidence": 95,
+    "notes": "Legacy category 'Business Cards' directly matches Print - Business Cards & Stationery.",
+    "_source_name": "Business Cards",
+    "_batch_index": 2
+  },
+  {
+    "name": "Buttons",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Buttons",
+    "confidence": 75,
+    "notes": "Legacy category 'Buttons' with .psd files; likely UI elements, but no specific UI kit category; fits Photoshop templates.",
+    "_source_name": "Buttons",
+    "_batch_index": 3
+  },
+  {
+    "name": "Cards",
+    "category": "Print - Business Cards & Stationery",
+    "clean_name": "Cards",
+    "confidence": 85,
+    "notes": "Legacy category 'Cards' and contains hint shows business card fronts/backs; .ai/.eps/.psd files.",
+    "_source_name": "Cards",
+    "_batch_index": 4
+  },
+  {
+    "name": "Cover Action Pro v1.3, v2.0 and v2.5",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Cover Action Pro v1.3, v2.0 and v2.5",
+    "confidence": 90,
+    "notes": "Legacy category name implies Photoshop actions for covers; .txt files likely contain instructions.",
+    "_source_name": "Cover Action Pro v1.3, v2.0 and v2.5",
+    "_batch_index": 5
+  },
+  {
+    "name": "CoverActionPro-rar-2008-Bandit",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "CoverActionPro rar 2008 Bandit",
+    "confidence": 85,
+    "notes": "Legacy category similar to above; .nfo file suggests release info for Photoshop action pack.",
+    "_source_name": "CoverActionPro-rar-2008-Bandit",
+    "_batch_index": 6
+  },
+  {
+    "name": "Facebook Covers",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Facebook Covers",
+    "confidence": 80,
+    "notes": "Social media cover templates; .jpg and .txt files; likely Photoshop templates.",
+    "_source_name": "Facebook Covers",
+    "_batch_index": 7
+  },
+  {
+    "name": "Indesign",
+    "category": "Print - Brochures & Books",
+    "clean_name": "InDesign",
+    "confidence": 70,
+    "notes": "Legacy category 'Indesign' with .indd files; likely print layout templates, best fit under Brochures & Books.",
+    "_source_name": "Indesign",
+    "_batch_index": 8
+  },
+  {
+    "name": "Infographics",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "Infographics",
+    "confidence": 85,
+    "notes": "Legacy category 'Infographics'; contains .psd and .zip with PowerPoint infographics; but AE category is more specific for motion infographics.",
+    "_source_name": "Infographics",
+    "_batch_index": 9
+  },
+  {
+    "name": "Isolated Food Items",
+    "category": "Stock Photos - Food & Drink",
+    "clean_name": "Isolated Food Items",
+    "confidence": 90,
+    "notes": "Legacy category 'Isolated Food Items' with .jpg and .psd; clearly stock photos of food.",
+    "_source_name": "Isolated Food Items",
+    "_batch_index": 10
+  },
+  {
+    "name": "JuiceDrops",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Juice Drops",
+    "confidence": 75,
+    "notes": "Legacy category 'JuiceDrops' with .psd files; likely liquid splash overlays or effects.",
+    "_source_name": "JuiceDrops",
+    "_batch_index": 11
+  },
+  {
+    "name": "Main File Editorial Template Bundle",
+    "category": "Print - Brochures & Books",
+    "clean_name": "Main File Editorial Template Bundle",
+    "confidence": 80,
+    "notes": "Legacy category with .pdf files; editorial templates suggest print layout for magazines/books.",
+    "_source_name": "Main File Editorial Template Bundle",
+    "_batch_index": 12
+  },
+  {
+    "name": "Polaroid Photo Template",
+    "category": "Photoshop - Mockups",
+    "clean_name": "Polaroid Photo Template",
+    "confidence": 85,
+    "notes": "Legacy category 'Polaroid Photo Template' with .jpg and .psd; clearly a mockup template.",
+    "_source_name": "Polaroid Photo Template",
+    "_batch_index": 13
+  },
+  {
+    "name": "Print Inspiration Pack 7200 images",
+    "category": "Print - Other",
+    "clean_name": "Print Inspiration Pack 7200 images",
+    "confidence": 80,
+    "notes": "Legacy category 'Print Inspiration Pack' with images; reference/inspiration collection for print design.",
+    "_source_name": "Print Inspiration Pack 7200 images",
+    "_batch_index": 14
+  },
+  {
+    "name": "Ribbons",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Ribbons",
+    "confidence": 75,
+    "notes": "Legacy category 'Ribbons' with .psd files; contains stickers/ribbons/badges, likely editable templates.",
+    "_source_name": "Ribbons",
+    "_batch_index": 15
+  },
+  {
+    "name": "The Big Bundle - Photoshop Brushes & Elements",
+    "category": "Photoshop - Brushes",
+    "clean_name": "The Big Bundle - Photoshop Brushes & Elements",
+    "confidence": 95,
+    "notes": "Legacy category explicitly says 'Photoshop Brushes & Elements'.",
+    "_source_name": "The Big Bundle - Photoshop Brushes & Elements",
+    "_batch_index": 16
+  },
+  {
+    "name": "Titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Titles",
+    "confidence": 90,
+    "notes": "Legacy category 'Titles' with .aep and .mogrt files; contains After Effects title animations.",
+    "_source_name": "Titles",
+    "_batch_index": 17
+  }
+]

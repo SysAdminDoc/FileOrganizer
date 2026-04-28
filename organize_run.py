@@ -23,7 +23,7 @@ Known edge cases handled:
 import os, sys, json, shutil, re, argparse, subprocess, sqlite3
 from pathlib import Path
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DEST_PRIMARY     = r'G:\Organized'
@@ -118,7 +118,7 @@ def journal_record(src: str, dest: str, disk_name: str,
         "INSERT INTO moves (src, dest, disk_name, clean_name, category, confidence, moved_at) "
         "VALUES (?,?,?,?,?,?,?)",
         (src, dest, disk_name, clean_name, category, confidence,
-         datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'))
+         datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'))
     )
     con.commit()
     con.close()
@@ -173,7 +173,7 @@ def undo_moves(last_n: int = 0, dry_run: bool = False) -> dict:
                 robust_move(src, dest)
                 con.execute(
                     "UPDATE moves SET undone_at=? WHERE id=?",
-                    (datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'), row['id'])
+                    (datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), row['id'])
                 )
                 con.commit()
                 reversed_n += 1
@@ -196,6 +196,8 @@ def load_index_for_source(source_mode: str) -> list:
         path = os.path.join(os.path.dirname(__file__), 'design_org_index.json')
     elif source_mode == 'loose_files':
         path = os.path.join(os.path.dirname(__file__), 'loose_files_index.json')
+    elif source_mode == 'design_elements':
+        path = os.path.join(os.path.dirname(__file__), 'design_elements_index.json')
     else:
         path = INDEX_FILE
     if not os.path.exists(path):
@@ -224,6 +226,9 @@ def batch_offset(filename: str, source_mode: str = 'ae') -> int:
     """
     stem = Path(filename).stem
     if stem.startswith('design_org_batch_'):
+        n = int(stem.split('_')[-1])
+        return (n - 1) * DESIGN_BATCH_SIZE
+    elif stem.startswith('de_batch_'):
         n = int(stem.split('_')[-1])
         return (n - 1) * DESIGN_BATCH_SIZE
     elif stem.startswith('loose_batch_'):
@@ -380,10 +385,11 @@ def load_one(path: str) -> list:
 def load_all_with_index(source_mode: str = 'ae') -> list:
     """
     Returns list of (classified_item, index_entry) tuples.
-    source_mode='ae'          → batch_NNN.json + unorg_batch_NNN.json → org_index.json
-    source_mode='design'      → design_batch_NNN.json → design_unorg_index.json
-    source_mode='design_org'  → design_org_batch_NNN.json → design_org_index.json
-    source_mode='loose_files' → loose_batch_NNN.json → loose_files_index.json
+    source_mode='ae'              → batch_NNN.json + unorg_batch_NNN.json → org_index.json
+    source_mode='design'          → design_batch_NNN.json → design_unorg_index.json
+    source_mode='design_org'      → design_org_batch_NNN.json → design_org_index.json
+    source_mode='loose_files'     → loose_batch_NNN.json → loose_files_index.json
+    source_mode='design_elements' → de_batch_NNN.json → design_elements_index.json
     """
     org = load_index_for_source(source_mode)
     pairs = []
@@ -394,13 +400,15 @@ def load_all_with_index(source_mode: str = 'ae') -> list:
         glob_pattern = 'design_org_batch_*.json'
     elif source_mode == 'loose_files':
         glob_pattern = 'loose_batch_*.json'
+    elif source_mode == 'design_elements':
+        glob_pattern = 'de_batch_*.json'
     else:
         glob_pattern = '*.json'
 
     for p in sorted(Path(RESULTS_DIR).glob(glob_pattern)):
         stem = p.stem
-        # In AE mode, skip design/org/loose batch files
-        if source_mode == 'ae' and stem.startswith(('design_batch_', 'design_org_batch_', 'loose_batch_')):
+        # In AE mode, skip design/org/loose/de batch files
+        if source_mode == 'ae' and stem.startswith(('design_batch_', 'design_org_batch_', 'loose_batch_', 'de_batch_')):
             continue
         # In design mode, only design_batch files
         if source_mode == 'design' and not stem.startswith('design_batch_'):
@@ -410,6 +418,9 @@ def load_all_with_index(source_mode: str = 'ae') -> list:
             continue
         # In loose_files mode, only loose_batch files
         if source_mode == 'loose_files' and not stem.startswith('loose_batch_'):
+            continue
+        # In design_elements mode, only de_batch files
+        if source_mode == 'design_elements' and not stem.startswith('de_batch_'):
             continue
 
         items = load_one(str(p))
@@ -664,8 +675,8 @@ def main():
     ap.add_argument('--undo-all',      action='store_true',   help='Reverse ALL moves from journal')
     ap.add_argument('--load',          type=str,            help='Single JSON file (skips position mapping)')
     ap.add_argument('--source',        type=str, default='ae',
-                    choices=['ae', 'design', 'design_org', 'loose_files'],
-                    help='Source mode: ae (default), design, design_org, or loose_files')
+                    choices=['ae', 'design', 'design_org', 'loose_files', 'design_elements'],
+                    help='Source mode: ae (default), design, design_org, loose_files, or design_elements')
     ap.add_argument('--stats',         action='store_true', help='Show batch file counts')
     ap.add_argument('--summary',       action='store_true', help='Category/marketplace breakdown')
     ap.add_argument('--quiet',         action='store_true', help='Suppress per-item output')
@@ -720,9 +731,10 @@ def main():
 
     # Determine source directory override per mode
     _SOURCE_DIRS = {
-        'design':      r'G:\Design Unorganized',
-        'design_org':  r'G:\Design Organized',
-        'loose_files': r'G:\Design Unorganized',
+        'design':           r'G:\Design Unorganized',
+        'design_org':       r'G:\Design Organized',
+        'loose_files':      r'G:\Design Unorganized',
+        'design_elements':  r'G:\Design Organized\Design Elements',
     }
     source_dir_override = _SOURCE_DIRS.get(source_mode, '')
 
