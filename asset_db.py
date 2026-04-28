@@ -48,6 +48,14 @@ PROJECT_EXTS = frozenset({
 
 DB_VERSION = 1
 
+# Image extensions used when scanning for preview thumbnails
+_PREVIEW_EXTS = frozenset({'.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp'})
+# Priority-ordered patterns that identify a "preview" image within a template folder
+_PREVIEW_PATTERNS = re.compile(
+    r'(preview|thumbnail|thumb|promo|poster|cover|banner|main|hero|featured)',
+    re.IGNORECASE
+)
+
 # ── Schema ──────────────────────────────────────────────────────────────────────
 _SCHEMA = """
 PRAGMA journal_mode = WAL;
@@ -69,6 +77,7 @@ CREATE TABLE IF NOT EXISTS assets (
     total_bytes        INTEGER DEFAULT 0,
     skipped_bytes      INTEGER DEFAULT 0,
     folder_fingerprint TEXT UNIQUE,
+    preview_image      TEXT,
     added_at           TEXT NOT NULL,
     updated_at         TEXT NOT NULL
 );
@@ -109,6 +118,42 @@ def init_db(db_path: str = DB_FILE) -> sqlite3.Connection:
 
 def _now() -> str:
     return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def find_preview_image(folder_path: str) -> str | None:
+    """
+    Locate the best preview/thumbnail image inside a template folder.
+    Scoring: named-preview images > images in root dir > largest image anywhere.
+    Returns relative path from folder_path, or None.
+    """
+    root    = Path(folder_path)
+    scored  = []
+
+    for fpath in root.rglob('*'):
+        if not fpath.is_file():
+            continue
+        if fpath.suffix.lower() not in _PREVIEW_EXTS:
+            continue
+        try:
+            size = fpath.stat().st_size
+        except OSError:
+            continue
+
+        rel   = fpath.relative_to(root).as_posix()
+        depth = len(fpath.relative_to(root).parts) - 1   # 0 = root dir
+
+        # Prefer: preview-named > root-level > large file
+        name_score = 100 if _PREVIEW_PATTERNS.search(fpath.stem) else 0
+        depth_pen  = depth * 20   # penalize depth
+        size_bonus = min(50, size // 10_000)  # up to +50 for larger files
+
+        score = name_score - depth_pen + size_bonus
+        scored.append((score, rel))
+
+    if not scored:
+        return None
+    scored.sort(key=lambda x: -x[0])
+    return scored[0][1]
 
 
 def hash_file(path: str) -> str | None:
@@ -293,15 +338,18 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
         conf        = meta.get('confidence', 0)
         disk_name   = meta.get('disk_name', '')
 
+        # Find best preview image
+        preview_rel = find_preview_image(asset_path)
+
         if existing:
             # Update existing record
             con.execute("""
                 UPDATE assets SET
                     file_count=?, total_bytes=?, skipped_bytes=?, folder_fingerprint=?,
-                    marketplace=?, confidence=?, disk_name=?, updated_at=?
+                    marketplace=?, confidence=?, disk_name=?, preview_image=?, updated_at=?
                 WHERE id=?
             """, (disk_file_count, total_bytes, skipped_bytes, fp,
-                  marketplace, conf, disk_name, now, existing['id']))
+                  marketplace, conf, disk_name, preview_rel, now, existing['id']))
             asset_id = existing['id']
             # Remove old file rows and re-insert
             con.execute("DELETE FROM asset_files WHERE asset_id=?", (asset_id,))
@@ -311,10 +359,11 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
                 INSERT INTO assets
                     (clean_name, category, marketplace, confidence, disk_name,
                      file_count, total_bytes, skipped_bytes, folder_fingerprint,
-                     added_at, updated_at)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?)
+                     preview_image, added_at, updated_at)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
             """, (clean_name, category, marketplace, conf, disk_name,
-                  disk_file_count, total_bytes, skipped_bytes, fp, now, now))
+                  disk_file_count, total_bytes, skipped_bytes, fp,
+                  preview_rel, now, now))
             asset_id = cur.lastrowid
             added += 1
 
@@ -438,16 +487,17 @@ def lookup_folder(folder_path: str, db_path: str = DB_FILE) -> dict | None:
 def _match_result(row, match_type: str, confidence: int,
                   matched: int, total: int, score: float = 1.0) -> dict:
     return {
-        'match_type':   match_type,
-        'confidence':   confidence,
-        'clean_name':   row['clean_name'],
-        'category':     row['category'],
-        'marketplace':  row['marketplace'] or '',
-        'disk_name':    row['disk_name'] or '',
-        'score':        round(score, 3),
+        'match_type':    match_type,
+        'confidence':    confidence,
+        'clean_name':    row['clean_name'],
+        'category':      row['category'],
+        'marketplace':   row['marketplace'] or '',
+        'disk_name':     row['disk_name'] or '',
+        'preview_image': row['preview_image'] or '',
+        'score':         round(score, 3),
         'matched_files': matched,
-        'total_files':  total,
-        'asset_id':     row['id'],
+        'total_files':   total,
+        'asset_id':      row['id'],
     }
 
 
@@ -489,6 +539,9 @@ def export_json(db_path: str = DB_FILE, output_path: str = EXPORT_FILE) -> int:
             'confidence':         asset['confidence'],
             'disk_name':          asset['disk_name'] or '',
             'file_count':         asset['file_count'],
+            'total_bytes':        asset['total_bytes'],
+            'folder_fingerprint': asset['folder_fingerprint'],
+            'preview_image':      asset['preview_image'] or '',
             'total_bytes':        asset['total_bytes'],
             'folder_fingerprint': asset['folder_fingerprint'],
             'added_at':           asset['added_at'],
