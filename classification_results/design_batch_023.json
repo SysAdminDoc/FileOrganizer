@@ -1,0 +1,545 @@
+[
+  {
+    "name": "AE Global Renamer v2.3.8",
+    "category": "Plugins & Extensions",
+    "clean_name": "AE Global Renamer",
+    "confidence": 90,
+    "notes": "AE plugin/script for renaming layers",
+    "_source_name": "AE Global Renamer v2.3.8",
+    "_batch_index": 1320
+  },
+  {
+    "name": "AE plug-in memleak 1.0.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "AE plug-in memleak",
+    "confidence": 90,
+    "notes": "AE plugin",
+    "_source_name": "AE plug-in memleak 1.0.1",
+    "_batch_index": 1321
+  },
+  {
+    "name": "Ae-simple-counter-presets-1414945",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "AE Simple Counter Presets",
+    "confidence": 85,
+    "notes": "AE presets for counter animation",
+    "_source_name": "Ae-simple-counter-presets-1414945",
+    "_batch_index": 1322
+  },
+  {
+    "name": "AEjuice - NeonMind AI Full Version",
+    "category": "Plugins & Extensions",
+    "clean_name": "AEjuice NeonMind AI",
+    "confidence": 85,
+    "notes": "AE plugin/extension",
+    "_source_name": "AEjuice - NeonMind AI Full Version",
+    "_batch_index": 1323
+  },
+  {
+    "name": "AEJuice Text Animation Presets",
+    "category": "After Effects - Preset Pack",
+    "clean_name": "AEJuice Text Animation Presets",
+    "confidence": 90,
+    "notes": "AE text animation presets",
+    "_source_name": "AEJuice Text Animation Presets",
+    "_batch_index": 1324
+  },
+  {
+    "name": "Aep_to_Mogrt_Pro_v2.1_(WIN_MAC)",
+    "category": "Plugins & Extensions",
+    "clean_name": "AEP to MOGRT Pro",
+    "confidence": 90,
+    "notes": "AE script to convert .aep to .mogrt",
+    "_source_name": "Aep_to_Mogrt_Pro_v2.1_(WIN_MAC)",
+    "_batch_index": 1325
+  },
+  {
+    "name": "aep_version_updater_v.1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "AEP Version Updater",
+    "confidence": 85,
+    "notes": "AE script for version updating",
+    "_source_name": "aep_version_updater_v.1.0",
+    "_batch_index": 1326
+  },
+  {
+    "name": "aerochrome-infrared-luts-50850158",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Aerochrome Infrared LUTs",
+    "confidence": 95,
+    "notes": "LUTs in name",
+    "_source_name": "aerochrome-infrared-luts-50850158",
+    "_batch_index": 1327
+  },
+  {
+    "name": "Aescripts AutoFill v2.0.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Aescripts AutoFill",
+    "confidence": 90,
+    "notes": "AE script/plugin",
+    "_source_name": "Aescripts AutoFill v2.0.0",
+    "_batch_index": 1328
+  },
+  {
+    "name": "AEScripts BeatEdit v1.2.002 for DaVinci Resolve",
+    "category": "Plugins & Extensions",
+    "clean_name": "BeatEdit for DaVinci Resolve",
+    "confidence": 90,
+    "notes": "Plugin for DaVinci Resolve",
+    "_source_name": "AEScripts BeatEdit v1.2.002 for DaVinci Resolve",
+    "_batch_index": 1329
+  },
+  {
+    "name": "Aescripts Mask Prompter v1.4.5",
+    "category": "Plugins & Extensions",
+    "clean_name": "Aescripts Mask Prompter",
+    "confidence": 90,
+    "notes": "AE script/plugin",
+    "_source_name": "Aescripts Mask Prompter v1.4.5",
+    "_batch_index": 1330
+  },
+  {
+    "name": "Aescripts SpeedX v1.1.3",
+    "category": "Plugins & Extensions",
+    "clean_name": "Aescripts SpeedX",
+    "confidence": 90,
+    "notes": "AE script/plugin",
+    "_source_name": "Aescripts SpeedX v1.1.3",
+    "_batch_index": 1331
+  },
+  {
+    "name": "Aescripts_AI_Color_Match_v1.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "AI Color Match",
+    "confidence": 85,
+    "notes": "AE script for color matching",
+    "_source_name": "Aescripts_AI_Color_Match_v1.1",
+    "_batch_index": 1332
+  },
+  {
+    "name": "AEScripts_BeatEdit_v2.2.001",
+    "category": "Plugins & Extensions",
+    "clean_name": "BeatEdit",
+    "confidence": 90,
+    "notes": "AE script/plugin",
+    "_source_name": "AEScripts_BeatEdit_v2.2.001",
+    "_batch_index": 1333
+  },
+  {
+    "name": "AEscripts_Crazy_Shapes_1.1.3",
+    "category": "Plugins & Extensions",
+    "clean_name": "Crazy Shapes",
+    "confidence": 90,
+    "notes": "AE script/plugin",
+    "_source_name": "AEscripts_Crazy_Shapes_1.1.3",
+    "_batch_index": 1334
+  },
+  {
+    "name": "Aescripts_DeepClear_v1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "DeepClear",
+    "confidence": 85,
+    "notes": "AE script/plugin",
+    "_source_name": "Aescripts_DeepClear_v1.0",
+    "_batch_index": 1335
+  },
+  {
+    "name": "Aescripts_Mask_Prompter_v1.10.6",
+    "category": "Plugins & Extensions",
+    "clean_name": "Mask Prompter",
+    "confidence": 90,
+    "notes": "AE script/plugin",
+    "_source_name": "Aescripts_Mask_Prompter_v1.10.6",
+    "_batch_index": 1336
+  },
+  {
+    "name": "Aescripts_ReTrack_v2.0.7",
+    "category": "Plugins & Extensions",
+    "clean_name": "ReTrack",
+    "confidence": 90,
+    "notes": "AE script/plugin",
+    "_source_name": "Aescripts_ReTrack_v2.0.7",
+    "_batch_index": 1337
+  },
+  {
+    "name": "AEScripts-AutoFill-v1.0-for-AE-INTROHD.NET",
+    "category": "Plugins & Extensions",
+    "clean_name": "AutoFill for AE",
+    "confidence": 90,
+    "notes": "AE script/plugin",
+    "_source_name": "AEScripts-AutoFill-v1.0-for-AE-INTROHD.NET",
+    "_batch_index": 1338
+  },
+  {
+    "name": "AEViewer v1.7-INTRO-HD.NET",
+    "category": "Plugins & Extensions",
+    "clean_name": "AEViewer",
+    "confidence": 90,
+    "notes": "AE viewer plugin/script",
+    "_source_name": "AEViewer v1.7-INTRO-HD.NET",
+    "_batch_index": 1339
+  },
+  {
+    "name": "AEviewer V2.1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "AEviewer",
+    "confidence": 90,
+    "notes": "AE viewer plugin/script",
+    "_source_name": "AEviewer V2.1.0",
+    "_batch_index": 1340
+  },
+  {
+    "name": "AEviewer_V2.1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "AEviewer",
+    "confidence": 90,
+    "notes": "AE viewer plugin/script",
+    "_source_name": "AEviewer_V2.1.0",
+    "_batch_index": 1341
+  },
+  {
+    "name": "after effect",
+    "category": "After Effects - Other",
+    "clean_name": "After Effect",
+    "confidence": 65,
+    "notes": "Generic name, .aep file present",
+    "_source_name": "after effect",
+    "_batch_index": 1342
+  },
+  {
+    "name": "After Effects",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects",
+    "confidence": 70,
+    "notes": "Contains multiple AE projects, mixed categories",
+    "_source_name": "After Effects",
+    "_batch_index": 1343
+  },
+  {
+    "name": "After Effects Files",
+    "category": "After Effects - Other",
+    "clean_name": "After Effects Files",
+    "confidence": 70,
+    "notes": "Contains medical elements, slideshow, logo intro",
+    "_source_name": "After Effects Files",
+    "_batch_index": 1344
+  },
+  {
+    "name": "After Effects Text Animations",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "After Effects Text Animations",
+    "confidence": 80,
+    "notes": "Text animations for AE",
+    "_source_name": "After Effects Text Animations",
+    "_batch_index": 1345
+  },
+  {
+    "name": "after-effects-vintage-film-look-template-in-4k-39610329",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Vintage Film Look Template",
+    "confidence": 85,
+    "notes": "AE template for vintage film look",
+    "_source_name": "after-effects-vintage-film-look-template-in-4k-39610329",
+    "_batch_index": 1346
+  },
+  {
+    "name": "after-the-rain-trailer-titles-27066691",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "After the Rain Trailer Titles",
+    "confidence": 85,
+    "notes": "AE trailer title template",
+    "_source_name": "after-the-rain-trailer-titles-27066691",
+    "_batch_index": 1347
+  },
+  {
+    "name": "AfterEmoji v1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "AfterEmoji",
+    "confidence": 85,
+    "notes": "AE plugin/script for emoji",
+    "_source_name": "AfterEmoji v1.0",
+    "_batch_index": 1348
+  },
+  {
+    "name": "AFY9QVC-Aidownload.net",
+    "category": "Fonts & Typography",
+    "clean_name": "Cracked Font",
+    "confidence": 85,
+    "notes": "Contains .woff2 font file",
+    "_source_name": "AFY9QVC-Aidownload.net",
+    "_batch_index": 1349
+  },
+  {
+    "name": "agent-007-investigation-intro-33877822",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Agent 007 Investigation Intro",
+    "confidence": 85,
+    "notes": "AE intro template",
+    "_source_name": "agent-007-investigation-intro-33877822",
+    "_batch_index": 1350
+  },
+  {
+    "name": "aggressive-trailer-19623726",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Aggressive Trailer",
+    "confidence": 85,
+    "notes": "AE trailer template",
+    "_source_name": "aggressive-trailer-19623726",
+    "_batch_index": 1351
+  },
+  {
+    "name": "agriculture-slideshow-37541093",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Agriculture Slideshow",
+    "confidence": 85,
+    "notes": "AE slideshow template",
+    "_source_name": "agriculture-slideshow-37541093",
+    "_batch_index": 1352
+  },
+  {
+    "name": "ahmya-mobile-and-desktop-lightroom-presets-K3HQZ59",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Ahmya Mobile and Desktop Lightroom Presets",
+    "confidence": 95,
+    "notes": "Lightroom presets",
+    "_source_name": "ahmya-mobile-and-desktop-lightroom-presets-K3HQZ59",
+    "_batch_index": 1353
+  },
+  {
+    "name": "AI",
+    "category": "Illustrator - Vectors & Assets",
+    "clean_name": "AI",
+    "confidence": 85,
+    "notes": "Contains .ai file with gradient webinar post",
+    "_source_name": "AI",
+    "_batch_index": 1354
+  },
+  {
+    "name": "ai-art-gallery-40700636",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "AI Art Gallery",
+    "confidence": 80,
+    "notes": "AE gallery template",
+    "_source_name": "ai-art-gallery-40700636",
+    "_batch_index": 1355
+  },
+  {
+    "name": "ai-chat-gpt-ui-45934455",
+    "category": "Illustrator - Icons & UI Kits",
+    "clean_name": "AI Chat GPT UI",
+    "confidence": 85,
+    "notes": "UI kit likely in AI format",
+    "_source_name": "ai-chat-gpt-ui-45934455",
+    "_batch_index": 1356
+  },
+  {
+    "name": "aicolormatch_v1.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "AI Color Match",
+    "confidence": 80,
+    "notes": "AE script/plugin",
+    "_source_name": "aicolormatch_v1.2",
+    "_batch_index": 1357
+  },
+  {
+    "name": "AIDOWNLOAD",
+    "category": "_Skip",
+    "clean_name": "AIDOWNLOAD",
+    "confidence": 95,
+    "notes": "Only .url file, no content",
+    "_source_name": "AIDOWNLOAD",
+    "_batch_index": 1358
+  },
+  {
+    "name": "AIDOWNLOAD.NET_2001523_PHOTOSHOP_abstract_paint_fx_photoshop_plugin_4509952",
+    "category": "Plugins & Extensions",
+    "clean_name": "Abstract Paint FX Photoshop Plugin",
+    "confidence": 90,
+    "notes": "Photoshop plugin",
+    "_source_name": "AIDOWNLOAD.NET_2001523_PHOTOSHOP_abstract_paint_fx_photoshop_plugin_4509952",
+    "_batch_index": 1359
+  },
+  {
+    "name": "AIDOWNLOAD.NET_2002429_PHOTOSHOP_shadow_photoshop_extension_3934745",
+    "category": "Plugins & Extensions",
+    "clean_name": "Shadow Photoshop Extension",
+    "confidence": 90,
+    "notes": "Photoshop extension (.zxp)",
+    "_source_name": "AIDOWNLOAD.NET_2002429_PHOTOSHOP_shadow_photoshop_extension_3934745",
+    "_batch_index": 1360
+  },
+  {
+    "name": "AIDOWNLOAD.NET_2004269_PHOTOSHOP_palette_knife_photoshop_action_26071394",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Palette Knife Photoshop Action",
+    "confidence": 95,
+    "notes": "Photoshop action (.atn)",
+    "_source_name": "AIDOWNLOAD.NET_2004269_PHOTOSHOP_palette_knife_photoshop_action_26071394",
+    "_batch_index": 1361
+  },
+  {
+    "name": "Aidownload.net_2042996",
+    "category": "Fonts & Typography",
+    "clean_name": "Handwritten Fonts Collection",
+    "confidence": 95,
+    "notes": "Contains font collection",
+    "_source_name": "Aidownload.net_2042996",
+    "_batch_index": 1362
+  },
+  {
+    "name": "Aidownload.net_2798169",
+    "category": "Fonts & Typography",
+    "clean_name": "Huge Typographic Pack 60 Logos",
+    "confidence": 90,
+    "notes": "Typography pack with logos",
+    "_source_name": "Aidownload.net_2798169",
+    "_batch_index": 1363
+  },
+  {
+    "name": "AIDOWNLOAD.NET_5q8wxlk",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Presets",
+    "confidence": 85,
+    "notes": "Contains DNG files (Lightroom presets)",
+    "_source_name": "AIDOWNLOAD.NET_5q8wxlk",
+    "_batch_index": 1364
+  },
+  {
+    "name": "AIDOWNLOAD.NET_63ld6ha",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Photocopy Overlay",
+    "confidence": 80,
+    "notes": "Photocopy effect likely overlay",
+    "_source_name": "AIDOWNLOAD.NET_63ld6ha",
+    "_batch_index": 1365
+  },
+  {
+    "name": "AIDOWNLOAD.NET_6t6kufc",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Presets",
+    "confidence": 85,
+    "notes": "Contains DNG files",
+    "_source_name": "AIDOWNLOAD.NET_6t6kufc",
+    "_batch_index": 1366
+  },
+  {
+    "name": "AIDOWNLOAD.NET_76phe4s",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Photoshop Actions",
+    "confidence": 85,
+    "notes": "Contains help file for Photoshop actions",
+    "_source_name": "AIDOWNLOAD.NET_76phe4s",
+    "_batch_index": 1367
+  },
+  {
+    "name": "AIDOWNLOAD.NET_9m73jaa",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Photoshop Actions & Presets Bundle",
+    "confidence": 92,
+    "notes": "Only instruction.jpg, unclear content",
+    "_source_name": "AIDOWNLOAD.NET_9m73jaa",
+    "_batch_index": 1368,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET_c8k8ujb",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Sketch Paper Torn Overlay",
+    "confidence": 80,
+    "notes": "Contains torn paper jpg, likely overlay",
+    "_source_name": "AIDOWNLOAD.NET_c8k8ujb",
+    "_batch_index": 1369
+  },
+  {
+    "name": "AIDOWNLOAD.NET_ca74en5",
+    "category": "_Skip",
+    "clean_name": "Empty/MACOSX",
+    "confidence": 95,
+    "notes": "Only __MACOSX folder, no real content",
+    "_source_name": "AIDOWNLOAD.NET_ca74en5",
+    "_batch_index": 1370
+  },
+  {
+    "name": "AIDOWNLOAD.NET_dvu6r36",
+    "category": "Cinematic FX & Overlays",
+    "clean_name": "Paper Torn",
+    "confidence": 65,
+    "notes": "Only ReadMe.txt, no content clue",
+    "_source_name": "AIDOWNLOAD.NET_dvu6r36",
+    "_batch_index": 1371,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET_f9ejx2u",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Photoshop Actions",
+    "confidence": 85,
+    "notes": "Contains help file for Photoshop actions",
+    "_source_name": "AIDOWNLOAD.NET_f9ejx2u",
+    "_batch_index": 1372
+  },
+  {
+    "name": "AIDOWNLOAD.NET_kqkdn2w",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Photoshop Action",
+    "confidence": 85,
+    "notes": "Contains Ps Action",
+    "_source_name": "AIDOWNLOAD.NET_kqkdn2w",
+    "_batch_index": 1373
+  },
+  {
+    "name": "AIDOWNLOAD.NET_ktj7yt2",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Broken Wall Overlay",
+    "confidence": 80,
+    "notes": "Contains broken wall.jpg, likely overlay",
+    "_source_name": "AIDOWNLOAD.NET_ktj7yt2",
+    "_batch_index": 1374
+  },
+  {
+    "name": "AIDOWNLOAD.NET_ngqrdep",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Fire Brushes",
+    "confidence": 95,
+    "notes": "Contains .abr brush file",
+    "_source_name": "AIDOWNLOAD.NET_ngqrdep",
+    "_batch_index": 1375
+  },
+  {
+    "name": "AIDOWNLOAD.NET_nk7jfhe",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Engraved Mixed Art PSD",
+    "confidence": 85,
+    "notes": "Contains .psd file",
+    "_source_name": "AIDOWNLOAD.NET_nk7jfhe",
+    "_batch_index": 1376
+  },
+  {
+    "name": "AIDOWNLOAD.NET_qlbwerv",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "How to Install Presets in Lightroom CC Classic Desktop",
+    "confidence": 85,
+    "notes": "Unclear what 'Mobile Version' refers to",
+    "_source_name": "AIDOWNLOAD.NET_qlbwerv",
+    "_batch_index": 1377,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "AIDOWNLOAD.NET_snmrl5n",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Photoshop Action",
+    "confidence": 85,
+    "notes": "Contains Ps Action",
+    "_source_name": "AIDOWNLOAD.NET_snmrl5n",
+    "_batch_index": 1378
+  },
+  {
+    "name": "AIDOWNLOAD.NET_unyrrv7",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Presets",
+    "confidence": 85,
+    "notes": "Contains DNG files",
+    "_source_name": "AIDOWNLOAD.NET_unyrrv7",
+    "_batch_index": 1379
+  }
+]

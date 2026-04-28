@@ -1,0 +1,551 @@
+[
+  {
+    "name": "Knitting Generator v4.0",
+    "category": "Software & Utilities",
+    "clean_name": "Knitting Generator v4.0",
+    "confidence": 95,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "Knitting Generator v4.0",
+    "_batch_index": 4140,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Kodak 2383 Powergrade",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Kodak 2383 Powergrade",
+    "confidence": 90,
+    "notes": "Powergrade implies color grading LUT",
+    "_source_name": "Kodak 2383 Powergrade",
+    "_batch_index": 4141
+  },
+  {
+    "name": "Kodak Film LUT Powergrade - FOR FUJIFILM F-LOG",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Kodak Film LUT Powergrade for Fujifilm F-LOG",
+    "confidence": 95,
+    "notes": "LUT and Powergrade in name",
+    "_source_name": "Kodak Film LUT Powergrade - FOR FUJIFILM F-LOG",
+    "_batch_index": 4142
+  },
+  {
+    "name": "Kraft_Paper_Bakery_Branding_Mockup_6337075",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Kraft Paper Bakery Branding Mockup",
+    "confidence": 90,
+    "notes": "Mockup in name, branding context",
+    "_source_name": "Kraft_Paper_Bakery_Branding_Mockup_6337075",
+    "_batch_index": 4143
+  },
+  {
+    "name": "kraft-paper-spiral-notebook-with-pen-mockup-VYHN7GZ",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Kraft Paper Spiral Notebook with Pen Mockup",
+    "confidence": 90,
+    "notes": "Mockup in name, stationery item",
+    "_source_name": "kraft-paper-spiral-notebook-with-pen-mockup-VYHN7GZ",
+    "_batch_index": 4144
+  },
+  {
+    "name": "kraft-paper-tape-mockups-V7PWLGD",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Kraft Paper Tape Mockups",
+    "confidence": 90,
+    "notes": "Mockup in name, tape is stationery",
+    "_source_name": "kraft-paper-tape-mockups-V7PWLGD",
+    "_batch_index": 4145
+  },
+  {
+    "name": "KraftStationaryMockUp",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Kraft Stationary Mockup",
+    "confidence": 90,
+    "notes": "Mockup in name, stationary",
+    "_source_name": "KraftStationaryMockUp",
+    "_batch_index": 4146
+  },
+  {
+    "name": "l326yv72qeq7",
+    "category": "After Effects - Other",
+    "clean_name": "l326yv72qeq7",
+    "confidence": 65,
+    "notes": "Numeric ID only, contains .jpg and .mp4, no clear title",
+    "_source_name": "l326yv72qeq7",
+    "_batch_index": 4147
+  },
+  {
+    "name": "Landscape-LUT-presets-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Landscape LUT Presets",
+    "confidence": 95,
+    "notes": "LUT in name",
+    "_source_name": "Landscape-LUT-presets-INTRO-HD.NET",
+    "_batch_index": 4148
+  },
+  {
+    "name": "laundry-flyer-K6TDEC",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Laundry Flyer",
+    "confidence": 85,
+    "notes": "Flyer in name",
+    "_source_name": "laundry-flyer-K6TDEC",
+    "_batch_index": 4149
+  },
+  {
+    "name": "lava-trailer-titles",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Lava Trailer Titles",
+    "confidence": 85,
+    "notes": "Trailer titles, likely AE",
+    "_source_name": "lava-trailer-titles",
+    "_batch_index": 4150
+  },
+  {
+    "name": "layermonkey_v1.12",
+    "category": "Plugins & Extensions",
+    "clean_name": "LayerMonkey v1.12",
+    "confidence": 80,
+    "notes": "Likely a plugin/script for AE",
+    "_source_name": "layermonkey_v1.12",
+    "_batch_index": 4151
+  },
+  {
+    "name": "lazy-vintage-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Lazy Vintage Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow in name, likely AE",
+    "_source_name": "lazy-vintage-slideshow",
+    "_batch_index": 4152
+  },
+  {
+    "name": "Learn Adobe After Effects in 1hr Beginners Tutorial",
+    "category": "Tutorial & Education",
+    "clean_name": "Learn Adobe After Effects in 1hr Beginners Tutorial",
+    "confidence": 95,
+    "notes": "Tutorial in name",
+    "_source_name": "Learn Adobe After Effects in 1hr Beginners Tutorial",
+    "_batch_index": 4153
+  },
+  {
+    "name": "Learn-Indie-Filmmaking-by-Making-a-Short-Documentary-Film",
+    "category": "Tutorial & Education",
+    "clean_name": "Learn Indie Filmmaking by Making a Short Documentary Film",
+    "confidence": 95,
+    "notes": "Learn in name, educational",
+    "_source_name": "Learn-Indie-Filmmaking-by-Making-a-Short-Documentary-Film",
+    "_batch_index": 4154
+  },
+  {
+    "name": "Leeming_LUT_Pro_III_DJI_Osmo_Pocket_3",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Leeming LUT Pro III DJI Osmo Pocket 3",
+    "confidence": 95,
+    "notes": "LUT in name",
+    "_source_name": "Leeming_LUT_Pro_III_DJI_Osmo_Pocket_3",
+    "_batch_index": 4155
+  },
+  {
+    "name": "legendary-cinematic-opener-24395572",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Legendary Cinematic Opener",
+    "confidence": 85,
+    "notes": "Cinematic opener, likely AE",
+    "_source_name": "legendary-cinematic-opener-24395572",
+    "_batch_index": 4156
+  },
+  {
+    "name": "Lens Distortions - Finishing LUTS",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Lens Distortions - Finishing LUTS",
+    "confidence": 95,
+    "notes": "LUTS in name",
+    "_source_name": "Lens Distortions - Finishing LUTS",
+    "_batch_index": 4157
+  },
+  {
+    "name": "Lens Distortions - Modern Light Hits",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Lens Distortions - Modern Light Hits",
+    "confidence": 80,
+    "notes": "Light hits likely stock footage overlays",
+    "_source_name": "Lens Distortions - Modern Light Hits",
+    "_batch_index": 4158
+  },
+  {
+    "name": "Lens_Photo_Effect_35055406-AIDOWNLOAD.NET",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Lens Photo Effect",
+    "confidence": 80,
+    "notes": "Photo effect, likely Photoshop overlay",
+    "_source_name": "Lens_Photo_Effect_35055406-AIDOWNLOAD.NET",
+    "_batch_index": 4159
+  },
+  {
+    "name": "lens-flare-gen-2-47508645",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Lens Flare Gen 2",
+    "confidence": 85,
+    "notes": "Lens flare stock footage",
+    "_source_name": "lens-flare-gen-2-47508645",
+    "_batch_index": 4160
+  },
+  {
+    "name": "Lens.Distortions.Premium.Light.Leaks",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Lens Distortions Premium Light Leaks",
+    "confidence": 85,
+    "notes": "Light leaks stock footage",
+    "_source_name": "Lens.Distortions.Premium.Light.Leaks",
+    "_batch_index": 4161
+  },
+  {
+    "name": "leonardo-art-opener37723967",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Leonardo Art Opener",
+    "confidence": 85,
+    "notes": "Opener in name, likely AE",
+    "_source_name": "leonardo-art-opener37723967",
+    "_batch_index": 4162
+  },
+  {
+    "name": "lets-have-a-new-year-party-42110269",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Let's Have a New Year Party",
+    "confidence": 85,
+    "notes": "Party event theme, likely AE",
+    "_source_name": "lets-have-a-new-year-party-42110269",
+    "_batch_index": 4163
+  },
+  {
+    "name": "Levels-LUTs-File",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Levels LUTs File",
+    "confidence": 95,
+    "notes": "LUTs in name",
+    "_source_name": "Levels-LUTs-File",
+    "_batch_index": 4164
+  },
+  {
+    "name": "life-memory-in-the-summer-photo-gallery-38910030",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Life Memory in the Summer Photo Gallery",
+    "confidence": 85,
+    "notes": "Photo gallery in name, likely AE",
+    "_source_name": "life-memory-in-the-summer-photo-gallery-38910030",
+    "_batch_index": 4165
+  },
+  {
+    "name": "Light Leaks",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Light Leaks",
+    "confidence": 85,
+    "notes": "Light leaks stock footage",
+    "_source_name": "Light Leaks",
+    "_batch_index": 4166
+  },
+  {
+    "name": "light-and-dark-intro",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Light and Dark Intro",
+    "confidence": 85,
+    "notes": "Intro in name, likely AE",
+    "_source_name": "light-and-dark-intro",
+    "_batch_index": 4167
+  },
+  {
+    "name": "light-bokeh-dust-particles-color-overlays-52829348",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Light Bokeh Dust Particles Color Overlays",
+    "confidence": 85,
+    "notes": "Overlays stock footage",
+    "_source_name": "light-bokeh-dust-particles-color-overlays-52829348",
+    "_batch_index": 4168
+  },
+  {
+    "name": "light-bokeh-particles-color-overlay-v2-53353761",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Light Bokeh Particles Color Overlay v2",
+    "confidence": 85,
+    "notes": "Overlay stock footage",
+    "_source_name": "light-bokeh-particles-color-overlay-v2-53353761",
+    "_batch_index": 4169
+  },
+  {
+    "name": "light-flash-transitions-overlay-package",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Light Flash Transitions Overlay Package",
+    "confidence": 85,
+    "notes": "Overlay transitions stock footage",
+    "_source_name": "light-flash-transitions-overlay-package",
+    "_batch_index": 4170
+  },
+  {
+    "name": "light-grunge-16289857",
+    "category": "After Effects - Other",
+    "clean_name": "Light Grunge",
+    "confidence": 70,
+    "notes": "Unclear, likely AE or overlay",
+    "_source_name": "light-grunge-16289857",
+    "_batch_index": 4171
+  },
+  {
+    "name": "light-leak-photo-template-Z69ELCC",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Light Leak Photo Template",
+    "confidence": 80,
+    "notes": "Photo template, likely Photoshop",
+    "_source_name": "light-leak-photo-template-Z69ELCC",
+    "_batch_index": 4172
+  },
+  {
+    "name": "light-leaks-and-bokehs-vol-1-9822840",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Light Leaks and Bokehs Vol 1",
+    "confidence": 85,
+    "notes": "Light leaks stock footage",
+    "_source_name": "light-leaks-and-bokehs-vol-1-9822840",
+    "_batch_index": 4173
+  },
+  {
+    "name": "light-leaks-transitions-38786029",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Light Leaks Transitions",
+    "confidence": 85,
+    "notes": "Light leaks transitions stock footage",
+    "_source_name": "light-leaks-transitions-38786029",
+    "_batch_index": 4174
+  },
+  {
+    "name": "light-leaks-transitions-43311023",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Light Leaks Transitions",
+    "confidence": 85,
+    "notes": "Light leaks transitions stock footage",
+    "_source_name": "light-leaks-transitions-43311023",
+    "_batch_index": 4175
+  },
+  {
+    "name": "light-leaks-transitions-52789357",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "Light Leaks Transitions",
+    "confidence": 85,
+    "notes": "Light leaks transitions stock footage",
+    "_source_name": "light-leaks-transitions-52789357",
+    "_batch_index": 4176
+  },
+  {
+    "name": "light-portrait-presets-mobile-and-desktop-WB8XMZ3",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Light Portrait Presets Mobile and Desktop",
+    "confidence": 85,
+    "notes": "Presets for mobile/desktop, likely Lightroom",
+    "_source_name": "light-portrait-presets-mobile-and-desktop-WB8XMZ3",
+    "_batch_index": 4177
+  },
+  {
+    "name": "light-rays",
+    "category": "After Effects - Other",
+    "clean_name": "Light Rays",
+    "confidence": 80,
+    "notes": "Contains .aep, .jsx, likely AE project with script",
+    "_source_name": "light-rays",
+    "_batch_index": 4178
+  },
+  {
+    "name": "lighter-mockup-VE7J349",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Lighter Mockup",
+    "confidence": 85,
+    "notes": "Mockup in name, lighter is a product",
+    "_source_name": "lighter-mockup-VE7J349",
+    "_batch_index": 4179
+  },
+  {
+    "name": "lighter-mockups-8R8QBB",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Lighter Mockups",
+    "confidence": 85,
+    "notes": "Mockup in name",
+    "_source_name": "lighter-mockups-8R8QBB",
+    "_batch_index": 4180
+  },
+  {
+    "name": "lightning-transitions-for-davinci-resolve-32194267 [source]",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Lightning Transitions for DaVinci Resolve",
+    "confidence": 80,
+    "notes": "For DaVinci Resolve, likely LUTs or transitions",
+    "_source_name": "lightning-transitions-for-davinci-resolve-32194267 [source]",
+    "_batch_index": 4181
+  },
+  {
+    "name": "Lightroom+Controls+for+F_X",
+    "category": "Lightroom - Presets & Profiles",
+    "clean_name": "Lightroom Controls for F_X",
+    "confidence": 85,
+    "notes": "Lightroom in name",
+    "_source_name": "Lightroom+Controls+for+F_X",
+    "_batch_index": 4182
+  },
+  {
+    "name": "like-and-subscribe37971002",
+    "category": "After Effects - Social Media",
+    "clean_name": "Like and Subscribe",
+    "confidence": 85,
+    "notes": "Social media call to action, likely AE",
+    "_source_name": "like-and-subscribe37971002",
+    "_batch_index": 4183
+  },
+  {
+    "name": "lines-photoshop-action-G4QYPZ",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Lines Photoshop Action",
+    "confidence": 95,
+    "notes": "Photoshop action in name",
+    "_source_name": "lines-photoshop-action-G4QYPZ",
+    "_batch_index": 4184
+  },
+  {
+    "name": "LINGO PACK V3 DELUXE",
+    "category": "Color Grading & LUTs",
+    "clean_name": "LINGO PACK V3 DELUXE",
+    "confidence": 90,
+    "notes": "Only .jpg and .txt, unclear content",
+    "_source_name": "LINGO PACK V3 DELUXE",
+    "_batch_index": 4185,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "lion-mirage-opener-19282618",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Lion Mirage Opener",
+    "confidence": 85,
+    "notes": "Opener in name, likely AE",
+    "_source_name": "lion-mirage-opener-19282618",
+    "_batch_index": 4186
+  },
+  {
+    "name": "lipsticks-mockup-YG9P7HW",
+    "category": "Mockups - Packaging",
+    "clean_name": "Lipsticks Mockup",
+    "confidence": 85,
+    "notes": "Mockup in name, product packaging",
+    "_source_name": "lipsticks-mockup-YG9P7HW",
+    "_batch_index": 4187
+  },
+  {
+    "name": "LIQUID FX ANIMATION PACK-INTRO-HD.NET",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Liquid FX Animation Pack",
+    "confidence": 85,
+    "notes": "Liquid FX animation, likely AE",
+    "_source_name": "LIQUID FX ANIMATION PACK-INTRO-HD.NET",
+    "_batch_index": 4188
+  },
+  {
+    "name": "liquid-motion-transitions-f_x",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Liquid Motion Transitions",
+    "confidence": 85,
+    "notes": "Liquid transitions, likely AE",
+    "_source_name": "liquid-motion-transitions-f_x",
+    "_batch_index": 4189
+  },
+  {
+    "name": "liquid-opener",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Liquid Opener",
+    "confidence": 85,
+    "notes": "Liquid opener, likely AE",
+    "_source_name": "liquid-opener",
+    "_batch_index": 4190
+  },
+  {
+    "name": "liquid-trails-water-reveal",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Liquid Trails Water Reveal",
+    "confidence": 85,
+    "notes": "Liquid water reveal, likely AE",
+    "_source_name": "liquid-trails-water-reveal",
+    "_batch_index": 4191
+  },
+  {
+    "name": "liquid-transitions-43311285",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Liquid Transitions",
+    "confidence": 90,
+    "notes": "Contains .aep, liquid transitions",
+    "_source_name": "liquid-transitions-43311285",
+    "_batch_index": 4192
+  },
+  {
+    "name": "liquid-transitions-pack-07-f_x",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Liquid Transitions Pack 07",
+    "confidence": 85,
+    "notes": "Liquid transitions pack, likely AE",
+    "_source_name": "liquid-transitions-pack-07-f_x",
+    "_batch_index": 4193
+  },
+  {
+    "name": "list-master-suite-pr-47616555",
+    "category": "Premiere Pro - Templates",
+    "clean_name": "List Master Suite PR",
+    "confidence": 80,
+    "notes": "PR likely Premiere Pro, template",
+    "_source_name": "list-master-suite-pr-47616555",
+    "_batch_index": 4194
+  },
+  {
+    "name": "list-titles-35475242",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "List Titles",
+    "confidence": 85,
+    "notes": "Titles, likely AE",
+    "_source_name": "list-titles-35475242",
+    "_batch_index": 4195
+  },
+  {
+    "name": "list-titles-41498235",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "List Titles",
+    "confidence": 85,
+    "notes": "Titles, likely AE",
+    "_source_name": "list-titles-41498235",
+    "_batch_index": 4196
+  },
+  {
+    "name": "litera-film-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Litera Film Titles",
+    "confidence": 85,
+    "notes": "Film titles, likely AE",
+    "_source_name": "litera-film-titles",
+    "_batch_index": 4197
+  },
+  {
+    "name": "livestream-gaming-youtube-thumbnail-template-KVFLKXM",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Livestream Gaming YouTube Thumbnail Template",
+    "confidence": 85,
+    "notes": "Thumbnail template, likely Photoshop",
+    "_source_name": "livestream-gaming-youtube-thumbnail-template-KVFLKXM",
+    "_batch_index": 4198
+  },
+  {
+    "name": "living-memories-37831114",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Living Memories",
+    "confidence": 80,
+    "notes": "Likely photo gallery slideshow",
+    "_source_name": "living-memories-37831114",
+    "_batch_index": 4199
+  },
+  {
+    "name": "lava-trailer-titles",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Lava Trailer Titles",
+    "confidence": 85,
+    "notes": "Trailer titles, likely AE"
+  }
+]

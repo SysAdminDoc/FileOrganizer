@@ -1,0 +1,542 @@
+[
+  {
+    "name": "22874124-INTRO-HD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "Virtual Studio",
+    "confidence": 65,
+    "notes": "Numeric ID folder, contains hint reveals 'virtual-studio', no clear AE subcategory match",
+    "_source_name": "22874124-INTRO-HD.NET",
+    "_batch_index": 600
+  },
+  {
+    "name": "22883048-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Energy Stomp",
+    "confidence": 80,
+    "notes": "Contains 'energy-stomp-intro', likely an AE intro template",
+    "_source_name": "22883048-INTRO-HD.NET",
+    "_batch_index": 601
+  },
+  {
+    "name": "22921548-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Slideshow",
+    "confidence": 85,
+    "notes": "Contains 'slideshow' in hint",
+    "_source_name": "22921548-INTRO-HD.NET",
+    "_batch_index": 602
+  },
+  {
+    "name": "22944804-stories-generator-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Stories Generator",
+    "confidence": 85,
+    "notes": "Name includes 'stories-generator', likely Instagram/Facebook stories",
+    "_source_name": "22944804-stories-generator-INTRO-HD.NET",
+    "_batch_index": 603
+  },
+  {
+    "name": "22992851-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Shatter Glass Trailer",
+    "confidence": 85,
+    "notes": "Contains 'shatter-glass-trailer'",
+    "_source_name": "22992851-INTRO-HD.NET",
+    "_batch_index": 604
+  },
+  {
+    "name": "22994316-INTRO-HD.NET",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Movie Element Pack",
+    "confidence": 80,
+    "notes": "Contains 'movie-element-pack', generic motion graphics",
+    "_source_name": "22994316-INTRO-HD.NET",
+    "_batch_index": 605
+  },
+  {
+    "name": "22995764-patch-generator-lite-AIDOWNLOAD.NET",
+    "category": "Plugins & Extensions",
+    "clean_name": "Patch Generator Lite",
+    "confidence": 90,
+    "notes": "Name suggests a plugin/generator tool",
+    "_source_name": "22995764-patch-generator-lite-AIDOWNLOAD.NET",
+    "_batch_index": 606
+  },
+  {
+    "name": "22999574-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Elegant Slideshow",
+    "confidence": 85,
+    "notes": "Contains 'elegant-slideshow'",
+    "_source_name": "22999574-INTRO-HD.NET",
+    "_batch_index": 607
+  },
+  {
+    "name": "2300 Animated Typography Pack",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Animated Typography Pack",
+    "confidence": 80,
+    "notes": "Name implies animated typography, .mp4 preview, likely AE",
+    "_source_name": "2300 Animated Typography Pack",
+    "_batch_index": 608
+  },
+  {
+    "name": "2300_Animated_Typography_Pack",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Animated Typography Pack",
+    "confidence": 85,
+    "notes": "Contains .prproj file, Premiere Pro project",
+    "_source_name": "2300_Animated_Typography_Pack",
+    "_batch_index": 609
+  },
+  {
+    "name": "23004808-chinese-new-year-opener-of-2019",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Chinese New Year Opener 2019",
+    "confidence": 85,
+    "notes": "Holiday-themed opener",
+    "_source_name": "23004808-chinese-new-year-opener-of-2019",
+    "_batch_index": 610
+  },
+  {
+    "name": "23008213-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Grunge Glitch Intro",
+    "confidence": 90,
+    "notes": "Contains 'grunge-glitch-intro'",
+    "_source_name": "23008213-INTRO-HD.NET",
+    "_batch_index": 611
+  },
+  {
+    "name": "23012483-liquid-instagram-promo-2-in-1-INTRO-HD.NET",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Liquid Instagram Promo 2-in-1",
+    "confidence": 85,
+    "notes": "Name includes 'liquid' and 'instagram promo'",
+    "_source_name": "23012483-liquid-instagram-promo-2-in-1-INTRO-HD.NET",
+    "_batch_index": 612
+  },
+  {
+    "name": "23013078-mountain-logo-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Mountain Logo",
+    "confidence": 85,
+    "notes": "Name includes 'logo'",
+    "_source_name": "23013078-mountain-logo-INTRO-HD.NET",
+    "_batch_index": 613
+  },
+  {
+    "name": "23020608-christmas-pack-titles-backgrounds-elements-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas Pack Titles Backgrounds Elements",
+    "confidence": 90,
+    "notes": "Christmas-themed pack",
+    "_source_name": "23020608-christmas-pack-titles-backgrounds-elements-INTRO-HD.NET",
+    "_batch_index": 614
+  },
+  {
+    "name": "23020693-instagram-stories-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Instagram Stories",
+    "confidence": 90,
+    "notes": "Name explicitly 'instagram stories'",
+    "_source_name": "23020693-instagram-stories-INTRO-HD.NET",
+    "_batch_index": 615
+  },
+  {
+    "name": "23022738-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitch Energy Logo",
+    "confidence": 85,
+    "notes": "Contains 'glitch-energy-logo'",
+    "_source_name": "23022738-INTRO-HD.NET",
+    "_batch_index": 616
+  },
+  {
+    "name": "23026345-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport",
+    "confidence": 85,
+    "notes": "Contains 'sport'",
+    "_source_name": "23026345-INTRO-HD.NET",
+    "_batch_index": 617
+  },
+  {
+    "name": "23044315-isometric-flat-world",
+    "category": "After Effects - Other",
+    "clean_name": "Isometric Flat World",
+    "confidence": 70,
+    "notes": "Only .jpg file, likely a static graphic, not AE",
+    "_source_name": "23044315-isometric-flat-world",
+    "_batch_index": 618
+  },
+  {
+    "name": "23045031-chinese-new-year-opener-pack",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Chinese New Year Opener Pack",
+    "confidence": 85,
+    "notes": "Holiday-themed opener pack",
+    "_source_name": "23045031-chinese-new-year-opener-pack",
+    "_batch_index": 619
+  },
+  {
+    "name": "23049275-title-trailer-friendly-beast",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Title Trailer Friendly Beast",
+    "confidence": 80,
+    "notes": "Name includes 'title' and 'trailer'",
+    "_source_name": "23049275-title-trailer-friendly-beast",
+    "_batch_index": 620
+  },
+  {
+    "name": "23051817-dynamic-liquid-shapes-INTRO-HD.NET",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Dynamic Liquid Shapes",
+    "confidence": 90,
+    "notes": "Name includes 'liquid'",
+    "_source_name": "23051817-dynamic-liquid-shapes-INTRO-HD.NET",
+    "_batch_index": 621
+  },
+  {
+    "name": "23052562-INTRO-HD.NET",
+    "category": "After Effects - Liquid & Fluid",
+    "clean_name": "Dynamic Liquid Shapes",
+    "confidence": 85,
+    "notes": "Contains 'dynamic-liquid-shapes'",
+    "_source_name": "23052562-INTRO-HD.NET",
+    "_batch_index": 622
+  },
+  {
+    "name": "23061215-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Clean Corporate Promo",
+    "confidence": 85,
+    "notes": "Contains 'clean-corporate-promo'",
+    "_source_name": "23061215-INTRO-HD.NET",
+    "_batch_index": 623
+  },
+  {
+    "name": "23069999-INTRO-HD.NET",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Minimal Titles and Lower Thirds",
+    "confidence": 90,
+    "notes": "Contains 'minimal-titles-and-lower-thirds'",
+    "_source_name": "23069999-INTRO-HD.NET",
+    "_batch_index": 624
+  },
+  {
+    "name": "23073069-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Shadows and Light Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains 'shadows-and-light-logo-reveal'",
+    "_source_name": "23073069-INTRO-HD.NET",
+    "_batch_index": 625
+  },
+  {
+    "name": "23074661-galaxy-title-design-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Galaxy Title Design",
+    "confidence": 85,
+    "notes": "Name includes 'title-design'",
+    "_source_name": "23074661-galaxy-title-design-INTRO-HD.NET",
+    "_batch_index": 626
+  },
+  {
+    "name": "23078990-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Fashion Opener",
+    "confidence": 85,
+    "notes": "Contains 'urban-fashion-opener'",
+    "_source_name": "23078990-INTRO-HD.NET",
+    "_batch_index": 627
+  },
+  {
+    "name": "23086359-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Digital Glitch Logo Reveal",
+    "confidence": 90,
+    "notes": "Hint says 'Digital Glitch Logo Reveal'",
+    "_source_name": "23086359-INTRO-HD.NET",
+    "_batch_index": 628
+  },
+  {
+    "name": "23089645-urban-glitch-trendy-opener-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Urban Glitch Trendy Opener",
+    "confidence": 90,
+    "notes": "Name includes 'glitch'",
+    "_source_name": "23089645-urban-glitch-trendy-opener-INTRO-HD.NET",
+    "_batch_index": 629
+  },
+  {
+    "name": "23091825-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "New Year Wishes for Loved Ones Instagram",
+    "confidence": 85,
+    "notes": "Contains 'new-year-wishes...instagram'",
+    "_source_name": "23091825-INTRO-HD.NET",
+    "_batch_index": 630
+  },
+  {
+    "name": "23097953-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Mukbang Food YouTube Intro",
+    "confidence": 85,
+    "notes": "Contains 'mukbang-food-youtube-intro'",
+    "_source_name": "23097953-INTRO-HD.NET",
+    "_batch_index": 631
+  },
+  {
+    "name": "23106691-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Energy Sport Dynamic Promo",
+    "confidence": 85,
+    "notes": "Contains 'energy-sport-dynamic-promo'",
+    "_source_name": "23106691-INTRO-HD.NET",
+    "_batch_index": 632
+  },
+  {
+    "name": "23111068-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "YouTube Channel Promo",
+    "confidence": 85,
+    "notes": "Contains 'youtube-channel-promo'",
+    "_source_name": "23111068-INTRO-HD.NET",
+    "_batch_index": 633
+  },
+  {
+    "name": "23115145-business-conference-promo-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Business Conference Promo",
+    "confidence": 90,
+    "notes": "Name includes 'business-conference-promo'",
+    "_source_name": "23115145-business-conference-promo-INTRO-HD.NET",
+    "_batch_index": 634
+  },
+  {
+    "name": "23115439-sport-promo-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Sport Promo",
+    "confidence": 90,
+    "notes": "Name includes 'sport-promo'",
+    "_source_name": "23115439-sport-promo-INTRO-HD.NET",
+    "_batch_index": 635
+  },
+  {
+    "name": "23117227-INTRO-HD.NET",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Awards Opener",
+    "confidence": 85,
+    "notes": "Contains 'awards-opener'",
+    "_source_name": "23117227-INTRO-HD.NET",
+    "_batch_index": 636
+  },
+  {
+    "name": "23128117-documentary-teaser-INTRO-HD.NET",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Documentary Teaser",
+    "confidence": 85,
+    "notes": "Name includes 'documentary-teaser'",
+    "_source_name": "23128117-documentary-teaser-INTRO-HD.NET",
+    "_batch_index": 637
+  },
+  {
+    "name": "23128798-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Dynamic Urban Opener",
+    "confidence": 85,
+    "notes": "Contains 'dynamic-urban-opener'",
+    "_source_name": "23128798-INTRO-HD.NET",
+    "_batch_index": 638
+  },
+  {
+    "name": "23135812-humans-explainer-essential-mogrt-INTRO-HD.NET",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Humans Explainer Essential Mogrt",
+    "confidence": 90,
+    "notes": "Name includes '.mogrt'",
+    "_source_name": "23135812-humans-explainer-essential-mogrt-INTRO-HD.NET",
+    "_batch_index": 639
+  },
+  {
+    "name": "23136000-INTRO-HD.NET",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "YouTube Kids Subscribe Button",
+    "confidence": 85,
+    "notes": "Contains 'youtube-kids-subscribe-button'",
+    "_source_name": "23136000-INTRO-HD.NET",
+    "_batch_index": 640
+  },
+  {
+    "name": "23138763-stomp-intro",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Stomp Intro",
+    "confidence": 80,
+    "notes": "Name includes 'intro'",
+    "_source_name": "23138763-stomp-intro",
+    "_batch_index": 641
+  },
+  {
+    "name": "23142764-INTRO-HD.NET",
+    "category": "After Effects - News & Broadcast",
+    "clean_name": "Region News",
+    "confidence": 85,
+    "notes": "Contains 'region-news'",
+    "_source_name": "23142764-INTRO-HD.NET",
+    "_batch_index": 642
+  },
+  {
+    "name": "23150536-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Chinese New Year",
+    "confidence": 85,
+    "notes": "Contains 'chinese-new-year'",
+    "_source_name": "23150536-INTRO-HD.NET",
+    "_batch_index": 643
+  },
+  {
+    "name": "23151699-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Modern Slides 2",
+    "confidence": 85,
+    "notes": "Contains 'clean-modern-slides-2'",
+    "_source_name": "23151699-INTRO-HD.NET",
+    "_batch_index": 644
+  },
+  {
+    "name": "23154042-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Digital Space Logo Reveal",
+    "confidence": 90,
+    "notes": "Contains 'digital-space-logo-reveal'",
+    "_source_name": "23154042-INTRO-HD.NET",
+    "_batch_index": 645
+  },
+  {
+    "name": "23159217-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Flat Glitch Intro",
+    "confidence": 85,
+    "notes": "Contains 'flat-glitch-intro'",
+    "_source_name": "23159217-INTRO-HD.NET",
+    "_batch_index": 646
+  },
+  {
+    "name": "23164217-INTRO-HD.NET",
+    "category": "After Effects - Glitch & Distortion",
+    "clean_name": "Glitch Logo",
+    "confidence": 85,
+    "notes": "Contains 'glitch-logo'",
+    "_source_name": "23164217-INTRO-HD.NET",
+    "_batch_index": 647
+  },
+  {
+    "name": "23165988-fashion-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fashion Opener",
+    "confidence": 85,
+    "notes": "Name includes 'fashion-opener'",
+    "_source_name": "23165988-fashion-opener",
+    "_batch_index": 648
+  },
+  {
+    "name": "23173515-neon-wave-audio-visualizer-INTRO-HD.NET",
+    "category": "After Effects - Music & Audio Visualizer",
+    "clean_name": "Neon Wave Audio Visualizer",
+    "confidence": 90,
+    "notes": "Name includes 'audio-visualizer'",
+    "_source_name": "23173515-neon-wave-audio-visualizer-INTRO-HD.NET",
+    "_batch_index": 649
+  },
+  {
+    "name": "23173916-world-travel-maps-australia-and-new-zealand",
+    "category": "After Effects - Map & Location",
+    "clean_name": "World Travel Maps Australia and New Zealand",
+    "confidence": 90,
+    "notes": "Name includes 'maps'",
+    "_source_name": "23173916-world-travel-maps-australia-and-new-zealand",
+    "_batch_index": 650
+  },
+  {
+    "name": "23174175-latter-day-titles-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Latter Day Titles",
+    "confidence": 85,
+    "notes": "Name includes 'titles'",
+    "_source_name": "23174175-latter-day-titles-INTRO-HD.NET",
+    "_batch_index": 651
+  },
+  {
+    "name": "23174392-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Nature Intro",
+    "confidence": 85,
+    "notes": "Contains 'nature-intro'",
+    "_source_name": "23174392-INTRO-HD.NET",
+    "_batch_index": 652
+  },
+  {
+    "name": "23179558-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Creative Typography",
+    "confidence": 85,
+    "notes": "Contains 'creative-typography'",
+    "_source_name": "23179558-INTRO-HD.NET",
+    "_batch_index": 653
+  },
+  {
+    "name": "23181006-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Phone Logo Reveal 4 Versions",
+    "confidence": 90,
+    "notes": "Contains 'phone-logo-reveal'",
+    "_source_name": "23181006-INTRO-HD.NET",
+    "_batch_index": 654
+  },
+  {
+    "name": "23184574-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Dynamic Action Opener",
+    "confidence": 85,
+    "notes": "Contains 'dynamic-action-opener'",
+    "_source_name": "23184574-INTRO-HD.NET",
+    "_batch_index": 655
+  },
+  {
+    "name": "23192497-clean-titles-and-lower-thirds",
+    "category": "After Effects - Lower Thirds",
+    "clean_name": "Clean Titles and Lower Thirds",
+    "confidence": 90,
+    "notes": "Name includes 'titles-and-lower-thirds'",
+    "_source_name": "23192497-clean-titles-and-lower-thirds",
+    "_batch_index": 656
+  },
+  {
+    "name": "23199973-instagram-pack",
+    "category": "After Effects - Social Media",
+    "clean_name": "Instagram Pack",
+    "confidence": 85,
+    "notes": "Name includes 'instagram-pack'",
+    "_source_name": "23199973-instagram-pack",
+    "_batch_index": 657
+  },
+  {
+    "name": "23201855-medical-clinic-INTRO-HD.NET",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Medical Clinic",
+    "confidence": 85,
+    "notes": "Name includes 'medical-clinic', likely corporate",
+    "_source_name": "23201855-medical-clinic-INTRO-HD.NET",
+    "_batch_index": 658
+  },
+  {
+    "name": "23211553-fast-dynamic-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Fast Dynamic Opener",
+    "confidence": 85,
+    "notes": "Name includes 'opener'",
+    "_source_name": "23211553-fast-dynamic-opener-INTRO-HD.NET",
+    "_batch_index": 659
+  }
+]

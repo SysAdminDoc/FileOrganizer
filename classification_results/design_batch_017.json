@@ -1,0 +1,543 @@
+[
+  {
+    "name": "30123178-retro-pop-stories-GFXDRUG.COM",
+    "category": "After Effects - VHS & Retro",
+    "clean_name": "Retro Pop Stories",
+    "confidence": 75,
+    "notes": "Only .txt file, no content clue",
+    "_source_name": "30123178-retro-pop-stories-GFXDRUG.COM",
+    "_batch_index": 960,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "3023716-royal-wedding-4-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Royal Wedding 4",
+    "confidence": 80,
+    "notes": "Name suggests wedding, .zip likely AE template",
+    "_source_name": "3023716-royal-wedding-4-INTRO-HD.NET",
+    "_batch_index": 961
+  },
+  {
+    "name": "31144549-V3-multi-screen-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Multi Screen Opener V3",
+    "confidence": 85,
+    "notes": "Name indicates opener, .zip likely AE",
+    "_source_name": "31144549-V3-multi-screen-opener",
+    "_batch_index": 962
+  },
+  {
+    "name": "31777552-esports-gaming-package",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Esports Gaming Package",
+    "confidence": 80,
+    "notes": "Esports/gaming package, .zip likely AE",
+    "_source_name": "31777552-esports-gaming-package",
+    "_batch_index": 963
+  },
+  {
+    "name": "32968545-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Slideshow 1",
+    "confidence": 70,
+    "notes": "Contains hint 'Slideshow1', numeric ID folder",
+    "_source_name": "32968545-INTRO-HD.NET",
+    "_batch_index": 964
+  },
+  {
+    "name": "33 Vintage Grunge Photo Overlays",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "33 Vintage Grunge Photo Overlays",
+    "confidence": 90,
+    "notes": "Photo overlays, likely Photoshop",
+    "_source_name": "33 Vintage Grunge Photo Overlays",
+    "_batch_index": 965
+  },
+  {
+    "name": "33234390-clean-fashion-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Clean Fashion Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow name, .zip likely AE",
+    "_source_name": "33234390-clean-fashion-slideshow",
+    "_batch_index": 966
+  },
+  {
+    "name": "33485560-romantic-pack-v2.0",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Romantic Pack v2.0",
+    "confidence": 85,
+    "notes": "Romantic theme, .zip likely AE",
+    "_source_name": "33485560-romantic-pack-v2.0",
+    "_batch_index": 967
+  },
+  {
+    "name": "3363419-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Underwater Logo v2 CS5.5 plugins",
+    "confidence": 70,
+    "notes": "Contains hint 'Underwater Logo v2 CS5.5 plugins'",
+    "_source_name": "3363419-INTRO-HD.NET",
+    "_batch_index": 968
+  },
+  {
+    "name": "33802238-V1.5-world-map-pack",
+    "category": "After Effects - Map & Location",
+    "clean_name": "World Map Pack V1.5",
+    "confidence": 90,
+    "notes": "World map pack, .zip likely AE",
+    "_source_name": "33802238-V1.5-world-map-pack",
+    "_batch_index": 969
+  },
+  {
+    "name": "33866640-patch-maker-tools-AIDOWNLOAD.NET",
+    "category": "Plugins & Extensions",
+    "clean_name": "Patch Maker Tools",
+    "confidence": 80,
+    "notes": "Tools/plugins, .url file",
+    "_source_name": "33866640-patch-maker-tools-AIDOWNLOAD.NET",
+    "_batch_index": 970
+  },
+  {
+    "name": "33870760-the-ultimate-transitions-pack-davinci-resolve",
+    "category": "Color Grading & LUTs",
+    "clean_name": "The Ultimate Transitions Pack DaVinci Resolve",
+    "confidence": 85,
+    "notes": "DaVinci Resolve transitions (.drfx)",
+    "_source_name": "33870760-the-ultimate-transitions-pack-davinci-resolve",
+    "_batch_index": 971
+  },
+  {
+    "name": "34023556-epic-cinematic-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Epic Cinematic Trailer",
+    "confidence": 85,
+    "notes": "Trailer name, .zip likely AE",
+    "_source_name": "34023556-epic-cinematic-trailer",
+    "_batch_index": 972
+  },
+  {
+    "name": "34127030-halloween-animation-icons-after-effects-INTRO-HD.NET",
+    "category": "After Effects - Kids & Cartoons",
+    "clean_name": "Halloween Animation Icons After Effects",
+    "confidence": 80,
+    "notes": "Halloween icons, AE",
+    "_source_name": "34127030-halloween-animation-icons-after-effects-INTRO-HD.NET",
+    "_batch_index": 973
+  },
+  {
+    "name": "34131296-300-social-elements-after-effects-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "300 Social Elements After Effects",
+    "confidence": 85,
+    "notes": "Social media elements, AE",
+    "_source_name": "34131296-300-social-elements-after-effects-INTRO-HD.NET",
+    "_batch_index": 974
+  },
+  {
+    "name": "34132045-halloween-trailer-template-INTRO-HD.NET",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Halloween Trailer Template",
+    "confidence": 85,
+    "notes": "Halloween trailer, AE",
+    "_source_name": "34132045-halloween-trailer-template-INTRO-HD.NET",
+    "_batch_index": 975
+  },
+  {
+    "name": "34132750-halloween-slideshow-template-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Halloween Slideshow Template",
+    "confidence": 85,
+    "notes": "Halloween slideshow, AE",
+    "_source_name": "34132750-halloween-slideshow-template-INTRO-HD.NET",
+    "_batch_index": 976
+  },
+  {
+    "name": "34138507-horror-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Horror Opener",
+    "confidence": 85,
+    "notes": "Horror opener, AE",
+    "_source_name": "34138507-horror-opener-INTRO-HD.NET",
+    "_batch_index": 977
+  },
+  {
+    "name": "34152529-halloween-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Halloween Slideshow",
+    "confidence": 85,
+    "notes": "Halloween slideshow, AE",
+    "_source_name": "34152529-halloween-slideshow-INTRO-HD.NET",
+    "_batch_index": 978
+  },
+  {
+    "name": "34156436-urban-blog-intro-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Urban Blog Intro",
+    "confidence": 85,
+    "notes": "Blog intro, AE",
+    "_source_name": "34156436-urban-blog-intro-INTRO-HD.NET",
+    "_batch_index": 979
+  },
+  {
+    "name": "34256877-black-friday-titles-INTRO-HD.NET",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Black Friday Titles",
+    "confidence": 85,
+    "notes": "Titles, AE",
+    "_source_name": "34256877-black-friday-titles-INTRO-HD.NET",
+    "_batch_index": 980
+  },
+  {
+    "name": "34324437-opener-creator",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Opener Creator",
+    "confidence": 85,
+    "notes": "Opener creator, .zip likely AE",
+    "_source_name": "34324437-opener-creator",
+    "_batch_index": 981
+  },
+  {
+    "name": "34372558-day-of-the-dead-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Day of the Dead Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow, AE",
+    "_source_name": "34372558-day-of-the-dead-slideshow-INTRO-HD.NET",
+    "_batch_index": 982
+  },
+  {
+    "name": "34546154-christmas-2022-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas 2022",
+    "confidence": 85,
+    "notes": "Christmas theme, AE",
+    "_source_name": "34546154-christmas-2022-INTRO-HD.NET",
+    "_batch_index": 983
+  },
+  {
+    "name": "34597236-black-friday-instagram-promo-v75-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Black Friday Instagram Promo v75",
+    "confidence": 85,
+    "notes": "Instagram promo, AE",
+    "_source_name": "34597236-black-friday-instagram-promo-v75-INTRO-HD.NET",
+    "_batch_index": 984
+  },
+  {
+    "name": "34615743-engriso-photoshop-action-engrave-and-risograph-AIDOWNLOAD.NET",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Engriso Photoshop Action Engrave and Risograph",
+    "confidence": 90,
+    "notes": "Photoshop action, .rar",
+    "_source_name": "34615743-engriso-photoshop-action-engrave-and-risograph-AIDOWNLOAD.NET",
+    "_batch_index": 985
+  },
+  {
+    "name": "34625592-comic-style-cartoon-painting-AIDOWNLOAD.NET",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Comic Style Cartoon Painting",
+    "confidence": 80,
+    "notes": "Likely Photoshop action, no files listed",
+    "_source_name": "34625592-comic-style-cartoon-painting-AIDOWNLOAD.NET",
+    "_batch_index": 986
+  },
+  {
+    "name": "34629454-scribble-pen-sketch-photoshop-action-v3-GraphicEx.com",
+    "category": "Photoshop - Actions & Presets",
+    "clean_name": "Scribble Pen Sketch Photoshop Action v3",
+    "confidence": 90,
+    "notes": "Photoshop action, .rar",
+    "_source_name": "34629454-scribble-pen-sketch-photoshop-action-v3-GraphicEx.com",
+    "_batch_index": 987
+  },
+  {
+    "name": "34757555-fitness-and-sport-motivation-promo-INTRO-HD.NET",
+    "category": "After Effects - Sport & Action",
+    "clean_name": "Fitness and Sport Motivation Promo",
+    "confidence": 85,
+    "notes": "Fitness/sport promo, AE",
+    "_source_name": "34757555-fitness-and-sport-motivation-promo-INTRO-HD.NET",
+    "_batch_index": 988
+  },
+  {
+    "name": "34766412-positive-intro",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Positive Intro",
+    "confidence": 85,
+    "notes": "Intro, .zip likely AE",
+    "_source_name": "34766412-positive-intro",
+    "_batch_index": 989
+  },
+  {
+    "name": "34767093-photo-slideshow-parallax",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow Parallax",
+    "confidence": 85,
+    "notes": "Slideshow with parallax, .zip likely AE",
+    "_source_name": "34767093-photo-slideshow-parallax",
+    "_batch_index": 990
+  },
+  {
+    "name": "3476949-INTRO-HD.NET",
+    "category": "After Effects - Logo Reveal",
+    "clean_name": "Quick Logo Sting CS4",
+    "confidence": 70,
+    "notes": "Contains hint 'Quick Logo Sting CS4'",
+    "_source_name": "3476949-INTRO-HD.NET",
+    "_batch_index": 991
+  },
+  {
+    "name": "34842617-self-resizing-essentials",
+    "category": "After Effects - Other",
+    "clean_name": "Self Resizing Essentials",
+    "confidence": 70,
+    "notes": "Unclear purpose, .zip likely AE",
+    "_source_name": "34842617-self-resizing-essentials",
+    "_batch_index": 992
+  },
+  {
+    "name": "34854150-barbershop-portfolioslideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Barbershop Portfolio Slideshow",
+    "confidence": 85,
+    "notes": "Portfolio slideshow, .zip likely AE",
+    "_source_name": "34854150-barbershop-portfolioslideshow",
+    "_batch_index": 993
+  },
+  {
+    "name": "34858726-photo-effects",
+    "category": "After Effects - Other",
+    "clean_name": "Photo Effects",
+    "confidence": 70,
+    "notes": "Generic name, .zip likely AE",
+    "_source_name": "34858726-photo-effects",
+    "_batch_index": 994
+  },
+  {
+    "name": "34863753-this-is-a-christmas-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "This is a Christmas Slideshow",
+    "confidence": 85,
+    "notes": "Christmas slideshow, AE",
+    "_source_name": "34863753-this-is-a-christmas-slideshow-INTRO-HD.NET",
+    "_batch_index": 995
+  },
+  {
+    "name": "34915922-christmas-wishes-christmas-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas Wishes Christmas Slideshow",
+    "confidence": 85,
+    "notes": "Christmas slideshow, AE",
+    "_source_name": "34915922-christmas-wishes-christmas-slideshow-INTRO-HD.NET",
+    "_batch_index": 996
+  },
+  {
+    "name": "35-Different-Mock-ups-Bundle",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "35 Different Mock-ups Bundle",
+    "confidence": 80,
+    "notes": "Mockup bundle with .psd files",
+    "_source_name": "35-Different-Mock-ups-Bundle",
+    "_batch_index": 997
+  },
+  {
+    "name": "35003105-new-year-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "New Year Slideshow",
+    "confidence": 85,
+    "notes": "New Year slideshow, AE",
+    "_source_name": "35003105-new-year-slideshow-INTRO-HD.NET",
+    "_batch_index": 998
+  },
+  {
+    "name": "35072886-multiscreen-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Multiscreen Slideshow",
+    "confidence": 85,
+    "notes": "Multiscreen slideshow, .zip likely AE",
+    "_source_name": "35072886-multiscreen-slideshow",
+    "_batch_index": 999
+  },
+  {
+    "name": "35114642-christmas-slideshow-v88-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Christmas Slideshow v88",
+    "confidence": 85,
+    "notes": "Christmas slideshow, AE",
+    "_source_name": "35114642-christmas-slideshow-v88-INTRO-HD.NET",
+    "_batch_index": 1000
+  },
+  {
+    "name": "35120058-new-year-and-merry-christmas-ident-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "New Year and Merry Christmas Ident",
+    "confidence": 85,
+    "notes": "Christmas/New Year ident, AE",
+    "_source_name": "35120058-new-year-and-merry-christmas-ident-INTRO-HD.NET",
+    "_batch_index": 1001
+  },
+  {
+    "name": "35122714-happy-new-year-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Happy New Year",
+    "confidence": 85,
+    "notes": "New Year, AE",
+    "_source_name": "35122714-happy-new-year-INTRO-HD.NET",
+    "_batch_index": 1002
+  },
+  {
+    "name": "35137219-merry-christmas-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Merry Christmas Slideshow",
+    "confidence": 85,
+    "notes": "Christmas slideshow, AE",
+    "_source_name": "35137219-merry-christmas-slideshow-INTRO-HD.NET",
+    "_batch_index": 1003
+  },
+  {
+    "name": "35151989-world-war-2-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "World War 2 Trailer",
+    "confidence": 85,
+    "notes": "Trailer, .zip likely AE",
+    "_source_name": "35151989-world-war-2-trailer",
+    "_batch_index": 1004
+  },
+  {
+    "name": "35217658-new-year-countdown-2022-3d-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "New Year Countdown 2022 3D",
+    "confidence": 85,
+    "notes": "New Year countdown, AE",
+    "_source_name": "35217658-new-year-countdown-2022-3d-INTRO-HD.NET",
+    "_batch_index": 1005
+  },
+  {
+    "name": "35231813-happy-new-year-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Happy New Year",
+    "confidence": 85,
+    "notes": "New Year, AE",
+    "_source_name": "35231813-happy-new-year-INTRO-HD.NET",
+    "_batch_index": 1006
+  },
+  {
+    "name": "35243623-photo-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Photo Slideshow",
+    "confidence": 85,
+    "notes": "Photo slideshow, .zip likely AE",
+    "_source_name": "35243623-photo-slideshow",
+    "_batch_index": 1007
+  },
+  {
+    "name": "35250207-new-year-photo-slideshow-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "New Year Photo Slideshow",
+    "confidence": 85,
+    "notes": "New Year slideshow, AE",
+    "_source_name": "35250207-new-year-photo-slideshow-INTRO-HD.NET",
+    "_batch_index": 1008
+  },
+  {
+    "name": "35268389-happy-new-year-and-merry-christmas-INTRO-HD.NET",
+    "category": "After Effects - Christmas & Holiday",
+    "clean_name": "Happy New Year and Merry Christmas",
+    "confidence": 85,
+    "notes": "Christmas/New Year, AE",
+    "_source_name": "35268389-happy-new-year-and-merry-christmas-INTRO-HD.NET",
+    "_batch_index": 1009
+  },
+  {
+    "name": "35335963-chinese-new-year-booklet-opener-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Chinese New Year Booklet Opener",
+    "confidence": 85,
+    "notes": "Opener, AE",
+    "_source_name": "35335963-chinese-new-year-booklet-opener-INTRO-HD.NET",
+    "_batch_index": 1010
+  },
+  {
+    "name": "35391671-creative-motion-pack",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Creative Motion Pack",
+    "confidence": 80,
+    "notes": "Motion pack, .url file",
+    "_source_name": "35391671-creative-motion-pack",
+    "_batch_index": 1011
+  },
+  {
+    "name": "35473350-valentine-s-menu-restaurant-promo-b221-INTRO-HD.NET",
+    "category": "After Effects - Wedding & Romance",
+    "clean_name": "Valentine's Menu Restaurant Promo b221",
+    "confidence": 85,
+    "notes": "Valentine's promo, AE",
+    "_source_name": "35473350-valentine-s-menu-restaurant-promo-b221-INTRO-HD.NET",
+    "_batch_index": 1012
+  },
+  {
+    "name": "35476344-modern-opener",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Opener",
+    "confidence": 85,
+    "notes": "Opener, .zip likely AE",
+    "_source_name": "35476344-modern-opener",
+    "_batch_index": 1013
+  },
+  {
+    "name": "35477500-dynamic-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Dynamic Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow, .zip likely AE",
+    "_source_name": "35477500-dynamic-slideshow",
+    "_batch_index": 1014
+  },
+  {
+    "name": "3547926-INTROHD.NET",
+    "category": "After Effects - Other",
+    "clean_name": "3547926",
+    "confidence": 65,
+    "notes": "Numeric ID only, no hint",
+    "_source_name": "3547926-INTROHD.NET",
+    "_batch_index": 1015
+  },
+  {
+    "name": "35480579-mosaic-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Mosaic Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow, .zip likely AE",
+    "_source_name": "35480579-mosaic-slideshow",
+    "_batch_index": 1016
+  },
+  {
+    "name": "35490695-valentine-day-facebook-cover-INTRO-HD.NET",
+    "category": "After Effects - Social Media",
+    "clean_name": "Valentine Day Facebook Cover",
+    "confidence": 85,
+    "notes": "Facebook cover, AE",
+    "_source_name": "35490695-valentine-day-facebook-cover-INTRO-HD.NET",
+    "_batch_index": 1017
+  },
+  {
+    "name": "3549269-INTRO-HD.NET",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Sketch Show Broadcast Pack",
+    "confidence": 70,
+    "notes": "Contains hint 'sketch-show-broadcast-pack'",
+    "_source_name": "3549269-INTRO-HD.NET",
+    "_batch_index": 1018
+  },
+  {
+    "name": "35526145-punch-hole-transitions-library",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Punch Hole Transitions Library",
+    "confidence": 85,
+    "notes": "Transitions library, .jpg file",
+    "_source_name": "35526145-punch-hole-transitions-library",
+    "_batch_index": 1019
+  }
+]

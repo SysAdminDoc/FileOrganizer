@@ -1,0 +1,547 @@
+[
+  {
+    "name": "SFXtools_Passbys_WAV-FANTASTiC",
+    "category": "Sound Effects & SFX",
+    "clean_name": "SFXtools Passbys WAV",
+    "confidence": 90,
+    "notes": "Name implies sound effects, .zip likely contains WAV audio",
+    "_source_name": "SFXtools_Passbys_WAV-FANTASTiC",
+    "_batch_index": 5520
+  },
+  {
+    "name": "SFXTools_Water_Splashes_WAV-FANTASTiC",
+    "category": "Sound Effects & SFX",
+    "clean_name": "SFXTools Water Splashes WAV",
+    "confidence": 90,
+    "notes": "Name implies sound effects, .zip likely contains WAV audio",
+    "_source_name": "SFXTools_Water_Splashes_WAV-FANTASTiC",
+    "_batch_index": 5521
+  },
+  {
+    "name": "SG_cine.collection.m2.luts.presets.polisher.m2-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "SG Cine Collection M2 LUTs Presets Polisher",
+    "confidence": 95,
+    "notes": "Name contains 'luts' and 'presets'",
+    "_source_name": "SG_cine.collection.m2.luts.presets.polisher.m2-INTRO-HD.NET",
+    "_batch_index": 5522
+  },
+  {
+    "name": "SG-professional.filmgrain",
+    "category": "Stock Footage - Abstract & VFX",
+    "clean_name": "SG Professional Film Grain",
+    "confidence": 70,
+    "notes": "Film grain likely stock footage or overlay, .rar unclear but name suggests VFX",
+    "_source_name": "SG-professional.filmgrain",
+    "_batch_index": 5523
+  },
+  {
+    "name": "shader-brushes-for-illustrator-Q5LX46F",
+    "category": "Illustrator - Brushes & Swatches",
+    "clean_name": "Shader Brushes for Illustrator",
+    "confidence": 95,
+    "notes": "Name explicitly says for Illustrator and brushes",
+    "_source_name": "shader-brushes-for-illustrator-Q5LX46F",
+    "_batch_index": 5524
+  },
+  {
+    "name": "Shadow Studio 3 v1.0.0 Win",
+    "category": "Plugins & Extensions",
+    "clean_name": "Shadow Studio 3",
+    "confidence": 90,
+    "notes": "Contains .aex file, which is an After Effects plugin extension",
+    "_source_name": "Shadow Studio 3 v1.0.0 Win",
+    "_batch_index": 5525
+  },
+  {
+    "name": "shadow-sunlight-photo-overlays-TRD45Q7",
+    "category": "Photoshop - Overlays & FX",
+    "clean_name": "Shadow Sunlight Photo Overlays",
+    "confidence": 85,
+    "notes": "Name implies photo overlays, likely for Photoshop",
+    "_source_name": "shadow-sunlight-photo-overlays-TRD45Q7",
+    "_batch_index": 5526
+  },
+  {
+    "name": "Shake Sauce 2",
+    "category": "Software & Utilities",
+    "clean_name": "Shake Sauce 2",
+    "confidence": 90,
+    "notes": "Only .jpg, .lnk, .reg, .txt files; unclear purpose, likely a plugin or preset but insufficient info",
+    "_source_name": "Shake Sauce 2",
+    "_batch_index": 5527,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Shape Elements 2",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Shape Elements 2",
+    "confidence": 70,
+    "notes": "Name suggests motion graphics shapes, .zip likely contains AE assets",
+    "_source_name": "Shape Elements 2",
+    "_batch_index": 5528
+  },
+  {
+    "name": "Shape Out Toolkit v1.5.1",
+    "category": "Plugins & Extensions",
+    "clean_name": "Shape Out Toolkit",
+    "confidence": 75,
+    "notes": "Name says toolkit, .zip may contain plugin files",
+    "_source_name": "Shape Out Toolkit v1.5.1",
+    "_batch_index": 5529
+  },
+  {
+    "name": "shape-elements-pack-extension-450-elements-52246745",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Shape Elements Pack Extension 450 Elements",
+    "confidence": 80,
+    "notes": "Name implies shape elements pack for motion graphics",
+    "_source_name": "shape-elements-pack-extension-450-elements-52246745",
+    "_batch_index": 5530
+  },
+  {
+    "name": "Shape-kit-21498",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Shape Kit",
+    "confidence": 70,
+    "notes": "Name suggests shape kit for motion graphics",
+    "_source_name": "Shape-kit-21498",
+    "_batch_index": 5531
+  },
+  {
+    "name": "shape-transitions-after-effects-38507040",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Shape Transitions After Effects",
+    "confidence": 95,
+    "notes": "Name explicitly says after effects and transitions",
+    "_source_name": "shape-transitions-after-effects-38507040",
+    "_batch_index": 5532
+  },
+  {
+    "name": "shape-transitions-big-pack",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Shape Transitions Big Pack",
+    "confidence": 90,
+    "notes": "Name implies transitions pack, likely for AE",
+    "_source_name": "shape-transitions-big-pack",
+    "_batch_index": 5533
+  },
+  {
+    "name": "ShapeMonkey 1.09",
+    "category": "Plugins & Extensions",
+    "clean_name": "ShapeMonkey",
+    "confidence": 85,
+    "notes": "Contains .jsxbin file, which is an After Effects script/extension",
+    "_source_name": "ShapeMonkey 1.09",
+    "_batch_index": 5534
+  },
+  {
+    "name": "shapemonkey_v1.05",
+    "category": "Plugins & Extensions",
+    "clean_name": "ShapeMonkey",
+    "confidence": 80,
+    "notes": "Name matches ShapeMonkey, .rar likely contains script/plugin",
+    "_source_name": "shapemonkey_v1.05",
+    "_batch_index": 5535
+  },
+  {
+    "name": "shapes-transitions-fx-pack-for-davinci-resolve-38412207",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Shapes Transitions FX Pack for DaVinci Resolve",
+    "confidence": 85,
+    "notes": "Name says for DaVinci Resolve, likely LUTs or color grading related",
+    "_source_name": "shapes-transitions-fx-pack-for-davinci-resolve-38412207",
+    "_batch_index": 5536
+  },
+  {
+    "name": "shapix-shape-elements-pack-14061002",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "Shapix Shape Elements Pack",
+    "confidence": 75,
+    "notes": "Name implies shape elements pack for motion graphics",
+    "_source_name": "shapix-shape-elements-pack-14061002",
+    "_batch_index": 5537
+  },
+  {
+    "name": "ShareAE.com-19316873-modern-cinematic-inspirational-parallax-slideshow-Opener",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Cinematic Inspirational Parallax Slideshow Opener",
+    "confidence": 85,
+    "notes": "Name says slideshow opener, from ShareAE.com implying AE template",
+    "_source_name": "ShareAE.com-19316873-modern-cinematic-inspirational-parallax-slideshow-Opener",
+    "_batch_index": 5538
+  },
+  {
+    "name": "ShareAE.com-ma-Hanging_Photo_Gallery",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Hanging Photo Gallery",
+    "confidence": 85,
+    "notes": "Name implies photo gallery, from ShareAE.com implying AE template",
+    "_source_name": "ShareAE.com-ma-Hanging_Photo_Gallery",
+    "_batch_index": 5539
+  },
+  {
+    "name": "shark-attack-t-shirt-design-ZQANSUT",
+    "category": "Print - Other",
+    "clean_name": "Shark Attack T-Shirt Design",
+    "confidence": 80,
+    "notes": "Name implies t-shirt design, likely print-ready file",
+    "_source_name": "shark-attack-t-shirt-design-ZQANSUT",
+    "_batch_index": 5540
+  },
+  {
+    "name": "shatter-burn-trailer-37104580",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Shatter Burn Trailer",
+    "confidence": 85,
+    "notes": "Name implies trailer with shatter/burn effects",
+    "_source_name": "shatter-burn-trailer-37104580",
+    "_batch_index": 5541
+  },
+  {
+    "name": "shatter-glass-trailer",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Shatter Glass Trailer",
+    "confidence": 85,
+    "notes": "Name implies trailer with glass shatter effects",
+    "_source_name": "shatter-glass-trailer",
+    "_batch_index": 5542
+  },
+  {
+    "name": "shatter-war-movie-trailer-31457498",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Shatter War Movie Trailer",
+    "confidence": 85,
+    "notes": "Name implies war movie trailer",
+    "_source_name": "shatter-war-movie-trailer-31457498",
+    "_batch_index": 5543
+  },
+  {
+    "name": "shattered-history",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Shattered History",
+    "confidence": 70,
+    "notes": "Name suggests a trailer or cinematic piece",
+    "_source_name": "shattered-history",
+    "_batch_index": 5544
+  },
+  {
+    "name": "shifter_2_2.0.3",
+    "category": "After Effects - Other",
+    "clean_name": "Shifter 2",
+    "confidence": 65,
+    "notes": "Only .mp4, .reg, .txt files; unclear if plugin or template",
+    "_source_name": "shifter_2_2.0.3",
+    "_batch_index": 5545,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "Short_Sleeve_Jersey_Set_Mockup-6509417",
+    "category": "Mockups - Apparel",
+    "clean_name": "Short Sleeve Jersey Set Mockup",
+    "confidence": 95,
+    "notes": "Name explicitly says mockup and apparel",
+    "_source_name": "Short_Sleeve_Jersey_Set_Mockup-6509417",
+    "_batch_index": 5546
+  },
+  {
+    "name": "short-action-trailer-18893081",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Short Action Trailer",
+    "confidence": 85,
+    "notes": "Name implies action trailer",
+    "_source_name": "short-action-trailer-18893081",
+    "_batch_index": 5547
+  },
+  {
+    "name": "short-creative-special-opener-36723170",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Short Creative Special Opener",
+    "confidence": 85,
+    "notes": "Name implies opener",
+    "_source_name": "short-creative-special-opener-36723170",
+    "_batch_index": 5548
+  },
+  {
+    "name": "short-dynamic-opener-45496383",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Short Dynamic Opener",
+    "confidence": 85,
+    "notes": "Name implies opener",
+    "_source_name": "short-dynamic-opener-45496383",
+    "_batch_index": 5549
+  },
+  {
+    "name": "short-eid-and-ramadan-opener-51230859",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Short Eid and Ramadan Opener",
+    "confidence": 85,
+    "notes": "Name implies opener for Eid/Ramadan",
+    "_source_name": "short-eid-and-ramadan-opener-51230859",
+    "_batch_index": 5550
+  },
+  {
+    "name": "short-intro",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Short Intro",
+    "confidence": 80,
+    "notes": "Name implies intro",
+    "_source_name": "short-intro",
+    "_batch_index": 5551
+  },
+  {
+    "name": "short-smooth-intro",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Short Smooth Intro",
+    "confidence": 80,
+    "notes": "Name implies intro",
+    "_source_name": "short-smooth-intro",
+    "_batch_index": 5552
+  },
+  {
+    "name": "Shortcakes v2.1.4",
+    "category": "UI Resources & Icon Sets",
+    "clean_name": "Shortcakes",
+    "confidence": 72,
+    "notes": "Only .jpg, .lnk, .reg, .txt files; unclear purpose",
+    "_source_name": "Shortcakes v2.1.4",
+    "_batch_index": 5553,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "show-opener-52162460",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Show Opener",
+    "confidence": 85,
+    "notes": "Name implies show opener",
+    "_source_name": "show-opener-52162460",
+    "_batch_index": 5554
+  },
+  {
+    "name": "Shy Bar 1.0",
+    "category": "Plugins & Extensions",
+    "clean_name": "Shy Bar",
+    "confidence": 70,
+    "notes": "Name suggests a plugin or extension for video editing",
+    "_source_name": "Shy Bar 1.0",
+    "_batch_index": 5555
+  },
+  {
+    "name": "Signal v1.2.3",
+    "category": "Plugins & Extensions",
+    "clean_name": "Signal",
+    "confidence": 85,
+    "notes": "Only .pkg file; unclear if it's a plugin or something else",
+    "_source_name": "Signal v1.2.3",
+    "_batch_index": 5556,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "significant-history-events-slideshow-retro-vinta-37543636",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Significant History Events Slideshow Retro Vinta",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "significant-history-events-slideshow-retro-vinta-37543636",
+    "_batch_index": 5557
+  },
+  {
+    "name": "Silence Remover_V1.2",
+    "category": "Plugins & Extensions",
+    "clean_name": "Silence Remover",
+    "confidence": 70,
+    "notes": "Name suggests an audio plugin or extension",
+    "_source_name": "Silence Remover_V1.2",
+    "_batch_index": 5558
+  },
+  {
+    "name": "silk-fabric-mockup",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Silk Fabric Mockup",
+    "confidence": 80,
+    "notes": "Name implies fabric mockup, likely for print",
+    "_source_name": "silk-fabric-mockup",
+    "_batch_index": 5559
+  },
+  {
+    "name": "silk-remington-XSHUFJ",
+    "category": "Fonts & Typography",
+    "clean_name": "Silk Remington Font",
+    "confidence": 99,
+    "notes": "Name unclear, no file type hints",
+    "_source_name": "silk-remington-XSHUFJ",
+    "_batch_index": 5560,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "silk-satin-scraf-mockup-X9LXXWX",
+    "category": "Mockups - Apparel",
+    "clean_name": "Silk Satin Scarf Mockup",
+    "confidence": 90,
+    "notes": "Name explicitly says mockup and scarf (apparel)",
+    "_source_name": "silk-satin-scraf-mockup-X9LXXWX",
+    "_batch_index": 5561
+  },
+  {
+    "name": "silk-turban-mockup",
+    "category": "Mockups - Apparel",
+    "clean_name": "Silk Turban Mockup",
+    "confidence": 90,
+    "notes": "Name explicitly says mockup and turban (apparel)",
+    "_source_name": "silk-turban-mockup",
+    "_batch_index": 5562
+  },
+  {
+    "name": "silver-awarding-pack-20427314",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Silver Awarding Pack",
+    "confidence": 70,
+    "notes": "Name suggests broadcast package for awards, only .jpg file",
+    "_source_name": "silver-awarding-pack-20427314",
+    "_batch_index": 5563
+  },
+  {
+    "name": "silver-or-gold-square-titanium-broadcast-pack-39536796",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Silver or Gold Square Titanium Broadcast Pack",
+    "confidence": 85,
+    "notes": "Name explicitly says broadcast pack",
+    "_source_name": "silver-or-gold-square-titanium-broadcast-pack-39536796",
+    "_batch_index": 5564
+  },
+  {
+    "name": "simple-characters-explainer-toolkit-essential-gr",
+    "category": "After Effects - Character & Explainer",
+    "clean_name": "Simple Characters Explainer Toolkit Essential",
+    "confidence": 85,
+    "notes": "Name implies explainer toolkit with characters",
+    "_source_name": "simple-characters-explainer-toolkit-essential-gr",
+    "_batch_index": 5565
+  },
+  {
+    "name": "simple-photo-slides",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Simple Photo Slides",
+    "confidence": 80,
+    "notes": "Name implies photo slideshow",
+    "_source_name": "simple-photo-slides",
+    "_batch_index": 5566
+  },
+  {
+    "name": "simple-photo-slideshow-43560981",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Simple Photo Slideshow",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "simple-photo-slideshow-43560981",
+    "_batch_index": 5567
+  },
+  {
+    "name": "simple-slideshow-19821820",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Simple Slideshow",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "simple-slideshow-19821820",
+    "_batch_index": 5568
+  },
+  {
+    "name": "simple-slideshow-39551136",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Simple Slideshow",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "simple-slideshow-39551136",
+    "_batch_index": 5569
+  },
+  {
+    "name": "simple-slideshow-42868453",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Simple Slideshow",
+    "confidence": 95,
+    "notes": "Contains .aep file, confirms After Effects slideshow",
+    "_source_name": "simple-slideshow-42868453",
+    "_batch_index": 5570
+  },
+  {
+    "name": "simple-slideshow-43307909",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Simple Slideshow",
+    "confidence": 85,
+    "notes": "Name implies slideshow",
+    "_source_name": "simple-slideshow-43307909",
+    "_batch_index": 5571
+  },
+  {
+    "name": "simple-story-minimal-slides-clean-slideshow-tra",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Simple Story Minimal Slides Clean Slideshow",
+    "confidence": 95,
+    "notes": "Contains .aep file, confirms After Effects slideshow",
+    "_source_name": "simple-story-minimal-slides-clean-slideshow-tra",
+    "_batch_index": 5572
+  },
+  {
+    "name": "simple-titles",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Simple Titles",
+    "confidence": 80,
+    "notes": "Name implies titles",
+    "_source_name": "simple-titles",
+    "_batch_index": 5573
+  },
+  {
+    "name": "simple-typo-opener-34502595",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Simple Typo Opener",
+    "confidence": 85,
+    "notes": "Name implies typography opener",
+    "_source_name": "simple-typo-opener-34502595",
+    "_batch_index": 5574
+  },
+  {
+    "name": "singapore-animated-map-republic-of-singapore-map",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Singapore Animated Map",
+    "confidence": 90,
+    "notes": "Name implies animated map",
+    "_source_name": "singapore-animated-map-republic-of-singapore-map",
+    "_batch_index": 5575
+  },
+  {
+    "name": "single-bed-bedding-mockup-L58LZW8",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Single Bed Bedding Mockup",
+    "confidence": 85,
+    "notes": "Name implies bedding mockup, likely for print",
+    "_source_name": "single-bed-bedding-mockup-L58LZW8",
+    "_batch_index": 5576
+  },
+  {
+    "name": "single-bed-mockup",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Single Bed Mockup",
+    "confidence": 85,
+    "notes": "Name implies bed mockup, likely for print",
+    "_source_name": "single-bed-mockup",
+    "_batch_index": 5577
+  },
+  {
+    "name": "single-bedding-mock-up",
+    "category": "Mockups - Print & Signage",
+    "clean_name": "Single Bedding Mock Up",
+    "confidence": 85,
+    "notes": "Name implies bedding mockup, likely for print",
+    "_source_name": "single-bedding-mock-up",
+    "_batch_index": 5578
+  },
+  {
+    "name": "Ska Music Flyer",
+    "category": "Print - Flyers & Posters",
+    "clean_name": "Ska Music Flyer",
+    "confidence": 95,
+    "notes": "Name says flyer, contains .psd file",
+    "_source_name": "Ska Music Flyer",
+    "_batch_index": 5579
+  }
+]

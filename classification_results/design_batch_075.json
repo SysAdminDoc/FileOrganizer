@@ -1,0 +1,545 @@
+[
+  {
+    "name": "minimal-typography-36232661",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Minimal Typography",
+    "confidence": 75,
+    "notes": "Name suggests typography, likely AE template.",
+    "_source_name": "minimal-typography-36232661",
+    "_batch_index": 4440
+  },
+  {
+    "name": "minimal-typography-pack-37400161",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Minimal Typography Pack",
+    "confidence": 75,
+    "notes": "Name suggests typography pack, likely AE.",
+    "_source_name": "minimal-typography-pack-37400161",
+    "_batch_index": 4441
+  },
+  {
+    "name": "minimal-typography-pack-mogrt-37439656",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Minimal Typography Pack Mogrt",
+    "confidence": 90,
+    "notes": "Name includes 'mogrt'.",
+    "_source_name": "minimal-typography-pack-mogrt-37439656",
+    "_batch_index": 4442
+  },
+  {
+    "name": "minimal-youtube-broadcast-elements-45321035",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Minimal YouTube Broadcast Elements",
+    "confidence": 80,
+    "notes": "Name suggests broadcast elements for YouTube.",
+    "_source_name": "minimal-youtube-broadcast-elements-45321035",
+    "_batch_index": 4443
+  },
+  {
+    "name": "minimalist-cinematic-film-look-moody-video-luts-pa-48065752",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Minimalist Cinematic Film Look Moody Video LUTs",
+    "confidence": 95,
+    "notes": "Name includes 'luts'.",
+    "_source_name": "minimalist-cinematic-film-look-moody-video-luts-pa-48065752",
+    "_batch_index": 4444
+  },
+  {
+    "name": "minimalistic-art-gallery",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Minimalistic Art Gallery",
+    "confidence": 70,
+    "notes": "Name suggests gallery slideshow, likely AE.",
+    "_source_name": "minimalistic-art-gallery",
+    "_batch_index": 4445
+  },
+  {
+    "name": "minimalistic-gallery-museum-45204119",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Minimalistic Gallery Museum",
+    "confidence": 70,
+    "notes": "Name suggests gallery, likely AE.",
+    "_source_name": "minimalistic-gallery-museum-45204119",
+    "_batch_index": 4446
+  },
+  {
+    "name": "minimalistic-mobile-mockup-scenes-37584061",
+    "category": "Mockups - Devices & Screens",
+    "clean_name": "Minimalistic Mobile Mockup Scenes",
+    "confidence": 90,
+    "notes": "Name includes 'mockup' and 'mobile'.",
+    "_source_name": "minimalistic-mobile-mockup-scenes-37584061",
+    "_batch_index": 4447
+  },
+  {
+    "name": "misc",
+    "category": "_Review",
+    "clean_name": "Misc",
+    "confidence": 50,
+    "notes": "Mixed file types, unclear purpose.",
+    "_source_name": "misc",
+    "_batch_index": 4448
+  },
+  {
+    "name": "miss-competition-52256946",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Miss Competition",
+    "confidence": 65,
+    "notes": "Name suggests a competition/event, likely AE.",
+    "_source_name": "miss-competition-52256946",
+    "_batch_index": 4449
+  },
+  {
+    "name": "mission-trailer-21390955",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Mission Trailer",
+    "confidence": 80,
+    "notes": "Name includes 'trailer'.",
+    "_source_name": "mission-trailer-21390955",
+    "_batch_index": 4450
+  },
+  {
+    "name": "MIX",
+    "category": "After Effects - Other",
+    "clean_name": "MIX",
+    "confidence": 60,
+    "notes": "Contains .motn file, likely AE motion.",
+    "_source_name": "MIX",
+    "_batch_index": 4451
+  },
+  {
+    "name": "Mix 970",
+    "category": "Stock Photos - General",
+    "clean_name": "Mix 970",
+    "confidence": 72,
+    "notes": "Only .jpg, unclear purpose.",
+    "_source_name": "Mix 970",
+    "_batch_index": 4452,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "mixed-media-paper-transitions-mogrt-52026623",
+    "category": "Premiere Pro - Motion Graphics (.mogrt)",
+    "clean_name": "Mixed Media Paper Transitions Mogrt",
+    "confidence": 90,
+    "notes": "Name includes 'mogrt'.",
+    "_source_name": "mixed-media-paper-transitions-mogrt-52026623",
+    "_batch_index": 4453
+  },
+  {
+    "name": "mixed-texture-transitions-51108341",
+    "category": "After Effects - Transition Pack",
+    "clean_name": "Mixed Texture Transitions",
+    "confidence": 75,
+    "notes": "Name suggests transitions, likely AE.",
+    "_source_name": "mixed-texture-transitions-51108341",
+    "_batch_index": 4454
+  },
+  {
+    "name": "mLUT-Blockbuster-Pack-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "mLUT Blockbuster Pack",
+    "confidence": 95,
+    "notes": "Name includes 'LUT'.",
+    "_source_name": "mLUT-Blockbuster-Pack-INTRO-HD.NET",
+    "_batch_index": 4455
+  },
+  {
+    "name": "MlutCinemati_ack-INTRO-HD.NET",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Mlut Cinematic Pack",
+    "confidence": 95,
+    "notes": "Name includes 'Lut' and 'Cinematic'.",
+    "_source_name": "MlutCinemati_ack-INTRO-HD.NET",
+    "_batch_index": 4456
+  },
+  {
+    "name": "MMA Gloves",
+    "category": "After Effects - Other",
+    "clean_name": "MMA Gloves",
+    "confidence": 70,
+    "notes": "Contains .aep, likely a specific AE project.",
+    "_source_name": "MMA Gloves",
+    "_batch_index": 4457
+  },
+  {
+    "name": "mma-fighting-intro-40382422",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "MMA Fighting Intro",
+    "confidence": 80,
+    "notes": "Name includes 'intro'.",
+    "_source_name": "mma-fighting-intro-40382422",
+    "_batch_index": 4458
+  },
+  {
+    "name": "mMovements",
+    "category": "After Effects - Motion Graphics Pack",
+    "clean_name": "mMovements",
+    "confidence": 65,
+    "notes": "Only .zip, no content clue.",
+    "_source_name": "mMovements",
+    "_batch_index": 4459,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "mMusic Video 2",
+    "category": "After Effects - Lyric & Music Video",
+    "clean_name": "Music Video 2",
+    "confidence": 70,
+    "notes": "Name suggests music video, likely AE.",
+    "_source_name": "mMusic Video 2",
+    "_batch_index": 4460
+  },
+  {
+    "name": "mNews",
+    "category": "Stock Footage - General",
+    "clean_name": "mNews",
+    "confidence": 60,
+    "notes": "Contains .mp4, likely stock footage.",
+    "_source_name": "mNews",
+    "_batch_index": 4461
+  },
+  {
+    "name": "mO2",
+    "category": "After Effects - Other",
+    "clean_name": "mO2",
+    "confidence": 60,
+    "notes": "Only .zip, no content clue.",
+    "_source_name": "mO2",
+    "_batch_index": 4462,
+    "resolved_by": "review_resolver"
+  },
+  {
+    "name": "MoBar_2.1.11",
+    "category": "Plugins & Extensions",
+    "clean_name": "MoBar 2.1.11",
+    "confidence": 80,
+    "notes": "Name suggests a plugin/extension.",
+    "_source_name": "MoBar_2.1.11",
+    "_batch_index": 4463
+  },
+  {
+    "name": "mobile-app-presentation-42293958",
+    "category": "After Effects - Mockup & Device",
+    "clean_name": "Mobile App Presentation",
+    "confidence": 70,
+    "notes": "Name suggests app mockup, likely AE.",
+    "_source_name": "mobile-app-presentation-42293958",
+    "_batch_index": 4464
+  },
+  {
+    "name": "MochaImport__v6.0.013",
+    "category": "Plugins & Extensions",
+    "clean_name": "MochaImport v6.0.013",
+    "confidence": 90,
+    "notes": "Name suggests a plugin for Mocha.",
+    "_source_name": "MochaImport__v6.0.013",
+    "_batch_index": 4465
+  },
+  {
+    "name": "Mockup_-_Bakery_Branding",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Mockup - Bakery Branding",
+    "confidence": 90,
+    "notes": "Name includes 'Mockup' and 'Branding'.",
+    "_source_name": "Mockup_-_Bakery_Branding",
+    "_batch_index": 4466
+  },
+  {
+    "name": "Mockup_of_a_short_hooded_sweatshirt.-6492910",
+    "category": "Mockups - Apparel",
+    "clean_name": "Mockup of a Short Hooded Sweatshirt",
+    "confidence": 95,
+    "notes": "Name includes 'Mockup' and 'sweatshirt'.",
+    "_source_name": "Mockup_of_a_short_hooded_sweatshirt.-6492910",
+    "_batch_index": 4467
+  },
+  {
+    "name": "Mockup_Stationery_Kit_on_Wood_and_Ma",
+    "category": "Mockups - Branding & Stationery",
+    "clean_name": "Mockup Stationery Kit on Wood",
+    "confidence": 95,
+    "notes": "Name includes 'Mockup' and 'Stationery'.",
+    "_source_name": "Mockup_Stationery_Kit_on_Wood_and_Ma",
+    "_batch_index": 4468
+  },
+  {
+    "name": "Mockup_T-shirt_Antique__1",
+    "category": "Mockups - Apparel",
+    "clean_name": "Mockup T-shirt Antique",
+    "confidence": 95,
+    "notes": "Name includes 'Mockup' and 'T-shirt'.",
+    "_source_name": "Mockup_T-shirt_Antique__1",
+    "_batch_index": 4469
+  },
+  {
+    "name": "Modern Events",
+    "category": "After Effects - Event & Party",
+    "clean_name": "Modern Events",
+    "confidence": 80,
+    "notes": "Contains .aep, name suggests events.",
+    "_source_name": "Modern Events",
+    "_batch_index": 4470
+  },
+  {
+    "name": "Modern Spherical Flares Kit 25603713",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Modern Spherical Flares Kit",
+    "confidence": 80,
+    "notes": "Name suggests flares/particles, likely AE.",
+    "_source_name": "Modern Spherical Flares Kit 25603713",
+    "_batch_index": 4471
+  },
+  {
+    "name": "modern-audio-react-3-in-1",
+    "category": "After Effects - Music & Audio Visualizer",
+    "clean_name": "Modern Audio React 3-in-1",
+    "confidence": 85,
+    "notes": "Name suggests audio visualizer.",
+    "_source_name": "modern-audio-react-3-in-1",
+    "_batch_index": 4472
+  },
+  {
+    "name": "modern-broadcast-pack",
+    "category": "After Effects - Broadcast Package",
+    "clean_name": "Modern Broadcast Pack",
+    "confidence": 85,
+    "notes": "Name suggests broadcast package.",
+    "_source_name": "modern-broadcast-pack",
+    "_batch_index": 4473
+  },
+  {
+    "name": "modern-call-outs-for-davinci-resolve-29465791",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Modern Call Outs for DaVinci Resolve",
+    "confidence": 70,
+    "notes": "For DaVinci Resolve, likely LUTs or color tools.",
+    "_source_name": "modern-call-outs-for-davinci-resolve-29465791",
+    "_batch_index": 4474
+  },
+  {
+    "name": "modern-classy-design-39658117",
+    "category": "After Effects - Other",
+    "clean_name": "Modern Classy Design",
+    "confidence": 60,
+    "notes": "Generic name, likely AE.",
+    "_source_name": "modern-classy-design-39658117",
+    "_batch_index": 4475
+  },
+  {
+    "name": "modern-clean-slideshow-35715322",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Clean Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow.",
+    "_source_name": "modern-clean-slideshow-35715322",
+    "_batch_index": 4476
+  },
+  {
+    "name": "modern-comic-titles-27957519",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Modern Comic Titles",
+    "confidence": 80,
+    "notes": "Name suggests titles.",
+    "_source_name": "modern-comic-titles-27957519",
+    "_batch_index": 4477
+  },
+  {
+    "name": "modern-fashion",
+    "category": "After Effects - Other",
+    "clean_name": "Modern Fashion",
+    "confidence": 60,
+    "notes": "Generic name, likely AE.",
+    "_source_name": "modern-fashion",
+    "_batch_index": 4478
+  },
+  {
+    "name": "modern-fashion-showcase-36330146",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Fashion Showcase",
+    "confidence": 70,
+    "notes": "Name suggests showcase/slideshow.",
+    "_source_name": "modern-fashion-showcase-36330146",
+    "_batch_index": 4479
+  },
+  {
+    "name": "modern-fast-opener-dynamic-typography-fashion",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Fast Opener Dynamic Typography Fashion",
+    "confidence": 85,
+    "notes": "Name includes 'opener'.",
+    "_source_name": "modern-fast-opener-dynamic-typography-fashion",
+    "_batch_index": 4480
+  },
+  {
+    "name": "modern-fresh-titles-37952975",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Modern Fresh Titles",
+    "confidence": 80,
+    "notes": "Name suggests titles.",
+    "_source_name": "modern-fresh-titles-37952975",
+    "_batch_index": 4481
+  },
+  {
+    "name": "modern-grunge-and-brush-strokes-intro-opener-38335750",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Grunge and Brush Strokes Intro Opener",
+    "confidence": 85,
+    "notes": "Name includes 'intro opener'.",
+    "_source_name": "modern-grunge-and-brush-strokes-intro-opener-38335750",
+    "_batch_index": 4482
+  },
+  {
+    "name": "modern-grunge-intro-21389037",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Grunge Intro",
+    "confidence": 80,
+    "notes": "Name includes 'intro'.",
+    "_source_name": "modern-grunge-intro-21389037",
+    "_batch_index": 4483
+  },
+  {
+    "name": "Modern-hip-hop-opener-1031917",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Hip Hop Opener",
+    "confidence": 80,
+    "notes": "Name includes 'opener'.",
+    "_source_name": "Modern-hip-hop-opener-1031917",
+    "_batch_index": 4484
+  },
+  {
+    "name": "modern-intro-urban-concrete-opener-39612338",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Intro Urban Concrete Opener",
+    "confidence": 80,
+    "notes": "Name includes 'intro' and 'opener'.",
+    "_source_name": "modern-intro-urban-concrete-opener-39612338",
+    "_batch_index": 4485
+  },
+  {
+    "name": "modern-mosaic-opener-v-2",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Mosaic Opener v2",
+    "confidence": 85,
+    "notes": "Name includes 'opener'.",
+    "_source_name": "modern-mosaic-opener-v-2",
+    "_batch_index": 4486
+  },
+  {
+    "name": "modern-opener-for-after-effects-38644606",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Opener for After Effects",
+    "confidence": 90,
+    "notes": "Name includes 'opener' and 'After Effects'.",
+    "_source_name": "modern-opener-for-after-effects-38644606",
+    "_batch_index": 4487
+  },
+  {
+    "name": "modern-opener-template-39573930",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Opener Template",
+    "confidence": 85,
+    "notes": "Name includes 'opener'.",
+    "_source_name": "modern-opener-template-39573930",
+    "_batch_index": 4488
+  },
+  {
+    "name": "modern-photo-collage-template-94AEBT7",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "Modern Photo Collage Template",
+    "confidence": 80,
+    "notes": "Name suggests photo collage.",
+    "_source_name": "modern-photo-collage-template-94AEBT7",
+    "_batch_index": 4489
+  },
+  {
+    "name": "modern-production-reel",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Modern Production Reel",
+    "confidence": 75,
+    "notes": "Name suggests production reel.",
+    "_source_name": "modern-production-reel",
+    "_batch_index": 4490
+  },
+  {
+    "name": "modern-rhythmic-opener-42367654",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Rhythmic Opener",
+    "confidence": 85,
+    "notes": "Name includes 'opener'.",
+    "_source_name": "modern-rhythmic-opener-42367654",
+    "_batch_index": 4491
+  },
+  {
+    "name": "modern-slideshow-19512181",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow.",
+    "_source_name": "modern-slideshow-19512181",
+    "_batch_index": 4492
+  },
+  {
+    "name": "modern-slideshow-20192169",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow.",
+    "_source_name": "modern-slideshow-20192169",
+    "_batch_index": 4493
+  },
+  {
+    "name": "modern-slideshow-22117002",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Modern Slideshow",
+    "confidence": 80,
+    "notes": "Name suggests slideshow.",
+    "_source_name": "modern-slideshow-22117002",
+    "_batch_index": 4494
+  },
+  {
+    "name": "modern-slideshow-i-opener-19351342",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Modern Slideshow I Opener",
+    "confidence": 80,
+    "notes": "Name includes 'opener'.",
+    "_source_name": "modern-slideshow-i-opener-19351342",
+    "_batch_index": 4495
+  },
+  {
+    "name": "modern-spherical-flares-kit-25603713",
+    "category": "After Effects - 3D & Particle",
+    "clean_name": "Modern Spherical Flares Kit",
+    "confidence": 80,
+    "notes": "Name suggests flares/particles.",
+    "_source_name": "modern-spherical-flares-kit-25603713",
+    "_batch_index": 4496
+  },
+  {
+    "name": "modern-timeline-story-36411362",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "Modern Timeline Story",
+    "confidence": 75,
+    "notes": "Name suggests timeline/infographic.",
+    "_source_name": "modern-timeline-story-36411362",
+    "_batch_index": 4497
+  },
+  {
+    "name": "modern-title-trailer-37747373",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Modern Title Trailer",
+    "confidence": 80,
+    "notes": "Name suggests title.",
+    "_source_name": "modern-title-trailer-37747373",
+    "_batch_index": 4498
+  },
+  {
+    "name": "Modern-Trailer-for-F_X-35906716",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Modern Trailer for F/X",
+    "confidence": 85,
+    "notes": "Name includes 'Trailer'.",
+    "_source_name": "Modern-Trailer-for-F_X-35906716",
+    "_batch_index": 4499
+  }
+]

@@ -1,0 +1,542 @@
+[
+  {
+    "name": "history-intro-21296587",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "History Intro",
+    "confidence": 80,
+    "notes": "Name suggests intro opener, .zip likely contains AE project",
+    "_source_name": "history-intro-21296587",
+    "_batch_index": 3540
+  },
+  {
+    "name": "history-memories-36821757",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "History Memories",
+    "confidence": 80,
+    "notes": "Memories suggests photo album style slideshow",
+    "_source_name": "history-memories-36821757",
+    "_batch_index": 3541
+  },
+  {
+    "name": "history-movie-opener-8329653",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "History Movie Opener",
+    "confidence": 85,
+    "notes": "Explicitly movie opener",
+    "_source_name": "history-movie-opener-8329653",
+    "_batch_index": 3542
+  },
+  {
+    "name": "history-on-newspaper-15128452",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "History on Newspaper",
+    "confidence": 75,
+    "notes": "Newspaper theme suggests cinematic/film style",
+    "_source_name": "history-on-newspaper-15128452",
+    "_batch_index": 3543
+  },
+  {
+    "name": "history-parallax-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Parallax Slideshow",
+    "confidence": 85,
+    "notes": "Parallax slideshow typical for AE",
+    "_source_name": "history-parallax-slideshow",
+    "_batch_index": 3544
+  },
+  {
+    "name": "history-project-slideshow-44457445",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Project Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow project",
+    "_source_name": "history-project-slideshow-44457445",
+    "_batch_index": 3545
+  },
+  {
+    "name": "history-slides-21426290",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slides",
+    "confidence": 80,
+    "notes": "Slides likely slideshow",
+    "_source_name": "history-slides-21426290",
+    "_batch_index": 3546
+  },
+  {
+    "name": "history-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 85,
+    "notes": "Explicit slideshow",
+    "_source_name": "history-slideshow",
+    "_batch_index": 3547
+  },
+  {
+    "name": "history-slideshow-22675584-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow, INTRO-HD.NET suffix but name says slideshow",
+    "_source_name": "history-slideshow-22675584-INTRO-HD.NET",
+    "_batch_index": 3548
+  },
+  {
+    "name": "history-slideshow-33672926",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "history-slideshow-33672926",
+    "_batch_index": 3549
+  },
+  {
+    "name": "history-slideshow-37499254",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "history-slideshow-37499254",
+    "_batch_index": 3550
+  },
+  {
+    "name": "history-slideshow-39135046",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "history-slideshow-39135046",
+    "_batch_index": 3551
+  },
+  {
+    "name": "history-slideshow-39826845",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 80,
+    "notes": "Slideshow, .jpg files suggest preview",
+    "_source_name": "history-slideshow-39826845",
+    "_batch_index": 3552
+  },
+  {
+    "name": "history-slideshow-45799993",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "history-slideshow-45799993",
+    "_batch_index": 3553
+  },
+  {
+    "name": "history-slideshow-4k-36112348-INTRO-HD.NET",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow 4K",
+    "confidence": 85,
+    "notes": "4K slideshow",
+    "_source_name": "history-slideshow-4k-36112348-INTRO-HD.NET",
+    "_batch_index": 3554
+  },
+  {
+    "name": "history-slideshow-50997427",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "history-slideshow-50997427",
+    "_batch_index": 3555
+  },
+  {
+    "name": "history-slideshow-52239631",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "history-slideshow-52239631",
+    "_batch_index": 3556
+  },
+  {
+    "name": "history-slideshow-52251252",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow",
+    "confidence": 85,
+    "notes": "Slideshow",
+    "_source_name": "history-slideshow-52251252",
+    "_batch_index": 3557
+  },
+  {
+    "name": "history-slideshow-for-after-effects-45395860",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Slideshow for After Effects",
+    "confidence": 90,
+    "notes": "Explicitly for After Effects",
+    "_source_name": "history-slideshow-for-after-effects-45395860",
+    "_batch_index": 3558
+  },
+  {
+    "name": "history-slideshow-old-memories-retro-photo-alb-38103609",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "History Slideshow Old Memories Retro Photo Album",
+    "confidence": 90,
+    "notes": "Retro photo album style",
+    "_source_name": "history-slideshow-old-memories-retro-photo-alb-38103609",
+    "_batch_index": 3559
+  },
+  {
+    "name": "history-slideshow-old-memories-retro-photo-alb-38389931c",
+    "category": "After Effects - Photo Album & Gallery",
+    "clean_name": "History Slideshow Old Memories Retro Photo Album",
+    "confidence": 90,
+    "notes": "Retro photo album style",
+    "_source_name": "history-slideshow-old-memories-retro-photo-alb-38389931c",
+    "_batch_index": 3560
+  },
+  {
+    "name": "history-time-vintage-opener-45445939",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "History Time Vintage Opener",
+    "confidence": 85,
+    "notes": "Vintage opener",
+    "_source_name": "history-time-vintage-opener-45445939",
+    "_batch_index": 3561
+  },
+  {
+    "name": "history-timeline",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 85,
+    "notes": "Timeline suggests infographic/data viz",
+    "_source_name": "history-timeline",
+    "_batch_index": 3562
+  },
+  {
+    "name": "history-timeline-21633379",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 85,
+    "notes": "Timeline",
+    "_source_name": "history-timeline-21633379",
+    "_batch_index": 3563
+  },
+  {
+    "name": "history-timeline-22117002",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 85,
+    "notes": "Timeline",
+    "_source_name": "history-timeline-22117002",
+    "_batch_index": 3564
+  },
+  {
+    "name": "history-timeline-22179137",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 90,
+    "notes": "Contains .aep file, timeline",
+    "_source_name": "history-timeline-22179137",
+    "_batch_index": 3565
+  },
+  {
+    "name": "history-timeline-23110639-INTRO-HD.NET",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 85,
+    "notes": "Timeline",
+    "_source_name": "history-timeline-23110639-INTRO-HD.NET",
+    "_batch_index": 3566
+  },
+  {
+    "name": "history-timeline-35037669",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 85,
+    "notes": "Timeline",
+    "_source_name": "history-timeline-35037669",
+    "_batch_index": 3567
+  },
+  {
+    "name": "history-timeline-39412030",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 85,
+    "notes": "Timeline",
+    "_source_name": "history-timeline-39412030",
+    "_batch_index": 3568
+  },
+  {
+    "name": "History-timeline-429612",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 85,
+    "notes": "Timeline",
+    "_source_name": "History-timeline-429612",
+    "_batch_index": 3569
+  },
+  {
+    "name": "history-timeline-44835749",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline",
+    "confidence": 90,
+    "notes": "Contains .aep, timeline",
+    "_source_name": "history-timeline-44835749",
+    "_batch_index": 3570
+  },
+  {
+    "name": "history-timeline-presentation-31432522",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline Presentation",
+    "confidence": 85,
+    "notes": "Timeline presentation",
+    "_source_name": "history-timeline-presentation-31432522",
+    "_batch_index": 3571
+  },
+  {
+    "name": "history-timeline-presentation-31482129",
+    "category": "After Effects - Infographic & Data Viz",
+    "clean_name": "History Timeline Presentation",
+    "confidence": 85,
+    "notes": "Timeline presentation",
+    "_source_name": "history-timeline-presentation-31482129",
+    "_batch_index": 3572
+  },
+  {
+    "name": "history-timeline-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Timeline Slideshow",
+    "confidence": 80,
+    "notes": "Combination timeline and slideshow, leans slideshow",
+    "_source_name": "history-timeline-slideshow",
+    "_batch_index": 3573
+  },
+  {
+    "name": "history-timeline-slideshow-31658992",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Timeline Slideshow",
+    "confidence": 80,
+    "notes": "Combination timeline and slideshow",
+    "_source_name": "history-timeline-slideshow-31658992",
+    "_batch_index": 3574
+  },
+  {
+    "name": "history-vintage-slideshow",
+    "category": "After Effects - Slideshow",
+    "clean_name": "History Vintage Slideshow",
+    "confidence": 85,
+    "notes": "Vintage slideshow",
+    "_source_name": "history-vintage-slideshow",
+    "_batch_index": 3575
+  },
+  {
+    "name": "HiTechMonster-INTRO-HD.NET",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "HiTech Monster Intro",
+    "confidence": 80,
+    "notes": "Name suggests intro, INTRO-HD.NET suffix",
+    "_source_name": "HiTechMonster-INTRO-HD.NET",
+    "_batch_index": 3576
+  },
+  {
+    "name": "Hokku_____watercolor_oriental_brushset",
+    "category": "Photoshop - Brushes",
+    "clean_name": "Hokku Watercolor Oriental Brushset",
+    "confidence": 90,
+    "notes": "Brushset, likely Photoshop brushes",
+    "_source_name": "Hokku_____watercolor_oriental_brushset",
+    "_batch_index": 3577
+  },
+  {
+    "name": "hollywood-movies-luts-38435303",
+    "category": "Color Grading & LUTs",
+    "clean_name": "Hollywood Movies LUTs",
+    "confidence": 95,
+    "notes": "Explicit LUTs in name",
+    "_source_name": "hollywood-movies-luts-38435303",
+    "_batch_index": 3578
+  },
+  {
+    "name": "holochrome-youtube-thumbnails-UAR5TST",
+    "category": "After Effects - Social Media",
+    "clean_name": "Holochrome YouTube Thumbnails",
+    "confidence": 80,
+    "notes": "YouTube thumbnails, likely AE template",
+    "_source_name": "holochrome-youtube-thumbnails-UAR5TST",
+    "_batch_index": 3579
+  },
+  {
+    "name": "holographic-opener-26892933",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Holographic Opener",
+    "confidence": 85,
+    "notes": "Opener",
+    "_source_name": "holographic-opener-26892933",
+    "_batch_index": 3580
+  },
+  {
+    "name": "holographic-slideshow-for-after-effects-43040228",
+    "category": "After Effects - Slideshow",
+    "clean_name": "Holographic Slideshow for After Effects",
+    "confidence": 90,
+    "notes": "Explicitly for After Effects, slideshow",
+    "_source_name": "holographic-slideshow-for-after-effects-43040228",
+    "_batch_index": 3581
+  },
+  {
+    "name": "holographic-sticker-maker",
+    "category": "Photoshop - Smart Objects & Templates",
+    "clean_name": "Holographic Sticker Maker",
+    "confidence": 75,
+    "notes": "Sticker maker likely PSD template",
+    "_source_name": "holographic-sticker-maker",
+    "_batch_index": 3582
+  },
+  {
+    "name": "holographic-youtube-thumbnails-BXMKRW7",
+    "category": "After Effects - Social Media",
+    "clean_name": "Holographic YouTube Thumbnails",
+    "confidence": 80,
+    "notes": "YouTube thumbnails",
+    "_source_name": "holographic-youtube-thumbnails-BXMKRW7",
+    "_batch_index": 3583
+  },
+  {
+    "name": "homework-presentation-50899904",
+    "category": "After Effects - Corporate & Business",
+    "clean_name": "Homework Presentation",
+    "confidence": 70,
+    "notes": "Presentation style, could be educational but likely template",
+    "_source_name": "homework-presentation-50899904",
+    "_batch_index": 3584
+  },
+  {
+    "name": "homyhandcraft-youtube-cover-4HS44PJ",
+    "category": "After Effects - Social Media",
+    "clean_name": "Homyhandcraft YouTube Cover",
+    "confidence": 80,
+    "notes": "YouTube cover",
+    "_source_name": "homyhandcraft-youtube-cover-4HS44PJ",
+    "_batch_index": 3585
+  },
+  {
+    "name": "Honey Jar Mockups",
+    "category": "Mockups - Packaging",
+    "clean_name": "Honey Jar Mockups",
+    "confidence": 95,
+    "notes": "Explicit mockup, jar packaging",
+    "_source_name": "Honey Jar Mockups",
+    "_batch_index": 3586
+  },
+  {
+    "name": "hong-kong-animated-map-hong-kong-region-of-the-p",
+    "category": "After Effects - Map & Location",
+    "clean_name": "Hong Kong Animated Map",
+    "confidence": 90,
+    "notes": "Animated map",
+    "_source_name": "hong-kong-animated-map-hong-kong-region-of-the-p",
+    "_batch_index": 3587
+  },
+  {
+    "name": "hoodie-sweater-mockup-23GJMNV",
+    "category": "Mockups - Apparel",
+    "clean_name": "Hoodie Sweater Mockup",
+    "confidence": 95,
+    "notes": "Apparel mockup",
+    "_source_name": "hoodie-sweater-mockup-23GJMNV",
+    "_batch_index": 3588
+  },
+  {
+    "name": "Hookah-Party-Template",
+    "category": "Print - Invitations & Events",
+    "clean_name": "Hookah Party Template",
+    "confidence": 80,
+    "notes": "Party template, .pdf and .psd suggest print invitation",
+    "_source_name": "Hookah-Party-Template",
+    "_batch_index": 3589
+  },
+  {
+    "name": "Horizon Panels",
+    "category": "After Effects - Other",
+    "clean_name": "Horizon Panels",
+    "confidence": 60,
+    "notes": ".py file, unclear purpose, likely AE script or plugin",
+    "_source_name": "Horizon Panels",
+    "_batch_index": 3590
+  },
+  {
+    "name": "horizon-screens-36344306",
+    "category": "After Effects - Mockup & Device",
+    "clean_name": "Horizon Screens",
+    "confidence": 80,
+    "notes": "Screens suggests device mockup",
+    "_source_name": "horizon-screens-36344306",
+    "_batch_index": 3591
+  },
+  {
+    "name": "Horizontal Music Players with Lyric",
+    "category": "After Effects - Lyric & Music Video",
+    "clean_name": "Horizontal Music Players with Lyric",
+    "confidence": 90,
+    "notes": "Contains .aep and .mogrt, music lyric style",
+    "_source_name": "Horizontal Music Players with Lyric",
+    "_batch_index": 3592
+  },
+  {
+    "name": "horror_old_TV_opener folder",
+    "category": "After Effects - Intro & Opener",
+    "clean_name": "Horror Old TV Opener",
+    "confidence": 90,
+    "notes": "Contains .aep, opener",
+    "_source_name": "horror_old_TV_opener folder",
+    "_batch_index": 3593
+  },
+  {
+    "name": "horror-8146208",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Horror",
+    "confidence": 75,
+    "notes": "Horror theme, likely cinematic",
+    "_source_name": "horror-8146208",
+    "_batch_index": 3594
+  },
+  {
+    "name": "horror-classic-41027578",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Horror Classic",
+    "confidence": 75,
+    "notes": "Horror classic theme",
+    "_source_name": "horror-classic-41027578",
+    "_batch_index": 3595
+  },
+  {
+    "name": "horror-forest-20730449",
+    "category": "After Effects - Cinematic & Film",
+    "clean_name": "Horror Forest",
+    "confidence": 75,
+    "notes": "Horror forest theme",
+    "_source_name": "horror-forest-20730449",
+    "_batch_index": 3596
+  },
+  {
+    "name": "horror-movie-trailer-38162240",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Horror Movie Trailer",
+    "confidence": 90,
+    "notes": "Explicit movie trailer",
+    "_source_name": "horror-movie-trailer-38162240",
+    "_batch_index": 3597
+  },
+  {
+    "name": "horror-teaser-50827137",
+    "category": "After Effects - Trailer & Teaser",
+    "clean_name": "Horror Teaser",
+    "confidence": 85,
+    "notes": "Teaser",
+    "_source_name": "horror-teaser-50827137",
+    "_batch_index": 3598
+  },
+  {
+    "name": "horror-titles-in-photos-30756037",
+    "category": "After Effects - Title & Typography",
+    "clean_name": "Horror Titles in Photos",
+    "confidence": 85,
+    "notes": "Titles in photos, title style",
+    "_source_name": "horror-titles-in-photos-30756037",
+    "_batch_index": 3599
+  }
+]
