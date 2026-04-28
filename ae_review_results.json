@@ -1,0 +1,317 @@
+[
+  {
+    "name": "1920x1080 Main Composition",
+    "action": "categorize",
+    "target": "After Effects - Cinematic & Film",
+    "confidence": 80,
+    "clean_name": "Space Bound - Only E3D Required",
+    "notes": "Contains a cinematic space-themed composition with E3D requirement, suitable for film/cinematic category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\1920x1080 Main Composition"
+  },
+  {
+    "name": "1st Version",
+    "action": "categorize",
+    "target": "After Effects - Motion Graphics Pack",
+    "confidence": 70,
+    "clean_name": "1st Version (BillBoard Mock-Up)",
+    "notes": "Multiple versions of a project with billboard mock-up timelapse, likely a motion graphics pack.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\1st Version"
+  },
+  {
+    "name": "AE File",
+    "action": "categorize",
+    "target": "After Effects - Other",
+    "confidence": 60,
+    "clean_name": "AE File",
+    "notes": "Generic name with footage subfolder; insufficient context for specific category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\AE File"
+  },
+  {
+    "name": "All Comps Render",
+    "action": "categorize",
+    "target": "After Effects - Photo Slideshow",
+    "confidence": 85,
+    "clean_name": "Travel Memories Photo Slideshow",
+    "notes": "Contains travel memories and photo album display template, clearly a photo slideshow.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\All Comps Render"
+  },
+  {
+    "name": "Chinese AE CC2014 Template",
+    "action": "categorize",
+    "target": "After Effects - Cinematic & Film",
+    "confidence": 75,
+    "clean_name": "Blue Electromagnetic Lines Space Film Trailer",
+    "notes": "Blue electromagnetic lines space film trailer/promo, fits cinematic/film category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE CC2014 Template"
+  },
+  {
+    "name": "Chinese AE CC2014 Template 2",
+    "action": "categorize",
+    "target": "After Effects - Photo Slideshow",
+    "confidence": 85,
+    "clean_name": "3D Space Photo Album Display",
+    "notes": "3D space photo album display template, clearly a photo slideshow.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE CC2014 Template 2"
+  },
+  {
+    "name": "Chinese AE CC2015",
+    "action": "categorize",
+    "target": "After Effects - Cinematic & Film",
+    "confidence": 80,
+    "clean_name": "Film Set Graphic Display",
+    "notes": "Film set graphic display template, suitable for cinematic/film category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE CC2015"
+  },
+  {
+    "name": "Chinese AE CC2015 Template",
+    "action": "categorize",
+    "target": "After Effects - Sport & Action",
+    "confidence": 90,
+    "clean_name": "Sports Event Broadcast Package",
+    "notes": "Sports event broadcast package with high-tech graphics, clearly sport & action.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE CC2015 Template"
+  },
+  {
+    "name": "Chinese AE CC2015 Template 2",
+    "action": "categorize",
+    "target": "After Effects - Titles & Typography",
+    "confidence": 85,
+    "clean_name": "Elegant Text Animation",
+    "notes": "Elegant text animation template, fits titles & typography category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE CC2015 Template 2"
+  },
+  {
+    "name": "Chinese AE CC2015 Template 3",
+    "action": "categorize",
+    "target": "After Effects - Christmas & Holiday",
+    "confidence": 90,
+    "clean_name": "Traditional Chinese Ink Dragon Boat Festival",
+    "notes": "Traditional Chinese ink style Dragon Boat Festival opener, fits holiday category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE CC2015 Template 3"
+  },
+  {
+    "name": "Chinese AE CS6 Template",
+    "action": "categorize",
+    "target": "After Effects - Sport & Action",
+    "confidence": 85,
+    "clean_name": "World Cup Soccer Fashion Stage Display",
+    "notes": "The folder name and subdir contain Chinese characters that translate to 'World Cup soccer fashion stage display', which fits Sport & Action category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE CS6 Template"
+  },
+  {
+    "name": "Chinese AE CS6 Template 2",
+    "action": "categorize",
+    "target": "After Effects - Corporate & Business",
+    "confidence": 90,
+    "clean_name": "Corporate Business Promotion Intro",
+    "notes": "Subdir translates to 'Enterprise company business promotion introduction promotional AE video template', clearly Corporate & Business.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE CS6 Template 2"
+  },
+  {
+    "name": "Chinese AE Template 2015",
+    "action": "categorize",
+    "target": "After Effects - Corporate & Business",
+    "confidence": 85,
+    "clean_name": "Tech Glitch Corporate Culture Display",
+    "notes": "Subdir translates to 'Exquisite technology full element glitch style corporate culture promotion graphic display', fits Corporate & Business with glitch elements.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE Template 2015"
+  },
+  {
+    "name": "Chinese AE Template 3",
+    "action": "categorize",
+    "target": "After Effects - Corporate & Business",
+    "confidence": 80,
+    "clean_name": "Blue Atmosphere Corporate Certificate",
+    "notes": "Subdir translates to 'Blue atmosphere corporate certificate promotion AE template', suitable for Corporate & Business.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE Template 3"
+  },
+  {
+    "name": "Chinese AE Template Open",
+    "action": "merge",
+    "target": "G:\\Organized\\After Effects - Event & Party\\Open Event",
+    "confidence": 90,
+    "clean_name": "Space Particle Explosion Opener",
+    "notes": "Subdir translates to 'Space particle explosion special effect film header AE template', and parent candidate 'Open Event' is a good match for this opener style.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese AE Template Open"
+  },
+  {
+    "name": "Chinese Metal 2017 Template 2",
+    "action": "merge",
+    "target": "G:\\Organized\\After Effects - Intro & Opener\\Gold Metal and Particles",
+    "confidence": 85,
+    "clean_name": "Metal Image Display 2017",
+    "notes": "Subdir translates to 'Metal image-9', and among parent candidates, 'Gold Metal and Particles' in Intro & Opener is the most fitting for a metal-themed intro.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Chinese Metal 2017 Template 2"
+  },
+  {
+    "name": "Composition Render",
+    "action": "categorize",
+    "target": "After Effects - Christmas & Holiday",
+    "confidence": 95,
+    "clean_name": "Merry Christmas Greeting",
+    "notes": "AEP file 'Greeting-Merry-Christmas' and subdir mentions 'logo text', but the Christmas theme is dominant, so Christmas & Holiday is appropriate.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Composition Render"
+  },
+  {
+    "name": "Final Project Render",
+    "action": "categorize",
+    "target": "After Effects - Photo Slideshow",
+    "confidence": 90,
+    "clean_name": "Lovely Photo Slideshow",
+    "notes": "AEP file 'Lovely Slideshow' and subdir translates to 'Beautiful photo album fashion quick display', clearly a Photo Slideshow.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Final Project Render"
+  },
+  {
+    "name": "Master Photo Pages Comps",
+    "action": "merge",
+    "target": "G:\\Organized\\After Effects - Christmas & Holiday\\Christmas Photo Tree",
+    "confidence": 85,
+    "clean_name": "Christmas Memories Album",
+    "notes": "AEP file 'Our Christmas Memories Album' and subdir 'Red romantic Christmas holiday photo album', best matched with 'Christmas Photo Tree' among parent candidates.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Master Photo Pages Comps"
+  },
+  {
+    "name": "Race Machine Main Composition",
+    "action": "merge",
+    "target": "G:\\Organized\\After Effects - Intro & Opener\\Drift Car Race Automotive Opener",
+    "confidence": 90,
+    "clean_name": "Race Machine Plugin",
+    "notes": "AEP file 'Race_Machine_plugin' and subdir 'Shocking explosive car fast motion display', best fits 'Drift Car Race Automotive Opener' in Intro & Opener.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Race Machine Main Composition"
+  },
+  {
+    "name": "Render Project Final",
+    "action": "categorize",
+    "target": "After Effects - Christmas & Holiday",
+    "confidence": 90,
+    "clean_name": "Christmas Slideshow (CS6)",
+    "notes": "Contains Christmas-themed slideshow project and related assets.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Render Project Final"
+  },
+  {
+    "name": "Scaled Down Render 960x540",
+    "action": "categorize",
+    "target": "After Effects - Christmas & Holiday",
+    "confidence": 90,
+    "clean_name": "Inkman Christmas Holiday Card",
+    "notes": "Christmas holiday card project with scaled-down render.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Scaled Down Render 960x540"
+  },
+  {
+    "name": "Unknown LP Video 2",
+    "action": "keep-in-review",
+    "target": "Insufficient context: subfolder name is garbled and no .aep files or clear theme; parent candidates are unrelated.",
+    "confidence": 50,
+    "clean_name": "Unknown LP Video 2",
+    "notes": "Garbled subfolder name and no project files; cannot determine category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown LP Video 2"
+  },
+  {
+    "name": "Unknown VH Template",
+    "action": "keep-in-review",
+    "target": "Insufficient context: only a subfolder 'Planet Blast' and a .wav file; no .aep files.",
+    "confidence": 50,
+    "clean_name": "Unknown VH Template",
+    "notes": "No project files; cannot determine category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template"
+  },
+  {
+    "name": "Unknown VH Template (1)",
+    "action": "categorize",
+    "target": "After Effects - Wedding & Romance",
+    "confidence": 80,
+    "clean_name": "Wedding and Travel Slideshow",
+    "notes": "Subfolder name suggests wedding and travel slideshow content.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template (1)"
+  },
+  {
+    "name": "Unknown VH Template (2)",
+    "action": "keep-in-review",
+    "target": "Insufficient context: only subfolder 'Planet Blast' with .e3d and .wav files; no .aep files.",
+    "confidence": 50,
+    "clean_name": "Unknown VH Template (2)",
+    "notes": "No project files; cannot determine category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template (2)"
+  },
+  {
+    "name": "Unknown VH Template (3)",
+    "action": "categorize",
+    "target": "After Effects - Wedding & Romance",
+    "confidence": 80,
+    "clean_name": "Wedding and Travel Slideshow",
+    "notes": "Subfolder name suggests wedding and travel slideshow content.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template (3)"
+  },
+  {
+    "name": "Unknown VH Template 2",
+    "action": "categorize",
+    "target": "After Effects - Broadcast Package",
+    "confidence": 90,
+    "clean_name": "Isometric Broadcast Pack",
+    "notes": "Text hint describes 'Isometric Broadcast Pack' with 3D-render based template.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template 2"
+  },
+  {
+    "name": "Unknown VH Template 2 (1)",
+    "action": "keep-in-review",
+    "target": "Insufficient context: only a subfolder 'VH-9265399' with .jpg, .url, .zip; no .aep files.",
+    "confidence": 50,
+    "clean_name": "Unknown VH Template 2 (1)",
+    "notes": "No project files; cannot determine category.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template 2 (1)"
+  },
+  {
+    "name": "Unknown VH Template 3",
+    "action": "keep-in-review",
+    "target": "Insufficient context: subfolder 'ae' with .aep, .ai, .mov, .mp4 but no clear theme or text hint.",
+    "confidence": 60,
+    "clean_name": "Unknown VH Template 3",
+    "notes": "Has project files but no clear theme; needs manual review.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template 3"
+  },
+  {
+    "name": "Unknown VH Template 3 (1)",
+    "action": "categorize",
+    "target": "After Effects - Christmas & Holiday",
+    "confidence": 90,
+    "clean_name": "Christmas Slideshow",
+    "notes": "Contains 'Christmas Slideshow' subfolder, clearly a holiday-themed slideshow template.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template 3 (1)"
+  },
+  {
+    "name": "Unknown VH Template 4",
+    "action": "categorize",
+    "target": "After Effects - Promo & Advertising",
+    "confidence": 70,
+    "clean_name": "Mobile App Presentation",
+    "notes": "Contains 'mobile_app_presentation_hive' subfolder and .ai files, likely a mobile app promo template.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template 4"
+  },
+  {
+    "name": "Unknown VH Template 4 (1)",
+    "action": "categorize",
+    "target": "After Effects - Corporate & Business",
+    "confidence": 80,
+    "clean_name": "Our Corporation Folder",
+    "notes": "Contains 'our corporation folder', strongly suggests corporate/business content.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template 4 (1)"
+  },
+  {
+    "name": "Unknown VH Template 4 (2)",
+    "action": "merge",
+    "target": "G:\\Organized\\After Effects - Product Promo\\Minimal Product Display",
+    "confidence": 60,
+    "clean_name": "Mobile App Presentation (duplicate)",
+    "notes": "Duplicate of 'Unknown VH Template 4' with same subfolder and .ai files; merging to avoid redundancy.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Unknown VH Template 4 (2)"
+  },
+  {
+    "name": "Warming Display",
+    "action": "merge",
+    "target": "G:\\Organized\\After Effects - Slideshow\\Leaves Relaxing Photo and Video Display",
+    "confidence": 75,
+    "clean_name": "Warming Display",
+    "notes": "Contains .aep, .jpeg, .jpg, .txt files and 'warming-display' subfolder; best fits slideshow category, merging with similar relaxing display template.",
+    "src_path": "G:\\Organized\\_Review\\After Effects - Other\\Warming Display"
+  }
+]
