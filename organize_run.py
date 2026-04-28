@@ -46,6 +46,32 @@ JOURNAL_FILE     = os.path.join(os.path.dirname(__file__), 'organize_moves.db')
 RESULTS_DIR      = os.path.join(os.path.dirname(__file__), 'classification_results')
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
+# ── Category name normalization ──────────────────────────────────────────────
+# Canonical names (right-hand side).  Any batch that returns a left-hand key
+# will be silently rewritten before the destination path is computed.
+# This handles cross-batch inconsistencies (AE vs Design classifiers used
+# slightly different names for the same category).
+CATEGORY_ALIASES = {
+    # word-order variant from the AE classifier
+    'After Effects - Opener & Intro':   'After Effects - Intro & Opener',
+    # old short name — "Title & Typography" is more precise
+    'After Effects - Typography':       'After Effects - Title & Typography',
+    # flat names returned by older AE batches for categories with subtypes
+    'Business & Marketing':             'After Effects - Corporate & Business',
+    'Holiday & Seasonal':               'After Effects - Christmas & Holiday',
+    'Motion Graphics & VFX':            'After Effects - Motion Graphics Pack',
+    'Services & Industries':            'After Effects - Corporate & Business',
+    'Sport & Recreation':               'After Effects - Sport & Action',
+    'Food & Lifestyle':                 'After Effects - Product Promo',
+    'Design Tools & Resources':         'Plugins & Extensions',
+    'Audio Resources':                  'Stock Music & Audio',
+    'Video Editing - General':          'After Effects - Other',
+}
+
+def normalize_category(cat: str) -> str:
+    """Return the canonical category name, resolving any known alias."""
+    return CATEGORY_ALIASES.get(cat, cat)
+
 # ── Logging ───────────────────────────────────────────────────────────────────
 def log(msg, also_print=True):
     ts = datetime.now().strftime('%H:%M:%S')
@@ -379,7 +405,7 @@ def apply_moves(pairs: list, source_override: str,
 
     for item, org_entry in pairs:
         clean    = (item.get('clean_name') or item.get('name', '')).strip()
-        category = item.get('category', 'After Effects - Other').strip()
+        category = normalize_category(item.get('category', 'After Effects - Other').strip())
         conf     = int(item.get('confidence', 0))
 
         if not org_entry:
