@@ -108,16 +108,87 @@ GENERIC_AEP_STEMS = {
 }
 
 
+def _research_inner_archive(archive: Path, names: list[str]) -> str:
+    """If the listing reveals an inner .zip / .rar named informatively,
+    that name often carries the real product title. Return cleaned title
+    or empty string."""
+    inner_archives: list[str] = []
+    for n in names:
+        n_norm = n.replace("\\", "/")
+        if n_norm.startswith("__MACOSX/") or "/._" in n_norm:
+            continue
+        ext = os.path.splitext(n)[1].lower()
+        if ext in (".zip", ".rar", ".7z"):
+            inner = os.path.basename(n_norm)
+            stem = os.path.splitext(inner)[0]
+            if stem and len(stem) > 5 and not JUNK_TOKENS.search(stem):
+                inner_archives.append(stem)
+    if not inner_archives:
+        return ""
+    # Prefer the longest informative name
+    inner_archives.sort(key=len, reverse=True)
+    cleaned = clean_name(inner_archives[0])
+    if cleaned and len(cleaned) > 4 and cleaned.lower() not in GENERIC_AEP_STEMS:
+        return cleaned
+    return ""
+
+
+def _research_pdf_titles(archive: Path, names: list[str]) -> str:
+    """Many marketplaces ship a Readme.pdf / Help.pdf / Manual.pdf whose
+    *filename* contains the product title (e.g. "Premium Light Leaks Pack
+    User Guide.pdf"). Returns cleaned title or empty string."""
+    for n in names:
+        n_norm = n.replace("\\", "/")
+        if n_norm.startswith("__MACOSX/") or "/._" in n_norm:
+            continue
+        if not n_norm.lower().endswith(".pdf"):
+            continue
+        base = os.path.basename(n_norm)
+        stem = os.path.splitext(base)[0]
+        if not stem or len(stem) <= 5 or JUNK_TOKENS.search(stem):
+            continue
+        # Strip "readme" / "user guide" / "help" suffixes to get the title
+        cleaned = re.sub(
+            r"\s*[-_]?\s*(?:read\s*me|user\s*guide|guide|manual|help|"
+            r"documentation|installation|instructions?)\s*\.?\s*$",
+            "", stem, flags=re.IGNORECASE,
+        )
+        cleaned = clean_name(cleaned)
+        if cleaned and len(cleaned) > 4 and cleaned.lower() not in GENERIC_AEP_STEMS:
+            return cleaned
+    return ""
+
+
 def extract_project_name(names: list[str], archive_stem: str) -> str:
     """Pick the most informative name from an archive's listing.
 
-    Priority:
-      1. Stem of any .aep / .aet whose name is *not* generic.
-      2. Top-level folder name (excluding __MACOSX, .DS_Store).
-      3. Stem of any .aep even if generic, suffixed with archive-stem clue.
-      4. Cleaned archive stem.
+    Priority (highest-confidence first):
+      1. Cleaned archive stem if it's a real slug
+         ("095550436-photo-slideshow" -> "Photo Slideshow"). This is the
+         marketplace-canonical title for any Envato slug-format zip.
+      2. Stem of any .aep / .aet whose name is not generic.
+      3. Inner archive name (outer-zip-of-inner-zip pattern).
+      4. PDF/README filename (often "Product Title User Guide.pdf").
+      5. Top-level folder name (excluding __MACOSX / .DS_Store / generic).
+      6. Last-resort: any top-level dir or generic .aep stem.
     """
-    # 1. Informative .aep/.aet file stems
+    # 1. Cleaned archive stem if it's a real slug — marketplace-canonical
+    #    title for any Envato slug-format zip. This beats inner data because
+    #    Envato slugs are deterministic and human-readable.
+    cleaned_stem = clean_name(archive_stem)
+    archive_stem_is_a_real_slug = (
+        cleaned_stem
+        and len(cleaned_stem) > 5
+        and cleaned_stem.lower() not in GENERIC_AEP_STEMS
+        # The archive stem must contain at least one alphabetic word, not
+        # just a bare ID like "VH-3101891" or "ME-12345".
+        and re.search(r"[A-Za-z]{4,}", cleaned_stem)
+        and not re.fullmatch(r"(?:VH|ME)\s+\d+", cleaned_stem, re.IGNORECASE)
+    )
+    if archive_stem_is_a_real_slug:
+        return cleaned_stem
+
+    # 2. Informative .aep/.aet file stems
     aep_stems: list[str] = []
     generic_aep_stems: list[str] = []
     for n in names:
@@ -138,7 +209,17 @@ def extract_project_name(names: list[str], archive_stem: str) -> str:
         aep_stems.sort(key=len, reverse=True)
         return clean_name(aep_stems[0])
 
-    # 2. Top-level dirs (filter out __MACOSX, junk tokens, AND generic names)
+    # 3. Inner archive title (outer-of-inner pattern)
+    inner_title = _research_inner_archive(Path(""), names)
+    if inner_title:
+        return inner_title
+
+    # 4. PDF/README filename ("Product Title User Guide.pdf")
+    pdf_title = _research_pdf_titles(Path(""), names)
+    if pdf_title:
+        return pdf_title
+
+    # 5. Top-level dirs (filter out __MACOSX, junk tokens, AND generic names)
     top_dirs: set[str] = set()
     for n in names:
         first = n.replace("\\", "/").split("/", 1)[0].rstrip()
@@ -155,14 +236,12 @@ def extract_project_name(names: list[str], archive_stem: str) -> str:
         candidates.sort(key=len, reverse=True)
         return clean_name(candidates[0])
 
-    # 3. Cleaned archive stem (this is usually the marketplace slug
-    #    "095550436-photo-slideshow" -> "Photo Slideshow", which is far
-    #    more informative than generic dir names like "Project").
-    cleaned = clean_name(archive_stem)
-    if cleaned and len(cleaned) > 3:
-        return cleaned
+    # 6. Cleaned archive stem even if generic-looking (e.g. "VH 3101891" —
+    #    we don't have anything better, keep it).
+    if cleaned_stem and len(cleaned_stem) > 3:
+        return cleaned_stem
 
-    # 4. Last resort: any top-level dir, even if generic
+    # 7. Last resort
     if top_dirs:
         return clean_name(sorted(top_dirs, key=len, reverse=True)[0])
     if generic_aep_stems:
@@ -178,13 +257,31 @@ def clean_name(raw: str) -> str:
     # Strip piracy domains in name
     s = PIRACY_DOMAIN_RE.sub("", s)
     s = JUNK_TOKENS.sub("", s)
-    # Strip leading marketplace prefixes
-    s = re.sub(r"^(?:VH[-_]|videohive[-_]?|VideoHive[-_]?|VideoHive\s+)", "", s,
-               flags=re.IGNORECASE)
+    # Strip leading marketplace prefixes (VideoHive/Videohive/VH-/videohive-/elements-)
+    s = re.sub(
+        r"^(?:videohive[-_\s]+|VH[-_]|elements[-_\s]+|envato[-_\s]+)",
+        "", s, flags=re.IGNORECASE,
+    )
     s = re.sub(r"^(?:[0-9]{6,}_MotionElements_)", "", s)
-    s = re.sub(r"^(?:[0-9]{7,9})[-_\s]+", "", s)  # 9-digit VH ID prefix
-    # Strip trailing version/parenthetical noise
-    s = re.sub(r"\s*\(CS\d+(\.\d+)?\)\s*$", "", s, flags=re.IGNORECASE)
+    s = re.sub(r"^(?:[0-9]{7,9})[-_\s]+", "", s)  # 7-9 digit VH ID prefix
+    s = re.sub(r"^(?:VH[-_])(?=\d)", "", s, flags=re.IGNORECASE)  # VH-1234
+    # Strip trailing numeric marketplace IDs ("Wedding slideshow 25259629")
+    s = re.sub(r"[\s_\-]+\d{6,9}\s*$", "", s)
+    # Strip trailing version/parenthetical noise (CS6, CC2017, CC 2018, etc.)
+    s = re.sub(
+        r"\s*\((?:CS|CC)\s*\d+(?:\.\d+)?\)\s*$",
+        "", s, flags=re.IGNORECASE,
+    )
+    s = re.sub(
+        r"[_\-\s]+(?:CS|CC)\s*\d+(?:\.\d+)?\s*$",
+        "", s, flags=re.IGNORECASE,
+    )
+    # Strip Envato slug-suffix codes ("MWFKLJ-RuBsP6N8-05-19" pattern)
+    s = re.sub(
+        r"[\s_\-]+[A-Z0-9]{4,8}-[A-Za-z0-9]{8,}-\d{2}-\d{2,4}\s*$",
+        "", s,
+    )
+    # Trailing punctuation
     s = re.sub(r"\s*[-_\.]\s*$", "", s)
     # Replace separators with spaces
     s = re.sub(r"[_\-\.]+", " ", s)
