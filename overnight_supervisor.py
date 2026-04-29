@@ -310,23 +310,35 @@ def phase_process_ae_organized() -> None:
 
 # ── Phase 3: merge G:\Organized → I:\Organized ──────────────────────────────
 def phase_merge_g_to_i() -> None:
-    """Move every category from G:\Organized into I:\Organized.
+    r"""Move every category from G:\Organized into I:\Organized.
 
-    Uses per-child move for collision merging:
-      - If I:\Organized\<cat> doesn't exist: cross-drive robust_move whole dir.
-      - If I:\Organized\<cat> exists: walk children of G:\Organized\<cat> and
-        move each into I:\Organized\<cat>/<child> (with collision suffix).
+    Strategy v2 (post-audit, optimized for speed): use whole-dir robocopy
+    /MOVE /E for each category. When the destination already exists,
+    add /XC /XN /XO (skip files present in both with any size/timestamp
+    relationship) so we never overwrite or duplicate — items unique to G:\
+    move over, identical names in both stay on I:\ untouched. fix_duplicates
+    in Phase 4 catches anything ambiguous.
+
+    This is ~10-100x faster than the per-child loop because it avoids the
+    process-startup overhead of one robocopy invocation per item.
     """
     if not ORGANIZED_PRIMARY.exists():
         log("phase 3: G:\\Organized not found, skipping")
         append_log({"phase": "merge-g-to-i", "status": "skipped"})
         return
 
-    moved_categories = merged_categories = errors = 0
-    moved_items_total = 0
+    moved_whole = merged_existing = errors = empty_removed = 0
 
     g_categories = sorted(c for c in ORGANIZED_PRIMARY.iterdir() if c.is_dir())
     log(f"phase 3: {len(g_categories)} categories on G:\\Organized")
+
+    def _lp(p: str) -> str:
+        ap = os.path.abspath(p).replace("/", "\\")
+        if ap.startswith("\\\\?\\"):
+            return ap
+        if ap.startswith("\\\\"):
+            return "\\\\?\\UNC\\" + ap[2:]
+        return "\\\\?\\" + ap
 
     for cat_g in g_categories:
         cat_i = ORGANIZED_OVERFLOW / cat_g.name
@@ -337,46 +349,55 @@ def phase_merge_g_to_i() -> None:
         if child_count == 0:
             try:
                 cat_g.rmdir()
+                empty_removed += 1
             except OSError:
                 pass
             continue
 
-        if not cat_i.exists():
-            # Whole-dir cross-drive move via robust_move (robocopy /256)
+        existed = cat_i.exists()
+        cat_i.mkdir(parents=True, exist_ok=True)
+
+        # Build robocopy command. /MOVE /E is the core. /XC /XN /XO when
+        # dest existed = "skip any file present in both" (additive merge).
+        cmd = [
+            "robocopy", _lp(str(cat_g)), _lp(str(cat_i)),
+            "/MOVE", "/E", "/256", "/COPY:DAT",
+            "/R:1", "/W:1", "/NP", "/NFL", "/NDL", "/NJH", "/NJS",
+        ]
+        if existed:
+            cmd.extend(["/XC", "/XN", "/XO"])
+            log(f"phase 3: merging {cat_g.name} ({child_count} items, "
+                f"additive — won't overwrite I:)")
+        else:
             log(f"phase 3: moving whole category {cat_g.name} ({child_count} items)")
-            try:
-                robust_move(str(cat_g), str(cat_i))
-                moved_categories += 1
-                moved_items_total += child_count
-            except Exception as e:
-                log(f"phase 3: whole-dir move fail {cat_g.name}: {e}")
-                errors += 1
+
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True,
+                                    errors="replace", timeout=12 * 3600)
+        except subprocess.TimeoutExpired:
+            log(f"phase 3: TIMEOUT on {cat_g.name} (>12 hours)")
+            errors += 1
             continue
 
-        # Per-child merge: walk children, move each into existing dest
-        log(f"phase 3: merging {cat_g.name} into existing I:\\ counterpart "
-            f"({child_count} items)")
-        per_child_moved = per_child_err = 0
-        for child in list(cat_g.iterdir()):
-            target = safe_dest(cat_i, child.name)
-            try:
-                robust_move(str(child), str(target))
-                per_child_moved += 1
-                moved_items_total += 1
-                journal_move(str(child), str(target), child.name, cat_g.name)
-            except Exception as e:
-                log(f"phase 3: child move fail {child.name}: {str(e)[:160]}")
-                per_child_err += 1
-                errors += 1
+        if result.returncode >= 8:
+            log(f"phase 3: robocopy rc={result.returncode} on {cat_g.name}: "
+                f"{(result.stderr or result.stdout)[:300]}")
+            errors += 1
+            continue
+
+        if existed:
+            merged_existing += 1
+        else:
+            moved_whole += 1
+
         # Try removing the now-empty G:\<cat> dir
         try:
             if cat_g.exists() and not list(cat_g.iterdir()):
                 cat_g.rmdir()
+                empty_removed += 1
                 log(f"phase 3: G:\\Organized\\{cat_g.name} removed (empty)")
         except OSError:
             pass
-        merged_categories += 1
-        log(f"phase 3: {cat_g.name} merge: {per_child_moved} moved, {per_child_err} errors")
 
     # Try removing G:\Organized root if empty
     try:
@@ -388,9 +409,8 @@ def phase_merge_g_to_i() -> None:
 
     append_log({
         "phase": "merge-g-to-i", "status": "complete",
-        "categories_moved_whole": moved_categories,
-        "categories_merged_per_child": merged_categories,
-        "total_items": moved_items_total, "errors": errors,
+        "moved_whole": moved_whole, "merged_existing": merged_existing,
+        "empty_removed": empty_removed, "errors": errors,
     })
 
 
