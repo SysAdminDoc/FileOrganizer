@@ -712,9 +712,10 @@ def _lp(path: str) -> str:
 
 def robust_move(src: str, dst: str) -> None:
     """
-    Move `src` directory to `dst`.
+    Move `src` (file or directory) to `dst`.
     - Same drive: os.rename (atomic).
-    - Cross-drive: robocopy /MOVE /256 (long-path aware), then remove emptied src.
+    - Cross-drive directory: robocopy /MOVE /E /256 then remove emptied src.
+    - Cross-drive file: robocopy /MOV (single-file mode) on the parent dir.
     Both src and dst are passed with \\\\?\\ prefix so robocopy source-scanning
     also honours extended path lengths (not just the destination).
     Raises RuntimeError if robocopy exit code >= 8 (actual failure).
@@ -723,6 +724,34 @@ def robust_move(src: str, dst: str) -> None:
     """
     if not is_cross_drive(src, dst):
         os.rename(src, dst)
+        return
+
+    is_file = os.path.isfile(src)
+    if is_file:
+        # Robocopy works on parent dirs + a filename pattern. Don't pre-create
+        # `dst` as a directory — that's what previously caused
+        # "ERROR 123 (0x0000007B) Accessing Source Directory" when a caller
+        # mistakenly invoked robust_move on a file.
+        src_parent = os.path.dirname(src) or os.path.splitdrive(src)[0] + '\\'
+        dst_parent = os.path.dirname(dst) or os.path.splitdrive(dst)[0] + '\\'
+        src_name = os.path.basename(src)
+        dst_name = os.path.basename(dst)
+        os.makedirs(dst_parent, exist_ok=True)
+        result = subprocess.run([
+            'robocopy', _lp(src_parent), _lp(dst_parent), src_name,
+            '/MOV',    # /MOV (single V) moves files but not dir trees
+            '/256', '/R:3', '/W:1',
+            '/NP', '/NFL', '/NDL', '/NJH', '/NJS',
+        ], capture_output=True, text=True)
+        if result.returncode >= 8:
+            raise RuntimeError(
+                f"robocopy file move exit {result.returncode}: "
+                f"{result.stderr.strip() or result.stdout.strip()}"
+            )
+        # Robocopy preserves the original filename; rename if dst differs
+        intermediate = os.path.join(dst_parent, src_name)
+        if intermediate != dst and os.path.exists(intermediate):
+            os.rename(intermediate, dst)
         return
 
     os.makedirs(dst, exist_ok=True)
