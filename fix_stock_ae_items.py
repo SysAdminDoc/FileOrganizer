@@ -37,6 +37,7 @@ RESULTS_FILE  = Path(__file__).parent / 'fix_stock_ae_results.json'
 # (audit 2026-04-28 found ~46 misplaced tutorials/templates because the prior
 # list only covered 5 of the 12 stock subcategories).
 _NON_AE_SCAN_NAMES = [
+    # Stock — pure stock content shouldn't have AE templates
     'Stock Footage - General',
     'Stock Footage - Abstract & VFX',
     'Stock Footage - Aerial & Drone',
@@ -48,16 +49,23 @@ _NON_AE_SCAN_NAMES = [
     'Stock Photos - Food & Drink',
     'Stock Photos - Nature & Outdoors',
     'Stock Music & Audio',
-    'Sound Effects & SFX',
+    # NOTE: 'Sound Effects & SFX' intentionally not scanned — sound-design
+    # packs (e.g. Designer Sound FX) ship with bonus AE template files
+    # showing how to apply the sounds; the audio is still the primary asset.
+    # Print — legitimately has bonus AE promos sometimes, but a folder with
+    # actual .aep files belongs in an AE subcategory, not Print
     'Print - Other',
     'Print - Flyers & Posters',
     'Print - Brochures & Books',
     'Print - Business Cards & Stationery',
     'Print - Invitations & Events',
     'Print - Social Media Graphics',
-    'Plugins & Extensions',
-    'Cinematic FX & Overlays',
-    'Color Grading & LUTs',
+    # NOTE: Plugins & Extensions, Cinematic FX & Overlays, and
+    # Color Grading & LUTs are intentionally NOT scanned — items there
+    # legitimately have AE-related files (.aex/.ffx/.aep for plugins,
+    # .aep render-on-cube workflows for LUTs, .aep FX templates for
+    # Cinematic FX). Including them caused 65 false positives in the
+    # post-migration audit pass.
 ]
 
 def _scan_dirs_for_root(root: Path) -> list[Path]:
