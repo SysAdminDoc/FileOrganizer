@@ -72,6 +72,15 @@ CATEGORY_LINK_RX = re.compile(
     re.IGNORECASE,
 )
 
+# Author portfolio pagination: /user/<name>/portfolio?page=N
+# Top authors have 100s-1000s of items, opening a separate pagination
+# window from /search and /category. See discover_authors() and
+# harvest_author().
+USER_LINK_RX = re.compile(
+    r'href="/user/([a-z0-9_-]+?)(?:/[a-z]+)?(?:[?#"])',
+    re.IGNORECASE,
+)
+
 # Regex for /item/slug/id - works on every Envato site.
 ITEM_RX = re.compile(r"/item/([a-z0-9_-]+)/(\d+)(?:[/\"\s?])", re.IGNORECASE)
 
@@ -156,6 +165,83 @@ def harvest_page(sess, url: str, throttle: float) -> set:
         return set()
     matches = ITEM_RX.findall(r.text)
     return {(slug.lower(), vid) for slug, vid in matches}
+
+
+def discover_authors(base_url: str, throttle: float = 0.6,
+                     extra_seed_pages: int = 3) -> list:
+    """Scrape `/authors/top` and the global `/search?sort=sales` first pages
+    for `/user/<name>` links. Returns a sorted list of unique usernames."""
+    try:
+        import requests
+    except ImportError:
+        return []
+    sess = requests.Session()
+    sess.headers.update(HTTP_HEADERS)
+
+    seeds = [f"{base_url}/authors/top"]
+    # Search pages also surface popular authors (each item links its author)
+    for page in range(1, extra_seed_pages + 1):
+        seeds.append(f"{base_url}/search?q=&sort=sales&page={page}")
+
+    found = set()
+    for url in seeds:
+        time.sleep(throttle)
+        try:
+            r = sess.get(url, timeout=30, allow_redirects=True)
+        except Exception:
+            continue
+        if r.status_code != 200:
+            continue
+        for m in USER_LINK_RX.findall(r.text):
+            name = m.lower().strip()
+            if (len(name) >= 3 and name not in {"envato", "search", "cart",
+                                                 "wishlist", "settings"}
+                    and re.match(r"^[a-z0-9][a-z0-9_-]+$", name)):
+                found.add(name)
+    return sorted(found)
+
+
+def harvest_author(marketplace: str, base_url: str, username: str,
+                   max_pages: int, cache: dict, throttle: float = 0.6) -> int:
+    """Walk `/user/<username>/portfolio?page=N` until pagination redirects
+    to bare profile (out of items). Returns NEW entries added to cache.
+
+    Detection: when a portfolio page request lands on /user/<name> (no
+    /portfolio segment) we've walked past the last page; bail.
+    """
+    try:
+        import requests
+    except ImportError:
+        return 0
+
+    sess = requests.Session()
+    sess.headers.update(HTTP_HEADERS)
+    new_count = 0
+    consecutive_no_new = 0
+
+    for page in range(1, max_pages + 1):
+        url = f"{base_url}/user/{username}/portfolio?page={page}"
+        time.sleep(throttle)
+        try:
+            r = sess.get(url, timeout=30, allow_redirects=True)
+        except Exception:
+            break
+        if r.status_code != 200:
+            break
+        # Pagination exhausted: redirect to bare /user/<name> drops the items
+        if "/portfolio" not in r.url.lower():
+            break
+        items = {(slug.lower(), vid) for slug, vid
+                 in ITEM_RX.findall(r.text)}
+        added = _ingest(cache, marketplace, items)
+        new_count += added
+        if added == 0:
+            consecutive_no_new += 1
+            if consecutive_no_new >= 2:
+                break
+        else:
+            consecutive_no_new = 0
+    return new_count
 
 
 def harvest_marketplace(marketplace: str, base_url: str, max_pages: int,
@@ -280,8 +366,18 @@ def main() -> None:
                     help="Start each sort at this page (default 1). Use for "
                          "deep re-runs that skip already-cached pages.")
     ap.add_argument("--subcategories", action="store_true",
-                    help="Walk hardcoded subcategory slugs per marketplace "
-                         "(separate pagination window from global /search).")
+                    help="Walk dynamically-discovered subcategory slugs per "
+                         "marketplace (separate pagination window from global "
+                         "/search).")
+    ap.add_argument("--authors", action="store_true",
+                    help="Walk /user/<name>/portfolio for top authors per "
+                         "marketplace (separate pagination window from "
+                         "search and category surfaces).")
+    ap.add_argument("--author-pages", type=int, default=40,
+                    help="Max portfolio pages per author (default 40, "
+                         "covers the typical top-author tail).")
+    ap.add_argument("--max-authors", type=int, default=80,
+                    help="Cap authors per marketplace (default 80).")
     args = ap.parse_args()
 
     if not (args.scan or args.apply):
@@ -300,6 +396,33 @@ def main() -> None:
         return
 
     total_new = 0
+    # --authors mode: walk top-author portfolios per marketplace.
+    # Runs separately from --subcategories so we don't tangle the unit shape.
+    if args.authors:
+        max_workers = min(len(sites) * 4, 12) if args.parallel else 1
+        with ThreadPoolExecutor(max_workers=max_workers) as ex:
+            futs = {}
+            for m, u in sites:
+                authors = discover_authors(u, args.throttle)[: args.max_authors]
+                print(f"  {m}: discovered {len(authors)} authors", flush=True)
+                for username in authors:
+                    fut = ex.submit(harvest_author, m, u, username,
+                                    args.author_pages, cache, args.throttle)
+                    futs[fut] = (m, username)
+            for fut in as_completed(futs):
+                m, uname = futs[fut]
+                try:
+                    added = fut.result()
+                    total_new += added
+                    if added:
+                        print(f"  [{m}/{uname}] +{added}", flush=True)
+                except Exception as e:
+                    print(f"  [{m}/{uname}] FAILED: {e}", flush=True)
+        save_cache(cache)
+        print(f"\nDONE: {total_new} new entries added")
+        print(f"Cache now: {len(cache)} entries total")
+        return
+
     # Build the (marketplace, base_url, category) work units. Without
     # --subcategories: one unit per site (category=None). With it: one unit
     # per (site, subcategory) combination, discovered dynamically from each
