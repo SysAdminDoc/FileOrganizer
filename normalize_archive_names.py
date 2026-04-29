@@ -112,10 +112,26 @@ def detect_platform_id(stem: str) -> tuple[str, str, str] | None:
 
 
 _LAST_REQUEST_AT = [0.0]   # naive global throttle (single-threaded)
+_SESSION = None            # reused requests.Session (browser-like cookies)
+
+
+def _get_session():
+    """Return a shared requests.Session — cookie state + connection reuse
+    makes us look more like a real browser than fresh stateless GETs.
+    """
+    global _SESSION
+    if _SESSION is None:
+        try:
+            import requests
+        except ImportError:
+            return None
+        _SESSION = requests.Session()
+        _SESSION.headers.update(HTTP_HEADERS)
+    return _SESSION
 
 
 def fetch_videohive_title(item_id: str, cache: dict[str, dict],
-                          throttle: float = 0.4) -> dict | None:
+                          throttle: float = 2.0, max_attempts: int = 3) -> dict | None:
     """Scrape https://videohive.net/item/-/<id> and pull the canonical title.
 
     The Envato server issues a 301/302 redirect from /item/-/<id> to
@@ -132,31 +148,45 @@ def fetch_videohive_title(item_id: str, cache: dict[str, dict],
     if key in cache:
         return cache[key] or None
 
-    try:
-        import requests
-    except ImportError:
+    sess = _get_session()
+    if sess is None:
         return None
 
-    # Polite throttle so we don't trip Envato's rate-limit
-    elapsed = time.monotonic() - _LAST_REQUEST_AT[0]
-    if elapsed < throttle:
-        time.sleep(throttle - elapsed)
-    _LAST_REQUEST_AT[0] = time.monotonic()
-
+    # Polite throttle + retry. If the redirect comes back with no slug,
+    # treat as transient (likely rate-limit) and retry up to N times with
+    # exponential back-off. Only cache a final negative after all retries
+    # are exhausted.
     url = f"https://videohive.net/item/-/{item_id}"
-    try:
-        r = requests.get(url, headers=HTTP_HEADERS, timeout=30,
-                         allow_redirects=True)
-    except Exception:
+    final_url = ""
+    r = None
+    for attempt in range(max_attempts):
+        elapsed = time.monotonic() - _LAST_REQUEST_AT[0]
+        wait = max(throttle * (2 ** attempt), throttle - elapsed)
+        if wait > 0:
+            time.sleep(wait)
+        _LAST_REQUEST_AT[0] = time.monotonic()
+        try:
+            r = sess.get(url, timeout=30, allow_redirects=True)
+            final_url = r.url
+            slug_m = re.search(r"/item/([^/]+)/(\d+)", final_url)
+            slug = slug_m.group(1) if slug_m else ""
+            if slug and slug != "-":
+                break  # got a real redirect, stop retrying
+        except Exception:
+            r = None
+            continue
+    else:
+        # All retries exhausted with no useful response
         cache[key] = None
         save_cache(cache)
         return None
 
-    final_url = r.url
+    if r is None:
+        return None  # network failure, don't cache
+
     slug_m = re.search(r"/item/([^/]+)/(\d+)", final_url)
     slug = slug_m.group(1) if slug_m else ""
     if slug == "-" or not slug:
-        # Server didn't redirect — item is unrecoverable.
         cache[key] = None
         save_cache(cache)
         return None
