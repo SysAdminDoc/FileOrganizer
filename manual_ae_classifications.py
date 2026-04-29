@@ -24,6 +24,7 @@ MANUAL: dict[str, tuple[str, str | None]] = {
     "Front Gun Muzzle Flashes":         ("Cinematic FX & Overlays", None),
     "Rifle Front Muzzle Flashes":       ("Cinematic FX & Overlays", None),
     "Premium Overlays Dust Smoke":      ("Cinematic FX & Overlays", "Premium Overlays - Dust & Smoke"),
+    "Premium Overlays - Dust & Smoke":  ("Cinematic FX & Overlays", None),
     "BAT PACK 2":                       ("Cinematic FX & Overlays", None),
 
     # ── Plugins & Extensions (every BAO/aescripts plugin and similar)
@@ -76,6 +77,34 @@ MANUAL: dict[str, tuple[str, str | None]] = {
     "AE Face Tools":                    ("Plugins & Extensions", None),
     "LINGO PACK V3 DELUXE":             ("Plugins & Extensions", "Lingo Pack v3 Deluxe"),
     "Designer Sound FX":                ("Sound Effects & SFX", None),
+    # Already-cleaned variants for re-runs
+    "BAO Bones":                        ("Plugins & Extensions", None),
+    "BAO Layer Sculptor":               ("Plugins & Extensions", None),
+    "BAO Mask Avenger":                 ("Plugins & Extensions", None),
+    "BRAW Studio":                      ("Plugins & Extensions", None),
+    "Buena Depth Cue":                  ("Plugins & Extensions", None),
+    "Color Shift":                      ("Plugins & Extensions", None),
+    "Deep Glow":                        ("Plugins & Extensions", None),
+    "Find My AEP":                      ("Plugins & Extensions", None),
+    "Geometric Filter":                 ("Plugins & Extensions", None),
+    "GeoTracker":                       ("Plugins & Extensions", None),
+    "Lockdown":                         ("Plugins & Extensions", None),
+    "Look Designer":                    ("Plugins & Extensions", None),
+    "m's Halftone":                     ("Plugins & Extensions", None),
+    "MB Plotter":                       ("Plugins & Extensions", None),
+    "Memleak":                          ("Plugins & Extensions", None),
+    "MonkeyCam Pro":                    ("Plugins & Extensions", None),
+    "Motion (mt-mograph)":              ("Plugins & Extensions", None),
+    "Quick Depth":                      ("Plugins & Extensions", None),
+    "Rubberhose":                       ("Plugins & Extensions", None),
+    "Soft Body":                        ("Plugins & Extensions", None),
+    "Split Blur":                       ("Plugins & Extensions", None),
+    "StyleX":                           ("Plugins & Extensions", None),
+    "Super Shine":                      ("Plugins & Extensions", None),
+    "Superluminal Stardust":            ("Plugins & Extensions", None),
+    "SuperposeAE":                      ("Plugins & Extensions", None),
+    "Time Bend":                        ("Plugins & Extensions", None),
+    "Lingo Pack v3 Deluxe":             ("Plugins & Extensions", None),
 
     # ── AE - Logo Reveal
     "Backward Logo Timelapse":          ("After Effects - Logo Reveal", None),
@@ -152,6 +181,26 @@ MANUAL: dict[str, tuple[str, str | None]] = {
 }
 
 
+import re
+
+def lookup(name: str) -> tuple[str, str | None] | None:
+    """Look up manual category, stripping any (N) collision suffixes first."""
+    if name in MANUAL:
+        return MANUAL[name]
+    # Strip every trailing " (N)" — items relocated multiple times grew
+    # cumulative suffixes like "Foo (1) (1)" or "Bar (2) (3)".
+    stripped = name
+    while True:
+        new = re.sub(r"\s*\(\d+\)$", "", stripped)
+        if new == stripped:
+            break
+        stripped = new
+    if stripped != name and stripped in MANUAL:
+        cat, clean = MANUAL[stripped]
+        return cat, clean  # keep original cumulative suffix on the new name
+    return None
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true",
@@ -172,8 +221,9 @@ def main() -> None:
         if r.get("method") != "manual_review":
             continue
         name = r["folder_name"]
-        if name in MANUAL:
-            cat, clean = MANUAL[name]
+        hit = lookup(name)
+        if hit:
+            cat, clean = hit
             if not args.dry_run:
                 r["new_category"] = cat
                 r["clean_name"] = clean or name
