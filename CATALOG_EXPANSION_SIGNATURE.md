@@ -13,15 +13,18 @@ which covers per-archive title lookup.
 ## Cache contents (apr 2026 snapshot)
 
 ```
-videohive     5,645   (was 643 -> +5,002)
-audiojungle   9,773
-graphicriver  8,668
-codecanyon    7,882
-photodune     6,395
-themeforest   3,062
-3docean       2,404
-TOTAL        43,829
+photodune     22,473
+graphicriver  22,190
+audiojungle   16,486
+videohive     12,686
+codecanyon     9,703
+themeforest    8,018
+3docean        4,470
+TOTAL        96,026
 ```
+
+Growth: 643 -> 96,026 entries (149x). Original cache was videohive-only;
+the expansion covers every Envato marketplace at >2,400 entries minimum.
 
 ## The expansion model
 
@@ -81,6 +84,21 @@ The trailing-character class is critical; without it the regex over-matches.
 ```
 - High-quality items, single page each.
 - Worth scraping once per marketplace at the start of any pass.
+
+### Author portfolios (deepest single source)
+```
+/authors/top                        - top ~50 author usernames
+/user/<name>/portfolio?page=<n>     - that author's items, paginated
+```
+- Top authors have 100s-1000s of items; portfolio pagination opens a
+  separate window from /search and /category.
+- Bail-out signal: when a portfolio request lands on `/user/<name>` (no
+  `/portfolio` segment in `r.url`), pagination is exhausted - stop.
+- Each page returns ~30 unique items (deduped from 36 raw matches).
+- Author discovery: combine `/authors/top` + the first 3 search-sales
+  pages (each item links its author).
+- This surface alone added +28K entries on top of the search/category
+  baseline; running deeper (80 pages × 150 authors) added another +10K.
 
 ## Sort orders (in order of catalog diversity)
 
@@ -154,8 +172,26 @@ python bulk_catalog_envato.py --apply --parallel --start-page 60 --max-pages 200
 
 # Pass 3 - subcategory sweep (dynamic discovery)
 python bulk_catalog_envato.py --apply --parallel --subcategories --max-pages 12 --throttle 0.5
+
+# Pass 4 - author portfolio sweep (top 80 authors per site, 40 pages each)
+python bulk_catalog_envato.py --apply --parallel --authors \
+    --max-authors 80 --author-pages 40 --throttle 0.5
+
+# Pass 5 - author deepening (150 authors, 80 pages, catches authors who
+# hit the 40-page cap in pass 4)
+python bulk_catalog_envato.py --apply --parallel --authors \
+    --max-authors 150 --author-pages 80 --throttle 0.5
+
+# Pass 6 - subcategory deepening (page 12 onward, lifts the 12-page cap
+# from pass 3)
+python bulk_catalog_envato.py --apply --parallel --subcategories \
+    --start-page 12 --max-pages 40 --throttle 0.5
 ```
-Total wall time: ~25 minutes. Network bandwidth: ~600 MB. Cache disk: ~10 MB.
+Total wall time: ~70 minutes. Network bandwidth: ~2 GB. Cache disk: ~16 MB.
+
+Each pass is incremental and idempotent - re-running yields 0 new entries
+once a surface is saturated. Run pass 5 + 6 monthly to capture new
+uploads on Envato without re-walking already-covered ground.
 
 ## Failure modes encountered
 
