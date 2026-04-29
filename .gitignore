@@ -39,6 +39,8 @@ process_ae_archives_log.json
 overnight_supervisor_log.json
 overnight_supervisor_state.json
 tutorial_video_suspects.json
+fast_merge_log.json
+normalize_archive_names_log.json
 
 # DB files (export JSON is the shareable artifact)
 asset_fingerprints.db
