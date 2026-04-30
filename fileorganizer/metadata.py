@@ -87,12 +87,19 @@ def extract_prproj_metadata(filepath: str) -> list:
 
 def extract_psd_metadata(filepath: str) -> list:
     """Extract layer names and metadata from .psd files via psd-tools.
-    Falls back gracefully if psd-tools not installed."""
+    Falls back gracefully if psd-tools not installed.
+
+    Routes through `safe_psd_open` so oversized or malformed PSDs are
+    skipped (returns []) instead of crashing the worker (N-13).
+    """
     if not HAS_PSD_TOOLS:
+        return []
+    from fileorganizer.psd_safe import safe_psd_open
+    psd = safe_psd_open(filepath)
+    if psd is None:
         return []
     names = []
     try:
-        psd = _psd_tools.PSDImage.open(filepath)
         for layer in psd.descendants():
             if hasattr(layer, 'name') and layer.name:
                 name = layer.name.strip()
@@ -382,12 +389,14 @@ def _extract_file_content(file_path: str, max_chars: int = 800) -> str:
 
     # ── Photoshop (.psd) ─────────────────────────────────────────────────
     elif ext == '.psd' and HAS_PSD_TOOLS:
-        try:
-            psd = _psd_tools.PSDImage.open(file_path)
-            layer_names = [layer.name for layer in psd.descendants() if layer.name]
-            content = f"Layers: {', '.join(layer_names[:20])}"
-        except Exception:
-            pass
+        from fileorganizer.psd_safe import safe_psd_open
+        psd = safe_psd_open(file_path)
+        if psd is not None:
+            try:
+                layer_names = [layer.name for layer in psd.descendants() if layer.name]
+                content = f"Layers: {', '.join(layer_names[:20])}"
+            except Exception:
+                pass
 
     # ── Audio files (metadata tags) ──────────────────────────────────────
     elif ext in _CONTENT_AUDIO_EXTS and HAS_MUTAGEN:
