@@ -17,7 +17,8 @@ from fileorganizer.dialogs.duplicates import (
 from fileorganizer.dialogs.tools import (
     BeforeAfterDialog, EventGroupDialog, ScheduleDialog,
     UndoTimelineDialog, UndoBatchDialog, PluginManagerDialog,
-    RelationshipGraphWidget, WatchHistoryDialog
+    RelationshipGraphWidget, WatchHistoryDialog,
+    PreflightWorker, PreflightDialog,
 )
 from fileorganizer.dialogs.theme import (
     ThemePickerDialog, ProtectedPathsDialog
@@ -36,6 +37,7 @@ __all__ = [
     'BeforeAfterDialog', 'EventGroupDialog', 'ScheduleDialog',
     'UndoTimelineDialog', 'UndoBatchDialog', 'PluginManagerDialog',
     'RelationshipGraphWidget', 'WatchHistoryDialog',
+    'PreflightWorker', 'PreflightDialog',
     'ThemePickerDialog', 'ProtectedPathsDialog',
     'LibraryAuditorPanel', 'ArchiveNormalizerPanel', 'CatalogManagerPanel',
 ]

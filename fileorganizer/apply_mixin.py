@@ -3,6 +3,7 @@ import time
 
 from PyQt6.QtCore import QTimer
 from PyQt6.QtGui import QColor
+from PyQt6.QtWidgets import QDialog
 
 from fileorganizer.cache import (
     create_backup_snapshot, save_undo_log, append_csv_log
@@ -80,6 +81,14 @@ class ApplyMixin:
     def _apply_cat(self):
         work = [(i,it) for i,it in enumerate(self.cat_items) if it.selected and it.status=="Pending"]
         if not work: self._log("No items selected"); return
+
+        # Pre-flight: scan sources for path issues, disk space, low confidence
+        from fileorganizer.dialogs.tools import PreflightDialog
+        dlg = PreflightDialog([it for _, it in work], parent=self)
+        if dlg.exec() != QDialog.DialogCode.Accepted:
+            self._log("Apply cancelled at pre-flight check.")
+            return
+
         snap = create_backup_snapshot(self.txt_src.text(), [it for _,it in work])
         if snap: self._log(f"Backup snapshot saved: {snap}")
         self.btn_apply.setEnabled(False); self.cmb_op.setEnabled(False)
