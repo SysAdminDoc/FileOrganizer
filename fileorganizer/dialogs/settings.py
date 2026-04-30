@@ -700,7 +700,7 @@ class ModelManagerDialog(QDialog):
         # ── Header ────────────────────────────────────────────────────────────
         hdr = QHBoxLayout()
         title = QLabel("Ollama Model Manager")
-        title.setStyleSheet(f"font-size: 16px; font-weight: bold; color: {_t['fg_bright']};")
+        title.setProperty("class", "heading")
         hdr.addWidget(title)
         hdr.addStretch()
         self.lbl_server = QLabel("Checking server...")
