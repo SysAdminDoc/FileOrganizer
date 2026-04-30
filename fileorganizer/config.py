@@ -27,6 +27,20 @@ for _mf in _MIGRATE_FILES:
             pass
 del _mf, _old, _new
 
+# ── Checkbox checkmark SVG ─────────────────────────────────────────────────────
+# Qt6 doesn't support ::after pseudo-elements in QSS — write an SVG and reference
+# it via image: url(...) on QCheckBox::indicator:checked instead.
+_CHECK_SVG = os.path.join(_APP_DATA_DIR, 'check.svg')
+_CHECK_SVG_URL = _CHECK_SVG.replace('\\', '/')
+try:
+    if not os.path.exists(_CHECK_SVG):
+        with open(_CHECK_SVG, 'w') as _f:
+            _f.write('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">'
+                     '<path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2.5" fill="none"'
+                     ' stroke-linecap="round" stroke-linejoin="round"/></svg>')
+except OSError:
+    _CHECK_SVG_URL = ''
+
 # ── Confidence Thresholds ─────────────────────────────────────────────────────
 CONF_HIGH   = 80   # green — high confidence
 CONF_MEDIUM = 50   # yellow — medium confidence (below = red)
@@ -191,6 +205,12 @@ QPushButton[class="toolbar"] {{
 }}
 QPushButton[class="toolbar"]:hover {{ background-color: {t['btn_bg']}; color: {t['fg']}; border-color: {t['border']}; }}
 QPushButton[class="toolbar"]:disabled {{ color: {t['border']}; }}
+QPushButton[class="danger"] {{
+    background-color: {t['btn_bg']}; color: {t['danger']}; font-weight: bold;
+    border: 1px solid {t['danger_border']}; border-radius: 4px; padding: 4px 16px;
+}}
+QPushButton[class="danger"]:hover {{ background-color: {t['danger_hover_bg']}; color: {t['danger_hover_fg']}; }}
+QPushButton[class="danger"]:disabled {{ background-color: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['border']}; }}
 QLineEdit {{
     background-color: {t['input_bg']}; color: {t['fg']};
     border: 1px solid {t['border']}; border-radius: 4px;
@@ -240,6 +260,11 @@ QTextEdit {{
     border: 1px solid {t['btn_bg']}; border-radius: 4px;
     font-size: 12px; padding: 8px; selection-background-color: {t['accent']};
 }}
+QTextEdit[class="log"] {{
+    background-color: {t['bg']}; color: {t['muted']};
+    font-family: 'Consolas', 'Courier New', monospace; font-size: 10px;
+    border: 1px solid {t['border']}; border-radius: 4px; padding: 6px;
+}}
 QScrollBar:vertical {{ background: transparent; width: 8px; border: none; margin: 4px 0; }}
 QScrollBar::handle:vertical {{ background: {t['border']}; border-radius: 4px; min-height: 30px; }}
 QScrollBar::handle:vertical:hover {{ background: {t['border_hover']}; }}
@@ -251,9 +276,7 @@ QScrollBar::handle:horizontal:hover {{ background: {t['border_hover']}; }}
 QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {{ width: 0; }}
 QCheckBox {{ spacing: 8px; color: {t['fg']}; }}
 QCheckBox::indicator {{ width: 18px; height: 18px; border-radius: 4px; border: 2px solid {t['border']}; background: {t['input_bg']}; }}
-QCheckBox::indicator:checked {{ background: {t['accent']}; border-color: {t['accent']};
-    image: none; }}
-QCheckBox::indicator:checked:after {{ color: #ffffff; }}
+QCheckBox::indicator:checked {{ background: {t['accent']}; border-color: {t['accent']}; image: url({_CHECK_SVG_URL}); }}
 QCheckBox::indicator:unchecked:hover {{ border-color: {t['border_hover']}; }}
 QSlider::groove:horizontal {{ background: {t['btn_bg']}; height: 6px; border-radius: 3px; }}
 QSlider::handle:horizontal {{ background: {t['accent']}; width: 16px; height: 16px; margin: -5px 0; border-radius: 8px; }}
@@ -272,8 +295,16 @@ QListWidget {{ background-color: {t['input_bg']}; color: {t['fg']}; border: 1px 
 QListWidget::item {{ padding: 6px 10px; }}
 QListWidget::item:selected {{ background-color: {t['selection']}; }}
 QListWidget::item:hover {{ background-color: {t['row_hover']}; }}
-QProgressBar {{ background-color: {t['btn_bg']}; border: none; border-radius: 3px; height: 6px; }}
-QProgressBar::chunk {{ background-color: {t['accent']}; border-radius: 3px; }}
+QProgressBar {{ background-color: {t['btn_bg']}; border: none; border-radius: 4px; height: 8px; }}
+QProgressBar::chunk {{ background-color: {t['accent']}; border-radius: 4px; }}
+QTabWidget::pane {{ border: 1px solid {t['border']}; background: {t['bg_alt']}; border-radius: 0 4px 4px 4px; }}
+QTabBar::tab {{ background: {t['bg_alt']}; color: {t['muted']}; padding: 7px 16px; border: 1px solid {t['border']}; border-bottom: none; margin-right: 2px; font-size: 12px; border-radius: 4px 4px 0 0; }}
+QTabBar::tab:selected {{ background: {t['selection']}; color: {t['sidebar_btn_active_fg']}; font-weight: 600; }}
+QTabBar::tab:hover:!selected {{ background: {t['btn_hover']}; color: {t['fg']}; }}
+QSplitter::handle {{ background: {t['border']}; }}
+QSplitter::handle:horizontal {{ width: 1px; }}
+QSplitter::handle:vertical {{ height: 1px; }}
+QFrame[class="separator"] {{ background-color: {t['border']}; border: none; max-height: 1px; min-height: 1px; }}
 """
 
 # ── Theme Palettes ───────────────────────────────────────────────────────────
@@ -293,6 +324,8 @@ THEME_STEAM_DARK = {
     'green': '#1b8553', 'green_hover': '#22a366', 'green_pressed': '#167045',
     'selection': '#1a3a5c', 'row_hover': '#152535',
     'muted': '#6b7785', 'disabled': '#3a4654',
+    'danger': '#ef4444', 'danger_border': '#5c2e2e',
+    'danger_hover_bg': '#4a1a1a', 'danger_hover_fg': '#fca5a5',
 }
 
 THEME_CATPPUCCIN_MOCHA = {
@@ -311,6 +344,8 @@ THEME_CATPPUCCIN_MOCHA = {
     'green': '#a6e3a1', 'green_hover': '#b8f0b4', 'green_pressed': '#8ad085',
     'selection': '#313244', 'row_hover': '#252536',
     'muted': '#6c7086', 'disabled': '#45475a',
+    'danger': '#f38ba8', 'danger_border': '#5c2838',
+    'danger_hover_bg': '#3a1520', 'danger_hover_fg': '#ffb3c8',
 }
 
 THEME_OLED_BLACK = {
@@ -329,6 +364,8 @@ THEME_OLED_BLACK = {
     'green': '#00aa55', 'green_hover': '#00cc66', 'green_pressed': '#008844',
     'selection': '#1a1a2e', 'row_hover': '#111118',
     'muted': '#666666', 'disabled': '#333333',
+    'danger': '#ff4444', 'danger_border': '#5c2020',
+    'danger_hover_bg': '#3a0f0f', 'danger_hover_fg': '#ff9090',
 }
 
 THEME_GITHUB_DARK = {
@@ -347,6 +384,8 @@ THEME_GITHUB_DARK = {
     'green': '#238636', 'green_hover': '#2ea043', 'green_pressed': '#1a7f37',
     'selection': '#1a2332', 'row_hover': '#131920',
     'muted': '#484f58', 'disabled': '#30363d',
+    'danger': '#f85149', 'danger_border': '#5c2020',
+    'danger_hover_bg': '#3d1a1a', 'danger_hover_fg': '#ffadad',
 }
 
 THEME_NORD = {
@@ -365,6 +404,8 @@ THEME_NORD = {
     'green': '#a3be8c', 'green_hover': '#b4d09c', 'green_pressed': '#8aab73',
     'selection': '#3b4252', 'row_hover': '#353c4a',
     'muted': '#616e88', 'disabled': '#4c566a',
+    'danger': '#bf616a', 'danger_border': '#5c3034',
+    'danger_hover_bg': '#3a2025', 'danger_hover_fg': '#d09098',
 }
 
 THEME_DRACULA = {
@@ -383,6 +424,8 @@ THEME_DRACULA = {
     'green': '#50fa7b', 'green_hover': '#70ff95', 'green_pressed': '#38d960',
     'selection': '#383a4c', 'row_hover': '#30323f',
     'muted': '#6272a4', 'disabled': '#44475a',
+    'danger': '#ff5555', 'danger_border': '#6b2525',
+    'danger_hover_bg': '#4a1515', 'danger_hover_fg': '#ff9090',
 }
 
 # Registry: name → palette dict
@@ -422,11 +465,7 @@ def get_active_theme() -> dict:
     return THEMES.get(load_theme_name(), THEME_STEAM_DARK)
 
 def get_active_stylesheet() -> str:
-    name = load_theme_name()
-    if name == 'Steam Dark':
-        return DARK_STYLE
-    theme = THEMES.get(name, THEME_STEAM_DARK)
-    return _build_theme_qss(theme)
+    return _build_theme_qss(THEMES.get(load_theme_name(), THEME_STEAM_DARK))
 
 # ── Protected Paths ──────────────────────────────────────────────────────────
 # System folders and important files that should NEVER be moved/deleted/renamed.
