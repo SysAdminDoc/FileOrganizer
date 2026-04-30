@@ -105,7 +105,7 @@ Every entry produced an on-disk bug before the fix was written.
 
 These items are blocking real workflows, are partially complete, or fix known hazards.
 
-### N-1: I:\ legacy reclassification (Phase 4)
+### N-1: ~~I:\ legacy reclassification (Phase 4)~~ ✓ Shipped v8.2.0
 Run `build_source_index.py --source i_organized_legacy` on the 18,742-asset I:\Organized library,
 using the legacy folder name as a `legacy_category` hint, then route through the standard
 `classify_design` pipeline into canonical taxonomy.

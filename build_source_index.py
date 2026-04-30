@@ -15,6 +15,7 @@ SCRIPT_DIR = Path(__file__).parent
 DESIGN_ORG_ROOT     = r'G:\Design Organized'
 LOOSE_FILES_ROOT    = r'G:\Design Unorganized'
 DESIGN_ELEMENTS_ROOT = r'G:\Design Organized\Design Elements'
+I_ORGANIZED_ROOT    = r'I:\Organized'
 
 LOOSE_EXTS = frozenset([
     '.psd', '.psb', '.ai', '.eps', '.aep', '.prproj', '.mogrt',
@@ -97,6 +98,45 @@ def build_loose_files_index() -> list[dict]:
     return items
 
 
+def build_i_organized_index() -> list[dict]:
+    """Index I:\\Organized as a two-level hierarchy.
+
+    Structure: ``I:\\Organized\\<legacy_category_dir>\\<asset_folder>``
+
+    ``<legacy_category_dir>`` is the non-canonical top-level name (e.g.
+    "After Effects - Titles & Typography") and becomes the ``legacy_category``
+    hint fed to classify_design.py.  ``<asset_folder>`` is the item to classify.
+
+    Skips non-directory entries and hidden system dirs.
+    """
+    root = Path(I_ORGANIZED_ROOT)
+    if not root.exists():
+        print(f"ERROR: {I_ORGANIZED_ROOT!r} not found.")
+        sys.exit(1)
+
+    _SKIP = frozenset(['$RECYCLE.BIN', 'System Volume Information', '_Review', '_Skip'])
+
+    items = []
+    category_dirs = sorted(d for d in root.iterdir()
+                           if d.is_dir() and d.name not in _SKIP)
+    for cat_dir in category_dirs:
+        legacy_cat = cat_dir.name
+        asset_count = 0
+        for asset_dir in sorted(cat_dir.iterdir()):
+            if not asset_dir.is_dir():
+                continue
+            items.append({
+                'name':            asset_dir.name,
+                'path':            str(asset_dir),
+                'legacy_category': legacy_cat,
+            })
+            asset_count += 1
+        if asset_count:
+            print(f"  {legacy_cat}: {asset_count} assets")
+
+    return items
+
+
 def build_design_elements_index() -> list[dict]:
     """Index G:\\Design Organized\\Design Elements\\ as directory items.
 
@@ -148,7 +188,7 @@ def build_design_elements_index() -> list[dict]:
 def main():
     ap = argparse.ArgumentParser(description='Build index files for classification sources')
     ap.add_argument('--source', required=True,
-                    choices=['design_org', 'loose_files', 'design_elements'],
+                    choices=['design_org', 'loose_files', 'design_elements', 'i_organized_legacy'],
                     help='Which source to index')
     args = ap.parse_args()
 
@@ -172,6 +212,13 @@ def main():
         out_path = SCRIPT_DIR / 'design_elements_index.json'
         out_path.write_text(json.dumps(items, indent=2, ensure_ascii=False), encoding='utf-8')
         print(f"design_elements_index.json: {len(items)} items saved to {out_path}")
+
+    elif args.source == 'i_organized_legacy':
+        print(f"Walking {I_ORGANIZED_ROOT} ...")
+        items = build_i_organized_index()
+        out_path = SCRIPT_DIR / 'i_organized_legacy_index.json'
+        out_path.write_text(json.dumps(items, indent=2, ensure_ascii=False), encoding='utf-8')
+        print(f"i_organized_legacy_index.json: {len(items)} items saved to {out_path}")
 
 
 if __name__ == '__main__':
