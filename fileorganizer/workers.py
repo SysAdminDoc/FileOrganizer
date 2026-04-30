@@ -1098,16 +1098,29 @@ class ApplyCatWorker(QThread):
     def cancel(self): self._cancelled = True
 
     def run(self):
+        from fileorganizer.move_journal import plan_run, mark_done, clear_run
+        import uuid
+
         ok = err = 0; undo_ops = []
         total = len(self.work_items)
         ts = datetime.now().isoformat()
+
+        # Phase 1: write plan to journal before touching disk
+        run_id = datetime.now().strftime('%Y%m%d-%H%M%S-') + uuid.uuid4().hex[:8]
+        if not self.dry_run:
+            plan_run(run_id, self.work_items)
+
+        # Phase 2: execute
         for idx, (ri, it) in enumerate(self.work_items):
             if self._cancelled:
                 self.log.emit(f"  Apply cancelled at {idx}/{total}"); break
             self.progress.emit(idx + 1, total)
             if is_protected(it.full_source_path):
                 self.log.emit(f"  \u26D4 Skipped (protected): {it.folder_name}")
-                self.item_done.emit(ri, "Protected"); continue
+                self.item_done.emit(ri, "Protected")
+                if not self.dry_run:
+                    mark_done(run_id, ri, 'skipped')
+                continue
             label = "[DRY RUN] " if self.dry_run else ""
             self.log.emit(f"  {label}[{idx+1}/{total}] {it.folder_name}  ->  {it.category}/")
             try:
@@ -1127,6 +1140,7 @@ class ApplyCatWorker(QThread):
                 self.log.emit(f"  \u2705 Done")
                 self.item_done.emit(ri, "Done")
                 if not self.dry_run:
+                    mark_done(run_id, ri, 'done')
                     cache_store(it.folder_name, it.full_source_path,
                         {'category': it.category, 'confidence': it.confidence,
                          'cleaned_name': it.cleaned_name, 'method': it.method,
@@ -1134,14 +1148,82 @@ class ApplyCatWorker(QThread):
             except Exception as e:
                 err += 1
                 self.log.emit(f"  \u274C Error: {e}")
-                if not self.dry_run and os.path.exists(it.full_dest_path) and not os.path.exists(it.full_source_path):
-                    try:
-                        shutil.move(it.full_dest_path, it.full_source_path)
-                        self.log.emit(f"  Rolled back to original location")
-                    except Exception:
-                        pass
+                if not self.dry_run:
+                    mark_done(run_id, ri, 'error')
+                    if os.path.exists(it.full_dest_path) and not os.path.exists(it.full_source_path):
+                        try:
+                            shutil.move(it.full_dest_path, it.full_source_path)
+                            self.log.emit(f"  Rolled back to original location")
+                        except Exception:
+                            pass
                 self.item_done.emit(ri, "Error")
+
+        # Clear journal on clean exit (crashed runs leave pending rows)
+        if not self.dry_run and not self._cancelled:
+            clear_run(run_id)
+
         self.finished.emit(ok, err, undo_ops)
+
+
+class ResumeApplyWorker(QThread):
+    """
+    Execute pending moves from the two-phase commit journal after a crash.
+    Does not sync back to GUI table rows (the table is fresh/empty after restart).
+    """
+    log      = pyqtSignal(str)
+    progress = pyqtSignal(int, int)
+    finished = pyqtSignal(int, int)   # ok, err
+
+    def __init__(self, run_id: str, pending_moves: list, check_hashes: bool = False):
+        super().__init__()
+        self._run_id       = run_id
+        self._moves        = pending_moves   # list of dicts from get_pending_moves()
+        self._check_hashes = check_hashes
+        self._cancelled    = False
+
+    def cancel(self): self._cancelled = True
+
+    def run(self):
+        from fileorganizer.move_journal import mark_done, clear_run
+        ok = err = 0
+        total = len(self._moves)
+        for idx, mv in enumerate(self._moves):
+            if self._cancelled:
+                self.log.emit(f"  Resume cancelled at {idx}/{total}")
+                break
+            self.progress.emit(idx + 1, total)
+            src  = mv['src']
+            dst  = mv['dst']
+            name = mv['folder_name']
+            self.log.emit(f"  [{idx+1}/{total}] Resume: {name}  ->  {mv['category']}/")
+            try:
+                if not os.path.exists(src):
+                    # Already moved in a prior attempt that didn't update DB
+                    if os.path.exists(dst):
+                        mark_done(self._run_id, mv['ri'], 'done')
+                        ok += 1
+                        self.log.emit(f"  Already at destination — marked done")
+                        continue
+                    else:
+                        raise FileNotFoundError(f"Source gone and dest missing: {src}")
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                if os.path.exists(dst):
+                    merged, skipped = safe_merge_move(src, dst,
+                        log_cb=self.log.emit, check_hashes=self._check_hashes)
+                    self.log.emit(f"  Merged ({merged} replaced, {skipped} identical skipped)")
+                else:
+                    shutil.move(src, dst)
+                mark_done(self._run_id, mv['ri'], 'done')
+                ok += 1
+                self.log.emit(f"  \u2705 Done")
+            except Exception as e:
+                err += 1
+                mark_done(self._run_id, mv['ri'], 'error')
+                self.log.emit(f"  \u274C Error: {e}")
+
+        if not self._cancelled:
+            clear_run(self._run_id)
+        self.finished.emit(ok, err)
 
 
 
