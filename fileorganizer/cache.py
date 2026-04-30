@@ -1,5 +1,5 @@
 """FileOrganizer — Caching, corrections, undo log, and backup utilities."""
-import os, json, csv, hashlib, sqlite3, shutil, gzip
+import os, re, json, csv, hashlib, sqlite3, shutil, gzip, threading
 from datetime import datetime
 from pathlib import Path
 
@@ -26,33 +26,39 @@ def load_corrections():
 
 # In-memory corrections cache for scan performance (avoids re-reading JSON per folder)
 _corrections_cache = None
+_corrections_lock = threading.Lock()
 
 def _preload_corrections():
     """Pre-load corrections into memory. Call once at scan start."""
     global _corrections_cache
-    _corrections_cache = load_corrections()
+    with _corrections_lock:
+        _corrections_cache = load_corrections()
 
 def _invalidate_corrections_cache():
     """Invalidate cache after edits."""
     global _corrections_cache
-    _corrections_cache = None
+    with _corrections_lock:
+        _corrections_cache = None
 
 def save_correction(folder_name, category):
     """Save a single correction for future learning."""
     corrections = load_corrections()
-    # Store the cleaned folder name as key
     key = re.sub(r'[\d_\-]+$', '', folder_name).strip().lower()
     if key:
         corrections[key] = category
     corrections[folder_name.lower()] = category
-    with open(_CORRECTIONS_FILE, 'w', encoding='utf-8') as f:
-        json.dump(corrections, f, indent=2)
+    try:
+        with open(_CORRECTIONS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(corrections, f, indent=2)
+    except OSError:
+        pass
     _invalidate_corrections_cache()
 
 def check_corrections(folder_name):
     """Check if we have a prior correction for this folder name.
     Returns category string or None. Uses in-memory cache when available."""
-    corrections = _corrections_cache if _corrections_cache is not None else load_corrections()
+    with _corrections_lock:
+        corrections = _corrections_cache if _corrections_cache is not None else load_corrections()
     if not corrections:
         return None
     name_lower = folder_name.lower()
@@ -80,7 +86,7 @@ def _get_cache_conn():
     """Get persistent SQLite connection, creating if needed."""
     global _cache_conn
     if _cache_conn is None:
-        _cache_conn = sqlite3.connect(_CACHE_DB)
+        _cache_conn = sqlite3.connect(_CACHE_DB, timeout=5)
         _cache_conn.execute('PRAGMA journal_mode=WAL')
         _cache_conn.execute('CREATE TABLE IF NOT EXISTS cache ('
             'fingerprint TEXT PRIMARY KEY,'
@@ -219,13 +225,21 @@ def export_rules_bundle(filepath):
 def import_rules_bundle(filepath):
     """Import custom categories + corrections from a JSON bundle."""
     from fileorganizer.categories import save_custom_categories
-    with open(filepath, 'r', encoding='utf-8') as f:
-        bundle = json.load(f)
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            bundle = json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        raise ValueError(f"Invalid rules bundle: {e}") from e
+    if not isinstance(bundle, dict):
+        raise ValueError("Invalid rules bundle: expected JSON object")
     if 'custom_categories' in bundle:
         save_custom_categories(bundle['custom_categories'])
     if 'corrections' in bundle:
-        with open(_CORRECTIONS_FILE, 'w', encoding='utf-8') as f:
-            json.dump(bundle['corrections'], f, indent=2)
+        try:
+            with open(_CORRECTIONS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(bundle['corrections'], f, indent=2)
+        except OSError:
+            pass
     return bundle
 
 # ── Undo / operation log ──────────────────────────────────────────────────────
@@ -255,8 +269,11 @@ def _load_undo_stack() -> list:
     return []
 
 def _save_undo_stack(stack: list):
-    with open(_UNDO_STACK_FILE, 'w', encoding='utf-8') as f:
-        json.dump(stack, f, indent=2)
+    try:
+        with open(_UNDO_STACK_FILE, 'w', encoding='utf-8') as f:
+            json.dump(stack, f, indent=2)
+    except OSError:
+        pass
 
 def save_undo_log(operations):
     """Push a new batch onto the undo stack (preserves previous batches, max 10)."""

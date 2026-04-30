@@ -3,11 +3,20 @@ import os, re, math
 from pathlib import Path
 from collections import Counter
 
-from fileorganizer.bootstrap import HAS_RAPIDFUZZ
+from fileorganizer.bootstrap import HAS_RAPIDFUZZ, HAS_PSD_TOOLS
 try:
     from rapidfuzz import fuzz as _rfuzz
 except ImportError:
     _rfuzz = None
+from fileorganizer.duplicates import IMAGE_EXTS, _compute_phash, _hamming_distance
+from fileorganizer.metadata import (
+    detect_envato_item_code, extract_prproj_metadata, extract_psd_metadata,
+    _envato_api_classify,
+)
+from fileorganizer.ollama import (
+    DESIGN_TEMPLATE_EXTS, VIDEO_TEMPLATE_EXTS, FILENAME_ASSET_MAP,
+    _GENERIC_DESIGN_CATEGORIES,
+)
 
 from fileorganizer.config import CONF_HIGH, CONF_MEDIUM, CONF_FUZZY_CAP, _APP_DATA_DIR
 from fileorganizer.cache import (
