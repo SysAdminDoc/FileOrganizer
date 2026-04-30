@@ -4,7 +4,14 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
-### Fixed (2026-04-30)
+### Added (2026-04-30)
+
+- **N-5: Confidence threshold control** — `confidence_settings.json` in `%APPDATA%/FileOrganizer`
+  persists two user-configurable thresholds: "auto-apply if confidence ≥ X" (default 80%) and
+  "send to _Review if confidence < Y" (default 50%). Exposed in Design Workflow Settings dialog
+  under a new "Classification thresholds" section. `organize_run.py` loads the `review_below`
+  threshold at startup so CLI runs respect the same setting.
+
 
 - `fix_duplicates.py` — switched from a single `write_text` at run-end (plus an every-50
   checkpoint that also overwrites) to per-item JSONL append with immediate `flush()`. A killed or
