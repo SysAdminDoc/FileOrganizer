@@ -195,7 +195,7 @@ class LibraryAuditorPanel(QWidget):
 
         # Header
         hdr = QLabel("Library Auditor")
-        hdr.setStyleSheet(f"color:{_t['fg_bright']};font-size:16px;font-weight:700;")
+        hdr.setProperty("class", "heading")
         root_lay.addWidget(hdr)
         sub = QLabel("Detect misclassified projects and repair foreign/CJK filenames in your organized library.")
         sub.setProperty("class", "meta")
@@ -573,7 +573,7 @@ class ArchiveNormalizerPanel(QWidget):
         root_lay.setSpacing(10)
 
         hdr = QLabel("Archive Normalizer")
-        hdr.setStyleSheet(f"color:{_t['fg_bright']};font-size:16px;font-weight:700;")
+        hdr.setProperty("class", "heading")
         root_lay.addWidget(hdr)
         sub = QLabel(
             "Rename design asset archives (VH-NNNNNNN.zip, etc.) to canonical marketplace titles "
@@ -818,7 +818,7 @@ class CatalogManagerPanel(QWidget):
         root_lay.setSpacing(10)
 
         hdr = QLabel("Catalog Manager")
-        hdr.setStyleSheet(f"color:{_t['fg_bright']};font-size:16px;font-weight:700;")
+        hdr.setProperty("class", "heading")
         root_lay.addWidget(hdr)
         sub = QLabel(
             "Build and refresh the Envato marketplace title cache used by the Archive Normalizer. "
