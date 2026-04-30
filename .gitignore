@@ -42,6 +42,11 @@ tutorial_video_suspects.json
 fast_merge_log.json
 normalize_archive_names_log.json
 
+# Full sitemap-harvested catalog (2GB+ raw JSON). The sharded gzipped
+# version under catalog/ is the shipped artifact.
+marketplace_title_cache.full.json
+marketplace_catalog.db
+
 # DB files (export JSON is the shareable artifact)
 asset_fingerprints.db
 asset_fingerprints.db-shm

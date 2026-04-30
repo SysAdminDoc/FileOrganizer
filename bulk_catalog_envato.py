@@ -36,6 +36,7 @@ Usage:
     python bulk_catalog_envato.py --apply --parallel       # 7 sites concurrent
 """
 import argparse
+import gzip
 import json
 import re
 import sys
@@ -199,6 +200,111 @@ def discover_authors(base_url: str, throttle: float = 0.6,
                     and re.match(r"^[a-z0-9][a-z0-9_-]+$", name)):
                 found.add(name)
     return sorted(found)
+
+
+def fetch_xml_maybe_gzip(sess, url: str, throttle: float) -> str:
+    """Fetch a URL, ungzip if needed, return text body. Empty on failure."""
+    time.sleep(throttle)
+    try:
+        r = sess.get(url, timeout=120)
+    except Exception:
+        return ""
+    if r.status_code != 200:
+        return ""
+    # Sites sometimes serve already-decompressed content despite .gz URL
+    if url.endswith(".gz") or r.content[:2] == b"\x1f\x8b":
+        try:
+            return gzip.decompress(r.content).decode("utf-8", errors="replace")
+        except Exception:
+            return r.text
+    return r.text
+
+
+# Matches `<loc>https://site.net/item/slug/id</loc>` and bare /item/slug/id
+SITEMAP_ITEM_RX = re.compile(
+    r"/item/([a-z0-9_-]+)/(\d+)(?=[</?\"\s])", re.IGNORECASE
+)
+SITEMAP_NESTED_RX = re.compile(
+    r"<loc>([^<]+sitemap\d+\.xml(?:\.gz)?)</loc>", re.IGNORECASE
+)
+
+
+def harvest_sitemap_shard(sess, marketplace: str, url: str, cache: dict,
+                          throttle: float) -> int:
+    """Fetch a single sitemap shard (.xml or .xml.gz) and ingest /item/ URLs.
+    Returns NEW entries added to cache."""
+    body = fetch_xml_maybe_gzip(sess, url, throttle)
+    if not body:
+        return 0
+    items = {(slug.lower(), vid)
+             for slug, vid in SITEMAP_ITEM_RX.findall(body)}
+    return _ingest(cache, marketplace, items)
+
+
+def harvest_sitemaps(marketplace: str, base_url: str, cache: dict,
+                     throttle: float = 0.4, max_workers: int = 6) -> int:
+    """Walk a marketplace's full sitemap tree. Each Envato site exposes
+    `/sitemap.xml.gz` which is either a sitemap-index (nested .xml.gz
+    shards) or a direct urlset with /item/ URLs inline.
+
+    Returns NEW entries added to cache."""
+    try:
+        import requests
+    except ImportError:
+        return 0
+
+    sess = requests.Session()
+    sess.headers.update(HTTP_HEADERS)
+
+    print(f"\n=== {marketplace} sitemap ({base_url}) ===", flush=True)
+
+    body = fetch_xml_maybe_gzip(sess, f"{base_url}/sitemap.xml.gz", throttle)
+    if not body:
+        print(f"  [{marketplace}] no root sitemap", flush=True)
+        return 0
+
+    # First, harvest items embedded in the root (codecanyon serves items
+    # directly in the root urlset, not via nested shards)
+    new_count = 0
+    inline_items = {(slug.lower(), vid)
+                    for slug, vid in SITEMAP_ITEM_RX.findall(body)}
+    if inline_items:
+        added = _ingest(cache, marketplace, inline_items)
+        new_count += added
+        print(f"  [{marketplace}] root urlset: +{added} new "
+              f"({len(inline_items)} item URLs)", flush=True)
+        save_cache(cache)
+
+    # Then walk any nested shards (videohive, photodune, etc.)
+    nested = SITEMAP_NESTED_RX.findall(body)
+    if not nested:
+        return new_count
+
+    print(f"  [{marketplace}] {len(nested)} nested shards to walk",
+          flush=True)
+
+    # Fetch shards in parallel (per-marketplace throughput) but cap so we
+    # don't fan out unbounded threads when called from a top-level executor
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        futs = [
+            ex.submit(harvest_sitemap_shard, sess, marketplace, shard_url,
+                      cache, throttle)
+            for shard_url in nested
+        ]
+        for i, fut in enumerate(as_completed(futs), 1):
+            try:
+                added = fut.result()
+            except Exception as e:
+                print(f"  [{marketplace}] shard FAILED: {e}", flush=True)
+                continue
+            new_count += added
+            if i % 5 == 0 or i == len(futs):
+                print(f"  [{marketplace}] shard {i}/{len(futs)}: "
+                      f"+{new_count} new total", flush=True)
+                save_cache(cache)
+
+    save_cache(cache)
+    return new_count
 
 
 def harvest_author(marketplace: str, base_url: str, username: str,
@@ -378,6 +484,10 @@ def main() -> None:
                          "covers the typical top-author tail).")
     ap.add_argument("--max-authors", type=int, default=80,
                     help="Cap authors per marketplace (default 80).")
+    ap.add_argument("--sitemaps", action="store_true",
+                    help="Harvest each marketplace's full sitemap tree "
+                         "(/sitemap.xml.gz + nested shards). Yields the "
+                         "complete public catalog - millions of items.")
     args = ap.parse_args()
 
     if not (args.scan or args.apply):
@@ -396,6 +506,32 @@ def main() -> None:
         return
 
     total_new = 0
+    # --sitemaps mode: harvest each marketplace's full sitemap tree.
+    if args.sitemaps:
+        if args.parallel and len(sites) > 1:
+            with ThreadPoolExecutor(max_workers=len(sites)) as ex:
+                futs = {
+                    ex.submit(harvest_sitemaps, m, u, cache,
+                              args.throttle): m
+                    for m, u in sites
+                }
+                for fut in as_completed(futs):
+                    m = futs[fut]
+                    try:
+                        added = fut.result()
+                        total_new += added
+                        print(f"  [{m}] DONE: +{added}", flush=True)
+                    except Exception as e:
+                        print(f"  [{m}] FAILED: {e}", flush=True)
+        else:
+            for m, u in sites:
+                added = harvest_sitemaps(m, u, cache, args.throttle)
+                total_new += added
+        save_cache(cache)
+        print(f"\nDONE: {total_new} new entries added")
+        print(f"Cache now: {len(cache)} entries total")
+        return
+
     # --authors mode: walk top-author portfolios per marketplace.
     # Runs separately from --subcategories so we don't tangle the unit shape.
     if args.authors:
