@@ -12,8 +12,12 @@ github_token.txt
 # WinUI 3 shell (FileOrganizer.UI) build artifacts
 src/**/bin/
 src/**/obj/
+src/**/publish/
 src/**/.vs/
 src/.vs/
+
+# Release-staging artifacts (zips, sha256, staged trees)
+artifacts/
 
 # Generated index files (machine-specific disk contents)
 org_index.json
