@@ -151,7 +151,7 @@ X and Y; send to _Review if < Y." Expose in Settings -> Classification.
 - **Impact**: 4 | **Effort**: 2
 - Source: [S6] https://github.com/thebearwithabite/ai-file-organizer
 
-### N-6: Two-phase commit for GUI Apply
+### N-6: ~~Two-phase commit for GUI Apply~~ ✓ Shipped v8.2.0
 Before executing any move, write all planned moves to `organize_moves.db` with
 `status='pending'`. Mark `status='done'` atomically after each move. On crash/restart, offer to
 resume from pending entries.
