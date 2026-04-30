@@ -15,7 +15,7 @@ from PyQt6.QtGui import QColor, QPixmap, QImage, QIcon
 
 import sys, subprocess
 
-from fileorganizer.config import _APP_DATA_DIR, DARK_STYLE, get_active_stylesheet, get_active_theme, append_watch_event
+from fileorganizer.config import _APP_DATA_DIR, get_active_stylesheet, get_active_theme, append_watch_event
 from fileorganizer.bootstrap import HAS_PILLOW
 from fileorganizer.metadata import ArchivePeeker
 try:
