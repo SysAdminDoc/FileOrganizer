@@ -362,6 +362,18 @@ QLabel[class="meta"] {{ color: {t['muted']}; font-size: 11px; }}
 QLabel[class="empty-state"] {{
     color: {t['muted']}; font-size: 13px; font-weight: 500; padding: 40px;
 }}
+QLabel[class="stats"] {{
+    color: {t['muted']}; font-size: 12px; padding: 4px 0;
+}}
+QLabel[class="summary"] {{
+    color: {t['sidebar_btn_active_fg']}; font-size: 12px; font-weight: 600;
+}}
+QLabel[class="toast"] {{
+    background: {t['selection']}; color: {t['fg']};
+    font-size: 13px; font-weight: bold;
+    padding: 10px 20px; border-radius: 8px;
+    border: 1px solid {t['border']};
+}}
 QLabel[class="meta-mono"] {{
     color: {t['muted']}; font-size: 11px; font-family: 'Consolas', 'Courier New', monospace;
 }}

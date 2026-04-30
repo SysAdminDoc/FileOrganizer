@@ -234,7 +234,7 @@ class CleanupToolsDialog(QDialog):
         # ── Action buttons ────────────────────────────────────────────────
         action_row = QHBoxLayout()
         self.lbl_summary = QLabel("")
-        self.lbl_summary.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-size: 12px;")
+        self.lbl_summary.setProperty("class", "summary")
         action_row.addWidget(self.lbl_summary, 1)
 
         btn_select_all = QPushButton("Select All")
@@ -600,7 +600,7 @@ class CleanupPanel(QWidget):
         # ── Action buttons ────────────────────────────────────────────────
         action_row = QHBoxLayout()
         self.lbl_summary = QLabel("")
-        self.lbl_summary.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-size: 12px;")
+        self.lbl_summary.setProperty("class", "summary")
         action_row.addWidget(self.lbl_summary, 1)
 
         btn_select_all = QPushButton("Select All")
