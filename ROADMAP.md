@@ -1,5 +1,5 @@
 # ROADMAP -- FileOrganizer
-<!-- v8.2.0 · Updated 2026-05 · Supersedes all prior ROADMAP.md versions -->
+<!-- v8.3.0-planning · Updated 2026-05 · Supersedes all prior ROADMAP.md versions -->
 
 FileOrganizer is a Python/PyQt6 desktop tool for classifying and moving creative design assets
 into a canonical folder taxonomy. Core use case: 33 TB+ of Envato/Creative Market/Freepik
@@ -8,7 +8,11 @@ Multi-provider AI backbone (DeepSeek, GitHub Models, Ollama).
 
 ---
 
-## State of the Repo (v8.2.0, May 2026)
+## State of the Repo (v8.3.0 planning, May 2026)
+
+v8.2.0 is **fully shipped** (all 8 NOW items: I:\ source infrastructure, fix_duplicates incremental
+journal, catalog auto-download, pre-flight UI, confidence thresholds, two-phase commit, security
+dependency pins, and _Review batch panel). See [Shipped — v8.2.0](#shipped--v820) below.
 
 ### What ships today
 - 384-category design asset taxonomy (After Effects, Photoshop, Illustrator, Premiere Pro, web,
@@ -20,28 +24,32 @@ Multi-provider AI backbone (DeepSeek, GitHub Models, Ollama).
 - `organize_run.py` CLI: position-based batch mapping, robocopy integration, long-path (`\\?\`)
   and trailing-space guards, SQLite undo journal (`organize_moves.db`)
 - `classify_design.py`: DeepSeek batch classifier (60 items/batch), `_CATEGORY_SET` phantom guard
-- `asset_db.py`: SHA-256 community fingerprint DB (96,026 marketplace entries cached locally)
+- `asset_db.py`: SHA-256 community fingerprint DB (96,026 marketplace entries); auto-download
+  on first run via `CatalogSyncWorker` QThread (N-3 shipped)
 - `marketplace_enrich.py`: Envato API + scraping for item title/category lookup
-- Multi-source support: `ae`, `design`, `design_org`, `loose_files` via `--source` flag
-- PyQt6 GUI with settings, source management, apply workflow
+- Multi-source support: `ae`, `design`, `design_org`, `i_organized_legacy`, `loose_files` via
+  `--source` flag (I:\ source added in N-1)
+- PyQt6 GUI with settings, source management, apply workflow, pre-flight dialog (N-4),
+  confidence threshold panel (N-5), two-phase commit (N-6), _Review batch panel (N-8)
 - PyInstaller release: `FileOrganizer.exe` + CLI ZIP on GitHub Releases
-- CI: syntax check + `test_organize_run.py` on `windows-latest`
+- CI: syntax check + `test_organize_run.py` + `pip-audit --fail-on-cvss 7` (N-7) on
+  `windows-latest`
 
 ### Built but not fully wired
-- Community fingerprint DB: ships manually; auto-download on first run not implemented
+- `metadata_extractors/`: psd-tools/fonttools/mutagen/ffprobe metadata pipeline planned in
+  RESEARCH_IDEAS.md; no implementation yet — this is the primary N-9 target for v8.3.0
 - `marketplace_enrich.py`: built, but stage 2 pipeline call not always reachable via GUI
 - `archive_extractor.py`: scaffolded; archive content peek not integrated into classifier
-- `_Review` second-pass: `deepseek_research.py` CLI exists but not surfaced in GUI as first-class flow
+- ReviewPanel (N-8): `thumbnail` path collected but QTableWidget renders text only — N-11 fixes
+- `deepseek_research.py` CLI exists but not surfaced in GUI as first-class flow
 - Watch mode: not implemented
 
 ### Stubbed / incomplete
-- **I:\ legacy reclassification (Phase 4)**: 18,742-asset legacy library still in pre-canonical
-  folder names; never processed by current pipeline
-- **`fix_duplicates.py` journal**: writes log file only at end of run; crash mid-run leaves
-  applied merges unrecorded
-- AEP binary parser: concept and spec exist; no implementation
-- Perceptual hash dedup: planned; not implemented
-- Plugin SDK: mentioned in code, undocumented externally
+- **Embeddings classifier**: planned in RESEARCH_IDEAS.md #7; not implemented (N-10 target)
+- **Provenance tracking**: source_domain + first_seen not in `asset_fingerprints.db` (N-12 target)
+- **AEP binary parser**: concept and spec exist; no implementation (NEXT-9)
+- **Perceptual hash dedup**: planned; not implemented (NEXT-19)
+- **Plugin SDK**: mentioned in code, undocumented externally (NEXT-27)
 
 ### Hard constraints
 - Python + PyQt6: no migration planned; all GUI work targets PyQt6 6.x
@@ -101,9 +109,9 @@ Every entry produced an on-disk bug before the fix was written.
 
 ---
 
-## NOW -- Active / Blocking (target: v8.2.x)
+## Shipped -- v8.2.0
 
-These items are blocking real workflows, are partially complete, or fix known hazards.
+All 8 items shipped. See CHANGELOG.md for full details.
 
 ### N-1: ~~I:\ legacy reclassification (Phase 4)~~ ✓ Shipped v8.2.0
 Run `build_source_index.py --source i_organized_legacy` on the 18,742-asset I:\Organized library,
@@ -183,6 +191,119 @@ proposed category, dropdown to confirm/reassign. Corrections feed `corrections.j
 
 ---
 
+## NOW -- Active / Blocking (target: v8.3.0)
+
+These items extend v8.2.0 directly; all have clear implementation paths given the shipped stack.
+
+### AI Pipeline
+
+**N-9: Metadata extractors MVP**
+Create `fileorganizer/metadata_extractors/` package with four extractors wired into
+`classify_design.py` as pre-AI stages. Classification order: metadata first → keyword/fuzzy
+fallback → AI last. Eliminates AI calls for ~40-60% of well-structured assets.
+- `psd_extractor.py`: psd-tools 1.16.0 layer names, document width/height → classify mockups,
+  social-media templates (9:16 canvas), print layouts without AI
+- `font_extractor.py`: fonttools `TTFont['name'].names` → font family, style variants → route to
+  `Fonts & Typography` subcategories at confidence 95
+- `audio_extractor.py`: mutagen → title, artist, BPM, duration → differentiate stock music,
+  SFX packs, tutorial audio tracks
+- `video_extractor.py`: `subprocess(['ffprobe', '-v', 'quiet', '-print_format', 'json',
+  '-show_streams', path])` → duration, codec, resolution, aspect ratio → route 9:16 vertical
+  video to `Social Media`, ProRes/DNXHD to `Broadcast / Cinema Stock`
+- **Why now**: psd-tools 1.16.0 (Apr 2026) adds Python 3.14 support; fonttools CVE-2025-66034
+  security pin (N-13) must land with or before fonttools use in code. RESEARCH_IDEAS.md rates
+  this the #1 priority for reducing per-item AI cost.
+- **Impact**: 5 | **Effort**: 3
+- Source: [S34] RESEARCH_IDEAS.md, [S8] organize-cli v3.3.0 filecontent filter, [S44] Czkawka
+  v11.0.0 ffprobe video analysis, [S46] psd-tools v1.16.0
+
+**N-10: Embeddings classifier MVP**
+Add `fileorganizer/embeddings_classifier.py`. On first run, embed all 384 category display names
+via `sentence-transformers` `all-MiniLM-L6-v2` (80 M params, fully local, ~40 ms per batch)
+and store vectors as REAL columns in a new `category_embeddings` SQLite table. At classify time:
+embed item `name + extension_set` → cosine similarity against all 384 anchors → if top-1 ≥ 0.65
+AND margin over top-2 ≥ 0.15, apply category at confidence 90; otherwise fall through to AI.
+Add `--embeddings-only` CLI flag for benchmarking skip rate against a known-classified sample.
+- **Why now**: Reduces AI API cost ~50-70% on well-named assets; fully local; no cloud dependency.
+  electron-dam confirmed Ollama-based embedding is a viable DAM pattern [S43]; sentence-
+  transformers is production-stable with 15,000+ pretrained models [S48].
+- **Impact**: 5 | **Effort**: 3
+- Source: [S34] RESEARCH_IDEAS.md #7, [S48] sentence-transformers, [S43] electron-dam Ollama
+  embedding
+
+### UX Completion
+
+**N-11: ReviewPanel thumbnail rendering**
+N-8 shipped the _Review batch panel but the thumbnail column is text-only. Replace the folder-name
+cell with a `QLabel` holding a `QPixmap` scaled to 80×80 px via `PIL.Image.thumbnail()`. Use
+`QPixmapCache` (key = folder fingerprint) to prevent re-loading on scroll. For items with no
+image: render an extension badge (colored rectangle + extension text) as a fallback `QPixmap`.
+For PSD files: load the embedded composite via `psd_tools.PSDImage(path).topil()` at native
+thumbnail resolution. The `thumbnail` path is already collected by `_ReviewScanWorker`; this item
+only changes rendering.
+- **Why now**: ReviewPanel is actively used for the I:\ reclassification pass; text-only cells
+  make visual asset review impractical for 18,000+ mixed-media items.
+- **Impact**: 4 | **Effort**: 2
+- Source: [S38] TagStudio v9.5.6 virtual list + thumbnail, [S43] electron-dam thumbnail grid,
+  [S19] Eagle App, [S34] RESEARCH_IDEAS.md
+
+### Data Enrichment
+
+**N-12: Provenance tracking**
+Add `source_domain TEXT`, `first_seen_ts INTEGER` columns to `asset_fingerprints.db` via
+`ALTER TABLE IF NOT COLUMN` migration guard (safe for existing installs). Populate at index time:
+`source_domain` by normalizing folder path through a known-source parser (Envato, Creative Market,
+Freepik, Motion Array) plus a piracy-domain blocklist; `first_seen_ts` = Unix epoch at insert.
+Expose `source_domain` as sub-text in ReviewPanel row and in Browse tab tooltip. Strip piracy
+domains from UI display names and CSV exports. CLI: `build_source_index.py --show-provenance`.
+- **Why now**: RESEARCH_IDEAS.md #6 rates this high; N-10 embeddings can use domain as a prior
+  weight; NEXT-20 cross-library dedup needs stable domain metadata.
+- **Impact**: 4 | **Effort**: 2
+- Source: [S34] RESEARCH_IDEAS.md #6, [S33] RESEARCH.md provenance track
+
+### Security
+
+**N-13: Security hardening — fonttools pin + archive isolation**
+Three concrete changes in a single PR:
+1. Pin `fonttools>=4.62.1` in `requirements.txt`. CVE-2025-66034 is a path traversal bug in
+   `fonttools.varLib.main` fixed in 4.61.0. FileOrganizer uses TTFont name table reads (N-9),
+   not varLib, but the explicit pin prevents transitive exposure and covers future sub-path use.
+2. Run psd-tools PSD parsing in a subprocess with a configurable file-size sanity limit (default
+   500 MB). Maliciously crafted PSDs can trigger parser bugs; the Coverage Matrix flagged this
+   as pending since N-7. N-9 adds active psd-tools use, making isolation urgent.
+3. In `archive_extractor.py` and any RAR/7z/ZIP extraction path: validate all extracted entry
+   paths against the target directory before write:
+   `assert os.path.realpath(dest).startswith(os.path.realpath(safe_root))`.
+   Covers the 2 open GitHub Advisory DB entries for rarfile and 2 for py7zr [S42, S41].
+- **Why now**: N-9 will use fonttools heavily; pin must land first or in the same commit.
+  fonttools CVE-2025-66034 was published 2025 — the outstanding pin is now overdue.
+- **Impact**: 3 | **Effort**: 1
+- Source: [S49] fonttools CVE-2025-66034 (fixed v4.61.0), [S42] rarfile GitHub Advisories,
+  [S41] py7zr advisories, Coverage Matrix security notes
+
+### Quality
+
+**N-14: Broken file detection**
+During `build_source_index.py` scan, detect and flag corrupt/truncated assets before classify:
+- **Images**: `PIL.Image.verify()` on images ≤ 20 MB; catch `PIL.UnidentifiedImageError`,
+  `OSError` → flag `broken=True`
+- **Videos**: `subprocess(['ffprobe', '-v', 'error', '-print_format', 'json', '-show_error',
+  path])` → flag if `error` key present in parsed JSON output
+- **Archives**: `zipfile.ZipFile(f).testzip()`, `rarfile.RarFile(f).testrar()`,
+  `py7zr.SevenZipFile(f).testzip()` → flag if any returns non-None
+Add `broken INTEGER DEFAULT 0` column to `asset_files` table (schema migration). Pre-flight dialog
+(N-4, shipped) gets a collapsible "Broken files (N)" section listing affected paths before any
+move is attempted.
+- **Why now**: Running classify+move on a corrupt archive silently fails mid-extraction; broken
+  images cause Pillow tracebacks mid-batch. Czkawka v11.0.0 shipped broken-video detection via
+  ffprobe in 2026 — the pattern is proven and the tooling (Pillow, ffprobe, zipfile) is already
+  present.
+- **Impact**: 3 | **Effort**: 2
+- Source: [S44] Czkawka v11.0.0 broken video detection, [S34] RESEARCH_IDEAS.md, N-4 pre-flight
+  infra
+
+---
+
 ## NEXT -- High Value, Well-Scoped (target: v8.3 / v9.x)
 
 ### Automation & Workflow
@@ -257,11 +378,16 @@ Template name, editable parameters, required fonts, minimum Premiere version. Pu
 (`zipfile` + `json`). Store extracted fields in `asset_files.metadata`.
 - **Impact**: 4 | **Effort**: 2
 
-**NEXT-11: Video metadata extraction (FFmpeg)**
-Use `ffprobe` (via `ffmpeg-python`) to extract duration, resolution, codec, aspect ratio, frame
-rate from `.mp4`, `.mov`, `.webm` templates. Route 9:16 vertical video to a separate subcategory.
-- **Impact**: 4 | **Effort**: 2
-- Source: [S15] digiKam FFmpeg pipeline https://www.digikam.org/about/
+**NEXT-11: Video metadata deep routing (FFmpeg expansion)**
+Extend the N-9 `video_extractor.py` MVP with deep routing rules: 9:16 vertical video →
+`Social Media`, looping clips ≤ 15 s → `Motion Graphic`, codec=ProRes/DNXHD/XDCAM →
+`Broadcast / Cinema Stock`, duration > 5 min → `Tutorial Video`. Add `video_codec`,
+`video_resolution`, `video_duration`, `video_fps` to `asset_files.metadata`. The ffprobe
+subprocess pattern is established in N-9; this item adds routing rules only. Do not use the
+stale `ffmpeg-python` package (last release 2019); use `subprocess.run(['ffprobe', ...])` directly.
+- **Impact**: 4 | **Effort**: 2 | **Depends on**: N-9
+- Source: [S15] digiKam FFmpeg pipeline https://www.digikam.org/about/, [S44] Czkawka v11.0.0
+  broken video detection, [S34] RESEARCH_IDEAS.md
 
 **NEXT-12: LLaVA visual classification**
 Route image and PDF mimes to a local multimodal model (`llava:7b`, `qwen2.5-vl`, or `moondream`)
@@ -309,11 +435,13 @@ Flag in UI: "Update available for 3 items in After Effects - Slideshow".
 ### Deduplication
 
 **NEXT-19: Perceptual hash dedup (preview images)**
-Use `imagehash` (perceptual hash / dHash) on `preview_image` files to detect visually similar
-templates even when files differ slightly (re-exported preview, different resolution). BK-tree +
-Hamming distance for sub-linear similarity search, pattern from [S10] Czkawka.
+Use `imagehash` (pHash / dHash / crop-resistant hash) on `preview_image` files to detect visually
+similar templates even when files differ slightly (re-exported preview, different resolution).
+BK-tree + Hamming distance for sub-linear similarity search (pattern from [S10] Czkawka).
+`imagehash` supports pHash, dHash, wHash, average hash, colorhash, and crop-resistant hash;
+choose crop-resistant hash for design asset previews (handles partial crops, watermark variants).
 - **Impact**: 4 | **Effort**: 3
-- Source: [S10] https://github.com/qarmin/czkawka
+- Source: [S10] https://github.com/qarmin/czkawka, [S47] imagehash (JohannesBuchner)
 
 **NEXT-20: Cross-library fingerprint dedup**
 Compare G:\ + I:\ (and external drives) by `folder_fingerprint` SHA-256 across roots. Show a
@@ -331,9 +459,14 @@ a newer version. Keep the one with more files; archive the other with a reason n
 **NEXT-22: Category thumbnail browser**
 New "Browse" tab: grid/list view of the organized library with preview thumbnails from
 `asset_db.find_preview_image()`. Per-item details panel: category, marketplace, confidence, file
-count, total size, AE version (if parsed), marketplace link.
+count, total size, AE version (if parsed), marketplace link. Implement as `QListView` with a
+custom delegate + lazy thumbnail loading to handle 10,000+ item collections without freezing.
+TagStudio v9.5.6 shipped infinite scrolling via virtual list rendering [S38] — use the same
+pattern: render only the visible viewport rows, load thumbnails asynchronously on scroll. N-11
+already ships the `Pillow + QPixmap + QPixmapCache` pattern; NEXT-22 reuses it at Browse scale.
 - **Impact**: 5 | **Effort**: 4 | Primary commercial benchmark: [S19] Eagle App
-- Source: [S19] https://eagle.cool , [S9] TagStudio, [S22] Adobe Bridge
+- Source: [S19] https://eagle.cool, [S38] TagStudio v9.5.6 infinite scrolling, [S22] Adobe Bridge,
+  N-11 (thumbnail Pillow+QPixmap pattern established)
 
 **NEXT-23: Drag-and-drop reclassification**
 Drag any item from one category to another in the Browse tab tree. Records the correction in
@@ -386,6 +519,22 @@ Add macOS and Linux PyInstaller targets to `release.yml` using `macos-latest` an
 `ubuntu-latest` runners. Ship platform-specific binaries in GitHub Release.
 - **Impact**: 3 | **Effort**: 2
 - Source: [S1] LlamaFS CI, [S8] organize-cli cross-platform, [S2] Local-File-Organizer
+
+**NEXT-31: Scan time measurement**
+Record wall-clock time for each scan phase (index build, classification, enrichment, pre-flight)
+and display in the GUI status bar and in post-apply HTML report (NEXT-25). Store `scan_duration_ms`
+per run in `organize_moves.db`. Helps users identify which pipeline stage is the bottleneck on
+large libraries.
+- **Impact**: 2 | **Effort**: 1
+- Source: [S44] Czkawka v11.0.0 scan time display, internal profiling need
+
+**NEXT-32: Dedup similarity grouping improvements**
+When running perceptual hash dedup (NEXT-19), group near-identical items into clusters before
+presenting the merge/keep dialog. Use complete-linkage clustering: two items in the same cluster
+only if every pair is within Hamming distance threshold. Prevents over-merging when a cluster
+contains both a genuine duplicate and a similar-but-different item.
+- **Impact**: 3 | **Effort**: 2 | **Depends on**: NEXT-19
+- Source: [S44] Czkawka v11.0.0 similarity grouping overhaul, [S47] imagehash clustering patterns
 
 ---
 
@@ -486,6 +635,22 @@ provider selection ratios. No file names, no paths. Used to identify categories 
 to `_Review` to prioritize classifier improvements.
 - **Impact**: 3 | **Effort**: 3
 
+**L-17: Virtual bundles**
+Allow users to create named groupings of assets that span multiple categories without moving files.
+A bundle is a named list of asset fingerprints stored in `asset_bundles.db`. Bundles appear as
+virtual folders in the Browse tab. Useful for "all assets used in Project X" groupings that do
+not map to taxonomy categories. Non-destructive by design — no filesystem changes.
+- **Impact**: 3 | **Effort**: 4
+- Source: [S43] electron-dam virtual bundles pattern
+
+**L-18: Audio waveform preview in Browse tab**
+In the Browse tab (NEXT-22) details panel, render a waveform visualization for audio assets
+(`.mp3`, `.wav`, `.aiff`, `.flac`, `.ogg`). Use `librosa` or `soundfile` + `matplotlib` to
+compute and render a static waveform PNG, cached alongside the thumbnail. electron-dam ships this
+via Wavesurfer.js [S43]; the Qt equivalent is a `QLabel` holding a cached waveform `QPixmap`.
+- **Impact**: 2 | **Effort**: 4 | **Depends on**: NEXT-22
+- Source: [S43] electron-dam audio waveform visualization
+
 ---
 
 ## UNDER CONSIDERATION
@@ -545,13 +710,13 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 | Category | Status | Primary Items |
 |----------|--------|---------------|
-| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI), psd-tools/rarfile path-traversal guards (L-7, N-7 scope) |
+| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE-2025-66034 pin + psd-tools subprocess isolation + archive path-traversal guard), L-7 (archive content full implementation) |
 | **Accessibility** | Covered | L-15 (WCAG 2.1, keyboard nav, screen reader) |
 | **i18n / l10n** | Covered | L-14 (QTranslator, CJK locale) |
-| **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-23 (post-apply report) |
-| **Testing** | Covered | NEXT-27 (unit test expansion to 10+ functions), N-7 (pip-audit CI gate) |
-| **Distribution / packaging** | Covered | N-3 (catalog auto-download), NEXT-28 (multiplatform CI), L-10 (portable mode) |
-| **Plugin ecosystem** | Covered | NEXT-25 (SDK + 3 reference plugins), NEXT-26 (webhook) |
+| **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-25 (post-apply report), NEXT-31 (scan time measurement) |
+| **Testing** | Covered | NEXT-29 (unit test expansion to 10+ functions), N-7 (pip-audit CI gate), N-14 (broken file detection as pre-run validation) |
+| **Distribution / packaging** | Covered | N-3 (catalog auto-download), NEXT-30 (multiplatform CI), L-10 (portable mode) |
+| **Plugin ecosystem** | Covered | NEXT-27 (SDK + 3 reference plugins), NEXT-28 (webhook) |
 | **Mobile** | Rejected | Android app rejected (no server backend); revisit after UC-1 |
 | **Offline / resilience** | Covered | N-6 (two-phase commit), N-2 (incremental journal), Ollama local fallback already in prod |
 | **Multi-user / collaboration** | Rejected | Single-user tool by design; see Rejected table |
@@ -560,11 +725,14 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 ### Security -- additional notes
 - **psd-tools** parses untrusted `.psd` files. Maliciously crafted PSDs could trigger parser bugs.
-  Mitigation (add to N-7 scope): run parser in a subprocess with a file-size sanity limit.
+  Fix: run parser in subprocess with file-size sanity limit. **Scheduled in N-13.**
 - **rarfile / py7zr** extract untrusted archives. Path traversal risk (archive entry names with
-  `../`). Mitigation (add to L-7): validate all extracted paths against target directory before write.
+  `../`). 2 open GitHub Advisory DB entries for each. Fix: validate all extracted paths against
+  target directory before write. **Scheduled in N-13.**
+- **fonttools** CVE-2025-66034 (path traversal in `varLib.main`, fixed v4.61.0). N-9 metadata
+  extractors will use fonttools; pin `fonttools>=4.62.1` in the same commit. **Scheduled in N-13.**
 - **API keys** (DeepSeek, GitHub, Envato) are stored in `%APPDATA%\FileOrganizer\` settings.
-  Verify they are not logged or committed. Add explicit check to N-7 audit pass.
+  Verify they are not logged or committed. Covered by N-7 audit pass (shipped).
 
 ---
 
@@ -572,20 +740,23 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 | Tool | Type | Key strength | FileOrganizer gap addressed |
 |------|------|--------------|----------------------------|
-| organize-cli [S8] | OSS CLI | YAML rules, dry-run, rich filters | NEXT-2 (YAML export), NEXT-3 (rule chains) |
+| organize-cli [S8] | OSS CLI | YAML rules, dry-run, deduplicate conflict mode (v3.3.0) | NEXT-2 (YAML export), NEXT-3 (rule chains) |
 | LlamaFS [S1] | OSS Electron | Watch mode, minimal-diff index | NEXT-1, NEXT-5 |
-| Czkawka [S10] | OSS Rust GUI | Perceptual hash dedup, persistent cache | NEXT-17 |
-| fclones [S11] | OSS Rust CLI | Reflinks, cross-library dedup, JSON | NEXT-18 |
-| TagStudio [S9] | OSS Python/Qt | Non-destructive tagging, i18n | Different model (move vs tag) -- intentional |
-| Eagle App [S19] | Commercial | Visual search, designer UX | NEXT-20 (thumbnail browser) |
+| Czkawka/Krokiet [S10] | OSS Rust GUI | Perceptual hash dedup, broken video detection (v11) | NEXT-19, NEXT-32, N-14 |
+| fclones [S11] | OSS Rust CLI | Reflinks, cross-library dedup, JSON, fclones-gui (pre-release) | NEXT-20 |
+| TagStudio [S9] | OSS Python/Qt | Non-destructive tagging, infinite scrolling (v9.5.6), 7+ locales | Different model (move vs tag) -- intentional |
+| electron-dam [S43] | OSS Electron | Semantic search, virtual bundles, 3D/audio preview, Ollama embedding | L-1, L-17, L-18, N-10 pattern |
+| AIFileSorterShellExtension [S45] | OSS C# | Windows Explorer context menu, 2-min undo, OpenRouter LLM | L-6 (context menu -- prior art confirmed) |
+| Eagle App [S19] | Commercial | Visual search, designer UX | NEXT-22 (thumbnail browser) |
 | Hazel [S20] | Commercial macOS | Rule chains, Spotlight conditions | NEXT-3, NEXT-1 |
 | File Juggler [S21] | Commercial Win | Folder watch, content conditions | NEXT-1, NEXT-3 |
 | Paperless-ngx [S14] | OSS Docker | OCR, multi-user, REST API | Single-user; OCR in L-3 |
-| Adobe Bridge [S22] | Commercial | AEP/PSD preview, CC integration | NEXT-20 |
+| Adobe Bridge [S22] | Commercial | AEP/PSD preview, CC integration | NEXT-22 |
 
 **FileOrganizer's unique position**: design-asset-specialist classifier (384 categories, Envato
-marketplace ID enrichment, AEP-aware pipeline) + multi-TB real-world hardening. No OSS competitor
-combines both. Primary gaps: watch mode (NEXT-1), thumbnail browser (NEXT-20), rule chains (NEXT-3).
+marketplace ID enrichment, AEP-aware pipeline) + multi-TB real-world hardening + metadata-first
+AI cost reduction (N-9). No OSS competitor combines all three. Primary gaps closing in v8.3.0:
+metadata extractors (N-9), embeddings classifier (N-10), ReviewPanel thumbnails (N-11).
 
 ---
 
@@ -601,7 +772,8 @@ Every claim in this roadmap traces to at least one source below.
 - [S5] aifiles (jjuliano) -- https://github.com/jjuliano/aifiles
 - [S6] ai-file-organizer (thebearwithabite) -- https://github.com/thebearwithabite/ai-file-organizer
 - [S7] docmind-ai-llm (BjornMelin) -- https://github.com/BjornMelin/docmind-ai-llm
-- [S8] organize-cli (tfeldmann) -- https://github.com/tfeldmann/organize
+- [S8] organize-cli (tfeldmann) -- https://github.com/tfeldmann/organize (v3.3.0: deduplicate
+  conflict mode, EXIF on non-image files, filecontent filter for DOCX/PDF)
 - [S9] TagStudio -- https://github.com/TagStudioDev/TagStudio
 - [S10] Czkawka (qarmin) -- https://github.com/qarmin/czkawka
 - [S11] fclones (pkolaczk) -- https://github.com/pkolaczk/fclones
@@ -610,7 +782,8 @@ Every claim in this roadmap traces to at least one source below.
 - [S14] Paperless-ngx -- https://github.com/paperless-ngx/paperless-ngx
 - [S15] digiKam -- https://www.digikam.org/about/
 - [S16] hazelnut (ricardodantas) -- https://github.com/ricardodantas/hazelnut
-- [S17] electron-dam -- GitHub topic: digital-asset-management scan
+- [S17] electron-dam (simeonradivoev) -- https://github.com/simeonradivoev/electron-dam
+  (3D model preview, audio waveform, Ollama semantic search, virtual bundles)
 - [S18] fixxer -- GitHub topic: file-organizer scan
 
 ### Commercial Competitors
@@ -640,3 +813,40 @@ Every claim in this roadmap traces to at least one source below.
 - [S34] RESEARCH_IDEAS.md -- 12 research areas: metadata extractors, embeddings, YAML rules
 - [S35] CHANGELOG.md v8.2.0 -- Audit findings, phantom category fixes, fix_duplicates hazard
 - [S36] CLAUDE.md -- Living working notes: architecture, known issues, version history
+
+### New Sources (Phase 1 refresh, May 2026)
+- [S37] rarfile (markokr) -- https://github.com/markokr/rarfile -- ISC licensed; extraction via
+  external unrar/7zip; 2 GitHub Advisory DB entries; path-traversal risk in archive entry paths
+- [S38] TagStudio v9.5.6 release notes -- https://github.com/tagstudiodev/tagstudio/releases/tag/v9.5.6
+  (infinite scrolling, .cb7/.cbr/.cbt thumbnails, 7 active locales)
+- [S39] TagStudio v9.5.5 release notes -- https://github.com/tagstudiodev/tagstudio/releases/tag/v9.5.5
+  (thumbnail cache quality + resolution settings in settings.toml)
+- [S40] organize-cli v3.3.0 release -- https://github.com/tfeldmann/organize/releases/tag/3.3.0
+  (deduplicate conflict mode, EXIF on EPUB/PDF, filecontent DOCX/PDF native)
+- [S41] py7zr GitHub Advisories -- https://github.com/miurahr/py7zr/security/advisories
+  (2 entries; path traversal risk in archive extraction paths)
+- [S42] rarfile GitHub Advisories -- https://github.com/advisories?query=rarfile (2 entries)
+- [S43] electron-dam (simeonradivoev) -- https://github.com/simeonradivoev/electron-dam
+  (Electron DAM: Ollama semantic search, virtual bundles, 3D preview via ASSIMP, audio
+  waveform via Wavesurfer.js, Humble Bundle import, light/dark mode)
+- [S44] Czkawka v11.0.0 release -- https://github.com/qarmin/czkawka/releases/tag/11.0.0
+  (Krokiet is now primary GUI; broken video detection via ffprobe; RAW JPEG preview extraction;
+  JSON config; wgpu/skia/femtovg backends; scan time measurement; grouping overhaul)
+- [S45] AIFileSorterShellExtension (nonniks) -- https://github.com/nonniks/AIFileSorterShellExtension
+  (C# Windows Explorer context menu, OpenRouter LLM, game/mod recognition, 2-minute undo window;
+  corroborates L-6 prior art)
+- [S46] psd-tools v1.16.0 -- https://pypi.org/project/psd-tools/#history
+  (Apr 24, 2026; Python 3.14 support; composite extra with aggdraw/scipy/scikit-image for
+  advanced layer rendering)
+- [S47] imagehash (JohannesBuchner) -- https://github.com/JohannesBuchner/imagehash
+  (pHash, dHash, wHash, average hash, colorhash, crop-resistant hash; Hamming distance;
+  BK-tree for sub-linear similarity search)
+- [S48] sentence-transformers -- https://www.sbert.net / https://github.com/UKPLab/sentence-transformers
+  (15,000+ pretrained models on HuggingFace; sparse encoder support added; all-MiniLM-L6-v2
+  confirmed viable at 80M params for local embedding)
+- [S49] fonttools CVE-2025-66034 / v4.62.1 -- https://pypi.org/project/fonttools/#history
+  (CVE-2025-66034: path traversal in varLib.main, fixed in 4.61.0; v4.62.1 = Mar 2026 latest)
+- [S50] fclones-gui v0.1.2 -- https://github.com/pkolaczk/fclones-gui/releases
+  (pre-release GUI wrapper for fclones; confirms demand for GUI dedup tooling)
+- [S51] Hydrus Network v670 -- https://github.com/hydrusnetwork/hydrus/releases/tag/v670
+  (curl_cffi HTTP/2 test mode; off-screen window rescue logic; tag suggestion improvements)
