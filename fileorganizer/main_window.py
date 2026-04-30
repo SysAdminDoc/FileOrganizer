@@ -61,7 +61,8 @@ from fileorganizer.dialogs import (
     EventGroupDialog, RuleEditorDialog, ScheduleDialog,
     UndoTimelineDialog, PluginManagerDialog, CleanupToolsDialog,
     DuplicateFinderDialog, CleanupPanel, DuplicatePanel,
-    ProtectedPathsDialog, ThemePickerDialog, WatchHistoryDialog
+    ProtectedPathsDialog, ThemePickerDialog, WatchHistoryDialog,
+    LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel,
 )
 from fileorganizer.widgets import (
     CategoryBarChart, FlowLayout, ThumbnailLoader, ThumbnailCard,
@@ -120,7 +121,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("FileOrganizer v8.0.0")
+        self.setWindowTitle("FileOrganizer v8.2.0")
         self.setMinimumSize(1050, 700)
         self.aep_items  = []
         self.cat_items  = []
@@ -272,7 +273,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             f"color: {_t['fg_bright']}; font-size: 15px; font-weight: 700; letter-spacing: -0.5px;"
             "background: transparent;")
         brand_lay.addWidget(lbl_brand)
-        lbl_ver = QLabel("v7.5.0")
+        lbl_ver = QLabel("v8.2.0")
         lbl_ver.setStyleSheet(
             f"color: {_t['muted']}; font-size: 10px; font-weight: 600; background: transparent;")
         brand_lay.addWidget(lbl_ver)
@@ -331,6 +332,27 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             ("Old Downloads",     'cleanup', 5),
         ]
         for label, tool_type, tab_idx in _nav_items_tools:
+            btn = QPushButton(f"  {label}")
+            btn.setCheckable(True)
+            btn.setStyleSheet(_NAV_BTN)
+            btn.setCursor(Qt.CursorShape.PointingHandCursor)
+            btn.clicked.connect(
+                lambda checked, t=tool_type, ti=tab_idx: self._on_sidebar_tool(t, ti))
+            sb_lay.addWidget(btn)
+            self._nav_buttons.append(('tool', (tool_type, tab_idx), btn))
+
+        # ── MARKETPLACE section ──────────────────────────────────────────
+        lbl_sec_mkt = QLabel("MARKETPLACE")
+        lbl_sec_mkt.setStyleSheet(_NAV_SECTION)
+        sb_lay.addWidget(lbl_sec_mkt)
+        self._nav_section_labels.append(lbl_sec_mkt)
+
+        _nav_items_mkt = [
+            ("Library Auditor",      'auditor',    None),
+            ("Archive Normalizer",   'normalizer', None),
+            ("Catalog Manager",      'catalog',    None),
+        ]
+        for label, tool_type, tab_idx in _nav_items_mkt:
             btn = QPushButton(f"  {label}")
             btn.setCheckable(True)
             btn.setStyleSheet(_NAV_BTN)
@@ -1069,6 +1091,18 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self._duplicate_panel = DuplicatePanel()
         self._content_stack.addWidget(self._duplicate_panel)  # index 2
 
+        # ── Page 3: Library Auditor ───────────────────────────────────
+        self._auditor_panel = LibraryAuditorPanel()
+        self._content_stack.addWidget(self._auditor_panel)   # index 3
+
+        # ── Page 4: Archive Normalizer ────────────────────────────────
+        self._normalizer_panel = ArchiveNormalizerPanel()
+        self._content_stack.addWidget(self._normalizer_panel)  # index 4
+
+        # ── Page 5: Catalog Manager ───────────────────────────────────
+        self._catalog_panel = CatalogManagerPanel()
+        self._content_stack.addWidget(self._catalog_panel)   # index 5
+
         self._content_stack.setCurrentIndex(0)
         right_col.addWidget(self._content_stack, 1)
 
@@ -1626,6 +1660,12 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # Switch stack to the right panel
         if tool_type == 'duplicates':
             self._content_stack.setCurrentIndex(2)
+        elif tool_type == 'auditor':
+            self._content_stack.setCurrentIndex(3)
+        elif tool_type == 'normalizer':
+            self._content_stack.setCurrentIndex(4)
+        elif tool_type == 'catalog':
+            self._content_stack.setCurrentIndex(5)
         else:
             # Cleanup panel — switch to the right tab
             self._cleanup_panel.tabs.setCurrentIndex(tab_idx or 0)
