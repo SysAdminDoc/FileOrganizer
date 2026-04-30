@@ -6,6 +6,14 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added (2026-04-30)
 
+- **N-4: Pre-flight report UI** — `PreflightDialog` (backed by `PreflightWorker` QThread)
+  runs automatically before every category/smart-scan Apply. Shallow-scans source folders
+  for trailing-space names and >260-char paths, reports destination free space, and shows
+  how many items will route to _Review based on the current confidence threshold. Errors
+  (missing source, <5 GB free) block continuation with a red "Continue Anyway" button;
+  warnings and info allow a normal green "Continue". Cancel aborts the apply without
+  touching disk.
+
 - **N-5: Confidence threshold control** — `confidence_settings.json` in `%APPDATA%/FileOrganizer`
   persists two user-configurable thresholds: "auto-apply if confidence ≥ X" (default 80%) and
   "send to _Review if confidence < Y" (default 50%). Exposed in Design Workflow Settings dialog
