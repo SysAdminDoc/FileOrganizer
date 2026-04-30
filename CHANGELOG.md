@@ -4,7 +4,13 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
-### Security (2026-04-30)
+### Fixed (2026-04-30)
+
+- `fix_duplicates.py` — switched from a single `write_text` at run-end (plus an every-50
+  checkpoint that also overwrites) to per-item JSONL append with immediate `flush()`. A killed or
+  crashed run now has a complete audit trail of every merge that completed before the interruption.
+  Log file renamed from `fix_duplicates_log.json` to `fix_duplicates_log.jsonl`.
+
 
 - `requirements.txt` — pinned `Pillow>=12.2.0` (fixes libavif, libjpeg-turbo, harfbuzz CVEs) and
   `PyQt6>=6.11.0` (ARM64 stability, upstream Qt 6.11 bug fixes).
