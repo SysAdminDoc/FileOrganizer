@@ -209,7 +209,7 @@ class CleanupToolsDialog(QDialog):
         self.btn_scan.clicked.connect(self._start_scan)
         scan_row.addWidget(self.btn_scan)
         self.lbl_progress = QLabel("")
-        self.lbl_progress.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_progress.setProperty("class", "meta")
         scan_row.addWidget(self.lbl_progress, 1)
         layout.addLayout(scan_row)
 
@@ -575,7 +575,7 @@ class CleanupPanel(QWidget):
         self.btn_scan.clicked.connect(self._start_scan)
         scan_row.addWidget(self.btn_scan)
         self.lbl_progress = QLabel("")
-        self.lbl_progress.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_progress.setProperty("class", "meta")
         scan_row.addWidget(self.lbl_progress, 1)
         layout.addLayout(scan_row)
 
