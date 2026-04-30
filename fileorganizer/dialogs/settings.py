@@ -711,7 +711,7 @@ class ModelManagerDialog(QDialog):
 
         # ── Summary ───────────────────────────────────────────────────────────
         self.lbl_summary = QLabel("")
-        self.lbl_summary.setStyleSheet(f"color: {_t['muted']}; font-size: 12px; padding: 2px 0;")
+        self.lbl_summary.setProperty("class", "stats")
         layout.addWidget(self.lbl_summary)
 
         # ── Search ────────────────────────────────────────────────────────────
