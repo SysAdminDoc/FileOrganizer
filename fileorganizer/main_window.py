@@ -870,7 +870,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # Thumbnail Grid View (hidden by default)
         self.grid_scroll = QScrollArea()
         self.grid_scroll.setWidgetResizable(True)
-        self.grid_scroll.setStyleSheet(f"QScrollArea {{ background: {_t['header_bg']}; border: none; }}")
+        self.grid_scroll.setProperty("class", "scroll-area-header")
         self._grid_container = QWidget()
         self._grid_layout = FlowLayout(self._grid_container, margin=8, spacing=8)
         self.grid_scroll.setWidget(self._grid_container)
@@ -3291,10 +3291,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             self.lbl_ollama.style().unpolish(self.lbl_ollama)
             self.lbl_ollama.style().polish(self.lbl_ollama)
 
-        # ── Grid Scroll ──────────────────────────────────────────────────
-        if hasattr(self, 'grid_scroll'):
-            self.grid_scroll.setStyleSheet(
-                f"QScrollArea {{ background: {t['header_bg']}; border: none; }}")
+        # grid_scroll uses scroll-area-header class — auto-updates via global QSS.
 
     # ═══ CLEANUP TOOLS ═══════════════════════════════════════════════════════
     def _open_cleanup_tools(self):
