@@ -4,6 +4,49 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
+### Added (2026-04-30, N-11 ReviewPanel thumbnail rendering)
+
+- **N-11: ReviewPanel thumbnails** — new `fileorganizer/thumbnail_cache.py`
+  with three layers ported from local TagStudio [S56] `cache_manager.py` +
+  `previews/renderer.py`:
+  1. In-process `QPixmapCache` (50 MiB, RAM only) keyed by absolute thumbnail
+     source path + target size.  Fast scroll cache hits, no disk I/O.
+  2. `ThumbnailLoaderWorker(QThread)` — single per-panel worker with a
+     non-blocking job queue (`queue(row, path, ext)`) that emits
+     `loaded(row, pixmap)` per job.  Stops cleanly on `stop()` via a sentinel
+     job; `wait(timeout_ms)` for graceful teardown.
+  3. `extension_badge(ext, size)` synthetic fallback — colored rounded rect +
+     ext text rendered with `QPainter`.  Stable color per extension via a
+     hash into an 8-color palette so `.psd` always renders the same blue.
+  4. PSD support via `psd_tools.PSDImage.composite()` (or `.topil()` on older
+     versions); skipped for files > 200 MB to avoid OOM on layer-tree parses.
+  5. Pillow path for raster types (jpg/jpeg/png/gif/bmp/webp/tiff/tif).
+
+  ReviewPanel changes (`fileorganizer/dialogs/marketplace.py`):
+  - `_ReviewScanWorker` now records the most-frequent extension per item
+    (`primary_ext`) so the badge fallback shows something meaningful when
+    the item has no preview image.  PSD added to thumbnail-source extension
+    set.
+  - `ReviewPanel.__init__` instantiates a `ThumbnailLoaderWorker` and connects
+    its `loaded` signal to a slot that swaps the placeholder badge for the
+    real preview.  Row height grows to fit the 64×64 thumbnail.
+  - `_on_scan_result` immediately sets an extension badge as the row icon
+    (so the table never appears blank during a scan), then queues the real
+    thumbnail for async load.  When the worker finishes, the icon swaps.
+  - `closeEvent()` stops + waits the worker (≤2s) so the thread doesn't
+    outlive the panel.
+
+  PyQt6 compatibility: `QPixmapCache.find()` is the single-argument form in
+  PyQt6 (the legacy two-arg `find(key, &pm)` overload from PyQt5/Qt-C++ is
+  gone).  `cached_pixmap` uses the new return-Optional[QPixmap] shape.
+
+  11 new tests in `tests/test_thumbnail_cache.py` cover the cache key
+  (case-insensitive, size-aware), the badge renderer (valid pixmap, stable
+  color per extension), the QPixmapCache round-trip (including the null-
+  pixmap rejection), the synchronous `render_pixmap` fallback when the
+  source path is missing or empty, and the loader worker's stop-unblocks-
+  queue contract.
+
 ### Added (2026-04-30, N-10 embeddings classifier MVP)
 
 - **N-10: Embeddings classifier MVP** — new `fileorganizer/embeddings_classifier.py`
