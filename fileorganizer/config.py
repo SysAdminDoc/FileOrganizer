@@ -42,9 +42,35 @@ except OSError:
     _CHECK_SVG_URL = ''
 
 # ── Confidence Thresholds ─────────────────────────────────────────────────────
-CONF_HIGH   = 80   # green — high confidence
-CONF_MEDIUM = 50   # yellow — medium confidence (below = red)
-CONF_FUZZY_CAP = 80   # max confidence for fuzzy-match results
+_CONFIDENCE_SETTINGS_FILE = os.path.join(_APP_DATA_DIR, 'confidence_settings.json')
+_CONFIDENCE_DEFAULTS = {
+    'auto_above':   80,  # conf >= this  → green, auto-apply
+    'review_below': 50,  # conf <  this  → route to _Review / yellow zone [review_below, auto_above)
+}
+
+def load_confidence_settings() -> dict:
+    try:
+        with open(_CONFIDENCE_SETTINGS_FILE, 'r', encoding='utf-8') as f:
+            s = json.load(f)
+        return {**_CONFIDENCE_DEFAULTS, **s}
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        return dict(_CONFIDENCE_DEFAULTS)
+
+def save_confidence_settings(settings: dict):
+    global CONF_HIGH, CONF_MEDIUM
+    try:
+        with open(_CONFIDENCE_SETTINGS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(settings, f, indent=2)
+    except OSError:
+        pass
+    # Update module-level constants so in-process callers pick up new values
+    CONF_HIGH   = int(settings.get('auto_above',   _CONFIDENCE_DEFAULTS['auto_above']))
+    CONF_MEDIUM = int(settings.get('review_below', _CONFIDENCE_DEFAULTS['review_below']))
+
+_conf_init = load_confidence_settings()
+CONF_HIGH   = _conf_init['auto_above']    # green — auto-apply threshold
+CONF_MEDIUM = _conf_init['review_below']  # yellow — below this routes to _Review
+CONF_FUZZY_CAP = 80   # max confidence for fuzzy-match results (not user-configurable)
 
 
 # ── Theme System ──────────────────────────────────────────────────────────────
