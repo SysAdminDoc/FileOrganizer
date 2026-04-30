@@ -10,12 +10,13 @@ from PyQt6.QtWidgets import (
     QTreeWidget, QTreeWidgetItem, QDialog,
     QListWidget, QSplitter
 )
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal, QThread
 from PyQt6.QtGui import QColor
 
 from fileorganizer.config import (
     get_active_theme, get_active_stylesheet,
-    load_watch_history, clear_watch_history
+    load_watch_history, clear_watch_history,
+    load_confidence_settings,
 )
 from fileorganizer.cache import _load_undo_stack
 from fileorganizer.engine import ScheduleManager, EventGrouper
@@ -728,3 +729,204 @@ class WatchHistoryDialog(QDialog):
     def _clear(self):
         clear_watch_history()
         self.tbl.setRowCount(0)
+
+
+# ═══ PRE-FLIGHT CHECK ════════════════════════════════════════════════════════
+
+class PreflightWorker(QThread):
+    """Scan pending work items for path issues, disk space, and low confidence."""
+
+    issue    = pyqtSignal(str, str, str)   # severity ('error'/'warning'/'info'), category, detail
+    progress = pyqtSignal(str)
+    done     = pyqtSignal(int, int, int)   # n_errors, n_warnings, n_info
+
+    def __init__(self, items, review_below=50, parent=None):
+        super().__init__(parent)
+        self._items = items          # list of CategorizeItem (selected + Pending)
+        self._review_below = review_below
+
+    def run(self):
+        import shutil as _shutil
+
+        n_err = n_warn = n_info = 0
+
+        # ── 1. Source path checks (shallow: folder + one level deep) ─────────
+        self.progress.emit("Checking source paths…")
+        for it in self._items:
+            src = getattr(it, 'full_source_path', '')
+            if not src:
+                continue
+            if not os.path.exists(src):
+                self.issue.emit('error', 'Missing source', src)
+                n_err += 1
+                continue
+            # Check the folder name itself
+            folder_name = os.path.basename(src)
+            if folder_name != folder_name.rstrip():
+                self.issue.emit('error', 'Trailing space in folder name', src)
+                n_err += 1
+            # Shallow scan: first-level children only
+            try:
+                children = os.listdir(src)
+            except PermissionError:
+                children = []
+            for child in children:
+                if child != child.rstrip():
+                    self.issue.emit('error', 'Trailing space in name',
+                                    os.path.join(src, child))
+                    n_err += 1
+                full_child = os.path.join(src, child)
+                if len(full_child) > 260:
+                    self.issue.emit('warning', 'Path > 260 chars', full_child)
+                    n_warn += 1
+
+        # ── 2. Destination path length ────────────────────────────────────────
+        self.progress.emit("Checking destination paths…")
+        for it in self._items:
+            dst = getattr(it, 'full_dest_path', '')
+            if dst and len(dst) > 260:
+                self.issue.emit('warning', 'Dest path > 260 chars', dst)
+                n_warn += 1
+
+        # ── 3. Destination free space ─────────────────────────────────────────
+        self.progress.emit("Checking destination disk space…")
+        dest_paths = [getattr(it, 'full_dest_path', '') for it in self._items
+                      if getattr(it, 'full_dest_path', '')]
+        if dest_paths:
+            try:
+                dest_root = os.path.splitdrive(dest_paths[0])[0] or dest_paths[0][:2]
+                _, _, free = _shutil.disk_usage(dest_root + os.sep)
+                free_gb = free / (1024 ** 3)
+                if free_gb < 5:
+                    self.issue.emit('error', 'Low disk space',
+                                    f"Destination has only {free_gb:.1f} GB free")
+                    n_err += 1
+                elif free_gb < 20:
+                    self.issue.emit('warning', 'Low disk space',
+                                    f"Destination has {free_gb:.1f} GB free")
+                    n_warn += 1
+                else:
+                    self.issue.emit('info', 'Disk space',
+                                    f"Destination has {free_gb:.1f} GB free")
+                    n_info += 1
+            except Exception as exc:
+                self.issue.emit('warning', 'Could not check disk space', str(exc))
+                n_warn += 1
+
+        # ── 4. Low-confidence items ───────────────────────────────────────────
+        self.progress.emit("Checking confidence levels…")
+        rb = self._review_below
+        review_count = sum(
+            1 for it in self._items
+            if getattr(it, 'confidence', 100) < rb
+        )
+        if review_count:
+            self.issue.emit('warning', 'Low-confidence items',
+                            f"{review_count} item(s) will route to _Review "
+                            f"(confidence < {rb}%)")
+            n_warn += 1
+        else:
+            self.issue.emit('info', 'Confidence check',
+                            f"All items meet the {rb}% confidence threshold")
+            n_info += 1
+
+        self.done.emit(n_err, n_warn, n_info)
+
+
+class PreflightDialog(QDialog):
+    """
+    Non-blocking pre-flight check shown before Apply in cat/smart-scan mode.
+    Runs PreflightWorker in a background thread, populates a live issue table,
+    then enables 'Continue' / 'Cancel' when complete.
+    """
+
+    def __init__(self, items, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Pre-flight Check")
+        self.setMinimumSize(780, 420)
+        self.setStyleSheet(get_active_stylesheet())
+        self._accepted = False
+
+        conf = load_confidence_settings()
+        review_below = conf.get('review_below', 50)
+
+        lay = QVBoxLayout(self)
+
+        self._lbl_status = QLabel("Scanning…")
+        lay.addWidget(self._lbl_status)
+
+        self._tbl = QTableWidget(0, 3)
+        self._tbl.setHorizontalHeaderLabels(["Severity", "Issue", "Details"])
+        hdr = self._tbl.horizontalHeader()
+        hdr.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        hdr.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+        hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        self._tbl.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self._tbl.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self._tbl.setWordWrap(False)
+        lay.addWidget(self._tbl, 1)
+
+        self._lbl_summary = QLabel("")
+        lay.addWidget(self._lbl_summary)
+
+        btn_row = QHBoxLayout()
+        self._btn_cancel   = QPushButton("Cancel")
+        self._btn_continue = QPushButton("Continue")
+        self._btn_continue.setEnabled(False)
+        btn_row.addStretch()
+        btn_row.addWidget(self._btn_cancel)
+        btn_row.addWidget(self._btn_continue)
+        lay.addLayout(btn_row)
+
+        self._btn_continue.clicked.connect(self._on_continue)
+        self._btn_cancel.clicked.connect(self.reject)
+
+        self._worker = PreflightWorker(items, review_below=review_below, parent=self)
+        self._worker.issue.connect(self._on_issue)
+        self._worker.progress.connect(self._lbl_status.setText)
+        self._worker.done.connect(self._on_done)
+        self._worker.start()
+
+    # ── slots ────────────────────────────────────────────────────────────────
+
+    def _on_issue(self, severity: str, category: str, detail: str):
+        theme = get_active_theme()
+        colors = {
+            'error':   QColor(theme.get('danger',  '#f38ba8')),
+            'warning': QColor(theme.get('warning', '#fab387')),
+            'info':    QColor(theme.get('success', '#a6e3a1')),
+        }
+        color = colors.get(severity, QColor('#cdd6f4'))
+        row = self._tbl.rowCount()
+        self._tbl.insertRow(row)
+        for col, text in enumerate([severity.upper(), category, detail]):
+            item = QTableWidgetItem(text)
+            item.setForeground(color)
+            self._tbl.setItem(row, col, item)
+
+    def _on_done(self, n_err: int, n_warn: int, n_info: int):
+        self._lbl_status.setText("Scan complete.")
+        self._lbl_summary.setText(
+            f"{n_err} error(s)  |  {n_warn} warning(s)  |  {n_info} info")
+        self._btn_continue.setEnabled(True)
+        if n_err > 0:
+            self._btn_continue.setText("Continue Anyway")
+            self._btn_continue.setProperty("class", "danger")
+        else:
+            self._btn_continue.setProperty("class", "apply")
+        self._btn_continue.style().unpolish(self._btn_continue)
+        self._btn_continue.style().polish(self._btn_continue)
+
+    def _on_continue(self):
+        self._accepted = True
+        self.accept()
+
+    def was_accepted(self) -> bool:
+        return self._accepted
+
+    def closeEvent(self, event):
+        if self._worker.isRunning():
+            self._worker.quit()
+            self._worker.wait(2000)
+        super().closeEvent(event)
+
