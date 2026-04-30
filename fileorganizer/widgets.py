@@ -412,7 +412,7 @@ class WatchSettingsDialog(QDialog):
 
         # Header
         lbl_h = QLabel("Watch Folder — Auto-Organize")
-        lbl_h.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-size: 14px; font-weight: bold;")
+        lbl_h.setProperty("class", "section-title")
         lay.addWidget(lbl_h)
 
         # Folder list
