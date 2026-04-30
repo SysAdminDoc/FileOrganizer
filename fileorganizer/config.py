@@ -296,6 +296,11 @@ QCheckBox::indicator:checked {{ background: {t['accent']}; border-color: {t['acc
 QRadioButton::indicator:checked {{ background: {t['accent']}; border-color: {t['accent']}; }}
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled {{ background: {t['bg_alt']}; border-color: {t['btn_bg']}; }}
 QCheckBox::indicator:checked:disabled, QRadioButton::indicator:checked:disabled {{ background: {t['btn_bg']}; border-color: {t['btn_bg']}; }}
+/* Accent-colored emphasized checkbox (used to highlight key options like LLM) */
+QCheckBox[class="accent"] {{
+    color: {t['sidebar_profile_fg']}; font-weight: bold; font-size: 12px;
+    background: transparent;
+}}
 
 /* ── Slider ──────────────────────────────────────────────────────────────── */
 QSlider::groove:horizontal {{ background: {t['btn_bg']}; height: 6px; border-radius: 3px; }}
@@ -394,6 +399,14 @@ QLabel[class="subheading"] {{
 QLabel[class="caption"] {{
     color: {t['muted']}; font-size: 10px; font-weight: 600;
     letter-spacing: 0.6px; text-transform: uppercase;
+}}
+QLabel[class="form-label"] {{
+    color: {t['muted']}; font-weight: 700; font-size: 10px;
+    letter-spacing: 1px; background: transparent;
+}}
+QLabel[class="option-label"] {{
+    color: {t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 11px;
+    background: transparent;
 }}
 QLabel[class="muted"] {{ color: {t['muted']}; }}
 QLabel[class="hint"] {{ color: {t['muted']}; font-size: 11px; font-style: italic; }}
