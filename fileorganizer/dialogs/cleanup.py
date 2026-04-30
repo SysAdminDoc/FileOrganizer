@@ -56,12 +56,6 @@ class CleanupToolsDialog(QDialog):
         from PyQt6.QtWidgets import QTabWidget, QDoubleSpinBox
         _t = get_active_theme()
         self.tabs = QTabWidget()
-        self.tabs.setStyleSheet(
-            f"QTabWidget::pane {{ border: 1px solid {_t['border']}; background: {_t['bg_alt']}; }}"
-            f"QTabBar::tab {{ background: {_t['bg_alt']}; color: {_t['muted']}; padding: 8px 18px;"
-            f"border: 1px solid {_t['border']}; border-bottom: none; margin-right: 2px;"
-            f"font-size: 12px; }}"
-            f"QTabBar::tab:selected {{ background: {_t['selection']}; color: {_t['sidebar_btn_active_fg']}; font-weight: 600; }}")
 
         # ── Empty Folders tab ─────────────────────────────────────────────
         tab_empty = QWidget()
@@ -253,15 +247,9 @@ class CleanupToolsDialog(QDialog):
         btn_invert.clicked.connect(self._invert_selection)
         action_row.addWidget(btn_invert)
 
-        _DANGER_BTN = (
-            f"QPushButton {{ background: {_t['btn_bg']}; color: #ef4444; font-weight: bold;"
-            f"border: 1px solid #5c2e2e; border-radius: 4px; padding: 4px 16px; }}"
-            f"QPushButton:hover {{ background: #4a1a1a; color: #fca5a5; }}"
-            f"QPushButton:disabled {{ background: {_t['btn_bg']}; color: {_t['disabled']}; }}")
-
         self.btn_delete = QPushButton("Delete Selected")
         self.btn_delete.setEnabled(False)
-        self.btn_delete.setStyleSheet(_DANGER_BTN)
+        self.btn_delete.setProperty("class", "danger")
         self.btn_delete.clicked.connect(self._delete_selected)
         action_row.addWidget(self.btn_delete)
         layout.addLayout(action_row)
@@ -434,12 +422,6 @@ class CleanupPanel(QWidget):
 
         _t = get_active_theme()
         self.tabs = QTabWidget()
-        self.tabs.setStyleSheet(
-            f"QTabWidget::pane {{ border: 1px solid {_t['border']}; background: {_t['bg_alt']}; }}"
-            f"QTabBar::tab {{ background: {_t['bg_alt']}; color: {_t['muted']}; padding: 8px 18px;"
-            f"border: 1px solid {_t['border']}; border-bottom: none; margin-right: 2px;"
-            f"font-size: 12px; }}"
-            f"QTabBar::tab:selected {{ background: {_t['selection']}; color: {_t['sidebar_btn_active_fg']}; font-weight: 600; }}")
 
         # ── Empty Folders tab ─────────────────────────────────────────────
         tab_empty = QWidget()
@@ -631,15 +613,9 @@ class CleanupPanel(QWidget):
         btn_invert.clicked.connect(self._invert_selection)
         action_row.addWidget(btn_invert)
 
-        _DANGER_BTN = (
-            f"QPushButton {{ background: {_t['btn_bg']}; color: #ef4444; font-weight: bold;"
-            f"border: 1px solid #5c2e2e; border-radius: 4px; padding: 4px 16px; }}"
-            f"QPushButton:hover {{ background: #4a1a1a; color: #fca5a5; }}"
-            f"QPushButton:disabled {{ background: {_t['btn_bg']}; color: {_t['disabled']}; }}")
-
         self.btn_delete = QPushButton("Delete Selected")
         self.btn_delete.setEnabled(False)
-        self.btn_delete.setStyleSheet(_DANGER_BTN)
+        self.btn_delete.setProperty("class", "danger")
         self.btn_delete.clicked.connect(self._delete_selected)
         action_row.addWidget(self.btn_delete)
         layout.addLayout(action_row)
