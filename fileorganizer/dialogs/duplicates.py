@@ -469,7 +469,7 @@ class DuplicateFinderDialog(QDialog):
             ])
             header.setForeground(1, QColor("#4fc3f7"))
             header.setForeground(4, QColor("#a78bfa") if match_type != "Exact"
-                                 else QColor("#4ade80"))
+                                 else QColor(get_active_theme()['green']))
             self.tree.addTopLevelItem(header)
 
             for path, info in members:
@@ -487,7 +487,7 @@ class DuplicateFinderDialog(QDialog):
                 child.setCheckState(0, Qt.CheckState.Unchecked)
 
                 if info.is_original:
-                    child.setForeground(4, QColor("#4ade80"))
+                    child.setForeground(4, QColor(get_active_theme()['green']))
                 else:
                     child.setForeground(4, QColor("#f87171"))
                     total_dupes += 1
@@ -826,7 +826,7 @@ class DuplicatePanel(QWidget):
             ])
             header.setForeground(1, QColor("#4fc3f7"))
             header.setForeground(4, QColor("#a78bfa") if match_type != "Exact"
-                                 else QColor("#4ade80"))
+                                 else QColor(get_active_theme()['green']))
             self.tree.addTopLevelItem(header)
             for path, info in members:
                 try:
@@ -841,7 +841,7 @@ class DuplicatePanel(QWidget):
                 ])
                 child.setCheckState(0, Qt.CheckState.Unchecked)
                 if info.is_original:
-                    child.setForeground(4, QColor("#4ade80"))
+                    child.setForeground(4, QColor(get_active_theme()['green']))
                 else:
                     child.setForeground(4, QColor("#f87171"))
                     total_dupes += 1
