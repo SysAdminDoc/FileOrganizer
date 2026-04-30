@@ -696,13 +696,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.cmb_type_filter.addItems(list(_SCAN_FILTERS.keys()))
         self.cmb_type_filter.setFixedWidth(130)
         self.cmb_type_filter.setToolTip("Filter scan to specific file types")
-        self.cmb_type_filter.setStyleSheet(
-            f"QComboBox {{ background: {_t['input_bg']}; color: {_t['accent_hover']}; border: 1px solid {_t['border']};"
-            f"border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: bold; }}"
-            f"QComboBox:hover {{ border-color: {_t['accent_hover']}; }}"
-            f"QComboBox::drop-down {{ border: none; }}"
-            f"QComboBox QAbstractItemView {{ background: {_t['input_bg']}; color: {_t['fg']};"
-            f"selection-background-color: {_t['selection']}; border: 1px solid {_t['border']}; }}")
+        self.cmb_type_filter.setProperty("class", "combo-accent")
         self.cmb_type_filter.setVisible(False)
         opts_row.addWidget(self.cmb_type_filter)
 
@@ -832,9 +826,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.cmb_face_filter = QComboBox()
         self.cmb_face_filter.setFixedWidth(130)
         self.cmb_face_filter.setToolTip("Filter by detected face/person")
-        self.cmb_face_filter.setStyleSheet(
-            f"QComboBox {{ font-size: 11px; background: {_t['selection']}; color: {_t['green']};"
-            f"border: 1px solid {_t['border']}; border-radius: 4px; padding: 2px 6px; }}")
+        self.cmb_face_filter.setProperty("class", "combo-success")
         self.cmb_face_filter.addItem("All Persons")
         self.cmb_face_filter.currentTextChanged.connect(self._apply_filter)
         self.cmb_face_filter.hide()
@@ -844,7 +836,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         # ── Scan Results Dashboard ───────────────────────────────────────
         self.dashboard_panel = QWidget()
-        self.dashboard_panel.setStyleSheet(f"background: {_t['header_bg']}; border-radius: 6px; padding: 4px;")
+        self.dashboard_panel.setProperty("class", "dashboard-panel")
+        self.dashboard_panel.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.dashboard_panel.setFixedHeight(68)
         self.dashboard_panel.hide()
         dash_lay = QVBoxLayout(self.dashboard_panel)
@@ -1006,20 +999,13 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_toggle_log = QPushButton("Console Log")
         self.btn_toggle_log.setCheckable(True)
         self.btn_toggle_log.setChecked(False)
-        self.btn_toggle_log.setStyleSheet(
-            f"QPushButton {{ background: transparent; color: {_t['muted']}; font-size: 11px; "
-            f"border: none; padding: 2px 4px; text-align: left; font-family: monospace; }}"
-            f"QPushButton:hover {{ color: {_t['fg']}; }}"
-            f"QPushButton:checked {{ color: {_t['sidebar_btn_active_fg']}; }}")
+        self.btn_toggle_log.setProperty("class", "log-toggle")
         self.btn_toggle_log.clicked.connect(self._toggle_log)
         log_header.addWidget(self.btn_toggle_log)
         log_header.addStretch()
         btn_clear_log = QPushButton("Clear")
         self._themed_btn_clear_log = btn_clear_log
-        btn_clear_log.setStyleSheet(
-            f"QPushButton {{ background: transparent; color: {_t['muted']}; font-size: 11px; "
-            f"border: none; padding: 2px 6px; }}"
-            f"QPushButton:hover {{ color: #ef4444; }}")
+        btn_clear_log.setProperty("class", "log-clear")
         btn_clear_log.clicked.connect(lambda: self.txt_log.clear())
         log_header.addWidget(btn_clear_log)
         log_outer.addLayout(log_header)
@@ -3267,24 +3253,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         if hasattr(self, '_themed_lbl_cf'):
             self._themed_lbl_cf.setProperty("class", "meta")
 
-        if hasattr(self, 'cmb_face_filter'):
-            self.cmb_face_filter.setStyleSheet(
-                f"QComboBox {{ font-size: 11px; background: {t['selection']}; color: {t['green']};"
-                f"border: 1px solid {t['border']}; border-radius: 4px; padding: 2px 6px; }}")
-
-        if hasattr(self, 'cmb_type_filter'):
-            self.cmb_type_filter.setStyleSheet(
-                f"QComboBox {{ background: {t['input_bg']}; color: {t['accent_hover']}; border: 1px solid {t['border']};"
-                f"border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: bold; }}"
-                f"QComboBox:hover {{ border-color: {t['accent_hover']}; }}"
-                f"QComboBox::drop-down {{ border: none; }}"
-                f"QComboBox QAbstractItemView {{ background: {t['input_bg']}; color: {t['fg']};"
-                f"selection-background-color: {t['selection']}; border: 1px solid {t['border']}; }}")
-
-        # ── Dashboard ────────────────────────────────────────────────────
-        if hasattr(self, 'dashboard_panel'):
-            self.dashboard_panel.setStyleSheet(
-                f"background: {t['header_bg']}; border-radius: 6px; padding: 4px;")
+        # cmb_face_filter / cmb_type_filter / dashboard_panel use combo-success /
+        # combo-accent / dashboard-panel classes — auto-update via global QSS.
         if hasattr(self, 'lbl_dash_summary'):
             self.lbl_dash_summary.setStyleSheet(
                 f"color: {t['fg']}; font-size: 12px; font-weight: bold;")
@@ -3315,17 +3285,9 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                 f"stop:0 {t['accent']}, stop:0.5 {t['sidebar_btn_active_fg']}, stop:1 {t['accent']}); border-radius:3px; }}")
 
         # ── Console Log ──────────────────────────────────────────────────
-        if hasattr(self, 'btn_toggle_log'):
-            self.btn_toggle_log.setStyleSheet(
-                f"QPushButton {{ background: transparent; color: {t['muted']}; font-size: 11px; "
-                f"border: none; padding: 2px 4px; text-align: left; font-family: monospace; }}"
-                f"QPushButton:hover {{ color: {t['fg']}; }}"
-                f"QPushButton:checked {{ color: {t['sidebar_btn_active_fg']}; }}")
-        if hasattr(self, '_themed_btn_clear_log'):
-            self._themed_btn_clear_log.setStyleSheet(
-                f"QPushButton {{ background: transparent; color: {t['muted']}; font-size: 11px; "
-                f"border: none; padding: 2px 6px; }}"
-                f"QPushButton:hover {{ color: #ef4444; }}")
+        # btn_toggle_log / btn_clear_log use log-toggle / log-clear classes
+        # — auto-update via global QSS. txt_log has unique header_bg + 11px
+        # styling so it stays inline (the log class uses 10px / bg).
         if hasattr(self, 'txt_log'):
             self.txt_log.setStyleSheet(
                 f"QTextEdit {{ background:{t['header_bg']}; color:{t['muted']}; font-family: 'Consolas','Courier New',monospace; "
