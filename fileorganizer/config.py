@@ -109,6 +109,14 @@ QPushButton[class="danger"] {{
 QPushButton[class="danger"]:hover {{ background-color: {t['danger_hover_bg']}; color: {t['danger_hover_fg']}; }}
 QPushButton[class="danger"]:focus {{ border-color: {t['danger']}; }}
 QPushButton[class="danger"]:disabled {{ background-color: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['border']}; }}
+/* Cancel = same button, just text-color override (used for Scan/Cancel toggle) */
+QPushButton[class="cancel"] {{
+    color: {t['danger']}; font-weight: bold;
+}}
+QPushButton[class="cancel"]:hover {{
+    background-color: {t['danger_hover_bg']}; color: {t['danger_hover_fg']};
+    border-color: {t['danger_border']};
+}}
 
 /* ── Tool buttons ────────────────────────────────────────────────────────── */
 QToolButton {{
@@ -333,8 +341,25 @@ QLabel[class="caption"] {{
 }}
 QLabel[class="muted"] {{ color: {t['muted']}; }}
 QLabel[class="hint"] {{ color: {t['muted']}; font-size: 11px; font-style: italic; }}
+QLabel[class="meta"] {{ color: {t['muted']}; font-size: 11px; }}
+QLabel[class="meta-mono"] {{
+    color: {t['muted']}; font-size: 11px; font-family: 'Consolas', 'Courier New', monospace;
+}}
 QLabel[class="mono"] {{
     color: {t['muted']}; font-family: 'Consolas', 'Courier New', monospace; font-size: 11px;
+}}
+QLabel[class="section-title"] {{
+    color: {t['sidebar_btn_active_fg']}; font-size: 13px; font-weight: bold;
+}}
+QLabel[class="phase-label"] {{
+    color: {t['sidebar_btn_active_fg']}; font-size: 12px; font-weight: bold; letter-spacing: 0.5px;
+}}
+QLabel[class="brand-title"] {{
+    color: {t['fg_bright']}; font-size: 15px; font-weight: 700; letter-spacing: -0.5px;
+    background: transparent;
+}}
+QLabel[class="brand-version"] {{
+    color: {t['muted']}; font-size: 10px; font-weight: 600; background: transparent;
 }}
 QLabel[class="badge-success"] {{
     background: {t['green']}; color: #ffffff;

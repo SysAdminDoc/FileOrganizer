@@ -42,7 +42,7 @@ class DuplicateCompareDialog(QDialog):
         nav.addWidget(self.btn_prev)
         self.lbl_group = QLabel("")
         _t = get_active_theme()
-        self.lbl_group.setStyleSheet(f"color: {_t['fg_bright']}; font-size: 13px; font-weight: bold;")
+        self.lbl_group.setProperty("class", "subheading")
         self.lbl_group.setAlignment(Qt.AlignmentFlag.AlignCenter)
         nav.addWidget(self.lbl_group, 1)
         self.btn_next = QPushButton("Next Group >")
@@ -123,7 +123,7 @@ class DuplicateCompareDialog(QDialog):
             except Exception:
                 mt = "?"
             lbl_detail = QLabel(f"{sz_str}  |  {mt}  |  {it.dup_detail}")
-            lbl_detail.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+            lbl_detail.setProperty("class", "meta")
             info_lay.addWidget(lbl_detail)
             row_lay.addLayout(info_lay, 1)
             # Keep badge
@@ -322,7 +322,7 @@ class DuplicateFinderDialog(QDialog):
         scan_row.addWidget(self.progress, 1)
 
         self.lbl_status = QLabel("")
-        self.lbl_status.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_status.setProperty("class", "meta")
         scan_row.addWidget(self.lbl_status)
         lay.addLayout(scan_row)
 
@@ -376,11 +376,7 @@ class DuplicateFinderDialog(QDialog):
 
         self.btn_apply = QPushButton("Apply to Selected")
         self.btn_apply.setEnabled(False)
-        self.btn_apply.setStyleSheet(
-            f"QPushButton {{ background: {_t['btn_bg']}; color: #ef4444; font-weight: bold;"
-            f"border: 1px solid #5c2e2e; border-radius: 4px; padding: 4px 18px; }}"
-            f"QPushButton:hover {{ background: #4a1a1a; color: #fca5a5; }}"
-            f"QPushButton:disabled {{ background: {_t['btn_bg']}; color: {_t['disabled']}; }}")
+        self.btn_apply.setProperty("class", "danger")
         self.btn_apply.clicked.connect(self._apply_action)
         action_row.addWidget(self.btn_apply)
 
@@ -699,7 +695,7 @@ class DuplicatePanel(QWidget):
         scan_row.addWidget(self.progress, 1)
 
         self.lbl_status = QLabel("")
-        self.lbl_status.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_status.setProperty("class", "meta")
         scan_row.addWidget(self.lbl_status)
         lay.addLayout(scan_row)
 
@@ -752,11 +748,7 @@ class DuplicatePanel(QWidget):
 
         self.btn_apply = QPushButton("Apply to Selected")
         self.btn_apply.setEnabled(False)
-        self.btn_apply.setStyleSheet(
-            f"QPushButton {{ background: {_t['btn_bg']}; color: #ef4444; font-weight: bold;"
-            f"border: 1px solid #5c2e2e; border-radius: 4px; padding: 4px 18px; }}"
-            f"QPushButton:hover {{ background: #4a1a1a; color: #fca5a5; }}"
-            f"QPushButton:disabled {{ background: {_t['btn_bg']}; color: {_t['disabled']}; }}")
+        self.btn_apply.setProperty("class", "danger")
         self.btn_apply.clicked.connect(self._apply_action)
         action_row.addWidget(self.btn_apply)
         lay.addLayout(action_row)

@@ -106,7 +106,7 @@ class OllamaSettingsDialog(QDialog):
         adv_header.addWidget(QLabel("Advanced Settings:"))
         adv_header.addStretch()
         self.lbl_custom_model = QLabel("")
-        self.lbl_custom_model.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_custom_model.setProperty("class", "meta")
         adv_header.addWidget(self.lbl_custom_model)
         layout.addLayout(adv_header)
 
@@ -758,7 +758,7 @@ class ModelManagerDialog(QDialog):
         pf_top.addWidget(self.lbl_pull_name)
         pf_top.addStretch()
         self.lbl_pull_bytes = QLabel("")
-        self.lbl_pull_bytes.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_pull_bytes.setProperty("class", "meta")
         pf_top.addWidget(self.lbl_pull_bytes)
         pf_lay.addLayout(pf_top)
 
@@ -774,7 +774,7 @@ class ModelManagerDialog(QDialog):
         pf_lay.addWidget(self.progress_bar)
 
         self.lbl_pull_status = QLabel("")
-        self.lbl_pull_status.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_pull_status.setProperty("class", "meta")
         pf_lay.addWidget(self.lbl_pull_status)
 
         layout.addWidget(self.progress_frame)
@@ -1079,7 +1079,7 @@ class AIProviderSettingsDialog(QDialog):
         gh_lay.addWidget(self.cmb_gh_model)
 
         self.lbl_gh_status = QLabel("")
-        self.lbl_gh_status.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        self.lbl_gh_status.setProperty("class", "meta")
         btn_gh_test = QPushButton("Test GitHub Models")
         btn_gh_test.clicked.connect(self._test_github)
         row_gh = QHBoxLayout()
@@ -1111,7 +1111,7 @@ class AIProviderSettingsDialog(QDialog):
         ds_lay.addWidget(self.cmb_ds_model)
 
         self.lbl_ds_status = QLabel("")
-        self.lbl_ds_status.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        self.lbl_ds_status.setProperty("class", "meta")
         btn_ds_test = QPushButton("Test DeepSeek")
         btn_ds_test.clicked.connect(self._test_deepseek)
         row_ds = QHBoxLayout()

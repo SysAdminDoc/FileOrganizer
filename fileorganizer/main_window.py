@@ -269,13 +269,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         brand_lay.setContentsMargins(16, 10, 16, 8)
         brand_lay.setSpacing(1)
         lbl_brand = QLabel("FileOrganizer")
-        lbl_brand.setStyleSheet(
-            f"color: {_t['fg_bright']}; font-size: 15px; font-weight: 700; letter-spacing: -0.5px;"
-            "background: transparent;")
+        lbl_brand.setProperty("class", "brand-title")
         brand_lay.addWidget(lbl_brand)
         lbl_ver = QLabel("v8.2.0")
-        lbl_ver.setStyleSheet(
-            f"color: {_t['muted']}; font-size: 10px; font-weight: 600; background: transparent;")
+        lbl_ver.setProperty("class", "brand-version")
         brand_lay.addWidget(lbl_ver)
         sb_lay.addWidget(brand_w)
 
@@ -845,7 +842,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         lbl_cf = QLabel("Conf:")
         self._themed_lbl_cf = lbl_cf
-        lbl_cf.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        lbl_cf.setProperty("class", "meta")
         toolbar.addWidget(lbl_cf)
         self.sld_conf = QSlider(Qt.Orientation.Horizontal)
         self.sld_conf.setRange(0, 100); self.sld_conf.setValue(0)
@@ -853,7 +850,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.sld_conf.valueChanged.connect(self._on_conf_changed)
         toolbar.addWidget(self.sld_conf)
         self.lbl_conf = QLabel("0%"); self.lbl_conf.setFixedWidth(30)
-        self.lbl_conf.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_conf.setProperty("class", "meta")
         toolbar.addWidget(self.lbl_conf)
 
         self.cmb_face_filter = QComboBox()
@@ -993,15 +990,14 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         prog_top = QHBoxLayout()
         self.lbl_prog_phase = QLabel("Scanning")
-        self.lbl_prog_phase.setStyleSheet(
-            f"color: {_t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 12px; letter-spacing: 0.5px;")
+        self.lbl_prog_phase.setProperty("class", "phase-label")
         prog_top.addWidget(self.lbl_prog_phase)
         prog_top.addStretch()
         self.lbl_prog_counter = QLabel("0 / 0")
-        self.lbl_prog_counter.setStyleSheet(f"color: {_t['fg']}; font-size: 11px; font-family: monospace;")
+        self.lbl_prog_counter.setStyleSheet(f"color: {_t['fg']}; font-size: 11px; font-family: 'Consolas', monospace;")
         prog_top.addWidget(self.lbl_prog_counter)
         self.lbl_prog_eta = QLabel("")
-        self.lbl_prog_eta.setStyleSheet(f"color: {_t['muted']}; font-size: 11px; padding-left: 10px;")
+        self.lbl_prog_eta.setProperty("class", "meta")
         prog_top.addWidget(self.lbl_prog_eta)
         prog_layout.addLayout(prog_top)
 
@@ -1017,11 +1013,11 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         prog_bottom = QHBoxLayout()
         self.lbl_prog_method = QLabel("")
-        self.lbl_prog_method.setStyleSheet(f"color: {_t['muted']}; font-size: 11px; font-style: italic;")
+        self.lbl_prog_method.setProperty("class", "hint")
         prog_bottom.addWidget(self.lbl_prog_method)
         prog_bottom.addStretch()
         self.lbl_prog_speed = QLabel("")
-        self.lbl_prog_speed.setStyleSheet(f"color: {_t['muted']}; font-size: 11px; font-family: monospace;")
+        self.lbl_prog_speed.setProperty("class", "meta-mono")
         prog_bottom.addWidget(self.lbl_prog_speed)
         prog_layout.addLayout(prog_bottom)
 
@@ -1102,11 +1098,11 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         s_lay = QHBoxLayout(status)
         s_lay.setContentsMargins(16, 0, 16, 0)
         self.lbl_statusbar = QLabel("Ready")
-        self.lbl_statusbar.setStyleSheet(f"color: {_t['muted']}; font-size: 11px; font-family: monospace;")
+        self.lbl_statusbar.setProperty("class", "meta-mono")
         s_lay.addWidget(self.lbl_statusbar)
         s_lay.addStretch()
         self.lbl_ollama = QLabel("Ollama")
-        self.lbl_ollama.setStyleSheet(f"color: {_t['muted']}; font-size: 11px; font-family: monospace;")
+        self.lbl_ollama.setProperty("class", "meta-mono")
         self.lbl_ollama.setToolTip("Checking Ollama status...")
         s_lay.addWidget(self.lbl_ollama)
         self.lbl_prog = self.lbl_statusbar   # backward-compat alias
@@ -3360,9 +3356,9 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         # ── Filter controls ──────────────────────────────────────────────
         if hasattr(self, 'lbl_conf'):
-            self.lbl_conf.setStyleSheet(f"color: {t['muted']}; font-size: 11px;")
+            self.lbl_conf.setProperty("class", "meta")
         if hasattr(self, '_themed_lbl_cf'):
-            self._themed_lbl_cf.setStyleSheet(f"color: {t['muted']}; font-size: 11px;")
+            self._themed_lbl_cf.setProperty("class", "meta")
 
         if hasattr(self, 'cmb_face_filter'):
             self.cmb_face_filter.setStyleSheet(
@@ -3452,12 +3448,13 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         if hasattr(self, '_themed_status_bar'):
             self._themed_status_bar.setStyleSheet(
                 f"background-color: {t['sidebar_brand']}; border-top: 1px solid {t['sidebar_border']};")
-        if hasattr(self, 'lbl_statusbar'):
-            self.lbl_statusbar.setStyleSheet(
-                f"color: {t['muted']}; font-size: 11px; font-family: monospace;")
+        # lbl_statusbar uses meta-mono class — auto-updates with global QSS.
+        # lbl_ollama: only re-style when not ready (the ready state has its
+        # own runtime color set in _on_ollama_ready).
         if hasattr(self, 'lbl_ollama') and not self._ollama_ready:
-            self.lbl_ollama.setStyleSheet(
-                f"color: {t['muted']}; font-size: 11px; font-family: monospace;")
+            self.lbl_ollama.setProperty("class", "meta-mono")
+            self.lbl_ollama.style().unpolish(self.lbl_ollama)
+            self.lbl_ollama.style().polish(self.lbl_ollama)
 
         # ── Grid Scroll ──────────────────────────────────────────────────
         if hasattr(self, 'grid_scroll'):
