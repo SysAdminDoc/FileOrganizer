@@ -952,11 +952,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # Scan Summary Toast (overlay banner on table)
         self.lbl_toast = QLabel("", self.tbl)
         self.lbl_toast.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.lbl_toast.setStyleSheet(
-            f"QLabel {{ background: {_t['selection']};"
-            f"color: {_t['fg']}; font-size: 13px; font-weight: bold;"
-            f"padding: 10px 20px; border-radius: 8px;"
-            f"border: 1px solid {_t['border']}; }}")
+        self.lbl_toast.setProperty("class", "toast")
         self.lbl_toast.setFixedHeight(44)
         self.lbl_toast.hide()
         self._toast_timer = QTimer(self)
@@ -966,7 +962,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # Stats bar
         self.lbl_stats = QLabel("")
         self.lbl_stats.setObjectName("stats_label")
-        self.lbl_stats.setStyleSheet(f"color: {_t['muted']}; font-size: 12px; padding: 4px 0;")
+        self.lbl_stats.setProperty("class", "stats")
         main.addWidget(self.lbl_stats)
 
         # ── Progress Panel ───────────────────────────────────────────────
@@ -3350,19 +3346,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                 f"border:1px solid {t['border']};border-radius:3px}}"
                 f"QPushButton:hover{{color:{t['fg']}}}")
 
-        # ── Empty / Toast / Stats ────────────────────────────────────────
-        if hasattr(self, 'lbl_empty'):
-            self.lbl_empty.setStyleSheet(
-                f"color: {t['muted']}; font-size: 13px; padding: 50px; font-weight: 500;")
-        if hasattr(self, 'lbl_toast'):
-            self.lbl_toast.setStyleSheet(
-                f"QLabel {{ background: {t['selection']};"
-                f"color: {t['fg']}; font-size: 13px; font-weight: bold;"
-                f"padding: 10px 20px; border-radius: 8px;"
-                f"border: 1px solid {t['border']}; }}")
-        if hasattr(self, 'lbl_stats'):
-            self.lbl_stats.setStyleSheet(
-                f"color: {t['muted']}; font-size: 12px; padding: 4px 0;")
+        # lbl_empty / lbl_toast / lbl_stats use empty-state / toast / stats
+        # property classes — auto-update via global QSS when theme changes.
 
         # ── Progress Panel ───────────────────────────────────────────────
         if hasattr(self, 'prog_panel'):
