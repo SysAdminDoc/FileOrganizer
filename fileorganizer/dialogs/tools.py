@@ -85,7 +85,7 @@ class BeforeAfterDialog(QDialog):
         left_lay = QVBoxLayout(left_w)
         left_lay.setContentsMargins(4, 4, 4, 4)
         lbl_before = QLabel("BEFORE (Current)")
-        lbl_before.setStyleSheet("color: #ef4444; font-weight: bold; font-size: 12px;")  # semantic: before=red
+        lbl_before.setProperty("class", "status-error")
         left_lay.addWidget(lbl_before)
         self.tree_before = QTreeWidget()
         self.tree_before.setHeaderLabels(["Path"])
@@ -99,7 +99,7 @@ class BeforeAfterDialog(QDialog):
         right_lay = QVBoxLayout(right_w)
         right_lay.setContentsMargins(4, 4, 4, 4)
         lbl_after = QLabel("AFTER (Proposed)")
-        lbl_after.setStyleSheet(f"color: {_t['green']}; font-weight: bold; font-size: 12px;")
+        lbl_after.setProperty("class", "status-success")
         right_lay.addWidget(lbl_after)
         self.tree_after = QTreeWidget()
         self.tree_after.setHeaderLabels(["Path"])

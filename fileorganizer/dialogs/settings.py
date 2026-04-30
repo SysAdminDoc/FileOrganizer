@@ -585,7 +585,8 @@ class FaceManagerDialog(QDialog):
         if not HAS_FACE_RECOGNITION:
             warn = QLabel("face_recognition library not installed - face identity management unavailable.\n"
                           "Install with: pip install cmake dlib face_recognition")
-            warn.setStyleSheet("color: #f38ba8; font-size: 11px; padding: 8px;")  # semantic: error
+            warn.setProperty("class", "status-error")
+            warn.setContentsMargins(8, 8, 8, 8)
             warn.setWordWrap(True)
             layout.addWidget(warn)
 
@@ -704,7 +705,7 @@ class ModelManagerDialog(QDialog):
         hdr.addWidget(title)
         hdr.addStretch()
         self.lbl_server = QLabel("Checking server...")
-        self.lbl_server.setStyleSheet("color: #f59e0b; font-size: 11px;")  # semantic: warning amber
+        self.lbl_server.setProperty("class", "status-warning")
         hdr.addWidget(self.lbl_server)
         layout.addLayout(hdr)
 
@@ -790,10 +791,16 @@ class ModelManagerDialog(QDialog):
         layout.addLayout(row_btns)
 
     # ── Data Loading ──────────────────────────────────────────────────────────
+    def _set_server_status(self, kind: str) -> None:
+        """Re-apply a status-* class to lbl_server. kind: success | warning | error."""
+        self.lbl_server.setProperty("class", f"status-{kind}")
+        self.lbl_server.style().unpolish(self.lbl_server)
+        self.lbl_server.style().polish(self.lbl_server)
+
     def _load_models(self):
         self.lbl_summary.setText("Loading models...")
         self.lbl_server.setText("Connecting...")
-        self.lbl_server.setStyleSheet("color: #f59e0b; font-size: 11px;")  # semantic: warning amber
+        self._set_server_status("warning")
         if hasattr(self, '_list_worker') and self._list_worker is not None:
             try: self._list_worker.finished.disconnect()
             except (TypeError, RuntimeError): pass
@@ -806,10 +813,10 @@ class ModelManagerDialog(QDialog):
 
         if models or _is_ollama_server_running(self.url):
             self.lbl_server.setText("Connected")
-            self.lbl_server.setStyleSheet(f"color: {get_active_theme()['green']}; font-size: 11px;")
+            self._set_server_status("success")
         else:
             self.lbl_server.setText("Not connected")
-            self.lbl_server.setStyleSheet("color: #ef4444; font-size: 11px;")
+            self._set_server_status("error")
 
         total_bytes = sum(m.get('size', 0) for m in models)
         self.lbl_summary.setText(
