@@ -1732,6 +1732,14 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.txt_log.setVisible(checked)
         self.btn_toggle_log.setText("Console Log  [hide]" if checked else "Console Log  [show]")
 
+    def _set_scan_state(self, scanning: bool):
+        """Toggle the Scan button text + scanning-property to swap between
+        Scan (idle) and Cancel (active, red text via QSS [scanning="true"])."""
+        self.btn_scan.setText("Cancel" if scanning else "Scan")
+        self.btn_scan.setProperty("scanning", "true" if scanning else "false")
+        self.btn_scan.style().unpolish(self.btn_scan)
+        self.btn_scan.style().polish(self.btn_scan)
+
     _LOG_MAX_BLOCKS = 10000
 
     def _log(self, m):

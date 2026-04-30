@@ -107,7 +107,7 @@ class ScanMixin:
             self.lbl_empty.hide(); self.tbl.setRowCount(0)
             self._scanning = True
             self.tbl.setSortingEnabled(False)
-            self.btn_scan.setText("Cancel"); self.btn_scan.setStyleSheet("QPushButton { color: #ef4444; font-weight: bold; }")
+            self._set_scan_state(True)
             self.btn_apply.setEnabled(False); self.btn_preview.setEnabled(False); self.btn_export.setEnabled(False); self.btn_export_html.setEnabled(False)
             self._scan_start_time = time.time()
             self._scan_files(src)
@@ -119,7 +119,7 @@ class ScanMixin:
         self.lbl_empty.hide(); self.tbl.setRowCount(0)
         self._scanning = True
         self.tbl.setSortingEnabled(False)
-        self.btn_scan.setText("Cancel"); self.btn_scan.setStyleSheet("QPushButton { color: #ef4444; font-weight: bold; }")
+        self._set_scan_state(True)
         self.btn_apply.setEnabled(False); self.btn_preview.setEnabled(False); self.btn_export.setEnabled(False)
         self._scan_start_time = time.time()
         if op in (self.OP_CAT, self.OP_SMART):
@@ -158,7 +158,7 @@ class ScanMixin:
     def _reset_scan_ui(self):
         """Restore Scan button and state after scan completes or is cancelled."""
         self._scanning = False
-        self.btn_scan.setText("Scan"); self.btn_scan.setStyleSheet("")
+        self._set_scan_state(False)
         self.btn_scan.setEnabled(True)
         self.prog_panel.setVisible(False)
         self.lbl_statusbar.setText("Ready")
