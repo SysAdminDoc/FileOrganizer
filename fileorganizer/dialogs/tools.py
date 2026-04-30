@@ -181,7 +181,7 @@ class EventGroupDialog(QDialog):
         left = QVBoxLayout()
         lbl_h = QLabel("Detected Events")
         _t = get_active_theme()
-        lbl_h.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 13px;")
+        lbl_h.setProperty("class", "section-title")
         left.addWidget(lbl_h)
         self.lst_events = QListWidget()
         self.lst_events.currentRowChanged.connect(self._on_event_selected)
@@ -191,7 +191,7 @@ class EventGroupDialog(QDialog):
         # Right: files in event
         right = QVBoxLayout()
         self.lbl_event_name = QLabel("")
-        self.lbl_event_name.setStyleSheet(f"color: {_t['fg_bright']}; font-weight: bold; font-size: 13px;")
+        self.lbl_event_name.setProperty("class", "subheading")
         right.addWidget(self.lbl_event_name)
         self.lst_files = QListWidget()
         self.lst_files.setStyleSheet(f"QListWidget {{ background: {_t['header_bg']}; color: {_t['muted']}; }}")
@@ -422,7 +422,7 @@ class ScheduleDialog(QDialog):
 
         lbl_h = QLabel("Scheduled Scans (Windows Task Scheduler)")
         _t = get_active_theme()
-        lbl_h.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 13px;")
+        lbl_h.setProperty("class", "section-title")
         lay.addWidget(lbl_h)
 
         # Profile
@@ -522,7 +522,7 @@ class UndoTimelineDialog(QDialog):
         left = QVBoxLayout()
         lbl_h = QLabel("Operation History")
         _t = get_active_theme()
-        lbl_h.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 13px;")
+        lbl_h.setProperty("class", "section-title")
         left.addWidget(lbl_h)
         self.lst_timeline = QListWidget()
         self.lst_timeline.currentRowChanged.connect(self._on_batch_selected)
@@ -606,7 +606,7 @@ class PluginManagerDialog(QDialog):
         lay = QVBoxLayout(self)
         lbl_h = QLabel("Installed Plugins")
         _t = get_active_theme()
-        lbl_h.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 13px;")
+        lbl_h.setProperty("class", "section-title")
         lay.addWidget(lbl_h)
 
         self.lst_plugins = QListWidget()

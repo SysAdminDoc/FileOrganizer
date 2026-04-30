@@ -198,7 +198,7 @@ class LibraryAuditorPanel(QWidget):
         hdr.setStyleSheet(f"color:{_t['fg_bright']};font-size:16px;font-weight:700;")
         root_lay.addWidget(hdr)
         sub = QLabel("Detect misclassified projects and repair foreign/CJK filenames in your organized library.")
-        sub.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        sub.setProperty("class", "meta")
         sub.setWordWrap(True)
         root_lay.addWidget(sub)
 
@@ -262,7 +262,7 @@ class LibraryAuditorPanel(QWidget):
         self.btn_stop.setEnabled(False)
         self.btn_stop.clicked.connect(self._stop)
         self.lbl_stats = QLabel("")
-        self.lbl_stats.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        self.lbl_stats.setProperty("class", "meta")
         row4.addWidget(self.btn_scan)
         row4.addWidget(self.btn_apply)
         row4.addWidget(self.btn_stop)
@@ -578,7 +578,7 @@ class ArchiveNormalizerPanel(QWidget):
         sub = QLabel(
             "Rename design asset archives (VH-NNNNNNN.zip, etc.) to canonical marketplace titles "
             "using local cache + optional online lookup.")
-        sub.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        sub.setProperty("class", "meta")
         sub.setWordWrap(True)
         root_lay.addWidget(sub)
 
@@ -620,7 +620,7 @@ class ArchiveNormalizerPanel(QWidget):
         self.btn_stop.setEnabled(False)
         self.btn_stop.clicked.connect(self._stop)
         self.lbl_stats = QLabel("")
-        self.lbl_stats.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        self.lbl_stats.setProperty("class", "meta")
         row3.addWidget(self.btn_scan)
         row3.addWidget(self.btn_apply)
         row3.addWidget(self.btn_stop)
@@ -823,7 +823,7 @@ class CatalogManagerPanel(QWidget):
         sub = QLabel(
             "Build and refresh the Envato marketplace title cache used by the Archive Normalizer. "
             "The lightweight cache (96K) ships with the app; the full catalog (10.6M) is optional.")
-        sub.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        sub.setProperty("class", "meta")
         sub.setWordWrap(True)
         root_lay.addWidget(sub)
 
@@ -915,7 +915,7 @@ class CatalogManagerPanel(QWidget):
         self.btn_stop.setEnabled(False)
         self.btn_stop.clicked.connect(self._stop)
         self.lbl_status = QLabel("")
-        self.lbl_status.setStyleSheet(f"color:{_t['muted']};font-size:11px;")
+        self.lbl_status.setProperty("class", "meta")
         row3.addWidget(self.btn_run)
         row3.addWidget(self.btn_stop)
         row3.addStretch()
