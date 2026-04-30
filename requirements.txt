@@ -21,3 +21,11 @@ reverse_geocoder
 send2trash
 rarfile
 py7zr
+
+# Optional local embeddings classifier (N-10).  Install at least one to enable
+# the pre-AI cosine match against category anchors; the classifier degrades to
+# an AI-only flow when none is present.
+# fastembed is the preferred backend (ONNX runtime, ~80 MB on disk).
+# fastembed
+# model2vec
+# sentence-transformers
