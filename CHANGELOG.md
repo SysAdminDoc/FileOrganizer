@@ -6,6 +6,14 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added (2026-04-30)
 
+- **N-3: Community catalog auto-download** — `CatalogSyncWorker(QThread)` runs silently
+  on startup, checks the GitHub Releases API for a new `asset_fingerprints.json` attached
+  to the latest release, and merges it into the local `asset_fingerprints.db` via a new
+  `import_community_json()` function in `asset_db.py`. Existing local entries are never
+  overwritten (INSERT OR IGNORE on `folder_fingerprint`). Sync state persisted in
+  `%APPDATA%/FileOrganizer/catalog_sync.json`; status bar updated only when a real update
+  is downloaded.
+
 - **N-4: Pre-flight report UI** — `PreflightDialog` (backed by `PreflightWorker` QThread)
   runs automatically before every category/smart-scan Apply. Shallow-scans source folders
   for trailing-space names and >260-char paths, reports destination free space, and shows

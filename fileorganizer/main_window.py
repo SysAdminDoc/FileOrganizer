@@ -142,6 +142,9 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # Launch Ollama auto-setup in background
         self._start_ollama_setup()
 
+        # Check for community catalog update in background
+        self._start_catalog_sync()
+
     # ═══ DRAG & DROP ═══════════════════════════════════════════════════════════
     def dragEnterEvent(self, event: QDragEnterEvent):
         if event.mimeData().hasUrls():
@@ -225,6 +228,23 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             self.lbl_ollama.setStyleSheet("color: #ef4444; font-size: 11px; font-family: monospace;")
             self.lbl_ollama.setToolTip("Ollama not available — rule-based engine will be used")
             self._log("Ollama LLM: not available (rule-based engine will be used)")
+
+    # ═══ COMMUNITY CATALOG SYNC ═══════════════════════════════════════════════
+
+    def _start_catalog_sync(self):
+        """Check for a newer community asset_fingerprints.json on startup."""
+        from fileorganizer.workers import CatalogSyncWorker
+        self._catalog_sync_worker = CatalogSyncWorker()
+        self._catalog_sync_worker.log.connect(self._log)
+        self._catalog_sync_worker.finished.connect(self._on_catalog_sync_done)
+        self._catalog_sync_worker.start()
+
+    def _on_catalog_sync_done(self, success: bool, msg: str):
+        if not success:
+            self._log(f"Catalog sync: {msg}")
+        elif msg.startswith("Catalog updated"):
+            self._log(msg)
+            self.lbl_statusbar.setText(msg)
 
     # ═══ BUILD UI ═════════════════════════════════════════════════════════════
 

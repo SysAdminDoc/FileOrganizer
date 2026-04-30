@@ -2620,3 +2620,107 @@ class ArchiveExtractionWorker(QThread):
         self.finished.emit()
 
 
+# ═══ COMMUNITY CATALOG SYNC ══════════════════════════════════════════════════
+
+_CATALOG_SYNC_FILE  = os.path.join(_APP_DATA_DIR, 'catalog_sync.json')
+_CATALOG_GITHUB_API = 'https://api.github.com/repos/SysAdminDoc/FileOrganizer/releases/latest'
+_CATALOG_ASSET_NAME = 'asset_fingerprints.json'
+
+
+class CatalogSyncWorker(QThread):
+    """
+    Background worker that checks GitHub Releases for a newer community
+    asset_fingerprints.json and imports it into the local asset_fingerprints.db.
+
+    Runs silently on startup; only logs on meaningful events (update found,
+    error, or up-to-date confirmation).
+    """
+
+    log      = pyqtSignal(str)
+    finished = pyqtSignal(bool, str)   # (success, summary_message)
+
+    def run(self):
+        import urllib.request, urllib.error
+
+        try:
+            # ── Load last-sync state ─────────────────────────────────────────
+            last_published = ''
+            if os.path.exists(_CATALOG_SYNC_FILE):
+                try:
+                    state = json.loads(Path(_CATALOG_SYNC_FILE).read_text(encoding='utf-8'))
+                    last_published = state.get('last_published_at', '')
+                except Exception:
+                    pass
+
+            # ── Fetch latest release metadata (unauthenticated, 60 req/hr) ──
+            req = urllib.request.Request(
+                _CATALOG_GITHUB_API,
+                headers={'Accept': 'application/vnd.github+json',
+                         'User-Agent': 'FileOrganizer-CatalogSync/1.0'}
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    release = json.loads(resp.read().decode())
+            except urllib.error.URLError as exc:
+                self.finished.emit(True, f"Catalog sync skipped (offline: {exc.reason})")
+                return
+
+            published_at = release.get('published_at', '')
+            tag          = release.get('tag_name', '')
+
+            if published_at and published_at <= last_published:
+                self.finished.emit(True, f"Catalog up-to-date ({tag})")
+                return
+
+            # ── Find the fingerprint JSON asset ──────────────────────────────
+            download_url = ''
+            for asset in release.get('assets', []):
+                if asset.get('name') == _CATALOG_ASSET_NAME:
+                    download_url = asset.get('browser_download_url', '')
+                    break
+
+            if not download_url:
+                self.finished.emit(True, "Catalog release found but no fingerprint asset attached")
+                return
+
+            # ── Download ─────────────────────────────────────────────────────
+            self.log.emit(f"Catalog: downloading {_CATALOG_ASSET_NAME} from {tag}…")
+            dl_req = urllib.request.Request(
+                download_url,
+                headers={'User-Agent': 'FileOrganizer-CatalogSync/1.0'}
+            )
+            with urllib.request.urlopen(dl_req, timeout=60) as resp:
+                raw = resp.read()
+
+            json_data = json.loads(raw.decode('utf-8'))
+
+            # ── Import via asset_db module ────────────────────────────────────
+            db_path     = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                                       'asset_fingerprints.db')
+            db_mod_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                                       'asset_db.py')
+            import importlib.util as _ilu
+            spec = _ilu.spec_from_file_location('asset_db', db_mod_path)
+            asset_db_mod = _ilu.module_from_spec(spec)
+            spec.loader.exec_module(asset_db_mod)
+
+            new_assets, skipped = asset_db_mod.import_community_json(json_data, db_path)
+
+            # ── Persist sync state ───────────────────────────────────────────
+            os.makedirs(_APP_DATA_DIR, exist_ok=True)
+            Path(_CATALOG_SYNC_FILE).write_text(json.dumps({
+                'last_published_at': published_at,
+                'last_tag':          tag,
+                'last_sync_at':      datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
+                'new_assets':        new_assets,
+                'skipped':           skipped,
+            }, indent=2), encoding='utf-8')
+
+            msg = (f"Catalog updated from {tag}: "
+                   f"+{new_assets} new assets, {skipped} already known")
+            self.log.emit(f"Catalog: {msg}")
+            self.finished.emit(True, msg)
+
+        except Exception as exc:
+            self.finished.emit(False, f"Catalog sync error: {exc}")
+
