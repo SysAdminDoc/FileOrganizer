@@ -323,7 +323,7 @@ class PhotoMapWidget(QWidget):
         else:
             lbl = QLabel("Map view requires PyQtWebEngine.\npip install PyQt6-WebEngine")
             lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
-            lbl.setStyleSheet(f"color: {_t['muted']}; font-size: 13px; padding: 40px;")
+            lbl.setProperty("class", "empty-state")
             lay.addWidget(lbl)
             self._web = None
 

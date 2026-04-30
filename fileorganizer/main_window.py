@@ -231,16 +231,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
     def _build_ui(self):
         _t = get_active_theme()
 
-        # ── Shared inline button styles ─────────────────────────────────
-        _SEC_BTN = (
-            f"QPushButton {{ font-size: 11px; padding: 2px 10px; background: {_t['selection']};"
-            f"color: {_t['sidebar_btn_active_fg']}; border: 1px solid {_t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {_t['btn_hover']}; }}")
-        _TOGGLE_BTN = (
-            f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {_t['selection']};"
-            f"color: {_t['sidebar_btn_active_fg']}; border: 1px solid {_t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {_t['btn_hover']}; }}"
-            f"QPushButton:checked {{ background: {_t['sidebar_btn_active_fg']}; color: {_t['sidebar_brand']}; }}")
+        # Compact button variants live in the global QSS as
+        # QPushButton[class="secondary"] / [class="toggle"] — see config.py.
 
         cw = QWidget(); self.setCentralWidget(cw)
         root = QHBoxLayout(cw)
@@ -501,7 +493,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_replay = QPushButton("Repeat Last")
         self.btn_replay.setFixedHeight(32)
         self.btn_replay.setToolTip("Replay the last scan configuration")
-        self.btn_replay.setStyleSheet(_SEC_BTN)
+        self.btn_replay.setProperty("class", "secondary")
         self.btn_replay.setEnabled(os.path.isfile(_LAST_CONFIG_FILE))
         self.btn_replay.clicked.connect(self._replay_last_config)
         ab_lay.addWidget(self.btn_replay)
@@ -509,21 +501,21 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_export = QPushButton("Export")
         self.btn_export.setFixedHeight(32); self.btn_export.setEnabled(False)
         self.btn_export.setToolTip("Export the classification plan as CSV")
-        self.btn_export.setStyleSheet(_SEC_BTN)
+        self.btn_export.setProperty("class", "secondary")
         self.btn_export.clicked.connect(self._export_plan)
         ab_lay.addWidget(self.btn_export)
 
         self.btn_export_html = QPushButton("HTML")
         self.btn_export_html.setFixedHeight(32); self.btn_export_html.setEnabled(False)
         self.btn_export_html.setToolTip("Export scan results as a styled HTML report")
-        self.btn_export_html.setStyleSheet(_SEC_BTN)
+        self.btn_export_html.setProperty("class", "secondary")
         self.btn_export_html.clicked.connect(self._export_html)
         ab_lay.addWidget(self.btn_export_html)
 
         self.btn_open_dest = QPushButton("Open Dest")
         self.btn_open_dest.setFixedHeight(32)
         self.btn_open_dest.setToolTip("Open the current destination folder in Explorer")
-        self.btn_open_dest.setStyleSheet(_SEC_BTN)
+        self.btn_open_dest.setProperty("class", "secondary")
         self.btn_open_dest.clicked.connect(self._open_destination)
         ab_lay.addWidget(self.btn_open_dest)
 
@@ -534,7 +526,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_watch.setFixedHeight(32)
         self.btn_watch.setCheckable(True)
         self.btn_watch.setToolTip("Auto-organize watched folders")
-        self.btn_watch.setStyleSheet(_TOGGLE_BTN)
+        self.btn_watch.setProperty("class", "toggle")
         self.btn_watch.clicked.connect(self._toggle_watch_mode)
         ab_lay.addWidget(self.btn_watch)
 
@@ -723,7 +715,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_pc_cats = QPushButton("Categories")
         self.btn_pc_cats.setFixedHeight(28)
         self.btn_pc_cats.setToolTip("Edit PC file categories and extension rules")
-        self.btn_pc_cats.setStyleSheet(_SEC_BTN)
+        self.btn_pc_cats.setProperty("class", "secondary")
         self.btn_pc_cats.setVisible(False)
         self.btn_pc_cats.clicked.connect(self._open_pc_cat_editor)
         opts_row.addWidget(self.btn_pc_cats)
@@ -773,7 +765,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_grid_toggle.setFixedHeight(28)
         self.btn_grid_toggle.setCheckable(True)
         self.btn_grid_toggle.setToolTip("Toggle thumbnail grid view")
-        self.btn_grid_toggle.setStyleSheet(_TOGGLE_BTN)
+        self.btn_grid_toggle.setProperty("class", "toggle")
         self.btn_grid_toggle.setVisible(False)
         self.btn_grid_toggle.clicked.connect(self._toggle_grid_view)
         toolbar.addWidget(self.btn_grid_toggle)
@@ -795,7 +787,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_graph_toggle.setFixedHeight(28)
         self.btn_graph_toggle.setCheckable(True)
         self.btn_graph_toggle.setToolTip("Show file relationship graph")
-        self.btn_graph_toggle.setStyleSheet(_TOGGLE_BTN)
+        self.btn_graph_toggle.setProperty("class", "toggle")
         self.btn_graph_toggle.setVisible(False)
         self.btn_graph_toggle.clicked.connect(self._toggle_graph_view)
         toolbar.addWidget(self.btn_graph_toggle)
@@ -804,7 +796,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_preview_toggle.setFixedHeight(28)
         self.btn_preview_toggle.setCheckable(True)
         self.btn_preview_toggle.setToolTip("Toggle file preview panel")
-        self.btn_preview_toggle.setStyleSheet(_TOGGLE_BTN)
+        self.btn_preview_toggle.setProperty("class", "toggle")
         self.btn_preview_toggle.setVisible(False)
         self.btn_preview_toggle.clicked.connect(self._toggle_preview_panel)
         toolbar.addWidget(self.btn_preview_toggle)
@@ -954,7 +946,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # Empty state (overlay on top of table)
         self.lbl_empty = QLabel("Select a tool from the sidebar, then Scan", self.tbl)
         self.lbl_empty.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.lbl_empty.setStyleSheet(f"color: {_t['muted']}; font-size: 13px; padding: 50px; font-weight: 500;")
+        self.lbl_empty.setProperty("class", "empty-state")
         self.lbl_empty.setGeometry(self.tbl.rect())
 
         # Scan Summary Toast (overlay banner on table)
@@ -3298,61 +3290,32 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             self._themed_dir_panel.setStyleSheet(
                 f"QWidget#dir_panel {{ background: {t['bg_alt']}; border-bottom: 1px solid {t['btn_bg']}; }}")
 
-        # ── Toolbar buttons (common style helper) ────────────────────────
-        _TB = (
-            f"QPushButton {{ font-size: 11px; padding: 2px 10px; background: {t['selection']};"
-            f"color: {t['sidebar_btn_active_fg']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {t['btn_hover']}; }}"
-        )
-        _TB_SMALL = (
-            f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
-            f"color: {t['sidebar_btn_active_fg']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {t['btn_hover']}; }}"
-        )
-        _TB_CHECK = _TB_SMALL + (
-            f"QPushButton:checked {{ background: {t['sidebar_btn_active_fg']}; color: {t['sidebar_brand']}; }}"
-        )
+        # Standard secondary/toggle buttons use property classes; they auto-update
+        # via the global QSS when the stylesheet is reapplied.
 
-        # Replay, Export, Export HTML, Open Dest
-        for btn in [self.btn_replay, self.btn_export, self.btn_export_html, self.btn_open_dest]:
-            btn.setStyleSheet(_TB)
-
-        # PC Cats button
-        self.btn_pc_cats.setStyleSheet(_TB)
-
-        # Photo button (green accent)
-        self.btn_photo.setStyleSheet(
-            f"QPushButton {{ font-size: 11px; padding: 2px 10px; background: {t['selection']};"
-            f"color: {t['green']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
-
-        # Grid, Preview, Graph toggles (checkable, standard accent)
-        self.btn_grid_toggle.setStyleSheet(_TB_CHECK)
-        self.btn_preview_toggle.setStyleSheet(_TB_CHECK)
-        self.btn_graph_toggle.setStyleSheet(_TB_CHECK)
-
-        # Map toggle (green checkable)
-        self.btn_map_toggle.setStyleSheet(
-            f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
-            f"color: {t['green']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {t['btn_hover']}; }}"
-            f"QPushButton:checked {{ background: {t['green']}; color: {t['sidebar_brand']}; }}")
-
-        # Before/After
-        self.btn_before_after.setStyleSheet(
-            f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
-            f"color: {t['accent_hover']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
-
-        # Events
-        self.btn_events.setStyleSheet(
-            f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
-            f"color: {t['accent_hover']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
-
-        # Watch Mode button
-        if hasattr(self, 'btn_watch'):
-            self.btn_watch.setStyleSheet(_TB_CHECK)
+        # Specially-colored buttons (green photo / map, accent before/after / events)
+        # don't fit the generic classes — keep their inline color overrides.
+        if hasattr(self, 'btn_photo'):
+            self.btn_photo.setStyleSheet(
+                f"QPushButton {{ font-size: 11px; padding: 2px 10px; background: {t['selection']};"
+                f"color: {t['green']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
+                f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
+        if hasattr(self, 'btn_map_toggle'):
+            self.btn_map_toggle.setStyleSheet(
+                f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
+                f"color: {t['green']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
+                f"QPushButton:hover {{ background: {t['btn_hover']}; }}"
+                f"QPushButton:checked {{ background: {t['green']}; color: {t['sidebar_brand']}; }}")
+        if hasattr(self, 'btn_before_after'):
+            self.btn_before_after.setStyleSheet(
+                f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
+                f"color: {t['accent_hover']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
+                f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
+        if hasattr(self, 'btn_events'):
+            self.btn_events.setStyleSheet(
+                f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
+                f"color: {t['accent_hover']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
+                f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
 
         # ── Filter controls ──────────────────────────────────────────────
         if hasattr(self, 'lbl_conf'):
