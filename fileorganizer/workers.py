@@ -2722,7 +2722,7 @@ class CatalogSyncWorker(QThread):
     finished = pyqtSignal(bool, str)   # (success, summary_message)
 
     def run(self):
-        import urllib.request, urllib.error
+        import urllib.request, urllib.error, socket
 
         try:
             # ── Load last-sync state ─────────────────────────────────────────
@@ -2745,6 +2745,12 @@ class CatalogSyncWorker(QThread):
                     release = json.loads(resp.read().decode())
             except urllib.error.URLError as exc:
                 self.finished.emit(True, f"Catalog sync skipped (offline: {exc.reason})")
+                return
+            except socket.timeout:
+                self.finished.emit(True, "Catalog sync skipped (release metadata timeout)")
+                return
+            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+                self.finished.emit(False, f"Catalog sync: malformed release metadata: {exc}")
                 return
 
             published_at = release.get('published_at', '')
@@ -2771,10 +2777,26 @@ class CatalogSyncWorker(QThread):
                 download_url,
                 headers={'User-Agent': 'FileOrganizer-CatalogSync/1.0'}
             )
-            with urllib.request.urlopen(dl_req, timeout=60) as resp:
-                raw = resp.read()
+            try:
+                with urllib.request.urlopen(dl_req, timeout=60) as resp:
+                    raw = resp.read()
+            except (urllib.error.URLError, socket.timeout) as exc:
+                reason = getattr(exc, 'reason', exc)
+                self.finished.emit(True, f"Catalog sync skipped (download failed: {reason})")
+                return
 
-            json_data = json.loads(raw.decode('utf-8'))
+            try:
+                json_data = json.loads(raw.decode('utf-8'))
+            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+                self.finished.emit(False, f"Catalog sync: malformed asset payload: {exc}")
+                return
+
+            # Validate shape before importing — import_community_json expects
+            # {"assets": [ {...}, ... ]}.  Guard against unexpected schema so a
+            # malformed release doesn't silently insert zero rows.
+            if not isinstance(json_data, dict) or not isinstance(json_data.get('assets'), list):
+                self.finished.emit(False, "Catalog sync: asset payload missing 'assets' list")
+                return
 
             # ── Import via asset_db module ────────────────────────────────────
             db_path     = os.path.join(os.path.dirname(os.path.dirname(__file__)),
