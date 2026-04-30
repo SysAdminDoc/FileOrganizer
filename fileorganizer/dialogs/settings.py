@@ -1239,10 +1239,15 @@ class DesignWorkflowSettingsDialog(QDialog):
         self.setMinimumSize(480, 380)
         self.setStyleSheet(get_active_stylesheet())
         try:
-            from fileorganizer.config import load_design_settings, save_design_settings
+            from fileorganizer.config import load_design_settings, save_design_settings, \
+                load_confidence_settings
             self._load_fn  = load_design_settings
             self._save_fn  = save_design_settings
             self._settings = load_design_settings()
+            # Pull saved confidence thresholds into _settings for the spinboxes
+            _conf = load_confidence_settings()
+            self._settings.setdefault('conf_auto_above',   _conf['auto_above'])
+            self._settings.setdefault('conf_review_below', _conf['review_below'])
         except ImportError:
             self._load_fn  = lambda: {}
             self._save_fn  = lambda s: None
@@ -1302,6 +1307,32 @@ class DesignWorkflowSettingsDialog(QDialog):
         self.chk_confirm   = _chk("Require hash verification before marking duplicates","confirm_duplicates")
         self.chk_del_after = _chk("Delete original archives after successful extraction","delete_archives_after_extract")
 
+        sep2 = QFrame(); sep2.setFrameShape(QFrame.Shape.NoFrame)
+        sep2.setProperty("class", "separator"); layout.addWidget(sep2)
+        layout.addWidget(QLabel("Classification thresholds:"))
+
+        row_auto = QHBoxLayout()
+        row_auto.addWidget(QLabel("Auto-apply if confidence \u2265"))
+        self.spn_auto = QSpinBox()
+        self.spn_auto.setRange(50, 100)
+        self.spn_auto.setValue(int(self._settings.get('conf_auto_above', 80)))
+        self.spn_auto.setSuffix("%")
+        self.spn_auto.setToolTip("Items at or above this confidence are green and applied automatically.")
+        row_auto.addWidget(self.spn_auto)
+        row_auto.addStretch()
+        layout.addLayout(row_auto)
+
+        row_review = QHBoxLayout()
+        row_review.addWidget(QLabel("Send to _Review if confidence <"))
+        self.spn_review = QSpinBox()
+        self.spn_review.setRange(1, 90)
+        self.spn_review.setValue(int(self._settings.get('conf_review_below', 50)))
+        self.spn_review.setSuffix("%")
+        self.spn_review.setToolTip("Items below this confidence are routed to the _Review folder instead of their category.")
+        row_review.addWidget(self.spn_review)
+        row_review.addStretch()
+        layout.addLayout(row_review)
+
         layout.addStretch()
 
         row_btns = QHBoxLayout()
@@ -1324,5 +1355,16 @@ class DesignWorkflowSettingsDialog(QDialog):
         s['dynamic_categories']  = self.chk_dynamic.isChecked()
         s['confirm_duplicates']  = self.chk_confirm.isChecked()
         s['delete_archives_after_extract'] = self.chk_del_after.isChecked()
+        s['conf_auto_above']  = self.spn_auto.value()
+        s['conf_review_below'] = self.spn_review.value()
         self._save_fn(s)
+        # Persist confidence thresholds so they're picked up by all callers
+        try:
+            from fileorganizer.config import save_confidence_settings
+            save_confidence_settings({
+                'auto_above':   self.spn_auto.value(),
+                'review_below': self.spn_review.value(),
+            })
+        except Exception:
+            pass
         self.accept()

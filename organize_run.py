@@ -35,7 +35,19 @@ DEST_OVERFLOW    = r'I:\Organized'   # used automatically when G:\ free < MIN_FR
 MIN_FREE_GB      = 50
 _FORCE_OVERFLOW  = False             # set True via --overflow-now CLI flag
 REVIEW_SUBDIR    = '_Review'       # low-confidence items land here
-MIN_CONFIDENCE   = 50
+# MIN_CONFIDENCE is loaded from user settings (Design Workflow -> Classification Thresholds).
+# Default 50 is used when the GUI has never been opened / settings file is absent.
+def _load_min_confidence() -> int:
+    try:
+        import sys as _sys, os as _os
+        _pkg = _os.path.join(_os.path.dirname(__file__), 'fileorganizer')
+        if _pkg not in _sys.path:
+            _sys.path.insert(0, _os.path.dirname(__file__))
+        from fileorganizer.config import load_confidence_settings
+        return int(load_confidence_settings()['review_below'])
+    except Exception:
+        return 50
+MIN_CONFIDENCE   = _load_min_confidence()
 
 # ── AE / Unorganized source (Phase 1) ────────────────────────────────────────
 AE_BATCH_SIZE    = 60              # items per AE batch (batches 1-18 = 60, batch 19 = 56)

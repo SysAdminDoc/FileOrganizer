@@ -143,7 +143,7 @@ color-coded table of long-path issues, trailing-space hits, low-confidence items
 - **Impact**: 4 | **Effort**: 2
 - Source: [S32] AUDIT_LESSONS.md
 
-### N-5: Confidence threshold control
+### N-5: ~~Confidence threshold control~~ ✓ Shipped v8.2.0
 User-configurable thresholds: "auto-apply if confidence >= X; queue for manual approval between
 X and Y; send to _Review if < Y." Expose in Settings -> Classification.
 - **Why now**: No user-visible control over when the AI defers to `_Review`.
