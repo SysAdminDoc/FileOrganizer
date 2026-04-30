@@ -2727,22 +2727,40 @@ class CatalogSyncWorker(QThread):
         try:
             # ── Load last-sync state ─────────────────────────────────────────
             last_published = ''
+            last_etag      = ''
+            last_modified  = ''
             if os.path.exists(_CATALOG_SYNC_FILE):
                 try:
                     state = json.loads(Path(_CATALOG_SYNC_FILE).read_text(encoding='utf-8'))
                     last_published = state.get('last_published_at', '')
+                    last_etag      = state.get('last_etag', '')
+                    last_modified  = state.get('last_modified', '')
                 except Exception:
                     pass
 
             # ── Fetch latest release metadata (unauthenticated, 60 req/hr) ──
-            req = urllib.request.Request(
-                _CATALOG_GITHUB_API,
-                headers={'Accept': 'application/vnd.github+json',
-                         'User-Agent': 'FileOrganizer-CatalogSync/1.0'}
-            )
+            # Use conditional headers so GitHub returns 304 Not Modified when
+            # the release hasn't changed — that costs zero against the
+            # rate-limit bucket and skips JSON parsing entirely.
+            headers = {'Accept': 'application/vnd.github+json',
+                       'User-Agent': 'FileOrganizer-CatalogSync/1.0'}
+            if last_etag:
+                headers['If-None-Match'] = last_etag
+            elif last_modified:
+                headers['If-Modified-Since'] = last_modified
+            req = urllib.request.Request(_CATALOG_GITHUB_API, headers=headers)
             try:
                 with urllib.request.urlopen(req, timeout=10) as resp:
+                    response_etag     = resp.headers.get('ETag', '')
+                    response_modified = resp.headers.get('Last-Modified', '')
                     release = json.loads(resp.read().decode())
+            except urllib.error.HTTPError as exc:
+                # 304 Not Modified — the release hasn't changed since last sync.
+                if exc.code == 304:
+                    self.finished.emit(True, "Catalog up-to-date (304 Not Modified)")
+                    return
+                self.finished.emit(True, f"Catalog sync skipped (HTTP {exc.code}: {exc.reason})")
+                return
             except urllib.error.URLError as exc:
                 self.finished.emit(True, f"Catalog sync skipped (offline: {exc.reason})")
                 return
@@ -2757,6 +2775,11 @@ class CatalogSyncWorker(QThread):
             tag          = release.get('tag_name', '')
 
             if published_at and published_at <= last_published:
+                # Refresh ETag/Last-Modified so we don't keep re-fetching.
+                self._persist_sync_state(
+                    last_published or published_at, tag,
+                    response_etag, response_modified, 0, 0,
+                )
                 self.finished.emit(True, f"Catalog up-to-date ({tag})")
                 return
 
@@ -2811,14 +2834,10 @@ class CatalogSyncWorker(QThread):
             new_assets, skipped = asset_db_mod.import_community_json(json_data, db_path)
 
             # ── Persist sync state ───────────────────────────────────────────
-            os.makedirs(_APP_DATA_DIR, exist_ok=True)
-            Path(_CATALOG_SYNC_FILE).write_text(json.dumps({
-                'last_published_at': published_at,
-                'last_tag':          tag,
-                'last_sync_at':      datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
-                'new_assets':        new_assets,
-                'skipped':           skipped,
-            }, indent=2), encoding='utf-8')
+            self._persist_sync_state(
+                published_at, tag, response_etag, response_modified,
+                new_assets, skipped,
+            )
 
             msg = (f"Catalog updated from {tag}: "
                    f"+{new_assets} new assets, {skipped} already known")
@@ -2827,4 +2846,19 @@ class CatalogSyncWorker(QThread):
 
         except Exception as exc:
             self.finished.emit(False, f"Catalog sync error: {exc}")
+
+    @staticmethod
+    def _persist_sync_state(published_at: str, tag: str,
+                            etag: str, last_modified: str,
+                            new_assets: int, skipped: int) -> None:
+        os.makedirs(_APP_DATA_DIR, exist_ok=True)
+        Path(_CATALOG_SYNC_FILE).write_text(json.dumps({
+            'last_published_at': published_at,
+            'last_tag':          tag,
+            'last_etag':         etag,
+            'last_modified':     last_modified,
+            'last_sync_at':      datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'new_assets':        new_assets,
+            'skipped':           skipped,
+        }, indent=2), encoding='utf-8')
 
