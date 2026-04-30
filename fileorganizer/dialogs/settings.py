@@ -53,8 +53,8 @@ class OllamaSettingsDialog(QDialog):
         row_url.addWidget(self.txt_url, 1)
         layout.addLayout(row_url)
 
-        sep = QFrame(); sep.setFrameShape(QFrame.Shape.HLine)
-        sep.setStyleSheet(f"QFrame{{background-color:{_t['border']};max-height:1px;}}"); layout.addWidget(sep)
+        sep = QFrame(); sep.setFrameShape(QFrame.Shape.NoFrame)
+        sep.setProperty("class", "separator"); layout.addWidget(sep)
 
         # ── Model Catalog ─────────────────────────────────────────────────────
         layout.addWidget(QLabel("Select Model Preset:"))
@@ -98,8 +98,8 @@ class OllamaSettingsDialog(QDialog):
         self.lbl_desc.setWordWrap(True)
         layout.addWidget(self.lbl_desc)
 
-        sep2 = QFrame(); sep2.setFrameShape(QFrame.Shape.HLine)
-        sep2.setStyleSheet(f"QFrame{{background-color:{_t['border']};max-height:1px;}}"); layout.addWidget(sep2)
+        sep2 = QFrame(); sep2.setFrameShape(QFrame.Shape.NoFrame)
+        sep2.setProperty("class", "separator"); layout.addWidget(sep2)
 
         # ── Advanced / Custom Override ────────────────────────────────────────
         adv_header = QHBoxLayout()
@@ -213,8 +213,8 @@ class OllamaSettingsDialog(QDialog):
         self._populate_models(self.settings['model'])
         self._select_catalog_model(self.settings['model'])
 
-        sep3 = QFrame(); sep3.setFrameShape(QFrame.Shape.HLine)
-        sep3.setStyleSheet(f"QFrame{{background-color:{_t['border']};max-height:1px;}}"); layout.addWidget(sep3)
+        sep3 = QFrame(); sep3.setFrameShape(QFrame.Shape.NoFrame)
+        sep3.setProperty("class", "separator"); layout.addWidget(sep3)
 
         # ── Test / Pull / Status ──────────────────────────────────────────────
         row_test = QHBoxLayout()
@@ -393,8 +393,8 @@ class PhotoSettingsDialog(QDialog):
         self.chk_enabled.toggled.connect(self._on_toggle)
         layout.addWidget(self.chk_enabled)
 
-        sep1 = QFrame(); sep1.setFrameShape(QFrame.Shape.HLine)
-        sep1.setStyleSheet(f"QFrame{{background-color:{_t['border']};max-height:1px;}}"); layout.addWidget(sep1)
+        sep1 = QFrame(); sep1.setFrameShape(QFrame.Shape.NoFrame)
+        sep1.setProperty("class", "separator"); layout.addWidget(sep1)
 
         # ── Folder structure preset ──────────────────────────────────────────
         row_preset = QHBoxLayout()
@@ -415,8 +415,8 @@ class PhotoSettingsDialog(QDialog):
         layout.addWidget(self.lbl_preview)
         self._update_preview()
 
-        sep2 = QFrame(); sep2.setFrameShape(QFrame.Shape.HLine)
-        sep2.setStyleSheet(f"QFrame{{background-color:{_t['border']};max-height:1px;}}"); layout.addWidget(sep2)
+        sep2 = QFrame(); sep2.setFrameShape(QFrame.Shape.NoFrame)
+        sep2.setProperty("class", "separator"); layout.addWidget(sep2)
 
         # ── Feature toggles ──────────────────────────────────────────────────
         lbl_feat = QLabel("Features")
@@ -1286,8 +1286,8 @@ class DesignWorkflowSettingsDialog(QDialog):
         row_thresh.addStretch()
         layout.addLayout(row_thresh)
 
-        sep = QFrame(); sep.setFrameShape(QFrame.Shape.HLine)
-        sep.setStyleSheet(f"QFrame{{background:{_t['border']};max-height:1px;}}"); layout.addWidget(sep)
+        sep = QFrame(); sep.setFrameShape(QFrame.Shape.NoFrame)
+        sep.setProperty("class", "separator"); layout.addWidget(sep)
         layout.addWidget(QLabel("Pipeline features:"))
 
         def _chk(label, key):
