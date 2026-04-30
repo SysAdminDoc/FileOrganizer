@@ -566,8 +566,88 @@ def export_json(db_path: str = DB_FILE, output_path: str = EXPORT_FILE) -> int:
     print(f"Exported {total} assets to {output_path}  ({size_mb:.1f} MB)")
     return total
 
+
+# ── Community import ────────────────────────────────────────────────────────────
 
-# ── Stats ────────────────────────────────────────────────────────────────────────
+def import_community_json(json_data: dict, db_path: str = DB_FILE) -> tuple:
+    """
+    Merge a community-exported asset_fingerprints.json into the local DB.
+
+    Existing assets (matched by folder_fingerprint) are left untouched so
+    local renames/corrections take priority over community data.
+
+    Returns (new_assets, skipped_duplicates).
+    """
+    con = init_db(db_path)
+    now = _now()
+    new_assets = 0
+    skipped    = 0
+
+    try:
+        for asset in json_data.get('assets', []):
+            fp = asset.get('folder_fingerprint') or ''
+            if not fp:
+                skipped += 1
+                continue
+
+            # INSERT OR IGNORE respects the UNIQUE constraint on folder_fingerprint
+            cur = con.execute(
+                """
+                INSERT OR IGNORE INTO assets
+                    (clean_name, category, marketplace, confidence, disk_name,
+                     file_count, total_bytes, folder_fingerprint,
+                     preview_image, added_at, updated_at)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)
+                """,
+                (
+                    asset.get('clean_name', ''),
+                    asset.get('category', ''),
+                    asset.get('marketplace', ''),
+                    asset.get('confidence', 0),
+                    asset.get('disk_name', ''),
+                    asset.get('file_count', 0),
+                    asset.get('total_bytes', 0),
+                    fp,
+                    asset.get('preview_image', ''),
+                    asset.get('added_at', now),
+                    now,
+                )
+            )
+            if cur.lastrowid and cur.rowcount:
+                asset_id = cur.lastrowid
+                new_assets += 1
+                for f in asset.get('files', []):
+                    con.execute(
+                        """
+                        INSERT OR IGNORE INTO asset_files
+                            (asset_id, filename, relative_path, size_bytes,
+                             sha256, is_project_file, added_at)
+                        VALUES (?,?,?,?,?,?,?)
+                        """,
+                        (
+                            asset_id,
+                            os.path.basename(f.get('p', '')),
+                            f.get('p', ''),
+                            f.get('s', 0),
+                            f.get('h', ''),
+                            int(bool(f.get('k', 0))),
+                            now,
+                        )
+                    )
+            else:
+                skipped += 1
+
+        con.execute(
+            "INSERT OR REPLACE INTO db_meta VALUES ('last_community_import', ?)", (now,)
+        )
+        con.commit()
+    finally:
+        con.close()
+
+    return new_assets, skipped
+
+
+
 
 def cmd_stats(db_path: str = DB_FILE):
     if not os.path.exists(db_path):
