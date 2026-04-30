@@ -117,6 +117,11 @@ QPushButton[class="cancel"]:hover {{
     background-color: {t['danger_hover_bg']}; color: {t['danger_hover_fg']};
     border-color: {t['danger_border']};
 }}
+/* Scan/Cancel toggle: composes with the button's existing class to override
+   text color while keeping primary background. Toggle via setProperty("scanning", True/False) */
+QPushButton[scanning="true"] {{
+    color: {t['danger']}; font-weight: bold;
+}}
 /* Compact accented secondary button (small toolbar action) */
 QPushButton[class="secondary"] {{
     font-size: 11px; padding: 2px 10px;
