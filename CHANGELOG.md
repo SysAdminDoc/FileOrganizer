@@ -4,6 +4,44 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
+### Added (2026-04-30, N-13 security hardening — fonttools pin + archive + PSD guards)
+
+- **N-13.1: fonttools pin** — `requirements.txt` now pins `fonttools>=4.62.1`
+  so CVE-2025-66034 (path traversal in `varLib.main`, fixed in 4.61.0) cannot
+  reach FileOrganizer transitively.  Lands ahead of N-9, which will use the
+  TTFont name table.
+
+- **N-13.2: Archive path-traversal guard** — new
+  `fileorganizer/safe_archive.py` exposes `safe_extract_path(target_root,
+  entry_name)` that rejects:
+    * `..` traversal (anywhere in the entry path)
+    * absolute paths (POSIX `/etc/...`, Windows `C:\...`)
+    * UNC roots (`\\server\share\...`, `//server/share/...`)
+    * drive-letter prefixes (`C:relative.txt`)
+    * sibling-prefix collisions (`targetX` masquerading as `target`)
+    * empty / whitespace-only names
+  Plus `filter_safe_entries()` for bulk shape-checking.  Hardens any future
+  zipfile/rarfile/py7zr extraction (L-7, L-19) without relying on the
+  upstream library's own path handling.
+
+- **N-13.3: PSD parser size + exception isolation** — new
+  `fileorganizer/psd_safe.py` exposes `safe_psd_open(path)` which:
+    * skips files larger than 200 MB (configurable per call) — prevents OOM
+      on layer-tree parses that have hit 1 GB+ PSDs in real organize runs
+    * isolates psd_tools parser exceptions so a malformed PSD returns None
+      instead of crashing the GUI worker
+    * returns None when psd_tools is not installed
+  Wired into both psd_tools call sites in `fileorganizer/metadata.py`
+  (`extract_psd_metadata`, content extraction in `extract_folder_metadata`)
+  and the thumbnail loader in `fileorganizer/thumbnail_cache.py`.  The
+  duplicate `PSD_PARSE_LIMIT_BYTES` constant in `thumbnail_cache.py` was
+  removed so every entry point shares the same threshold.
+
+- 26 new tests across `tests/test_safe_archive.py` (16 — every traversal
+  attack shape plus happy paths) and `tests/test_psd_safe.py` (6 — size
+  guard short-circuits, missing-file return, garbage-content isolation).
+  Suite total: **57/57 pass**.
+
 ### Added (2026-04-30, N-11 ReviewPanel thumbnail rendering)
 
 - **N-11: ReviewPanel thumbnails** — new `fileorganizer/thumbnail_cache.py`
