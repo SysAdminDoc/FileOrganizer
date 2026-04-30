@@ -1,65 +1,99 @@
 # FileOrganizer
 
-![Version](https://img.shields.io/badge/version-8.1.0-blue)
+![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.2.0-22d3ee)
+![Core](https://img.shields.io/badge/core-Python%20v8.2.0-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)
-![Status](https://img.shields.io/badge/status-active-success)
-![AI Powered](https://img.shields.io/badge/AI-DeepSeek%20%7C%20GitHub%20Models%20%7C%20Ollama-e879f9)
+![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
+![WinUI](https://img.shields.io/badge/WinUI-3-0078D6)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![AI](https://img.shields.io/badge/AI-DeepSeek%20%7C%20GitHub%20Models%20%7C%20Ollama-e879f9)
 
-> AI-powered desktop tool that automatically classifies, renames, and organizes design asset folders at scale using multi-provider AI (DeepSeek, GitHub Models, Ollama), a community fingerprint database, and a robust CLI batch runner with undo support.
+> Hybrid file organizer for Windows. A C# / .NET 8 / WinUI 3 desktop shell
+> drives a Python core that handles AI classification (DeepSeek, GitHub
+> Models, Ollama), six cleanup scanners, progressive hash + perceptual
+> dedup, and EXIF-aware photo workflows.
 
 ![Screenshot](screenshot.png)
 
-## Architecture (hybrid, v0.1+)
-
-FileOrganizer is split between a **C# / .NET 8 / WinUI 3 shell** and the **Python core**:
+## What's in this repo
 
 ```
-src/FileOrganizer.UI/   ← WinUI 3 shell: side-tab nav, tile grid, dark Steam theme
-fileorganizer/          ← Python core: AI classification, dedup, photo, archive logic
-*.py (repo root)        ← CLI runners: organize_run.py, asset_db.py, classify_design.py, ...
+src/FileOrganizer.UI/   ← C# / WinUI 3 desktop shell (new — v0.2.0)
+fileorganizer/          ← Python core (legacy PyQt6 GUI + library code)
+*.py at repo root       ← CLI runners + NDJSON sidecars (organize_run, cleanup_run, asset_db, ...)
 ```
 
-The shell calls into Python via two services:
-- **`PythonRunner`** for text-stdout scripts (used by `OrganizePage` to call `organize_run.py --stats`).
-- **`SidecarRunner`** for NDJSON-emitting frozen tools under `tools/<name>/<name>.exe` (future).
+The shell exists to replace the legacy PyQt6 GUI with a UCX-style
+side-tab `NavigationView` and tile dashboard, while keeping every line of
+the AI / dedup / photo logic in Python where the ecosystem lives. The
+two halves talk over `stdout` (text or NDJSON). The legacy PyQt6 GUI
+keeps working in parallel until the shell reaches feature parity.
 
-### Build the WinUI 3 shell
+| Page in shell | Status (v0.2.0) | Wraps |
+|---|---|---|
+| Home | Live | — |
+| Organize | Live | `organize_run.py` |
+| Cleanup | Live | `cleanup_run.py` |
+| Files / Duplicates / Photos / Watch / Toolbox | Placeholder | TBD |
 
-```powershell
-pwsh src/build.ps1
-# Output: src/FileOrganizer.UI/bin/x64/Debug/net8.0-windows10.0.19041.0/FileOrganizer.exe
+## Get FileOrganizer
+
+Two install paths, pick the one that fits.
+
+### Path A — WinUI 3 shell preview (recommended for new users)
+
+Grab the latest release zip from
+[Releases](https://github.com/SysAdminDoc/FileOrganizer/releases) (look
+for `ui-v*` tags) and extract it anywhere.
+
+```
+shell\FileOrganizer.exe   ← double-click to launch
+organize_run.py · cleanup_run.py · fileorganizer\ · requirements.txt
 ```
 
-The build script wraps VS 2026 MSBuild because `dotnet build` against the
-.NET 10 SDK fails on the WindowsAppSDK 1.5 AppX/PRI task path. The legacy
-PyQt6 GUI (`python -m fileorganizer`) keeps working in parallel until the
-WinUI 3 shell reaches feature parity.
+The shell is self-contained for .NET 8, but the live pages still call
+into Python — install Python 3.10+ on PATH (or drop a
+`.venv\Scripts\python.exe` next to the scripts at the extract root, or
+set `%FILEORGANIZER_PYTHON%`), then once:
 
-## Quick Start
+```pwsh
+python -m pip install -r requirements.txt
+```
+
+### Path B — Python core only (legacy PyQt6 GUI + CLI)
 
 ```bash
 git clone https://github.com/SysAdminDoc/FileOrganizer.git
 cd FileOrganizer
-python run.py  # Auto-installs all dependencies + Ollama on first run
+python run.py        # auto-installs deps + Ollama, opens the PyQt6 GUI
 ```
 
-That's it. On launch, FileOrganizer will:
-1. Install PyQt6, rapidfuzz, psd-tools, and other dependencies if missing
-2. Download and install [Ollama](https://ollama.com) if not found
-3. Start the Ollama server if not running
-4. Pull the `qwen2.5:7b` model if not already downloaded
-5. Open the GUI with LLM mode enabled and ready
+On first launch this path will:
+1. Install PyQt6, rapidfuzz, psd-tools, and other dependencies if missing.
+2. Download and install [Ollama](https://ollama.com) if not found.
+3. Pull the `qwen2.5:7b` model if not already downloaded.
 
-No manual setup required.
+## Build the WinUI 3 shell from source
 
-## What It Does
+```pwsh
+pwsh src/build.ps1                         # Debug build
+pwsh src/build.ps1 -Configuration Release  # Release build
+```
 
-FileOrganizer handles two major workflows:
+The script wraps **VS 2026 MSBuild** because bare `dotnet build` against
+the .NET 10 SDK fails on the WindowsAppSDK 1.5 AppX/PRI task path. It
+also cleans `obj/` + `bin/` first and runs `Restore` and `Build` as
+separate invocations to avoid a known MarkupCompilePass2 cascade.
 
-### 1. Design Asset Organization
-Sort hundreds of messy marketplace downloads (Envato, Creative Market, Freepik) into a clean category tree. The LLM reads folder names and filenames, strips marketplace junk, and picks the best category from 384+ built-in categories.
+Output: `src/FileOrganizer.UI/bin/x64/Debug/net8.0-windows10.0.19041.0/FileOrganizer.exe`.
+
+## Major workflows
+
+### Design Asset Organization (the original use case)
+
+Sort thousands of marketplace downloads (Envato, Creative Market, Freepik)
+into a clean category tree. The LLM reads folder + filenames, strips
+marketplace junk, and picks from 384+ built-in categories.
 
 **Before:**
 ```
@@ -75,130 +109,50 @@ Downloads/
 Organized/
 ├── After Effects - Slideshows/
 │   └── Christmas Slideshow/
-├── Flyers & Print/
+├── Print - Flyers & Posters/
 │   └── Neon Night Club Party Flyer/
-├── Invitations & Save the Date/
+├── Print - Invitations & Events/
 │   └── Elegant Wedding Invitation Set/
 └── ...
 ```
 
-### 2. PC File Organizer
-Scan any folder (Downloads, Desktop, etc.) and auto-sort files by type into organized category folders with configurable output mapping per category.
+Drive it from the **Organize** page in the shell, or directly from the
+CLI runner — see [CLI Batch Runner](#cli-batch-runner) below.
 
-## Features
+### Cleanup
 
-### Core
-| Feature | Description |
-|---------|-------------|
-| Ollama LLM Classification | Local AI-powered category + name inference via Ollama |
-| Auto Ollama Setup | Installs Ollama, starts server, pulls model on first launch |
-| 384+ Built-in Categories | Covers design, video, audio, print, web, 3D, photography |
-| 7-Level Classification Pipeline | Extension > Keyword > Fuzzy > Metadata > Envato API > Composition > Context |
-| PC File Organizer | Sort any folder's files by type with configurable output mapping |
-| Multiple Scan Profiles | Design Assets, PC Files, Photo Library, and custom profiles |
-| Classification Rules Editor | Create custom if/then rules with condition builder UI |
-| Rename Template Engine | Token-based rename templates with live preview |
+Six progressive scanners, all wired into the **Cleanup** page in the shell
+(or callable as `python cleanup_run.py --scanner <name> --root <path>`):
 
-### Organization Modes
-| Mode | Description |
-|------|-------------|
-| Rename .aep Folders | Renames After Effects project folders by their largest `.aep` filename |
-| Categorize Folders | Sorts folders into category groups using AI + rules |
-| Categorize + Smart Rename | Full AI rename + categorization in one pass |
-| PC File Organizer | Sorts individual files by extension/type with per-category output paths |
+| Scanner | What it finds |
+|---|---|
+| Empty folders | Recursively-empty directory trees, deepest-first |
+| Empty files | Zero-byte files |
+| Temp / junk | `.tmp`, `.bak`, `Thumbs.db`, `~$*`, `.DS_Store`, partial downloads |
+| Broken / corrupt | Magic-byte mismatches + optional ZIP/TAR integrity check |
+| Big files | Files above a configurable MB threshold |
+| Old downloads | Files not accessed in N days at the top of a folder |
 
-### Cleanup Tools (v7.0+)
-| Tool | Description |
-|------|-------------|
-| Empty Folders | Find and delete empty directories |
-| Empty Files | Find zero-byte files |
-| Temp / Junk Files | Find `.tmp`, `.bak`, `Thumbs.db`, etc. |
-| Broken Files | Detect corrupt/truncated files |
-| Big Files | Find files above a configurable size threshold |
-| Old Downloads | Find stale files in download folders |
+Results stream live as items are discovered. Cancellation kills the child
+Python process tree.
 
-All cleanup scanners show results **progressively** as items are discovered.
+### Duplicates, Photos, Watch (Python-side, shell pages still placeholders)
 
-### Duplicate Finder (v7.0+)
-- Progressive hash-based duplicate detection: Size > Prefix hash > Suffix hash > Full SHA-256
-- Perceptual image hashing for near-duplicate photos
-- Side-by-side duplicate comparison dialog
-- Configurable similarity tolerance
+- **Progressive hash dedup** — Size > prefix hash > suffix hash > full
+  SHA-256, plus perceptual image hashing for near-duplicate photos.
+- **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
+  optional face detection, thumbnail grid.
+- **Watch mode** — monitor folders, auto-organize new files, system tray.
 
-### Photo Organization (v7.0+)
-- EXIF metadata extraction (date, camera, GPS)
-- Photo map view with geotagged photo markers (Leaflet)
-- AI Event Grouping — cluster photos by event using vision descriptions
-- Face detection and person-based organization (optional)
-- Thumbnail grid view with flow layout
+These all work today through `python -m fileorganizer` (Path B). Shell
+pages will land in subsequent `ui-v0.X.Y` releases.
 
-### Watch Mode
-- Monitor folders for changes and auto-organize new files
-- System tray integration with minimize-to-tray
-- Configurable delay and folder list
-- **Watch History** — log of all auto-organize events with timestamps
-
-### UI & UX
-| Feature | Description |
-|---------|-------------|
-| 6 Color Themes | Steam Dark, Catppuccin Mocha, OLED Black, GitHub Dark, Nord, Dracula |
-| Live Theme Preview | See themes applied instantly before committing |
-| Czkawka-Inspired Sidebar | Left navigation panel with section grouping |
-| Before/After Preview | Visual directory tree comparison |
-| File Relationship Graph | Interactive graph showing file connections |
-| File Preview Panel | Split-view with image preview, text excerpt, metadata |
-| Thumbnail Grid View | Visual grid with flow layout for image-heavy scans |
-| Dashboard Bar Chart | Interactive category distribution chart with drag-reassign |
-| Drag & Drop | Drop folders onto the window to set source |
-| Protected Paths | System folder protection prevents accidental moves |
-| Undo Timeline | Visual timeline of all operations with one-click rollback |
-| Plugin System | Extensible plugin architecture for custom behavior |
-| Scheduled Scans | Windows Task Scheduler integration for automated scans |
-| Shell Extension | Right-click "Organize with FileOrganizer" in Windows Explorer |
-
-### Safety
-- **Preview before apply** — full destination tree preview before any files move
-- **Protected paths** — system folders and important files are guarded at scan, apply, and delete layers
-- **Safe merge-move** — merging into existing folders preserves all files
-- **Progressive hash dedup** — SHA-256 + perceptual hash prevents overwrites
-- **Full undo log** — every operation recorded with one-click rollback
-- **CSV audit trail** — every classification logged with timestamp, method, confidence
-- **Crash handler** — unhandled exceptions saved to crash log with MessageBox notification
-
-## Architecture
-
-```
-fileorganizer/
-├── __init__.py          # Package version
-├── __main__.py          # Entry point with crash handler
-├── bootstrap.py         # Auto-dependency installer
-├── config.py            # Settings, themes, protected paths
-├── categories.py        # 384+ category definitions
-├── classifier.py        # 7-level classification engine
-├── engine.py            # Rule engine, scheduler, templates
-├── naming.py            # Smart rename logic
-├── metadata.py          # File metadata extraction
-├── ollama.py            # Ollama LLM integration
-├── photos.py            # Photo/EXIF/face processing
-├── files.py             # PC file organizer logic
-├── cache.py             # Classification cache, undo log
-├── models.py            # Data models (ScanItem, etc.)
-├── workers.py           # QThread workers for scanning/applying
-├── plugins.py           # Plugin system, profiles, presets
-├── profiles.py          # Scan profile management
-├── cleanup.py           # Cleanup scanners (6 types)
-├── duplicates.py        # Duplicate detection engine
-├── dialogs.py           # All dialog windows and panels
-├── widgets.py           # Custom Qt widgets (charts, map, preview)
-└── main_window.py       # Main application window
-```
-
-## CLI Batch Runner (v8+)
+## CLI Batch Runner
 
 ```bash
 # AE pipeline (I:\After Effects → G:\Organized)
 python organize_run.py --stats                    # Show all classified batches
-python organize_run.py --preview --quiet          # Dry run: see what would move
+python organize_run.py --preview --quiet          # Dry run
 python organize_run.py --apply --quiet            # Apply all moves
 python organize_run.py --retry-errors             # Retry failed items
 
@@ -206,116 +160,139 @@ python organize_run.py --retry-errors             # Retry failed items
 python organize_run.py --source design --preview --quiet
 python organize_run.py --source design --apply --quiet
 
-# Plan-first apply flow
+# Plan-first apply
 python organize_run.py --source design --preview --plan-out plan.json
 python organize_run.py --apply-plan plan.json
 python organize_run.py --report <RUN_ID> --output report.md
 
-# Undo support
-python organize_run.py --undo-last 10             # Reverse last 10 moves
-python organize_run.py --undo-all                 # Reverse everything
+# Undo
+python organize_run.py --undo-last 10
+python organize_run.py --undo-all
 
-# Validate sources before moving
-python organize_run.py --validate                 # Report trailing-space/long-path issues
+# Validate sources
+python organize_run.py --validate
 ```
 
-## Community Fingerprint Database (v8.1+)
+## Community Fingerprint Database
 
 ```bash
-python asset_db.py --build G:\Organized          # Hash every file, build SQLite DB
-python asset_db.py --stats                       # Show DB summary
-python asset_db.py --export                      # Export asset_fingerprints.json
-python asset_db.py --lookup "path/to/folder"     # Look up a folder in the DB
+python asset_db.py --build G:\Organized          # Hash every file → SQLite DB
+python asset_db.py --stats                       # DB summary
+python asset_db.py --export                      # asset_fingerprints.json
+python asset_db.py --lookup "path/to/folder"     # Look up a folder
 ```
 
-The fingerprint DB enables any FileOrganizer user to match their locally-downloaded templates against a community-curated catalog of already-classified assets by SHA-256 hash — getting clean names and categories instantly without an AI API call.
+Match locally-downloaded templates against a community-curated catalog of
+already-classified assets by SHA-256 — get clean names and categories
+instantly without an AI API call.
 
 ## Configuration
 
-### AI Providers (v8+)
-
-Click **Settings > AI Providers** to configure:
+### AI Providers
 
 | Provider | Use | Model |
-|----------|-----|-------|
+|---|---|---|
 | DeepSeek | Heavy classification batches | `deepseek-chat` |
 | GitHub Models | Fast lightweight checks | `claude-3-5-haiku` |
-| Ollama | Local/offline fallback | Any local model |
+| Ollama | Local / offline fallback | Any local model |
 
-Set `DEEPSEEK_API_KEY` in your environment to enable DeepSeek routing.
+Set `DEEPSEEK_API_KEY` to enable DeepSeek routing.
 
-### Ollama Settings
-
-Click **Settings > Ollama LLM** to configure:
-
-| Setting | Default | Description |
-|---------|---------|-------------|
-| URL | `http://localhost:11434` | Ollama server address |
-| Model | `qwen2.5:7b` | Model for classification |
-| Timeout | 30s | Per-item LLM timeout |
-
-**Recommended models:**
+### Ollama models
 
 | Model | Size | Speed | Accuracy | Install |
-|-------|------|-------|----------|---------|
+|---|---|---|---|---|
 | `qwen2.5:7b` | 4.7 GB | Medium | Best | `ollama pull qwen2.5:7b` |
 | `llama3.2:3b` | 2.0 GB | Fastest | Good | `ollama pull llama3.2:3b` |
 | `gemma3:4b` | 3.3 GB | Fast | Good | `ollama pull gemma3:4b` |
 
-### Themes
+### Themes (legacy PyQt6 GUI)
 
-Click **Settings > Color Theme** to choose from 6 dark themes with live preview:
-- **Steam Dark** (default) — Deep blue-black with cyan accents
-- **Catppuccin Mocha** — Warm purple-blue palette
-- **OLED Black** — True black for OLED displays
-- **GitHub Dark** — GitHub's dark mode colors
-- **Nord** — Arctic blue-gray palette
-- **Dracula** — Classic purple-accented dark theme
+Six dark themes with live preview: **Steam Dark** (default), Catppuccin
+Mocha, OLED Black, GitHub Dark, Nord, Dracula. The WinUI 3 shell uses the
+Steam Dark palette with a cyan accent and currently does not expose a
+theme picker.
 
-## Architecture (v8+)
+## Architecture
+
+### WinUI 3 shell
 
 ```
-FileOrganizer/
-├── fileorganizer/           # GUI package
-│   ├── providers.py         # Multi-provider AI router (DeepSeek, GitHub Models, Ollama)
-│   ├── catalog.py           # Marketplace lookup + fingerprint DB pre-check
-│   ├── archive_extractor.py # ZIP/RAR/7z inspection without full extraction
-│   ├── categories.py        # 84+ canonical category definitions
-│   ├── workers.py           # QThread workers
-│   └── main_window.py       # Main GUI window
-├── organize_run.py          # CLI batch runner (Phase 1+2 apply)
-├── classify_design.py       # DeepSeek batch classifier for design assets
-├── asset_db.py              # Community SHA-256 fingerprint DB
-├── org_index.json           # Master index: I:\After Effects items
-├── design_unorg_index.json  # Master index: G:\Design Unorganized items
-└── classification_results/  # batch_NNN.json + design_batch_NNN.json outputs
+src/FileOrganizer.UI/
+├── App.xaml(.cs)             ← brand tokens, DI, crash handler
+├── Views/
+│   ├── MainWindow.xaml(.cs)  ← side-tab NavigationView shell
+│   └── Pages/
+│       ├── HomePage          ← hero + tile grid + cluster cards
+│       ├── OrganizePage      ← live, runs organize_run.py
+│       ├── CleanupPage       ← live, runs cleanup_run.py over NDJSON
+│       └── PlaceholderPage   ← parameterized stub for unwired routes
+├── Services/
+│   ├── PythonRunner.cs       ← text + NDJSON Python invocation
+│   └── SidecarRunner.cs      ← NDJSON for future tools/<name>/<name>.exe
+└── FileOrganizer.UI.csproj
+```
+
+### Python core
+
+```
+fileorganizer/
+├── classifier.py             ← 7-level classification engine
+├── categories.py             ← 384+ canonical category definitions
+├── providers.py              ← multi-provider AI router (DeepSeek + GH + Ollama)
+├── catalog.py                ← marketplace lookup + fingerprint DB pre-check
+├── cleanup.py                ← six cleanup scanners
+├── duplicates.py             ← progressive hash + perceptual image hash
+├── photos.py                 ← EXIF / faces / events / map markers
+├── files.py                  ← PC file organizer
+├── workers.py                ← QThread workers (legacy GUI)
+├── main_window.py            ← legacy PyQt6 main window
+└── ...
+
+repo root:
+├── organize_run.py           ← CLI batch runner (text-stdout sidecar)
+├── cleanup_run.py            ← NDJSON sidecar for the Cleanup page
+├── asset_db.py               ← community SHA-256 fingerprint DB
+├── classify_design.py        ← DeepSeek batch classifier for design assets
+└── deepseek_research.py      ← _Review-folder ID resolver
 ```
 
 ## FAQ
 
-**Ollama won't install automatically** — Download from [ollama.com/download](https://ollama.com/download), then restart FileOrganizer.
+**Should I install Path A (shell) or Path B (Python)?** — If you want the
+new UI and you're on Windows, Path A. If you're on Linux/macOS, or you
+need the photo / duplicates / watch features today, Path B. Both share
+the same `fileorganizer/` package so you can switch later.
 
-**LLM shows "unavailable"** — Start the server manually: `ollama serve`, then restart.
+**Ollama won't install automatically** — Download from
+[ollama.com/download](https://ollama.com/download), then restart.
 
-**Classification is slow** — Use DeepSeek for bulk batches (60 items/call, ~1-2s). Ollama is per-item; use it only for small jobs.
+**Classification is slow** — Use DeepSeek for bulk batches (60 items/call,
+~1–2s). Ollama is per-item; use it only for small jobs.
 
-**How do I add categories?** — Settings > Edit Categories. Add categories with keywords. Saved to JSON and available immediately.
+**Why position-based batch mapping?** — AI agents may clean or reformat
+folder names in their response. The only reliable mapping is by position:
+`batch_NNN.json[i]` always corresponds to `org_index[(N-1)*60 + i]`
+regardless of name changes.
 
-**Why position-based batch mapping?** — AI agents may clean or reformat folder names in their response. The only reliable mapping is by position: `batch_NNN.json[i]` always corresponds to `org_index[(N-1)*60 + i]` regardless of name changes.
+**Why two release tag schemes (`v8.x` vs `ui-v0.x`)?** — The Python core
+and the WinUI 3 shell version independently. Python uses `vX.Y.Z`, the
+shell uses `ui-vX.Y.Z`, and they release on their own cadences.
 
 ## Related Tools
 
-| Tool | Best For |
-|------|----------|
-| **FileOrganizer** (this repo) | Focused file organization — AI classification, cleanup, duplicates, photo management |
-| [UniFile](https://github.com/SysAdminDoc/UniFile) | Everything in FileOrganizer plus a tag-based file library (TagStudio-style), movie/TV metadata lookup (TMDb/TVMaze), and Nexa vision AI backend |
-
-If you want tag-based organization with hierarchical tags, TMDb/TVMaze metadata, or LLaVA vision classification, see [UniFile](https://github.com/SysAdminDoc/UniFile) — the all-in-one successor built on this project's foundation.
+| Tool | Best for |
+|---|---|
+| **FileOrganizer** (this repo) | Focused file organization — AI classification, cleanup, dedup, photo |
+| [UniFile](https://github.com/SysAdminDoc/UniFile) | Everything here plus tag-based library, TMDb/TVMaze lookup, LLaVA vision |
 
 ## Contributing
 
-Issues and PRs welcome. The codebase is modular — categories in `categories.py`, classification in `catalog.py`, UI in `main_window.py`.
+Issues and PRs welcome. The codebase is modular — categories in
+`fileorganizer/categories.py`, classification in
+`fileorganizer/catalog.py`, legacy GUI in `fileorganizer/main_window.py`,
+shell in `src/FileOrganizer.UI/`.
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT — see [LICENSE](LICENSE).
