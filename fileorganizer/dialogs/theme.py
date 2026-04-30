@@ -35,7 +35,7 @@ class ProtectedPathsDialog(QDialog):
 
         # Header
         hdr = QLabel("Protected Paths")
-        hdr.setStyleSheet(f"font-size: 16px; font-weight: 700; color: {t['fg_bright']};")
+        hdr.setProperty("class", "heading")
         lay.addWidget(hdr)
         desc = QLabel(
             "Files and folders listed below will never be moved, renamed, or deleted by FileOrganizer.\n"
@@ -167,7 +167,7 @@ class ThemePickerDialog(QDialog):
 
         t = get_active_theme()
         hdr = QLabel("Color Theme")
-        hdr.setStyleSheet(f"font-size: 16px; font-weight: 700; color: {t['fg_bright']};")
+        hdr.setProperty("class", "heading")
         lay.addWidget(hdr)
 
         desc = QLabel("Select a theme. The preview updates instantly. Click Apply to save.")
