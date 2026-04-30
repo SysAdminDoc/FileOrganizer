@@ -2,6 +2,43 @@
 
 All notable changes to FileOrganizer will be documented in this file.
 
+## [FileOrganizer.UI v0.1.0] - 2026-04-30
+
+### Added (WinUI 3 shell scaffold)
+
+- **`src/FileOrganizer.UI/`** — C# / .NET 8 / WinUI 3 desktop shell mirroring
+  the UniversalConverterX design system: side-tab `NavigationView`, dark Steam
+  palette with cyan accent, hero card + tile grid + cluster cards on Home,
+  search box in pane header.
+- **Side-tab nav**: Home · Organize · Files · Cleanup · Duplicates · Photos ·
+  Watch · Toolbox. Routes resolve to live pages where wired, otherwise to a
+  `PlaceholderPage` that names the Python module the route will wrap.
+- **`OrganizePage`** — first live workflow. Source picker (ae/design/design_org/
+  loose_files) plus three actions wired to `organize_run.py`: `--stats`,
+  `--preview --quiet`, `--validate`. Streams stdout line-by-line into a code
+  panel. Cancellation kills the child Python tree.
+- **`PythonRunner`** service — locates the repo root, resolves Python via
+  `FILEORGANIZER_PYTHON` env override → `.venv/Scripts/python.exe` → `py.exe` →
+  PATH. Forces `PYTHONIOENCODING=utf-8` + `PYTHONUTF8=1` so Unicode filenames
+  don't crash the child.
+- **`SidecarRunner`** service — UCX-style NDJSON event runner (`progress`,
+  `log`, `complete`, `error`) with watchdog silence-timeout. Ready for future
+  PyInstaller-frozen sidecars under `tools/<name>/`.
+- **`src/build.ps1`** — VS 2026 MSBuild wrapper. Cleans `obj/`+`bin/` first
+  (MarkupCompilePass2 stale-state guard) and runs `Restore` and `Build` as
+  separate invocations (combined target reproduces the same cascade per UCX
+  experience).
+- **`.gitignore`** — added `src/**/bin/`, `src/**/obj/`, `src/**/.vs/`.
+
+### Why C# / WinUI 3 alongside Python
+
+Python keeps the AI/classification/dedup/photo logic (psd-tools, rapidfuzz,
+Ollama/DeepSeek clients, Pillow, archive inspection — ~20K LOC). WinUI 3
+provides side-tab nav, tile grids, and native window chrome that PyQt6 cannot
+match visually. The two halves talk over `stdout` (text or NDJSON). The
+existing CLI runners (`organize_run.py`, `asset_db.py`, `classify_design.py`,
+etc.) already match the sidecar contract.
+
 ## [v8.2.0] - Unreleased
 
 ### Added (2026-04-30, N-13 security hardening — fonttools pin + archive + PSD guards)
