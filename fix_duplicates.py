@@ -76,8 +76,14 @@ REPO      = Path(__file__).parent
 DB        = REPO / 'organize_moves.db'
 ORGANIZED = Path(r'G:\Organized')
 ORGANIZED_OVERFLOW = Path(r'I:\Organized')
-LOG_FILE  = REPO / 'fix_duplicates_log.json'
+LOG_FILE  = REPO / 'fix_duplicates_log.jsonl'
 EMPTY_DIR = REPO / '.robocopy-empty'
+
+
+def _append_entry(fp, entry: dict) -> None:
+    """Write one JSON record to the open append-mode log file and flush immediately."""
+    fp.write(json.dumps(entry, ensure_ascii=False) + '\n')
+    fp.flush()
 
 def all_org_roots() -> list[Path]:
     return [r for r in (ORGANIZED, ORGANIZED_OVERFLOW) if r.exists()]
@@ -240,7 +246,6 @@ def cmd_apply(dry_run: bool = False) -> None:
     collisions = find_collisions()
     con = sqlite3.connect(str(DB))
 
-    results = []
     merged = 0
     deleted = 0
     skipped = 0
@@ -249,101 +254,111 @@ def cmd_apply(dry_run: bool = False) -> None:
 
     tag = '[DRY]' if dry_run else '[APPLY]'
 
-    for orig_path, colls in sorted(collisions.items()):
-        orig = Path(orig_path)
-        orig_files = get_orig_file_count(orig_path)
+    # Open log in append mode so each entry is durable even if the run is killed.
+    # Format: one JSON object per line (JSONL).
+    log_ctx = open(LOG_FILE, 'a', encoding='utf-8') if not dry_run else None
 
-        for coll_info in colls:
-            coll      = Path(coll_info['path'])
-            coll_n    = coll_info['n']
-            coll_files = coll_info['files']
+    try:
+        for orig_path, colls in sorted(collisions.items()):
+            orig = Path(orig_path)
+            orig_files = get_orig_file_count(orig_path)
 
-            # Case 1: Original is MISSING — rename collision to original name
-            if orig_files < 0:
-                log(f'{tag} RENAME  {coll.name} -> {orig.name}  ({coll_files} files)')
-                if not dry_run:
-                    try:
-                        coll.rename(orig)
-                        # Update DB entry
+            for coll_info in colls:
+                coll      = Path(coll_info['path'])
+                coll_n    = coll_info['n']
+                coll_files = coll_info['files']
+
+                # Case 1: Original is MISSING — rename collision to original name
+                if orig_files < 0:
+                    log(f'{tag} RENAME  {coll.name} -> {orig.name}  ({coll_files} files)')
+                    if not dry_run:
+                        try:
+                            coll.rename(orig)
+                            con.execute(
+                                'UPDATE moves SET dest = ? WHERE dest = ?',
+                                (str(orig), str(coll))
+                            )
+                            con.commit()
+                            db_updates += 1
+                            orig_files = coll_files
+                            merged += 1
+                            _append_entry(log_ctx, {
+                                'action': 'rename', 'from': str(coll), 'to': str(orig)
+                            })
+                        except Exception as e:
+                            log(f'  ERROR rename: {e}')
+                            errors += 1
+                            _append_entry(log_ctx, {
+                                'action': 'rename_failed', 'from': str(coll),
+                                'to': str(orig), 'error': str(e)
+                            })
+                    continue
+
+                # Case 2: Both exist — merge collision contents into original, then delete.
+                log(f'{tag} MERGE   {coll.name}  ({coll_files} files) -> {orig.name} ({orig_files} files)')
+
+                if dry_run:
+                    rc, err_lines = 0, []
+                elif _same_drive(coll, orig):
+                    m, c, errs = os_rename_merge(coll, orig)
+                    if errs:
+                        log(f'  rename merge: {len(errs)} errors (first: {errs[0][:200]})')
+                        errors += 1
+                        _append_entry(log_ctx, {
+                            'action': 'merge_failed', 'src': str(coll), 'dst': str(orig),
+                            'errors': errs[:5]
+                        })
+                        skipped += 1
+                        continue
+                    rc = 0
+                    err_lines = []
+                else:
+                    rc, err_lines = robocopy_merge(coll, orig, dry_run=dry_run)
+                    if rc > 7:
+                        log(f'  ROBOCOPY ERROR rc={rc}: {err_lines}')
+                        errors += 1
+                        _append_entry(log_ctx, {
+                            'action': 'merge_failed', 'src': str(coll), 'dst': str(orig), 'rc': rc
+                        })
+                        skipped += 1
+                        continue
+
+                removed = rmtree_safe(coll, dry_run=dry_run)
+                if removed:
+                    deleted += 1
+                    if not dry_run:
                         con.execute(
                             'UPDATE moves SET dest = ? WHERE dest = ?',
                             (str(orig), str(coll))
                         )
                         con.commit()
                         db_updates += 1
-                        orig_files = coll_files  # now exists
-                        merged += 1
-                    except Exception as e:
-                        log(f'  ERROR rename: {e}')
-                        errors += 1
-                results.append({'action': 'rename', 'from': str(coll), 'to': str(orig)})
-                continue
-
-            # Case 2: Both exist — merge collision contents into original, then delete collision.
-            # Same-drive: per-file os.rename (metadata-only, near-instant).
-            # Cross-drive: robocopy /E (must copy file bytes anyway).
-            log(f'{tag} MERGE   {coll.name}  ({coll_files} files) -> {orig.name} ({orig_files} files)')
-
-            if dry_run:
-                rc, err_lines = 0, []
-            elif _same_drive(coll, orig):
-                m, c, errs = os_rename_merge(coll, orig)
-                if errs:
-                    log(f'  rename merge: {len(errs)} errors (first: {errs[0][:200]})')
+                    orig_files = get_orig_file_count(orig_path)
+                    log(f'  -> merged, original now has {orig_files} files')
+                    merged += 1
+                    if not dry_run:
+                        _append_entry(log_ctx, {
+                            'action': 'merge',
+                            'collision': str(coll),
+                            'original': str(orig),
+                            'coll_files': coll_files,
+                            'orig_files_after': orig_files,
+                            'rc': rc,
+                        })
+                else:
                     errors += 1
-                    results.append({'action': 'merge_failed', 'src': str(coll), 'dst': str(orig),
-                                    'errors': errs[:5]})
-                    skipped += 1
-                    continue
-                rc = 0
-                err_lines = []
-            else:
-                rc, err_lines = robocopy_merge(coll, orig, dry_run=dry_run)
-                if rc > 7:
-                    log(f'  ROBOCOPY ERROR rc={rc}: {err_lines}')
-                    errors += 1
-                    results.append({'action': 'merge_failed', 'src': str(coll), 'dst': str(orig), 'rc': rc})
-                    skipped += 1
-                    continue
-
-            # Remove collision
-            removed = rmtree_safe(coll, dry_run=dry_run)
-            if removed:
-                deleted += 1
-                if not dry_run:
-                    # Update DB: redirect collision's dest to original
-                    con.execute(
-                        'UPDATE moves SET dest = ? WHERE dest = ?',
-                        (str(orig), str(coll))
-                    )
-                    con.commit()
-                    db_updates += 1
-                # Recount orig files after merge
-                orig_files = get_orig_file_count(orig_path)
-                log(f'  -> merged, original now has {orig_files} files')
-                merged += 1
-            else:
-                errors += 1
-
-            results.append({
-                'action': 'merge',
-                'collision': str(coll),
-                'original': str(orig),
-                'coll_files': coll_files,
-                'orig_files_after': orig_files if not dry_run else '?',
-                'rc': rc,
-            })
-
-            # Incremental log save every 50 merges so a kill mid-run preserves audit trail
-            if not dry_run and len(results) % 50 == 0:
-                LOG_FILE.write_text(json.dumps(results, indent=2), encoding='utf-8')
+                    if not dry_run:
+                        _append_entry(log_ctx, {
+                            'action': 'rmtree_failed', 'path': str(coll)
+                        })
+    finally:
+        if log_ctx is not None:
+            log_ctx.close()
 
     con.close()
 
-    # Save results (final)
     if not dry_run:
-        LOG_FILE.write_text(json.dumps(results, indent=2), encoding='utf-8')
-        log(f'\nResults saved to {LOG_FILE.name}')
+        log(f'\nEntries appended to {LOG_FILE.name}')
 
     print(f'\n{"[DRY RUN] " if dry_run else ""}Summary:')
     print(f'  Merged/renamed:  {merged}')

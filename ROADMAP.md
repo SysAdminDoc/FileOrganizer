@@ -116,7 +116,7 @@ using the legacy folder name as a `legacy_category` hint, then route through the
 - **Impact**: 5 | **Effort**: 3
 - Source: [S32] AUDIT_LESSONS.md, [S35] CHANGELOG.md v8.2.0
 
-### N-2: fix_duplicates.py incremental journal
+### N-2: ~~fix_duplicates.py incremental journal~~ ✓ Shipped v8.2.0
 Write a log entry after each successful merge, not at the end of the full run. Use append-mode
 `open(logfile, 'a')` with a flush after each entry.
 - **Why now**: An interrupted run leaves applied merges on disk but unrecorded. The user has no
