@@ -417,7 +417,7 @@ class WatchSettingsDialog(QDialog):
 
         # Folder list
         lbl_f = QLabel("Watched Folders:")
-        lbl_f.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        lbl_f.setProperty("class", "meta")
         lay.addWidget(lbl_f)
         self.lst_folders = QListWidget()
         self.lst_folders.setMaximumHeight(120)
@@ -576,12 +576,12 @@ class FilePreviewPanel(QWidget):
 
         self.lbl_preview_name = QLabel("")
         self.lbl_preview_name.setWordWrap(True)
-        self.lbl_preview_name.setStyleSheet(f"color: {_t['fg_bright']}; font-size: 13px; font-weight: bold;")
+        self.lbl_preview_name.setProperty("class", "subheading")
         lay.addWidget(self.lbl_preview_name)
 
         self.lbl_preview_meta = QLabel("")
         self.lbl_preview_meta.setWordWrap(True)
-        self.lbl_preview_meta.setStyleSheet(f"color: {_t['muted']}; font-size: 11px;")
+        self.lbl_preview_meta.setProperty("class", "meta")
         lay.addWidget(self.lbl_preview_meta)
 
         self.txt_preview_text = QTextEdit()
