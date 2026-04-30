@@ -111,7 +111,7 @@ class DestTreeDialog(QDialog):
 
         for cat in sorted(cats.keys()):
             cat_item = QTreeWidgetItem([cat, str(len(cats[cat]))])
-            cat_item.setForeground(0, QColor("#4ade80"))
+            cat_item.setForeground(0, QColor(get_active_theme()['green']))
             for folder in sorted(cats[cat]):
                 child = QTreeWidgetItem([folder, ""])
                 cat_item.addChild(child)
@@ -662,8 +662,8 @@ class _FileBrowserDialog(QDialog):
                     # Colour by file type
                     if ext in self._PROJECT_EXTS:
                         item.setForeground(0, QColor("#4fc3f7"))
-                        item.setForeground(1, QColor("#f59e0b"))
-                        item.setForeground(2, QColor("#4ade80"))
+                        item.setForeground(1, QColor(get_active_theme()['warning']))
+                        item.setForeground(2, QColor(get_active_theme()['green']))
                     else:
                         item.setForeground(0, QColor("#6b8fa8"))
                         item.setForeground(1, QColor("#3d5a73"))
