@@ -11,6 +11,32 @@
 
 ![Screenshot](screenshot.png)
 
+## Architecture (hybrid, v0.1+)
+
+FileOrganizer is split between a **C# / .NET 8 / WinUI 3 shell** and the **Python core**:
+
+```
+src/FileOrganizer.UI/   ← WinUI 3 shell: side-tab nav, tile grid, dark Steam theme
+fileorganizer/          ← Python core: AI classification, dedup, photo, archive logic
+*.py (repo root)        ← CLI runners: organize_run.py, asset_db.py, classify_design.py, ...
+```
+
+The shell calls into Python via two services:
+- **`PythonRunner`** for text-stdout scripts (used by `OrganizePage` to call `organize_run.py --stats`).
+- **`SidecarRunner`** for NDJSON-emitting frozen tools under `tools/<name>/<name>.exe` (future).
+
+### Build the WinUI 3 shell
+
+```powershell
+pwsh src/build.ps1
+# Output: src/FileOrganizer.UI/bin/x64/Debug/net8.0-windows10.0.19041.0/FileOrganizer.exe
+```
+
+The build script wraps VS 2026 MSBuild because `dotnet build` against the
+.NET 10 SDK fails on the WindowsAppSDK 1.5 AppX/PRI task path. The legacy
+PyQt6 GUI (`python -m fileorganizer`) keeps working in parallel until the
+WinUI 3 shell reaches feature parity.
+
 ## Quick Start
 
 ```bash
