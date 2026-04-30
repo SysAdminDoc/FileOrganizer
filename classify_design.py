@@ -50,6 +50,13 @@ SOURCE_CONFIGS = {
         'has_legacy':   True,   # legacy_category = subfolder name
         'file_mode':    False,  # move whole directories
     },
+    'i_organized_legacy': {
+        'index_file':   'i_organized_legacy_index.json',
+        'batch_prefix': 'i_org_batch_',
+        'source_dir':   r'I:\Organized',
+        'has_legacy':   True,   # legacy_category = first-level category dir name
+        'file_mode':    False,
+    },
 }
 
 # ── Config (defaults; overridden at parse time) ───────────────────────────────
