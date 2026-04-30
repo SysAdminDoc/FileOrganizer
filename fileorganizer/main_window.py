@@ -350,9 +350,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         prof_lay.setContentsMargins(12, 8, 12, 4)
         prof_lay.setSpacing(4)
         lbl_prof = QLabel("PROFILE")
-        lbl_prof.setStyleSheet(
-            f"color: {_t['sidebar_section']}; font-size: 10px; font-weight: 700; letter-spacing: 1.5px;"
-            "background: transparent;")
+        lbl_prof.setProperty("class", "sidebar-section")
         self._nav_section_labels.append(lbl_prof)
         prof_lay.addWidget(lbl_prof)
         self.cmb_profile = QComboBox()
@@ -563,9 +561,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # Source path
         row_src = QHBoxLayout(); row_src.setSpacing(8)
         lbl_src = QLabel("SOURCE")
-        lbl_src.setStyleSheet(
-            f"color: {_t['muted']}; font-weight: 700; font-size: 10px; letter-spacing: 1px;"
-            "background: transparent;")
+        lbl_src.setProperty("class", "form-label")
         lbl_src.setFixedWidth(55)
         row_src.addWidget(lbl_src)
         self.txt_src = QLineEdit()
@@ -585,9 +581,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         row_dst = QHBoxLayout(self.row_dst_w)
         row_dst.setContentsMargins(0, 0, 0, 0); row_dst.setSpacing(8)
         lbl_dst = QLabel("OUTPUT")
-        lbl_dst.setStyleSheet(
-            f"color: {_t['muted']}; font-weight: 700; font-size: 10px; letter-spacing: 1px;"
-            "background: transparent;")
+        lbl_dst.setProperty("class", "form-label")
         lbl_dst.setFixedWidth(55)
         row_dst.addWidget(lbl_dst)
         self.txt_dst = QLineEdit()
@@ -608,9 +602,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         row_pc_src = QHBoxLayout(); row_pc_src.setSpacing(8)
         lbl_pc_src = QLabel("SOURCE")
-        lbl_pc_src.setStyleSheet(
-            f"color: {_t['muted']}; font-weight: 700; font-size: 10px; letter-spacing: 1px;"
-            "background: transparent;")
+        lbl_pc_src.setProperty("class", "form-label")
         lbl_pc_src.setFixedWidth(55)
         row_pc_src.addWidget(lbl_pc_src)
         self.cmb_pc_src = QComboBox()
@@ -652,9 +644,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         self.chk_llm = QCheckBox("LLM")
         self.chk_llm.setToolTip("Use Ollama LLM for AI-powered classification")
-        self.chk_llm.setStyleSheet(
-            f"QCheckBox {{ color: {_t['sidebar_profile_fg']}; font-weight: bold; font-size: 12px;"
-            "background: transparent; }")
+        self.chk_llm.setProperty("class", "accent")
         opts_row.addWidget(self.chk_llm)
 
         self.chk_hash = QCheckBox("Dedup")
@@ -677,8 +667,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         opts_row.addWidget(self.chk_inc_folders)
 
         lbl_depth = QLabel("Depth:")
-        lbl_depth.setStyleSheet(
-            f"color: {_t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 11px; background: transparent;")
+        lbl_depth.setProperty("class", "option-label")
         opts_row.addWidget(lbl_depth)
         self.spn_depth = QSpinBox()
         self.spn_depth.setRange(0, 99); self.spn_depth.setValue(0)
@@ -688,8 +677,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         opts_row.addWidget(self.spn_depth)
 
         self.lbl_type_filter = QLabel("Type:")
-        self.lbl_type_filter.setStyleSheet(
-            f"color: {_t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 11px; background: transparent;")
+        self.lbl_type_filter.setProperty("class", "option-label")
         self.lbl_type_filter.setVisible(False)
         opts_row.addWidget(self.lbl_type_filter)
         self.cmb_type_filter = QComboBox()
