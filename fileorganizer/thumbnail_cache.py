@@ -30,7 +30,8 @@ from PyQt6.QtGui import QColor, QPainter, QPen, QPixmap, QPixmapCache
 
 
 THUMB_SIZE = 64   # square px for ReviewPanel rows
-PSD_PARSE_LIMIT_BYTES = 200 * 1024 * 1024   # skip parsing PSDs > 200 MB
+# Note: PSD size limit lives in fileorganizer.psd_safe so every call site
+# shares the same threshold.
 
 _RASTER_EXTS = {
     '.jpg', '.jpeg', '.png', '.gif', '.bmp',
@@ -139,21 +140,21 @@ def _load_raster(path: str, size: int) -> QPixmap | None:
 
 
 def _load_psd(path: str, size: int) -> QPixmap | None:
-    """Load the embedded composite from a PSD via psd_tools.  Skip very large
-    files — psd_tools parses the full layer tree and can OOM on 1+ GB PSDs.
+    """Load the embedded composite from a PSD via psd_tools.
+
+    Routes through `fileorganizer.psd_safe.safe_psd_open` (N-13) which skips
+    files over PSD_PARSE_LIMIT_BYTES and isolates parser exceptions so a
+    malformed PSD can't crash the loader thread.
     """
     try:
-        if os.path.getsize(path) > PSD_PARSE_LIMIT_BYTES:
-            return None
-    except OSError:
-        return None
-    try:
-        from psd_tools import PSDImage
         from PIL.ImageQt import ImageQt
+        from fileorganizer.psd_safe import safe_psd_open
     except Exception:
         return None
+    psd = safe_psd_open(path)
+    if psd is None:
+        return None
     try:
-        psd = PSDImage.open(path)
         im = psd.composite() if hasattr(psd, "composite") else psd.topil()
         if im is None:
             return None
