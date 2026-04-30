@@ -396,6 +396,9 @@ QLabel[class="heading"] {{
 QLabel[class="subheading"] {{
     color: {t['fg']}; font-size: 13px; font-weight: 600; padding: 0;
 }}
+QLabel[class="subheading-sm"] {{
+    color: {t['fg']}; font-size: 12px; font-weight: 600;
+}}
 QLabel[class="caption"] {{
     color: {t['muted']}; font-size: 10px; font-weight: 600;
     letter-spacing: 0.6px; text-transform: uppercase;
@@ -533,6 +536,11 @@ QComboBox[class="combo-success"] {{
 QWidget[class="dashboard-panel"] {{
     background: {t['header_bg']};
     border-radius: 6px;
+}}
+/* Scroll areas with header_bg background (used for thumbnail grids) */
+QScrollArea[class="scroll-area-header"] {{
+    background: {t['header_bg']};
+    border: none;
 }}
 """
 

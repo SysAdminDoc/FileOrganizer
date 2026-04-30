@@ -835,7 +835,7 @@ class CatalogManagerPanel(QWidget):
 
         # Stats table
         stats_hdr = QLabel("Cache Statistics")
-        stats_hdr.setStyleSheet(f"color:{_t['fg']};font-size:12px;font-weight:600;")
+        stats_hdr.setProperty("class", "subheading-sm")
         root_lay.addWidget(stats_hdr)
 
         self.tbl_stats = QTableWidget(0, 3)
@@ -864,7 +864,7 @@ class CatalogManagerPanel(QWidget):
 
         # Run options
         opts_hdr = QLabel("Expand Catalog")
-        opts_hdr.setStyleSheet(f"color:{_t['fg']};font-size:12px;font-weight:600;")
+        opts_hdr.setProperty("class", "subheading-sm")
         root_lay.addWidget(opts_hdr)
 
         row1 = QHBoxLayout()
