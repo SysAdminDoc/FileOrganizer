@@ -124,7 +124,7 @@ Write a log entry after each successful merge, not at the end of the full run. U
 - **Impact**: 4 | **Effort**: 1
 - Source: [S35] CHANGELOG.md v8.2.0, [S32] AUDIT_LESSONS.md
 
-### N-3: Community catalog auto-download
+### N-3: ~~Community catalog auto-download~~ ✓ Shipped v8.2.0
 On startup, check the GitHub Releases API for a newer `asset_fingerprints.json`. Import into the
 local SQLite DB. Schema version gate: skip if DB_VERSION mismatch. Download sharded catalog/
 (10.6M entries, 400MB gzipped) in background on first run via a `CatalogSyncWorker` (QThread).
