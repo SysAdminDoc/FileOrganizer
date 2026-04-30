@@ -11,8 +11,8 @@ from PyQt6.QtWidgets import (
     QAbstractItemView, QProgressBar, QTabWidget, QTextEdit, QSplitter,
     QComboBox, QFrame, QMessageBox
 )
-from PyQt6.QtCore import Qt, QThread, pyqtSignal
-from PyQt6.QtGui import QColor
+from PyQt6.QtCore import Qt, QSize, QThread, pyqtSignal
+from PyQt6.QtGui import QColor, QIcon, QPixmap
 
 from fileorganizer.config import get_active_theme
 
@@ -1039,11 +1039,14 @@ class CatalogManagerPanel(QWidget):
 
 class _ReviewScanWorker(QThread):
     """Scan _Review subdirectories and emit one record per item folder."""
-    result  = pyqtSignal(dict)   # {folder_name, folder_path, subcategory, thumbnail}
+    result  = pyqtSignal(dict)   # {folder_name, folder_path, subcategory, thumbnail, primary_ext}
     done    = pyqtSignal(int)    # total items found
     log     = pyqtSignal(str)
 
-    _IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff', '.tif'}
+    # Preview-friendly raster sources, in priority order.  PSDs are previewable
+    # via psd_tools so we accept them as thumbnail candidates too.
+    _IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp',
+                   '.webp', '.tiff', '.tif', '.psd'}
 
     def __init__(self, review_root: str):
         super().__init__()
@@ -1074,21 +1077,31 @@ class _ReviewScanWorker(QThread):
                 if not item_dir.is_dir():
                     continue
 
-                # Find first image for thumbnail
+                # Find first image (or PSD) for thumbnail; record the most
+                # frequent extension so the badge fallback shows something
+                # meaningful when there's no preview image.
                 thumbnail = ""
+                primary_ext = ""
+                ext_count: dict[str, int] = {}
                 try:
                     for f in item_dir.rglob("*"):
-                        if f.suffix.lower() in self._IMAGE_EXTS and f.is_file():
+                        if not f.is_file():
+                            continue
+                        suf = f.suffix.lower()
+                        ext_count[suf] = ext_count.get(suf, 0) + 1
+                        if not thumbnail and suf in self._IMAGE_EXTS:
                             thumbnail = str(f)
-                            break
                 except (PermissionError, OSError):
                     pass
+                if ext_count:
+                    primary_ext = max(ext_count.items(), key=lambda kv: kv[1])[0]
 
                 self.result.emit({
                     "folder_name": item_dir.name,
                     "folder_path": str(item_dir),
                     "subcategory": subcategory,
                     "thumbnail":   thumbnail,
+                    "primary_ext": primary_ext,
                 })
                 count += 1
 
@@ -1172,6 +1185,12 @@ class ReviewPanel(QWidget):
         self._items: list[dict] = []   # raw scan results
         self._scan_worker  = None
         self._apply_worker = None
+        # One thumbnail-loader thread per panel; owns its own job queue.
+        from fileorganizer.thumbnail_cache import ThumbnailLoaderWorker, THUMB_SIZE
+        self._thumb_size = THUMB_SIZE
+        self._thumb_worker = ThumbnailLoaderWorker(self)
+        self._thumb_worker.loaded.connect(self._on_thumbnail_loaded)
+        self._thumb_worker.start()
         self._build_ui()
 
     def _build_ui(self):
@@ -1244,6 +1263,8 @@ class ReviewPanel(QWidget):
 
         self.tbl = QTableWidget(0, 4)
         self.tbl.setHorizontalHeaderLabels(["Folder", "Current Category", "Assign To", ""])
+        # Bigger icon size so the thumbnail beside the folder name is readable.
+        self.tbl.setIconSize(QSize(self._thumb_size, self._thumb_size))
         self.tbl.horizontalHeader().setSectionResizeMode(
             self._COL_NAME, QHeaderView.ResizeMode.Stretch)
         self.tbl.horizontalHeader().setSectionResizeMode(
@@ -1353,11 +1374,22 @@ class ReviewPanel(QWidget):
         self._items.append(rec)
         row = self.tbl.rowCount()
         self.tbl.insertRow(row)
-        self.tbl.setRowHeight(row, 28)
+        # Row needs to fit the thumbnail; padding keeps the icon clear of the
+        # cell border on themes with thicker grid lines.
+        self.tbl.setRowHeight(row, self._thumb_size + 8)
 
         name_item = QTableWidgetItem(rec["folder_name"])
         name_item.setData(Qt.ItemDataRole.UserRole, rec["folder_path"])
+        # Show an extension badge immediately so the row never appears blank;
+        # the worker will swap in the real thumbnail when it finishes.
+        from fileorganizer.thumbnail_cache import extension_badge
+        primary_ext = rec.get("primary_ext", "")
+        name_item.setIcon(QIcon(extension_badge(primary_ext, self._thumb_size)))
         self.tbl.setItem(row, self._COL_NAME, name_item)
+        # Queue real-thumbnail load (PSD composite or raster) on the worker.
+        thumb_path = rec.get("thumbnail", "")
+        if thumb_path:
+            self._thumb_worker.queue(row, thumb_path, primary_ext)
 
         from_item = QTableWidgetItem(rec["subcategory"])
         from_item.setForeground(QColor(get_active_theme()['warning']))
@@ -1369,6 +1401,26 @@ class ReviewPanel(QWidget):
 
         btn = self._mark_btn_for_row(row)
         self.tbl.setCellWidget(row, self._COL_ACTION, btn)
+
+    def _on_thumbnail_loaded(self, row: int, pixmap: QPixmap) -> None:
+        """Loader finished — swap the placeholder badge for the real preview."""
+        if row < 0 or row >= self.tbl.rowCount():
+            return
+        item = self.tbl.item(row, self._COL_NAME)
+        if item is None:
+            return
+        item.setIcon(QIcon(pixmap))
+
+    def closeEvent(self, ev) -> None:
+        # Stop the thumbnail worker before tearing down the widget so we
+        # don't leak a running QThread on app close.
+        try:
+            if self._thumb_worker is not None:
+                self._thumb_worker.stop()
+                self._thumb_worker.wait(2000)
+        except Exception:
+            pass
+        super().closeEvent(ev)
 
     def _on_cat_changed(self, row: int):
         """When user changes a category, auto-set the row to Move."""
