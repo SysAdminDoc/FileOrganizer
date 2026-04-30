@@ -171,7 +171,7 @@ Security notes in Coverage Matrix).
 - **Impact**: 3 | **Effort**: 1
 - Source: [S27] GitHub Advisory Database (Pillow), [S28] PyPI PyQt6 6.11.0
 
-### N-8: _Review batch panel in GUI
+### N-8: ~~_Review batch panel in GUI~~ ✓ Shipped v8.2.0
 Dedicated "Needs Review" tab showing `_Review` items with: preview image, AI confidence score,
 proposed category, dropdown to confirm/reassign. Corrections feed `corrections.json`.
 - **Why now**: `_Review` requires manual filesystem inspection today and grows unbounded.

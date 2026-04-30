@@ -1033,3 +1033,436 @@ class CatalogManagerPanel(QWidget):
         self.btn_stop.setEnabled(False)
         self.lbl_status.setText(f"+{added:,} new entries")
         self._refresh_stats()
+
+
+# ═══ REVIEW QUEUE PANEL ═══════════════════════════════════════════════════════
+
+class _ReviewScanWorker(QThread):
+    """Scan _Review subdirectories and emit one record per item folder."""
+    result  = pyqtSignal(dict)   # {folder_name, folder_path, subcategory, thumbnail}
+    done    = pyqtSignal(int)    # total items found
+    log     = pyqtSignal(str)
+
+    _IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff', '.tif'}
+
+    def __init__(self, review_root: str):
+        super().__init__()
+        self.review_root = review_root
+        self._stop = False
+
+    def stop(self): self._stop = True
+
+    def run(self):
+        root = Path(self.review_root)
+        if not root.is_dir():
+            self.log.emit(f"[ERROR] _Review directory not found: {root}")
+            self.done.emit(0)
+            return
+
+        count = 0
+        # Two-level scan: _Review/<subcategory>/<item_folder>
+        for subcat_dir in sorted(root.iterdir()):
+            if self._stop:
+                break
+            if not subcat_dir.is_dir():
+                continue
+            subcategory = subcat_dir.name
+
+            for item_dir in sorted(subcat_dir.iterdir()):
+                if self._stop:
+                    break
+                if not item_dir.is_dir():
+                    continue
+
+                # Find first image for thumbnail
+                thumbnail = ""
+                try:
+                    for f in item_dir.rglob("*"):
+                        if f.suffix.lower() in self._IMAGE_EXTS and f.is_file():
+                            thumbnail = str(f)
+                            break
+                except (PermissionError, OSError):
+                    pass
+
+                self.result.emit({
+                    "folder_name": item_dir.name,
+                    "folder_path": str(item_dir),
+                    "subcategory": subcategory,
+                    "thumbnail":   thumbnail,
+                })
+                count += 1
+
+        self.log.emit(f"Scan complete — {count} item(s) found in _Review")
+        self.done.emit(count)
+
+
+class _ReviewApplyWorker(QThread):
+    """Move corrected items out of _Review to their proper category folders."""
+    log  = pyqtSignal(str)
+    done = pyqtSignal(int, int)  # moved, errors
+
+    def __init__(self, dest_root: str, corrections: list[dict]):
+        super().__init__()
+        self.dest_root = dest_root   # G:\Organized  (parent of _Review)
+        self.corrections = corrections  # [{folder_path, chosen_cat, folder_name}, ...]
+
+    def run(self):
+        import shutil as _shutil
+        from fileorganizer.cache import save_correction as _save_corr
+        dest = Path(self.dest_root)
+        moved = errs = 0
+
+        for item in self.corrections:
+            src = Path(item["folder_path"])
+            cat = item["chosen_cat"]
+            name = item["folder_name"]
+
+            # Persist correction for future scans
+            try:
+                _save_corr(name, cat)
+            except Exception as e:
+                self.log.emit(f"  WARN save_correction({name}): {e}")
+
+            # Determine destination
+            dst_dir = dest / cat
+            try:
+                dst_dir.mkdir(parents=True, exist_ok=True)
+            except OSError as e:
+                self.log.emit(f"  ERR mkdir {dst_dir}: {e}")
+                errs += 1
+                continue
+
+            dst = dst_dir / name
+            # Avoid collisions
+            if dst.exists():
+                stem, suffix = dst.name, ""
+                counter = 1
+                while dst.exists():
+                    dst = dst_dir / f"{stem}_{counter}{suffix}"
+                    counter += 1
+
+            try:
+                if src.exists():
+                    os.rename(str(src), str(dst))
+                    self.log.emit(f"  moved {name} → {cat}/")
+                    moved += 1
+                else:
+                    self.log.emit(f"  SKIP {name} (source gone)")
+            except OSError:
+                try:
+                    _shutil.move(str(src), str(dst))
+                    self.log.emit(f"  moved {name} → {cat}/  (shutil fallback)")
+                    moved += 1
+                except Exception as e:
+                    self.log.emit(f"  ERR {name}: {e}")
+                    errs += 1
+
+        self.log.emit(f"Done — {moved} moved, {errs} errors")
+        self.done.emit(moved, errs)
+
+
+class ReviewPanel(QWidget):
+    """Inline _Review queue panel — batch-correct low-confidence items and move them to their proper categories."""
+
+    # Columns
+    _COL_NAME   = 0
+    _COL_FROM   = 1
+    _COL_TO     = 2
+    _COL_ACTION = 3
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._items: list[dict] = []   # raw scan results
+        self._scan_worker  = None
+        self._apply_worker = None
+        self._build_ui()
+
+    def _build_ui(self):
+        _t = get_active_theme()
+        root_lay = QVBoxLayout(self)
+        root_lay.setContentsMargins(16, 12, 16, 12)
+        root_lay.setSpacing(10)
+
+        # Header
+        hdr = QLabel("Review Queue")
+        hdr.setProperty("class", "heading")
+        root_lay.addWidget(hdr)
+        sub = QLabel(
+            "Browse items that landed in _Review (low confidence) and route each one to the correct category. "
+            "Corrections are saved to corrections.json for future scans.")
+        sub.setProperty("class", "meta")
+        sub.setWordWrap(True)
+        root_lay.addWidget(sub)
+
+        sep = QFrame()
+        sep.setFrameShape(QFrame.Shape.NoFrame)
+        sep.setProperty("class", "separator")
+        sep.setFixedHeight(1)
+        root_lay.addWidget(sep)
+
+        # Path row
+        row_path = QHBoxLayout()
+        row_path.addWidget(QLabel("Organized root:"))
+        self.txt_root = QLineEdit("G:\\Organized")
+        self.txt_root.setToolTip(
+            "Parent folder of _Review — i.e. the destination root where category folders live.")
+        row_path.addWidget(self.txt_root, 1)
+        btn_browse = QPushButton("Browse")
+        btn_browse.setFixedWidth(75)
+        btn_browse.clicked.connect(self._browse)
+        row_path.addWidget(btn_browse)
+        root_lay.addLayout(row_path)
+
+        # Buttons row
+        row_btns = QHBoxLayout()
+        self.btn_scan = QPushButton("Scan _Review")
+        self.btn_scan.setProperty("class", "primary")
+        self.btn_scan.setFixedHeight(32)
+        self.btn_scan.clicked.connect(self._scan)
+        self.btn_apply = QPushButton("Apply Corrections")
+        self.btn_apply.setProperty("class", "apply")
+        self.btn_apply.setFixedHeight(32)
+        self.btn_apply.setEnabled(False)
+        self.btn_apply.clicked.connect(self._apply)
+        self.btn_stop = QPushButton("Stop")
+        self.btn_stop.setFixedHeight(32)
+        self.btn_stop.setEnabled(False)
+        self.btn_stop.clicked.connect(self._stop)
+        self.lbl_stats = QLabel("")
+        self.lbl_stats.setProperty("class", "meta")
+        row_btns.addWidget(self.btn_scan)
+        row_btns.addWidget(self.btn_apply)
+        row_btns.addWidget(self.btn_stop)
+        row_btns.addStretch()
+        row_btns.addWidget(self.lbl_stats)
+        root_lay.addLayout(row_btns)
+
+        self.progress = QProgressBar()
+        self.progress.setRange(0, 0)
+        self.progress.hide()
+        root_lay.addWidget(self.progress)
+
+        # Main split: table + log
+        splitter = QSplitter(Qt.Orientation.Vertical)
+
+        self.tbl = QTableWidget(0, 4)
+        self.tbl.setHorizontalHeaderLabels(["Folder", "Current Category", "Assign To", ""])
+        self.tbl.horizontalHeader().setSectionResizeMode(
+            self._COL_NAME, QHeaderView.ResizeMode.Stretch)
+        self.tbl.horizontalHeader().setSectionResizeMode(
+            self._COL_FROM, QHeaderView.ResizeMode.ResizeToContents)
+        self.tbl.horizontalHeader().setSectionResizeMode(
+            self._COL_TO,   QHeaderView.ResizeMode.ResizeToContents)
+        self.tbl.horizontalHeader().setSectionResizeMode(
+            self._COL_ACTION, QHeaderView.ResizeMode.ResizeToContents)
+        self.tbl.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.tbl.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.tbl.setAlternatingRowColors(True)
+        self.tbl.setRowHeight(0, 28)
+        splitter.addWidget(self.tbl)
+
+        self.log_box = QTextEdit()
+        self.log_box.setReadOnly(True)
+        self.log_box.setMaximumHeight(140)
+        self.log_box.setProperty("class", "log")
+        splitter.addWidget(self.log_box)
+        splitter.setSizes([500, 140])
+        root_lay.addWidget(splitter, 1)
+
+    # ── helpers ───────────────────────────────────────────────────────────────
+
+    def _log(self, msg: str):
+        self.log_box.append(msg)
+        self.log_box.verticalScrollBar().setValue(
+            self.log_box.verticalScrollBar().maximum())
+
+    def _browse(self):
+        d = QFileDialog.getExistingDirectory(
+            self, "Select organized root (parent of _Review)", self.txt_root.text())
+        if d:
+            self.txt_root.setText(d)
+
+    def _build_category_combo(self, current_subcat: str) -> QComboBox:
+        """Build a category combo pre-selected to current_subcat."""
+        from fileorganizer.categories import get_all_category_names
+        cmb = QComboBox()
+        cmb.setMinimumWidth(230)
+        cats = get_all_category_names()
+        # Keep _Review sub-path options for "leave here" choices
+        cmb.addItem(f"_Review/{current_subcat}")
+        for c in cats:
+            cmb.addItem(c)
+        # Try to pre-select the current subcategory if it matches a real category
+        idx = cmb.findText(current_subcat)
+        if idx >= 0:
+            cmb.setCurrentIndex(idx)
+        else:
+            cmb.setCurrentIndex(0)    # default: keep in _Review
+        return cmb
+
+    def _mark_btn_for_row(self, row: int) -> QPushButton:
+        btn = QPushButton("Keep")
+        btn.setCheckable(True)
+        btn.setFixedWidth(60)
+        btn.setProperty("class", "")
+        btn.clicked.connect(lambda checked, r=row: self._toggle_keep(r, checked))
+        return btn
+
+    def _toggle_keep(self, row: int, checked: bool):
+        """Toggle the keep/move state for a row."""
+        btn = self.tbl.cellWidget(row, self._COL_ACTION)
+        if btn:
+            btn.setText("Keep" if checked else "Move")
+            self.tbl.item(row, self._COL_NAME).setForeground(
+                QColor(get_active_theme()['muted'] if checked else get_active_theme()['text']))
+        self._refresh_apply_btn()
+
+    def _refresh_apply_btn(self):
+        """Enable Apply only when at least one row is set to Move."""
+        n_move = 0
+        for row in range(self.tbl.rowCount()):
+            btn = self.tbl.cellWidget(row, self._COL_ACTION)
+            if btn and btn.text() == "Move":
+                n_move += 1
+        self.btn_apply.setEnabled(n_move > 0)
+        self.lbl_stats.setText(
+            f"{self.tbl.rowCount()} items  •  {n_move} queued to move")
+
+    # ── scan ──────────────────────────────────────────────────────────────────
+
+    def _scan(self):
+        if self._scan_worker and self._scan_worker.isRunning():
+            return
+        root = self.txt_root.text().strip()
+        review_dir = os.path.join(root, "_Review")
+
+        self._items.clear()
+        self.tbl.setRowCount(0)
+        self.log_box.clear()
+        self.btn_apply.setEnabled(False)
+        self.btn_scan.setEnabled(False)
+        self.btn_stop.setEnabled(True)
+        self.lbl_stats.setText("Scanning…")
+        self.progress.show()
+
+        self._scan_worker = _ReviewScanWorker(review_dir)
+        self._scan_worker.result.connect(self._on_scan_result)
+        self._scan_worker.done.connect(self._on_scan_done)
+        self._scan_worker.log.connect(self._log)
+        self._scan_worker.start()
+
+    def _on_scan_result(self, rec: dict):
+        self._items.append(rec)
+        row = self.tbl.rowCount()
+        self.tbl.insertRow(row)
+        self.tbl.setRowHeight(row, 28)
+
+        name_item = QTableWidgetItem(rec["folder_name"])
+        name_item.setData(Qt.ItemDataRole.UserRole, rec["folder_path"])
+        self.tbl.setItem(row, self._COL_NAME, name_item)
+
+        from_item = QTableWidgetItem(rec["subcategory"])
+        from_item.setForeground(QColor(get_active_theme()['warning']))
+        self.tbl.setItem(row, self._COL_FROM, from_item)
+
+        cmb = self._build_category_combo(rec["subcategory"])
+        cmb.currentIndexChanged.connect(lambda _idx, r=row: self._on_cat_changed(r))
+        self.tbl.setCellWidget(row, self._COL_TO, cmb)
+
+        btn = self._mark_btn_for_row(row)
+        self.tbl.setCellWidget(row, self._COL_ACTION, btn)
+
+    def _on_cat_changed(self, row: int):
+        """When user changes a category, auto-set the row to Move."""
+        btn = self.tbl.cellWidget(row, self._COL_ACTION)
+        if btn:
+            btn.setChecked(False)
+            btn.setText("Move")
+            self.tbl.item(row, self._COL_NAME).setForeground(
+                QColor(get_active_theme()['text']))
+        self._refresh_apply_btn()
+
+    def _on_scan_done(self, count: int):
+        self.progress.hide()
+        self.btn_scan.setEnabled(True)
+        self.btn_stop.setEnabled(False)
+        self._refresh_apply_btn()
+        if count == 0:
+            self._log("_Review is empty — nothing to review.")
+
+    # ── apply ─────────────────────────────────────────────────────────────────
+
+    def _apply(self):
+        if self._apply_worker and self._apply_worker.isRunning():
+            return
+
+        # Collect rows queued to Move
+        corrections = []
+        for row in range(self.tbl.rowCount()):
+            btn = self.tbl.cellWidget(row, self._COL_ACTION)
+            if not btn or btn.text() != "Move":
+                continue
+            cmb = self.tbl.cellWidget(row, self._COL_TO)
+            name_item = self.tbl.item(row, self._COL_NAME)
+            if not cmb or not name_item:
+                continue
+            chosen = cmb.currentText()
+            # Strip "_Review/" prefix if user left default but it happens to match
+            if chosen.startswith("_Review/"):
+                chosen = chosen[len("_Review/"):]
+                # Re-check: if it's now just the same subcategory, treat as keep
+                continue
+            corrections.append({
+                "folder_path": name_item.data(Qt.ItemDataRole.UserRole),
+                "folder_name": name_item.text(),
+                "chosen_cat":  chosen,
+            })
+
+        if not corrections:
+            QMessageBox.information(self, "Nothing to do",
+                                    "No rows are queued to Move.")
+            return
+
+        ans = QMessageBox.question(
+            self, "Apply Corrections",
+            f"Move {len(corrections)} item(s) to their assigned categories?\n"
+            "Corrections will be saved for future scans.",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Cancel,
+            QMessageBox.StandardButton.Yes,
+        )
+        if ans != QMessageBox.StandardButton.Yes:
+            return
+
+        dest_root = self.txt_root.text().strip()
+        self.btn_apply.setEnabled(False)
+        self.btn_scan.setEnabled(False)
+        self.btn_stop.setEnabled(True)
+        self.progress.show()
+        self.lbl_stats.setText(f"Moving {len(corrections)} items…")
+
+        self._apply_worker = _ReviewApplyWorker(dest_root, corrections)
+        self._apply_worker.log.connect(self._log)
+        self._apply_worker.done.connect(self._on_apply_done)
+        self._apply_worker.start()
+
+    def _on_apply_done(self, moved: int, errs: int):
+        self.progress.hide()
+        self.btn_scan.setEnabled(True)
+        self.btn_stop.setEnabled(False)
+        self.lbl_stats.setText(f"{moved} moved, {errs} errors — rescan to refresh")
+        # Remove successfully-moved rows from the table
+        rows_to_remove = []
+        for row in range(self.tbl.rowCount()):
+            btn = self.tbl.cellWidget(row, self._COL_ACTION)
+            if btn and btn.text() == "Move":
+                rows_to_remove.append(row)
+        for row in reversed(rows_to_remove):
+            self.tbl.removeRow(row)
+        self._refresh_apply_btn()
+
+    def _stop(self):
+        if self._scan_worker and self._scan_worker.isRunning():
+            self._scan_worker.stop()
+        if self._apply_worker and self._apply_worker.isRunning():
+            self._apply_worker.stop() if hasattr(self._apply_worker, 'stop') else None
+        self.btn_stop.setEnabled(False)

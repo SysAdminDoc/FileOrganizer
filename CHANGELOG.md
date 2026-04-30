@@ -6,6 +6,15 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added (2026-04-30)
 
+- **N-8: Review Queue panel** — new "Review Queue" entry in sidebar MARKETPLACE section
+  (content stack index 6). Scans `<Organized root>/_Review/<subcategory>/<item>` in a
+  background `_ReviewScanWorker`; displays each item with its current subcategory and a
+  category dropdown. User sets each row to Move/Keep; clicking "Apply Corrections" runs
+  `_ReviewApplyWorker` which calls `save_correction()` for every moved item and relocates
+  the folder to `<dest>/<chosen_category>/`. Implemented in
+  `fileorganizer/dialogs/marketplace.py` (`_ReviewScanWorker`, `_ReviewApplyWorker`,
+  `ReviewPanel`).
+
 - **N-6: Two-phase commit for GUI Apply** — `ApplyCatWorker` now writes every planned
   move to `%APPDATA%/FileOrganizer/organize_moves.db` as `pending` before touching disk,
   then updates each record to `done`/`error` as moves complete, and clears the journal on
