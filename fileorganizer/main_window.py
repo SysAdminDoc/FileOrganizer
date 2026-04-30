@@ -62,7 +62,7 @@ from fileorganizer.dialogs import (
     UndoTimelineDialog, PluginManagerDialog, CleanupToolsDialog,
     DuplicateFinderDialog, CleanupPanel, DuplicatePanel,
     ProtectedPathsDialog, ThemePickerDialog, WatchHistoryDialog,
-    LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel,
+    LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel, ReviewPanel,
 )
 from fileorganizer.widgets import (
     CategoryBarChart, FlowLayout, ThumbnailLoader, ThumbnailCard,
@@ -350,6 +350,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             ("Library Auditor",      'auditor',    None),
             ("Archive Normalizer",   'normalizer', None),
             ("Catalog Manager",      'catalog',    None),
+            ("Review Queue",         'review',     None),
         ]
         for label, tool_type, tab_idx in _nav_items_mkt:
             btn = QPushButton(f"  {label}")
@@ -1053,6 +1054,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self._catalog_panel = CatalogManagerPanel()
         self._content_stack.addWidget(self._catalog_panel)   # index 5
 
+        # ── Page 6: Review Queue ──────────────────────────────────────────
+        self._review_panel = ReviewPanel()
+        self._content_stack.addWidget(self._review_panel)    # index 6
+
         self._content_stack.setCurrentIndex(0)
         right_col.addWidget(self._content_stack, 1)
 
@@ -1617,6 +1622,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             self._content_stack.setCurrentIndex(4)
         elif tool_type == 'catalog':
             self._content_stack.setCurrentIndex(5)
+        elif tool_type == 'review':
+            self._content_stack.setCurrentIndex(6)
         else:
             # Cleanup panel — switch to the right tab
             self._cleanup_panel.tabs.setCurrentIndex(tab_idx or 0)
