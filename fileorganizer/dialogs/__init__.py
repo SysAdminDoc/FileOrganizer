@@ -22,6 +22,9 @@ from fileorganizer.dialogs.tools import (
 from fileorganizer.dialogs.theme import (
     ThemePickerDialog, ProtectedPathsDialog
 )
+from fileorganizer.dialogs.marketplace import (
+    LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel
+)
 
 __all__ = [
     'OllamaSettingsDialog', 'PhotoSettingsDialog', 'FaceManagerDialog', 'ModelManagerDialog',
@@ -34,4 +37,5 @@ __all__ = [
     'UndoTimelineDialog', 'UndoBatchDialog', 'PluginManagerDialog',
     'RelationshipGraphWidget', 'WatchHistoryDialog',
     'ThemePickerDialog', 'ProtectedPathsDialog',
+    'LibraryAuditorPanel', 'ArchiveNormalizerPanel', 'CatalogManagerPanel',
 ]
