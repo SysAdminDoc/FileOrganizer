@@ -727,21 +727,43 @@ def _lp(path: str) -> str:
     return '\\\\?\\' + p
 
 
+def _robocopy_mt_arg() -> list:
+    """Return ['/MT:n'] when multi-thread enabled, else [].
+
+    Pulled from advanced_settings.json (default 8).  /MT:0 or /MT:1 means
+    "disable" — return [] so robocopy uses single-thread mode (which is what
+    it does without /MT at all).
+    """
+    try:
+        from fileorganizer.config import load_advanced_settings
+        n = int(load_advanced_settings().get('robocopy_mt', 8))
+    except Exception:
+        n = 8
+    if n <= 1:
+        return []
+    return [f'/MT:{n}']
+
+
 def robust_move(src: str, dst: str) -> None:
     """
     Move `src` (file or directory) to `dst`.
     - Same drive: os.rename (atomic).
-    - Cross-drive directory: robocopy /MOVE /E /256 then remove emptied src.
+    - Cross-drive directory: robocopy /MOVE /E /256 /MT:8 then remove emptied src.
     - Cross-drive file: robocopy /MOV (single-file mode) on the parent dir.
     Both src and dst are passed with \\\\?\\ prefix so robocopy source-scanning
     also honours extended path lengths (not just the destination).
     Raises RuntimeError if robocopy exit code >= 8 (actual failure).
     Robocopy exit codes: 0=nothing to do, 1=files copied, 2=extra files,
     3=mismatched, 4=mismatched+copied, 5-7=combinations — all < 8 = success.
+
+    /MT:n thread count is loaded from advanced_settings.json (default 8); set
+    robocopy_mt=0 or 1 to disable multi-thread on slow USB drives.
     """
     if not is_cross_drive(src, dst):
         os.rename(src, dst)
         return
+
+    mt = _robocopy_mt_arg()
 
     is_file = os.path.isfile(src)
     if is_file:
@@ -758,6 +780,7 @@ def robust_move(src: str, dst: str) -> None:
             'robocopy', _lp(src_parent), _lp(dst_parent), src_name,
             '/MOV',    # /MOV (single V) moves files but not dir trees
             '/256', '/R:3', '/W:1',
+            *mt,
             '/NP', '/NFL', '/NDL', '/NJH', '/NJS',
         ], capture_output=True, text=True)
         if result.returncode >= 8:
@@ -779,6 +802,7 @@ def robust_move(src: str, dst: str) -> None:
         '/256',    # disable 260-char path limit (long path support)
         '/R:3',    # retry 3×
         '/W:1',    # wait 1 s between retries
+        *mt,       # /MT:n multi-thread (default 8) — 4-6× faster on cross-drive
         '/NP',     # no progress %
         '/NFL',    # no file list
         '/NDL',    # no dir list
