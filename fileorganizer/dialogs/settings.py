@@ -867,7 +867,7 @@ class ModelManagerDialog(QDialog):
                     child.setText(1, format_size(m.get('size', 0)))
                     child.setText(2, "Installed")
                     child.setForeground(0, QColor("#cdd6f4"))
-                    child.setForeground(2, QColor("#4ade80"))
+                    child.setForeground(2, QColor(get_active_theme()['green']))
                     self._add_action_button(child, "Delete", name)
                 else:
                     label = entry.get('label', '')
@@ -906,7 +906,7 @@ class ModelManagerDialog(QDialog):
                 child.setText(1, format_size(m.get('size', 0)))
                 child.setText(2, "Installed")
                 child.setForeground(0, QColor("#cdd6f4"))
-                child.setForeground(2, QColor("#4ade80"))
+                child.setForeground(2, QColor(get_active_theme()['green']))
                 self._add_action_button(child, "Delete", name)
 
         self._apply_filter(self.txt_filter.text())
