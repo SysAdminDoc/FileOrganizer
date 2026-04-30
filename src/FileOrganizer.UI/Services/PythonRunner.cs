@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using System.Text.Json;
 
 namespace FileOrganizer.UI.Services;
 
@@ -20,12 +21,25 @@ public interface IPythonRunner
 
     /// <summary>
     /// Run a Python script in the FileOrganizer repo root and capture stdout/stderr
-    /// as plain text. For sidecars that emit NDJSON, use ISidecarRunner instead.
+    /// as plain text. For sidecars that emit NDJSON, use RunScriptNdjsonAsync.
     /// </summary>
     Task<PythonResult> RunScriptAsync(
         string scriptName,
         IEnumerable<string> args,
         IProgress<string>? lineProgress = null,
+        CancellationToken ct = default);
+
+    /// <summary>
+    /// Run a Python script that emits NDJSON events on stdout. The callback
+    /// receives the event name and the raw JsonElement so the caller can
+    /// decode any custom fields. Lines that fail to parse as JSON are
+    /// forwarded as a synthetic <c>{"event":"log","level":"debug",...}</c>
+    /// to <paramref name="onEvent"/>.
+    /// </summary>
+    Task<PythonResult> RunScriptNdjsonAsync(
+        string scriptName,
+        IEnumerable<string> args,
+        Action<string, JsonElement> onEvent,
         CancellationToken ct = default);
 }
 
@@ -148,6 +162,118 @@ public sealed class PythonRunner : IPythonRunner
         return new PythonResult(
             Success: success,
             Stdout: stdout.ToString(),
+            Stderr: stderr.ToString(),
+            ExitCode: process.ExitCode,
+            ErrorMessage: success ? null : $"Python exited with code {process.ExitCode}");
+    }
+
+    public async Task<PythonResult> RunScriptNdjsonAsync(
+        string scriptName,
+        IEnumerable<string> args,
+        Action<string, JsonElement> onEvent,
+        CancellationToken ct = default)
+    {
+        var repoRoot = LocateRepoRoot();
+        if (repoRoot is null)
+        {
+            return new PythonResult(false, "", "", -1,
+                "Could not locate FileOrganizer repo root.");
+        }
+
+        var scriptPath = Path.Combine(repoRoot, scriptName);
+        if (!File.Exists(scriptPath))
+        {
+            return new PythonResult(false, "", "", -1,
+                $"Script not found: {scriptPath}");
+        }
+
+        var psi = new ProcessStartInfo
+        {
+            FileName = ResolvePythonExecutable(repoRoot),
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            CreateNoWindow = true,
+            WindowStyle = ProcessWindowStyle.Hidden,
+            WorkingDirectory = repoRoot,
+            StandardOutputEncoding = Encoding.UTF8,
+            StandardErrorEncoding = Encoding.UTF8,
+        };
+        psi.ArgumentList.Add("-u");
+        psi.ArgumentList.Add(scriptPath);
+        foreach (var a in args) psi.ArgumentList.Add(a);
+        psi.EnvironmentVariables["PYTHONIOENCODING"] = "utf-8";
+        psi.EnvironmentVariables["PYTHONUTF8"] = "1";
+
+        using var process = new Process { StartInfo = psi };
+        var stderr = new StringBuilder();
+
+        try
+        {
+            process.Start();
+        }
+        catch (Exception ex)
+        {
+            return new PythonResult(false, "", "", -1,
+                $"Failed to start Python: {ex.Message}");
+        }
+
+        var stdoutTask = Task.Run(async () =>
+        {
+            while (!process.StandardOutput.EndOfStream)
+            {
+                ct.ThrowIfCancellationRequested();
+                var line = await process.StandardOutput.ReadLineAsync(ct).ConfigureAwait(false);
+                if (line is null) break;
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                try
+                {
+                    using var doc = JsonDocument.Parse(line);
+                    var root = doc.RootElement;
+                    var evName = root.TryGetProperty("event", out var ev) && ev.ValueKind == JsonValueKind.String
+                        ? ev.GetString() ?? "log"
+                        : "log";
+                    onEvent(evName, root.Clone());
+                }
+                catch (JsonException)
+                {
+                    // Non-JSON line — surface as a synthetic debug log so the
+                    // UI can still display it without crashing.
+                    using var doc = JsonDocument.Parse(
+                        $"{{\"event\":\"log\",\"level\":\"debug\",\"message\":{JsonSerializer.Serialize(line)}}}");
+                    onEvent("log", doc.RootElement.Clone());
+                }
+            }
+        }, ct);
+
+        var stderrTask = Task.Run(async () =>
+        {
+            while (!process.StandardError.EndOfStream)
+            {
+                ct.ThrowIfCancellationRequested();
+                var line = await process.StandardError.ReadLineAsync(ct).ConfigureAwait(false);
+                if (line is null) break;
+                stderr.AppendLine(line);
+            }
+        }, ct);
+
+        try
+        {
+            await process.WaitForExitAsync(ct).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            try { if (!process.HasExited) process.Kill(entireProcessTree: true); } catch { }
+            return new PythonResult(false, "", stderr.ToString(), -1, "Cancelled by user.");
+        }
+
+        await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
+
+        var success = process.ExitCode == 0;
+        return new PythonResult(
+            Success: success,
+            Stdout: "",
             Stderr: stderr.ToString(),
             ExitCode: process.ExitCode,
             ErrorMessage: success ? null : $"Python exited with code {process.ExitCode}");

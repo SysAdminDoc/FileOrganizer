@@ -43,7 +43,7 @@ public sealed partial class HomePage : Page
             "\uE8A5", blue, blueSurface, "Planned", "Wire up", "files"));
         Actions.Add(new HomeActionTile("Cleanup",
             "Empty folders, junk, broken, big, and old files — six progressive scanners.",
-            "\uE74D", orange, blueSurface, "Planned", "Wire up", "cleanup"));
+            "\uE74D", orange, blueSurface, "Ready", "Open cleanup", "cleanup"));
         Actions.Add(new HomeActionTile("Duplicates",
             "Hash + perceptual dedup with side-by-side compare.",
             "\uE8C8", violet, blueSurface, "Planned", "Wire up", "duplicates"));
