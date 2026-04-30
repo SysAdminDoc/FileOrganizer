@@ -1955,11 +1955,11 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.tbl.setItem(r, 1, src_item)
         self.tbl.setItem(r, 2, self._make_arrow())
         # Col 3: Full new path
-        ni = self._it(it.full_new_path); ni.setForeground(QColor("#4ade80")); ni.setToolTip(it.full_new_path)
+        ni = self._it(it.full_new_path); ni.setForeground(QColor(get_active_theme()['green'])); ni.setToolTip(it.full_new_path)
         f=ni.font(); f.setBold(True); ni.setFont(f); self.tbl.setItem(r, 3, ni)
         self.tbl.setItem(r, 4, self._it(it.aep_file))
         si = self._nit(it.file_size, getattr(it, 'file_size_bytes', 0)); si.setTextAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignVCenter); self.tbl.setItem(r, 5, si)
-        sti = self._it("Pending"); sti.setTextAlignment(Qt.AlignmentFlag.AlignCenter); sti.setForeground(QColor("#f59e0b")); self.tbl.setItem(r, 6, sti)
+        sti = self._it("Pending"); sti.setTextAlignment(Qt.AlignmentFlag.AlignCenter); sti.setForeground(QColor(get_active_theme()['warning'])); self.tbl.setItem(r, 6, sti)
 
     def _aep_cb(self, idx, st):
         if idx < len(self.aep_items):
@@ -2005,7 +2005,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             dest_item.setForeground(QColor("#e879f9"))  # purple = context override
             dest_item.setToolTip(f"Topic \"{it.topic}\" overridden to \"{it.category}\"")
         else:
-            dest_item.setForeground(QColor("#4ade80"))
+            dest_item.setForeground(QColor(get_active_theme()['green']))
             dest_item.setToolTip(it.full_dest_path)
         f = dest_item.font(); f.setBold(True); dest_item.setFont(f)
         self.tbl.setItem(r, 3, dest_item)
@@ -2024,7 +2024,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.tbl.setItem(r, 5, mi)
 
         # Col 6: Status
-        sti = self._it("Pending"); sti.setTextAlignment(Qt.AlignmentFlag.AlignCenter); sti.setForeground(QColor("#f59e0b"))
+        sti = self._it("Pending"); sti.setTextAlignment(Qt.AlignmentFlag.AlignCenter); sti.setForeground(QColor(get_active_theme()['warning']))
         self.tbl.setItem(r, 6, sti)
 
         # Row background tinting — category color at 10% opacity
@@ -2393,11 +2393,11 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         ni.setForeground(QColor(_rt['fg']))
         f = ni.font(); f.setBold(True); ni.setFont(f)
         if it.is_duplicate:
-            ni.setForeground(QColor("#f59e0b"))
+            ni.setForeground(QColor(get_active_theme()['warning']))
             tip = it.dup_detail or "Possible duplicate — auto-deselected"
             ni.setToolTip(f"{it.full_src}\n{'─' * 30}\n{tip}")
         elif it.dup_group > 0 and it.dup_is_original:
-            ni.setForeground(QColor("#4ade80"))
+            ni.setForeground(QColor(get_active_theme()['green']))
             ni.setToolTip(f"{it.full_src}\n{'─' * 30}\n{it.dup_detail}")
         else:
             # Build rich tooltip: path + vision + metadata
