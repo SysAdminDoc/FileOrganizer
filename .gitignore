@@ -9,6 +9,12 @@ CODEX_CHANGELOG.md
 deepseek_key.txt
 github_token.txt
 
+# WinUI 3 shell (FileOrganizer.UI) build artifacts
+src/**/bin/
+src/**/obj/
+src/**/.vs/
+src/.vs/
+
 # Generated index files (machine-specific disk contents)
 org_index.json
 design_unorg_index.json
