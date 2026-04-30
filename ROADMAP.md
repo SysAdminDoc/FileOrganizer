@@ -162,7 +162,7 @@ resume from pending entries.
 - **Impact**: 5 | **Effort**: 3
 - Source: [S33] RESEARCH.md
 
-### N-7: Security dependency update + audit
+### N-7: ~~Security dependency update + audit~~ ✓ Shipped v8.2.0
 Pin `Pillow>=12.2.0` and `PyQt6>=6.11.0` in `requirements.txt`. Add `pip-audit --fail-on-cvss 7`
 as a CI gate in `ci.yml`. Audit `psd-tools` and `rarfile`/`py7zr` for path-traversal risk (see
 Security notes in Coverage Matrix).
