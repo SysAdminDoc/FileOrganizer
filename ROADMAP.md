@@ -14,6 +14,14 @@ v8.2.0 is **fully shipped** (all 8 NOW items: I:\ source infrastructure, fix_dup
 journal, catalog auto-download, pre-flight UI, confidence thresholds, two-phase commit, security
 dependency pins, and _Review batch panel). See [Shipped — v8.2.0](#shipped--v820) below.
 
+A 2026-04-30 audit pass on the N-1..N-8 commits surfaced source-config drift, an unsafe
+ReviewPanel move path, missing SQLite pragmas on the journal DB, an invalid pip-audit flag,
+and a few smaller resilience gaps. All fixes are merged. The audit is what motivated **N-15**
+(SOURCE_CONFIGS parity test), **N-16** (catalog sync conditional requests), **N-17** (robocopy
+/MT), **NEXT-33** through **NEXT-38** (xxhash/blake3, provider failover, reparse-point detection,
+free-space reserve, journal vacuum, crash dialog), **L-19** (executable quarantine), and
+**L-20** (localized destination folder names).
+
 ### What ships today
 - 384-category design asset taxonomy (After Effects, Photoshop, Illustrator, Premiere Pro, web,
   audio, fonts, photos, videos, general documents)
@@ -224,12 +232,17 @@ and store vectors as REAL columns in a new `category_embeddings` SQLite table. A
 embed item `name + extension_set` → cosine similarity against all 384 anchors → if top-1 ≥ 0.65
 AND margin over top-2 ≥ 0.15, apply category at confidence 90; otherwise fall through to AI.
 Add `--embeddings-only` CLI flag for benchmarking skip rate against a known-classified sample.
+Bookmark-Organizer-Pro [S55] ships a production-ready embedding service in
+`services/embeddings.py` (fastembed → model2vec → sentence-transformers fallback chain) plus
+a vector store with cosine fallback in `services/vector_store.py` — both are directly portable
+to FileOrganizer's stack with minor schema adjustments.
 - **Why now**: Reduces AI API cost ~50-70% on well-named assets; fully local; no cloud dependency.
   electron-dam confirmed Ollama-based embedding is a viable DAM pattern [S43]; sentence-
-  transformers is production-stable with 15,000+ pretrained models [S48].
+  transformers is production-stable with 15,000+ pretrained models [S48]. Local prior art in
+  `Bookmark-Organizer-Pro` shortens the implementation path materially.
 - **Impact**: 5 | **Effort**: 3
 - Source: [S34] RESEARCH_IDEAS.md #7, [S48] sentence-transformers, [S43] electron-dam Ollama
-  embedding
+  embedding, [S55] Bookmark-Organizer-Pro `services/embeddings.py` + `services/vector_store.py`
 
 ### UX Completion
 
@@ -240,12 +253,16 @@ cell with a `QLabel` holding a `QPixmap` scaled to 80×80 px via `PIL.Image.thum
 image: render an extension badge (colored rectangle + extension text) as a fallback `QPixmap`.
 For PSD files: load the embedded composite via `psd_tools.PSDImage(path).topil()` at native
 thumbnail resolution. The `thumbnail` path is already collected by `_ReviewScanWorker`; this item
-only changes rendering.
+only changes rendering. The local TagStudio clone [S56] ships a folder-based LRU cache with
+thread-safe `RLock` and configurable size in `cache_manager.py` plus a multi-format renderer
+(RAW/raster/SVG/PDF/audio waveform) in `previews/renderer.py` — both are nearly drop-in for
+the PyQt6 build.
 - **Why now**: ReviewPanel is actively used for the I:\ reclassification pass; text-only cells
   make visual asset review impractical for 18,000+ mixed-media items.
 - **Impact**: 4 | **Effort**: 2
 - Source: [S38] TagStudio v9.5.6 virtual list + thumbnail, [S43] electron-dam thumbnail grid,
-  [S19] Eagle App, [S34] RESEARCH_IDEAS.md
+  [S19] Eagle App, [S34] RESEARCH_IDEAS.md, [S56] TagStudio local clone
+  `cache_manager.py` + `previews/renderer.py`
 
 ### Data Enrichment
 
@@ -282,6 +299,51 @@ Three concrete changes in a single PR:
   [S41] py7zr advisories, Coverage Matrix security notes
 
 ### Quality
+
+**N-15: SOURCE_CONFIGS parity test + alias-RHS guard**
+The N-1 audit (2026-04-30) found that `classify_design.py`, `organize_run.py`, and
+`review_resolver.py` had silently drifted — `i_organized_legacy` was added to one but missing
+from the other two, so `--source i_organized_legacy` would fail at apply time. Add unit tests
+that import all three modules and assert:
+1. `classify_design.SOURCE_CONFIGS.keys() == organize_run._SOURCE_DIRS.keys() ∪ {'ae'}` and the
+   same set is present in `review_resolver.SOURCE_CONFIGS`.
+2. Every right-hand side of `organize_run.CATEGORY_ALIASES` exists in
+   `classify_design._CATEGORY_SET` (catches phantom-category regressions of the kind documented
+   in `CHANGELOG.md` 2026-04-28).
+3. Every batch_prefix in `SOURCE_CONFIGS` has a matching branch in `organize_run.batch_offset`
+   and `load_all_with_index`'s glob dispatcher.
+- **Why now**: This drift bug just shipped to main. The fix took 30 lines of code; the test
+  guard is 30 more. Highest leverage-per-line addition in the roadmap.
+- **Impact**: 4 | **Effort**: 1
+- Source: [S35] CHANGELOG.md v8.2.0 audit pass, [S32] AUDIT_LESSONS.md "Phantom categories
+  corrupt the taxonomy"
+
+**N-16: catalog_sync `If-Modified-Since` / ETag**
+`CatalogSyncWorker` (N-3, shipped) hits the GitHub Releases API on every startup even when the
+release hasn't changed. Add an `If-Modified-Since: <last_published_at>` header (or store
+`ETag` from the previous response) so the API returns 304 Not Modified and the worker skips
+JSON parsing entirely. State already lives in `%APPDATA%/FileOrganizer/catalog_sync.json`;
+just persist `last_etag` alongside `last_published_at`.
+- **Why now**: GitHub unauthenticated API is rate-limited to 60 requests/hour per IP. Heavy
+  users running multiple FileOrganizer windows (or sharing an IP with other tools using the
+  same API) eat quota for nothing.
+- **Impact**: 2 | **Effort**: 1
+- Source: [S35] CHANGELOG.md v8.2.0 N-3 audit note, GitHub REST API conditional requests
+  https://docs.github.com/en/rest/overview/resources-in-the-rest-api#conditional-requests
+
+**N-17: Robocopy multi-thread (`/MT:8`) for cross-drive moves**
+`robust_move()` calls robocopy single-threaded today. Robocopy's `/MT:n` flag enables `n`
+threads on the copy phase (default in robocopy.exe is `/MT:8`); on cross-drive bulk moves
+between G:\ and I:\ this is typically a 4–6× wall-clock improvement and the controlling
+process stays well under 100 % single-core. Pass `/MT:8` from `robust_move()` and surface a
+"copy threads" slider (4 / 8 / 16) in Settings → Advanced for users on slow USB drives where
+high concurrency hurts.
+- **Why now**: The 33 TB G:↔I: shuffles in CHANGELOG run for hours. This is the cheapest
+  perf win in the roadmap; the robocopy exit-code logic in `robust_move()` already tolerates
+  the multi-thread output format.
+- **Impact**: 4 | **Effort**: 1
+- Source: [S32] AUDIT_LESSONS.md "Robocopy exit codes 0-7 are all success", `organize_run.py`
+  `robust_move()` already in production
 
 **N-14: Broken file detection**
 During `build_source_index.py` scan, detect and flag corrupt/truncated assets before classify:
@@ -424,8 +486,12 @@ Example: `Wedding` must not contain "Corporate" -> routes to `After Effects - Co
 **NEXT-17: Marketplace enrichment expansion**
 Extend `marketplace_enrich.py` beyond Envato to: Creative Market (API available), Freepik (API
 key), Motion Array, FilterGrade, Shutterstock, Adobe Stock. Each needs a URL pattern + parser.
+mnamer [S58] models exactly this pattern in `mnamer/providers.py` (Provider ABC) +
+`mnamer/endpoints.py` (low-level wrappers for OMDb/TMDb/TVDb/TvMaze with ID caching, error
+handling, and retry logic) — port the Provider ABC verbatim and add one subclass per
+marketplace.
 - **Impact**: 4 | **Effort**: 3
-- Source: [S34] RESEARCH_IDEAS.md, [S33] RESEARCH.md
+- Source: [S34] RESEARCH_IDEAS.md, [S33] RESEARCH.md, [S58] mnamer Provider ABC pattern
 
 **NEXT-18: Marketplace update alerts**
 For items with a known marketplace ID, periodically check if a newer version has been published.
@@ -440,8 +506,12 @@ similar templates even when files differ slightly (re-exported preview, differen
 BK-tree + Hamming distance for sub-linear similarity search (pattern from [S10] Czkawka).
 `imagehash` supports pHash, dHash, wHash, average hash, colorhash, and crop-resistant hash;
 choose crop-resistant hash for design asset previews (handles partial crops, watermark variants).
+The local DeDuper [S52] tiered hash architecture and DuplicateFF [S53] 5-stage elimination
+pipeline are both worth borrowing as I/O-saving filters before the pHash phase: skip any pair
+whose preview-file size or 4 KB head/tail hash differs first.
 - **Impact**: 4 | **Effort**: 3
-- Source: [S10] https://github.com/qarmin/czkawka, [S47] imagehash (JohannesBuchner)
+- Source: [S10] https://github.com/qarmin/czkawka, [S47] imagehash (JohannesBuchner),
+  [S52] DeDuper tiered hash, [S53] DuplicateFF staged pipeline
 
 **NEXT-20: Cross-library fingerprint dedup**
 Compare G:\ + I:\ (and external drives) by `folder_fingerprint` SHA-256 across roots. Show a
@@ -464,9 +534,13 @@ custom delegate + lazy thumbnail loading to handle 10,000+ item collections with
 TagStudio v9.5.6 shipped infinite scrolling via virtual list rendering [S38] — use the same
 pattern: render only the visible viewport rows, load thumbnails asynchronously on scroll. N-11
 already ships the `Pillow + QPixmap + QPixmapCache` pattern; NEXT-22 reuses it at Browse scale.
+The local Images viewer [S57] implements an analogous `VirtualizingStackPanel` filmstrip with
+`ScrollIntoView()` centering — its layout strategy maps directly onto `QListView` + custom
+delegate.
 - **Impact**: 5 | **Effort**: 4 | Primary commercial benchmark: [S19] Eagle App
 - Source: [S19] https://eagle.cool, [S38] TagStudio v9.5.6 infinite scrolling, [S22] Adobe Bridge,
-  N-11 (thumbnail Pillow+QPixmap pattern established)
+  N-11 (thumbnail Pillow+QPixmap pattern established), [S57] Images viewer
+  `MainWindow.xaml.cs` virtual filmstrip
 
 **NEXT-23: Drag-and-drop reclassification**
 Drag any item from one category to another in the Browse tab tree. Records the correction in
@@ -487,9 +561,13 @@ default browser or display inline in a new Results tab.
 
 **NEXT-26: Batch rename with preview**
 GUI dialog showing old name -> proposed canonical name (`{CAT_CODE}_{ID}_{CLEAN_NAME}`) for all
-items in a category, with inline edit before committing. CLI: opt-in `--rename` flag.
+items in a category, with inline edit before committing. CLI: opt-in `--rename` flag. mnamer
+[S58] already has the template formatter (`MetadataMovie.__format__()` with regex-based
+placeholder substitution + `{name}`, `{year}`, `{season:02d}` style padding/case converters)
+and a `--test` dry-run path — both directly portable to the GUI preview dialog.
 - **Impact**: 3 | **Effort**: 2
-- Source: [S22] Adobe Bridge batch rename, [S15] digiKam rename templates
+- Source: [S22] Adobe Bridge batch rename, [S15] digiKam rename templates, [S58] mnamer
+  `MetadataMovie.__format__()` + `--test` dry-run
 
 ### Plugin Ecosystem
 
@@ -536,6 +614,98 @@ contains both a genuine duplicate and a similar-but-different item.
 - **Impact**: 3 | **Effort**: 2 | **Depends on**: NEXT-19
 - Source: [S44] Czkawka v11.0.0 similarity grouping overhaul, [S47] imagehash clustering patterns
 
+### Resilience & Operations
+
+**NEXT-33: xxhash / blake3 fast fingerprint mode**
+SHA-256 dominates dedup wall time on multi-TB scans. fclones [S11] switched to blake3 for
+exactly this reason; it is roughly 10× faster than SHA-256 on modern CPUs. Add a
+`--fingerprint-algo {sha256,blake3,xxhash}` flag to `asset_db.py` and `build_source_index.py`,
+default `blake3` when the optional `blake3` package is installed (fallback `sha256` when not),
+and store the algorithm tag in a new `algo TEXT NOT NULL DEFAULT 'sha256'` column on
+`assets.folder_fingerprint`. Mixing algorithms in one DB is fine because the column is
+self-describing and `INSERT OR IGNORE` already works on the textual fingerprint string.
+The DeDuper [S52] tiered-hash pattern (size → 64 KB head/tail partial hash → full hash) and
+the DuplicateFF [S53] 4 KB prefix/suffix elimination pipeline are both directly applicable
+as I/O-saving stages above any fingerprint algo.
+- **Why now**: NEXT-19 (perceptual dedup) and NEXT-20 (cross-library dedup) both gate on
+  fingerprint speed. The roadmap was missing a faster fingerprint primitive.
+- **Impact**: 4 | **Effort**: 2 | **Pairs with**: NEXT-19, NEXT-20
+- Source: [S11] fclones blake3 default, [S52] DeDuper tiered hash, [S53] DuplicateFF
+  staged hash pipeline, blake3 PyPI https://pypi.org/project/blake3/
+
+**NEXT-34: Provider cost cap + 429 backoff + automatic failover**
+Provider routing exists today (auto / github_only / deepseek_only / ollama_only) but has no
+daily $ budget cap, no automatic exponential backoff on 429s, and no failover-on-error chain.
+Production runs need all three:
+1. **Cost cap**: per-provider daily budget in `provider_costs.json`; pre-flight check before
+   each call against the embedded pricing table from octopus-factory [S54] `cost-estimate.sh`
+   (model → input/output/cache_read/cache_write $/M tokens).
+2. **429 backoff**: `tenacity` retry with exponential backoff on 429 / 5xx; lockout TTL of
+   60 min on persistent 429 (mirroring octopus-factory's `copilot-fallback.sh` quota lockout
+   pattern).
+3. **Failover chain**: when the active provider locks out, automatically fall through the
+   user-configured chain (e.g., DeepSeek → GitHub Models → Ollama).
+The Bookmark-Organizer-Pro [S55] `ai.py` `AIProviderInfo` dataclass already abstracts
+multi-provider routing in pure Python; FileOrganizer can lift that pattern and layer the
+cost / backoff / failover logic on top.
+- **Why now**: A 19,531-item loose-files run at 60 items/batch is 326 API calls. One 429
+  storm currently aborts the whole run with no retry.
+- **Impact**: 4 | **Effort**: 3 | **Pairs with**: NEXT-6 (parallel async)
+- Source: [S54] octopus-factory `cost-estimate.sh` + `copilot-fallback.sh`, [S55]
+  Bookmark-Organizer-Pro `ai.py`, tenacity https://tenacity.readthedocs.io
+
+**NEXT-35: Symlink / junction / reparse-point detection in pre-flight**
+Windows junction points and reparse points cause `shutil.move` to traverse outside the source
+tree silently. The N-4 PreflightDialog scans for trailing-space and >260-char paths but does
+not flag reparse points. Extend `PreflightWorker` (in `fileorganizer/dialogs/tools.py`) with a
+`stat().st_file_attributes & FILE_ATTRIBUTE_REPARSE_POINT` check on every shallow child;
+report findings in the dialog under a new "Reparse points (N)" warning row. Block apply when
+a reparse target points outside the configured source root (path traversal risk).
+- **Why now**: This codepath has burned at least one user with a NetBIOS junction silently
+  re-pointing into `C:\Windows`. Pre-flight is the right place to catch it.
+- **Impact**: 3 | **Effort**: 2
+- Source: Microsoft `FILE_ATTRIBUTE_REPARSE_POINT` https://learn.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants
+
+**NEXT-36: Free-space *reserve* via sparse file (not just check)**
+N-4 (shipped) checks `shutil.disk_usage` once at apply start, but a concurrent process can
+eat the buffer mid-run. Pre-allocate `dst_root/.fileorganizer.reserve` as a sparse file sized
+to (estimated bytes-to-move × 1.10), delete on clean completion or crash recovery. Sparse
+files reserve no physical blocks until written, so the cost is metadata-only, but the
+filesystem rejects competing writes that would push it over the reserve.
+- **Why now**: A 50 GB Apply on a 60 GB free drive can fail mid-way today if Windows Update
+  or another tool consumes the buffer. Cheap insurance for the multi-TB G:↔I: runs.
+- **Impact**: 3 | **Effort**: 2
+- Source: Win32 `FSCTL_SET_SPARSE` https://learn.microsoft.com/en-us/windows/win32/api/winioctl/ni-winioctl-fsctl_set_sparse
+
+**NEXT-37: organize_moves.db vacuum + retention policy**
+`organize_moves.db` (SQLite WAL after the N-6 audit fix) grows unbounded. After 100k moves
+the DB and its WAL can be hundreds of MB, hurting both startup time (the journal is read on
+every Apply click for crash detection) and `--undo-last N` query latency. Add:
+1. A maintenance hook on app exit: `VACUUM` after every 10 successful runs.
+2. A retention setting in `confidence_settings.json` (`journal_retention_days`, default 90):
+   on startup, `DELETE FROM moves WHERE status='done' AND ts_done < now-N`.
+3. Settings → Maintenance → "Vacuum journal now" button.
+- **Why now**: The journal already shipped with WAL pragmas (post-audit). Maintenance is the
+  natural follow-up before the 33 TB run produces a journal that's bigger than `org_index.json`.
+- **Impact**: 2 | **Effort**: 1
+- Source: SQLite VACUUM https://www.sqlite.org/lang_vacuum.html, internal observation
+
+**NEXT-38: GUI worker crash dialog + unified log viewer**
+Unhandled exceptions raised inside QThread workers (Apply, Scan, ReviewApply, CatalogSync, etc.)
+die silently today — the worker's `run()` returns, the parent never sees a `finished` signal
+with error info, and the user sees a stalled progress bar. Install a `qInstallMessageHandler`
+plus `sys.excepthook` override that:
+1. Captures every uncaught exception from any thread to
+   `%APPDATA%/FileOrganizer/crash.log` with timestamp + traceback.
+2. Shows a non-blocking toast "An apply worker crashed — view log" with a one-click open of
+   the log viewer (a new `LogViewerDialog` in `fileorganizer/dialogs/`).
+3. Preserves any pending journal rows (the N-6 resume flow already handles re-attempting them).
+- **Why now**: When a worker dies the Qt event loop keeps the GUI responsive but reports no
+  failure — easy to mistake a crashed run for a slow one. Crash logs also feed the optional
+  L-16 telemetry channel.
+- **Impact**: 3 | **Effort**: 2
+- Source: Qt `qInstallMessageHandler` https://doc.qt.io/qt-6/qtlogging.html
+
 ---
 
 ## LATER -- Strategic, Not Yet Urgent
@@ -545,8 +715,12 @@ Depend on NEXT-tier items, or have high effort relative to current user base.
 **L-1: Semantic / embedding search**
 Embed file path + AI classification description at move time via `sentence-transformers`. Store in
 SQLite-Vec or FAISS. Enable "find assets similar to this one" queries in Browse tab (NEXT-20).
+Bookmark-Organizer-Pro [S55] already ships a tested embedding service plus a vector store and
+hybrid search (BM25 + cosine via Reciprocal Rank Fusion) — those modules are directly portable
+and shorten this work substantially.
 - **Impact**: 4 | **Effort**: 5 | Leapfrog: no OSS desktop organizer has done this for design assets
-- Source: [S34] RESEARCH_IDEAS.md, [S17] electron-dam, [S7] DocMind
+- Source: [S34] RESEARCH_IDEAS.md, [S17] electron-dam, [S7] DocMind, [S55] Bookmark-Organizer-Pro
+  `services/embeddings.py` + `services/vector_store.py` + `services/hybrid_search.py`
 
 **L-2: Few-shot teaching panel**
 Drag a handful of files into a category to generate 3-5 in-context examples prepended to future
@@ -563,8 +737,15 @@ content-based classification. Optional dependency -- skip gracefully if Tesserac
 **L-4: Natural-language search**
 FTS5 full-text search over organized file paths + AI-generated descriptions. NL query interface
 in Browse tab. Depends on NEXT-20 (Browse tab) and NEXT-5 (description stored at move time).
+Two local prior-art repos materially shorten this:
+PromptCompanion [S61] has the FTS5 BM25 schema + tuned weights (10.0, 1.0, 5.0, 2.0) and the
+favorites/history pattern; Bookmark-Organizer-Pro [S55] has `services/nl_query.py` (NL → JSON
+schema translation) + `services/rag_chat.py` (citation-aware summaries) + `services/hybrid_search.py`
+(keyword + semantic fusion).
 - **Impact**: 4 | **Effort**: 3
-- Source: [S4] FileWizardAI https://github.com/AIxHunter/FileWizardAI , [S34] RESEARCH_IDEAS.md
+- Source: [S4] FileWizardAI https://github.com/AIxHunter/FileWizardAI , [S34] RESEARCH_IDEAS.md,
+  [S61] PromptCompanion FTS5+BM25 schema, [S55] Bookmark-Organizer-Pro `nl_query.py` +
+  `hybrid_search.py` + `rag_chat.py`
 
 **L-5: Custom GGUF model registration**
 GUI dialog to register any local `.gguf` model file. App auto-detects context window size and
@@ -581,7 +762,11 @@ source folder, or triggers headless classify+apply via COM shell extension.
 Complete `archive_extractor.py`: list top-level items inside ZIP/RAR/7z/tar, extract preview
 image if present, feed filelist to keyword classifier. No extraction required for classification.
 Add path-traversal guard (validate extracted paths against target dir) as part of this work.
+EXTRACTORX [S59] has a clean `ExtractionService` threading + queue model and magic-byte archive
+detection in `extractorx/archive.py` worth porting; note that EXTRACTORX itself does NOT ship
+a path-traversal guard, so N-13 still owns that guarantee.
 - **Impact**: 3 | **Effort**: 3
+- Source: [S59] EXTRACTORX `extractorx/extractor.py` ExtractionService + `extractorx/archive.py`
 
 **L-8: Bi-directional sync (symlink mode)**
 Optional "keep original in place, symlink into organized tree" mode for users who cannot move
@@ -648,8 +833,37 @@ In the Browse tab (NEXT-22) details panel, render a waveform visualization for a
 (`.mp3`, `.wav`, `.aiff`, `.flac`, `.ogg`). Use `librosa` or `soundfile` + `matplotlib` to
 compute and render a static waveform PNG, cached alongside the thumbnail. electron-dam ships this
 via Wavesurfer.js [S43]; the Qt equivalent is a `QLabel` holding a cached waveform `QPixmap`.
+TagStudio's `previews/renderer.py` [S56] already implements an audio waveform path in PySide6
+that maps directly onto FileOrganizer's PyQt6 stack — the renderer dispatcher and waveform
+QPainter logic are nearly portable line-for-line.
 - **Impact**: 2 | **Effort**: 4 | **Depends on**: NEXT-22
-- Source: [S43] electron-dam audio waveform visualization
+- Source: [S43] electron-dam audio waveform visualization, [S56] TagStudio
+  `src/tagstudio/qt/previews/renderer.py`
+
+**L-19: Source quarantine for executables found in archives**
+When archive_extractor (L-7) lands and starts inspecting archive contents pre-classify, any
+`.exe`, `.bat`, `.ps1`, `.scr`, `.cmd`, `.msi`, `.lnk`, `.vbs` discovered inside what looks
+like a design-asset bundle should be routed to `<dest>/_Quarantine/<source_name>/` instead of
+the asset library. Pirated AE templates have repeatedly shipped with bundled malware
+loaders disguised as install helpers. Pair with the path-traversal guard in N-13 to cover
+both classes of archive risk in one feature surface.
+- **Why later**: Gates on L-7 (archive content inspection) shipping; the quarantine bucket
+  itself is a dozen lines once L-7 exists.
+- **Impact**: 3 | **Effort**: 3 | **Depends on**: L-7, N-13
+- Source: [S32] AUDIT_LESSONS.md, GHSA archive risk corpus, internal pen-test pattern
+
+**L-20: Localized destination folder names**
+Distinct from L-14 (UI string i18n). The 384-category taxonomy is English-only; a CJK user
+may want destination folders to read `フォトショップ - パターン` instead of
+`Photoshop - Patterns & Textures`. Add `category_translations.json` mapping canonical
+category → locale → display name; resolve at apply time in `_cat_path()`. The canonical
+English name remains the storage key in `asset_db.py` so the DB stays portable across locales.
+Ship Simplified Chinese first (CJK filenames are an existing pain point in `loose_files`).
+- **Why later**: No active user demand yet, and the migration story for users switching
+  locales mid-library is non-trivial (rename every existing folder or maintain symlinks?).
+  Revisit after L-14 ships and we have a translator workflow in place.
+- **Impact**: 2 | **Effort**: 4 | **Depends on**: L-14
+- Source: [S9] TagStudio Weblate workflow, [S43] electron-dam multi-locale design assets
 
 ---
 
@@ -710,15 +924,16 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 | Category | Status | Primary Items |
 |----------|--------|---------------|
-| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE-2025-66034 pin + psd-tools subprocess isolation + archive path-traversal guard), L-7 (archive content full implementation) |
+| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE-2025-66034 pin + psd-tools subprocess isolation + archive path-traversal guard), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan) |
 | **Accessibility** | Covered | L-15 (WCAG 2.1, keyboard nav, screen reader) |
-| **i18n / l10n** | Covered | L-14 (QTranslator, CJK locale) |
-| **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-25 (post-apply report), NEXT-31 (scan time measurement) |
-| **Testing** | Covered | NEXT-29 (unit test expansion to 10+ functions), N-7 (pip-audit CI gate), N-14 (broken file detection as pre-run validation) |
-| **Distribution / packaging** | Covered | N-3 (catalog auto-download), NEXT-30 (multiplatform CI), L-10 (portable mode) |
+| **i18n / l10n** | Covered | L-14 (QTranslator UI strings, CJK locale), L-20 (localized destination folder names) |
+| **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-25 (post-apply report), NEXT-31 (scan time measurement), NEXT-38 (crash dialog + log viewer) |
+| **Testing** | Covered | NEXT-29 (unit test expansion to 10+ functions), N-7 (pip-audit CI gate), N-14 (broken file detection as pre-run validation), N-15 (SOURCE_CONFIGS parity test) |
+| **Distribution / packaging** | Covered | N-3 (catalog auto-download), N-16 (catalog sync conditional requests), NEXT-30 (multiplatform CI), L-10 (portable mode) |
 | **Plugin ecosystem** | Covered | NEXT-27 (SDK + 3 reference plugins), NEXT-28 (webhook) |
 | **Mobile** | Rejected | Android app rejected (no server backend); revisit after UC-1 |
-| **Offline / resilience** | Covered | N-6 (two-phase commit), N-2 (incremental journal), Ollama local fallback already in prod |
+| **Offline / resilience** | Covered | N-6 (two-phase commit), N-2 (incremental journal), N-17 (robocopy multi-thread), NEXT-34 (provider failover), NEXT-35 (reparse-point detection), NEXT-36 (free-space reserve), NEXT-37 (journal vacuum + retention), Ollama local fallback already in prod |
+| **Performance** | Covered | N-17 (robocopy /MT), NEXT-6 (parallel async LLM), NEXT-33 (xxhash/blake3 fast fingerprint), NEXT-5 (minimal-diff re-scan) |
 | **Multi-user / collaboration** | Rejected | Single-user tool by design; see Rejected table |
 | **Migration paths** | Covered | N-1 (I:\ legacy reclassification), CATEGORY_ALIASES expansion (already shipped) |
 | **Upgrade strategy** | Covered | N-3 (schema version gate on catalog sync), UC-5 (in-app update notification) |
@@ -850,3 +1065,48 @@ Every claim in this roadmap traces to at least one source below.
   (pre-release GUI wrapper for fclones; confirms demand for GUI dedup tooling)
 - [S51] Hydrus Network v670 -- https://github.com/hydrusnetwork/hydrus/releases/tag/v670
   (curl_cffi HTTP/2 test mode; off-screen window rescue logic; tag suggestion improvements)
+
+### Local Repo Surveys (May 2026 — code reuse candidates)
+Repos under `~/repos/` whose code or patterns directly informs items above. Each was scanned
+for relevance; "directly portable" means the file can be copied with minor adapter changes,
+"pattern-reusable" means the architecture is reusable but the code itself is not.
+- [S52] DeDuper -- `~/repos/DeDuper/` -- PyQt6 single-file dedup GUI; tiered hash arch
+  (size → 64 KB partial → full hash) in `_partial_hash()` / `_hash()`. Pattern-reusable for
+  NEXT-33 hash staging. No perceptual hash, no BK-tree.
+- [S53] DuplicateFF -- `~/repos/DuplicateFF/` -- PowerShell/WPF dedup tool; 5-stage
+  elimination pipeline (size → 4 KB prefix → 4 KB suffix → full SHA256). Pattern-reusable
+  for NEXT-33 staging strategy.
+- [S54] octopus-factory -- `~/repos/octopus-factory/` -- Bash multi-AI orchestration with
+  `cost-estimate.sh` (per-model pricing table) and `copilot-fallback.sh` (429 detection,
+  60-min lockout TTL, fallback to next provider). **Directly portable pattern** for
+  NEXT-34 budget cap + 429 backoff + failover.
+- [S55] Bookmark-Organizer-Pro -- `~/repos/Bookmark-Organizer-Pro/` -- PyQt6 bookmark
+  manager with production-ready local AI stack. **Directly portable** for L-1 (embeddings
+  via `services/embeddings.py` — fastembed → model2vec → sentence-transformers chain), L-4
+  (FTS5 + NL via `services/hybrid_search.py`, `services/nl_query.py`, `services/rag_chat.py`),
+  N-10 (all-MiniLM via `services/embeddings.py`), and NEXT-34 (multi-provider routing scaffold
+  in `ai.py` `AIProviderInfo`).
+- [S56] TagStudio (local clone) -- `~/repos/TagStudio/` -- PySide6 photo tagger; portable
+  cache + thumbnail patterns for N-11 (`src/tagstudio/qt/cache_manager.py`) and L-18
+  (`src/tagstudio/qt/previews/renderer.py` audio waveform). PySide6 → PyQt6 is a near-trivial
+  port.
+- [S57] Images -- `~/repos/Images/` -- C#/WPF image viewer; `MainWindow.xaml.cs` has a
+  `VirtualizingStackPanel` filmstrip pattern that maps directly onto PyQt6 `QListView` +
+  custom delegate for NEXT-22 (Browse tab virtual list rendering for 10k+ items).
+- [S58] mnamer -- `~/repos/mnamer/` -- CLI media renamer with TVDb/TMDb/IMDb providers and
+  template-based rename + dry-run. **Pattern-reusable** for NEXT-17 (Provider ABC in
+  `mnamer/providers.py`, request wrapping in `mnamer/endpoints.py`) and NEXT-26
+  (`MetadataMovie.__format__()` template formatter + `--test` preview).
+- [S59] EXTRACTORX -- `~/repos/EXTRACTORX/` -- Python+PowerShell archive extractor over
+  7-Zip. Pattern-reusable for L-7 (`extractorx/extractor.py` `ExtractionService` threading
+  + queue model, `extractorx/archive.py` magic-bytes detection). Does NOT implement path-
+  traversal guard — N-13 still needs to add that explicitly.
+- [S60] maven-file-organizer -- `~/repos/maven-file-organizer/` -- Likely ancestor of
+  FileOrganizer (same scope: file-content classification into categories, no AI yet). Pattern-
+  reusable: content extraction pipeline (PDF/DOCX/XLSX/PPTX/EXIF/OCR via pdfplumber,
+  python-docx, openpyxl, Pillow, pytesseract). Useful prior art for L-3 (OCR pipeline) and
+  N-9 (metadata extractors) but no production AI code to port.
+- [S61] PromptCompanion -- `~/repos/PromptCompanion/` -- PyQt6 single-file prompt library
+  with SQLite FTS5 BM25 search (lines 581–637) and UserDB favorites/history schema. Pattern-
+  reusable for L-4 (FTS5 schema + BM25 weights + ORDER BY rank, quality DESC) and NEXT-7
+  (UserDB favorites/history pattern as template for `corrections.json` durable storage).
