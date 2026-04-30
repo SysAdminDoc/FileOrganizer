@@ -679,7 +679,7 @@ class WatchHistoryDialog(QDialog):
         lay.setContentsMargins(16, 16, 16, 16)
 
         hdr = QLabel("Watch Mode History")
-        hdr.setStyleSheet(f"font-size: 16px; font-weight: 700; color: {_t['fg_bright']};")
+        hdr.setProperty("class", "heading")
         lay.addWidget(hdr)
 
         desc = QLabel("Recent auto-organize events triggered by Watch Mode.")
