@@ -4,6 +4,13 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
+### Security (2026-04-30)
+
+- `requirements.txt` — pinned `Pillow>=12.2.0` (fixes libavif, libjpeg-turbo, harfbuzz CVEs) and
+  `PyQt6>=6.11.0` (ARM64 stability, upstream Qt 6.11 bug fixes).
+- `.github/workflows/ci.yml` — added `pip-audit --fail-on-cvss 7` gate; any future dependency CVE
+  scoring ≥ 7 will fail CI before it ships.
+
 ### Audit (session 2026-04-28 — phantom-category cleanup)
 
 A full project audit uncovered three source-code bugs that produced
