@@ -259,7 +259,7 @@ class DuplicateFinderDialog(QDialog):
         hdr = QLabel("Find duplicate and similar files using content hashing, "
                       "perceptual image matching, and audio fingerprinting.")
         hdr.setWordWrap(True)
-        hdr.setStyleSheet(f"color: {_t['muted']}; font-size: 12px; padding: 4px 0;")
+        hdr.setProperty("class", "stats")
         lay.addWidget(hdr)
 
         # ── Folder selector ───────────────────────────────────────────────
@@ -342,7 +342,7 @@ class DuplicateFinderDialog(QDialog):
         # ── Summary + Actions ─────────────────────────────────────────────
         summary_row = QHBoxLayout()
         self.lbl_summary = QLabel("")
-        self.lbl_summary.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-size: 12px; font-weight: 600;")
+        self.lbl_summary.setProperty("class", "summary")
         summary_row.addWidget(self.lbl_summary, 1)
         lay.addLayout(summary_row)
 
@@ -633,7 +633,7 @@ class DuplicatePanel(QWidget):
         hdr = QLabel("Find duplicate and similar files using content hashing, "
                       "perceptual image matching, and audio fingerprinting.")
         hdr.setWordWrap(True)
-        hdr.setStyleSheet(f"color: {_t['muted']}; font-size: 12px; padding: 4px 0;")
+        hdr.setProperty("class", "stats")
         lay.addWidget(hdr)
 
         # ── Folder selector ───────────────────────────────────────────────
@@ -715,7 +715,7 @@ class DuplicatePanel(QWidget):
         # ── Summary + Actions ─────────────────────────────────────────────
         summary_row = QHBoxLayout()
         self.lbl_summary = QLabel("")
-        self.lbl_summary.setStyleSheet(f"color: {_t['sidebar_btn_active_fg']}; font-size: 12px; font-weight: 600;")
+        self.lbl_summary.setProperty("class", "summary")
         summary_row.addWidget(self.lbl_summary, 1)
         lay.addLayout(summary_row)
 
