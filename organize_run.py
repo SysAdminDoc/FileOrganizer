@@ -585,6 +585,8 @@ def load_index_for_source(source_mode: str) -> list:
         path = os.path.join(os.path.dirname(__file__), 'loose_files_index.json')
     elif source_mode == 'design_elements':
         path = os.path.join(os.path.dirname(__file__), 'design_elements_index.json')
+    elif source_mode == 'i_organized_legacy':
+        path = os.path.join(os.path.dirname(__file__), 'i_organized_legacy_index.json')
     else:
         path = INDEX_FILE
     if not os.path.exists(path):
@@ -612,7 +614,10 @@ def batch_offset(filename: str, source_mode: str = 'ae') -> int:
         loose_batch_001.json → 0
     """
     stem = Path(filename).stem
-    if stem.startswith('design_org_batch_'):
+    if stem.startswith('i_org_batch_'):
+        n = int(stem.split('_')[-1])
+        return (n - 1) * DESIGN_BATCH_SIZE
+    elif stem.startswith('design_org_batch_'):
         n = int(stem.split('_')[-1])
         return (n - 1) * DESIGN_BATCH_SIZE
     elif stem.startswith('de_batch_'):
@@ -818,13 +823,15 @@ def load_all_with_index(source_mode: str = 'ae') -> list:
         glob_pattern = 'loose_batch_*.json'
     elif source_mode == 'design_elements':
         glob_pattern = 'de_batch_*.json'
+    elif source_mode == 'i_organized_legacy':
+        glob_pattern = 'i_org_batch_*.json'
     else:
         glob_pattern = '*.json'
 
     for p in sorted(Path(RESULTS_DIR).glob(glob_pattern)):
         stem = p.stem
-        # In AE mode, skip design/org/loose/de batch files
-        if source_mode == 'ae' and stem.startswith(('design_batch_', 'design_org_batch_', 'loose_batch_', 'de_batch_')):
+        # In AE mode, skip design/org/loose/de/i_org batch files
+        if source_mode == 'ae' and stem.startswith(('design_batch_', 'design_org_batch_', 'loose_batch_', 'de_batch_', 'i_org_batch_')):
             continue
         # In design mode, only design_batch files
         if source_mode == 'design' and not stem.startswith('design_batch_'):
@@ -837,6 +844,9 @@ def load_all_with_index(source_mode: str = 'ae') -> list:
             continue
         # In design_elements mode, only de_batch files
         if source_mode == 'design_elements' and not stem.startswith('de_batch_'):
+            continue
+        # In i_organized_legacy mode, only i_org_batch files
+        if source_mode == 'i_organized_legacy' and not stem.startswith('i_org_batch_'):
             continue
 
         items = load_one(str(p))
@@ -1395,8 +1405,8 @@ def main():
     ap.add_argument('--undo-all',      action='store_true',   help='Reverse ALL moves from journal')
     ap.add_argument('--load',          type=str,            help='Single JSON file (skips position mapping)')
     ap.add_argument('--source',        type=str, default='ae',
-                    choices=['ae', 'design', 'design_org', 'loose_files', 'design_elements'],
-                    help='Source mode: ae (default), design, design_org, loose_files, or design_elements')
+                    choices=['ae', 'design', 'design_org', 'loose_files', 'design_elements', 'i_organized_legacy'],
+                    help='Source mode: ae (default), design, design_org, loose_files, design_elements, or i_organized_legacy')
     ap.add_argument('--stats',         action='store_true', help='Show batch file counts')
     ap.add_argument('--summary',       action='store_true', help='Category/marketplace breakdown')
     ap.add_argument('--quiet',         action='store_true', help='Suppress per-item output')
@@ -1480,10 +1490,11 @@ def main():
 
     # Determine source directory override per mode
     _SOURCE_DIRS = {
-        'design':           r'G:\Design Unorganized',
-        'design_org':       r'G:\Design Organized',
-        'loose_files':      r'G:\Design Unorganized',
-        'design_elements':  r'G:\Design Organized\Design Elements',
+        'design':              r'G:\Design Unorganized',
+        'design_org':          r'G:\Design Organized',
+        'loose_files':         r'G:\Design Unorganized',
+        'design_elements':     r'G:\Design Organized\Design Elements',
+        'i_organized_legacy':  r'I:\Organized',
     }
     source_dir_override = _SOURCE_DIRS.get(source_mode, '')
 

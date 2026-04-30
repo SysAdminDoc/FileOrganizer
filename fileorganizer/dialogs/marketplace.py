@@ -1107,13 +1107,12 @@ class _ReviewApplyWorker(QThread):
         self.corrections = corrections  # [{folder_path, chosen_cat, folder_name}, ...]
 
     def run(self):
-        import shutil as _shutil
         from fileorganizer.cache import save_correction as _save_corr
-        dest = Path(self.dest_root)
+        _orun = _load_script('organize_run')
         moved = errs = 0
 
         for item in self.corrections:
-            src = Path(item["folder_path"])
+            src_str = item["folder_path"]
             cat = item["chosen_cat"]
             name = item["folder_name"]
 
@@ -1123,39 +1122,37 @@ class _ReviewApplyWorker(QThread):
             except Exception as e:
                 self.log.emit(f"  WARN save_correction({name}): {e}")
 
-            # Determine destination
-            dst_dir = dest / cat
+            # Sanitize each category component independently so backslashes
+            # never get collapsed into a flat _Review-Foo folder.
             try:
-                dst_dir.mkdir(parents=True, exist_ok=True)
+                dst_dir = _orun._cat_path(self.dest_root, cat)
+                os.makedirs(dst_dir, exist_ok=True)
             except OSError as e:
-                self.log.emit(f"  ERR mkdir {dst_dir}: {e}")
+                self.log.emit(f"  ERR mkdir {cat}: {e}")
                 errs += 1
                 continue
 
-            dst = dst_dir / name
-            # Avoid collisions
-            if dst.exists():
-                stem, suffix = dst.name, ""
-                counter = 1
-                while dst.exists():
-                    dst = dst_dir / f"{stem}_{counter}{suffix}"
-                    counter += 1
+            # Resolve collisions via the canonical safe_dest_path helper.
+            dst = _orun.safe_dest_path(self.dest_root, cat, name)
+
+            if not os.path.exists(src_str):
+                self.log.emit(f"  SKIP {name} (source gone)")
+                continue
+
+            # Strip trailing spaces in source tree (Win32 strips them on
+            # creation but rsync/ext4 sources can retain them, breaking moves).
+            try:
+                _orun.strip_trailing_spaces(src_str)
+            except Exception as e:
+                self.log.emit(f"  WARN strip_trailing_spaces({name}): {e}")
 
             try:
-                if src.exists():
-                    os.rename(str(src), str(dst))
-                    self.log.emit(f"  moved {name} → {cat}/")
-                    moved += 1
-                else:
-                    self.log.emit(f"  SKIP {name} (source gone)")
-            except OSError:
-                try:
-                    _shutil.move(str(src), str(dst))
-                    self.log.emit(f"  moved {name} → {cat}/  (shutil fallback)")
-                    moved += 1
-                except Exception as e:
-                    self.log.emit(f"  ERR {name}: {e}")
-                    errs += 1
+                _orun.robust_move(src_str, dst)
+                self.log.emit(f"  moved {name} → {cat}/")
+                moved += 1
+            except Exception as e:
+                self.log.emit(f"  ERR {name}: {e}")
+                errs += 1
 
         self.log.emit(f"Done — {moved} moved, {errs} errors")
         self.done.emit(moved, errs)
@@ -1349,6 +1346,7 @@ class ReviewPanel(QWidget):
         self._scan_worker.result.connect(self._on_scan_result)
         self._scan_worker.done.connect(self._on_scan_done)
         self._scan_worker.log.connect(self._log)
+        self._scan_worker.finished.connect(self._scan_worker.deleteLater)
         self._scan_worker.start()
 
     def _on_scan_result(self, rec: dict):
@@ -1410,8 +1408,11 @@ class ReviewPanel(QWidget):
             # Strip "_Review/" prefix if user left default but it happens to match
             if chosen.startswith("_Review/"):
                 chosen = chosen[len("_Review/"):]
-                # Re-check: if it's now just the same subcategory, treat as keep
-                continue
+                # If the dropdown still points at the original subcategory,
+                # treat the row as a no-op keep instead of moving in place.
+                from_item = self.tbl.item(row, self._COL_FROM)
+                if from_item is not None and chosen == from_item.text():
+                    continue
             corrections.append({
                 "folder_path": name_item.data(Qt.ItemDataRole.UserRole),
                 "folder_name": name_item.text(),
@@ -1443,6 +1444,7 @@ class ReviewPanel(QWidget):
         self._apply_worker = _ReviewApplyWorker(dest_root, corrections)
         self._apply_worker.log.connect(self._log)
         self._apply_worker.done.connect(self._on_apply_done)
+        self._apply_worker.finished.connect(self._apply_worker.deleteLater)
         self._apply_worker.start()
 
     def _on_apply_done(self, moved: int, errs: int):

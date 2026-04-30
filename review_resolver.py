@@ -52,6 +52,12 @@ SOURCE_CONFIGS = {
         'source_root':  Path(r'G:\Design Unorganized'),
         'file_mode':    True,
     },
+    'i_organized_legacy': {
+        'index_file':   Path('i_organized_legacy_index.json'),
+        'batch_prefix': 'i_org_batch_',
+        'source_root':  Path(r'I:\Organized'),
+        'file_mode':    False,
+    },
 }
 
 # ── Config (populated at runtime from --source) ───────────────────────────────

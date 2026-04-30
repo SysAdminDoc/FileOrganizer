@@ -48,24 +48,45 @@ _CONFIDENCE_DEFAULTS = {
     'review_below': 50,  # conf <  this  → route to _Review / yellow zone [review_below, auto_above)
 }
 
+def _validate_confidence(settings: dict) -> dict:
+    """Clamp values to 1..100 and ensure auto_above > review_below.
+
+    A user editing confidence_settings.json by hand can set illogical values
+    (e.g. review_below=99, auto_above=80) which would silently disable
+    auto-apply.  Coerce back to defaults rather than break the GUI.
+    """
+    out = dict(_CONFIDENCE_DEFAULTS)
+    for key in ('auto_above', 'review_below'):
+        try:
+            v = int(settings.get(key, _CONFIDENCE_DEFAULTS[key]))
+        except (TypeError, ValueError):
+            v = _CONFIDENCE_DEFAULTS[key]
+        out[key] = max(1, min(100, v))
+    if out['auto_above'] <= out['review_below']:
+        out['auto_above']   = _CONFIDENCE_DEFAULTS['auto_above']
+        out['review_below'] = _CONFIDENCE_DEFAULTS['review_below']
+    return out
+
+
 def load_confidence_settings() -> dict:
     try:
         with open(_CONFIDENCE_SETTINGS_FILE, 'r', encoding='utf-8') as f:
             s = json.load(f)
-        return {**_CONFIDENCE_DEFAULTS, **s}
+        return _validate_confidence({**_CONFIDENCE_DEFAULTS, **s})
     except (FileNotFoundError, OSError, json.JSONDecodeError):
         return dict(_CONFIDENCE_DEFAULTS)
 
 def save_confidence_settings(settings: dict):
     global CONF_HIGH, CONF_MEDIUM
+    settings = _validate_confidence(settings)
     try:
         with open(_CONFIDENCE_SETTINGS_FILE, 'w', encoding='utf-8') as f:
             json.dump(settings, f, indent=2)
     except OSError:
         pass
     # Update module-level constants so in-process callers pick up new values
-    CONF_HIGH   = int(settings.get('auto_above',   _CONFIDENCE_DEFAULTS['auto_above']))
-    CONF_MEDIUM = int(settings.get('review_below', _CONFIDENCE_DEFAULTS['review_below']))
+    CONF_HIGH   = int(settings['auto_above'])
+    CONF_MEDIUM = int(settings['review_below'])
 
 _conf_init = load_confidence_settings()
 CONF_HIGH   = _conf_init['auto_above']    # green — auto-apply threshold

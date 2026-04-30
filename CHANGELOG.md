@@ -4,6 +4,44 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
+### Audit + fixes (2026-04-30, post N-1..N-8)
+
+Reviewed every N-* commit for accuracy. Fixed:
+
+- **N-1**: `organize_run.py` `--source` choices and `_SOURCE_DIRS` did not include
+  `i_organized_legacy`; CLI rejected the new source. `review_resolver.py`
+  `SOURCE_CONFIGS` likewise missing the new key. Both now mirror
+  `classify_design.py`. Added `i_org_batch_*.json` glob and `batch_offset`
+  prefix branch in `organize_run.py`.
+- **N-7**: CI used `pip-audit --fail-on-cvss 7`, which is not a real flag
+  (pip-audit has no CVSS-severity gate). Replaced with `--strict` so any
+  vulnerability fails the build.
+- **N-8**: `_ReviewApplyWorker` used `dest / cat` (no `_cat_path` sanitization,
+  re-introducing the `_Review-CategoryName` flat-folder bug from 2026-04-28),
+  bare `os.rename` + `shutil.move` (no `\\?\` long-path support, no trailing-
+  space strip). Replaced with `organize_run._cat_path` + `safe_dest_path` +
+  `strip_trailing_spaces` + `robust_move`. Fixed dead `continue` that silently
+  dropped any row whose dropdown started with `_Review/`. Added
+  `finished.connect(deleteLater)` to scan and apply workers to plug a slow
+  Qt-object leak across rescans.
+- **N-6**: `move_journal.py` opened raw `sqlite3.connect()` calls with no
+  `timeout`, no `journal_mode=WAL`, and no `synchronous` pragma — worker
+  thread + GUI thread could deadlock on lock contention. Now routes through a
+  `_connect()` helper that sets WAL + NORMAL + 30s busy timeout.
+  `apply_mixin._apply_cat()` only handled `pending[0]`, silently leaving
+  older interrupted runs to resurrect on every Apply. Now reports the total
+  across all pending runs and chains resumes through a queue drained in
+  `_on_resume_done`.
+- **N-5**: `load_confidence_settings` / `save_confidence_settings` had no
+  validation — a hand-edited `confidence_settings.json` with
+  `review_below=99, auto_above=80` would silently disable auto-apply. Added
+  `_validate_confidence` that clamps to 1..100 and falls back to defaults if
+  `auto_above <= review_below`.
+- **N-3**: `CatalogSyncWorker` only caught `urllib.error.URLError`; a
+  `socket.timeout`, malformed JSON, or wrong asset schema would surface as a
+  noisy `Catalog sync error` instead of a graceful skip. Added explicit
+  `socket.timeout`, `json.JSONDecodeError`, and asset-payload shape guards.
+
 ### Added (2026-04-30)
 
 - **N-1: I:\ legacy reclassification (Phase 4)** — added `i_organized_legacy` source to
