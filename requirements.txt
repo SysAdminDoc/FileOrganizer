@@ -1,9 +1,9 @@
 # Core GUI/runtime dependencies.
-PyQt6
+PyQt6>=6.11.0
 openai
 requests
 rapidfuzz
-Pillow
+Pillow>=12.2.0
 psd-tools
 Unidecode
 
