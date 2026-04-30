@@ -832,7 +832,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         dash_lay.setContentsMargins(10, 4, 10, 4); dash_lay.setSpacing(3)
         dash_top = QHBoxLayout()
         self.lbl_dash_summary = QLabel("")
-        self.lbl_dash_summary.setStyleSheet(f"color: {_t['fg']}; font-size: 12px; font-weight: bold;")
+        self.lbl_dash_summary.setProperty("class", "subheading-sm")
         dash_top.addWidget(self.lbl_dash_summary)
         dash_top.addStretch()
         btn_hide_dash = QPushButton("Hide")
