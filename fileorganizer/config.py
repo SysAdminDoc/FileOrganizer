@@ -134,6 +134,30 @@ QPushButton[class="toggle"] {{
 QPushButton[class="toggle"]:hover {{ background: {t['btn_hover']}; }}
 QPushButton[class="toggle"]:checked {{ background: {t['sidebar_btn_active_fg']}; color: {t['sidebar_brand']}; }}
 QPushButton[class="toggle"]:disabled {{ background: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['btn_bg']}; }}
+/* Secondary button colored variants — for distinct meaning (success/accent) */
+QPushButton[class="secondary-success"] {{
+    font-size: 11px; padding: 2px 10px;
+    background: {t['selection']}; color: {t['green']};
+    border: 1px solid {t['border']}; border-radius: 4px;
+}}
+QPushButton[class="secondary-success"]:hover {{ background: {t['btn_hover']}; }}
+QPushButton[class="secondary-success"]:disabled {{ background: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['btn_bg']}; }}
+QPushButton[class="secondary-accent"] {{
+    font-size: 11px; padding: 2px 8px;
+    background: {t['selection']}; color: {t['accent_hover']};
+    border: 1px solid {t['border']}; border-radius: 4px;
+}}
+QPushButton[class="secondary-accent"]:hover {{ background: {t['btn_hover']}; }}
+QPushButton[class="secondary-accent"]:disabled {{ background: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['btn_bg']}; }}
+/* Toggle variant with green semantics (used for Map view toggle) */
+QPushButton[class="toggle-success"] {{
+    font-size: 11px; padding: 2px 8px;
+    background: {t['selection']}; color: {t['green']};
+    border: 1px solid {t['border']}; border-radius: 4px;
+}}
+QPushButton[class="toggle-success"]:hover {{ background: {t['btn_hover']}; }}
+QPushButton[class="toggle-success"]:checked {{ background: {t['green']}; color: {t['sidebar_brand']}; }}
+QPushButton[class="toggle-success"]:disabled {{ background: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['btn_bg']}; }}
 
 /* ── Tool buttons ────────────────────────────────────────────────────────── */
 QToolButton {{
@@ -336,6 +360,8 @@ QMessageBox QLabel {{ color: {t['fg']}; font-size: 13px; }}
 
 /* ── Utility classes ─────────────────────────────────────────────────────── */
 QFrame[class="separator"] {{ background-color: {t['border']}; border: none; max-height: 1px; min-height: 1px; }}
+QFrame[class="separator-vertical"] {{ background-color: {t['btn_bg']}; border: none; max-width: 1px; min-width: 1px; }}
+QFrame[class="separator-strong"] {{ background-color: {t['btn_bg']}; border: none; max-height: 1px; min-height: 1px; }}
 QFrame[class="card"] {{
     background-color: {t['bg_alt']}; border: 1px solid {t['btn_bg']};
     border-radius: 8px; padding: 14px;
@@ -436,6 +462,28 @@ QPushButton[class="sidebar-nav"]:checked {{
 QLabel[class="sidebar-section"] {{
     color: {t['sidebar_section']}; font-size: 10px; font-weight: 700;
     letter-spacing: 1.5px; padding: 12px 16px 4px 16px; background: transparent;
+}}
+/* Sidebar surface bands (header + footer rows that hold brand / status) */
+QWidget[class="sidebar-band-top"] {{
+    background: {t['sidebar_brand']};
+    border-bottom: 1px solid {t['sidebar_border']};
+}}
+QWidget[class="sidebar-band-bottom"] {{
+    background: {t['sidebar_brand']};
+    border-top: 1px solid {t['sidebar_border']};
+}}
+/* Sidebar profile combo */
+QComboBox[class="sidebar-profile"] {{
+    background: {t['sidebar_profile_bg']}; color: {t['sidebar_profile_fg']};
+    border: 1px solid {t['sidebar_profile_border']};
+    border-radius: 4px; padding: 6px 10px; font-size: 11px; font-weight: bold;
+}}
+QComboBox[class="sidebar-profile"]:hover {{ border-color: {t['sidebar_profile_fg']}; }}
+QComboBox[class="sidebar-profile"]::drop-down {{ border: none; }}
+QComboBox[class="sidebar-profile"] QAbstractItemView {{
+    background: {t['sidebar_profile_bg']}; color: {t['fg']};
+    selection-background-color: {t['selection']};
+    border: 1px solid {t['sidebar_profile_border']};
 }}
 """
 

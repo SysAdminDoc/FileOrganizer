@@ -254,8 +254,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         # ── Brand header ──────────────────────────────────────────────────
         brand_w = QWidget()
+        brand_w.setObjectName("sidebar_brand_band")
         brand_w.setFixedHeight(56)
-        brand_w.setStyleSheet(f"background: {_t['sidebar_brand']}; border-bottom: 1px solid {_t['sidebar_border']};")
+        brand_w.setProperty("class", "sidebar-band-top")
+        brand_w.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self._brand_w = brand_w
         brand_lay = QVBoxLayout(brand_w)
         brand_lay.setContentsMargins(16, 10, 16, 8)
@@ -359,14 +361,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             "Scan profile — changes categories, LLM persona, and scan behavior.\n"
             "Design Assets = original behavior for creative marketplace files."
         )
-        self.cmb_profile.setStyleSheet(
-            f"QComboBox {{ background: {_t['sidebar_profile_bg']}; color: {_t['sidebar_profile_fg']}; "
-            f"border: 1px solid {_t['sidebar_profile_border']};"
-            f"border-radius: 4px; padding: 6px 10px; font-size: 11px; font-weight: bold; }}"
-            f"QComboBox:hover {{ border-color: {_t['sidebar_profile_fg']}; }}"
-            f"QComboBox::drop-down {{ border: none; }}"
-            f"QComboBox QAbstractItemView {{ background: {_t['sidebar_profile_bg']}; color: {_t['fg']};"
-            f"selection-background-color: {_t['selection']}; border: 1px solid {_t['sidebar_profile_border']}; }}")
+        self.cmb_profile.setProperty("class", "sidebar-profile")
         idx_prof = self.cmb_profile.findText(get_active_profile_name())
         if idx_prof >= 0:
             self.cmb_profile.setCurrentIndex(idx_prof)
@@ -376,8 +371,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         # ── LLM status indicator (bottom of sidebar) ─────────────────────
         llm_w = QWidget()
+        llm_w.setObjectName("sidebar_llm_band")
         llm_w.setFixedHeight(40)
-        llm_w.setStyleSheet(f"background: {_t['sidebar_brand']}; border-top: 1px solid {_t['sidebar_border']};")
+        llm_w.setProperty("class", "sidebar-band-bottom")
+        llm_w.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self._llm_w = llm_w
         llm_lay = QHBoxLayout(llm_w)
         llm_lay.setContentsMargins(14, 0, 14, 0)
@@ -486,8 +483,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_undo.setEnabled(bool(load_undo_log()))
         ab_lay.addWidget(self.btn_undo)
 
-        sep_ab = QFrame(); sep_ab.setFrameShape(QFrame.Shape.VLine)
-        sep_ab.setStyleSheet(f"QFrame{{background-color:{_t['btn_bg']};}}"); sep_ab.setFixedHeight(22)
+        sep_ab = QFrame(); sep_ab.setFrameShape(QFrame.Shape.NoFrame)
+        sep_ab.setProperty("class", "separator-vertical"); sep_ab.setFixedHeight(22)
         ab_lay.addWidget(sep_ab)
 
         self.btn_replay = QPushButton("Repeat Last")
@@ -723,10 +720,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_photo = QPushButton("Photo Settings")
         self.btn_photo.setFixedHeight(28)
         self.btn_photo.setToolTip("Configure photo library organization features")
-        self.btn_photo.setStyleSheet(
-            f"QPushButton {{ font-size: 11px; padding: 2px 10px; background: {_t['selection']};"
-            f"color: {_t['green']}; border: 1px solid {_t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {_t['btn_hover']}; }}")
+        self.btn_photo.setProperty("class", "secondary-success")
         self.btn_photo.setVisible(False)
         self.btn_photo.clicked.connect(self._open_photo_settings)
         opts_row.addWidget(self.btn_photo)
@@ -756,8 +750,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         btn_uchk.setToolTip("Uncheck highlighted rows"); btn_uchk.clicked.connect(self._uncheck_selected)
         toolbar.addWidget(btn_uchk)
 
-        sep_t = QFrame(); sep_t.setFrameShape(QFrame.Shape.VLine)
-        sep_t.setStyleSheet(f"QFrame{{background-color:{_t['btn_bg']};}}"); sep_t.setFixedHeight(20)
+        sep_t = QFrame(); sep_t.setFrameShape(QFrame.Shape.NoFrame)
+        sep_t.setProperty("class", "separator-vertical"); sep_t.setFixedHeight(20)
         toolbar.addWidget(sep_t)
 
         # View toggles
@@ -774,11 +768,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_map_toggle.setFixedHeight(28)
         self.btn_map_toggle.setCheckable(True)
         self.btn_map_toggle.setToolTip("Show geotagged photos on map")
-        self.btn_map_toggle.setStyleSheet(
-            f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {_t['selection']};"
-            f"color: {_t['green']}; border: 1px solid {_t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {_t['btn_hover']}; }}"
-            f"QPushButton:checked {{ background: {_t['green']}; color: {_t['sidebar_brand']}; }}")
+        self.btn_map_toggle.setProperty("class", "toggle-success")
         self.btn_map_toggle.setVisible(False)
         self.btn_map_toggle.clicked.connect(self._toggle_map_view)
         toolbar.addWidget(self.btn_map_toggle)
@@ -804,10 +794,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_before_after = QPushButton("Before/After")
         self.btn_before_after.setFixedHeight(28)
         self.btn_before_after.setToolTip("Show before/after directory comparison")
-        self.btn_before_after.setStyleSheet(
-            f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {_t['selection']};"
-            f"color: {_t['accent_hover']}; border: 1px solid {_t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {_t['btn_hover']}; }}")
+        self.btn_before_after.setProperty("class", "secondary-accent")
         self.btn_before_after.setVisible(False)
         self.btn_before_after.clicked.connect(self._show_before_after)
         toolbar.addWidget(self.btn_before_after)
@@ -815,10 +802,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_events = QPushButton("Events")
         self.btn_events.setFixedHeight(28)
         self.btn_events.setToolTip("AI Event Grouping - cluster photos by event")
-        self.btn_events.setStyleSheet(
-            f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {_t['selection']};"
-            f"color: {_t['accent_hover']}; border: 1px solid {_t['border']}; border-radius: 4px; }}"
-            f"QPushButton:hover {{ background: {_t['btn_hover']}; }}")
+        self.btn_events.setProperty("class", "secondary-accent")
         self.btn_events.setVisible(False)
         self.btn_events.clicked.connect(self._show_event_grouping)
         toolbar.addWidget(self.btn_events)
@@ -1082,7 +1066,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         status = QWidget()
         self._themed_status_bar = status
         status.setFixedHeight(26)
-        status.setStyleSheet(f"background-color: {_t['sidebar_brand']}; border-top: 1px solid {_t['sidebar_border']};")
+        status.setProperty("class", "sidebar-band-bottom")
+        status.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         s_lay = QHBoxLayout(status)
         s_lay.setContentsMargins(16, 0, 16, 0)
         self.lbl_statusbar = QLabel("Ready")
@@ -3250,31 +3235,17 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             for _, _, btn in self._nav_buttons:
                 btn.style().unpolish(btn); btn.style().polish(btn)
 
-        # Brand header widget
-        if hasattr(self, '_brand_w'):
-            self._brand_w.setStyleSheet(
-                f"background: {t['sidebar_brand']}; border-bottom: 1px solid {t['sidebar_border']};")
-
-        # LLM status widget
-        if hasattr(self, '_llm_w'):
-            self._llm_w.setStyleSheet(
-                f"background: {t['sidebar_brand']}; border-top: 1px solid {t['sidebar_border']};")
-
-        # Section labels — global QSS handles styling, just re-polish
+        # _brand_w / _llm_w / cmb_profile / nav section labels all use property
+        # classes (sidebar-band-top / -bottom / sidebar-profile / sidebar-section)
+        # — they auto-update via the global QSS. Just re-polish to force Qt to
+        # re-evaluate the class selectors against the freshly applied stylesheet.
+        for w_attr in ('_brand_w', '_llm_w', 'cmb_profile'):
+            w = getattr(self, w_attr, None)
+            if w is not None:
+                w.style().unpolish(w); w.style().polish(w)
         if hasattr(self, '_nav_section_labels'):
             for lbl in self._nav_section_labels:
                 lbl.style().unpolish(lbl); lbl.style().polish(lbl)
-
-        # Profile combo
-        if hasattr(self, 'cmb_profile'):
-            self.cmb_profile.setStyleSheet(
-                f"QComboBox {{ background: {t['sidebar_profile_bg']}; color: {t['sidebar_profile_fg']}; "
-                f"border: 1px solid {t['sidebar_profile_border']};"
-                f"border-radius: 4px; padding: 6px 10px; font-size: 11px; font-weight: bold; }}"
-                f"QComboBox:hover {{ border-color: {t['sidebar_profile_fg']}; }}"
-                f"QComboBox::drop-down {{ border: none; }}"
-                f"QComboBox QAbstractItemView {{ background: {t['sidebar_profile_bg']}; color: {t['fg']};"
-                f"selection-background-color: {t['selection']}; border: 1px solid {t['sidebar_profile_border']}; }}")
 
         # ── Action Bar ───────────────────────────────────────────────────
         if hasattr(self, '_themed_action_bar'):
@@ -3286,32 +3257,9 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             self._themed_dir_panel.setStyleSheet(
                 f"QWidget#dir_panel {{ background: {t['bg_alt']}; border-bottom: 1px solid {t['btn_bg']}; }}")
 
-        # Standard secondary/toggle buttons use property classes; they auto-update
-        # via the global QSS when the stylesheet is reapplied.
-
-        # Specially-colored buttons (green photo / map, accent before/after / events)
-        # don't fit the generic classes — keep their inline color overrides.
-        if hasattr(self, 'btn_photo'):
-            self.btn_photo.setStyleSheet(
-                f"QPushButton {{ font-size: 11px; padding: 2px 10px; background: {t['selection']};"
-                f"color: {t['green']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-                f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
-        if hasattr(self, 'btn_map_toggle'):
-            self.btn_map_toggle.setStyleSheet(
-                f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
-                f"color: {t['green']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-                f"QPushButton:hover {{ background: {t['btn_hover']}; }}"
-                f"QPushButton:checked {{ background: {t['green']}; color: {t['sidebar_brand']}; }}")
-        if hasattr(self, 'btn_before_after'):
-            self.btn_before_after.setStyleSheet(
-                f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
-                f"color: {t['accent_hover']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-                f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
-        if hasattr(self, 'btn_events'):
-            self.btn_events.setStyleSheet(
-                f"QPushButton {{ font-size: 11px; padding: 2px 8px; background: {t['selection']};"
-                f"color: {t['accent_hover']}; border: 1px solid {t['border']}; border-radius: 4px; }}"
-                f"QPushButton:hover {{ background: {t['btn_hover']}; }}")
+        # All toolbar buttons use property classes (secondary, toggle,
+        # secondary-success, toggle-success, secondary-accent) — they
+        # auto-update via the global QSS when the stylesheet is reapplied.
 
         # ── Filter controls ──────────────────────────────────────────────
         if hasattr(self, 'lbl_conf'):
@@ -3350,30 +3298,21 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # property classes — auto-update via global QSS when theme changes.
 
         # ── Progress Panel ───────────────────────────────────────────────
+        # Most progress labels use property classes (phase-label, meta, hint,
+        # meta-mono) — auto-update via global QSS. Only the panel container
+        # itself and the gradient progress bar need per-theme rebuilds.
         if hasattr(self, 'prog_panel'):
             self.prog_panel.setStyleSheet(
                 f"QWidget#prog_panel {{ background: {t['bg_alt']}; border: 1px solid {t['border']}; "
                 f"border-radius: 6px; margin: 2px 0; }}")
-        if hasattr(self, 'lbl_prog_phase'):
-            self.lbl_prog_phase.setStyleSheet(
-                f"color: {t['sidebar_btn_active_fg']}; font-weight: bold; font-size: 12px; letter-spacing: 0.5px;")
         if hasattr(self, 'lbl_prog_counter'):
             self.lbl_prog_counter.setStyleSheet(
-                f"color: {t['fg']}; font-size: 11px; font-family: monospace;")
-        if hasattr(self, 'lbl_prog_eta'):
-            self.lbl_prog_eta.setStyleSheet(
-                f"color: {t['muted']}; font-size: 11px; padding-left: 10px;")
+                f"color: {t['fg']}; font-size: 11px; font-family: 'Consolas', monospace;")
         if hasattr(self, 'pbar'):
             self.pbar.setStyleSheet(
                 f"QProgressBar {{ background:{t['header_bg']}; border:none; border-radius:3px; }}"
                 f"QProgressBar::chunk {{ background: qlineargradient(x1:0,y1:0,x2:1,y2:0,"
                 f"stop:0 {t['accent']}, stop:0.5 {t['sidebar_btn_active_fg']}, stop:1 {t['accent']}); border-radius:3px; }}")
-        if hasattr(self, 'lbl_prog_method'):
-            self.lbl_prog_method.setStyleSheet(
-                f"color: {t['muted']}; font-size: 11px; font-style: italic;")
-        if hasattr(self, 'lbl_prog_speed'):
-            self.lbl_prog_speed.setStyleSheet(
-                f"color: {t['muted']}; font-size: 11px; font-family: monospace;")
 
         # ── Console Log ──────────────────────────────────────────────────
         if hasattr(self, 'btn_toggle_log'):
@@ -3393,9 +3332,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                 f"font-size: 11px; border: 1px solid {t['border']}; border-radius: 4px; padding: 4px; }}")
 
         # ── Status Bar ───────────────────────────────────────────────────
-        if hasattr(self, '_themed_status_bar'):
-            self._themed_status_bar.setStyleSheet(
-                f"background-color: {t['sidebar_brand']}; border-top: 1px solid {t['sidebar_border']};")
+        # _themed_status_bar uses sidebar-band-bottom class — auto-updates.
         # lbl_statusbar uses meta-mono class — auto-updates with global QSS.
         # lbl_ollama: only re-style when not ready (the ready state has its
         # own runtime color set in _on_ollama_ready).
