@@ -4,6 +4,32 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
+### Added (2026-04-30, post-audit roadmap items)
+
+- **N-15: SOURCE_CONFIGS parity test** — `tests/test_source_configs_parity.py`
+  asserts (1) every key in `classify_design.SOURCE_CONFIGS` (modulo the
+  `design_unorg`↔`design` rename) appears in `organize_run --source` choices
+  and `review_resolver.SOURCE_CONFIGS`; (2) every right-hand side of
+  `CATEGORY_ALIASES` is a real canonical category in `classify_design.CATEGORIES`;
+  (3) every declared `batch_prefix` is wired into both `batch_offset` and the
+  `load_all_with_index` glob dispatcher.  Six tests; would have caught the N-1
+  drift bug at PR time.
+
+- **N-16: catalog_sync conditional requests** — `CatalogSyncWorker` now sends
+  `If-None-Match: <etag>` (or `If-Modified-Since` as fallback) on the GitHub
+  Releases API call.  Server returns 304 when the release hasn't changed,
+  costing zero against the unauthenticated 60-req/hr rate-limit and skipping
+  JSON parsing entirely.  ETag and Last-Modified persisted in
+  `%APPDATA%/FileOrganizer/catalog_sync.json` alongside `last_published_at`.
+
+- **N-17: Robocopy `/MT:n` multi-thread cross-drive moves** — `robust_move()`
+  now passes `/MT:8` by default (configurable 0..128 in
+  `%APPDATA%/FileOrganizer/advanced_settings.json` via `robocopy_mt`).  4–6×
+  faster on cross-drive bulk moves; setting `robocopy_mt=0` or `1` disables
+  multi-thread for slow USB drives.  New `load_advanced_settings()` /
+  `save_advanced_settings()` helpers in `fileorganizer/config.py` clamp to
+  robocopy's accepted 0..128 range.
+
 ### Audit + fixes (2026-04-30, post N-1..N-8)
 
 Reviewed every N-* commit for accuracy. Fixed:
