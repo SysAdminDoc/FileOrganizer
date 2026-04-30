@@ -117,6 +117,23 @@ QPushButton[class="cancel"]:hover {{
     background-color: {t['danger_hover_bg']}; color: {t['danger_hover_fg']};
     border-color: {t['danger_border']};
 }}
+/* Compact accented secondary button (small toolbar action) */
+QPushButton[class="secondary"] {{
+    font-size: 11px; padding: 2px 10px;
+    background: {t['selection']}; color: {t['sidebar_btn_active_fg']};
+    border: 1px solid {t['border']}; border-radius: 4px;
+}}
+QPushButton[class="secondary"]:hover {{ background: {t['btn_hover']}; }}
+QPushButton[class="secondary"]:disabled {{ background: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['btn_bg']}; }}
+/* Toggleable variant (used for view-mode switches like Grid / Map / Graph) */
+QPushButton[class="toggle"] {{
+    font-size: 11px; padding: 2px 8px;
+    background: {t['selection']}; color: {t['sidebar_btn_active_fg']};
+    border: 1px solid {t['border']}; border-radius: 4px;
+}}
+QPushButton[class="toggle"]:hover {{ background: {t['btn_hover']}; }}
+QPushButton[class="toggle"]:checked {{ background: {t['sidebar_btn_active_fg']}; color: {t['sidebar_brand']}; }}
+QPushButton[class="toggle"]:disabled {{ background: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['btn_bg']}; }}
 
 /* ── Tool buttons ────────────────────────────────────────────────────────── */
 QToolButton {{
@@ -342,6 +359,9 @@ QLabel[class="caption"] {{
 QLabel[class="muted"] {{ color: {t['muted']}; }}
 QLabel[class="hint"] {{ color: {t['muted']}; font-size: 11px; font-style: italic; }}
 QLabel[class="meta"] {{ color: {t['muted']}; font-size: 11px; }}
+QLabel[class="empty-state"] {{
+    color: {t['muted']}; font-size: 13px; font-weight: 500; padding: 40px;
+}}
 QLabel[class="meta-mono"] {{
     color: {t['muted']}; font-size: 11px; font-family: 'Consolas', 'Courier New', monospace;
 }}
