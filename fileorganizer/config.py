@@ -356,6 +356,30 @@ QLabel[class="badge-neutral"] {{
     background: {t['btn_bg']}; color: {t['muted']};
     padding: 2px 9px; border-radius: 9px; font-size: 10px; font-weight: 600;
 }}
+
+/* ── Semantic status labels ──────────────────────────────────────────────── */
+QLabel[class="status-success"] {{ color: {t['green']};   font-size: 11px; font-weight: 600; }}
+QLabel[class="status-warning"] {{ color: {t['warning']}; font-size: 11px; font-weight: 600; }}
+QLabel[class="status-error"]   {{ color: {t['danger']};  font-size: 11px; font-weight: 600; }}
+
+/* ── Sidebar navigation ──────────────────────────────────────────────────── */
+QPushButton[class="sidebar-nav"] {{
+    background: transparent; color: {t['sidebar_btn']}; border: none;
+    border-left: 3px solid transparent; padding: 10px 14px;
+    font-size: 12px; font-weight: 500; text-align: left;
+}}
+QPushButton[class="sidebar-nav"]:hover {{
+    background: {t['sidebar_btn_hover_bg']}; color: {t['fg']};
+    border-left: 3px solid {t['sidebar_btn_hover_border']};
+}}
+QPushButton[class="sidebar-nav"]:checked {{
+    background: {t['sidebar_btn_active_bg']}; color: {t['sidebar_btn_active_fg']};
+    border-left: 3px solid {t['sidebar_btn_active_border']}; font-weight: 600;
+}}
+QLabel[class="sidebar-section"] {{
+    color: {t['sidebar_section']}; font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; padding: 12px 16px 4px 16px; background: transparent;
+}}
 """
 
 # ── Theme Palettes ───────────────────────────────────────────────────────────
@@ -377,6 +401,7 @@ THEME_STEAM_DARK = {
     'muted': '#6b7785', 'disabled': '#3a4654',
     'danger': '#ef4444', 'danger_border': '#5c2e2e',
     'danger_hover_bg': '#4a1a1a', 'danger_hover_fg': '#fca5a5',
+    'warning': '#f59e0b',
 }
 
 THEME_CATPPUCCIN_MOCHA = {
@@ -397,6 +422,7 @@ THEME_CATPPUCCIN_MOCHA = {
     'muted': '#6c7086', 'disabled': '#45475a',
     'danger': '#f38ba8', 'danger_border': '#5c2838',
     'danger_hover_bg': '#3a1520', 'danger_hover_fg': '#ffb3c8',
+    'warning': '#fab387',
 }
 
 THEME_OLED_BLACK = {
@@ -417,6 +443,7 @@ THEME_OLED_BLACK = {
     'muted': '#666666', 'disabled': '#333333',
     'danger': '#ff4444', 'danger_border': '#5c2020',
     'danger_hover_bg': '#3a0f0f', 'danger_hover_fg': '#ff9090',
+    'warning': '#ffaa00',
 }
 
 THEME_GITHUB_DARK = {
@@ -437,6 +464,7 @@ THEME_GITHUB_DARK = {
     'muted': '#484f58', 'disabled': '#30363d',
     'danger': '#f85149', 'danger_border': '#5c2020',
     'danger_hover_bg': '#3d1a1a', 'danger_hover_fg': '#ffadad',
+    'warning': '#d29922',
 }
 
 THEME_NORD = {
@@ -457,6 +485,7 @@ THEME_NORD = {
     'muted': '#616e88', 'disabled': '#4c566a',
     'danger': '#bf616a', 'danger_border': '#5c3034',
     'danger_hover_bg': '#3a2025', 'danger_hover_fg': '#d09098',
+    'warning': '#ebcb8b',
 }
 
 THEME_DRACULA = {
@@ -477,6 +506,7 @@ THEME_DRACULA = {
     'muted': '#6272a4', 'disabled': '#44475a',
     'danger': '#ff5555', 'danger_border': '#6b2525',
     'danger_hover_bg': '#4a1515', 'danger_hover_fg': '#ff9090',
+    'warning': '#ffb86c',
 }
 
 # Registry: name → palette dict

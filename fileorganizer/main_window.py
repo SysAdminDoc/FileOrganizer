@@ -279,24 +279,12 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         brand_lay.addWidget(lbl_ver)
         sb_lay.addWidget(brand_w)
 
-        # ── Sidebar nav button style ─────────────────────────────────────
-        _NAV_BTN = (
-            f"QPushButton {{ background: transparent; color: {_t['sidebar_btn']}; border: none;"
-            f"border-left: 3px solid transparent; padding: 10px 14px; font-size: 12px;"
-            f"font-weight: 500; text-align: left; }}"
-            f"QPushButton:hover {{ background: {_t['sidebar_btn_hover_bg']}; color: {_t['fg']};"
-            f"border-left: 3px solid {_t['sidebar_btn_hover_border']}; }}"
-            f"QPushButton:checked {{ background: {_t['sidebar_btn_active_bg']}; color: {_t['sidebar_btn_active_fg']};"
-            f"border-left: 3px solid {_t['sidebar_btn_active_border']}; font-weight: 600; }}"
-        )
-        _NAV_SECTION = (
-            f"color: {_t['sidebar_section']}; font-size: 10px; font-weight: 700; letter-spacing: 1.5px;"
-            f"padding: 12px 16px 4px 16px; background: transparent;"
-        )
+        # Sidebar nav styling lives in the global QSS via class properties:
+        # QPushButton[class="sidebar-nav"] / QLabel[class="sidebar-section"]
 
         # ── ORGANIZE section ─────────────────────────────────────────────
         lbl_sec_org = QLabel("ORGANIZE")
-        lbl_sec_org.setStyleSheet(_NAV_SECTION)
+        lbl_sec_org.setProperty("class", "sidebar-section")
         sb_lay.addWidget(lbl_sec_org)
         self._nav_section_labels = [lbl_sec_org]
 
@@ -310,7 +298,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         for label, op_idx in _nav_items_organize:
             btn = QPushButton(f"  {label}")
             btn.setCheckable(True)
-            btn.setStyleSheet(_NAV_BTN)
+            btn.setProperty("class", "sidebar-nav")
             btn.setCursor(Qt.CursorShape.PointingHandCursor)
             btn.clicked.connect(lambda checked, idx=op_idx: self._on_sidebar_nav(idx))
             sb_lay.addWidget(btn)
@@ -318,7 +306,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         # ── TOOLS section ────────────────────────────────────────────────
         lbl_sec_tools = QLabel("TOOLS")
-        lbl_sec_tools.setStyleSheet(_NAV_SECTION)
+        lbl_sec_tools.setProperty("class", "sidebar-section")
         sb_lay.addWidget(lbl_sec_tools)
         self._nav_section_labels.append(lbl_sec_tools)
 
@@ -334,7 +322,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         for label, tool_type, tab_idx in _nav_items_tools:
             btn = QPushButton(f"  {label}")
             btn.setCheckable(True)
-            btn.setStyleSheet(_NAV_BTN)
+            btn.setProperty("class", "sidebar-nav")
             btn.setCursor(Qt.CursorShape.PointingHandCursor)
             btn.clicked.connect(
                 lambda checked, t=tool_type, ti=tab_idx: self._on_sidebar_tool(t, ti))
@@ -343,7 +331,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         # ── MARKETPLACE section ──────────────────────────────────────────
         lbl_sec_mkt = QLabel("MARKETPLACE")
-        lbl_sec_mkt.setStyleSheet(_NAV_SECTION)
+        lbl_sec_mkt.setProperty("class", "sidebar-section")
         sb_lay.addWidget(lbl_sec_mkt)
         self._nav_section_labels.append(lbl_sec_mkt)
 
@@ -355,7 +343,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         for label, tool_type, tab_idx in _nav_items_mkt:
             btn = QPushButton(f"  {label}")
             btn.setCheckable(True)
-            btn.setStyleSheet(_NAV_BTN)
+            btn.setProperty("class", "sidebar-nav")
             btn.setCursor(Qt.CursorShape.PointingHandCursor)
             btn.clicked.connect(
                 lambda checked, t=tool_type, ti=tab_idx: self._on_sidebar_tool(t, ti))
@@ -3271,17 +3259,12 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                 f"QWidget#sidebar {{ background: {t['sidebar_bg']}; "
                 f"border-right: 1px solid {t['sidebar_border']}; }}")
 
-        _NAV_BTN = (
-            f"QPushButton {{ background: transparent; color: {t['sidebar_btn']}; border: none;"
-            f"border-left: 3px solid transparent; padding: 10px 14px; font-size: 12px;"
-            f"font-weight: 500; text-align: left; }}"
-            f"QPushButton:hover {{ background: {t['sidebar_btn_hover_bg']}; color: {t['fg']};"
-            f"border-left: 3px solid {t['sidebar_btn_hover_border']}; }}"
-            f"QPushButton:checked {{ background: {t['sidebar_btn_active_bg']}; color: {t['sidebar_btn_active_fg']};"
-            f"border-left: 3px solid {t['sidebar_btn_active_border']}; font-weight: 600; }}"
-        )
-        for _, _, btn in self._nav_buttons:
-            btn.setStyleSheet(_NAV_BTN)
+        # Sidebar nav buttons & section labels are styled by the global QSS
+        # (sidebar-nav / sidebar-section classes). Re-polish so Qt re-evaluates
+        # their class selectors against the freshly applied stylesheet.
+        if hasattr(self, '_nav_buttons'):
+            for _, _, btn in self._nav_buttons:
+                btn.style().unpolish(btn); btn.style().polish(btn)
 
         # Brand header widget
         if hasattr(self, '_brand_w'):
@@ -3293,14 +3276,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             self._llm_w.setStyleSheet(
                 f"background: {t['sidebar_brand']}; border-top: 1px solid {t['sidebar_border']};")
 
-        # Section labels
-        _NAV_SECTION = (
-            f"color: {t['sidebar_section']}; font-size: 10px; font-weight: 700; letter-spacing: 1.5px;"
-            f"padding: 12px 16px 4px 16px; background: transparent;"
-        )
+        # Section labels — global QSS handles styling, just re-polish
         if hasattr(self, '_nav_section_labels'):
             for lbl in self._nav_section_labels:
-                lbl.setStyleSheet(_NAV_SECTION)
+                lbl.style().unpolish(lbl); lbl.style().polish(lbl)
 
         # Profile combo
         if hasattr(self, 'cmb_profile'):
