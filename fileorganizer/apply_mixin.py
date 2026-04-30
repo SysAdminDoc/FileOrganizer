@@ -82,15 +82,17 @@ class ApplyMixin:
         work = [(i,it) for i,it in enumerate(self.cat_items) if it.selected and it.status=="Pending"]
         if not work: self._log("No items selected"); return
 
-        # ── Check for crash-interrupted run ──────────────────────────────────
+        # ── Check for crash-interrupted run(s) ──────────────────────────────
         from fileorganizer.move_journal import get_pending_summary, get_pending_moves, clear_all
         pending = get_pending_summary()
         if pending:
+            total = sum(c for _, c in pending)
             run_id, count = pending[0]   # handle oldest interrupted run first
+            extra = f" across {len(pending)} interrupted run(s)" if len(pending) > 1 else ""
             ans = QMessageBox.question(
                 self,
                 "Interrupted Apply Detected",
-                f"A previous apply run was interrupted with {count} move(s) still pending.\n\n"
+                f"{total} move(s) still pending{extra}.\n\n"
                 f"Resume those moves now, or discard and start fresh?",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Discard
                 | QMessageBox.StandardButton.Cancel,
@@ -99,6 +101,8 @@ class ApplyMixin:
             if ans == QMessageBox.StandardButton.Cancel:
                 return
             if ans == QMessageBox.StandardButton.Yes:
+                # Chain through every pending run, oldest first.
+                self._pending_resume_queue = [(rid, n) for rid, n in pending[1:]]
                 self._resume_interrupted_run(run_id, count)
                 return
             # Discard: clear all pending records and continue normally
@@ -183,6 +187,11 @@ class ApplyMixin:
         self.prog_panel.setVisible(False)
         msg = f"Resume complete: {ok} moved, {err} errors"
         self._log(msg); self.lbl_statusbar.setText(msg)
+        # Drain the queue: process the next interrupted run, if any.
+        queue = getattr(self, '_pending_resume_queue', None)
+        if queue:
+            run_id, count = queue.pop(0)
+            self._resume_interrupted_run(run_id, count)
 
     # ═══ PC FILES APPLY ══════════════════════════════════════════════════════
 
