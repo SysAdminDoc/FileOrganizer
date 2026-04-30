@@ -2,6 +2,25 @@
 
 All notable changes to FileOrganizer will be documented in this file.
 
+## [FileOrganizer.UI v0.2.0] - 2026-04-30
+
+### Added (Cleanup wired live)
+
+- **`CleanupPage`** — folder picker + six-scanner combo (empty folders,
+  empty files, temp/junk, broken/corrupt, big files, old downloads),
+  scanner-specific options (min size MB, days old, include logs, archive
+  validation toggle), live results table with size + reason columns,
+  cancellable mid-scan. Live metric tiles: scanned, found, total size.
+- **`cleanup_run.py`** — NDJSON sidecar wrapper around
+  `fileorganizer.cleanup`. Streams `start` / `progress` / `item` /
+  `complete` / `error` events on stdout, throttles `progress` to ~10
+  events/sec to avoid drowning the UI.
+- **`PythonRunner.RunScriptNdjsonAsync`** — new method on `IPythonRunner`
+  that parses NDJSON line-by-line and forwards `(eventName, JsonElement)`
+  to the caller. Non-JSON lines are wrapped in a synthetic `log` event so
+  the UI never sees a malformed payload.
+- Home page Cleanup tile bumped from "Planned" to "Ready".
+
 ## [FileOrganizer.UI v0.1.0] - 2026-04-30
 
 ### Added (WinUI 3 shell scaffold)

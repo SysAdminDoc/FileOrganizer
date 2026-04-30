@@ -77,6 +77,7 @@ public sealed partial class MainWindow : Window
         {
             "home" => typeof(HomePage),
             "organize" => typeof(OrganizePage),
+            "cleanup" => typeof(CleanupPage),
             _ => typeof(PlaceholderPage),
         };
 
@@ -100,12 +101,6 @@ public sealed partial class MainWindow : Window
             "PC File Organizer not wired yet",
             "Will sort any folder's files by extension or type using configurable per-category output paths. Wraps fileorganizer/files.py.",
             PoweredBy: "fileorganizer/files.py"),
-        "cleanup" => new PlaceholderInfo(
-            "Cleanup", "Find empty, junk, broken, big, and old files",
-            "\uE74D",
-            "Cleanup scanners not wired yet",
-            "Six scanners (empty folders, empty files, temp/junk, broken, big, old downloads) showing results progressively. Wraps fileorganizer/cleanup.py.",
-            PoweredBy: "fileorganizer/cleanup.py"),
         "duplicates" => new PlaceholderInfo(
             "Duplicates", "Progressive hash-based duplicate detection",
             "\uE8C8",
