@@ -7,6 +7,7 @@ from PyQt6.QtGui import QColor
 from fileorganizer.cache import (
     create_backup_snapshot, save_undo_log, append_csv_log
 )
+from fileorganizer.config import get_active_theme
 from fileorganizer.workers import ApplyAepWorker, ApplyCatWorker, ApplyFilesWorker
 
 
@@ -33,7 +34,7 @@ class ApplyMixin:
             snap = create_backup_snapshot(self.txt_src.text(), [it for _,it in work])
             if snap: self._log(f"Backup snapshot saved: {snap}")
         self.btn_apply.setEnabled(False); self.cmb_op.setEnabled(False)
-        self.btn_scan.setText("Cancel"); self.btn_scan.setStyleSheet("QPushButton { color: #ef4444; font-weight: bold; }")
+        self._set_scan_state(True)
         label = "Dry Run" if dry_run else "Renaming"
         self._log(f"{'Simulating' if dry_run else 'Renaming'} {len(work)} folders...")
         self._scan_start_time = time.time()
@@ -57,11 +58,11 @@ class ApplyMixin:
                 QTimer.singleShot(350, lambda r=vr: self.tbl.setRowHidden(r, True))
         else:
             if vr >= 0:
-                self._set_status(vr, status, "#ef4444", 6)
+                self._set_status(vr, status, get_active_theme()['danger'], 6)
                 self.tbl.scrollToItem(self.tbl.item(vr, 1))
 
     def _on_aep_apply_done(self, ok, err, undo_ops, dry_run=False):
-        self.btn_scan.setText("Scan"); self.btn_scan.setStyleSheet("")
+        self._set_scan_state(False)
         self.btn_scan.setEnabled(True); self.cmb_op.setEnabled(True); self._stats_aep()
         remaining = sum(1 for it in self.aep_items if it.status == "Pending" and it.selected)
         self.btn_apply.setEnabled(remaining > 0)
@@ -82,7 +83,7 @@ class ApplyMixin:
         snap = create_backup_snapshot(self.txt_src.text(), [it for _,it in work])
         if snap: self._log(f"Backup snapshot saved: {snap}")
         self.btn_apply.setEnabled(False); self.cmb_op.setEnabled(False)
-        self.btn_scan.setText("Cancel"); self.btn_scan.setStyleSheet("QPushButton { color: #ef4444; font-weight: bold; }")
+        self._set_scan_state(True)
         self._log(f"Moving {len(work)} folders...")
         self._scan_start_time = time.time()
         self.lbl_prog_phase.setText("Moving")
@@ -104,11 +105,11 @@ class ApplyMixin:
                 QTimer.singleShot(350, lambda r=vr: self.tbl.setRowHidden(r, True))
         else:
             if vr >= 0:
-                self._set_status(vr, status, "#ef4444", 6)
+                self._set_status(vr, status, get_active_theme()['danger'], 6)
                 self.tbl.scrollToItem(self.tbl.item(vr, 1))
 
     def _on_cat_apply_done(self, ok, err, undo_ops):
-        self.btn_scan.setText("Scan"); self.btn_scan.setStyleSheet("")
+        self._set_scan_state(False)
         self.btn_scan.setEnabled(True); self.cmb_op.setEnabled(True); self._stats_cat()
         remaining = sum(1 for it in self.cat_items if it.status == "Pending" and it.selected)
         self.btn_apply.setEnabled(remaining > 0)
@@ -129,7 +130,7 @@ class ApplyMixin:
             self._log("No items selected"); return
         label = "Dry Run" if dry_run else "Moving"
         self.btn_apply.setEnabled(False); self.cmb_op.setEnabled(False)
-        self.btn_scan.setText("Cancel"); self.btn_scan.setStyleSheet("QPushButton { color: #ef4444; font-weight: bold; }")
+        self._set_scan_state(True)
         self._log(f"{label}: {len(work)} items…")
         self._scan_start_time = time.time()
         self.lbl_prog_phase.setText(label)
@@ -156,10 +157,10 @@ class ApplyMixin:
             if vr >= 0:
                 si = self.tbl.item(vr, 10)   # Status col
                 if si:
-                    si.setText(status); si.setForeground(QColor("#ef4444"))
+                    si.setText(status); si.setForeground(QColor(get_active_theme()['danger']))
 
     def _on_files_apply_done(self, ok: int, err: int, undo_ops: list, dry_run: bool):
-        self.btn_scan.setText("Scan"); self.btn_scan.setStyleSheet("")
+        self._set_scan_state(False)
         self.btn_scan.setEnabled(True); self.cmb_op.setEnabled(True)
         remaining = sum(1 for it in self.file_items if it.status == "Pending" and it.selected)
         self.btn_apply.setEnabled(remaining > 0)
