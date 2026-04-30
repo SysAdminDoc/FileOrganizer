@@ -24,7 +24,7 @@ from fileorganizer.dialogs.theme import (
     ThemePickerDialog, ProtectedPathsDialog
 )
 from fileorganizer.dialogs.marketplace import (
-    LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel
+    LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel, ReviewPanel
 )
 
 __all__ = [
@@ -39,5 +39,5 @@ __all__ = [
     'RelationshipGraphWidget', 'WatchHistoryDialog',
     'PreflightWorker', 'PreflightDialog',
     'ThemePickerDialog', 'ProtectedPathsDialog',
-    'LibraryAuditorPanel', 'ArchiveNormalizerPanel', 'CatalogManagerPanel',
+    'LibraryAuditorPanel', 'ArchiveNormalizerPanel', 'CatalogManagerPanel', 'ReviewPanel',
 ]
