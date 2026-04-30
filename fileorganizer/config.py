@@ -94,6 +94,45 @@ CONF_MEDIUM = _conf_init['review_below']  # yellow — below this routes to _Rev
 CONF_FUZZY_CAP = 80   # max confidence for fuzzy-match results (not user-configurable)
 
 
+# ── Advanced / Performance Settings ───────────────────────────────────────────
+_ADVANCED_SETTINGS_FILE = os.path.join(_APP_DATA_DIR, 'advanced_settings.json')
+_ADVANCED_DEFAULTS = {
+    # Robocopy /MT:n value for cross-drive moves.  8 is robocopy's own default
+    # when /MT is passed without a number.  Lower this on slow USB drives where
+    # high concurrency thrashes the disk.  0 disables /MT entirely.
+    'robocopy_mt': 8,
+}
+
+
+def _validate_advanced(settings: dict) -> dict:
+    out = dict(_ADVANCED_DEFAULTS)
+    try:
+        mt = int(settings.get('robocopy_mt', _ADVANCED_DEFAULTS['robocopy_mt']))
+    except (TypeError, ValueError):
+        mt = _ADVANCED_DEFAULTS['robocopy_mt']
+    # Robocopy accepts /MT:1..128.  Clamp; treat <=1 as "disabled".
+    out['robocopy_mt'] = max(0, min(128, mt))
+    return out
+
+
+def load_advanced_settings() -> dict:
+    try:
+        with open(_ADVANCED_SETTINGS_FILE, 'r', encoding='utf-8') as f:
+            s = json.load(f)
+        return _validate_advanced({**_ADVANCED_DEFAULTS, **s})
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        return dict(_ADVANCED_DEFAULTS)
+
+
+def save_advanced_settings(settings: dict):
+    settings = _validate_advanced(settings)
+    try:
+        with open(_ADVANCED_SETTINGS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(settings, f, indent=2)
+    except OSError:
+        pass
+
+
 # ── Theme System ──────────────────────────────────────────────────────────────
 # Each theme is a dict of color tokens → hex values. _build_theme_qss() renders
 # them into a full QSS stylesheet. "Steam Dark" is the default palette.
