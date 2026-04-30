@@ -4,6 +4,35 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [v8.2.0] - Unreleased
 
+### Added (2026-04-30, N-10 embeddings classifier MVP)
+
+- **N-10: Embeddings classifier MVP** — new `fileorganizer/embeddings_classifier.py`
+  inserts a Stage-3 local cosine match between marketplace_enrich (Stage 2) and
+  the DeepSeek call (Stage 4) inside `classify_design.cmd_run`.  Backend chain
+  mirrors Bookmark-Organizer-Pro [S55] `services/embeddings.py`: fastembed →
+  model2vec → sentence-transformers → none (graceful no-op).  Anchors for the
+  full 384-category taxonomy are embedded once and cached in
+  `%APPDATA%/FileOrganizer/category_embeddings.db` keyed by (backend, model);
+  switching backends rebuilds anchors on first call automatically.
+
+  Gating: returns the canonical category at confidence 90 only when the top-1
+  cosine ≥ 0.65 AND the margin over the runner-up ≥ 0.15; otherwise None and
+  the item falls through to AI.  Pure-Python cosine with optional numpy fast
+  path.  When no embedding backend is installed the classifier is a no-op and
+  the existing AI flow is unchanged.
+
+  New `--embeddings-only` flag on `classify_design.py` runs Stages 2+3 only,
+  recording sub-threshold items as `_Unresolved` at confidence 0 — useful for
+  benchmarking the embeddings skip-rate before paying for a full AI run.
+
+  Optional dependencies (commented in `requirements.txt`): `fastembed`,
+  `model2vec`, `sentence-transformers`.
+
+  13 new tests in `tests/test_embeddings_classifier.py` cover cosine math,
+  singleton contract, graceful degradation when no backend is installed, the
+  top-1 + margin gating rules with a hand-rolled fake backend, and the
+  text-builder format.
+
 ### Added (2026-04-30, post-audit roadmap items)
 
 - **N-15: SOURCE_CONFIGS parity test** — `tests/test_source_configs_parity.py`
