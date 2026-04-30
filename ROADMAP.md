@@ -132,7 +132,7 @@ local SQLite DB. Schema version gate: skip if DB_VERSION mismatch. Download shar
 - **Impact**: 5 | **Effort**: 2
 - Source: [S32] AUDIT_LESSONS.md, existing `asset_db.py` pattern
 
-### N-4: Pre-flight report UI wiring
+### N-4: ~~Pre-flight report UI~~ ✓ Shipped v8.2.0 wiring
 Surface the existing `--validate` CLI check as a mandatory step in the GUI Apply workflow:
 color-coded table of long-path issues, trailing-space hits, low-confidence items going to
 `_Review`, and free-space check result. Require acknowledgment before Apply proceeds.
