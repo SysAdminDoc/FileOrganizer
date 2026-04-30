@@ -19,8 +19,15 @@ openpyxl
 python-pptx
 reverse_geocoder
 send2trash
+# rarfile / py7zr extract untrusted archives.  Pair with
+# fileorganizer.safe_archive.safe_extract_path to block path traversal in
+# archive entry names.  Two open GitHub Advisory DB entries each (N-13).
 rarfile
 py7zr
+# fonttools — pinned to fix CVE-2025-66034 (path traversal in varLib.main,
+# fixed in 4.61.0).  N-9 metadata extractors will use the name table; the
+# pin lands here ahead of that work to cover any transitive use today.
+fonttools>=4.62.1
 
 # Optional local embeddings classifier (N-10).  Install at least one to enable
 # the pre-AI cosine match against category anchors; the classifier degrades to
