@@ -12,6 +12,13 @@ which covers per-archive title lookup.
 
 ## Cache contents (apr 2026 snapshot)
 
+Two artifacts ship from the expansion pipeline:
+
+**1. `marketplace_title_cache.json` (lightweight, 16 MB)** — 96,026 entries
+covering the most popular items per marketplace, sourced from /search,
+/category, /authors/top, and author portfolios. This is what
+`normalize_archive_names.py` reads at runtime; it's small enough to load
+into memory in a millisecond.
 ```
 photodune     22,473
 graphicriver  22,190
@@ -23,8 +30,24 @@ themeforest    8,018
 TOTAL        96,026
 ```
 
-Growth: 643 -> 96,026 entries (149x). Original cache was videohive-only;
-the expansion covers every Envato marketplace at >2,400 entries minimum.
+**2. `catalog/` (sharded, 400 MB across 14 files)** — 10,645,539 entries
+covering the *complete* public Envato catalog, sourced from each
+marketplace's `/sitemap.xml.gz`. Shipped as gzipped JSON shards under
+50 MB each so they fit git's recommended file-size budget. Use
+`catalog_lookup.py` for shard-aware lazy lookups (loads only the relevant
+~40 MB shard on demand).
+```
+photodune     3,762,723   (4 shards × ~39 MB)
+videohive     3,475,605   (4 shards × ~39 MB)
+audiojungle   2,413,612   (2 shards × ~30 MB)
+graphicriver    834,008   (1 shard, 23 MB)
+themeforest      65,478   (1 shard, 2 MB)
+3docean          55,801   (1 shard, 1.6 MB)
+codecanyon       38,312   (1 shard, 1.5 MB)
+TOTAL        10,645,539
+```
+
+Growth: 643 -> 10.6M entries (16,500x). Original cache was videohive-only.
 
 ## The expansion model
 
@@ -84,6 +107,30 @@ The trailing-character class is critical; without it the regex over-matches.
 ```
 - High-quality items, single page each.
 - Worth scraping once per marketplace at the start of any pass.
+
+### Sitemap (THE complete catalog)
+```
+/robots.txt                           - declares Sitemap: URLs
+/sitemap.xml.gz                       - root: index of nested shards OR
+                                        a urlset with items inline
+/sitemaps/<marketplace>/sitemap<n>.xml.gz   - nested shard
+```
+- robots.txt always declares the sitemap location; never hardcode the
+  URL since Envato has changed it before.
+- Two flavors of root sitemap exist:
+  - **Index style** (videohive, photodune, audiojungle, graphicriver,
+    themeforest, 3docean): a `<sitemapindex>` referencing N nested
+    `<loc>...sitemap<n>.xml.gz</loc>` shards.
+  - **Direct style** (codecanyon): the root itself is a `<urlset>` with
+    item URLs inline.
+- Each nested shard contains 30K-55K item URLs. videohive has 221 shards
+  (~12M total URLs, dedupes to ~3.5M unique items).
+- This is the only surface that gives the *complete* catalog. /search
+  and /category cap at ~60 pages each; sitemaps don't paginate.
+- Decompress with `gzip.decompress(r.content)`. Some sitemaps double-gzip
+  (the request includes `Accept-Encoding: gzip`, the server transports
+  the already-gzipped body un-content-encoded). Detect by sniffing the
+  magic bytes `\x1f\x8b` after the request returns.
 
 ### Author portfolios (deepest single source)
 ```
@@ -186,12 +233,44 @@ python bulk_catalog_envato.py --apply --parallel --authors \
 # from pass 3)
 python bulk_catalog_envato.py --apply --parallel --subcategories \
     --start-page 12 --max-pages 40 --throttle 0.5
+
+# Pass 7 - SITEMAP HARVEST (the complete public catalog, ~10M entries)
+python bulk_catalog_envato.py --apply --parallel --sitemaps --throttle 0.4
+
+# Post-process: shard the resulting 2 GB JSON into git-safe gzipped pieces
+mv marketplace_title_cache.json marketplace_title_cache.full.json
+git checkout HEAD -- marketplace_title_cache.json   # restore the 96K subset
+python catalog_shard.py marketplace_title_cache.full.json catalog/
 ```
-Total wall time: ~70 minutes. Network bandwidth: ~2 GB. Cache disk: ~16 MB.
+Total wall time for passes 1-6: ~70 minutes. Pass 7 (sitemaps) adds another
+20-30 minutes and ~2 GB of intermediate disk.
 
 Each pass is incremental and idempotent - re-running yields 0 new entries
-once a surface is saturated. Run pass 5 + 6 monthly to capture new
+once a surface is saturated. Run pass 5 + 6 + 7 monthly to capture new
 uploads on Envato without re-walking already-covered ground.
+
+## Storage strategy
+
+The full sitemap-harvested catalog is too big for a single JSON file in
+git (2 GB raw, 400 MB gzipped). Split into per-marketplace + per-id-modulo
+shards under 50 MB each. Layout:
+```
+catalog/
+  videohive_0.json.gz    videohive_1.json.gz    videohive_2.json.gz    videohive_3.json.gz
+  photodune_0.json.gz    photodune_1.json.gz    photodune_2.json.gz    photodune_3.json.gz
+  audiojungle_0.json.gz  audiojungle_1.json.gz
+  graphicriver_0.json.gz themeforest_0.json.gz  3docean_0.json.gz      codecanyon_0.json.gz
+```
+Shard count per marketplace lives in `catalog_shard.py:NUM_SHARDS` and
+`catalog_lookup.py:NUM_SHARDS` — keep these in sync. Lookup:
+```python
+from catalog_lookup import CatalogLookup
+cl = CatalogLookup()
+entry = cl.get("videohive", "12345678")    # loads only videohive_2.json.gz
+```
+The helper LRU-caches loaded shards in memory, so resolving a few
+thousand IDs across one session touches 4-7 shards (~300 MB peak) vs the
+8 GB+ a full-load would need.
 
 ## Failure modes encountered
 
