@@ -617,8 +617,63 @@ def _try_marketplace_enrich(batch_items: list[dict]) -> dict[int, dict]:
     return pre
 
 
-def cmd_run(index: list[dict], only_batch: int = 0):
-    if not DEEPSEEK_API_KEY:
+def _try_embeddings_classify(batch_items: list[dict],
+                             skip_indices: set[int]) -> dict[int, dict]:
+    """Pre-classify items via local embeddings against CATEGORIES anchors.
+
+    Returns {position_in_batch: result_dict} for items where the top-1 anchor
+    cleared MIN_TOP1 AND the margin over runner-up cleared MIN_MARGIN.  Items
+    not in the returned dict either fell below the threshold or had no
+    embedding backend installed (silent fallback to AI).
+
+    `skip_indices` is the set of positions already resolved by an earlier stage
+    (e.g. marketplace_enrich) so we don't re-do work.
+    """
+    try:
+        from fileorganizer.embeddings_classifier import EmbeddingsClassifier
+    except Exception:
+        return {}
+
+    clf = EmbeddingsClassifier.instance()
+    if not clf.available:
+        return {}
+
+    out: dict[int, dict] = {}
+    for idx, item in enumerate(batch_items):
+        if idx in skip_indices:
+            continue
+        name = item.get('name', '') or ''
+        if not name:
+            continue
+        result = clf.classify(
+            name, CATEGORIES,
+            ext_set=item.get('extensions') or item.get('exts'),
+            marketplace=item.get('marketplace'),
+        )
+        if result:
+            out[idx] = {
+                'name':         name,
+                'category':     result['category'],
+                'clean_name':   result.get('cleaned_name', name),
+                'confidence':   result['confidence'],
+                'notes':        f"embeddings_classifier (top1={result['top1']}, margin={result['margin']})",
+                '_source_name': name,
+                '_classifier':  'embeddings',
+            }
+    return out
+
+
+def cmd_run(index: list[dict], only_batch: int = 0,
+            embeddings_only: bool = False):
+    """Classify all unprocessed batches.
+
+    Stages run in order; each stage skips items resolved by an earlier one:
+      1. marketplace_enrich   — known IDs → confidence 95+ (zero AI cost)
+      2. embeddings_classifier — local cosine match vs category anchors
+                                  (zero AI cost when top1 ≥ 0.65 AND margin ≥ 0.15)
+      3. DeepSeek AI           — everything else (skipped when embeddings_only=True)
+    """
+    if not embeddings_only and not DEEPSEEK_API_KEY:
         print("ERROR: DEEPSEEK_API_KEY not set in environment.")
         sys.exit(1)
 
@@ -643,10 +698,17 @@ def cmd_run(index: list[dict], only_batch: int = 0):
         if pre_enriched:
             print(f"  Marketplace pre-classified {len(pre_enriched)} item(s) — skipping AI for those")
 
-        # Build AI prompt only for items NOT pre-enriched
-        ai_items  = [(i, it) for i, it in enumerate(batch_items) if i not in pre_enriched]
+        # Stage 3: local embeddings classifier
+        embed_resolved = _try_embeddings_classify(batch_items, set(pre_enriched.keys()))
+        if embed_resolved:
+            print(f"  Embeddings pre-classified {len(embed_resolved)} item(s) — skipping AI for those")
+
+        resolved = {**pre_enriched, **embed_resolved}
+
+        # Build AI prompt only for items NOT yet resolved
+        ai_items  = [(i, it) for i, it in enumerate(batch_items) if i not in resolved]
         ai_results: list[dict] = []
-        if ai_items:
+        if ai_items and not embeddings_only:
             ai_only_batch = [it for _, it in ai_items]
             prompt = build_prompt(ai_only_batch)
             try:
@@ -667,8 +729,18 @@ def cmd_run(index: list[dict], only_batch: int = 0):
         results: list[dict] = []
         ai_cursor = 0
         for idx, item in enumerate(batch_items):
-            if idx in pre_enriched:
-                res = dict(pre_enriched[idx])
+            if idx in resolved:
+                res = dict(resolved[idx])
+            elif embeddings_only:
+                # Benchmark mode: leave the slot blank with a sentinel so
+                # we can measure embeddings skip rate without paying for AI.
+                res = {
+                    'name':       item.get('name', ''),
+                    'category':   '_Unresolved',
+                    'clean_name': item.get('name', ''),
+                    'confidence': 0,
+                    'notes':      'embeddings_only: below threshold',
+                }
             else:
                 res = ai_results[ai_cursor] if ai_cursor < len(ai_results) else {}
                 ai_cursor += 1
@@ -685,7 +757,9 @@ def cmd_run(index: list[dict], only_batch: int = 0):
             nm = res.get('clean_name', res.get('name', '?'))
             conf = res.get('confidence', '?')
             src = res.get('_marketplace_id', '')
-            print(f"    [{conf}%] {nm}  ->  {cat}{' [MKT]' if src else ''}")
+            tag = res.get('_classifier', '')
+            badge = ' [MKT]' if src else (f' [{tag.upper()}]' if tag else '')
+            print(f"    [{conf}%] {nm}  ->  {cat}{badge}")
 
     print("\nAll done.")
     cmd_stats(index)
@@ -701,6 +775,11 @@ def main():
     ap.add_argument('--source',    type=str, default='design_unorg',
                     choices=list(SOURCE_CONFIGS.keys()),
                     help='Source to classify (default: design_unorg)')
+    ap.add_argument('--embeddings-only', action='store_true',
+                    help='Run only marketplace + local embeddings stages; skip the '
+                         'AI call entirely.  Items below the embedding threshold are '
+                         'recorded as _Unresolved at confidence 0.  Useful for '
+                         'benchmarking the embeddings skip-rate before paying for AI.')
     args = ap.parse_args()
 
     # Wire up globals for the selected source
@@ -722,7 +801,7 @@ def main():
     elif args.preview:
         cmd_preview(index)
     elif args.run:
-        cmd_run(index, only_batch=args.batch)
+        cmd_run(index, only_batch=args.batch, embeddings_only=args.embeddings_only)
     else:
         ap.print_help()
 
