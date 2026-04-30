@@ -6,6 +6,14 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added (2026-04-30)
 
+- **N-6: Two-phase commit for GUI Apply** — `ApplyCatWorker` now writes every planned
+  move to `%APPDATA%/FileOrganizer/organize_moves.db` as `pending` before touching disk,
+  then updates each record to `done`/`error` as moves complete, and clears the journal on
+  clean exit. If the app crashes mid-apply, pending rows persist. On the next Apply click,
+  `_apply_cat()` detects the interrupted run and prompts: Resume / Discard / Cancel.
+  `ResumeApplyWorker` re-executes the pending moves by src/dst path without requiring a
+  rescan. New `fileorganizer/move_journal.py` owns all journal I/O.
+
 - **N-3: Community catalog auto-download** — `CatalogSyncWorker(QThread)` runs silently
   on startup, checks the GitHub Releases API for a new `asset_fingerprints.json` attached
   to the latest release, and merges it into the local `asset_fingerprints.db` via a new

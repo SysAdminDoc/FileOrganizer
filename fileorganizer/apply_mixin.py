@@ -3,7 +3,7 @@ import time
 
 from PyQt6.QtCore import QTimer
 from PyQt6.QtGui import QColor
-from PyQt6.QtWidgets import QDialog
+from PyQt6.QtWidgets import QDialog, QMessageBox
 
 from fileorganizer.cache import (
     create_backup_snapshot, save_undo_log, append_csv_log
@@ -82,7 +82,29 @@ class ApplyMixin:
         work = [(i,it) for i,it in enumerate(self.cat_items) if it.selected and it.status=="Pending"]
         if not work: self._log("No items selected"); return
 
-        # Pre-flight: scan sources for path issues, disk space, low confidence
+        # ── Check for crash-interrupted run ──────────────────────────────────
+        from fileorganizer.move_journal import get_pending_summary, get_pending_moves, clear_all
+        pending = get_pending_summary()
+        if pending:
+            run_id, count = pending[0]   # handle oldest interrupted run first
+            ans = QMessageBox.question(
+                self,
+                "Interrupted Apply Detected",
+                f"A previous apply run was interrupted with {count} move(s) still pending.\n\n"
+                f"Resume those moves now, or discard and start fresh?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.Discard
+                | QMessageBox.StandardButton.Cancel,
+                QMessageBox.StandardButton.Yes,
+            )
+            if ans == QMessageBox.StandardButton.Cancel:
+                return
+            if ans == QMessageBox.StandardButton.Yes:
+                self._resume_interrupted_run(run_id, count)
+                return
+            # Discard: clear all pending records and continue normally
+            clear_all()
+
+        # ── Pre-flight check ─────────────────────────────────────────────────
         from fileorganizer.dialogs.tools import PreflightDialog
         dlg = PreflightDialog([it for _, it in work], parent=self)
         if dlg.exec() != QDialog.DialogCode.Accepted:
@@ -129,6 +151,38 @@ class ApplyMixin:
             save_undo_log(undo_ops); self.undo_ops = undo_ops; self.btn_undo.setEnabled(True)
             append_csv_log(undo_ops)
             self._log(f"Undo log and CSV log saved")
+
+    # ── Resume interrupted apply ──────────────────────────────────────────────
+
+    def _resume_interrupted_run(self, run_id: str, count: int):
+        """Launch ResumeApplyWorker for a crash-interrupted apply run."""
+        from fileorganizer.move_journal import get_pending_moves
+        from fileorganizer.workers import ResumeApplyWorker
+        moves = get_pending_moves(run_id)
+        if not moves:
+            self._log("Resume: no pending moves found (journal already clear).")
+            return
+        self.btn_apply.setEnabled(False); self.cmb_op.setEnabled(False)
+        self._set_scan_state(True)
+        self._log(f"Resuming interrupted apply: {len(moves)} move(s) pending…")
+        self.lbl_prog_phase.setText("Resuming")
+        self.lbl_prog_method.setText("Resuming interrupted apply…")
+        self.pbar.setValue(0); self.prog_panel.setVisible(True)
+        self._scan_start_time = time.time()
+        self.apply_worker = ResumeApplyWorker(
+            run_id, moves, check_hashes=self.chk_hash.isChecked()
+        )
+        self.apply_worker.log.connect(self._log)
+        self.apply_worker.progress.connect(self._update_progress)
+        self.apply_worker.finished.connect(self._on_resume_done)
+        self.apply_worker.start()
+
+    def _on_resume_done(self, ok: int, err: int):
+        self._set_scan_state(False)
+        self.btn_scan.setEnabled(True); self.cmb_op.setEnabled(True)
+        self.prog_panel.setVisible(False)
+        msg = f"Resume complete: {ok} moved, {err} errors"
+        self._log(msg); self.lbl_statusbar.setText(msg)
 
     # ═══ PC FILES APPLY ══════════════════════════════════════════════════════
 
