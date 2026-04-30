@@ -6,6 +6,17 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added (2026-04-30)
 
+- **N-1: I:\ legacy reclassification (Phase 4)** — added `i_organized_legacy` source to
+  `classify_design.py` `SOURCE_CONFIGS` (index: `i_organized_legacy_index.json`, batch
+  prefix: `i_org_batch_`, source: `I:\Organized`, `has_legacy=True`). Added
+  `build_i_organized_index()` to `build_source_index.py` — walks
+  `I:\Organized\<category_dir>\<asset_folder>`, stores `legacy_category = category_dir.name`,
+  skips `_Review`/`_Skip`/system dirs. Usage:
+  ```
+  python build_source_index.py --source i_organized_legacy
+  python classify_design.py --source i_organized_legacy --run
+  ```
+
 - **N-8: Review Queue panel** — new "Review Queue" entry in sidebar MARKETPLACE section
   (content stack index 6). Scans `<Organized root>/_Review/<subcategory>/<item>` in a
   background `_ReviewScanWorker`; displays each item with its current subcategory and a
