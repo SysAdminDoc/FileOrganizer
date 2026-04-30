@@ -203,8 +203,8 @@ class LibraryAuditorPanel(QWidget):
         root_lay.addWidget(sub)
 
         sep = QFrame()
-        sep.setFrameShape(QFrame.Shape.HLine)
-        sep.setStyleSheet(f"background:{_t['border']};")
+        sep.setFrameShape(QFrame.Shape.NoFrame)
+        sep.setProperty("class", "separator")
         sep.setFixedHeight(1)
         root_lay.addWidget(sep)
 
@@ -273,7 +273,6 @@ class LibraryAuditorPanel(QWidget):
         self.progress = QProgressBar()
         self.progress.setRange(0, 0)
         self.progress.hide()
-        self.progress.setFixedHeight(4)
         root_lay.addWidget(self.progress)
 
         # Results tabs + log splitter
@@ -284,11 +283,6 @@ class LibraryAuditorPanel(QWidget):
         tabs_lay.setContentsMargins(0, 0, 0, 0)
 
         self.tabs = QTabWidget()
-        self.tabs.setStyleSheet(
-            f"QTabWidget::pane {{border:1px solid {_t['border']};background:{_t['bg_alt']};}}"
-            f"QTabBar::tab {{background:{_t['bg_alt']};color:{_t['muted']};padding:6px 16px;"
-            f"border:1px solid {_t['border']};border-bottom:none;margin-right:2px;font-size:11px;}}"
-            f"QTabBar::tab:selected {{background:{_t['selection']};color:{_t['sidebar_btn_active_fg']};font-weight:600;}}")
 
         # Misclassifications tab
         self.tbl_moves = QTableWidget(0, 5)
@@ -331,9 +325,7 @@ class LibraryAuditorPanel(QWidget):
         self.log_box = QTextEdit()
         self.log_box.setReadOnly(True)
         self.log_box.setMaximumHeight(140)
-        self.log_box.setStyleSheet(
-            f"background:{_t['bg']};color:{_t['muted']};font-family:monospace;"
-            f"font-size:10px;border:1px solid {_t['border']};border-radius:4px;")
+        self.log_box.setProperty("class", "log")
         splitter.addWidget(self.log_box)
         splitter.setSizes([500, 140])
 
@@ -591,8 +583,8 @@ class ArchiveNormalizerPanel(QWidget):
         root_lay.addWidget(sub)
 
         sep = QFrame()
-        sep.setFrameShape(QFrame.Shape.HLine)
-        sep.setStyleSheet(f"background:{_t['border']};")
+        sep.setFrameShape(QFrame.Shape.NoFrame)
+        sep.setProperty("class", "separator")
         sep.setFixedHeight(1)
         root_lay.addWidget(sep)
 
@@ -639,7 +631,6 @@ class ArchiveNormalizerPanel(QWidget):
         self.progress = QProgressBar()
         self.progress.setRange(0, 0)
         self.progress.hide()
-        self.progress.setFixedHeight(4)
         root_lay.addWidget(self.progress)
 
         splitter = QSplitter(Qt.Orientation.Vertical)
@@ -660,9 +651,7 @@ class ArchiveNormalizerPanel(QWidget):
         self.log_box = QTextEdit()
         self.log_box.setReadOnly(True)
         self.log_box.setMaximumHeight(140)
-        self.log_box.setStyleSheet(
-            f"background:{_t['bg']};color:{_t['muted']};font-family:monospace;"
-            f"font-size:10px;border:1px solid {_t['border']};border-radius:4px;")
+        self.log_box.setProperty("class", "log")
         splitter.addWidget(self.log_box)
         splitter.setSizes([500, 140])
 
@@ -839,8 +828,8 @@ class CatalogManagerPanel(QWidget):
         root_lay.addWidget(sub)
 
         sep = QFrame()
-        sep.setFrameShape(QFrame.Shape.HLine)
-        sep.setStyleSheet(f"background:{_t['border']};")
+        sep.setFrameShape(QFrame.Shape.NoFrame)
+        sep.setProperty("class", "separator")
         sep.setFixedHeight(1)
         root_lay.addWidget(sep)
 
@@ -868,8 +857,8 @@ class CatalogManagerPanel(QWidget):
         root_lay.addWidget(btn_refresh_stats)
 
         sep2 = QFrame()
-        sep2.setFrameShape(QFrame.Shape.HLine)
-        sep2.setStyleSheet(f"background:{_t['border']};")
+        sep2.setFrameShape(QFrame.Shape.NoFrame)
+        sep2.setProperty("class", "separator")
         sep2.setFixedHeight(1)
         root_lay.addWidget(sep2)
 
@@ -936,14 +925,11 @@ class CatalogManagerPanel(QWidget):
         self.progress = QProgressBar()
         self.progress.setRange(0, 0)
         self.progress.hide()
-        self.progress.setFixedHeight(4)
         root_lay.addWidget(self.progress)
 
         self.log_box = QTextEdit()
         self.log_box.setReadOnly(True)
-        self.log_box.setStyleSheet(
-            f"background:{_t['bg']};color:{_t['muted']};font-family:monospace;"
-            f"font-size:10px;border:1px solid {_t['border']};border-radius:4px;")
+        self.log_box.setProperty("class", "log")
         root_lay.addWidget(self.log_box, 1)
 
     def _log(self, msg: str):

@@ -17,7 +17,7 @@ from PyQt6.QtGui import QColor, QDragEnterEvent, QDropEvent, QAction, QPixmap, Q
 
 from fileorganizer.config import (
     _APP_DATA_DIR, _CUSTOM_CATS_FILE, _LAST_CONFIG_FILE,
-    CONF_HIGH, CONF_MEDIUM, DARK_STYLE,
+    CONF_HIGH, CONF_MEDIUM,
     THEMES, get_active_theme, get_active_stylesheet, load_theme_name, _build_theme_qss
 )
 from fileorganizer.cache import (
@@ -3252,10 +3252,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         theme = THEMES.get(name)
         if not theme:
             return
-        if name == 'Steam Dark':
-            qss = DARK_STYLE
-        else:
-            qss = _build_theme_qss(theme)
+        qss = _build_theme_qss(theme)
         self.setStyleSheet(qss)
         self._apply_theme_to_widgets(theme)
         self._log(f"Theme changed to: {name}")
