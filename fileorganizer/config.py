@@ -149,6 +149,19 @@ QPushButton[class="secondary-accent"] {{
 }}
 QPushButton[class="secondary-accent"]:hover {{ background: {t['btn_hover']}; }}
 QPushButton[class="secondary-accent"]:disabled {{ background: {t['btn_bg']}; color: {t['disabled']}; border-color: {t['btn_bg']}; }}
+/* Console log header buttons (flat ghost / monospace) */
+QPushButton[class="log-toggle"] {{
+    background: transparent; color: {t['muted']}; font-size: 11px;
+    border: none; padding: 2px 4px; text-align: left;
+    font-family: 'Consolas', 'Courier New', monospace;
+}}
+QPushButton[class="log-toggle"]:hover {{ color: {t['fg']}; }}
+QPushButton[class="log-toggle"]:checked {{ color: {t['sidebar_btn_active_fg']}; }}
+QPushButton[class="log-clear"] {{
+    background: transparent; color: {t['muted']}; font-size: 11px;
+    border: none; padding: 2px 6px;
+}}
+QPushButton[class="log-clear"]:hover {{ color: {t['danger']}; }}
 /* Toggle variant with green semantics (used for Map view toggle) */
 QPushButton[class="toggle-success"] {{
     font-size: 11px; padding: 2px 8px;
@@ -484,6 +497,29 @@ QComboBox[class="sidebar-profile"] QAbstractItemView {{
     background: {t['sidebar_profile_bg']}; color: {t['fg']};
     selection-background-color: {t['selection']};
     border: 1px solid {t['sidebar_profile_border']};
+}}
+/* Compact accent-colored filter combo (used for file-type / face filters) */
+QComboBox[class="combo-accent"] {{
+    background: {t['input_bg']}; color: {t['accent_hover']};
+    border: 1px solid {t['border']}; border-radius: 3px;
+    padding: 2px 6px; font-size: 11px; font-weight: bold;
+}}
+QComboBox[class="combo-accent"]:hover {{ border-color: {t['accent_hover']}; }}
+QComboBox[class="combo-accent"]::drop-down {{ border: none; }}
+QComboBox[class="combo-accent"] QAbstractItemView {{
+    background: {t['input_bg']}; color: {t['fg']};
+    selection-background-color: {t['selection']}; border: 1px solid {t['border']};
+}}
+/* Green-tinted compact filter combo */
+QComboBox[class="combo-success"] {{
+    background: {t['selection']}; color: {t['green']};
+    border: 1px solid {t['border']}; border-radius: 4px;
+    padding: 2px 6px; font-size: 11px;
+}}
+/* Dashboard panel (overview stats container above the results table) */
+QWidget[class="dashboard-panel"] {{
+    background: {t['header_bg']};
+    border-radius: 6px;
 }}
 """
 
