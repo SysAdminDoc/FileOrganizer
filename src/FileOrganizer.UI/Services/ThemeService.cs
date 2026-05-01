@@ -46,6 +46,25 @@ public sealed class ThemeService : IThemeService
         }
     }
 
+    /// <summary>
+    /// Maps a `Brand*` color resource key to the matching `*Brush` resource
+    /// key. The brushes in App.xaml were declared as
+    /// `&lt;SolidColorBrush x:Key="XBrush" Color="{StaticResource BrandX}"/&gt;`
+    /// — but StaticResource is a one-shot lookup, so updating the Color
+    /// resource at runtime never reaches the brush. We have to set the
+    /// brush's Color directly.
+    /// </summary>
+    private static string? BrandToBrushKey(string brandKey)
+    {
+        // BrandBackground          -> BackgroundBrush
+        // BrandSurfaceMuted        -> SurfaceMutedBrush
+        // BrandTextPrimary         -> TextPrimaryBrush
+        // BrandAccentPrimary       -> AccentPrimaryBrush
+        // BrandAccentPrimaryHover  -> AccentPrimaryHoverBrush
+        if (!brandKey.StartsWith("Brand")) return null;
+        return brandKey.Substring("Brand".Length) + "Brush";
+    }
+
     public void Apply(string themeId)
     {
         var theme = AvailableThemes.FirstOrDefault(t => t.Id == themeId) ?? AvailableThemes[0];
@@ -54,23 +73,39 @@ public sealed class ThemeService : IThemeService
         var resources = Application.Current.Resources;
         foreach (var (key, color) in theme.Colors)
         {
-            // The brushes reference these by key; updating them at runtime
-            // changes Color but not the brush identity, so all bindings refresh.
-            if (resources.TryGetValue(key, out var existing))
-            {
-                if (existing is SolidColorBrush brush)
-                {
-                    brush.Color = color;
-                }
-                else if (existing is Color)
-                {
-                    resources[key] = color;
-                }
-            }
-            else
-            {
+            // 1) Update the Color resource itself (for any future controls
+            //    that look it up dynamically).
+            if (resources.TryGetValue(key, out var existing) && existing is Color)
                 resources[key] = color;
+
+            // 2) Update the matching SolidColorBrush so live UI repaints.
+            //    Mutating the existing brush's Color triggers all controls
+            //    that reference it — no rebinding needed.
+            var brushKey = BrandToBrushKey(key);
+            if (brushKey is not null
+                && resources.TryGetValue(brushKey, out var br)
+                && br is SolidColorBrush brush)
+            {
+                brush.Color = color;
             }
+
+            // 3) The non-prefixed gradient color keys (hero1/ai1/...) and
+            //    anything else go straight into the dictionary; gradients
+            //    rebuild via UpdateGradient below.
+            if (brushKey is null && existing is null)
+                resources[key] = color;
+        }
+
+        // Hover / pressed accent variants — derive from primary so custom
+        // themes don't have to declare every shade.
+        if (theme.Colors.TryGetValue("BrandAccentPrimary", out var pc))
+        {
+            if (resources.TryGetValue("AccentPrimaryHoverBrush", out var hb)
+                && hb is SolidColorBrush hover)
+                hover.Color = Lighten(pc, 0.15);
+            if (resources.TryGetValue("AccentPrimaryPressedBrush", out var pb)
+                && pb is SolidColorBrush pressed)
+                pressed.Color = Darken(pc, 0.15);
         }
 
         // Update gradient stops by re-creating the gradient brushes.
@@ -88,6 +123,23 @@ public sealed class ThemeService : IThemeService
             ApplicationData.Current.LocalSettings.Values[SettingsKey] = themeId;
         }
         catch { }
+    }
+
+    private static Color Lighten(Color c, double f)
+    {
+        f = Math.Clamp(f, 0, 1);
+        return Color.FromArgb(c.A,
+            (byte)(c.R + (255 - c.R) * f),
+            (byte)(c.G + (255 - c.G) * f),
+            (byte)(c.B + (255 - c.B) * f));
+    }
+    private static Color Darken(Color c, double f)
+    {
+        f = Math.Clamp(f, 0, 1);
+        return Color.FromArgb(c.A,
+            (byte)(c.R * (1 - f)),
+            (byte)(c.G * (1 - f)),
+            (byte)(c.B * (1 - f)));
     }
 
     private static void UpdateGradient(ResourceDictionary res, string brushKey,
