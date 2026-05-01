@@ -36,3 +36,20 @@ fonttools>=4.62.1
 # fastembed
 # model2vec
 # sentence-transformers
+
+# ── Per-media-type organization (FileOrganizer.UI v0.3.0) ──────────────────
+# Music tagger (Picard pipeline): Chromaprint -> AcoustID -> MusicBrainz.
+# pyacoustid needs `fpcalc` on PATH (set FPCALC env var to point at a custom
+# location, or install Chromaprint from https://acoustid.org/chromaprint).
+pyacoustid
+musicbrainzngs
+# Video filename parser (Sonarr/Radarr-style): pulls title/year/season/episode/
+# source/codec out of any release name. Used by the Video page and by the
+# quality-scored dedup keeper-selector.
+guessit
+# E-book metadata: read EPUB/MOBI/AZW3 + optional ISBN lookup.
+EbookLib
+isbnlib
+# Sublinear perceptual-hash dedup (Czkawka-style BK-tree index).
+imagehash
+pybktree
