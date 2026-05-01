@@ -19,7 +19,9 @@ public sealed partial class SubtitlesPage : Page
     {
         InitializeComponent();
         _python = App.Services.GetRequiredService<IPythonRunner>();
+        var settings = App.Services.GetRequiredService<IUserSettings>();
         ResultsList.ItemsSource = Results;
+        LanguagesBox.Text = settings.DefaultSubtitleLanguages;
     }
 
     private async void Browse_Click(object sender, RoutedEventArgs e)
@@ -38,7 +40,9 @@ public sealed partial class SubtitlesPage : Page
         if (_cts is not null) return;
         var folder = FolderTextBox.Text?.Trim() ?? "";
         if (!Directory.Exists(folder)) { StatusText.Text = "Pick a folder first."; return; }
-        var langs = string.IsNullOrWhiteSpace(LanguagesBox.Text) ? "en" : LanguagesBox.Text.Trim();
+        var langText = (LanguagesBox.SelectedItem is ComboBoxItem cbi && cbi.Content is string s)
+            ? s : (LanguagesBox.Text ?? "");
+        var langs = string.IsNullOrWhiteSpace(langText) ? "en" : langText.Trim();
         var minScore = ((int)MinScoreBox.Value).ToString(CultureInfo.InvariantCulture);
         var args = new List<string> {
             "--root", folder, "--languages", langs, "--min-score", minScore

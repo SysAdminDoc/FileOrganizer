@@ -29,6 +29,13 @@ public sealed partial class DuplicatesPage : Page
 
     private void ModeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateOptionsVisibility();
 
+    private void Similarity_Changed(object sender, SelectionChangedEventArgs e)
+    {
+        if (SimilarityCombo.SelectedItem is ComboBoxItem c && c.Tag is string s
+            && double.TryParse(s, out var v))
+            ThresholdBox.Value = v;
+    }
+
     private void UpdateOptionsVisibility()
     {
         if (ImageOpts is null) return;
