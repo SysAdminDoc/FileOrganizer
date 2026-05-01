@@ -2,6 +2,59 @@
 
 All notable changes to FileOrganizer will be documented in this file.
 
+## [FileOrganizer.UI v0.4.0] - 2026-04-30
+
+### Added (Wave 2 — five new live pages, plus the Smart Sort dispatcher)
+
+The shell goes from 6 to 11 live pages this release. Highlight is the
+**Smart Sort** page — drop a folder, get an organized library — which
+auto-routes every file to the right pipeline using the same Python
+helpers each media-type sidecar already exposes.
+
+- **`SmartSortPage`** + `smart_run.py` — meta-dispatcher. Walks a source
+  root, classifies each file by extension into one of ten buckets
+  (audio / video / image / book / pdf / font / archive / code /
+  document / other), then delegates the *destination naming* to the
+  matching media-type sidecar's pure-Python helpers (no subprocess
+  spawn — one process for the whole run). `preview` shows the planned
+  destination tree; `apply` moves (or copies, with `--copy`). Live
+  category-count strip at the top of the page updates as the walk
+  progresses.
+- **`DuplicatesPage`** + `dedup_run.py` — replaces the Duplicates
+  placeholder with two engines:
+  - `files`: Czkawka-style progressive size → 4 KB-prefix SHA-256 →
+    full SHA-256, byte-identical only.
+  - `images`: pHash via `imagehash` indexed in a `pybktree` BK-tree for
+    sublinear similarity search; configurable Hamming threshold.
+  Results display as grouped cards showing the keeper (shortest path)
+  with each duplicate's size and (for images) Hamming distance.
+- **`FontsPage`** + `fonts_run.py` — TTF/OTF/WOFF/WOFF2/TTC/OTC reader.
+  fontTools pulls family, subfamily, OS/2 weight class, italic /
+  monospace flags, designer, foundry, version. Optional rename into
+  `Fonts/{family}/{family} - {style}.{ext}`.
+- **`CodePage`** + `code_run.py` — source-code project detector. Looks
+  for marker files (package.json, Cargo.toml, pyproject.toml, go.mod,
+  pom.xml, build.gradle, *.sln, .git, …) at each immediate child
+  folder, then walks the tree to count file extensions and pick the
+  primary language. Optional rename into `Code/{language}/{name}`.
+  Knows ~70 file extensions / 30 languages.
+- **`SubtitlesPage`** + `subtitles_run.py` — Subliminal-based auto-fetch.
+  Skips MKV files that already have embedded subs (via enzyme), then
+  asks Subliminal for matching .srt per requested language(s) with a
+  configurable min-score threshold. Saves next to the video.
+
+### Added (libraries)
+
+`requirements.txt` gains `subliminal`, `Pygments`. The `imagehash` /
+`pybktree` deps from v0.3.0 are now exercised by the Duplicates page.
+
+### Sourcing
+
+Pillaged from: Czkawka (BK-tree dedup index, MIT), Subliminal (subtitle
+matching, MIT), MusicBrainz Picard / FileBot / Calibre (re-used for
+Smart Sort dispatch via the existing music_run / video_run / books_run
+helpers), tfeldmann/organize (the ten-bucket category model).
+
 ## [FileOrganizer.UI v0.3.0] - 2026-04-30
 
 ### Added (Wave 1 — per-media-type organization)
