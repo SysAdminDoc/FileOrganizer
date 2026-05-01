@@ -2,6 +2,57 @@
 
 All notable changes to FileOrganizer will be documented in this file.
 
+## [FileOrganizer.UI v0.3.0] - 2026-04-30
+
+### Added (Wave 1 — per-media-type organization)
+
+Three new live pages in the WinUI 3 shell, each backed by a new NDJSON
+sidecar at the repo root. Together they take FileOrganizer from
+"design-asset organizer" to "well-rounded organizer for any media type".
+
+- **`MusicPage`** — Picard pipeline as a sidecar. `music_run.py` reads
+  existing tags via mutagen, falls back to a MusicBrainz text-search
+  ranked by RapidFuzz, then falls back again to a Chromaprint fingerprint
+  + AcoustID lookup when text matching is too weak. In `tag` mode it
+  writes ID3/Vorbis/MP4 tags via mutagen and (optionally) renames the
+  file into a beets-style template path like
+  `Music/{albumartist}/{year} - {album}/{disc:02}-{track:02} {title}.{ext}`.
+  Requires `pyacoustid` + `musicbrainzngs` + `mutagen` + `rapidfuzz` from
+  `requirements.txt`. AcoustID API key supplied via the `ACOUSTID_API_KEY`
+  env var or the page's password box (free registration at
+  https://acoustid.org/api-key).
+- **`VideoPage`** — `video_run.py` runs GuessIt (the parser FileBot,
+  Sonarr, Radarr all use under the hood) over each file's basename, then
+  scores every result with a Sonarr-style custom-format ladder
+  (resolution + source + video codec + audio codec + size tie-breaker).
+  Three modes: `preview`, `keepers` (group by `(type, title, year, S/E)`,
+  mark the highest-scoring file in each group as the keeper), `rename`
+  (move into `Movies/{title} ({year})/...` or
+  `TV/{title}/Season {season:02}/...`).
+- **`BooksPage`** — `books_run.py` reads embedded metadata from EPUB
+  (ebooklib), MOBI/AZW3 (PalmDB header), PDF (pikepdf docinfo + ISBN scan
+  over the first 5 pages of pdfminer text), and CBZ (ComicInfo.xml).
+  Optional `--isbn-lookup` enriches missing fields via isbnlib's default
+  provider chain. Calibre series metadata
+  (`<meta name="calibre:series">`) is preserved.
+
+### Added (libraries)
+
+`requirements.txt` gains `pyacoustid`, `musicbrainzngs`, `guessit`,
+`EbookLib`, `isbnlib`, `imagehash`, `pybktree`. The Picard pipeline also
+needs `fpcalc.exe` (Chromaprint) on PATH or pointed at via the `FPCALC`
+env var — download from https://acoustid.org/chromaprint, no install
+needed.
+
+### Sourcing
+
+Pillaged from: MusicBrainz Picard (the audio pipeline), beets (path-format
+DSL), FileBot / Sonarr / Radarr (`guessit` + custom-format scoring),
+Calibre (EPUB metadata + ISBN-from-content), Komga/Kavita
+(ComicInfo.xml read), Czkawka (BK-tree dedup — landing in a future wave).
+Licenses: GPL/MIT/Apache-2.0 mix; per project rules, all OSS licenses are
+fine.
+
 ## [FileOrganizer.UI v0.2.0] - 2026-04-30
 
 ### Added (Cleanup wired live)
