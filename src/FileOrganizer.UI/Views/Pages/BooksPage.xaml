@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="FileOrganizer.UI.Views.Pages.BooksPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BackgroundBrush}">
+
+    <Grid Padding="32" RowSpacing="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Spacing="6">
+            <TextBlock Text="Books" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Style="{StaticResource SubtitleTextStyle}"
+                       Text="Read embedded metadata from EPUB / MOBI / AZW3 / PDF / CBZ. PDF gets a best-effort ISBN scan over the first 5 pages, with optional online lookup via isbnlib."/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+            <StackPanel Spacing="14">
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Folder"
+                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="FolderTextBox"
+                             Style="{StaticResource PremiumTextBoxStyle}"
+                             PlaceholderText="C:\path\to\Books"/>
+                    <Button Grid.Column="2" x:Name="BrowseButton" Content="Browse"
+                            Style="{StaticResource SecondaryButtonStyle}" Click="Browse_Click"/>
+                </Grid>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Mode"
+                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="1" x:Name="ModeCombo"
+                              Style="{StaticResource PremiumComboBoxStyle}" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Tag="preview" Content="Preview (read metadata only)" IsSelected="True"/>
+                        <ComboBoxItem Tag="rename" Content="Rename (move into template path)"/>
+                    </ComboBox>
+                    <Button Grid.Column="2" x:Name="ScanButton" Content="Run"
+                            Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
+                    <Button Grid.Column="3" x:Name="CancelButton" Content="Stop"
+                            Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
+                </Grid>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Rename pattern"
+                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="PatternBox"
+                             Style="{StaticResource PremiumTextBoxStyle}"
+                             PlaceholderText="(rename mode) Books/{author}/{title}.{ext}  or  Books/{author}/{series} #{series_index:g} - {title}.{ext}"/>
+                </Grid>
+                <CheckBox x:Name="IsbnLookupCheck"
+                          Content="Enrich missing fields via isbnlib (online lookup of ISBN)"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Style="{StaticResource SubtleCardStyle}">
+            <Grid ColumnSpacing="32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Spacing="2">
+                    <TextBlock Text="SCANNED" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="ScannedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="2">
+                    <TextBlock Text="MATCHED" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="MatchedText" Text="0"
+                               Style="{StaticResource MetricNumberTextStyle}"
+                               Foreground="{StaticResource AccentPrimaryBrush}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Spacing="2">
+                    <TextBlock Text="RENAMED" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="RenamedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                </StackPanel>
+                <TextBlock Grid.Column="3" x:Name="StatusText"
+                           Text="Idle. Pick a folder."
+                           Style="{StaticResource MutedTextStyle}"
+                           VerticalAlignment="Center" HorizontalAlignment="Right"
+                           TextTrimming="CharacterEllipsis"/>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="3" Style="{StaticResource CardStyle}" Padding="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{StaticResource SurfaceMutedBrush}"
+                        BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1"
+                        Padding="16,10" CornerRadius="16,16,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="TITLE" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="1" Text="AUTHOR" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="2" Text="SERIES" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="3" Text="YEAR" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="4" Text="ISBN" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="5" Text="FMT" Style="{StaticResource MetricLabelTextStyle}"/>
+                    </Grid>
+                </Border>
+                <ListView x:Name="ResultsList" Grid.Row="1" SelectionMode="Extended" Padding="0,4">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="16,6"/>
+                            <Setter Property="MinHeight" Value="32"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="160"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="60"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Title}"
+                                           Style="{StaticResource CodeTextStyle}"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           TextTrimming="CharacterEllipsis"
+                                           ToolTipService.ToolTip="{Binding Path}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Author}"
+                                           Style="{StaticResource CodeTextStyle}"
+                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                           TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Series}"
+                                           Style="{StaticResource CodeTextStyle}"
+                                           Foreground="{StaticResource TextMutedBrush}"
+                                           TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Grid.Column="3" Text="{Binding Year}" Style="{StaticResource CodeTextStyle}"/>
+                                <TextBlock Grid.Column="4" Text="{Binding Isbn}"
+                                           Style="{StaticResource CodeTextStyle}"
+                                           Foreground="{StaticResource TextMutedBrush}"/>
+                                <TextBlock Grid.Column="5" Text="{Binding Format}"
+                                           Style="{StaticResource CodeTextStyle}"
+                                           Foreground="{StaticResource AccentPrimaryBrush}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

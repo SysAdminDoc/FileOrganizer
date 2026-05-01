@@ -16,6 +16,9 @@ public sealed partial class MainWindow : Window
         new("Files", "PC file organizer — sort by extension and type", "files"),
         new("Cleanup", "Find empty, junk, broken, big, and old files", "cleanup"),
         new("Duplicates", "Hash-based duplicate detection with side-by-side compare", "duplicates"),
+        new("Music", "Picard-style audio tagging — Chromaprint + AcoustID + MusicBrainz + mutagen", "music"),
+        new("Video", "GuessIt filename parser, custom-format scoring, TV/Movie rename templates", "video"),
+        new("Books", "EPUB/MOBI/AZW3/PDF/CBZ metadata, ISBN scan, optional online lookup", "books"),
         new("Photos", "EXIF, geotag map, AI event grouping, faces", "photos"),
         new("Watch", "Auto-organize folders on change with tray integration", "watch"),
         new("Toolbox", "Asset DB, classifier, research, plan-and-apply utilities", "toolbox"),
@@ -78,6 +81,9 @@ public sealed partial class MainWindow : Window
             "home" => typeof(HomePage),
             "organize" => typeof(OrganizePage),
             "cleanup" => typeof(CleanupPage),
+            "music" => typeof(MusicPage),
+            "video" => typeof(VideoPage),
+            "books" => typeof(BooksPage),
             _ => typeof(PlaceholderPage),
         };
 
