@@ -42,8 +42,8 @@ public sealed partial class HomePage : Page
             "Apply AI batch classifications to disk. Preview, plan, apply, undo.",
             "\uE8B7", cyan, greenSurface, "Ready", "Open organize", "organize"));
         Actions.Add(new HomeActionTile("Files",
-            "Sort PC files by extension or type with per-category output paths.",
-            "\uE8A5", blue, blueSurface, "Planned", "Wire up", "files"));
+            "Sort any folder by file type. Pictures/JPEGs, Music/Lossless, Documents/PDFs, etc.",
+            "\uE8A5", blue, blueSurface, "Ready", "Open files", "files"));
         Actions.Add(new HomeActionTile("Cleanup",
             "Empty folders, junk, broken, big, and old files — six progressive scanners.",
             "\uE74D", orange, blueSurface, "Ready", "Open cleanup", "cleanup"));
@@ -69,11 +69,17 @@ public sealed partial class HomePage : Page
             "Auto-fetch .srt via Subliminal. Skips MKVs that already have embedded subs.",
             "\uED1E", green, greenSurface, "Ready", "Open subtitles", "subtitles"));
         Actions.Add(new HomeActionTile("Photos",
-            "EXIF, geotag map, AI event grouping, faces.",
-            "\uEB9F", green, greenSurface, "Planned", "Wire up", "photos"));
+            "Read EXIF: date, camera, lens, ISO, GPS. Optional date-based folder rename.",
+            "\uEB9F", green, greenSurface, "Ready", "Open photos", "photos"));
         Actions.Add(new HomeActionTile("Watch",
-            "Auto-organize folders on change with tray integration.",
-            "\uE7C8", red, blueSurface, "Planned", "Wire up", "watch"));
+            "Auto-organize new files as they appear. Each watch is a (source, destination) pair.",
+            "\uE7C8", red, blueSurface, "Ready", "Open watch", "watch"));
+        Actions.Add(new HomeActionTile("Toolbox",
+            "Power-user CLI utilities: pipeline stats, validate, asset DB, undo, audit.",
+            "\uE713", orange, greenSurface, "Ready", "Open toolbox", "toolbox"));
+        Actions.Add(new HomeActionTile("Settings",
+            "Pick a theme (7 to choose from), set defaults, stash your AcoustID key.",
+            "\uE790", cyan, greenSurface, "Ready", "Open settings", "settings"));
 
         Clusters.Add(new HomeClusterTile("Classify", "AI batches",
             "Run DeepSeek/GitHub Models/Ollama batches over an org_index, write batch_NNN.json.",

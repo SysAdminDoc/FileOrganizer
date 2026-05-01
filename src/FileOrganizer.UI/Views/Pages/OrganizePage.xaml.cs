@@ -20,8 +20,8 @@ public sealed partial class OrganizePage : Page
 
     private string SelectedSource()
     {
-        if (SourceCombo.SelectedItem is ComboBoxItem item && item.Content is string s)
-            return s;
+        if (SourceCombo.SelectedItem is ComboBoxItem item && item.Tag is string t)
+            return t;
         return "ae";
     }
 
