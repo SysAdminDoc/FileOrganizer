@@ -15,6 +15,8 @@ public partial class App : Application
     public static Window MainWindowHandle => _mainWindow
         ?? throw new InvalidOperationException("Main window not registered yet.");
 
+    public static Window? MainWindowHandleSafe => _mainWindow;
+
     public App()
     {
         InitializeComponent();
@@ -27,6 +29,8 @@ public partial class App : Application
 
         services.AddSingleton<IPythonRunner, PythonRunner>();
         services.AddSingleton<ISidecarRunner, SidecarRunner>();
+        services.AddSingleton<IThemeService, ThemeService>();
+        services.AddSingleton<IUserSettings, UserSettings>();
 
         Services = services.BuildServiceProvider();
     }
@@ -40,6 +44,11 @@ public partial class App : Application
         };
         _mainWindow = new MainWindow();
         _mainWindow.Activate();
+
+        // Apply the saved theme after the window's content tree exists so
+        // ElementTheme propagates correctly.
+        var themeSvc = Services.GetRequiredService<IThemeService>();
+        themeSvc.Apply(themeSvc.GetSavedThemeId());
     }
 
     internal static void Register(MainWindow window) => _mainWindow = window;

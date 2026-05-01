@@ -34,8 +34,8 @@
                     <TextBlock Grid.Column="0" Text="Mode" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
                     <ComboBox Grid.Column="1" x:Name="ModeCombo" Style="{StaticResource PremiumComboBoxStyle}"
                               SelectionChanged="ModeCombo_SelectionChanged" HorizontalAlignment="Stretch">
-                        <ComboBoxItem Tag="files" Content="Files (byte-identical SHA-256)" IsSelected="True"/>
-                        <ComboBoxItem Tag="images" Content="Images (BK-tree perceptual hash)"/>
+                        <ComboBoxItem Tag="files" Content="Find exact copies — byte-for-byte identical files" IsSelected="True"/>
+                        <ComboBoxItem Tag="images" Content="Find similar images — visually-similar even after resize/crop"/>
                     </ComboBox>
                     <Button Grid.Column="2" x:Name="ScanButton" Content="Scan"
                             Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
@@ -43,12 +43,20 @@
                             Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
                 </Grid>
                 <StackPanel x:Name="ImageOpts" Orientation="Horizontal" Spacing="14" Visibility="Collapsed">
-                    <TextBlock Text="Hamming threshold"
-                               Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"/>
+                    <TextBlock Text="How similar?"
+                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <ComboBox x:Name="SimilarityCombo" Width="220"
+                              Style="{StaticResource PremiumComboBoxStyle}"
+                              SelectionChanged="Similarity_Changed">
+                        <ComboBoxItem Tag="0" Content="Identical (no changes)"/>
+                        <ComboBoxItem Tag="4" Content="Very strict (resize-only)"/>
+                        <ComboBoxItem Tag="8" Content="Strict (recommended)" IsSelected="True"/>
+                        <ComboBoxItem Tag="12" Content="Loose (catches edits)"/>
+                        <ComboBoxItem Tag="16" Content="Very loose (false positives likely)"/>
+                    </ComboBox>
                     <NumberBox x:Name="ThresholdBox" Value="8" Minimum="0" Maximum="32"
-                               SpinButtonPlacementMode="Inline" Width="100"/>
-                    <TextBlock Text="(0 = exact, 8 = very similar, 16 = loose)"
-                               Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"/>
+                               SpinButtonPlacementMode="Inline" Width="100"
+                               Visibility="Collapsed"/>
                 </StackPanel>
                 <StackPanel x:Name="FileOpts" Orientation="Horizontal" Spacing="14">
                     <TextBlock Text="Min size (bytes)"

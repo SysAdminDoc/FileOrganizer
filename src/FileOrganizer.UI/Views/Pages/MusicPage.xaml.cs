@@ -20,7 +20,12 @@ public sealed partial class MusicPage : Page
     {
         InitializeComponent();
         _python = App.Services.GetRequiredService<IPythonRunner>();
+        var settings = App.Services.GetRequiredService<IUserSettings>();
         ResultsList.ItemsSource = Results;
+        // Pre-fill from saved settings so users don't have to type templates.
+        PatternBox.Text = settings.DefaultMusicRenamePattern;
+        if (string.IsNullOrEmpty(ApiKeyBox.Password))
+            ApiKeyBox.Password = settings.AcoustIdApiKey;
     }
 
     private string SelectedMode()
