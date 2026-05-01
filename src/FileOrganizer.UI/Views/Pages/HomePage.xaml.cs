@@ -35,6 +35,9 @@ public sealed partial class HomePage : Page
         var blueSurface = (Brush)Application.Current.Resources["SurfaceLightBrush"];
         var greenSurface = (Brush)Application.Current.Resources["SurfaceSoftBrush"];
 
+        Actions.Add(new HomeActionTile("Smart Sort",
+            "Drop a folder, get an organized library. Auto-routes every file to the right pipeline.",
+            "\uE945", cyan, greenSurface, "Featured", "Try it", "smart"));
         Actions.Add(new HomeActionTile("Organize",
             "Apply AI batch classifications to disk. Preview, plan, apply, undo.",
             "\uE8B7", cyan, greenSurface, "Ready", "Open organize", "organize"));
@@ -45,8 +48,8 @@ public sealed partial class HomePage : Page
             "Empty folders, junk, broken, big, and old files — six progressive scanners.",
             "\uE74D", orange, blueSurface, "Ready", "Open cleanup", "cleanup"));
         Actions.Add(new HomeActionTile("Duplicates",
-            "Hash + perceptual dedup with side-by-side compare.",
-            "\uE8C8", violet, blueSurface, "Planned", "Wire up", "duplicates"));
+            "Byte-identical SHA-256 + BK-tree perceptual dedup with grouped results.",
+            "\uE8C8", violet, blueSurface, "Ready", "Open duplicates", "duplicates"));
         Actions.Add(new HomeActionTile("Music",
             "Picard-style tagging: Chromaprint → AcoustID → MusicBrainz → mutagen.",
             "\uE8D6", violet, blueSurface, "Ready", "Open music", "music"));
@@ -56,6 +59,15 @@ public sealed partial class HomePage : Page
         Actions.Add(new HomeActionTile("Books",
             "EPUB/MOBI/AZW3/PDF/CBZ metadata + optional ISBN lookup.",
             "\uE82D", yellow, greenSurface, "Ready", "Open books", "books"));
+        Actions.Add(new HomeActionTile("Fonts",
+            "TTF/OTF/WOFF metadata: family, style, weight, designer.",
+            "\uE185", blue, blueSurface, "Ready", "Open fonts", "fonts"));
+        Actions.Add(new HomeActionTile("Source Code",
+            "Detect repo roots, tag primary language, regroup into Code/{lang}/{name}.",
+            "\uE943", blue, blueSurface, "Ready", "Open code", "code"));
+        Actions.Add(new HomeActionTile("Subtitles",
+            "Auto-fetch .srt via Subliminal. Skips MKVs that already have embedded subs.",
+            "\uED1E", green, greenSurface, "Ready", "Open subtitles", "subtitles"));
         Actions.Add(new HomeActionTile("Photos",
             "EXIF, geotag map, AI event grouping, faces.",
             "\uEB9F", green, greenSurface, "Planned", "Wire up", "photos"));

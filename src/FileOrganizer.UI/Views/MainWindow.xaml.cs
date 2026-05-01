@@ -12,13 +12,17 @@ public sealed partial class MainWindow : Window
     private readonly List<NavSearchSuggestion> _searchSuggestions =
     [
         new("Home", "Workspace overview and quick actions", "home"),
+        new("Smart Sort", "Drop a folder, route every file to the right pipeline", "smart"),
         new("Organize", "Apply AI batch classifications to disk and undo moves", "organize"),
         new("Files", "PC file organizer — sort by extension and type", "files"),
         new("Cleanup", "Find empty, junk, broken, big, and old files", "cleanup"),
-        new("Duplicates", "Hash-based duplicate detection with side-by-side compare", "duplicates"),
+        new("Duplicates", "Byte-identical SHA-256 + BK-tree perceptual-image dedup", "duplicates"),
         new("Music", "Picard-style audio tagging — Chromaprint + AcoustID + MusicBrainz + mutagen", "music"),
         new("Video", "GuessIt filename parser, custom-format scoring, TV/Movie rename templates", "video"),
         new("Books", "EPUB/MOBI/AZW3/PDF/CBZ metadata, ISBN scan, optional online lookup", "books"),
+        new("Fonts", "TTF/OTF/WOFF metadata: family, style, weight, designer", "fonts"),
+        new("Source Code", "Detect repo roots by marker files, tag primary language", "code"),
+        new("Subtitles", "Subliminal: auto-fetch .srt for video files, skip embedded", "subtitles"),
         new("Photos", "EXIF, geotag map, AI event grouping, faces", "photos"),
         new("Watch", "Auto-organize folders on change with tray integration", "watch"),
         new("Toolbox", "Asset DB, classifier, research, plan-and-apply utilities", "toolbox"),
@@ -79,11 +83,16 @@ public sealed partial class MainWindow : Window
         Type pageType = routeKey switch
         {
             "home" => typeof(HomePage),
+            "smart" => typeof(SmartSortPage),
             "organize" => typeof(OrganizePage),
             "cleanup" => typeof(CleanupPage),
+            "duplicates" => typeof(DuplicatesPage),
             "music" => typeof(MusicPage),
             "video" => typeof(VideoPage),
             "books" => typeof(BooksPage),
+            "fonts" => typeof(FontsPage),
+            "code" => typeof(CodePage),
+            "subtitles" => typeof(SubtitlesPage),
             _ => typeof(PlaceholderPage),
         };
 
@@ -107,12 +116,6 @@ public sealed partial class MainWindow : Window
             "PC File Organizer not wired yet",
             "Will sort any folder's files by extension or type using configurable per-category output paths. Wraps fileorganizer/files.py.",
             PoweredBy: "fileorganizer/files.py"),
-        "duplicates" => new PlaceholderInfo(
-            "Duplicates", "Progressive hash-based duplicate detection",
-            "\uE8C8",
-            "Duplicate Finder not wired yet",
-            "Size > prefix hash > suffix hash > full SHA-256, plus perceptual image hashing for near-duplicate photos. Wraps fileorganizer/duplicates.py.",
-            PoweredBy: "fileorganizer/duplicates.py"),
         "photos" => new PlaceholderInfo(
             "Photos", "EXIF, geotag map, and AI event grouping",
             "\uEB9F",

@@ -53,3 +53,8 @@ isbnlib
 # Sublinear perceptual-hash dedup (Czkawka-style BK-tree index).
 imagehash
 pybktree
+# Subtitles auto-fetch (Subliminal). Ignores videos that already have
+# embedded subs via enzyme.
+subliminal
+# Source-code language detection (lightweight Pygments-based).
+Pygments
