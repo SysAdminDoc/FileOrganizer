@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="FileOrganizer.UI.Views.Pages.DuplicatesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BackgroundBrush}">
+    <Grid Padding="32" RowSpacing="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Spacing="6">
+            <TextBlock Text="Duplicates" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Style="{StaticResource SubtitleTextStyle}"
+                       Text="Two engines: progressive size→prefix→full SHA-256 for byte-identical files (Czkawka pipeline), or BK-tree perceptual hashing for near-duplicate images (sublinear similarity search)."/>
+        </StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+            <StackPanel Spacing="14">
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Folder" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="FolderTextBox" Style="{StaticResource PremiumTextBoxStyle}"
+                             PlaceholderText="C:\path\to\scan"/>
+                    <Button Grid.Column="2" x:Name="BrowseButton" Content="Browse"
+                            Style="{StaticResource SecondaryButtonStyle}" Click="Browse_Click"/>
+                </Grid>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Mode" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="1" x:Name="ModeCombo" Style="{StaticResource PremiumComboBoxStyle}"
+                              SelectionChanged="ModeCombo_SelectionChanged" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Tag="files" Content="Files (byte-identical SHA-256)" IsSelected="True"/>
+                        <ComboBoxItem Tag="images" Content="Images (BK-tree perceptual hash)"/>
+                    </ComboBox>
+                    <Button Grid.Column="2" x:Name="ScanButton" Content="Scan"
+                            Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
+                    <Button Grid.Column="3" x:Name="CancelButton" Content="Stop"
+                            Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
+                </Grid>
+                <StackPanel x:Name="ImageOpts" Orientation="Horizontal" Spacing="14" Visibility="Collapsed">
+                    <TextBlock Text="Hamming threshold"
+                               Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"/>
+                    <NumberBox x:Name="ThresholdBox" Value="8" Minimum="0" Maximum="32"
+                               SpinButtonPlacementMode="Inline" Width="100"/>
+                    <TextBlock Text="(0 = exact, 8 = very similar, 16 = loose)"
+                               Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel x:Name="FileOpts" Orientation="Horizontal" Spacing="14">
+                    <TextBlock Text="Min size (bytes)"
+                               Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"/>
+                    <NumberBox x:Name="MinSizeBox" Value="1024" Minimum="0" Maximum="1000000000"
+                               SpinButtonPlacementMode="Inline" Width="160"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="2" Style="{StaticResource SubtleCardStyle}">
+            <Grid ColumnSpacing="32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Spacing="2">
+                    <TextBlock Text="GROUPS" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="GroupsText" Text="0" Style="{StaticResource MetricNumberTextStyle}"
+                               Foreground="{StaticResource AccentPrimaryBrush}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="2">
+                    <TextBlock Text="DUPLICATES" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="DupesText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Spacing="2">
+                    <TextBlock Text="WASTED" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="WastedText" Text="0 B" Style="{StaticResource MetricNumberTextStyle}"
+                               Foreground="{StaticResource AccentOrangeBrush}"/>
+                </StackPanel>
+                <TextBlock Grid.Column="3" x:Name="StatusText"
+                           Text="Idle. Pick a folder."
+                           Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"
+                           HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="3" Style="{StaticResource CardStyle}" Padding="0">
+            <ListView x:Name="GroupsList" SelectionMode="None" Padding="0,4">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="16,8" Padding="14"
+                                Background="{StaticResource SurfaceMutedBrush}"
+                                BorderBrush="{StaticResource DividerBrush}" BorderThickness="1"
+                                CornerRadius="12">
+                            <StackPanel Spacing="6">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <FontIcon Glyph="&#xE8C8;" FontSize="13"
+                                              Foreground="{StaticResource AccentPrimaryBrush}"/>
+                                    <TextBlock Text="{Binding Header}"
+                                               Style="{StaticResource LabelTextStyle}"/>
+                                    <TextBlock Text="{Binding Subheader}"
+                                               Style="{StaticResource MutedTextStyle}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <ItemsRepeater ItemsSource="{Binding Files}">
+                                    <ItemsRepeater.Layout>
+                                        <StackLayout Orientation="Vertical" Spacing="2"/>
+                                    </ItemsRepeater.Layout>
+                                    <ItemsRepeater.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnSpacing="10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Path}"
+                                                           Style="{StaticResource CodeTextStyle}"
+                                                           Foreground="{Binding KeeperBrush}"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding SizeText}"
+                                                           Style="{StaticResource CodeTextStyle}"
+                                                           Foreground="{StaticResource TextMutedBrush}"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding DistanceText}"
+                                                           Style="{StaticResource CodeTextStyle}"
+                                                           Foreground="{StaticResource TextSubtleBrush}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsRepeater.ItemTemplate>
+                                </ItemsRepeater>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Border>
+    </Grid>
+</Page>
