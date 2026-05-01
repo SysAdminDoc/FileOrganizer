@@ -1,5 +1,5 @@
 # ROADMAP -- FileOrganizer
-<!-- v8.3.0-planning · Updated 2026-05 · Supersedes all prior ROADMAP.md versions -->
+<!-- v8.3.0-planning · Updated 2026-06 · Phase 1 refresh · Supersedes all prior ROADMAP.md versions -->
 
 FileOrganizer is a Python/PyQt6 desktop tool for classifying and moving creative design assets
 into a canonical folder taxonomy. Core use case: 33 TB+ of Envato/Creative Market/Freepik
@@ -8,19 +8,24 @@ Multi-provider AI backbone (DeepSeek, GitHub Models, Ollama).
 
 ---
 
-## State of the Repo (v8.3.0 planning, May 2026)
+## State of the Repo (v8.3.0 planning, June 2026)
 
-v8.2.0 is **fully shipped** (all 8 NOW items: I:\ source infrastructure, fix_duplicates incremental
-journal, catalog auto-download, pre-flight UI, confidence thresholds, two-phase commit, security
-dependency pins, and _Review batch panel). See [Shipped — v8.2.0](#shipped--v820) below.
+v8.2.0 is **fully shipped** — the original 8 NOW items (N-1..N-8) and the extended sprint items
+(N-10, N-11, N-13, N-15, N-16, N-17). See [Shipped — v8.2.0](#shipped--v820) below.
+Active NOW items remaining: **N-9** (metadata extractors), **N-12** (provenance tracking),
+**N-14** (broken file detection).
 
 A 2026-04-30 audit pass on the N-1..N-8 commits surfaced source-config drift, an unsafe
 ReviewPanel move path, missing SQLite pragmas on the journal DB, an invalid pip-audit flag,
-and a few smaller resilience gaps. All fixes are merged. The audit is what motivated **N-15**
+and a few smaller resilience gaps. All fixes are merged. The audit motivated **N-15**
 (SOURCE_CONFIGS parity test), **N-16** (catalog sync conditional requests), **N-17** (robocopy
 /MT), **NEXT-33** through **NEXT-38** (xxhash/blake3, provider failover, reparse-point detection,
 free-space reserve, journal vacuum, crash dialog), **L-19** (executable quarantine), and
-**L-20** (localized destination folder names).
+**L-20** (localized destination folder names) — all now shipped.
+
+The WinUI 3 shell reached **ui-v0.5.0** (2026-05-01) with 15 live pages covering all major media
+and design-asset domains. See [Shipped — WinUI Shell](#shipped--winui-shell-ui-v010--ui-v050) below.
+**ui-v0.6.0 targets**: WindowsAppSDK 1.7 upgrade (NEXT-39), RAWPage (NEXT-40), ComicsPage (NEXT-41).
 
 ### What ships today
 - 384-category design asset taxonomy (After Effects, Photoshop, Illustrator, Premiere Pro, web,
@@ -197,6 +202,63 @@ proposed category, dropdown to confirm/reassign. Corrections feed `corrections.j
 - **Impact**: 5 | **Effort**: 3
 - Source: [S3] hyperfield/ai-file-sorter batch-review pattern
 
+### N-10: ~~Embeddings classifier MVP~~ ✓ Shipped v8.2.0
+fastembed/sentence-transformers embedding chain; cosine similarity against 384 category anchors;
+`--embeddings-only` CLI flag. See CHANGELOG.md v8.2.0.
+- Source: [S48] sentence-transformers, [S55] Bookmark-Organizer-Pro
+
+### N-11: ~~ReviewPanel thumbnail rendering~~ ✓ Shipped v8.2.0
+QLabel/QPixmap 80×80 px thumbnails; QPixmapCache; extension-badge fallback for non-image items;
+PSD composite via psd-tools `topil()`. See CHANGELOG.md v8.2.0.
+- Source: [S38] TagStudio virtual list pattern, [S56] TagStudio `previews/renderer.py`
+
+### N-13: ~~Security hardening — fonttools pin + archive isolation~~ ✓ Shipped v8.2.0
+`fonttools>=4.62.1` pin (CVE-2025-66034); psd-tools subprocess isolation; archive path-traversal
+validation (`os.path.realpath` prefix guard). See CHANGELOG.md v8.2.0.
+- Source: [S49] fonttools CVE-2025-66034, [S41] py7zr advisories, [S42] rarfile advisories
+
+### N-15: ~~SOURCE_CONFIGS parity test + alias-RHS guard~~ ✓ Shipped v8.2.0
+Unit tests asserting SOURCE_CONFIGS key parity across classify_design / organize_run /
+review_resolver, plus phantom-category alias guard. See CHANGELOG.md v8.2.0.
+- Source: [S35] CHANGELOG.md v8.2.0
+
+### N-16: ~~catalog_sync `If-Modified-Since` / ETag~~ ✓ Shipped v8.2.0
+ETag/If-Modified-Since header on CatalogSyncWorker startup check; state persisted in
+`catalog_sync.json`. See CHANGELOG.md v8.2.0.
+- Source: [S35] CHANGELOG.md v8.2.0
+
+### N-17: ~~Robocopy multi-thread (`/MT:8`) for cross-drive moves~~ ✓ Shipped v8.2.0
+`robust_move()` passes `/MT:8`; copy-threads slider (4 / 8 / 16) in Settings → Advanced.
+See CHANGELOG.md v8.2.0.
+- Source: [S32] AUDIT_LESSONS.md
+
+---
+
+## Shipped -- WinUI Shell (ui-v0.1.0 → ui-v0.5.0)
+
+The WinUI 3 shell (`src/FileOrganizer.UI/`) runs on an independent version cadence from the Python
+core. All pages below are live in the main branch as of ui-v0.5.0 (2026-05-01).
+
+| Page | Since | Key functionality |
+|------|-------|-------------------|
+| FilesPage | ui-v0.1.0 | Extension-based organizer (all MIME categories) |
+| PhotosPage | ui-v0.1.0 | EXIF reader, date-based rename, location tagging |
+| WatchPage | ui-v0.1.0 | Long-running auto-organize service, debounce config |
+| ToolboxPage | ui-v0.1.0 | Pipeline stats, validate, asset DB, undo |
+| MusicPage | ui-v0.3.0 | Picard pipeline, AcoustID fingerprinting, MusicBrainz lookup |
+| VideoPage | ui-v0.3.0 | GuessIt parser, Sonarr-style quality scoring, ffprobe metadata |
+| BooksPage | ui-v0.3.0 | EPUB/MOBI/PDF/CBZ support, ISBN lookup via isbnlib |
+| SmartSortPage | ui-v0.4.0 | Meta-dispatcher: routes file to best-fit domain page |
+| DuplicatesPage | ui-v0.4.0 | pHash BK-tree image dedup (partially ships NEXT-19) |
+| FontsPage | ui-v0.4.0 | fonttools extraction, family/style classification (N-9 fonts) |
+| CodePage | ui-v0.4.0 | Language detection via Pygments, project-type classifier |
+| SubtitlesPage | ui-v0.4.0 | Subliminal integration, language/show detection |
+| SettingsPage | ui-v0.5.0 | Theme toggle (Catppuccin/GitHub Dark/AMOLED), AcoustID key, rename patterns |
+| (All pages) | ui-v0.5.0 | Per-page theme toggle, global settings propagation |
+
+Build: `pwsh src/build.ps1` via VS 2026 MSBuild. **NOT** `dotnet build` (WinAppSDK 1.5 + .NET 10
+AppX/PRI task path conflict). See `src/FileOrganizer.UI/CLAUDE.md`.
+
 ---
 
 ## NOW -- Active / Blocking (target: v8.3.0)
@@ -225,45 +287,6 @@ fallback → AI last. Eliminates AI calls for ~40-60% of well-structured assets.
 - Source: [S34] RESEARCH_IDEAS.md, [S8] organize-cli v3.3.0 filecontent filter, [S44] Czkawka
   v11.0.0 ffprobe video analysis, [S46] psd-tools v1.16.0
 
-**N-10: Embeddings classifier MVP**
-Add `fileorganizer/embeddings_classifier.py`. On first run, embed all 384 category display names
-via `sentence-transformers` `all-MiniLM-L6-v2` (80 M params, fully local, ~40 ms per batch)
-and store vectors as REAL columns in a new `category_embeddings` SQLite table. At classify time:
-embed item `name + extension_set` → cosine similarity against all 384 anchors → if top-1 ≥ 0.65
-AND margin over top-2 ≥ 0.15, apply category at confidence 90; otherwise fall through to AI.
-Add `--embeddings-only` CLI flag for benchmarking skip rate against a known-classified sample.
-Bookmark-Organizer-Pro [S55] ships a production-ready embedding service in
-`services/embeddings.py` (fastembed → model2vec → sentence-transformers fallback chain) plus
-a vector store with cosine fallback in `services/vector_store.py` — both are directly portable
-to FileOrganizer's stack with minor schema adjustments.
-- **Why now**: Reduces AI API cost ~50-70% on well-named assets; fully local; no cloud dependency.
-  electron-dam confirmed Ollama-based embedding is a viable DAM pattern [S43]; sentence-
-  transformers is production-stable with 15,000+ pretrained models [S48]. Local prior art in
-  `Bookmark-Organizer-Pro` shortens the implementation path materially.
-- **Impact**: 5 | **Effort**: 3
-- Source: [S34] RESEARCH_IDEAS.md #7, [S48] sentence-transformers, [S43] electron-dam Ollama
-  embedding, [S55] Bookmark-Organizer-Pro `services/embeddings.py` + `services/vector_store.py`
-
-### UX Completion
-
-**N-11: ReviewPanel thumbnail rendering**
-N-8 shipped the _Review batch panel but the thumbnail column is text-only. Replace the folder-name
-cell with a `QLabel` holding a `QPixmap` scaled to 80×80 px via `PIL.Image.thumbnail()`. Use
-`QPixmapCache` (key = folder fingerprint) to prevent re-loading on scroll. For items with no
-image: render an extension badge (colored rectangle + extension text) as a fallback `QPixmap`.
-For PSD files: load the embedded composite via `psd_tools.PSDImage(path).topil()` at native
-thumbnail resolution. The `thumbnail` path is already collected by `_ReviewScanWorker`; this item
-only changes rendering. The local TagStudio clone [S56] ships a folder-based LRU cache with
-thread-safe `RLock` and configurable size in `cache_manager.py` plus a multi-format renderer
-(RAW/raster/SVG/PDF/audio waveform) in `previews/renderer.py` — both are nearly drop-in for
-the PyQt6 build.
-- **Why now**: ReviewPanel is actively used for the I:\ reclassification pass; text-only cells
-  make visual asset review impractical for 18,000+ mixed-media items.
-- **Impact**: 4 | **Effort**: 2
-- Source: [S38] TagStudio v9.5.6 virtual list + thumbnail, [S43] electron-dam thumbnail grid,
-  [S19] Eagle App, [S34] RESEARCH_IDEAS.md, [S56] TagStudio local clone
-  `cache_manager.py` + `previews/renderer.py`
-
 ### Data Enrichment
 
 **N-12: Provenance tracking**
@@ -278,72 +301,7 @@ domains from UI display names and CSV exports. CLI: `build_source_index.py --sho
 - **Impact**: 4 | **Effort**: 2
 - Source: [S34] RESEARCH_IDEAS.md #6, [S33] RESEARCH.md provenance track
 
-### Security
-
-**N-13: Security hardening — fonttools pin + archive isolation**
-Three concrete changes in a single PR:
-1. Pin `fonttools>=4.62.1` in `requirements.txt`. CVE-2025-66034 is a path traversal bug in
-   `fonttools.varLib.main` fixed in 4.61.0. FileOrganizer uses TTFont name table reads (N-9),
-   not varLib, but the explicit pin prevents transitive exposure and covers future sub-path use.
-2. Run psd-tools PSD parsing in a subprocess with a configurable file-size sanity limit (default
-   500 MB). Maliciously crafted PSDs can trigger parser bugs; the Coverage Matrix flagged this
-   as pending since N-7. N-9 adds active psd-tools use, making isolation urgent.
-3. In `archive_extractor.py` and any RAR/7z/ZIP extraction path: validate all extracted entry
-   paths against the target directory before write:
-   `assert os.path.realpath(dest).startswith(os.path.realpath(safe_root))`.
-   Covers the 2 open GitHub Advisory DB entries for rarfile and 2 for py7zr [S42, S41].
-- **Why now**: N-9 will use fonttools heavily; pin must land first or in the same commit.
-  fonttools CVE-2025-66034 was published 2025 — the outstanding pin is now overdue.
-- **Impact**: 3 | **Effort**: 1
-- Source: [S49] fonttools CVE-2025-66034 (fixed v4.61.0), [S42] rarfile GitHub Advisories,
-  [S41] py7zr advisories, Coverage Matrix security notes
-
 ### Quality
-
-**N-15: SOURCE_CONFIGS parity test + alias-RHS guard**
-The N-1 audit (2026-04-30) found that `classify_design.py`, `organize_run.py`, and
-`review_resolver.py` had silently drifted — `i_organized_legacy` was added to one but missing
-from the other two, so `--source i_organized_legacy` would fail at apply time. Add unit tests
-that import all three modules and assert:
-1. `classify_design.SOURCE_CONFIGS.keys() == organize_run._SOURCE_DIRS.keys() ∪ {'ae'}` and the
-   same set is present in `review_resolver.SOURCE_CONFIGS`.
-2. Every right-hand side of `organize_run.CATEGORY_ALIASES` exists in
-   `classify_design._CATEGORY_SET` (catches phantom-category regressions of the kind documented
-   in `CHANGELOG.md` 2026-04-28).
-3. Every batch_prefix in `SOURCE_CONFIGS` has a matching branch in `organize_run.batch_offset`
-   and `load_all_with_index`'s glob dispatcher.
-- **Why now**: This drift bug just shipped to main. The fix took 30 lines of code; the test
-  guard is 30 more. Highest leverage-per-line addition in the roadmap.
-- **Impact**: 4 | **Effort**: 1
-- Source: [S35] CHANGELOG.md v8.2.0 audit pass, [S32] AUDIT_LESSONS.md "Phantom categories
-  corrupt the taxonomy"
-
-**N-16: catalog_sync `If-Modified-Since` / ETag**
-`CatalogSyncWorker` (N-3, shipped) hits the GitHub Releases API on every startup even when the
-release hasn't changed. Add an `If-Modified-Since: <last_published_at>` header (or store
-`ETag` from the previous response) so the API returns 304 Not Modified and the worker skips
-JSON parsing entirely. State already lives in `%APPDATA%/FileOrganizer/catalog_sync.json`;
-just persist `last_etag` alongside `last_published_at`.
-- **Why now**: GitHub unauthenticated API is rate-limited to 60 requests/hour per IP. Heavy
-  users running multiple FileOrganizer windows (or sharing an IP with other tools using the
-  same API) eat quota for nothing.
-- **Impact**: 2 | **Effort**: 1
-- Source: [S35] CHANGELOG.md v8.2.0 N-3 audit note, GitHub REST API conditional requests
-  https://docs.github.com/en/rest/overview/resources-in-the-rest-api#conditional-requests
-
-**N-17: Robocopy multi-thread (`/MT:8`) for cross-drive moves**
-`robust_move()` calls robocopy single-threaded today. Robocopy's `/MT:n` flag enables `n`
-threads on the copy phase (default in robocopy.exe is `/MT:8`); on cross-drive bulk moves
-between G:\ and I:\ this is typically a 4–6× wall-clock improvement and the controlling
-process stays well under 100 % single-core. Pass `/MT:8` from `robust_move()` and surface a
-"copy threads" slider (4 / 8 / 16) in Settings → Advanced for users on slow USB drives where
-high concurrency hurts.
-- **Why now**: The 33 TB G:↔I: shuffles in CHANGELOG run for hours. This is the cheapest
-  perf win in the roadmap; the robocopy exit-code logic in `robust_move()` already tolerates
-  the multi-thread output format.
-- **Impact**: 4 | **Effort**: 1
-- Source: [S32] AUDIT_LESSONS.md "Robocopy exit codes 0-7 are all success", `organize_run.py`
-  `robust_move()` already in production
 
 **N-14: Broken file detection**
 During `build_source_index.py` scan, detect and flag corrupt/truncated assets before classify:
@@ -706,6 +664,96 @@ plus `sys.excepthook` override that:
 - **Impact**: 3 | **Effort**: 2
 - Source: Qt `qInstallMessageHandler` https://doc.qt.io/qt-6/qtlogging.html
 
+### WinUI Shell
+
+**NEXT-39: WindowsAppSDK 1.7 upgrade**
+Upgrade the WinUI 3 shell from WinAppSDK 1.5 (current) to 1.7. Concrete unlocks:
+- **`TitleBar` control**: replaces current manual `AppWindowTitleBar` wiring with a declarative
+  XAML control; cleaner drag region, subtitle support, icon slot.
+- **`SetTaskBarIcon` / `SetTitleBarIcon`**: independent icon control per page — show a camera
+  icon when PhotosPage is open vs. the default app icon.
+- **`AppWindowTitleBar.PreferredTheme`**: opt-in titlebar dark/light independent of OS system
+  setting; improves the Catppuccin + AMOLED black theme polish.
+- **`OAuth2Manager`**: replaces the current manual browser-launch + clipboard-paste flow for
+  AcoustID API key registration in MusicPage with a proper in-app OAuth 2.0 PKCE flow.
+- **`BackgroundTaskBuilder`** (full-trust COM): register WatchPage as a proper Windows background
+  task instead of the current Task Scheduler workaround; survives user log-off, restarts cleanly.
+- **Impact**: 3 | **Effort**: 2
+- Source: [S62] WindowsAppSDK 1.7.0 release notes, [S63] WindowsAppSDK 1.6.0 release notes
+
+**NEXT-40: RAWPage — camera raw file organizer**
+New WinUI shell page for DNG / CR2 / NEF / ARW / ORF / RW2 raw photo files. Scope:
+- Extract EXIF via `rawpy` (libraw Python binding): camera make/model, capture date, ISO, focal
+  length, GPS coordinates if present.
+- Thumbnail via `rawpy.postprocess()` → PIL → QImage at 512×512 (cached in `%APPDATA%`).
+- Date-based folder routing (`YYYY/YYYY-MM-DD/Make_Model/`), or user-configurable rename pattern
+  using the same token engine as PhotosPage.
+- Pre-flight: identify files with corrupt RAW headers (libraw `LibRawFileUnsupportedError`) and
+  flag in the "Broken files" row (N-14 extension).
+`rawpy` is already a proven pattern: Czkawka v11.0.0 [S44] ships RAW JPEG preview extraction;
+TagStudio's renderer.py [S56] dispatches RAW thumbnails via the same library.
+- **Impact**: 4 | **Effort**: 3
+- Source: [S44] Czkawka v11.0.0 RAW JPEG preview extraction, [S56] TagStudio RAW renderer,
+  rawpy PyPI https://pypi.org/project/rawpy/
+
+**NEXT-41: ComicsPage — comic archive support (CBZ / CBR / CB7 / CBT)**
+New WinUI shell page for comic archives. Scope:
+- Extract first page as thumbnail (PIL for CBZ/ZIP, patoolib for CBR/RAR, py7zr for CB7/7z).
+- Parse filename series metadata: detect `(Series Name) #012 (Publisher) (Year).cbz` and
+  `Series_Name_v01c01.cbz` patterns. Map to `Comics/<Publisher>/<Series>/Volume N/` folder tree.
+- Series detection: group CBZ files with common prefix into a series and suggest bulk rename
+  to a canonical pattern.
+TagStudio v9.5.6 [S64] confirmed CB7/CBR/CBT thumbnail rendering is feasible and ships a
+working renderer for all four archive formats.
+- **Impact**: 3 | **Effort**: 3
+- Source: [S64] TagStudio v9.5.6 CB7/CBR/CBT thumbnails, [S41] py7zr Python bindings,
+  [S42] rarfile Python bindings
+
+### Classification & Pre-flight
+
+**NEXT-42: "Bad names" scanner in pre-flight**
+Extend `PreflightWorker` to flag files with naming problems that will cause silent failures
+or taxonomy drift downstream:
+- Non-ASCII characters in filename on NTFS volumes set to ASCII codepage.
+- Uppercase-only file extension (`.JPG`, `.MP4`): organize-cli [S69] normalizes extensions;
+  FileOrganizer should flag these before classify so the extension-based router sees `.jpg`.
+- Reserved Windows characters in filename (`< > : " / \ | ? *`).
+- Filename > 200 characters (leaves headroom below the 260-char path limit).
+- Trailing or leading spaces (already partially handled but not pre-flight reported).
+Show results in PreflightDialog under "Name issues (N)". Add `--fix-bad-names` CLI flag that
+auto-normalizes extensions and strips reserved characters in-place before classify.
+Czkawka v11.0.0 [S44] ships a "bad names" scanner as a first-class mode, confirming user demand.
+- **Impact**: 3 | **Effort**: 1
+- Source: [S44] Czkawka v11.0.0 "bad names" mode, N-4 pre-flight infra (shipped)
+
+**NEXT-43: ExifTool integration in metadata pipeline**
+Support `exiftool` as a supplementary metadata backend in `metadata_extractors/` (N-9).
+ExifTool reads 800+ formats including proprietary AE/PSD/Sketch embedded metadata not accessible
+via Python libraries. Integration:
+- Detect `exiftool` via `FILEORGANIZER_EXIFTOOL_PATH` env var (mirrors organize-cli's
+  `ORGANIZE_EXIFTOOL_PATH` pattern [S69]).
+- On N-9 extractor miss (result confidence < 50%), invoke `exiftool -json <path>` via subprocess
+  and merge the parsed fields into the existing extractor result dict.
+- Map ExifTool fields: `XMP:Category`, `XMP:Subject[]`, `IPTC:Keywords`, `QuickTime:Comment`
+  → keyword list fed into the keyword classifier (NEXT-2 path).
+- **Impact**: 4 | **Effort**: 2 | **Depends on**: N-9
+- Source: [S69] organize-cli v3.0.0 exiftool support, ExifTool docs
+  https://exiftool.org/exiftool_pod.html
+
+### Performance & Caching
+
+**NEXT-44: LLM summary cache (SQLite)**
+Cache the LLM classification response for each folder fingerprint. On re-scan of a folder
+whose fingerprint matches the cache, return the cached result instantly without an API call.
+Schema: new `llm_cache` table in `organize_moves.db`:
+  `(fingerprint TEXT PK, model TEXT, prompt_hash TEXT, response_json TEXT, ts INTEGER)`.
+Cache key: `(fingerprint, model_id, prompt_hash)` — invalidates automatically when the model
+or prompt template changes. Expiry: user-configurable TTL (default 30 days) cleaned on startup.
+FileWizardAI [S66] and thebearwithabite [S65] both ship LLM caching; on stable asset libraries
+(the common case) this eliminates >90% of API calls on re-runs.
+- **Impact**: 4 | **Effort**: 2 | **Depends on**: N-9 (metadata pipeline wired in)
+- Source: [S66] FileWizardAI SQLite summary cache, [S65] thebearwithabite review-queue cache
+
 ---
 
 ## LATER -- Strategic, Not Yet Urgent
@@ -865,6 +913,20 @@ Ship Simplified Chinese first (CJK filenames are an existing pain point in `loos
 - **Impact**: 2 | **Effort**: 4 | **Depends on**: L-14
 - Source: [S9] TagStudio Weblate workflow, [S43] electron-dam multi-locale design assets
 
+**L-21: Video optimizer / re-encode**
+After VideoPage (ui-v0.3.0 WinUI) organizes video assets, offer an optional post-organize step
+that re-encodes to HEVC (H.265) or AV1 to reclaim disk space on large video libraries. Scope:
+- ffmpeg subprocess: `ffmpeg -i <src> -c:v libx265 -crf 28 -preset slow -c:a copy <dst>`.
+- "Crop black bars" option: `ffmpeg -vf cropdetect` pass before encode.
+- Safety: keep original until encode finishes and passes a size-sanity check (output ≥ 10% of
+  original size), then replace. Progress in WinUI shell VideoPage.
+- Opt-in only: never runs as part of an automated organize; requires explicit user action.
+Czkawka v11.0.0 [S44] ships this as a first-class mode (video optimizer), confirming demand.
+- **Why later**: Windows ffmpeg availability is not guaranteed; requires a new "Optimize" surface
+  in VideoPage not designed yet; lossiness concerns require clear user consent UI.
+- **Impact**: 2 | **Effort**: 4
+- Source: [S44] Czkawka v11.0.0 video optimizer mode, ffmpeg documentation
+
 ---
 
 ## UNDER CONSIDERATION
@@ -898,6 +960,14 @@ Revisit after NEXT-20 ships.
 Check GitHub Releases API on startup; notify if a newer version exists. Implement once release
 cadence stabilizes to avoid false positives from frequent pre-release tags.
 
+**UC-6: EXIF remover / metadata strip**
+Strip EXIF data from images and video before or after organizing — useful for privacy-conscious
+workflows or before uploading to stock platforms. Czkawka v11.0.0 [S44] ships this as a
+first-class mode. For FileOrganizer, the primary conflict is that the N-9 metadata pipeline
+depends on EXIF being present; stripping before classify would degrade classification accuracy.
+Hold until there is explicit user demand and a clear pre/post classify trigger option.
+- Source: [S44] Czkawka v11.0.0 EXIF remover mode
+
 ---
 
 ## REJECTED
@@ -924,28 +994,29 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 | Category | Status | Primary Items |
 |----------|--------|---------------|
-| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE-2025-66034 pin + psd-tools subprocess isolation + archive path-traversal guard), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan) |
+| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE pin + psd-tools subprocess isolation + archive path-traversal guard, **shipped v8.2.0**), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan), UC-6 (EXIF remover — on hold) |
 | **Accessibility** | Covered | L-15 (WCAG 2.1, keyboard nav, screen reader) |
 | **i18n / l10n** | Covered | L-14 (QTranslator UI strings, CJK locale), L-20 (localized destination folder names) |
 | **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-25 (post-apply report), NEXT-31 (scan time measurement), NEXT-38 (crash dialog + log viewer) |
-| **Testing** | Covered | NEXT-29 (unit test expansion to 10+ functions), N-7 (pip-audit CI gate), N-14 (broken file detection as pre-run validation), N-15 (SOURCE_CONFIGS parity test) |
-| **Distribution / packaging** | Covered | N-3 (catalog auto-download), N-16 (catalog sync conditional requests), NEXT-30 (multiplatform CI), L-10 (portable mode) |
+| **Testing** | Covered | NEXT-29 (unit test expansion to 10+ functions), N-7 (pip-audit CI gate), N-14 (broken file detection as pre-run validation), N-15 (SOURCE_CONFIGS parity test, **shipped v8.2.0**) |
+| **Distribution / packaging** | Covered | N-3 (catalog auto-download), N-16 (catalog sync conditional requests, **shipped v8.2.0**), NEXT-30 (multiplatform CI), L-10 (portable mode) |
 | **Plugin ecosystem** | Covered | NEXT-27 (SDK + 3 reference plugins), NEXT-28 (webhook) |
 | **Mobile** | Rejected | Android app rejected (no server backend); revisit after UC-1 |
-| **Offline / resilience** | Covered | N-6 (two-phase commit), N-2 (incremental journal), N-17 (robocopy multi-thread), NEXT-34 (provider failover), NEXT-35 (reparse-point detection), NEXT-36 (free-space reserve), NEXT-37 (journal vacuum + retention), Ollama local fallback already in prod |
-| **Performance** | Covered | N-17 (robocopy /MT), NEXT-6 (parallel async LLM), NEXT-33 (xxhash/blake3 fast fingerprint), NEXT-5 (minimal-diff re-scan) |
+| **Offline / resilience** | Covered | N-6 (two-phase commit), N-2 (incremental journal), N-17 (robocopy multi-thread, **shipped v8.2.0**), NEXT-34 (provider failover), NEXT-35 (reparse-point detection), NEXT-36 (free-space reserve), NEXT-37 (journal vacuum + retention), Ollama local fallback already in prod |
+| **Performance** | Covered | N-17 (robocopy /MT, **shipped**), NEXT-6 (parallel async LLM), NEXT-33 (xxhash/blake3 fast fingerprint), NEXT-5 (minimal-diff re-scan), NEXT-44 (LLM summary cache) |
 | **Multi-user / collaboration** | Rejected | Single-user tool by design; see Rejected table |
 | **Migration paths** | Covered | N-1 (I:\ legacy reclassification), CATEGORY_ALIASES expansion (already shipped) |
 | **Upgrade strategy** | Covered | N-3 (schema version gate on catalog sync), UC-5 (in-app update notification) |
+| **WinUI Shell** | Active | ui-v0.5.0 shipped (15 pages); NEXT-39 (WinAppSDK 1.7 upgrade), NEXT-40 (RAWPage), NEXT-41 (ComicsPage) target ui-v0.6.0 |
 
 ### Security -- additional notes
 - **psd-tools** parses untrusted `.psd` files. Maliciously crafted PSDs could trigger parser bugs.
-  Fix: run parser in subprocess with file-size sanity limit. **Scheduled in N-13.**
+  Fix: run parser in subprocess with file-size sanity limit. **Shipped in N-13 (v8.2.0).**
 - **rarfile / py7zr** extract untrusted archives. Path traversal risk (archive entry names with
   `../`). 2 open GitHub Advisory DB entries for each. Fix: validate all extracted paths against
-  target directory before write. **Scheduled in N-13.**
+  target directory before write. **Shipped in N-13 (v8.2.0).**
 - **fonttools** CVE-2025-66034 (path traversal in `varLib.main`, fixed v4.61.0). N-9 metadata
-  extractors will use fonttools; pin `fonttools>=4.62.1` in the same commit. **Scheduled in N-13.**
+  extractors use fonttools; pin `fonttools>=4.62.1` in the same commit. **Shipped in N-13 (v8.2.0).**
 - **API keys** (DeepSeek, GitHub, Envato) are stored in `%APPDATA%\FileOrganizer\` settings.
   Verify they are not logged or committed. Covered by N-7 audit pass (shipped).
 
@@ -955,13 +1026,16 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 | Tool | Type | Key strength | FileOrganizer gap addressed |
 |------|------|--------------|----------------------------|
-| organize-cli [S8] | OSS CLI | YAML rules, dry-run, deduplicate conflict mode (v3.3.0) | NEXT-2 (YAML export), NEXT-3 (rule chains) |
-| LlamaFS [S1] | OSS Electron | Watch mode, minimal-diff index | NEXT-1, NEXT-5 |
-| Czkawka/Krokiet [S10] | OSS Rust GUI | Perceptual hash dedup, broken video detection (v11) | NEXT-19, NEXT-32, N-14 |
-| fclones [S11] | OSS Rust CLI | Reflinks, cross-library dedup, JSON, fclones-gui (pre-release) | NEXT-20 |
-| TagStudio [S9] | OSS Python/Qt | Non-destructive tagging, infinite scrolling (v9.5.6), 7+ locales | Different model (move vs tag) -- intentional |
-| electron-dam [S43] | OSS Electron | Semantic search, virtual bundles, 3D/audio preview, Ollama embedding | L-1, L-17, L-18, N-10 pattern |
-| AIFileSorterShellExtension [S45] | OSS C# | Windows Explorer context menu, 2-min undo, OpenRouter LLM | L-6 (context menu -- prior art confirmed) |
+| organize-cli [S8] | OSS CLI | YAML rules, dry-run, deduplicate conflict mode (v3.3.0), exiftool integration | NEXT-2 (YAML export), NEXT-3 (rule chains), NEXT-43 (exiftool) |
+| LlamaFS [S1] | OSS Electron | Watch mode, minimal-diff index, Groq/Ollama backends | NEXT-1, NEXT-5 |
+| Czkawka/Krokiet [S10] | OSS Rust GUI | Perceptual hash dedup, broken video detection (v11), bad-names scanner, video optimizer, EXIF remover | NEXT-19, NEXT-32, N-14, NEXT-42, L-21, UC-6 |
+| fclones [S11] | OSS Rust CLI | Reflinks, cross-library dedup, JSON, fclones-gui (pre-release), blake3 default | NEXT-20, NEXT-33 |
+| TagStudio [S9] | OSS Python/Qt | Non-destructive tagging, infinite scrolling (v9.5.6), CB7/CBR/CBT thumbnails, 7+ locales | Different model (move vs tag) -- intentional; NEXT-41 pattern |
+| electron-dam [S43] | OSS Electron | Semantic search, virtual bundles, 3D/audio preview, Ollama embedding | L-1, L-17, L-18 |
+| AIFileSorterShellExtension [S45] | OSS C# | Windows Explorer context menu, 2-min undo, OpenRouter LLM, game/mod file recognition | L-6 (context menu -- prior art confirmed) |
+| hazelnut [S16] | OSS Rust TUI | TOML rules, daemon, 15 TUI themes, desktop error notifications, age/size conditions, archive action | NEXT-1, NEXT-42 pattern |
+| Foldr [S67] | OSS Rust CLI | Preview → confirm → move flow, keep-newest/keep-largest/keep-oldest dedup, per-op undo IDs, TOML config | NEXT-19 UX, NEXT-24 |
+| hyperfield AI File Sorter [S3] | OSS Python+Qt | Local GGUF, Vulkan/CUDA/Metal GPU inference, Microsoft Store distribution | L-5 (GGUF), NEXT-30 distribution |
 | Eagle App [S19] | Commercial | Visual search, designer UX | NEXT-22 (thumbnail browser) |
 | Hazel [S20] | Commercial macOS | Rule chains, Spotlight conditions | NEXT-3, NEXT-1 |
 | File Juggler [S21] | Commercial Win | Folder watch, content conditions | NEXT-1, NEXT-3 |
@@ -970,8 +1044,10 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 **FileOrganizer's unique position**: design-asset-specialist classifier (384 categories, Envato
 marketplace ID enrichment, AEP-aware pipeline) + multi-TB real-world hardening + metadata-first
-AI cost reduction (N-9). No OSS competitor combines all three. Primary gaps closing in v8.3.0:
-metadata extractors (N-9), embeddings classifier (N-10), ReviewPanel thumbnails (N-11).
+AI cost reduction (N-9) + WinUI 3 shell (15 live pages, ui-v0.5.0). No OSS competitor combines
+all three. Primary gaps closing in v8.3.0: metadata extractors (N-9, NOW), provenance (N-12,
+NOW), broken file detection (N-14, NOW). N-10 (embeddings), N-11 (thumbnails), N-13 (security
+hardening) are **already shipped**.
 
 ---
 
@@ -1110,3 +1186,40 @@ for relevance; "directly portable" means the file can be copied with minor adapt
   with SQLite FTS5 BM25 search (lines 581–637) and UserDB favorites/history schema. Pattern-
   reusable for L-4 (FTS5 schema + BM25 weights + ORDER BY rank, quality DESC) and NEXT-7
   (UserDB favorites/history pattern as template for `corrections.json` durable storage).
+
+### New Sources (Phase 1 refresh, June 2026)
+- [S62] WindowsAppSDK 1.7.0 release notes --
+  https://github.com/microsoft/WindowsAppSDK/releases/tag/v1.7.0
+  (TitleBar control; SetTaskBarIcon/SetTitleBarIcon; AppWindowTitleBar.PreferredTheme;
+  OAuth2Manager for in-app OAuth 2.0 PKCE; BackgroundTaskBuilder full-trust COM background tasks)
+- [S63] WindowsAppSDK 1.6.0 release notes --
+  https://github.com/microsoft/WindowsAppSDK/releases/tag/v1.6.0
+  (Native AOT support; TabView tear-out; XAML Islands improvements)
+- [S64] TagStudio v9.5.6 release notes --
+  https://github.com/TagStudioDev/TagStudio/releases/tag/v9.5.6
+  (CB7/CBR/CBT thumbnail rendering; infinite scrolling; 7 active locales via Weblate)
+- [S65] ai-file-organizer (thebearwithabite) --
+  https://github.com/thebearwithabite/ai-file-organizer
+  (BPM/mood audio analysis; Google Drive integration; SHA-256 dedup; review queue with LLM
+  caching; per-item correction feedback loop)
+- [S66] FileWizardAI (AIxHunter) -- https://github.com/AIxHunter/FileWizardAI
+  (Angular+FastAPI; SQLite caching of LLM file summaries; semantic vector search; Python backend)
+- [S67] Foldr (qasimio) -- https://github.com/qasimio/foldr
+  (Rust CLI file organizer; preview → confirm → move flow; keep-newest/keep-largest/keep-oldest
+  dedup flags; per-operation undo IDs; TOML config; --show-ignored diagnostic flag)
+- [S68] hazelnut (ricardodantas) -- https://github.com/ricardodantas/hazelnut
+  (Rust Hazel-clone; TOML rules; glob/regex conditions; age/size conditions; 15 TUI themes;
+  daemon watch mode; desktop error notifications via notify-rust; archive action; send-to-trash)
+- [S69] organize-cli v3.0.0 changelog --
+  https://github.com/tfeldmann/organize/releases/tag/3.0.0
+  (exiftool integration via ORGANIZE_EXIFTOOL_PATH; hardlink action; JSONL output format;
+  `write` action; `min_depth` location option; YAML tag subsets; 4-10x speed-up)
+- [S70] fastembed PyPI -- https://pypi.org/project/fastembed/
+  (ONNX Runtime inference; dense + sparse SPLADE++ embeddings; late interaction ColBERT;
+  image embeddings via CLIP ViT-B-32; reranking; custom model registration; no GPU required)
+- [S71] blake3 PyPI v1.0.8 -- https://pypi.org/project/blake3/
+  (multithreaded hashing; memory-mapped file hashing via update_mmap(); hashlib-compatible API;
+  precompiled binary wheels; ~10x faster than SHA-256 on modern CPUs)
+- [S72] hyperfield AI File Sorter v1.7.3 -- https://github.com/hyperfield/ai-file-sorter
+  (local GGUF model registration; Vulkan/CUDA/Metal GPU acceleration; Microsoft Store listing;
+  privacy-first design; batch-review panel pattern)
