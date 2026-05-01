@@ -47,6 +47,15 @@ public sealed partial class HomePage : Page
         Actions.Add(new HomeActionTile("Duplicates",
             "Hash + perceptual dedup with side-by-side compare.",
             "\uE8C8", violet, blueSurface, "Planned", "Wire up", "duplicates"));
+        Actions.Add(new HomeActionTile("Music",
+            "Picard-style tagging: Chromaprint → AcoustID → MusicBrainz → mutagen.",
+            "\uE8D6", violet, blueSurface, "Ready", "Open music", "music"));
+        Actions.Add(new HomeActionTile("Video",
+            "GuessIt filename parser, custom-format scoring, TV/Movie rename.",
+            "\uE714", red, blueSurface, "Ready", "Open video", "video"));
+        Actions.Add(new HomeActionTile("Books",
+            "EPUB/MOBI/AZW3/PDF/CBZ metadata + optional ISBN lookup.",
+            "\uE82D", yellow, greenSurface, "Ready", "Open books", "books"));
         Actions.Add(new HomeActionTile("Photos",
             "EXIF, geotag map, AI event grouping, faces.",
             "\uEB9F", green, greenSurface, "Planned", "Wire up", "photos"));
