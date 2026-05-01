@@ -20,8 +20,15 @@ public sealed partial class VideoPage : Page
     {
         InitializeComponent();
         _python = App.Services.GetRequiredService<IPythonRunner>();
+        var settings = App.Services.GetRequiredService<IUserSettings>();
         ResultsList.ItemsSource = Results;
+        PatternBox.Text = settings.DefaultVideoRenamePattern;
     }
+
+    private void MoviesPreset_Click(object sender, RoutedEventArgs e) =>
+        PatternBox.Text = "Movies/{title} ({year})/{title} ({year}).{ext}";
+    private void TvPreset_Click(object sender, RoutedEventArgs e) =>
+        PatternBox.Text = "TV/{title}/Season {season:02}/{title} - S{season:02}E{episode:02}.{ext}";
 
     private string SelectedMode()
     {

@@ -46,35 +46,40 @@
                                Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
                     <ComboBox Grid.Column="1" x:Name="ModeCombo"
                               Style="{StaticResource PremiumComboBoxStyle}" HorizontalAlignment="Stretch">
-                        <ComboBoxItem Tag="preview" Content="Preview (identify only)" IsSelected="True"/>
-                        <ComboBoxItem Tag="tag" Content="Tag (write tags + optional rename)"/>
+                        <ComboBoxItem Tag="preview" Content="Just identify my songs (safe, no changes)" IsSelected="True"/>
+                        <ComboBoxItem Tag="tag" Content="Tag and (optionally) rename — writes ID3/Vorbis/MP4 tags"/>
                     </ComboBox>
                     <Button Grid.Column="2" x:Name="ScanButton" Content="Run"
                             Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
                     <Button Grid.Column="3" x:Name="CancelButton" Content="Stop"
                             Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
                 </Grid>
-                <Grid ColumnSpacing="12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Rename pattern"
-                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
-                    <TextBox Grid.Column="1" x:Name="PatternBox"
-                             Style="{StaticResource PremiumTextBoxStyle}"
-                             PlaceholderText="(optional) Music/{albumartist}/{year} - {album}/{disc:02}-{track:02} {title}.{ext}"/>
-                </Grid>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="AcoustID API key"
-                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
-                    <PasswordBox x:Name="ApiKeyBox" Width="240"
-                                 PlaceholderText="(optional — env: ACOUSTID_API_KEY)"/>
-                    <HyperlinkButton Content="Register free"
-                                     NavigateUri="https://acoustid.org/api-key"/>
-                    <TextBlock Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"
-                               Text="Required only for fingerprint fallback. Existing-tag and text-search matches work without one."/>
-                </StackPanel>
+                <Expander Header="Advanced options"
+                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="10">
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="Rename pattern (only used in Tag mode)"
+                                       Style="{StaticResource LabelTextStyle}"/>
+                            <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                                       Text="Tokens: {albumartist}, {album}, {title}, {year}, {track}, {disc}, {ext}. Leave blank to skip renaming. Default comes from Settings."/>
+                            <TextBox x:Name="PatternBox" Style="{StaticResource PremiumTextBoxStyle}"/>
+                        </StackPanel>
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="AcoustID API key (optional)"
+                                       Style="{StaticResource LabelTextStyle}"/>
+                            <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                                       Text="Only needed for the fingerprint fallback path on untagged files. Existing-tag and text-search matches work without one. Saved in Settings if you set it there."/>
+                            <Grid ColumnSpacing="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <PasswordBox Grid.Column="0" x:Name="ApiKeyBox"/>
+                                <HyperlinkButton Grid.Column="1" Content="Get a free key"
+                                                 NavigateUri="https://acoustid.org/api-key"/>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+                </Expander>
             </StackPanel>
         </Border>
 

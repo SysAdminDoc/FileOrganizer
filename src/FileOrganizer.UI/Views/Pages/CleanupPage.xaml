@@ -59,12 +59,12 @@
                               Style="{StaticResource PremiumComboBoxStyle}"
                               SelectionChanged="ScannerCombo_SelectionChanged"
                               HorizontalAlignment="Stretch">
-                        <ComboBoxItem Tag="empty_folders" Content="Empty folders" IsSelected="True"/>
+                        <ComboBoxItem Tag="empty_folders" Content="Empty folders — no files anywhere inside" IsSelected="True"/>
                         <ComboBoxItem Tag="empty_files" Content="Empty (zero-byte) files"/>
-                        <ComboBoxItem Tag="temp_files" Content="Temp / junk files"/>
-                        <ComboBoxItem Tag="broken_files" Content="Broken / corrupt files (magic-byte check)"/>
-                        <ComboBoxItem Tag="big_files" Content="Big files (≥ threshold)"/>
-                        <ComboBoxItem Tag="old_downloads" Content="Old downloads (top-level only)"/>
+                        <ComboBoxItem Tag="temp_files" Content="Temp / junk — .tmp, .bak, Thumbs.db, .DS_Store, partial downloads"/>
+                        <ComboBoxItem Tag="broken_files" Content="Broken files — wrong magic bytes / corrupt archives"/>
+                        <ComboBoxItem Tag="big_files" Content="Big files — anything above your size threshold"/>
+                        <ComboBoxItem Tag="old_downloads" Content="Stale downloads — files not opened in N days"/>
                     </ComboBox>
                     <Button Grid.Column="2"
                             x:Name="ScanButton"

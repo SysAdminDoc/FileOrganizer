@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="FileOrganizer.UI.Views.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BackgroundBrush}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
+        <Grid Padding="32" RowSpacing="22">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Spacing="6">
+                <TextBlock Text="Settings" Style="{StaticResource TitleTextStyle}"/>
+                <TextBlock Style="{StaticResource SubtitleTextStyle}"
+                           Text="Pick a theme, set your defaults, and stash API keys here. Everything is saved automatically."/>
+            </StackPanel>
+
+            <!-- Theme picker -->
+            <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="14">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE790;" FontSize="16"
+                                  Foreground="{StaticResource AccentPrimaryBrush}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="Theme" Style="{StaticResource PanelTitleTextStyle}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource MutedTextStyle}"
+                               Text="Click any tile to switch instantly. Your choice is saved between launches."/>
+                    <ItemsRepeater x:Name="ThemeRepeater">
+                        <ItemsRepeater.Layout>
+                            <UniformGridLayout MinItemWidth="220" MinItemHeight="116"
+                                               MinRowSpacing="12" MinColumnSpacing="12"
+                                               ItemsStretch="Fill"/>
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+                                <Button Tag="{Binding Id}" Click="ThemeTile_Click"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        Background="{Binding TileBackground}"
+                                        BorderBrush="{Binding TileBorder}"
+                                        BorderThickness="1"
+                                        CornerRadius="14"
+                                        Padding="16,12">
+                                    <StackPanel Spacing="8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding DisplayName}"
+                                                       Foreground="{Binding NameBrush}"
+                                                       FontWeight="SemiBold" FontSize="14"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Indicator}"
+                                                       Foreground="{Binding IndicatorBrush}"
+                                                       FontWeight="SemiBold" FontSize="12"/>
+                                        </Grid>
+                                        <TextBlock Text="{Binding Description}"
+                                                   Foreground="{Binding DescriptionBrush}"
+                                                   FontSize="11" TextWrapping="Wrap" MaxLines="2"/>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <Border Width="22" Height="22" CornerRadius="6" Background="{Binding Swatch1}"/>
+                                            <Border Width="22" Height="22" CornerRadius="6" Background="{Binding Swatch2}"/>
+                                            <Border Width="22" Height="22" CornerRadius="6" Background="{Binding Swatch3}"/>
+                                            <Border Width="22" Height="22" CornerRadius="6" Background="{Binding Swatch4}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </StackPanel>
+            </Border>
+
+            <!-- Music defaults -->
+            <Border Grid.Row="2" Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="14">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE8D6;" FontSize="16"
+                                  Foreground="{StaticResource AccentVioletBrush}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="Music" Style="{StaticResource PanelTitleTextStyle}"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="AcoustID API key (optional)"
+                                   Style="{StaticResource LabelTextStyle}"/>
+                        <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                                   Text="Only needed if you want fingerprint-based identification of untagged music. Existing-tag matching works without one. Free, no email required."/>
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <PasswordBox Grid.Column="0" x:Name="ApiKeyBox"/>
+                            <HyperlinkButton Grid.Column="1" Content="Get a key (acoustid.org)"
+                                             NavigateUri="https://acoustid.org/api-key"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Default rename pattern" Style="{StaticResource LabelTextStyle}"/>
+                        <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                                   Text="Tokens: {albumartist}, {album}, {title}, {year}, {track}, {disc}, {ext}. Use {disc:02} for zero-padded numbers."/>
+                        <TextBox x:Name="MusicPatternBox" Style="{StaticResource PremiumTextBoxStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Video / Books / Subtitles defaults -->
+            <Border Grid.Row="3" Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="14">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE713;" FontSize="16"
+                                  Foreground="{StaticResource AccentPrimaryBrush}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="Other defaults" Style="{StaticResource PanelTitleTextStyle}"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Video rename pattern" Style="{StaticResource LabelTextStyle}"/>
+                        <TextBlock Style="{StaticResource MutedTextStyle}"
+                                   Text="Tokens: {title}, {year}, {season:02}, {episode:02}, {ext}"/>
+                        <TextBox x:Name="VideoPatternBox" Style="{StaticResource PremiumTextBoxStyle}"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Book rename pattern" Style="{StaticResource LabelTextStyle}"/>
+                        <TextBlock Style="{StaticResource MutedTextStyle}"
+                                   Text="Tokens: {author}, {title}, {series}, {series_index}, {year}, {ext}"/>
+                        <TextBox x:Name="BookPatternBox" Style="{StaticResource PremiumTextBoxStyle}"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="Default subtitle languages" Style="{StaticResource LabelTextStyle}"/>
+                        <TextBlock Style="{StaticResource MutedTextStyle}"
+                                   Text="Comma-separated codes (en, es, fr, de, ja, …) — used by the Subtitles page."/>
+                        <TextBox x:Name="LangsBox" Style="{StaticResource PremiumTextBoxStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Buttons -->
+            <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="12">
+                <Button Content="Save defaults" Style="{StaticResource PrimaryButtonStyle}"
+                        Click="Save_Click"/>
+                <Button Content="Restore defaults" Style="{StaticResource GhostButtonStyle}"
+                        Click="Reset_Click"/>
+                <TextBlock x:Name="SaveStatusText"
+                           Style="{StaticResource MutedTextStyle}"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

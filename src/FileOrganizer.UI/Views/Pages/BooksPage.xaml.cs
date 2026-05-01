@@ -19,7 +19,9 @@ public sealed partial class BooksPage : Page
     {
         InitializeComponent();
         _python = App.Services.GetRequiredService<IPythonRunner>();
+        var settings = App.Services.GetRequiredService<IUserSettings>();
         ResultsList.ItemsSource = Results;
+        PatternBox.Text = settings.DefaultBookRenamePattern;
     }
 
     private string SelectedMode()
