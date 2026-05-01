@@ -31,6 +31,10 @@ public sealed partial class DuplicatesPage : Page
 
     private void Similarity_Changed(object sender, SelectionChangedEventArgs e)
     {
+        // ComboBox raises SelectionChanged during XAML init (before ThresholdBox
+        // has been constructed because it's declared after the combo in the
+        // tree). Guard against the null until both controls exist.
+        if (ThresholdBox is null) return;
         if (SimilarityCombo.SelectedItem is ComboBoxItem c && c.Tag is string s
             && double.TryParse(s, out var v))
             ThresholdBox.Value = v;
