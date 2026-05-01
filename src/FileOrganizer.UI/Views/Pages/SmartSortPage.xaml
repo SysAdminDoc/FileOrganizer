@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="FileOrganizer.UI.Views.Pages.SmartSortPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BackgroundBrush}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollMode="Disabled">
+        <Grid Padding="32" RowSpacing="22">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="{StaticResource HeroGradientBrush}"
+                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                    CornerRadius="20" Padding="28">
+                <StackPanel Spacing="10">
+                    <Border Background="{StaticResource SurfaceBrush}"
+                            BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                            CornerRadius="999" Padding="12,6" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Ellipse Width="6" Height="6" Fill="{StaticResource AccentGreenBrush}"
+                                     VerticalAlignment="Center"/>
+                            <TextBlock Text="THE CROWN JEWEL"
+                                       Style="{StaticResource EyebrowTextStyle}"
+                                       Foreground="{StaticResource AccentPrimaryBrush}"/>
+                        </StackPanel>
+                    </Border>
+                    <TextBlock Text="Smart Sort — drop a folder, get an organized library."
+                               Style="{StaticResource HeroTextStyle}"
+                               TextWrapping="Wrap" MaxWidth="980"/>
+                    <TextBlock Style="{StaticResource SubtitleTextStyle}"
+                               TextWrapping="Wrap" MaxWidth="980"
+                               Text="Walks every file under a source folder, classifies it by extension into one of ten buckets, and routes each one to the right pipeline: music files get Picard tagging, videos get GuessIt episode parsing, books get EPUB/PDF metadata, fonts get the OS/2 + name table, code projects get a marker-file walk, everything else goes to a typed bucket. Preview shows the planned destination tree before any file moves."/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="14">
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Source" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="SourceTextBox" Style="{StaticResource PremiumTextBoxStyle}"
+                                 PlaceholderText="C:\Users\You\Downloads (the messy folder you want sorted)"/>
+                        <Button Grid.Column="2" x:Name="SourceBrowseButton" Content="Browse"
+                                Style="{StaticResource SecondaryButtonStyle}" Click="BrowseSource_Click"/>
+                    </Grid>
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Destination" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="DestTextBox" Style="{StaticResource PremiumTextBoxStyle}"
+                                 PlaceholderText="C:\Users\You\Organized (will create Music/, Video/, Books/, Pictures/, ...)"/>
+                        <Button Grid.Column="2" x:Name="DestBrowseButton" Content="Browse"
+                                Style="{StaticResource SecondaryButtonStyle}" Click="BrowseDest_Click"/>
+                    </Grid>
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Mode" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                        <ComboBox Grid.Column="1" x:Name="ModeCombo"
+                                  Style="{StaticResource PremiumComboBoxStyle}" HorizontalAlignment="Stretch">
+                            <ComboBoxItem Tag="preview" Content="Preview (show planned tree, don't move)" IsSelected="True"/>
+                            <ComboBoxItem Tag="apply" Content="Apply (move into destination)"/>
+                        </ComboBox>
+                        <CheckBox Grid.Column="2" x:Name="CopyCheck" Content="Copy instead of move"
+                                  VerticalAlignment="Center"/>
+                        <Button Grid.Column="3" x:Name="ScanButton" Content="Run"
+                                Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
+                        <Button Grid.Column="4" x:Name="CancelButton" Content="Stop"
+                                Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="2" Style="{StaticResource SubtleCardStyle}">
+                <Grid ColumnSpacing="32">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Spacing="2">
+                        <TextBlock Text="SCANNED" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock x:Name="ScannedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Spacing="2">
+                        <TextBlock Text="PLANNED" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock x:Name="PlannedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"
+                                   Foreground="{StaticResource AccentPrimaryBrush}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Spacing="2">
+                        <TextBlock Text="MOVED" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock x:Name="MovedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"
+                                   Foreground="{StaticResource AccentGreenBrush}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" Spacing="2">
+                        <TextBlock Text="ERRORS" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock x:Name="ErrorsText" Text="0" Style="{StaticResource MetricNumberTextStyle}"
+                                   Foreground="{StaticResource AccentRedBrush}"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="4" x:Name="StatusText"
+                               Text="Idle. Drop a source and destination, then run."
+                               Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"
+                               HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"/>
+                </Grid>
+            </Border>
+
+            <ItemsRepeater Grid.Row="3" x:Name="CategoryStrip">
+                <ItemsRepeater.Layout>
+                    <UniformGridLayout MinItemWidth="156" MinItemHeight="78"
+                                       MinRowSpacing="10" MinColumnSpacing="10"
+                                       ItemsStretch="Fill"/>
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource SurfaceBrush}"
+                                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                                CornerRadius="14" Padding="14,10">
+                            <StackPanel Spacing="4">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="{Binding Glyph}" FontSize="14"
+                                              Foreground="{Binding AccentBrush}"/>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource LabelTextStyle}"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding CountText}"
+                                           Style="{StaticResource MetricNumberTextStyle}"
+                                           FontSize="20" LineHeight="24"
+                                           Foreground="{Binding AccentBrush}"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+
+            <Border Grid.Row="4" Style="{StaticResource CardStyle}" Padding="0" MinHeight="320">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                    <Border Grid.Row="0" Background="{StaticResource SurfaceMutedBrush}"
+                            BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1"
+                            Padding="16,10" CornerRadius="16,16,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/><ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="80"/><ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="SOURCE" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="DESTINATION" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="CAT" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="STATUS" Style="{StaticResource MetricLabelTextStyle}"/>
+                        </Grid>
+                    </Border>
+                    <ListView x:Name="ResultsList" Grid.Row="1" SelectionMode="None" Padding="0,4">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Padding" Value="16,4"/><Setter Property="MinHeight" Value="28"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/><ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="80"/><ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Source}"
+                                               Style="{StaticResource CodeTextStyle}"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               ToolTipService.ToolTip="{Binding Source}"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Dest}"
+                                               Style="{StaticResource CodeTextStyle}"
+                                               Foreground="{StaticResource TextPrimaryBrush}"
+                                               TextTrimming="CharacterEllipsis"
+                                               ToolTipService.ToolTip="{Binding Dest}"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Category}"
+                                               Style="{StaticResource CodeTextStyle}"
+                                               Foreground="{Binding CategoryBrush}"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding Status}"
+                                               Style="{StaticResource CodeTextStyle}"
+                                               Foreground="{Binding StatusBrush}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</Page>

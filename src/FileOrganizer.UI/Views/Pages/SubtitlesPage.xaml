@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="FileOrganizer.UI.Views.Pages.SubtitlesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BackgroundBrush}">
+    <Grid Padding="32" RowSpacing="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Spacing="6">
+            <TextBlock Text="Subtitles" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Style="{StaticResource SubtitleTextStyle}"
+                       Text="Auto-fetch subtitles via Subliminal. Skips MKV files that already have embedded subs (enzyme). Saves .srt next to each video."/>
+        </StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+            <StackPanel Spacing="14">
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Folder" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="FolderTextBox" Style="{StaticResource PremiumTextBoxStyle}"
+                             PlaceholderText="C:\path\to\Movies or TV"/>
+                    <Button Grid.Column="2" x:Name="BrowseButton" Content="Browse"
+                            Style="{StaticResource SecondaryButtonStyle}" Click="Browse_Click"/>
+                </Grid>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Languages"
+                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="LanguagesBox"
+                             Style="{StaticResource PremiumTextBoxStyle}"
+                             Text="en"
+                             PlaceholderText="comma-separated, e.g. en,es,fr"/>
+                    <TextBlock Grid.Column="2" Text="Min score"
+                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <NumberBox Grid.Column="3" x:Name="MinScoreBox" Value="50" Minimum="0" Maximum="200"
+                               SpinButtonPlacementMode="Inline" Width="100"/>
+                    <Button Grid.Column="4" x:Name="ScanButton" Content="Fetch"
+                            Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
+                    <Button Grid.Column="5" x:Name="CancelButton" Content="Stop"
+                            Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="2" Style="{StaticResource SubtleCardStyle}">
+            <Grid ColumnSpacing="32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Spacing="2">
+                    <TextBlock Text="SCANNED" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="ScannedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="2">
+                    <TextBlock Text="DOWNLOADED" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="DownloadedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"
+                               Foreground="{StaticResource AccentPrimaryBrush}"/>
+                </StackPanel>
+                <TextBlock Grid.Column="2" x:Name="StatusText" Text="Idle. Pick a video folder."
+                           Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"
+                           HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="3" Style="{StaticResource CardStyle}" Padding="0">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{StaticResource SurfaceMutedBrush}"
+                        BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1"
+                        Padding="16,10" CornerRadius="16,16,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/><ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="120"/><ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="VIDEO" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="1" Text="LANG" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="2" Text="PROVIDER" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="3" Text="STATUS" Style="{StaticResource MetricLabelTextStyle}"/>
+                    </Grid>
+                </Border>
+                <ListView x:Name="ResultsList" Grid.Row="1" SelectionMode="Extended" Padding="0,4">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Padding" Value="16,6"/><Setter Property="MinHeight" Value="32"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="120"/><ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding FileName}"
+                                           Style="{StaticResource CodeTextStyle}"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           TextTrimming="CharacterEllipsis"
+                                           ToolTipService.ToolTip="{Binding Path}"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Language}" Style="{StaticResource CodeTextStyle}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Provider}" Style="{StaticResource CodeTextStyle}"/>
+                                <TextBlock Grid.Column="3" Text="{Binding Status}"
+                                           Style="{StaticResource CodeTextStyle}"
+                                           Foreground="{Binding StatusBrush}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
