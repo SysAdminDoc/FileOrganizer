@@ -35,16 +35,15 @@
                 <StackPanel Orientation="Horizontal" Spacing="12">
                     <ComboBox x:Name="SourceCombo"
                               Style="{StaticResource PremiumComboBoxStyle}"
-                              MinWidth="220">
-                        <ComboBoxItem Content="ae" IsSelected="True"/>
-                        <ComboBoxItem Content="design"/>
-                        <ComboBoxItem Content="design_org"/>
-                        <ComboBoxItem Content="loose_files"/>
+                              MinWidth="280">
+                        <ComboBoxItem Tag="ae" Content="ae — After Effects templates" IsSelected="True"/>
+                        <ComboBoxItem Tag="design" Content="design — Design Unorganized folder"/>
+                        <ComboBoxItem Tag="design_org" Content="design_org — Design Organized (with legacy hints)"/>
+                        <ComboBoxItem Tag="loose_files" Content="loose_files — root-level standalone files"/>
                     </ComboBox>
-                    <TextBlock Text="Maps to organize_run.py --source &lt;name&gt;"
-                               Style="{StaticResource MutedTextStyle}"
-                               VerticalAlignment="Center"/>
                 </StackPanel>
+                <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                           Text="This page drives the design-asset AI batch pipeline (DeepSeek classification → position-based apply → undo journal). Most users want Smart Sort or Files instead — those work on any folder, no AI batch prep needed."/>
             </StackPanel>
         </Border>
 

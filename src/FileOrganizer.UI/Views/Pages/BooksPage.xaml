@@ -46,8 +46,8 @@
                                Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
                     <ComboBox Grid.Column="1" x:Name="ModeCombo"
                               Style="{StaticResource PremiumComboBoxStyle}" HorizontalAlignment="Stretch">
-                        <ComboBoxItem Tag="preview" Content="Preview (read metadata only)" IsSelected="True"/>
-                        <ComboBoxItem Tag="rename" Content="Rename (move into template path)"/>
+                        <ComboBoxItem Tag="preview" Content="Just read metadata (safe, no changes)" IsSelected="True"/>
+                        <ComboBoxItem Tag="rename" Content="Sort into Books/{author}/... folders (moves files)"/>
                     </ComboBox>
                     <Button Grid.Column="2" x:Name="ScanButton" Content="Run"
                             Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>

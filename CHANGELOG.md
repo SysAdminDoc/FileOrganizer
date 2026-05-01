@@ -2,6 +2,74 @@
 
 All notable changes to FileOrganizer will be documented in this file.
 
+## [FileOrganizer.UI v0.5.0] - 2026-05-01
+
+### Added (themes + missing pages + UX overhaul)
+
+The shell goes from 11 to **15 live pages** — all the placeholder routes
+ship live. Plus a 7-theme picker, persisted user defaults, and a
+sweeping pass over every page so settings read in plain English instead
+of CLI jargon.
+
+**Themes** — 7 dark + 1 light (Steam Dark default · Catppuccin Mocha ·
+OLED Black · GitHub Dark · Nord · Dracula · Light). Live preview tile
+grid in the new **Settings** page; click any tile to switch instantly.
+Choice persists between launches via `ApplicationData.LocalSettings`.
+
+**`SettingsPage`** — central hub for preferences. Theme picker,
+AcoustID API key (saved securely in user settings, auto-applied to the
+Music page), default rename patterns for Music / Video / Books, default
+subtitle languages.
+
+**`FilesPage`** + `files_run.py` — extension-based file organizer for
+users who don't need AI in the loop. Routes any folder into clean
+buckets (Pictures/JPEGs, Music/Lossless, Documents/PDFs, Archives,
+Installers, Disk Images, 3D Models, Torrents, …) with finer subcategory
+splits than Smart Sort.
+
+**`PhotosPage`** + `photos_run.py` — EXIF reader. Pulls date taken,
+camera, lens, ISO, aperture, shutter, focal length, GPS lat/lon. Optional
+date-based rename groups photos into `Pictures/{year}/{year-month-day}/`.
+
+**`WatchPage`** + `watch_run.py` — long-running auto-organize service.
+Per-watch (source, destination) pairs persist between launches in
+`ApplicationData.LocalSettings`. New files trigger Smart Sort
+classification + move (or copy). Live event log + heartbeat metrics.
+
+**`ToolboxPage`** — power-user tile grid: pipeline stats, validate
+sources, asset DB summary, undo last 10 moves, audit organized library,
+phantom-category scan. Each tile streams the script's stdout into a
+shared output panel.
+
+### UX overhaul on existing pages
+
+- **Mode dropdowns** rewritten in plain English. Examples:
+  - Music: "Just identify my songs (safe, no changes)" /
+    "Tag and (optionally) rename — writes ID3/Vorbis/MP4 tags"
+  - Video: "Find duplicates of the same movie/show — keep the highest-
+    quality copy" / "Reorganize into Movies/TV folders (moves files)"
+  - Cleanup: every scanner gets a one-line description of what it finds
+    inline in the dropdown
+  - Duplicates: replaced "Hamming threshold 0-32" with a 5-step
+    similarity preset (Identical / Very strict / Strict (recommended) /
+    Loose / Very loose)
+- **Rename patterns moved into Advanced expanders** — collapsed by
+  default, pre-filled from Settings page defaults. Music + Video gain
+  preset buttons (Movies preset / TV preset).
+- **AcoustID API key** moved out of the Music page header and into the
+  Advanced expander; reads from Settings if not entered locally.
+- **Subtitles language picker** is now a dropdown of common combos
+  (en, en+es, en+fr, en+es+fr+de, ja, ko, zh, pt-BR) instead of a free-
+  text box requiring babelfish code knowledge.
+- **Organize page source picker** gets human-readable labels with the
+  CLI flag in parentheses + a guidance line steering most users to
+  Smart Sort or Files instead.
+
+### Sourcing
+
+Theme palettes adapted from: Catppuccin (MIT), GitHub Primer (MIT),
+Nord (MIT), Dracula (MIT), and a from-scratch Steam-Dark + OLED Black.
+
 ## [FileOrganizer.UI v0.4.0] - 2026-04-30
 
 ### Added (Wave 2 — five new live pages, plus the Smart Sort dispatcher)

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="FileOrganizer.UI.Views.Pages.ToolboxPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BackgroundBrush}">
+    <Grid Padding="32" RowSpacing="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Spacing="6">
+            <TextBlock Text="Toolbox" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Style="{StaticResource SubtitleTextStyle}"
+                       Text="Power-user utilities. Each tile runs a CLI tool from the FileOrganizer Python core. Output streams below."/>
+        </StackPanel>
+
+        <ItemsRepeater Grid.Row="1" x:Name="ToolsRepeater">
+            <ItemsRepeater.Layout>
+                <UniformGridLayout MinItemWidth="280" MinItemHeight="120"
+                                   MinRowSpacing="12" MinColumnSpacing="12"
+                                   ItemsStretch="Fill"/>
+            </ItemsRepeater.Layout>
+            <ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                    <Button Tag="{Binding Id}" Click="Tool_Click"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            Background="{StaticResource SurfaceBrush}"
+                            BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                            CornerRadius="14" Padding="16,12">
+                        <StackPanel Spacing="8">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <FontIcon Glyph="{Binding Glyph}" FontSize="18"
+                                          Foreground="{StaticResource AccentPrimaryBrush}"/>
+                                <TextBlock Text="{Binding Title}" Style="{StaticResource PanelTitleTextStyle}"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding Description}"
+                                       Style="{StaticResource MutedTextStyle}"
+                                       TextWrapping="Wrap" MaxLines="3"/>
+                            <TextBlock Text="{Binding Command}"
+                                       Style="{StaticResource CodeTextStyle}"
+                                       Foreground="{StaticResource TextSubtleBrush}"
+                                       TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
+
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{StaticResource SurfaceMutedBrush}"
+                        BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1"
+                        Padding="16,10" CornerRadius="16,16,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="OUTPUT" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="1" x:Name="StatusText"
+                                   Text="Idle. Click a tile to run a tool."
+                                   Style="{StaticResource MutedTextStyle}"
+                                   VerticalAlignment="Center" Margin="20,0,0,0"
+                                   TextTrimming="CharacterEllipsis"/>
+                        <Button Grid.Column="2" x:Name="CancelButton" Content="Stop"
+                                Style="{StaticResource DangerButtonStyle}"
+                                IsEnabled="False" Click="Cancel_Click"/>
+                    </Grid>
+                </Border>
+                <ScrollViewer x:Name="OutputScroller" Grid.Row="1" Padding="20,16"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="OutputBlock"
+                               Style="{StaticResource CodeTextStyle}"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               IsTextSelectionEnabled="True"
+                               Text="No output yet."/>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

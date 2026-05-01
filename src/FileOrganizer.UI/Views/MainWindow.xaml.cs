@@ -85,6 +85,7 @@ public sealed partial class MainWindow : Window
             "home" => typeof(HomePage),
             "smart" => typeof(SmartSortPage),
             "organize" => typeof(OrganizePage),
+            "files" => typeof(FilesPage),
             "cleanup" => typeof(CleanupPage),
             "duplicates" => typeof(DuplicatesPage),
             "music" => typeof(MusicPage),
@@ -93,6 +94,10 @@ public sealed partial class MainWindow : Window
             "fonts" => typeof(FontsPage),
             "code" => typeof(CodePage),
             "subtitles" => typeof(SubtitlesPage),
+            "photos" => typeof(PhotosPage),
+            "watch" => typeof(WatchPage),
+            "toolbox" => typeof(ToolboxPage),
+            "settings" => typeof(SettingsPage),
             _ => typeof(PlaceholderPage),
         };
 
@@ -110,30 +115,6 @@ public sealed partial class MainWindow : Window
 
     private static PlaceholderInfo GetPlaceholderInfo(string routeKey) => routeKey switch
     {
-        "files" => new PlaceholderInfo(
-            "Files", "Sort PC files by type and extension",
-            "\uE8A5",
-            "PC File Organizer not wired yet",
-            "Will sort any folder's files by extension or type using configurable per-category output paths. Wraps fileorganizer/files.py.",
-            PoweredBy: "fileorganizer/files.py"),
-        "photos" => new PlaceholderInfo(
-            "Photos", "EXIF, geotag map, and AI event grouping",
-            "\uEB9F",
-            "Photo workflows not wired yet",
-            "EXIF metadata, Leaflet geotag map, AI event clustering, optional face detection, thumbnail grid. Wraps fileorganizer/photos.py.",
-            PoweredBy: "fileorganizer/photos.py"),
-        "watch" => new PlaceholderInfo(
-            "Watch", "Auto-organize folders on change",
-            "\uE7C8",
-            "Watch mode not wired yet",
-            "Monitor folders, auto-organize new files, system tray, watch history log. Wraps the watch worker in fileorganizer/workers.py.",
-            PoweredBy: "fileorganizer/workers.py"),
-        "toolbox" => new PlaceholderInfo(
-            "Toolbox", "Specialized organize-pipeline utilities",
-            "\uE713",
-            "Toolbox tile grid not wired yet",
-            "Asset DB build/lookup/export, classify_design batches, deepseek_research, fix_phantom_categories, validate, plan-and-apply, undo. Wraps the top-level *.py runners in the repo root.",
-            PoweredBy: "asset_db.py · classify_design.py · organize_run.py"),
         _ => new PlaceholderInfo(
             routeKey, "Module",
             "\uE713",
@@ -172,12 +153,7 @@ public sealed partial class MainWindow : Window
 
         if (args.IsSettingsSelected)
         {
-            // Settings window not wired yet — fall through to placeholder route.
-            ContentFrame.Navigate(typeof(PlaceholderPage), new PlaceholderInfo(
-                "Settings", "Preferences, themes, AI providers",
-                "\uE713",
-                "Settings not wired yet",
-                "Theme picker, AI provider config (DeepSeek/GitHub Models/Ollama), watch folder list, protected paths."), new EntranceNavigationTransitionInfo());
+            ContentFrame.Navigate(typeof(SettingsPage), null, new EntranceNavigationTransitionInfo());
             return;
         }
 

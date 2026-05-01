@@ -46,26 +46,29 @@
                                Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
                     <ComboBox Grid.Column="1" x:Name="ModeCombo"
                               Style="{StaticResource PremiumComboBoxStyle}" HorizontalAlignment="Stretch">
-                        <ComboBoxItem Tag="preview" Content="Preview (parse only)" IsSelected="True"/>
-                        <ComboBoxItem Tag="keepers" Content="Keepers (group + score, mark best per release)"/>
-                        <ComboBoxItem Tag="rename" Content="Rename (move into template path)"/>
+                        <ComboBoxItem Tag="preview" Content="Just identify (safe, no changes)" IsSelected="True"/>
+                        <ComboBoxItem Tag="keepers" Content="Find duplicates of the same movie/show — keep the highest-quality copy"/>
+                        <ComboBoxItem Tag="rename" Content="Reorganize into Movies/TV folders (moves files)"/>
                     </ComboBox>
                     <Button Grid.Column="2" x:Name="ScanButton" Content="Run"
                             Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
                     <Button Grid.Column="3" x:Name="CancelButton" Content="Stop"
                             Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
                 </Grid>
-                <Grid ColumnSpacing="12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Rename pattern"
-                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
-                    <TextBox Grid.Column="1" x:Name="PatternBox"
-                             Style="{StaticResource PremiumTextBoxStyle}"
-                             PlaceholderText="(rename mode) Movies/{title} ({year})/{title} ({year}).{ext}  or  TV/{title}/Season {season:02}/{title} - S{season:02}E{episode:02}.{ext}"/>
-                </Grid>
+                <Expander Header="Advanced: rename pattern (only used in Reorganize mode)"
+                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <StackPanel Spacing="6">
+                        <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                                   Text="Tokens: {title}, {year}, {season:02}, {episode:02}, {ext}. Quick presets:"/>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Content="Movies preset" Style="{StaticResource GhostButtonStyle}"
+                                    Click="MoviesPreset_Click"/>
+                            <Button Content="TV preset" Style="{StaticResource GhostButtonStyle}"
+                                    Click="TvPreset_Click"/>
+                        </StackPanel>
+                        <TextBox x:Name="PatternBox" Style="{StaticResource PremiumTextBoxStyle}"/>
+                    </StackPanel>
+                </Expander>
             </StackPanel>
         </Border>
 
