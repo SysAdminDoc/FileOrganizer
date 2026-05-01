@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="FileOrganizer.UI.Views.Pages.SubtitlesPage"
+    x:Class="FileOrganizer.UI.Views.Pages.PhotosPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Background="{StaticResource BackgroundBrush}">
@@ -10,9 +10,9 @@
             <RowDefinition Height="Auto"/><RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Spacing="6">
-            <TextBlock Text="Subtitles" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Text="Photos" Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Style="{StaticResource SubtitleTextStyle}"
-                       Text="Auto-fetch subtitles via Subliminal. Skips MKV files that already have embedded subs (enzyme). Saves .srt next to each video."/>
+                       Text="Read EXIF metadata: date taken, camera, lens, ISO, aperture, shutter, GPS. Optional rename groups photos by date into Pictures/{year}/{year-month-day}/."/>
         </StackPanel>
         <Border Grid.Row="1" Style="{StaticResource CardStyle}">
             <StackPanel Spacing="14">
@@ -22,7 +22,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Folder" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
                     <TextBox Grid.Column="1" x:Name="FolderTextBox" Style="{StaticResource PremiumTextBoxStyle}"
-                             PlaceholderText="C:\path\to\Movies or TV"/>
+                             PlaceholderText="C:\Users\You\Pictures"/>
                     <Button Grid.Column="2" x:Name="BrowseButton" Content="Browse"
                             Style="{StaticResource SecondaryButtonStyle}" Click="Browse_Click"/>
                 </Grid>
@@ -30,30 +30,15 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Languages"
-                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
-                    <ComboBox Grid.Column="1" x:Name="LanguagesBox"
-                              Style="{StaticResource PremiumComboBoxStyle}"
-                              IsEditable="True" HorizontalAlignment="Stretch"
-                              PlaceholderText="comma-separated, e.g. en,es,fr">
-                        <ComboBoxItem Content="en"/>
-                        <ComboBoxItem Content="en,es"/>
-                        <ComboBoxItem Content="en,fr"/>
-                        <ComboBoxItem Content="en,es,fr,de"/>
-                        <ComboBoxItem Content="ja"/>
-                        <ComboBoxItem Content="ko"/>
-                        <ComboBoxItem Content="zh"/>
-                        <ComboBoxItem Content="pt-BR"/>
+                    <TextBlock Grid.Column="0" Text="What to do" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="1" x:Name="ModeCombo" Style="{StaticResource PremiumComboBoxStyle}" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Tag="preview" Content="Just read EXIF and show me" IsSelected="True"/>
+                        <ComboBoxItem Tag="rename" Content="Group by date taken (Pictures/2024/2024-03-15/...)"/>
                     </ComboBox>
-                    <TextBlock Grid.Column="2" Text="Min score"
-                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
-                    <NumberBox Grid.Column="3" x:Name="MinScoreBox" Value="50" Minimum="0" Maximum="200"
-                               SpinButtonPlacementMode="Inline" Width="100"/>
-                    <Button Grid.Column="4" x:Name="ScanButton" Content="Fetch"
+                    <Button Grid.Column="2" x:Name="ScanButton" Content="Run"
                             Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
-                    <Button Grid.Column="5" x:Name="CancelButton" Content="Stop"
+                    <Button Grid.Column="3" x:Name="CancelButton" Content="Stop"
                             Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
                 </Grid>
             </StackPanel>
@@ -62,18 +47,24 @@
             <Grid ColumnSpacing="32">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Spacing="2">
                     <TextBlock Text="SCANNED" Style="{StaticResource MetricLabelTextStyle}"/>
                     <TextBlock x:Name="ScannedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Spacing="2">
-                    <TextBlock Text="DOWNLOADED" Style="{StaticResource MetricLabelTextStyle}"/>
-                    <TextBlock x:Name="DownloadedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"
+                    <TextBlock Text="WITH EXIF" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="ExifText" Text="0"
+                               Style="{StaticResource MetricNumberTextStyle}"
                                Foreground="{StaticResource AccentPrimaryBrush}"/>
                 </StackPanel>
-                <TextBlock Grid.Column="2" x:Name="StatusText" Text="Idle. Pick a video folder."
+                <StackPanel Grid.Column="2" Spacing="2">
+                    <TextBlock Text="RENAMED" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="RenamedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                </StackPanel>
+                <TextBlock Grid.Column="3" x:Name="StatusText"
+                           Text="Idle. Pick a photo folder."
                            Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"
                            HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"/>
             </Grid>
@@ -86,39 +77,51 @@
                         Padding="16,10" CornerRadius="16,16,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/><ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="120"/><ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/><ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="180"/><ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="80"/><ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="VIDEO" Style="{StaticResource MetricLabelTextStyle}"/>
-                        <TextBlock Grid.Column="1" Text="LANG" Style="{StaticResource MetricLabelTextStyle}"/>
-                        <TextBlock Grid.Column="2" Text="PROVIDER" Style="{StaticResource MetricLabelTextStyle}"/>
-                        <TextBlock Grid.Column="3" Text="STATUS" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="0" Text="FILE" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="1" Text="DATE" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="2" Text="CAMERA" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="3" Text="ISO" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="4" Text="APERTURE" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="5" Text="SHUTTER" Style="{StaticResource MetricLabelTextStyle}"/>
+                        <TextBlock Grid.Column="6" Text="GPS" Style="{StaticResource MetricLabelTextStyle}"/>
                     </Grid>
                 </Border>
-                <ListView x:Name="ResultsList" Grid.Row="1" SelectionMode="Extended" Padding="0,4">
+                <ListView x:Name="ResultsList" Grid.Row="1" SelectionMode="None" Padding="0,4">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Padding" Value="16,6"/><Setter Property="MinHeight" Value="32"/>
+                            <Setter Property="Padding" Value="16,4"/><Setter Property="MinHeight" Value="28"/>
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="120"/><ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/><ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="180"/><ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="80"/><ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="100"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="{Binding FileName}"
                                            Style="{StaticResource CodeTextStyle}"
                                            Foreground="{StaticResource TextPrimaryBrush}"
                                            TextTrimming="CharacterEllipsis"
                                            ToolTipService.ToolTip="{Binding Path}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Language}" Style="{StaticResource CodeTextStyle}"/>
-                                <TextBlock Grid.Column="2" Text="{Binding Provider}" Style="{StaticResource CodeTextStyle}"/>
-                                <TextBlock Grid.Column="3" Text="{Binding Status}"
+                                <TextBlock Grid.Column="1" Text="{Binding Date}" Style="{StaticResource CodeTextStyle}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Camera}"
                                            Style="{StaticResource CodeTextStyle}"
-                                           Foreground="{Binding StatusBrush}"/>
+                                           TextTrimming="CharacterEllipsis"/>
+                                <TextBlock Grid.Column="3" Text="{Binding Iso}" Style="{StaticResource CodeTextStyle}"/>
+                                <TextBlock Grid.Column="4" Text="{Binding Aperture}" Style="{StaticResource CodeTextStyle}"/>
+                                <TextBlock Grid.Column="5" Text="{Binding Shutter}" Style="{StaticResource CodeTextStyle}"/>
+                                <TextBlock Grid.Column="6" Text="{Binding Gps}"
+                                           Style="{StaticResource CodeTextStyle}"
+                                           Foreground="{StaticResource AccentGreenBrush}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
