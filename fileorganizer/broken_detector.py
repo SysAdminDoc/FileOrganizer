@@ -204,6 +204,73 @@ def is_broken(path: Path) -> tuple[bool, str]:
     return False, ""
 
 
+# ── Pre-flight scan (powers PreflightDialog "Broken files (N)" section) ─────
+
+
+def scan_paths(
+    paths,
+    *,
+    max_per_root: int = 10,
+    max_total: int = 200,
+    progress_cb=None,
+) -> list[tuple[Path, str]]:
+    """Walk a list of source paths and return one entry per detected broken file.
+
+    Bounded to keep the pre-flight pass cheap on 33TB-scale runs:
+      - max_per_root files PER source path (fingerprint, not exhaustive sweep)
+      - max_total files across the whole batch (hard ceiling)
+
+    progress_cb (optional) is called with (current_root_path, scanned_count)
+    every time we move to the next root, letting a GUI worker emit progress.
+
+    Files outside the recognised image/video/archive extension sets are not
+    counted against the budget — they're skipped at the dispatcher.
+    """
+    findings: list[tuple[Path, str]] = []
+    scanned_total = 0
+    relevant_exts = _IMAGE_EXTS | _VIDEO_EXTS | _ARCHIVE_EXTS
+    for root in paths:
+        if scanned_total >= max_total:
+            break
+        if root is None:
+            continue
+        root_path = Path(root)
+        if not root_path.exists():
+            continue
+        if progress_cb is not None:
+            try:
+                progress_cb(root_path, scanned_total)
+            except Exception:
+                # Don't let a bad callback torpedo the scan.
+                pass
+
+        per_root = 0
+        if root_path.is_file():
+            iterator = [root_path]
+        else:
+            try:
+                iterator = root_path.rglob("*")
+            except (OSError, PermissionError):
+                continue
+
+        for entry in iterator:
+            if scanned_total >= max_total or per_root >= max_per_root:
+                break
+            try:
+                if not entry.is_file():
+                    continue
+            except OSError:
+                continue
+            if entry.suffix.lower() not in relevant_exts:
+                continue
+            broken, reason = is_broken(entry)
+            scanned_total += 1
+            per_root += 1
+            if broken:
+                findings.append((entry, reason))
+    return findings
+
+
 # ── CLI ──────────────────────────────────────────────────────────────────
 
 
