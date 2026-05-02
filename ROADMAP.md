@@ -420,10 +420,15 @@ auto-apply the correction; keyword-pattern matches inject it as a few-shot examp
 - **Impact**: 4 | **Effort**: 3 (core 2 + integration 1) | Parity with: [S6] thebearwithabite adaptive learning loop
 - Source: [S6] https://github.com/thebearwithabite/ai-file-organizer
 
-**NEXT-8: Scheduled scans per profile**
+**NEXT-8: Scheduled scans per profile** ✓ Core shipped
 Register scan profiles with Windows Task Scheduler (or launchd/systemd on macOS/Linux).
-GUI: Settings -> Schedules -> New Schedule (source, dest, time, recurrence).
-- **Impact**: 3 | **Effort**: 3
+- **Core shipped**: `fileorganizer/scheduler.py` with ScheduledProfile + SchedulerManager.
+  Cross-platform abstraction: Windows Task Scheduler (via schtasks.exe + win32com fallback),
+  macOS launchd (plist + ~/Library/LaunchAgents/), Linux systemd timers (with cron fallback).
+  Frequency: daily / weekly / monthly. Full CRUD: create, list, delete, enable, disable.
+  Persistent JSON storage. 20+ tests covering all platforms and edge cases.
+- **Remaining**: GUI hook (Settings → Schedules), CLI flag --schedule, background daemon integration.
+- **Impact**: 3 | **Effort**: 3 (core 3 + integration 0)
 - Source: [S21] File Juggler task scheduling, [S20] Hazel run-at-schedule
 
 ### Classification Accuracy
