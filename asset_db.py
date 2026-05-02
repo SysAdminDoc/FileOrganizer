@@ -772,6 +772,125 @@ def cmd_verify(organized_root: str = DEFAULT_ORGANIZED,
     return {'ok': ok, 'missing': len(missing), 'count_mismatch': len(count_mismatch)}
 
 
+# ── Provenance back-fill (iter-2 follow-up to N-12) ─────────────────────────────
+
+def cmd_backfill_provenance(db_path: str = DB_FILE, dry_run: bool = False) -> dict:
+    """Populate source_domain + first_seen_ts on rows that pre-date N-12.
+
+    Walks every assets row where source_domain IS NULL OR first_seen_ts IS NULL,
+    derives source_domain from disk_name (or clean_name as fallback), and sets
+    first_seen_ts to the row's added_at unix timestamp (falling back to the
+    current time if added_at is unparseable).
+
+    Re-runs are idempotent: rows whose columns are already populated are
+    skipped by the WHERE clause.
+
+    Returns a summary dict::
+        {
+            'rows_scanned': int,        # NULL columns considered
+            'rows_updated': int,        # rows actually mutated (0 in dry_run)
+            'domains': {dom: count},    # per-domain back-fill counts
+            'no_match': int,            # rows where parse_source_domain returned None
+            'dry_run': bool,
+        }
+    """
+    if not os.path.exists(db_path):
+        print(f"No database at {db_path}")
+        return {
+            'rows_scanned': 0, 'rows_updated': 0,
+            'domains': {}, 'no_match': 0, 'dry_run': dry_run,
+        }
+
+    con = init_db(db_path)              # ensure migrations have run
+    con.row_factory = sqlite3.Row
+
+    rows = con.execute(
+        "SELECT id, clean_name, disk_name, added_at, source_domain, first_seen_ts "
+        "FROM assets "
+        "WHERE source_domain IS NULL OR first_seen_ts IS NULL"
+    ).fetchall()
+
+    domains: dict[str, int] = {}
+    updated = 0
+    no_match = 0
+
+    for row in rows:
+        # Only fill what's missing — never overwrite a non-NULL column.
+        new_domain = row['source_domain']
+        new_ts = row['first_seen_ts']
+
+        if new_domain is None:
+            name = row['disk_name'] or row['clean_name'] or ''
+            new_domain = _parse_provenance(name)
+            if new_domain is None:
+                no_match += 1
+            else:
+                domains[new_domain] = domains.get(new_domain, 0) + 1
+
+        if new_ts is None:
+            ts = _parse_added_at(row['added_at'])
+            new_ts = ts if ts is not None else int(time.time())
+
+        if dry_run:
+            updated += 1
+            continue
+
+        con.execute(
+            "UPDATE assets SET "
+            "  source_domain = COALESCE(source_domain, ?), "
+            "  first_seen_ts = COALESCE(first_seen_ts, ?) "
+            "WHERE id = ?",
+            (new_domain, new_ts, row['id']),
+        )
+        updated += 1
+
+    if not dry_run:
+        con.commit()
+
+    summary = {
+        'rows_scanned': len(rows),
+        'rows_updated': updated,
+        'domains': domains,
+        'no_match': no_match,
+        'dry_run': dry_run,
+    }
+
+    label = 'WOULD update' if dry_run else 'updated'
+    print(f"\nBack-fill complete: {label} {updated}/{len(rows)} rows "
+          f"({no_match} unmatched).")
+    if domains:
+        width = max(len(d) for d in domains)
+        for dom, n in sorted(domains.items(), key=lambda kv: (-kv[1], kv[0])):
+            print(f"  {dom.ljust(width)}  {n:6d}")
+    con.close()
+    return summary
+
+
+def _parse_added_at(value) -> int | None:
+    """Parse the 'added_at' column (ISO-8601 ish) into a unix epoch seconds.
+
+    Falls back to None when the value is missing or unparseable, which lets
+    cmd_backfill_provenance use the current time instead.
+    """
+    if not value:
+        return None
+    text = str(value)
+    # Try the formats _now() emits first, then a couple of common variants.
+    candidates = (
+        '%Y-%m-%dT%H:%M:%SZ',
+        '%Y-%m-%dT%H:%M:%S',
+        '%Y-%m-%d %H:%M:%S',
+        '%Y-%m-%d',
+    )
+    for fmt in candidates:
+        try:
+            dt = datetime.strptime(text, fmt).replace(tzinfo=timezone.utc)
+            return int(dt.timestamp())
+        except (ValueError, TypeError):
+            continue
+    return None
+
+
 # ── CLI ─────────────────────────────────────────────────────────────────────────
 
 def main():
@@ -788,6 +907,11 @@ def main():
                     help='Show database statistics')
     ap.add_argument('--verify',  nargs='?', const=DEFAULT_ORGANIZED, metavar='DIR',
                     help='Verify DB entries match disk')
+    ap.add_argument('--backfill-provenance', action='store_true',
+                    help='Populate source_domain + first_seen_ts on rows that '
+                         'pre-date N-12 (idempotent; only fills NULL columns).')
+    ap.add_argument('--dry-run', action='store_true',
+                    help='With --backfill-provenance: preview without committing.')
     ap.add_argument('--db',      default=DB_FILE, metavar='PATH',
                     help=f'Database path (default: {DB_FILE})')
     args = ap.parse_args()
@@ -815,8 +939,12 @@ def main():
     if args.verify is not None:
         cmd_verify(args.verify, args.db)
 
+    if args.backfill_provenance:
+        cmd_backfill_provenance(args.db, dry_run=args.dry_run)
+
     if not any([args.stats, args.build is not None, args.export is not None,
-                args.lookup, args.verify is not None]):
+                args.lookup, args.verify is not None,
+                args.backfill_provenance]):
         ap.print_help()
 
 
