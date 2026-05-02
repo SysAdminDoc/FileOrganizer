@@ -830,6 +830,37 @@ class PreflightWorker(QThread):
                             f"All items meet the {rb}% confidence threshold")
             n_info += 1
 
+        # ── 5. Broken file detection (sampled, bounded) — N-14 wiring ────────
+        # Probes a fingerprint sample of each source's image/video/archive
+        # files for corruption. Bounded to 10 per source / 200 total so
+        # 33TB-scale apply jobs stay snappy at the pre-flight gate.
+        self.progress.emit("Probing for broken files…")
+        try:
+            from fileorganizer.broken_detector import scan_paths
+            source_paths = [
+                getattr(it, 'full_source_path', '') for it in self._items
+            ]
+            source_paths = [p for p in source_paths if p]
+            findings = scan_paths(source_paths, max_per_root=10, max_total=200)
+        except Exception as exc:
+            self.issue.emit('warning', 'Broken-file probe failed', str(exc))
+            n_warn += 1
+            findings = []
+        if findings:
+            for path, reason in findings[:25]:    # cap UI table inserts
+                self.issue.emit('error', 'Broken file', f"{path} — {reason}")
+                n_err += 1
+            extra = len(findings) - 25
+            if extra > 0:
+                self.issue.emit('error', 'Broken file (more)',
+                                f"+{extra} more broken file(s) — see CLI scan "
+                                f"for the full list")
+                n_err += 1
+        else:
+            self.issue.emit('info', 'Broken-file probe',
+                            'No broken images/videos/archives detected in sample')
+            n_info += 1
+
         self.done.emit(n_err, n_warn, n_info)
 
 
