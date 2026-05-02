@@ -342,11 +342,15 @@ need the N-12 columns added — surfaces a `migration_pending` flag instead. CLI
 
 ### Automation & Workflow
 
-**NEXT-1: Watch mode daemon**
+**NEXT-1: Watch mode daemon** ✓ Core MVP shipped
 Monitor source folders for new files. Auto-classify+move when files stabilize (debounce window:
 default 30s -- avoids partially-downloaded-archive false positives). Option to register as a
 Windows background task or Task Scheduler trigger.
-- **Impact**: 4 | **Effort**: 4 | Risk: debounce stability on network drives
+- **Core shipped**: `fileorganizer/watch_mode.py` with `DebounceQueue`, file event handler, state
+  persistence (watch_state.db), CLI interface (--start, --stop, --status, --log). 18 tests passing.
+- **Remaining**: WinUI 3 Settings → Watch Mode tab (enable/disable, debounce slider, log viewer).
+  Task Scheduler registration for Windows background task startup.
+- **Impact**: 4 | **Effort**: 4 (core 2 + UI 2) | Risk: debounce stability on network drives
 - **Parity with**: [S1] LlamaFS, [S5] aifiles, [S20] Hazel, [S21] File Juggler
 
 **NEXT-2: ~~YAML rule export~~** ✓ Shipped v8.3.0 (iter 2)
