@@ -785,6 +785,11 @@ def cmd_backfill_provenance(db_path: str = DB_FILE, dry_run: bool = False) -> di
     Re-runs are idempotent: rows whose columns are already populated are
     skipped by the WHERE clause.
 
+    Dry-run honors immutability: opens the DB without invoking ``init_db()``
+    so its eager schema migrations don't commit on inspection-only calls.
+    If the legacy DB is missing the N-12 columns, dry-run reports the
+    pending migration and exits without touching the file.
+
     Returns a summary dict::
         {
             'rows_scanned': int,        # NULL columns considered
@@ -792,6 +797,7 @@ def cmd_backfill_provenance(db_path: str = DB_FILE, dry_run: bool = False) -> di
             'domains': {dom: count},    # per-domain back-fill counts
             'no_match': int,            # rows where parse_source_domain returned None
             'dry_run': bool,
+            'migration_pending': bool,  # only meaningful in dry_run
         }
     """
     if not os.path.exists(db_path):
@@ -799,10 +805,39 @@ def cmd_backfill_provenance(db_path: str = DB_FILE, dry_run: bool = False) -> di
         return {
             'rows_scanned': 0, 'rows_updated': 0,
             'domains': {}, 'no_match': 0, 'dry_run': dry_run,
+            'migration_pending': False,
         }
 
-    con = init_db(db_path)              # ensure migrations have run
-    con.row_factory = sqlite3.Row
+    if dry_run:
+        # Inspect-only: never call init_db (it would commit a schema mutation).
+        peek = sqlite3.connect(db_path)
+        peek.row_factory = sqlite3.Row
+        try:
+            cols = {r[1] for r in peek.execute("PRAGMA table_info(assets)").fetchall()}
+        except sqlite3.DatabaseError as exc:
+            peek.close()
+            print(f"ERROR reading {db_path}: {exc}")
+            return {
+                'rows_scanned': 0, 'rows_updated': 0,
+                'domains': {}, 'no_match': 0, 'dry_run': True,
+                'migration_pending': False,
+            }
+        if 'source_domain' not in cols or 'first_seen_ts' not in cols:
+            peek.close()
+            print(
+                f"\n--dry-run: legacy schema detected (missing N-12 columns).\n"
+                f"  Run without --dry-run to apply both the schema migration\n"
+                f"  AND the row back-fill in a single committed pass."
+            )
+            return {
+                'rows_scanned': 0, 'rows_updated': 0,
+                'domains': {}, 'no_match': 0, 'dry_run': True,
+                'migration_pending': True,
+            }
+        con = peek
+    else:
+        con = init_db(db_path)              # ensure migrations have run
+        con.row_factory = sqlite3.Row
 
     rows = con.execute(
         "SELECT id, clean_name, disk_name, added_at, source_domain, first_seen_ts "
@@ -853,6 +888,7 @@ def cmd_backfill_provenance(db_path: str = DB_FILE, dry_run: bool = False) -> di
         'domains': domains,
         'no_match': no_match,
         'dry_run': dry_run,
+        'migration_pending': False,
     }
 
     label = 'WOULD update' if dry_run else 'updated'
