@@ -61,3 +61,11 @@ marketplace_catalog.db
 asset_fingerprints.db
 asset_fingerprints.db-shm
 asset_fingerprints.db-wal
+
+# Classifier audit dumps (runtime artifacts; reproducible from source)
+audit_*.json
+audit_report.json
+audit_apply_full.json
+
+# Factory loop state (per-run scratch)
+.factory/
