@@ -20,6 +20,14 @@ import os, sys, json, re, argparse
 from pathlib import Path
 from datetime import datetime
 
+# Stage 0: fingerprint DB lookup (for NEXT-15)
+try:
+    from asset_db import lookup_folder
+except ImportError:
+    def lookup_folder(*args, **kwargs):  # type: ignore[no-redef]
+        """Graceful fallback if asset_db unavailable."""
+        return None
+
 # ── Source configs ────────────────────────────────────────────────────────────
 SOURCE_CONFIGS = {
     'design_unorg': {
@@ -712,11 +720,49 @@ def _try_embeddings_classify(batch_items: list[dict],
     return out
 
 
+def _try_fingerprint_db_lookup(batch_items: list[dict]) -> dict[int, dict]:
+    """
+    Stage 0: Hash-first DB skip (NEXT-15).
+    
+    For each item, compute folder fingerprint and query asset_db.
+    Returns resolved items at confidence 100 (zero API cost).
+    Expected skip rate: 60-70% for common templates already in the DB.
+    """
+    out = {}
+    for idx, item in enumerate(batch_items):
+        name = item.get('name', '').strip()
+        path = item.get('path', '').strip()
+        
+        if not path or not os.path.isdir(path):
+            continue
+        
+        # Query fingerprint DB
+        match = lookup_folder(path)
+        if match and match['match_type'] == 'exact':
+            # Exact match: use stored category at confidence 100
+            category = match['category']
+            clean_name = match['clean_name']
+            out[idx] = {
+                'name':          name,
+                'category':      category,
+                'clean_name':    clean_name,
+                'confidence':    100,
+                'notes':         f"fingerprint_db (skip_rate; {match['score']:.0%} match)",
+                '_source_name':  name,
+                '_classifier':   'fingerprint_db',
+                '_asset_id':     match.get('asset_id'),
+            }
+    
+    return out
+
+
 def cmd_run(index: list[dict], only_batch: int = 0,
             embeddings_only: bool = False):
     """Classify all unprocessed batches.
 
     Stages run in order; each stage skips items resolved by an earlier one:
+      0. fingerprint_db     — exact folder fingerprint match vs community DB
+                              (zero AI cost; ~60-70% skip rate for common templates)
       1. metadata_extractors   — file-content metadata (PSD canvas, font name
                                   table, audio duration, video aspect/codec).
                                   Hardroute at confidence >= 90.
@@ -745,6 +791,11 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         ts = datetime.now().strftime('%H:%M:%S')
         print(f"[{ts}] Batch {n:03d}/{num_batches}  items {start+1}-{end}  ({len(batch_items)} items)")
 
+        # Stage 0: fingerprint DB lookup (hash-first skip, NEXT-15)
+        fp_resolved = _try_fingerprint_db_lookup(batch_items)
+        if fp_resolved:
+            print(f"  Fingerprint DB matched {len(fp_resolved)} item(s) — skipping all downstream for those")
+
         # Stage 1: metadata extractors (file-content driven, zero AI cost)
         meta_resolved = _try_metadata_classify(batch_items)
         if meta_resolved:
@@ -753,18 +804,18 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         # Stage 2: marketplace ID pre-classification (zero AI cost for known items)
         pre_enriched = _try_marketplace_enrich(batch_items)
         if pre_enriched:
-            # Drop any positions already resolved by Stage 1.
-            pre_enriched = {k: v for k, v in pre_enriched.items() if k not in meta_resolved}
+            # Drop any positions already resolved by Stage 0 or Stage 1.
+            pre_enriched = {k: v for k, v in pre_enriched.items() if k not in fp_resolved and k not in meta_resolved}
             if pre_enriched:
                 print(f"  Marketplace pre-classified {len(pre_enriched)} item(s) — skipping AI for those")
 
         # Stage 3: local embeddings classifier
-        already_resolved = set(meta_resolved.keys()) | set(pre_enriched.keys())
+        already_resolved = set(fp_resolved.keys()) | set(meta_resolved.keys()) | set(pre_enriched.keys())
         embed_resolved = _try_embeddings_classify(batch_items, already_resolved)
         if embed_resolved:
             print(f"  Embeddings pre-classified {len(embed_resolved)} item(s) — skipping AI for those")
 
-        resolved = {**meta_resolved, **pre_enriched, **embed_resolved}
+        resolved = {**fp_resolved, **meta_resolved, **pre_enriched, **embed_resolved}
 
         # Build AI prompt only for items NOT yet resolved
         ai_items  = [(i, it) for i, it in enumerate(batch_items) if i not in resolved]
