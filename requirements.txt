@@ -66,3 +66,6 @@ pybktree
 subliminal
 # Source-code language detection (lightweight Pygments-based).
 Pygments
+# NEXT-1: Watch mode daemon — monitor source folders for new files + auto-classify.
+# Robust, cross-platform file system event monitoring.
+watchdog
