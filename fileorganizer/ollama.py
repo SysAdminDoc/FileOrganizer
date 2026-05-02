@@ -24,6 +24,21 @@ from fileorganizer.naming import (
     _is_generic_name, _normalize, _beautify_name
 )
 
+# Pydantic model for structured JSON output (Ollama format parameter)
+try:
+    from pydantic import BaseModel, Field
+    
+    class ClassifyResult(BaseModel):
+        """Structured classification result for Ollama format=PydanticModel.model_json_schema()."""
+        name: str = Field(..., description="Clean, English-translated project name")
+        category: str = Field(..., description="Category from the provided list")
+        confidence: int = Field(..., ge=0, le=100, description="Confidence 0–100")
+    
+    HAS_PYDANTIC = True
+except ImportError:
+    HAS_PYDANTIC = False
+    ClassifyResult = None
+
 _OLLAMA_SETTINGS_FILE = os.path.join(_APP_DATA_DIR, 'ollama_settings.json')
 
 _OLLAMA_DEFAULTS = {
@@ -371,10 +386,14 @@ def ollama_test_connection(url: str = None, model: str = None) -> tuple:
 
 def _ollama_generate(prompt: str, system: str = '', url: str = None,
                      model: str = None, timeout: int = None,
-                     log_cb=None, images: list = None) -> str:
+                     log_cb=None, images: list = None, structured: bool = False) -> str:
     """Send a prompt to Ollama via /api/chat and return the response text.
     Uses the chat endpoint so that 'think: false' is honored via the chat
     template (the /api/generate endpoint ignores this option for Qwen3.x).
+    
+    If structured=True and Pydantic is available, adds format=ClassifyResult.model_json_schema()
+    to guarantee valid JSON output (Ollama >= v0.22.1).
+    
     Raises on connection/timeout errors.
     """
     import urllib.request, urllib.error
@@ -403,6 +422,10 @@ def _ollama_generate(prompt: str, system: str = '', url: str = None,
             'num_predict': s.get('num_predict', 4096),
         },
     }
+    
+    # Add Pydantic structured format if requested and available (Ollama >= v0.22.1)
+    if structured and HAS_PYDANTIC and ClassifyResult:
+        payload['format'] = ClassifyResult.model_json_schema()
 
     data = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(
@@ -872,7 +895,8 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
 
     try:
         system = _build_llm_system_prompt()
-        raw = _ollama_generate(prompt, system=system, url=url, model=model, log_cb=log_cb)
+        # Use structured format (Ollama >= v0.22.1) for guaranteed valid JSON
+        raw = _ollama_generate(prompt, system=system, url=url, model=model, log_cb=log_cb, structured=True)
 
         raw = raw.strip()
         if not raw:

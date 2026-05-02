@@ -2,6 +2,7 @@
 PyQt6>=6.11.0
 openai
 anthropic>=0.44.0
+pydantic>=2.0
 requests
 rapidfuzz
 Pillow>=12.2.0
