@@ -103,6 +103,15 @@ _DEEPSEEK_MODEL_CATALOG = [
     },
 ]
 
+# Deprecated model aliases that will stop working at the deadline
+_DEPRECATED_MODELS = {
+    'claude-3-haiku': ('April 2026', 'claude-haiku-4-5'),          # Already deprecated
+    'claude-sonnet-4': ('June 15, 2026', 'claude-sonnet-4-5'),
+    'claude-opus-4': ('June 15, 2026', 'claude-opus-4-5'),
+    'deepseek-chat': ('July 24, 2026', 'deepseek-v4-flash'),
+    'deepseek-reasoner': ('July 24, 2026', 'deepseek-v4-pro'),
+}
+
 
 def load_provider_settings() -> dict:
     try:
@@ -247,10 +256,23 @@ class GitHubModelsProvider(_OpenAICompatProvider):
     def __init__(self, settings: dict):
         token = (os.environ.get('GITHUB_TOKEN', '')
                  or settings.get('github_token', ''))
+        model = settings.get('github_model', _PROVIDER_DEFAULTS['github_model'])
+        
+        # Check for deprecated model aliases and warn
+        for deprecated_alias, (deadline, recommended) in _DEPRECATED_MODELS.items():
+            if deprecated_alias in model:
+                warnings.warn(
+                    f"Model '{deprecated_alias}' is deprecated and will stop working "
+                    f"on {deadline}. Migrate to '{recommended}' immediately.",
+                    DeprecationWarning,
+                    stacklevel=2
+                )
+                log.warning(f"Deprecated GitHub Models alias: {deprecated_alias} → {recommended} (deadline: {deadline})")
+        
         super().__init__(
             base_url=settings.get('github_endpoint', _PROVIDER_DEFAULTS['github_endpoint']),
             api_key=token,
-            model=settings.get('github_model', _PROVIDER_DEFAULTS['github_model']),
+            model=model,
             timeout=settings.get('github_timeout', 60),
         )
 
