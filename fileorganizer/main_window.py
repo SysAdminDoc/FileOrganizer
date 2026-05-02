@@ -3351,7 +3351,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_undo.setEnabled(bool(_load_undo_stack()))
 
     def closeEvent(self, event):
-        """Override close event to minimize to tray when watch mode is active."""
+        """Override close event to minimize to tray when watch mode is active. NEXT-37: cleanup DB on exit."""
         if (self._watch_manager and self._watch_manager.is_active
                 and self._tray and self._tray.isVisible()):
             settings = _load_watch_settings()
@@ -3364,6 +3364,14 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self._save_settings()
         if self._watch_manager and self._watch_manager.is_active:
             self._watch_manager.stop()
+        # NEXT-37: Cleanup expired journal records and vacuum database
+        try:
+            from fileorganizer import move_journal
+            move_journal.cleanup_expired()
+            move_journal.vacuum()
+        except Exception:
+            pass  # DB cleanup is best-effort; don't block shutdown
         super().closeEvent(event)
+
 
 # ── Crash Handler ─────────────────────────────────────────────────────────────
