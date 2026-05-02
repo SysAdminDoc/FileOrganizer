@@ -306,11 +306,21 @@ New `fileorganizer/broken_detector.py` with `check_image` (PIL.Image.verify unde
 fix), and `check_archive` (zipfile/rarfile/py7zr per-format testzip with no-dep degradation).
 `is_broken(path)` dispatcher. Standalone CLI: `python -m fileorganizer.broken_detector --scan
 <dir>` exits 1 on any broken file. New `broken INTEGER NOT NULL DEFAULT 0` column on
-`asset_files` (idempotent migration) for future GUI pre-flight wiring.
-- Tests: 24 tests in `tests/test_broken_detector.py` (dispatcher, no-dep, real corrupt zip,
-  ffprobe stderr handling, CLI exit codes, schema migration).
-- **Deferred**: GUI PreflightDialog "Broken files (N)" section (N-4 wiring) — separate task.
+`asset_files` (idempotent migration). **Iter 2 follow-up**: PreflightDialog Step 5 wiring via
+`broken_detector.scan_paths(paths, max_per_root=10, max_total=200)` — surfaces broken files
+at the pre-flight gate, declares missing optional verifiers as partial coverage.
+- Tests: 33 tests in `tests/test_broken_detector.py` (dispatcher, no-dep, real corrupt zip,
+  ffprobe stderr handling, CLI exit codes, schema migration, scan_paths bounded sampling).
 - **Source**: [S44] Czkawka v11.0.0 broken video detection, [S34] RESEARCH_IDEAS.md
+
+### Provenance back-fill ✓ Shipped (Unreleased — iter 2 follow-up to N-12)
+`asset_db.cmd_backfill_provenance(db_path, dry_run)` populates `source_domain` +
+`first_seen_ts` on assets rows that pre-date N-12. Idempotent (WHERE source_domain IS NULL
+OR first_seen_ts IS NULL). Dry-run mode does not mutate the schema even on legacy DBs that
+need the N-12 columns added — surfaces a `migration_pending` flag instead. CLI:
+`python asset_db.py --backfill-provenance [--dry-run]`.
+- Tests: 5 in `tests/test_provenance.py` (happy path, dry-run no-commit, idempotency,
+  unmatched-name, legacy-schema dry-run safety).
 
 ---
 
@@ -325,12 +335,15 @@ Windows background task or Task Scheduler trigger.
 - **Impact**: 4 | **Effort**: 4 | Risk: debounce stability on network drives
 - **Parity with**: [S1] LlamaFS, [S5] aifiles, [S20] Hazel, [S21] File Juggler
 
-**NEXT-2: YAML rule export**
-Serialize the classifier's learned category-keyword rules as portable YAML. Structure compatible
-with [S8] organize-cli format so users can move rules to organize-cli without rework.
-Export from GUI: Settings -> Rules -> Export as YAML.
-- **Impact**: 4 | **Effort**: 2 | Leapfrog: bridges AI-generated rules to portable OSS format
-- Source: [S8] https://github.com/tfeldmann/organize
+**NEXT-2: ~~YAML rule export~~** ✓ Shipped (Unreleased — iter 2)
+CLI shipped via `python classify_design.py --export-rules [<path>|-]`.
+`fileorganizer/yaml_rule_export.py` builds organize-cli-compatible YAML from
+the canonical taxonomy + per-category extension hints + reverse-derived
+keywords from `CATEGORY_ALIASES`. PyYAML used when present, deterministic
+hand-rolled emitter as fallback (no new hard dep). 14 tests.
+GUI export tile under Settings -> Rules -> Export as YAML still planned
+(deferred — CLI is the production path; GUI is sugar).
+- **Impact**: 4 | **Effort**: 2 | Source: [S8] https://github.com/tfeldmann/organize
 
 **NEXT-3: Hazel-style rule chains**
 Multi-condition chains: "if source matches X AND LLM confidence < 70 AND file size > Z, move to
