@@ -25,6 +25,7 @@ public sealed partial class MainWindow : Window
         new("Subtitles", "Subliminal: auto-fetch .srt for video files, skip embedded", "subtitles"),
         new("Photos", "EXIF, geotag map, AI event grouping, faces", "photos"),
         new("Raw Photos", "DNG/CR2/NEF/ARW/ORF/RW2 metadata, EXIF, organize by camera and date", "raw"),
+        new("Comics", "CBZ/CBR/CB7/CBT archive metadata, series detection, organize by publisher and series", "comics"),
         new("Watch", "Auto-organize folders on change with tray integration", "watch"),
         new("Toolbox", "Asset DB, classifier, research, plan-and-apply utilities", "toolbox"),
     ];
@@ -97,6 +98,7 @@ public sealed partial class MainWindow : Window
             "subtitles" => typeof(SubtitlesPage),
             "photos" => typeof(PhotosPage),
             "raw" => typeof(RAWPage),
+            "comics" => typeof(ComicsPage),
             "watch" => typeof(WatchPage),
             "toolbox" => typeof(ToolboxPage),
             "settings" => typeof(SettingsPage),
