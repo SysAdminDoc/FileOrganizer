@@ -141,6 +141,17 @@ def _migrate_assets_provenance(con: sqlite3.Connection) -> None:
     con.execute(
         "CREATE INDEX IF NOT EXISTS idx_assets_source ON assets(source_domain)"
     )
+    _migrate_files_broken(con)
+
+
+def _migrate_files_broken(con: sqlite3.Connection) -> None:
+    """Idempotent ALTER TABLE for N-14 broken-file flag on asset_files."""
+    have = {row[1] for row in con.execute("PRAGMA table_info(asset_files)").fetchall()}
+    if "broken" not in have:
+        con.execute("ALTER TABLE asset_files ADD COLUMN broken INTEGER NOT NULL DEFAULT 0")
+    con.execute(
+        "CREATE INDEX IF NOT EXISTS idx_files_broken ON asset_files(broken)"
+    )
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
