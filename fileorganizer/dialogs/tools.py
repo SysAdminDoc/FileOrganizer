@@ -780,7 +780,27 @@ class PreflightWorker(QThread):
                     self.issue.emit('warning', 'Path > 260 chars', full_child)
                     n_warn += 1
 
-        # ── 2. Destination path length ────────────────────────────────────────
+        # ── 2. Bad filenames detection (NEXT-42) ──────────────────────────────
+        self.progress.emit("Checking for bad filenames…")
+        try:
+            from fileorganizer import bad_names as _bad_names
+            bad_count = 0
+            for it in self._items:
+                src = getattr(it, 'full_source_path', '')
+                if src:
+                    bad_issues = _bad_names.check_bad_names(src)
+                    for path, reason in bad_issues[:5]:  # cap UI inserts per folder
+                        self.issue.emit('warning', 'Bad filename', f"{os.path.basename(path)} — {reason}")
+                        bad_count += 1
+                    if len(bad_issues) > 5:
+                        self.issue.emit('warning', 'Bad filenames (more)', f"+{len(bad_issues) - 5} more in {os.path.basename(src)}")
+                        bad_count += 1
+            if bad_count > 0:
+                n_warn += 1
+        except Exception:
+            pass  # bad_names module optional
+
+        # ── 3. Destination path length ────────────────────────────────────────
         self.progress.emit("Checking destination paths…")
         for it in self._items:
             dst = getattr(it, 'full_dest_path', '')
@@ -788,7 +808,7 @@ class PreflightWorker(QThread):
                 self.issue.emit('warning', 'Dest path > 260 chars', dst)
                 n_warn += 1
 
-        # ── 3. Destination free space ─────────────────────────────────────────
+        # ── 4. Destination free space ─────────────────────────────────────────
         self.progress.emit("Checking destination disk space…")
         dest_paths = [getattr(it, 'full_dest_path', '') for it in self._items
                       if getattr(it, 'full_dest_path', '')]
@@ -813,7 +833,7 @@ class PreflightWorker(QThread):
                 self.issue.emit('warning', 'Could not check disk space', str(exc))
                 n_warn += 1
 
-        # ── 4. Low-confidence items ───────────────────────────────────────────
+        # ── 5. Low-confidence items ───────────────────────────────────────────
         self.progress.emit("Checking confidence levels…")
         rb = self._review_below
         review_count = sum(
@@ -830,7 +850,7 @@ class PreflightWorker(QThread):
                             f"All items meet the {rb}% confidence threshold")
             n_info += 1
 
-        # ── 5. Broken file detection (sampled, bounded) — N-14 wiring ────────
+        # ── 6. Broken file detection (sampled, bounded) — N-14 wiring ────────
         # Probes a fingerprint sample of each source's image/video/archive
         # files for corruption. Bounded to 10 per source / 200 total so
         # 33TB-scale apply jobs stay snappy at the pre-flight gate.
