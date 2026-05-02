@@ -72,16 +72,17 @@ def extract(path: Path) -> Optional[MetadataHint]:
             raw=raw,
         )
 
-    # Short clips (under 30 seconds) are almost always SFX or one-shots.
+    # MVP per N-9 rubric: audio is informational only — duration alone can't
+    # distinguish a 4s music intro stab from a 4s SFX one-shot, so we stay
+    # below the 90-conf hardroute threshold and let downstream stages decide.
     if duration < 30:
         return MetadataHint(
             category=_CAT_SFX,
-            confidence=90,
+            confidence=85,
             extractor="audio",
             reason=f"short clip ({duration:.1f}s)",
             raw=raw,
         )
-    # 30s-3min: ambiguous; emit informational hint only (below 90 = no hardroute).
     if duration < 180:
         return MetadataHint(
             category=_CAT_MUSIC,
@@ -90,10 +91,12 @@ def extract(path: Path) -> Optional[MetadataHint]:
             reason=f"mid-length ({duration:.1f}s) — ambiguous",
             raw=raw,
         )
-    # Longer than 3 minutes: full music track.
+    # Longer than 3 minutes: highly likely a full music track, but hold
+    # below the hardroute threshold (still ambiguous: tutorial audio,
+    # podcast clip, dialogue track all hit this band).
     return MetadataHint(
         category=_CAT_MUSIC,
-        confidence=90,
+        confidence=85,
         extractor="audio",
         reason=f"full track ({duration:.1f}s)",
         raw=raw,

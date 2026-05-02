@@ -72,6 +72,7 @@ def test_marketplace_recognition(name, expected):
         ("freegfx_pack_2026", "freegfx.net"),
         ("AIDOWNLOAD.NET-template-bundle", "aidownload.net"),
         ("ShareAE.com-modern-titles", "shareae.com"),
+        ("share.ae-modern-titles", "shareae.com"),  # audit fix: dotted variant
         ("GFXDRUG.COM-stuff", "gfxdrug.com"),
         ("graphicux-flyer-pack", "graphicux.com"),
         ("gfxlooks-mockup-bundle", "gfxlooks.com"),
@@ -80,6 +81,18 @@ def test_marketplace_recognition(name, expected):
 def test_piracy_recognition(name, expected):
     assert parse_source_domain(name) == expected
     assert is_piracy_domain(expected)
+
+
+def test_videohive_numeric_prefix_requires_separator(tmp_path):
+    """Audit fix: bare numeric folders (no separator after the ID) must NOT
+    be tagged as Videohive — that pattern is a strong false-positive risk."""
+    # Healthy: 8-9 digits + separator (the canonical Videohive folder shape)
+    assert parse_source_domain("12345678-promo") == "videohive.net"
+    assert parse_source_domain("123456789_titles") == "videohive.net"
+    # Negative cases: 8-9 digits with no separator after.
+    assert parse_source_domain("12345678abc") is None
+    assert parse_source_domain("12345678") is None
+    assert parse_source_domain("123456789xyz") is None
 
 
 def test_display_domain_strips_piracy():
