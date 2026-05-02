@@ -127,6 +127,11 @@
                         <FontIcon Glyph="&#xEBC6;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem Tag="comics" Content="Comics">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEAD8;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem Tag="watch" Content="Watch">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE7C8;"/>
