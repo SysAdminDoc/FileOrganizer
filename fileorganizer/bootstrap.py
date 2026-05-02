@@ -209,7 +209,8 @@ try:
     import face_recognition as _face_recognition
     import numpy as _np
     HAS_FACE_RECOGNITION = True
-except ImportError:
+except (ImportError, SystemExit):
+    # face_recognition calls quit() on missing models; catch both
     HAS_FACE_RECOGNITION = False
 
 try:
