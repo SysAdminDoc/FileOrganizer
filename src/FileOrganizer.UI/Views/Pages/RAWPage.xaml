@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="FileOrganizer.UI.Views.Pages.RAWPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FileOrganizer.UI.Views.Pages"
+    Background="{StaticResource BackgroundBrush}">
+    <Grid Padding="32" RowSpacing="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/><RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Spacing="6">
+            <TextBlock Text="Raw Photos" Style="{StaticResource TitleTextStyle}"/>
+            <TextBlock Style="{StaticResource SubtitleTextStyle}"
+                       Text="Read EXIF metadata from DNG, CR2, NEF, ARW, ORF, RW2 files. Extract camera info, date taken, ISO, focal length, GPS coordinates. Optional rename or organize into folders."/>
+        </StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+            <StackPanel Spacing="14">
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Folder" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="FolderTextBox" Style="{StaticResource PremiumTextBoxStyle}"
+                             PlaceholderText="C:\Users\You\Pictures\RAW"/>
+                    <Button Grid.Column="2" x:Name="BrowseButton" Content="Browse"
+                            Style="{StaticResource SecondaryButtonStyle}" Click="Browse_Click"/>
+                </Grid>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="What to do" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Column="1" x:Name="ModeCombo" Style="{StaticResource PremiumComboBoxStyle}" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Tag="preview" Content="Just read EXIF and show me" IsSelected="True"/>
+                        <ComboBoxItem Tag="organize" Content="Organize by camera make/model and date (YYYY/YYYY-MM-DD/Make_Model/)"/>
+                    </ComboBox>
+                    <Button Grid.Column="2" x:Name="ScanButton" Content="Run"
+                            Style="{StaticResource PrimaryButtonStyle}" Click="Run_Click"/>
+                    <Button Grid.Column="3" x:Name="CancelButton" Content="Stop"
+                            Style="{StaticResource DangerButtonStyle}" IsEnabled="False" Click="Cancel_Click"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="2" Style="{StaticResource SubtleCardStyle}">
+            <Grid ColumnSpacing="32">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Spacing="4">
+                    <TextBlock Text="Scanned" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="ScannedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="4">
+                    <TextBlock Text="Read EXIF" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="ExifText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Spacing="4">
+                    <TextBlock Text="Organized" Style="{StaticResource MetricLabelTextStyle}"/>
+                    <TextBlock x:Name="OrganizedText" Text="0" Style="{StaticResource MetricNumberTextStyle}"/>
+                </StackPanel>
+                <TextBlock Grid.Column="3" x:Name="StatusText" Style="{StaticResource SubtleTextStyle}"
+                           VerticalAlignment="Center" TextWrapping="Wrap"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="3" Style="{StaticResource SubtleCardStyle}">
+            <ListBox x:Name="ResultsList" ItemsSource="{x:Bind Results, Mode=OneWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="local:RawImageRow">
+                        <Grid ColumnSpacing="16" Padding="0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/><ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="100"/><ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{x:Bind Filename, Mode=OneWay}" Style="{StaticResource BodyTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind Camera, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind DateTaken, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind Iso, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind Status, Mode=OneWay}" Style="{StaticResource MutedTextStyle}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+    </Grid>
+</Page>
