@@ -114,6 +114,12 @@ def check_video(path: Path) -> tuple[bool, str]:
         return False, f"ffprobe spawn failed: {exc}"
     if proc.returncode != 0:
         return True, f"ffprobe rc={proc.returncode}: {(proc.stderr or '').strip()[:200]}"
+    # ffprobe sometimes returns rc=0 but writes diagnostics to stderr (truncated
+    # streams, missing moov atoms, etc.). Per the N-14 rubric, treat any non-empty
+    # stderr as a broken signal even when the JSON parses cleanly.
+    stderr_text = (proc.stderr or "").strip()
+    if stderr_text:
+        return True, f"ffprobe stderr: {stderr_text[:200]}"
     if proc.stdout:
         try:
             data = json.loads(proc.stdout)

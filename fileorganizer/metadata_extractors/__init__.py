@@ -146,7 +146,7 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
         except OSError:
             return candidates[0]
 
-    font = first_with_ext({".ttf", ".otf", ".ttc"})
+    font = first_with_ext({".ttf", ".otf", ".ttc", ".woff", ".woff2"})
     if font is not None:
         return font
     psd = largest_with_ext({".psd", ".psb"})
