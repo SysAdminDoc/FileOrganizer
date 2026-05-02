@@ -436,11 +436,15 @@ Candidate library: `aeptools` (Python) or custom RIFX reader.
 - **Impact**: 5 | **Effort**: 4 | Leapfrog: no OSS competitor parses AEP metadata for classification
 - Source: [S33] RESEARCH.md, [S34] RESEARCH_IDEAS.md, [S25] RIFX format
 
-**NEXT-10: MOGRT manifest parser**
+**NEXT-10: MOGRT manifest parser** ✓ Core shipped
 `.mogrt` files are ZIP archives with an embedded JSON manifest containing: Motion Graphics
 Template name, editable parameters, required fonts, minimum Premiere version. Pure Python
-(`zipfile` + `json`). Store extracted fields in `asset_files.metadata`.
-- **Impact**: 4 | **Effort**: 2
+(`zipfile` + `json`).
+- **Core shipped**: `fileorganizer/mogrt_parser.py` with parse_mogrt(), extract_mogrt_fonts(),
+  mogrt_to_category_hints(), batch parsing support. Handles parameter/font fields as dict or list.
+  Graceful fallback for corrupted/invalid MOGRTs. 20+ tests passing.
+- **Remaining**: Integration into asset classifier (use font requirements and parameter count as routing signals).
+- **Impact**: 4 | **Effort**: 2 (core 2 + integration 0)
 
 **NEXT-11: Video metadata deep routing (FFmpeg expansion)**
 Extend the N-9 `video_extractor.py` MVP with deep routing rules: 9:16 vertical video →
