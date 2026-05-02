@@ -24,6 +24,7 @@ public sealed partial class MainWindow : Window
         new("Source Code", "Detect repo roots by marker files, tag primary language", "code"),
         new("Subtitles", "Subliminal: auto-fetch .srt for video files, skip embedded", "subtitles"),
         new("Photos", "EXIF, geotag map, AI event grouping, faces", "photos"),
+        new("Raw Photos", "DNG/CR2/NEF/ARW/ORF/RW2 metadata, EXIF, organize by camera and date", "raw"),
         new("Watch", "Auto-organize folders on change with tray integration", "watch"),
         new("Toolbox", "Asset DB, classifier, research, plan-and-apply utilities", "toolbox"),
     ];
@@ -95,6 +96,7 @@ public sealed partial class MainWindow : Window
             "code" => typeof(CodePage),
             "subtitles" => typeof(SubtitlesPage),
             "photos" => typeof(PhotosPage),
+            "raw" => typeof(RAWPage),
             "watch" => typeof(WatchPage),
             "toolbox" => typeof(ToolboxPage),
             "settings" => typeof(SettingsPage),
