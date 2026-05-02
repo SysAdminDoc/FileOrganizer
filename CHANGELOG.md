@@ -4,6 +4,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [Unreleased]
 
+(no entries yet — next iteration will land here)
+
+## [v8.3.0] - 2026-05-02
+
 ### Added
 
 - **N-9: Metadata extractors MVP** — new `fileorganizer/metadata_extractors/`
@@ -87,6 +91,16 @@ All notable changes to FileOrganizer will be documented in this file.
   failed outright.
 - `--export-rules` default path resolved against the script's directory,
   not the caller's CWD.
+
+### Release-gate hardening
+
+- `bootstrap.py` adds an `_is_frozen()` guard around `_bootstrap()` and
+  the inner `_try_install()` — when running inside a PyInstaller bundle,
+  pip subprocess calls are short-circuited so the frozen GUI exe cannot
+  re-spawn itself in a fork-bomb loop.
+- `fileorganizer/__main__.py` calls `multiprocessing.freeze_support()`
+  as the first executable statement (canonical PyInstaller fork-bomb
+  defense for any Pool/Process worker re-entry path).
 
 ## [FileOrganizer.UI v0.5.0] - 2026-05-01
 
