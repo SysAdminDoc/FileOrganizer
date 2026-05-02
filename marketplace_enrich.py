@@ -445,7 +445,7 @@ def fetch_via_deepseek(platform: str, item_id: str, folder_name: str) -> Optiona
     )
     try:
         resp = client.chat.completions.create(
-            model='deepseek-chat',
+            model='deepseek-v4-flash',
             messages=[{'role': 'user', 'content': prompt}],
             temperature=0.05,
             max_tokens=300,

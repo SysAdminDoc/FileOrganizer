@@ -50,7 +50,7 @@ def deepseek(prompt: str, system: str = '') -> str:
         messages.append({'role': 'system', 'content': system})
     messages.append({'role': 'user', 'content': prompt})
     resp = client.chat.completions.create(
-        model='deepseek-chat',
+        model='deepseek-v4-flash',
         messages=messages,
         temperature=0.1,
         max_tokens=3000,

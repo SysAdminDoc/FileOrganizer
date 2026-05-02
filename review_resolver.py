@@ -69,7 +69,7 @@ FILE_MODE     = False     # set True when source is loose_files
 BATCH_SIZE    = 30        # items per DeepSeek call
 CONF_THRESHOLD = 55       # confidence below this stays _Review
 API_BASE      = 'https://api.deepseek.com'
-MODEL         = 'deepseek-chat'
+MODEL         = 'deepseek-v4-flash'
 
 # Read API key
 def get_api_key():

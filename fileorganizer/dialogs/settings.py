@@ -1102,9 +1102,9 @@ class AIProviderSettingsDialog(QDialog):
 
         ds_lay.addWidget(QLabel("Model:"))
         self.cmb_ds_model = QComboBox()
-        ds_models = ['deepseek-chat', 'deepseek-reasoner']
+        ds_models = ['deepseek-v4-flash', 'deepseek-v4-pro']
         self.cmb_ds_model.addItems(ds_models)
-        cur_ds = self._settings.get('deepseek_model', 'deepseek-chat')
+        cur_ds = self._settings.get('deepseek_model', 'deepseek-v4-flash')
         idx_ds = self.cmb_ds_model.findText(cur_ds)
         if idx_ds >= 0:
             self.cmb_ds_model.setCurrentIndex(idx_ds)
