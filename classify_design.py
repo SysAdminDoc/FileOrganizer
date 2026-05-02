@@ -28,6 +28,18 @@ except ImportError:
         """Graceful fallback if asset_db unavailable."""
         return None
 
+# LLM caching (NEXT-44)
+try:
+    from llm_cache import lookup_cached, store_cached, cleanup_expired
+except ImportError:
+    def lookup_cached(*args, **kwargs):  # type: ignore[no-redef]
+        """Graceful fallback if llm_cache unavailable."""
+        return None
+    def store_cached(*args, **kwargs):  # type: ignore[no-redef]
+        return False
+    def cleanup_expired(*args, **kwargs):  # type: ignore[no-redef]
+        return 0
+
 # ── Source configs ────────────────────────────────────────────────────────────
 SOURCE_CONFIGS = {
     'design_unorg': {
@@ -533,6 +545,67 @@ Return ONLY a JSON array with one object per item (same order as input):
 No markdown, no explanation outside the JSON array."""
 
 # ── DeepSeek caller ───────────────────────────────────────────────────────────
+def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_MODEL) -> list[dict]:
+    """
+    Cached wrapper around call_deepseek (NEXT-44).
+    
+    For each item in items, check cache using item's path.
+    Only call API for cache misses.
+    Returns results in the same order as items.
+    """
+    from llm_cache import prompt_hash as p_hash
+    
+    cached_results = {}
+    uncached_indices = []
+    
+    # Check cache for each item
+    for i, item in enumerate(items):
+        path = item.get('path', '').strip()
+        if path:
+            cached = lookup_cached(path, model, prompt)
+            if cached:
+                cached_results[i] = cached
+            else:
+                uncached_indices.append(i)
+        else:
+            uncached_indices.append(i)
+    
+    # Early return if everything is cached
+    if not uncached_indices:
+        results = [None] * len(items)
+        for i, cached in cached_results.items():
+            results[i] = cached
+        return results
+    
+    # Build prompt for uncached items only
+    uncached_items = [items[i] for i in uncached_indices]
+    uncached_prompt = build_prompt(uncached_items)
+    
+    # Call API for uncached batch
+    try:
+        uncached_results = call_deepseek(uncached_prompt)
+    except Exception:
+        raise  # Let caller handle the error
+    
+    # Cache the results
+    for i, uncached_idx in enumerate(uncached_indices):
+        if i < len(uncached_results):
+            item = items[uncached_idx]
+            path = item.get('path', '').strip()
+            if path:
+                store_cached(path, model, uncached_prompt, uncached_results[i])
+    
+    # Merge cached + API results in original order
+    results = [None] * len(items)
+    for i, cached in cached_results.items():
+        results[i] = cached
+    for i, uncached_idx in enumerate(uncached_indices):
+        if i < len(uncached_results):
+            results[uncached_idx] = uncached_results[i]
+    
+    return results
+
+
 def call_deepseek(prompt: str) -> list[dict]:
     try:
         from openai import OpenAI
@@ -775,6 +848,11 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         print("ERROR: DEEPSEEK_API_KEY not set in environment.")
         sys.exit(1)
 
+    # Clean up expired cache entries (NEXT-44)
+    expired_count = cleanup_expired(max_age_days=30)
+    if expired_count > 0:
+        print(f"Cleaned {expired_count} expired cache entry(ies)")
+
     total = len(index)
     num_batches = (total + BATCH_SIZE - 1) // BATCH_SIZE
 
@@ -822,9 +900,12 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         ai_results: list[dict] = []
         if ai_items and not embeddings_only:
             ai_only_batch = [it for _, it in ai_items]
-            prompt = build_prompt(ai_only_batch)
             try:
-                ai_results = call_deepseek(prompt)
+                # Use cached wrapper (NEXT-44) to eliminate >90% of API calls on re-runs
+                ai_results = call_deepseek_cached(build_prompt(ai_only_batch), ai_only_batch, DEEPSEEK_MODEL)
+                cache_hits = sum(1 for r in ai_results if r is not None)
+                if cache_hits > 0:
+                    print(f"  LLM cache hit {cache_hits}/{len(ai_results)} item(s) — skipped API calls")
             except Exception as e:
                 print(f"  ERROR calling DeepSeek: {e}")
                 print("  Saving partial error marker and continuing...")
