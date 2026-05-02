@@ -2,6 +2,62 @@
 
 All notable changes to FileOrganizer will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- **N-9: Metadata extractors MVP** — new `fileorganizer/metadata_extractors/`
+  package with four file-content readers (`psd_extractor`, `font_extractor`,
+  `audio_extractor`, `video_extractor`) wired into `classify_design.py` as a
+  zero-AI Stage 1 ahead of marketplace + embeddings + LLM. Hardroute
+  threshold is confidence ≥ 90; below that the hint is informational and
+  downstream stages still run. Phantom-category guard validates emitted
+  names against `CATEGORIES` before they can write to a batch JSON.
+  Routing today:
+    - PSD 9:16 / square / business-card / A4 canvases → Print or Photoshop
+      subcategories at confidence 90-92
+    - Valid font header (TTF/OTF/TTC/WOFF/WOFF2) → "Fonts & Typography"
+      at confidence 95
+    - ProRes/DNxHD video → "Stock Footage - General" at confidence 90
+    - Audio: short clips (<30s) hint Sound Effects, long tracks (>3min)
+      hint Stock Music — both stay below the hardroute threshold
+- **N-12: Provenance tracking** — `source_domain` + `first_seen_ts` columns
+  added to `assets` via idempotent migration. New `fileorganizer/provenance.py`
+  recognises 12 marketplace patterns (Videohive, MotionElements, Envato
+  Elements, Creative Market, DesignBundles, Motion Array, AEriver, Freepik,
+  Adobe Stock, Dribbble, Behance) and a 7-domain piracy blocklist
+  (intro-hd.net, aidownload.net, gfxdrug, shareae, freegfx, graphicux,
+  gfxlooks). Piracy match wins over marketplace match. UI-safe
+  `display_domain()` returns empty string for blocked domains so they
+  never surface in CSV exports or review-panel captions. New CLI flag
+  `python build_source_index.py --source <name> --show-provenance` prints
+  a per-domain histogram across the source root.
+- **N-14: Broken file detection** — `fileorganizer/broken_detector.py`
+  module with `check_image` (PIL.Image.verify under a 20 MB cap),
+  `check_video` (ffprobe -show_error, treats non-empty stderr as broken
+  even at rc=0), and `check_archive` (zipfile/rarfile/py7zr per-format
+  testzip). `is_broken(path)` dispatcher routes by extension. Standalone
+  CLI: `python -m fileorganizer.broken_detector --scan <dir>` exits 1 on
+  any broken file. New `broken INTEGER NOT NULL DEFAULT 0` column on
+  `asset_files` (idempotent migration) for future GUI pre-flight wiring.
+
+### Tests
+
+- 50 new tests across the three features + 5 audit-pass regression tests.
+  Suite at 128 passing (excludes one pre-existing PyQt6 GUI test that
+  fails on a DLL-load error unrelated to these changes).
+
+### Audit notes (cross-family review pass)
+
+- Audio MVP confidences capped below 90 — duration alone can't distinguish
+  a 4s music intro stab from a 4s SFX one-shot.
+- `check_video` honors the rubric's stderr-non-empty rule (catches
+  "moov atom not found" warnings on truncated MP4s that ffprobe parses).
+- Folder-mode font dispatch now picks `.woff` / `.woff2`.
+- Provenance: `share.ae` dotted variant added to piracy blocklist; the
+  over-broad second Videohive numeric pattern (matched any 8-9 digit
+  prefix without separator) was removed.
+
 ## [FileOrganizer.UI v0.5.0] - 2026-05-01
 
 ### Added (themes + missing pages + UX overhaul)
