@@ -841,12 +841,15 @@ def main():
                          'AI call entirely.  Items below the embedding threshold are '
                          'recorded as _Unresolved at confidence 0.  Useful for '
                          'benchmarking the embeddings skip-rate before paying for AI.')
-    ap.add_argument('--export-rules', nargs='?', const='organize_rules.yaml',
+    # Default export path resolves against this script's directory so the file
+    # always lands at repo root regardless of the caller's CWD.
+    _default_rules_path = str(Path(__file__).parent / 'organize_rules.yaml')
+    ap.add_argument('--export-rules', nargs='?', const=_default_rules_path,
                     metavar='OUTPUT',
                     help='Export the canonical taxonomy + alias map as an '
                          'organize-cli-compatible YAML rules file. Pass an '
-                         'output path or use the default (organize_rules.yaml). '
-                         'Pass "-" to write to stdout.')
+                         'output path or use the default (repo-root '
+                         'organize_rules.yaml). Pass "-" to write to stdout.')
     ap.add_argument('--export-dest-root', default=r'G:\Organized',
                     help='Destination root for --export-rules move actions '
                          '(default: G:\\Organized).')
@@ -865,7 +868,7 @@ def main():
         if args.export_rules == '-':
             sys.stdout.write(text)
         else:
-            print(f"Exported organize-cli rules → {args.export_rules}")
+            print(f"Exported organize-cli rules -> {args.export_rules}")
         return
 
     # Wire up globals for the selected source
