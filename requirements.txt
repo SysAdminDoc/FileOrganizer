@@ -33,6 +33,9 @@ fonttools>=4.62.1
 # NEXT-50: Google magika — 99%+ accurate content-type detection across 300+ MIME types.
 # Enables Stage 0 obfuscated-extension pre-routing (e.g., .txt that's actually .zip).
 python-magic-bin  # Windows fallback; on Linux use: apt-get install libmagic1
+# NEXT-43: ExifTool integration — 800+ format support via Python wrapper.
+# Supplements N-9 extractors on formats with <50% confidence.
+piexif
 
 # Optional local embeddings classifier (N-10).  Install at least one to enable
 # the pre-AI cosine match against category anchors; the classifier degrades to
