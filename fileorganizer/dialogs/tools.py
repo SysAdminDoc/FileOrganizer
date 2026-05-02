@@ -799,8 +799,33 @@ class PreflightWorker(QThread):
                 n_warn += 1
         except Exception:
             pass  # bad_names module optional
+
+        # ── 3. Symlink/junction detection (NEXT-35) ───────────────────────────
+        self.progress.emit("Checking for symlinks and junctions…")
+        try:
+            from fileorganizer import symlink_detector as _sd
+            reparse_count = 0
+            for it in self._items:
+                src = getattr(it, 'full_source_path', '')
+                if src:
+                    reparse_issues = _sd.scan_for_reparse_points(src)
+                    for path, issue_type in reparse_issues:
+                        self.issue.emit('warning', f'Symlink/junction ({issue_type})',
+                                       f"{os.path.basename(path)} — potential path traversal risk")
+                        reparse_count += 1
+                        # Validate junction target for safety
+                        if issue_type == 'junction':
+                            is_safe, reason = _sd.validate_junction_target(path)
+                            if not is_safe:
+                                self.issue.emit('error', 'Unsafe junction target',
+                                               f"{path} — {reason}")
+                                n_err += 1
+            if reparse_count > 0:
+                n_warn += 1
+        except Exception:
+            pass  # symlink_detector module optional
 
-        # ── 3. Destination path length ────────────────────────────────────────
+        # ── 4. Destination path length ────────────────────────────────────────
         self.progress.emit("Checking destination paths…")
         for it in self._items:
             dst = getattr(it, 'full_dest_path', '')
@@ -808,7 +833,7 @@ class PreflightWorker(QThread):
                 self.issue.emit('warning', 'Dest path > 260 chars', dst)
                 n_warn += 1
 
-        # ── 4. Destination free space ─────────────────────────────────────────
+        # ── 5. Destination free space ─────────────────────────────────────────
         self.progress.emit("Checking destination disk space…")
         dest_paths = [getattr(it, 'full_dest_path', '') for it in self._items
                       if getattr(it, 'full_dest_path', '')]
@@ -833,7 +858,7 @@ class PreflightWorker(QThread):
                 self.issue.emit('warning', 'Could not check disk space', str(exc))
                 n_warn += 1
 
-        # ── 5. Low-confidence items ───────────────────────────────────────────
+        # ── 6. Low-confidence items ───────────────────────────────────────────
         self.progress.emit("Checking confidence levels…")
         rb = self._review_below
         review_count = sum(
