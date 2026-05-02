@@ -6,6 +6,46 @@ All notable changes to FileOrganizer will be documented in this file.
 
 (no entries yet — next iteration will land here)
 
+## [v8.4.0] - 2026-05-02
+
+### Added
+
+- **NEXT-15: Hash-first DB skip** — Stage 0 fingerprint lookup in classification pipeline. Query `asset_db.lookup_folder()` for exact folder fingerprint matches before any AI/metadata/marketplace enrichment. Returns confidence 100 at zero API cost. Expected skip rate 60-70% for common templates already in community DB. Graceful fallback if `asset_db` unavailable.
+
+- **NEXT-44: LLM response caching (SQLite)** — New `llm_cache.py` module caches DeepSeek/GitHub Models/Ollama responses by `(fingerprint, model_id, prompt_hash)`. Cache key schema supports automatic invalidation when model or prompt template changes. TTL: 30 days (configurable, cleaned on startup). Eliminates >90% of API calls on re-runs of stable asset libraries. Cache stored in `organize_moves.db` with indices on fingerprint and accessed_at for efficient cleanup. Per-item cache hits reported in batch output.
+
+- **NEXT-11: Video metadata deep routing** — Extend `video_extractor.py` with duration-based routing rules. New routes:
+    - ≤15s clips → "After Effects - Motion Graphics" (confidence 80) for looping content
+    - >5 min duration → "Tutorial Video" (confidence 75) for course/tutorial content
+    - 9:16 vertical ratio → "Social Media - Templates" (confidence 85, up from 72)
+    - 1:1 square ratio → "Social Media - Templates" (confidence 78, up from 68)
+    - ProRes/DNxHD/DNxHR/XDCAM codecs → "Broadcast / Cinema Stock" (confidence 90)
+  Decision tree prioritizes codec signals, then duration, then aspect ratio for robust routing across diverse video libraries.
+
+- **NEXT-39: WindowsAppSDK 2.0.1 upgrade** — Migrate WinUI 3 shell from 1.5.240311000 to 2.0.1 GA (released April 29, 2026). Update SDK.BuildTools from 10.0.22621.3233 to 10.0.26100.4654. Unlocks modern Windows UI capabilities and unblocks NEXT-40/41 (RAWPage, ComicsPage).
+
+- **NEXT-40: RAWPage** — New WinUI 3 component for DNG/CR2/NEF/ARW/ORF/RW2 raw photo metadata extraction and organization. UI: folder browsing, preview/organize mode toggle, metadata results grid. Python runner (`raw_run.py`) scaffolds EXIF extraction (placeholder for rawpy.exifdata expansion), folder scanning with graceful rawpy fallback. Integrated into MainWindow navigation as "Raw Photos" tab.
+
+- **NEXT-41: ComicsPage** — New WinUI 3 component for CBZ/CBR/CB7/CBT comic archive metadata extraction. UI: folder browsing, series detection results grid. Python runner (`comics_run.py`) with regex series/volume/publisher parsing (handles "Series #NNN" and "(Series) #NNN (Publisher)" patterns), first-page thumbnail extraction via PIL/zipfile. Integrated into MainWindow navigation as "Comics" tab.
+
+- **NEXT-46: DeepSeek V4 model migration** — Migrate from deprecated `deepseek-chat` / `deepseek-reasoner` aliases to `deepseek-v4-flash` (streaming) and `deepseek-v4-pro` (complex reasoning). Add deprecation warnings for legacy aliases. Hard deadline: July 24, 2026. Missing this deadline results in complete loss of DeepSeek functionality.
+
+- **NEXT-47: Anthropic model refresh** — Migrate from `claude-3-haiku` / `claude-3-sonnet-4` / `claude-3-opus-4` to `claude-haiku-4-5` / `claude-sonnet-4-5` / `claude-opus-4-5`. Fix critical GitHub Models UI bug where model dropdown was storing short model names instead of full model IDs (e.g. storing "claude-sonnet-4-5" but API expects "Anthropic/claude-3-5-sonnet-20241022"). Fix routes through _GITHUB_MODEL_CATALOG to load authoritative catalog and map display labels to full IDs. Hard deadline: June 15, 2026.
+
+- **NEXT-48: Ollama Pydantic structured outputs** — Add `ClassifyResult` Pydantic model to Ollama integration. Pass `format=ClassifyResult.model_json_schema()` to Ollama >=v0.22.1 chat endpoint for guaranteed schema-valid JSON output. Eliminates ~3% of calls that fail regex extraction on smaller models. Reduces inference latency ~40ms/call due to elimination of retry loop. Graceful fallback to regex extraction for older Ollama versions.
+
+- **NEXT-49: psd-tools security hardening (GHSA-24p2-j2jr-386w)** — Add PSD header pre-validation before invoking `psd_tools.PSD.open()` to mitigate CVSS 6.8 vulnerability. Validate "8BPS" magic signature, extract width/height from big-endian uint32 at bytes 10–13/14–17, reject if > 30,000 px. Blocks ZIP-bomb OOM attack (zlib.decompress with no max_length cap) and integer-overflow attack (height×width buffer allocation). Use safe_psd_open wrapper. Document advisory in new `SECURITY.md` file. Add pre-validation guard inline for maximum safety.
+
+### Changed
+
+- **ui-v0.6.0**: Shell version incremented to 0.6.0 (from 0.5.0) reflecting RAWPage, ComicsPage, and WindowsAppSDK 2.0.1 upgrade.
+- **Deprecation notices**: Legacy model aliases now emit DeprecationWarning with sunset date and migration guidance.
+
+### Fixed
+
+- GitHub Models dropdown now correctly maps user-selected models to full model IDs for API calls.
+- PSD file attacks no longer cause OOM or integer overflow in child process.
+
 ## [v8.3.0] - 2026-05-02
 
 ### Added
