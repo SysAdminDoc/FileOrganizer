@@ -121,7 +121,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("FileOrganizer v8.2.0")
+        self.setWindowTitle("FileOrganizer v8.3.0")
         self.setMinimumSize(1050, 700)
         self.aep_items  = []
         self.cat_items  = []
@@ -285,7 +285,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         lbl_brand = QLabel("FileOrganizer")
         lbl_brand.setProperty("class", "brand-title")
         brand_lay.addWidget(lbl_brand)
-        lbl_ver = QLabel("v8.2.0")
+        lbl_ver = QLabel("v8.3.0")
         lbl_ver.setProperty("class", "brand-version")
         brand_lay.addWidget(lbl_ver)
         sb_lay.addWidget(brand_w)
