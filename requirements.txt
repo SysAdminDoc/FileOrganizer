@@ -69,3 +69,5 @@ Pygments
 # NEXT-1: Watch mode daemon — monitor source folders for new files + auto-classify.
 # Robust, cross-platform file system event monitoring.
 watchdog
+# NEXT-6: Parallel LLM calls — async HTTP batching for 3–5x throughput on large runs.
+aiohttp
