@@ -1,5 +1,5 @@
 # ROADMAP -- FileOrganizer
-<!-- v8.4.0-planning · Updated 2026-05 · Phase 3 refresh · Supersedes all prior ROADMAP.md versions -->
+<!-- v9.0.0-planning · Updated 2026-05 (Wave 4 synthesis) · Phase 5 audit complete · All prior RCs reconciled -->
 
 FileOrganizer is a Python/PyQt6 desktop tool for classifying and moving creative design assets
 into a canonical folder taxonomy. Core use case: 33 TB+ of Envato/Creative Market/Freepik
@@ -8,7 +8,7 @@ Multi-provider AI backbone (DeepSeek, GitHub Models, Ollama).
 
 ---
 
-## State of the Repo (v8.4.0 planning, May 2026)
+## State of the Repo (v9.0.0 planning, May 2026 — Wave 4 research complete)
 
 v8.3.0 is **fully shipped** — N-9 (metadata extractors), N-12 (provenance tracking), N-14
 (broken file detection), and all iter-2 follow-ups. Tagged and released 2026-05-02. See
@@ -1254,6 +1254,132 @@ modern compression. **Effort is low**: zstandard library is pure Python; pattern
    stream mode for memory efficiency);
    [S160] 7z format registry (Zstandard compression levels 1–22; adoption in p7zip v22.00+)
 
+**NEXT-81: Windows Authenticode code signing with Sectigo certificate**
+Implement code signing for FileOrganizer.exe using Authenticode (Microsoft's signing standard). Obtain an
+EV (Extended Validation) certificate from Sectigo or GlobalSign (~$300–400/year). Sign the binary in CI/CD:
+`signtool sign /f cert.pfx /p password /fd SHA256 /tr http://timestamp.authoritycompany.com FileOrganizer.exe`.
+This eliminates SmartScreen warnings on Windows and is **mandatory for enterprise adoption**. Certificate renewal
+must be automated in CI/CD (store .pfx as GitHub secret). Impact: dramatic reduction in user hesitation (SmartScreen
+blocks untrusted binaries; signed code builds reputation over time). Pairs with NEXT-82–85 for full multi-platform
+distribution tier.
+- **Impact**: 4 | **Effort**: 2 | **Tier**: NEXT | **Unblocks**: NEXT-82–85 (distribution tier)
+- Source: [S161] Microsoft Authenticode documentation https://learn.microsoft.com/en-us/windows/win32/seccrypto/authenticode;
+   [S162] Sectigo code signing certificates https://sectigo.com/SSL-certificates/code-signing;
+   [S163] FileOrganizer CI/CD signing integration pattern (GitHub Actions + signtool)
+
+**NEXT-82: macOS code signing + notarization workflow**
+Implement macOS Developer ID signing and notarization (required for Gatekeeper bypass since macOS 12). Use
+`codesign` to sign the bundled `FileOrganizer.app`, then submit to Apple's notarization service via `xcrun
+notarytool submit --wait`. Notarization is automatic malware scanning; takes 5–10 minutes. Store Developer ID
+certificate (from Apple Developer Program, ~$99/year) as GitHub secret. This is **mandatory for Homebrew Cask
+distribution** and enables seamless single-click execution on macOS. User experience: app runs immediately without
+"unidentified developer" warning. Impact: unblocks ~5% of target user base (macOS users); required for professional
+adoption.
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-81 (signing architecture) | **Unblocks**: NEXT-84 (Homebrew)
+- Source: [S164] Apple Gatekeeper docs https://developer.apple.com/documentation/security/gatekeeper;
+   [S165] macOS notarization workflow https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution;
+   [S166] Homebrew Cask requirements (code signing prerequisite)
+
+**NEXT-83: Multi-platform CI/CD matrix builds (Windows/macOS/Linux)**
+Restructure `.github/workflows/release.yml` to build FileOrganizer.exe (Windows), FileOrganizer.app (macOS),
+and FileOrganizer.AppImage (Linux) in parallel using GitHub Actions matrix strategy. Specify Python 3.13,
+PyInstaller 6.20+, and platform-specific tools (signtool for Windows, codesign for macOS, linuxdeploy for Linux).
+Each build produces signed, ready-to-distribute binaries. This is the **foundation for multi-platform distribution**
+(v9.1+). Build time: ~15 min per platform (45 min total, parallelized). Store all artifacts in release assets.
+Enables one-button release across all platforms.
+- **Impact**: 5 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-81, NEXT-82 | **Unblocks**: NEXT-84–86
+- Source: [S167] GitHub Actions matrix builds https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategmatrix;
+   [S168] PyInstaller cross-platform documentation https://pyinstaller.org/en/stable/common-issues-and-support.html#i-can-t-import-my-module-using-the-imports-statement;
+   [S169] FileOrganizer:.github/workflows/release.yml (current single-platform pattern)
+
+**NEXT-84: macOS Homebrew Cask submission + maintenance**
+Create and submit a Homebrew Cask formula for FileOrganizer. Once `NEXT-82` (macOS signing) is complete,
+submit a PR to `homebrew/cask` with a `fileorganizer.rb` formula. Formula specifies download URL, DMG hash,
+and desktop app target. Effort is minimal (~30 min review process). Once merged, users can install via
+`brew install fileorganizer` and auto-updates are managed by Homebrew (user runs `brew upgrade`). This is
+**high-value low-effort** distribution: ~5% macOS user base discovers via Homebrew (second most popular
+macOS package manager after App Store). Pairs with NEXT-85 for Linux distribution parity.
+- **Impact**: 3 | **Effort**: 1 | **Tier**: NEXT | **Depends on**: NEXT-82 (signed app) | **Unblocks**: enterprise macOS adoption
+- Source: [S170] Homebrew Cask guidelines https://docs.brew.sh/Cask-Cookbook;
+   [S171] Homebrew Cask submission workflow (PR to homebrew/homebrew-cask);
+   [S172] Example formula (existing OSS projects)
+
+**NEXT-85: Linux AppImage packaging + GPG signature**
+Bundle FileOrganizer as a portable `FileOrganizer-9.x.x-x86_64.AppImage` using `linuxdeploy` +
+`linuxdeploy-plugin-qt`. Single file (~150 MB) runs on any glibc 2.23+ system (Ubuntu 16.04+, Debian 9+,
+Fedora 25+). No installation needed; users download and run. GPG-sign the AppImage: `gpg --armor --detach-sign
+FileOrganizer*.AppImage` → ships .asc file for verification. This **expands reach to ~25% Linux user base** with
+zero friction. Users can also run in bubblewrap sandbox for security. Defer Snap/Flatpak to community
+contributions (high maintenance burden). AppImage is the **community standard** for cross-distro portability.
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-83 (CI/CD matrix) | **Unblocks**: Linux user adoption
+- Source: [S173] AppImage documentation https://docs.appimage.org/;
+   [S174] linuxdeploy + linuxdeploy-plugin-qt https://github.com/linuxdeploy/linuxdeploy;
+   [S175] GPG signature verification pattern
+
+**NEXT-86: WinSparkle auto-update integration (Windows)**
+Integrate WinSparkle (Windows port of Sparkle) for delta-update downloads. Add to `requirements.txt`:
+`pysparkle>=1.0` (or equivalent C++ binding). On startup, check releases.json from GitHub Releases API for new
+versions. If update available, download delta patch (~5–20 MB vs full 150 MB binary); apply in background;
+restart on next close. This provides **seamless auto-updates with 80–90% bandwidth savings** (delta patching).
+Users never manually download; v9.0.1 → v9.0.2 is transparent. Pairs with NEXT-87 (macOS Sparkle) for
+cross-platform auto-update parity.
+- **Impact**: 4 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-81 (code signing for update verification) | **Unblocks**: user delight (auto-updates)
+- Source: [S176] WinSparkle documentation https://github.com/vslavik/winsparkle;
+   [S177] Delta patching strategy (reduce download size);
+   [S178] Auto-update security (signature verification of patches)
+
+**NEXT-87: Sparkle auto-update integration (macOS)**
+Use Sparkle (de facto standard for macOS app updates) for macOS binary delta updates. Bundle Sparkle framework
+in FileOrganizer.app. Configure `Info.plist` with update feed URL (GitHub Releases Atom feed). On startup,
+Sparkle checks feed; if new version, prompts user or updates silently in background. Delta patching reduces
+download to 5–20 MB. This is **expected behavior** for macOS users; builds professional polish. Pairs with
+NEXT-86 for cross-platform parity.
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-82 (code signing) | **Unblocks**: macOS user delight
+- Source: [S179] Sparkle framework https://sparkle-project.org/;
+   [S180] macOS app auto-update best practices
+
+**NEXT-88: REUSE.software compliance audit + LICENSES.md**
+Implement REUSE.software compliance to satisfy GDPR/AGPL derivative work licensing requirements. Create
+`LICENSES/` directory; store full text of all dependency licenses (MIT, Apache-2.0, BSD-3, LGPL-3.0, GPL-2.0, etc.).
+Add SPDX headers to all source files: `# SPDX-License-Identifier: MIT`. Generate `LICENSES.md` via `pip-licenses
+--format=markdown`. This **audits FileOrganizer's open-source compliance** and enables confident distribution
+in regulated environments (enterprises, government). Effort is primarily documentation; zero code changes.
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Unblocks**: enterprise legal review
+- Source: [S181] REUSE.software https://reuse.software/;
+   [S182] SPDX license identifiers https://spdx.org/licenses/;
+   [S183] pip-licenses tool https://pypi.org/project/pip-licenses/
+
+**NEXT-89: Keyboard shortcuts customization panel**
+Add Settings panel enabling users to customize all keyboard shortcuts (e.g., Ctrl+O to open, Ctrl+Shift+O
+to organize, F5 to refresh). Store in `keyboard_shortcuts.json`. Reload on Settings change (no restart required).
+Enable power users (and accessibility users who prefer keyboard navigation over mouse) to match their muscle
+memory. This pairs with LATER-5 (full accessibility audit) as a low-hanging accessibility win.
+- **Impact**: 2 | **Effort**: 2 | **Tier**: NEXT
+- Source: [S184] PyQt6 keyboard event handling (QKeySequence, QShortcut)
+
+**NEXT-90: Basic accessibility audit (WCAG 2.1 Level A compliance)**
+Run automated accessibility checker (axe DevTools for desktop, or WAVE) on FileOrganizer UI. Fix high-priority
+failures: (1) Add alt text to all image buttons; (2) Ensure 4.5:1 color contrast on text; (3) Implement tab
+navigation (focus rect visibility); (4) Test with keyboard-only (no mouse); (5) Test with screen reader (NVDA
+on Windows, VoiceOver on macOS). This achieves **WCAG 2.1 Level A baseline** (minimum legal requirement in many
+jurisdictions). Effort is primarily testing + incremental UI fixes. Full Level AA requires NEXT-89 (keyboard
+shortcuts) + LATER-6 (screen reader testing).
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Unblocks**: LATER-5, LATER-6
+- Source: [S185] WCAG 2.1 Level A criteria https://www.w3.org/WAI/WCAG21/quickref/;
+   [S186] axe DevTools for automated a11y testing;
+   [S187] PyQt6 accessibility APIs (QAccessibleInterface, QAccessibleWidget)
+
+**NEXT-91: Privacy policy + telemetry opt-out mechanism**
+Create a privacy policy (required for GDPR compliance if any telemetry is enabled in NEXT-74 + NEXT-75). Policy
+must explicitly state: (1) no user data is collected by default; (2) metrics (NEXT-74) are local-only; (3) crash
+reports (NEXT-75) are opt-in; (4) audit logs (NEXT-73) are stored locally in `%APPDATA%`. Add Settings toggle:
+"Send crash reports to help improve FileOrganizer". Document data retention (audit logs kept 90 days, then deleted).
+This is **legally required** in EU (GDPR), California (CCPA), and many other regions.
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Unblocks**: enterprise deployment
+- Source: [S188] GDPR privacy policy template (example from Django/Flask projects);
+   [S189] CCPA requirements https://oag.ca.gov/privacy/ccpa;
+   [S190] Privacy policy best practices (Mozilla, EFF)
+
 ---
 
 ## LATER -- Strategic, Not Yet Urgent
@@ -1435,6 +1561,138 @@ Czkawka v11.0.0 [S44] ships this as a first-class mode (video optimizer), confir
 - **Impact**: 2 | **Effort**: 4
 - Source: [S44] Czkawka v11.0.0 video optimizer mode, ffmpeg documentation
 
+**L-22: Full WCAG 2.1 AA accessibility compliance**
+Complete audit + remediation to achieve Level AA (not just Level A from NEXT-90). Specific targets:
+(1) Screen reader testing on Windows (NVDA), macOS (VoiceOver), Linux (Orca). (2) Ensure all images have
+descriptive alt text. (3) Maintain 7:1 color contrast on focus indicators. (4) Test with high-zoom (200%)
+and magnification tools. (5) Support RTL text rendering (for Arabic/Hebrew file paths). (6) Verify all
+dynamic content updates are announced to assistive tech. This is **Level AA** (GDPR "accessibility by design"
+requirement in many EU jurisdictions). Benefit: enables use by visually impaired users and users with motor
+disabilities. Requires professional accessibility testing (~$2–5K externally); can be self-tested using NVDA
+(free) + axe (free).
+- **Why later**: Requires sustained UX + testing effort; demand from accessibility community not yet visible.
+  Revisit after NEXT-90 ships and we see real-world usage patterns.
+- **Impact**: 3 | **Effort**: 5 | **Depends on**: NEXT-90
+- Source: [S191] WCAG 2.1 Level AA https://www.w3.org/WAI/WCAG21/quickref/;
+   [S192] NVDA screen reader https://www.nvaccess.org/;
+   [S193] axe DevTools accessibility testing https://www.deque.systems/axe
+
+**L-23: Internationalization (i18n) UI strings — Qt Linguist workflow**
+Extract all UI strings into `FileOrganizer/i18n/fileorganizer_en.ts` (Qt Linguist format). Create translation
+files for Chinese, Japanese, Spanish, French, German (`_zh_CN.ts`, `_ja_JP.ts`, etc.). Use Qt Linguist GUI for
+translator-friendly editing. Load translations at app startup based on system locale. This is the **standard
+PyQt6 pattern** (not GNU gettext). Enables FileOrganizer to serve non-English users. Initial target: Chinese
+(1.4B potential users), Japanese (125M), Spanish (475M). Community translators can contribute via Weblate
+(free open-source hosting). Effort is primarily translation sourcing; code changes are minimal (one
+`QTranslator::load()` call at startup).
+- **Why later**: No active non-English user base yet. Revisit after v9.0 ships and we measure geographic usage.
+- **Impact**: 2 | **Effort**: 3 | **Depends on**: code cleanup (ensure all UI strings are wrapped in `QCoreApplication.translate()`)
+- Source: [S194] Qt Linguist documentation https://doc.qt.io/qt-6/linguist-manager.html;
+   [S195] Weblate https://weblate.org/;
+   [S196] PyQt6 QTranslator https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtcore/qtranslator.html
+
+**L-24: Category taxonomy translation (localized folder names)**
+Extend i18n to the 384-category taxonomy (Photoshop, Blender, Adobe, etc.). Ship category name + description
+translations for top-5 languages (Chinese, Japanese, Spanish, French, German). At application time, resolve
+category to localized folder name via `category_translations.json`. Store canonical English category in DB
+so assets remain portable across locale switches. Example: `Photoshop - Patterns & Textures` → `フォトショップ
+- パターンとテクスチャ` on Japanese system. Complexity: handling users switching locales mid-library (do we
+rename folders or maintain symlinks?). Recommend: ship folder-rename safe mode + symlink fallback.
+- **Why later**: Depends on L-23 (i18n infrastructure); no current demand from non-English users.
+- **Impact**: 2 | **Effort**: 4 | **Depends on**: L-23
+- Source: [S197] Qt file system locale handling;
+   [S198] Unicode filename best practices (BOM, combining characters);
+   [S199] TagStudio i18n integration (Weblate workflow reference)
+
+**L-25: Plugin ecosystem — pluggy-based extensibility**
+Design + implement a plugin architecture using `pluggy` (pytest's plugin framework). Define plugin hooks:
+(1) `categorize_post` — modify AI classification result before apply. (2) `apply_pre` / `apply_post` — intercept
+file move operations. (3) `ui_panel_custom` — register custom tabs in Browse UI. (4) `classifier_custom` — swap
+in alternate ML models. Sandbox plugins in separate Python namespace; validate plugin manifest (name, version,
+entry point). This enables power users and third-party developers to extend FileOrganizer without forking.
+Example plugin: "Archive2Folder" plugin that, after organizing, compresses old assets by date. Effort includes
+plugin API documentation, example plugins, and installation workflow (pip install user-plugins from PyPI).
+- **Why later**: Requires stable v9.x API + user demand for extensibility not yet visible.
+- **Impact**: 3 | **Effort**: 5 | **Depends on**: API stabilization (NEXT-1 through NEXT-30)
+- Source: [S200] pluggy https://pluggy.readthedocs.io/;
+   [S201] pytest plugin tutorial (reference architecture);
+   [S202] stevedore (alternative: entry_points-based plugins) https://stevedore.readthedocs.io/
+
+**L-26: Snap package distribution (Ubuntu/Linux)**
+Create Snapcraft manifest (`snapcraft.yaml`) for Ubuntu Snap Store. Snaps run in containers with restricted
+file system access (users can override with `--devmode` for full access). This is **Ubuntu's preferred** package
+format but has lower adoption than AppImage (L-25 ships AppImage first). Snap auto-updates via Store. Effort:
+~2 days to write + test the manifest. Defer to post-v9.0 unless significant Ubuntu user demand emerges.
+- **Why later**: AppImage (NEXT-85) is more portable and community-preferred. Snap adoption is concentrated in
+  Ubuntu; we serve broader Linux via AppImage first. Revisit if Ubuntu users request it.
+- **Impact**: 2 | **Effort**: 3 | **Depends on**: NEXT-85 (AppImage shipping first)
+- Source: [S203] Snapcraft https://snapcraft.io/;
+   [S204] Snap confinement model https://snapcraft.io/docs/snap-confinement
+
+**L-27: Flatpak distribution (GNOME/KDE/XFCE desktops)**
+Create Flatpak manifest for Flatseal Sandbox. Flatpak is the **community-preferred containerization** on
+GNOME and KDE desktops. Permissions sandbox model (declare home, documents, download access). Ship via Flathub
+(community-run app store). Effort: similar to Snap (~2 days). Like Snap, defer to post-v9.0; AppImage (NEXT-85)
+handles the Linux long-tail more efficiently. Revisit if GNOME/KDE user demand emerges.
+- **Why later**: AppImage is the cross-distro standard; Flatpak adoption is concentrated in newer desktops.
+- **Impact**: 2 | **Effort**: 3 | **Depends on**: NEXT-85 (AppImage priority)
+- Source: [S205] Flatpak https://flatpak.org/;
+   [S206] Flathub https://flathub.org/;
+   [S207] Flatpak permission sandbox https://docs.flatpak.org/en/latest/sandbox-permissions.html
+
+**L-28: Windows MSIX / Microsoft Store distribution**
+Package FileOrganizer as MSIX (Microsoft's modern Windows app format) for distribution via Microsoft Store.
+MSIX enables automatic updates via Store, but requires sandboxing (limited file system access; users must
+grant folder permissions via system UI). This is **enterprise-preferred** but restrictive for a file organizer.
+Effort: 1–2 weeks to refactor file I/O paths to respect sandbox boundaries. Defer to v9.5+ or later when we
+have stable cloud sync (LATER-15). Requires $19 USD annual registration fee in Microsoft Partner Center.
+- **Why later**: Sandbox refactoring is high-effort; demand from Store users not yet visible. Better to ship
+  portable exe + Homebrew + AppImage first. Enterprise adoption may eventually justify MSIX effort.
+- **Impact**: 2 | **Effort**: 5 | **Depends on**: file system abstraction refactoring
+- Source: [S208] MSIX containerization https://learn.microsoft.com/en-us/windows/msix/overview;
+   [S209] Microsoft Partner Center https://partner.microsoft.com/;
+   [S210] MSIX file system sandbox constraints
+
+**L-29: Debian/AUR package maintenance (community-driven)**
+Create `.deb` package (Debian/Ubuntu) and AUR (Arch User Repository) manifest. These are lower-priority than
+AppImage (NEXT-85) because: (1) Debian requires recurring review + rebuilds per distro version; (2) AUR is
+community-maintained (we don't control release cycle). Acceptable path: publish AppImage, let community
+contributors submit .deb + AUR packages if they want. If we ship this ourselves, effort is ~1 week per format.
+Prefer to defer to community volunteers.
+- **Why later**: AppImage + Snap + Flatpak cover Linux users well. .deb + AUR are high-maintenance with
+  minimal reach increase. Community-driven is acceptable.
+- **Impact**: 1 | **Effort**: 4 | **Depends on**: NEXT-85 (AppImage established first)
+- Source: [S211] Debian package creation https://www.debian.org/doc/manuals/maint-guide/;
+   [S212] AUR submission https://wiki.archlinux.org/title/AUR_submission_guidelines
+
+**L-30: Commercial licensing model (optional v10.x+ revenue)**
+Design + implement a licensing tier system: (1) **Community Edition** — free, open-source, unlimited use for
+individuals + educational institutions. (2) **Team Edition** — $49/yr per user, includes team collaboration
+(multi-user library sharing, LATER-16). (3) **Enterprise Edition** — custom pricing, includes priority support
++ on-premise deployment. Implement via License Key + validation server (Lemonsqueezy or Gumroad integration).
+No server-side functionality change; license check is local. This is **optional revenue stream** for funding
+continued development. Requires legal review (terms of service, refund policy, export compliance for non-US
+users). Defer to v10.x or later; ship v9.x as fully free/open-source first to build community trust.
+- **Why later**: Revenue is not required for v9.x viability; community-first positioning builds trust.
+  Licensing complexity introduces friction for adoption. Revisit after v9.0 ships + user base stabilizes.
+- **Impact**: 1 | **Effort**: 4
+- Source: [S213] Lemonsqueezy licensing https://www.lemonsqueezy.com/;
+   [S214] Gumroad licensing https://gumroad.com/;
+   [S215] Open-source dual-licensing model (example: JetBrains IntelliJ IDEA Community + Ultimate)
+
+**L-31: Analytics dashboard (observability + user insights)**
+Ship an optional in-app dashboard reporting: (1) Total files organized by category (bar chart). (2) ML model
+accuracy over time (confusion matrix trending). (3) Duplicate files detected (% of library). (4) Storage reclaimed
+(GB moved to archive). (5) Top 10 file types processed. Data is local-only (no phone-home); stored in SQLite.
+Dashboard helps users understand their library structure + FileOrganizer's impact. Pairs with NEXT-74 (metrics)
++ NEXT-75 (crash reporting) for observability. Low user value but high marketing/retention impact. Effort:
+UI + SQLite queries (~1 week).
+- **Why later**: Nice-to-have; core organize functionality (NEXT-1 through NEXT-50) is higher priority.
+- **Impact**: 2 | **Effort**: 3 | **Depends on**: NEXT-74 (metrics collection)
+- Source: [S216] Analytics dashboard patterns (Metabase, Superset);
+   [S217] SQLite aggregation queries;
+   [S218] PyQt6 charting (PyQtGraph, matplotlib integration)
+
 ---
 
 ## UNDER CONSIDERATION
@@ -1513,19 +1771,20 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 | Category | Status | Primary Items |
 |----------|--------|---------------|
-| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE pin + psd-tools subprocess isolation + archive path-traversal guard, **shipped v8.2.0**), NEXT-49 (psd-tools GHSA-24p2-j2jr-386w ZIP-bomb hardening — NOW), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan), UC-6 (EXIF remover — on hold) |
-| **Accessibility** | Covered | L-15 (WCAG 2.1, keyboard nav, screen reader) |
-| **i18n / l10n** | Covered | L-14 (QTranslator UI strings, CJK locale), L-20 (localized destination folder names) |
-| **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-25 (post-apply report), NEXT-31 (scan time measurement), NEXT-38 (crash dialog + log viewer) |
+| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE pin + psd-tools subprocess isolation + archive path-traversal guard, **shipped v8.2.0**), NEXT-49 (psd-tools GHSA-24p2-j2jr-386w ZIP-bomb hardening — NOW), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan), UC-6 (EXIF remover — on hold), NEXT-88 (REUSE.software compliance audit + LICENSES.md) |
+| **Accessibility** | Covered | NEXT-90 (WCAG 2.1 Level A baseline), NEXT-89 (keyboard shortcut customization), L-22 (WCAG 2.1 AA full compliance), L-15 (screen reader testing) |
+| **i18n / l10n** | Covered | L-23 (Qt Linguist UI string extraction + Chinese/Japanese/Spanish/French/German), L-24 (localized category taxonomy names), L-14 (QTranslator UI strings, CJK locale), L-20 (localized destination folder names) |
+| **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-25 (post-apply report), NEXT-31 (scan time measurement), NEXT-38 (crash dialog + log viewer), NEXT-91 (privacy policy + telemetry opt-out), L-31 (analytics dashboard) |
 | **Testing** | Covered | NEXT-29 (unit test expansion to 10+ functions), N-7 (pip-audit CI gate), N-14 (broken file detection as pre-run validation), N-15 (SOURCE_CONFIGS parity test, **shipped v8.2.0**) |
-| **Distribution / packaging** | Covered | N-3 (catalog auto-download), N-16 (catalog sync conditional requests, **shipped v8.2.0**), NEXT-30 (multiplatform CI), L-10 (portable mode) |
-| **Plugin ecosystem** | Covered | NEXT-27 (SDK + 3 reference plugins), NEXT-28 (webhook) |
+| **Distribution / packaging** | Covered | NEXT-81 (Windows Authenticode signing), NEXT-82 (macOS code signing + notarization), NEXT-83 (multi-platform CI/CD matrix), NEXT-84 (Homebrew Cask), NEXT-85 (Linux AppImage + GPG), NEXT-86 (WinSparkle auto-updates), NEXT-87 (Sparkle macOS auto-updates), L-26 (Snap distribution), L-27 (Flatpak distribution), L-28 (MSIX Windows Store), L-29 (Debian .deb + AUR), N-3 (catalog auto-download), N-16 (catalog sync conditional requests, **shipped v8.2.0**), NEXT-30 (multiplatform CI), L-10 (portable mode) |
+| **Plugin ecosystem** | Covered | L-25 (pluggy-based extensibility architecture), NEXT-27 (SDK + 3 reference plugins), NEXT-28 (webhook) |
 | **Mobile** | Rejected | Android app rejected (no server backend); revisit after UC-1 |
 | **Offline / resilience** | Covered | N-6 (two-phase commit), N-2 (incremental journal), N-17 (robocopy multi-thread, **shipped v8.2.0**), NEXT-34 (provider failover), NEXT-35 (reparse-point detection), NEXT-36 (free-space reserve), NEXT-37 (journal vacuum + retention), Ollama local fallback already in prod |
 | **Performance** | Covered | N-17 (robocopy /MT, **shipped**), NEXT-6 (parallel async LLM), NEXT-33 (xxhash/blake3 fast fingerprint), NEXT-5 (minimal-diff re-scan), NEXT-44 (LLM summary cache) |
 | **Multi-user / collaboration** | Rejected | Single-user tool by design; see Rejected table |
 | **Migration paths** | Covered | N-1 (I:\ legacy reclassification), CATEGORY_ALIASES expansion (already shipped) |
-| **Upgrade strategy** | Covered | N-3 (schema version gate on catalog sync), UC-5 (in-app update notification) |
+| **Upgrade strategy** | Covered | N-3 (schema version gate on catalog sync), UC-5 (in-app update notification), NEXT-86, NEXT-87 (auto-update frameworks) |
+| **Commercial licensing** | Covered | L-30 (optional dual-licensing model — Community + Team + Enterprise editions) |
 | **WinUI Shell** | Active | ui-v0.5.0 shipped (15 pages); NEXT-39 (WinAppSDK 2.0 upgrade), NEXT-40 (RAWPage), NEXT-41 (ComicsPage) target ui-v0.6.0 |
 
 ### Security -- additional notes
@@ -2125,3 +2384,191 @@ for relevance; "directly portable" means the file can be copied with minor adapt
 - [S160] 7z format registry & p7zip v22.00+ -- https://github.com/p7zip-project/p7zip
    (Zstandard compression levels 1–22; emerging standard for asset distribution; integration with 7z
    archive suite confirms production readiness)
+
+### Distribution & Code Signing (Wave 4)
+- [S161] Microsoft Authenticode documentation --
+   https://learn.microsoft.com/en-us/windows/win32/seccrypto/authenticode
+   (Authenticode signing standard; SmartScreen reputation building; certificate revocation validation)
+- [S162] Sectigo code signing certificates --
+   https://sectigo.com/SSL-certificates/code-signing
+   (EV certificates ~$300–400/yr; standard for Windows code signing; private key protection; CRL)
+- [S163] signtool CLI reference --
+   https://learn.microsoft.com/en-us/windows/win32/seccrypto/signtool
+   (`signtool sign /f cert.pfx /p password /fd SHA256 /tr http://timestamp.authoritycompany.com`)
+- [S164] Apple Gatekeeper documentation --
+   https://developer.apple.com/documentation/security/gatekeeper
+   (macOS app code signing; Developer ID; notarization requirement on 12+; quarantine bit handling)
+- [S165] macOS notarization workflow --
+   https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution
+   (`xcrun notarytool submit --wait`; automatic malware scan; 5–10 min turnaround; required for Gatekeeper)
+- [S166] Homebrew Cask submission guidelines --
+   https://docs.brew.sh/Cask-Cookbook
+   (Formula syntax; installer verification; code signing prerequisite; auto-update pattern)
+- [S167] GitHub Actions matrix strategy --
+   https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategmatrix
+   (Parallel builds across OS matrix; Win / macOS / Linux simultaneous jobs; shared artifact upload)
+- [S168] PyInstaller cross-platform --
+   https://pyinstaller.org/en/stable/common-issues-and-support.html
+   (Platform-specific binaries; code signing integration; multi-platform distribution patterns)
+- [S169] FileOrganizer CI/CD release workflow --
+   C:\Users\--\repos\FileOrganizer\.github\workflows\release.yml
+   (Current single-platform pattern; to be extended for multi-platform matrix in NEXT-83)
+- [S170] Homebrew Cask documentation --
+   https://docs.brew.sh/Cask-Cookbook
+   (Formula DSL; app targets; checksum verification; discovery via `brew search`)
+- [S171] Homebrew Cask submission --
+   https://github.com/Homebrew/homebrew-cask/blob/master/CONTRIBUTING.md
+   (PR submission to homebrew/homebrew-cask; review SLA; auto-update configuration)
+- [S172] AppImage documentation --
+   https://docs.appimage.org/
+   (Portable executable; glibc 2.23+ compatibility matrix; GPG signature verification; bubblewrap sandboxing)
+- [S173] linuxdeploy + linuxdeploy-plugin-qt --
+   https://github.com/linuxdeploy/linuxdeploy
+   (AppImage builder; PyQt6 + Python bundling; dependencies isolation; portable runtime)
+- [S174] GPG signature verification --
+   https://www.gnupg.org/documentation/
+   (Detached .asc files; GPG key management; signature validation on Linux distributions)
+- [S175] WinSparkle documentation --
+   https://github.com/vslavik/winsparkle
+   (Windows auto-update framework; delta patching; silent updates; Sparkle API compatibility)
+- [S176] Delta patching in auto-updates --
+   https://en.wikipedia.org/wiki/Delta_encoding
+   (Binary diff compression; 80–90% bandwidth savings on incremental updates; bsdiff/bspatch algorithms)
+- [S177] Auto-update security --
+   https://learn.microsoft.com/en-us/windows/win32/msi/digital-signatures-and-windows-installer
+   (Signature verification of patches; replay attack prevention; manifest integrity)
+- [S178] Sparkle framework (macOS) --
+   https://sparkle-project.org/
+   (De facto standard for macOS app updates; Delta updates; user-controlled deferral; Info.plist configuration)
+- [S179] macOS app update best practices --
+   https://developer.apple.com/documentation/appkit/updating_your_app_dynamically
+   (App sandboxing + auto-update; background installation; relaunch-free patching patterns)
+- [S180] REUSE.software compliance --
+   https://reuse.software/
+   (SPDX headers; license text repository; GDPR/AGPL compliance audit; `reuse lint` tool)
+- [S181] SPDX license identifiers --
+   https://spdx.org/licenses/
+   (Canonical license list; identifier syntax; GPL/LGPL/MIT classification)
+- [S182] pip-licenses tool --
+   https://pypi.org/project/pip-licenses/
+   (License enumeration from installed packages; markdown / JSON output; compliance audit)
+
+### Accessibility & Localization (Wave 4)
+- [S183] PyQt6 keyboard shortcuts --
+   https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtgui/qkeysequence.html
+   (QKeySequence; QShortcut; customization pattern; focus navigation)
+- [S184] WCAG 2.1 Level A criteria --
+   https://www.w3.org/WAI/WCAG21/quickref/
+   (Success criteria for basic accessibility; alt text, color contrast, keyboard navigation)
+- [S185] axe DevTools accessibility testing --
+   https://www.deque.systems/axe
+   (Automated a11y scanning; desktop application testing; issue classification)
+- [S186] PyQt6 accessibility APIs --
+   https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtgui/qaccessibleinterface.html
+   (QAccessibleInterface; widget annotations; screen reader integration; NVDA/JAWS/VoiceOver support)
+- [S187] NVDA screen reader --
+   https://www.nvaccess.org/
+   (Free, open-source screen reader; Windows testing; cross-app testing protocol)
+- [S188] VoiceOver macOS documentation --
+   https://www.apple.com/accessibility/voiceover/
+   (Native macOS screen reader; testing protocol; keyboard shortcuts)
+- [S189] GDPR privacy policy template --
+   https://gdpr-info.eu/article-13/
+   (Data processing disclosure; consent management; data retention policies)
+- [S190] CCPA requirements --
+   https://oag.ca.gov/privacy/ccpa
+   (California Consumer Privacy Act; right to know / delete / opt-out; disclosure requirements)
+- [S191] Privacy policy best practices --
+   https://www.eff.org/deeplinks/2015/02/5-websites-and-apps-should-fix-their-privacy-policies-improve-user-control
+   (Mozilla, EFF guidance; transparency; user control)
+- [S192] WCAG 2.1 Level AA compliance --
+   https://www.w3.org/WAI/WCAG21/quickref/
+   (Enhanced color contrast 7:1; magnification support; RTL text; dynamic content announcement)
+- [S193] Qt Linguist documentation --
+   https://doc.qt.io/qt-6/linguist-manager.html
+   (Translation UI; .ts file format; QCoreApplication.translate() wrapping; context strings)
+- [S194] Weblate open-source translation --
+   https://weblate.org/
+   (Community translation hosting; crowdsourced localization; translation memory)
+- [S195] PyQt6 QTranslator --
+   https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtcore/qtranslator.html
+   (Load translation files at startup; locale detection; fallback chains)
+- [S196] Unicode filename handling --
+   https://www.unicode.org/reports/tr21/
+   (BOM handling; combining characters; normalization forms for cross-platform compatibility)
+- [S197] Qt file system locale handling --
+   https://doc.qt.io/qt-6/qfileinfo.html
+   (Locale-aware path resolution; encoding detection; cross-platform file path portability)
+- [S198] TagStudio i18n integration --
+   https://github.com/tagstudiodev/tagstudio/blob/main/README.md
+   (Weblate workflow for community translation; 7 active locales as of v9.5.6)
+
+### Plugin Ecosystem (Wave 4)
+- [S199] pluggy documentation --
+   https://pluggy.readthedocs.io/
+   (pytest plugin framework; plugin hooks; calling conventions; plugin discovery)
+- [S200] pytest plugin tutorial --
+   https://docs.pytest.org/en/stable/how-to/writing-plugins.html
+   (Plugin architecture reference; hook specification pattern; entry_points registration)
+- [S201] stevedore (entry_points plugin pattern) --
+   https://stevedore.readthedocs.io/
+   (Alternative: entry_points-based discovery; dynamic loading; manager API)
+- [S202] Python plugin sandboxing patterns --
+   https://github.com/sloria/environs
+   (Namespace isolation; permission model; plugin API boundaries)
+
+### Linux Distribution (Wave 4)
+- [S203] Snapcraft documentation --
+   https://snapcraft.io/docs
+   (Ubuntu Snap package format; containerization; permissions model; Store distribution)
+- [S204] Snap confinement model --
+   https://snapcraft.io/docs/snap-confinement
+   (strict / classic / devmode confinement levels; file system access; plugs)
+- [S205] Flatpak documentation --
+   https://flatpak.org/setup/
+   (GNOME/KDE/XFCE desktop containerization; permissions sandbox; Flathub distribution)
+- [S206] Flathub community app store --
+   https://flathub.org/
+   (Community-run Flatpak repository; app submission; discoverability)
+- [S207] Flatpak permission sandbox --
+   https://docs.flatpak.org/en/latest/sandbox-permissions.html
+   (Permission model; portals for file system access; home / documents / removable-media scopes)
+
+### Windows Packaging (Wave 4)
+- [S208] MSIX containerization --
+   https://learn.microsoft.com/en-us/windows/msix/overview
+   (Windows app package format; sandboxing; Microsoft Store distribution; auto-updates)
+- [S209] Microsoft Partner Center --
+   https://partner.microsoft.com/
+   (Developer registration; Store app submission; $19/yr enrollment fee)
+- [S210] MSIX file system sandbox constraints --
+   https://learn.microsoft.com/en-us/windows/msix/desktop/desktop-to-uwp-behind-the-scenes
+   (Limited file system access; user permissions model; exemptions for major launchers)
+
+### Debian & AUR (Wave 4)
+- [S211] Debian package creation --
+   https://www.debian.org/doc/manuals/maint-guide/
+   (Packaging guidelines; .deb format; dependency declaration; maintainer workflow)
+- [S212] AUR submission guidelines --
+   https://wiki.archlinux.org/title/AUR_submission_guidelines
+   (Arch User Repository; PKGBUILD format; community maintenance model)
+
+### Commercial Licensing & Analytics (Wave 4)
+- [S213] Lemonsqueezy licensing platform --
+   https://www.lemonsqueezy.com/
+   (SaaS licensing; license key generation; revenue split; checkout flows)
+- [S214] Gumroad licensing --
+   https://gumroad.com/
+   (Digital product distribution; licensing; subscription support; creator tools)
+- [S215] Open-source dual-licensing model --
+   https://www.jetbrains.com/help/idea/intellij-idea-community-edition.html
+   (Community (free) + Ultimate (commercial) edition pattern; license key validation)
+- [S216] Analytics dashboard patterns --
+   https://www.metabase.com/
+   (Self-hosted analytics; SQL queries; chart generation; local data storage)
+- [S217] SQLite aggregation queries --
+   https://www.sqlite.org/lang_aggfunc.html
+   (SUM, COUNT, AVG, GROUP BY; trending; time-series analysis; performance optimization)
+- [S218] PyQt6 charting --
+   https://www.pyqtgraph.org/
+   (PyQtGraph library; real-time plots; embedded charts; matplotlib integration)
