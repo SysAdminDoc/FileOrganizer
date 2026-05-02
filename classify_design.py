@@ -67,6 +67,8 @@ RESULTS_DIR.mkdir(exist_ok=True)
 # These are set dynamically in main() based on --source; defaults = design_unorg
 INDEX_FILE   = Path(__file__).parent / 'design_unorg_index.json'
 BATCH_PREFIX = 'design_batch_'
+SOURCE_DIR   = SOURCE_CONFIGS['design_unorg']['source_dir']
+FILE_MODE    = False
 
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
 DEEPSEEK_BASE    = 'https://api.deepseek.com'
@@ -209,6 +211,15 @@ CATEGORIES = [
     "_Review",     # confidence < 50 or truly ambiguous
     "_Skip",       # empty/junk/license-only/duplicate fragment (e.g. .part2 archive)
 ]
+
+# Phantom-category guard for any pre-AI stage that emits a category name
+# (metadata_extractors, embeddings, marketplace_enrich). Anything not in this
+# set is rejected before being written to a batch JSON file.
+_CATEGORY_SET = frozenset(CATEGORIES)
+
+# Threshold at which a pre-AI metadata stage skips downstream classification
+# entirely. Below this, the hint is informational only and downstream stages run.
+_METADATA_HARDROUTE_THRESHOLD = 90
 
 CATEGORY_HINT = "\n".join(f"  {c}" for c in CATEGORIES)
 
@@ -588,6 +599,44 @@ def cmd_show_cats():
     for c in CATEGORIES:
         print(f"  {c}")
 
+def _try_metadata_classify(batch_items: list[dict]) -> dict[int, dict]:
+    """Stage 1: zero-AI metadata-driven classification.
+
+    Reads file content (PSD canvas, font name table, audio duration, video
+    aspect/codec) via the fileorganizer.metadata_extractors package. Only
+    items resolved at confidence >= _METADATA_HARDROUTE_THRESHOLD (90) skip
+    downstream stages. Lower-confidence hints are dropped silently so
+    marketplace + embeddings + AI keep their say.
+
+    Categories are validated against _CATEGORY_SET — a phantom hint is
+    rejected before it can land in the batch JSON.
+    """
+    try:
+        from fileorganizer.metadata_extractors import extract_hint
+    except Exception:
+        return {}
+
+    if not SOURCE_DIR:
+        return {}
+
+    out: dict[int, dict] = {}
+    for idx, item in enumerate(batch_items):
+        try:
+            hint = extract_hint(item, source_dir=SOURCE_DIR)
+        except Exception:
+            hint = None
+        if hint is None:
+            continue
+        if hint.confidence < _METADATA_HARDROUTE_THRESHOLD:
+            continue
+        if hint.category not in _CATEGORY_SET:
+            # Phantom guard: do not let an extractor write a non-canonical
+            # category, even at high confidence.
+            continue
+        out[idx] = hint.to_result(item.get('name', ''))
+    return out
+
+
 def _try_marketplace_enrich(batch_items: list[dict]) -> dict[int, dict]:
     """Pre-classify items that have a known marketplace ID.
 
@@ -668,10 +717,13 @@ def cmd_run(index: list[dict], only_batch: int = 0,
     """Classify all unprocessed batches.
 
     Stages run in order; each stage skips items resolved by an earlier one:
-      1. marketplace_enrich   — known IDs → confidence 95+ (zero AI cost)
-      2. embeddings_classifier — local cosine match vs category anchors
+      1. metadata_extractors   — file-content metadata (PSD canvas, font name
+                                  table, audio duration, video aspect/codec).
+                                  Hardroute at confidence >= 90.
+      2. marketplace_enrich    — known marketplace IDs → confidence 95+
+      3. embeddings_classifier — local cosine match vs category anchors
                                   (zero AI cost when top1 ≥ 0.65 AND margin ≥ 0.15)
-      3. DeepSeek AI           — everything else (skipped when embeddings_only=True)
+      4. DeepSeek AI           — everything else (skipped when embeddings_only=True)
     """
     if not embeddings_only and not DEEPSEEK_API_KEY:
         print("ERROR: DEEPSEEK_API_KEY not set in environment.")
@@ -693,17 +745,26 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         ts = datetime.now().strftime('%H:%M:%S')
         print(f"[{ts}] Batch {n:03d}/{num_batches}  items {start+1}-{end}  ({len(batch_items)} items)")
 
+        # Stage 1: metadata extractors (file-content driven, zero AI cost)
+        meta_resolved = _try_metadata_classify(batch_items)
+        if meta_resolved:
+            print(f"  Metadata pre-classified {len(meta_resolved)} item(s) — skipping downstream for those")
+
         # Stage 2: marketplace ID pre-classification (zero AI cost for known items)
         pre_enriched = _try_marketplace_enrich(batch_items)
         if pre_enriched:
-            print(f"  Marketplace pre-classified {len(pre_enriched)} item(s) — skipping AI for those")
+            # Drop any positions already resolved by Stage 1.
+            pre_enriched = {k: v for k, v in pre_enriched.items() if k not in meta_resolved}
+            if pre_enriched:
+                print(f"  Marketplace pre-classified {len(pre_enriched)} item(s) — skipping AI for those")
 
         # Stage 3: local embeddings classifier
-        embed_resolved = _try_embeddings_classify(batch_items, set(pre_enriched.keys()))
+        already_resolved = set(meta_resolved.keys()) | set(pre_enriched.keys())
+        embed_resolved = _try_embeddings_classify(batch_items, already_resolved)
         if embed_resolved:
             print(f"  Embeddings pre-classified {len(embed_resolved)} item(s) — skipping AI for those")
 
-        resolved = {**pre_enriched, **embed_resolved}
+        resolved = {**meta_resolved, **pre_enriched, **embed_resolved}
 
         # Build AI prompt only for items NOT yet resolved
         ai_items  = [(i, it) for i, it in enumerate(batch_items) if i not in resolved]
@@ -784,9 +845,11 @@ def main():
 
     # Wire up globals for the selected source
     cfg = SOURCE_CONFIGS[args.source]
-    global INDEX_FILE, BATCH_PREFIX
+    global INDEX_FILE, BATCH_PREFIX, SOURCE_DIR, FILE_MODE
     INDEX_FILE   = Path(__file__).parent / cfg['index_file']
     BATCH_PREFIX = cfg['batch_prefix']
+    SOURCE_DIR   = cfg['source_dir']
+    FILE_MODE    = bool(cfg.get('file_mode', False))
 
     if not INDEX_FILE.exists():
         print(f"ERROR: {INDEX_FILE} not found. Run build_source_index.py --source {args.source} first.")
