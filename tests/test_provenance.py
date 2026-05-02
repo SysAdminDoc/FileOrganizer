@@ -351,6 +351,40 @@ def test_backfill_unmatched_still_sets_first_seen(tmp_path):
     con.close()
 
 
+def test_backfill_dry_run_does_not_run_schema_migration(tmp_path):
+    """Audit fix: --dry-run on a pre-N-12 DB must NOT invoke init_db (which
+    would commit the schema migration before the row-backfill loop)."""
+    import asset_db
+    db_path = tmp_path / "legacy.db"
+    # Create a pre-N-12 schema by hand — no source_domain, no first_seen_ts.
+    with sqlite3.connect(str(db_path)) as legacy:
+        legacy.execute("""
+            CREATE TABLE assets (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                clean_name TEXT NOT NULL,
+                category TEXT NOT NULL,
+                disk_name TEXT,
+                added_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            )
+        """)
+        legacy.execute(
+            "INSERT INTO assets (clean_name, category, disk_name, "
+            "                   added_at, updated_at) VALUES (?, ?, ?, ?, ?)",
+            ("legacy row", "_Review",
+             "12345678-thing", "2026-01-01T00:00:00Z", "2026-01-01T00:00:00Z"),
+        )
+
+    summary = asset_db.cmd_backfill_provenance(str(db_path), dry_run=True)
+    assert summary['dry_run'] is True
+    assert summary['migration_pending'] is True
+    # Confirm the columns are STILL absent — dry-run did not commit a migration.
+    with sqlite3.connect(str(db_path)) as check:
+        cols = {r[1] for r in check.execute("PRAGMA table_info(assets)").fetchall()}
+    assert 'source_domain' not in cols
+    assert 'first_seen_ts' not in cols
+
+
 def test_first_seen_ts_immutable_via_coalesce(tmp_path):
     """Simulate the cmd_build UPDATE path: a row's first_seen_ts must not change
     when COALESCE is the source of truth."""
