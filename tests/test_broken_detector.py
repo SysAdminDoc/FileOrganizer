@@ -264,6 +264,109 @@ def test_cli_scan_missing_dir_returns_2(tmp_path, capsys):
     assert rc == 2
 
 
+# ── scan_paths (PreflightDialog wiring substrate) ─────────────────────────
+
+
+def test_scan_paths_finds_broken_zip_in_directory(tmp_path):
+    src = tmp_path / "src"
+    src.mkdir()
+    good = src / "good.zip"
+    with zipfile.ZipFile(str(good), "w") as z:
+        z.writestr("ok.txt", "x")
+    bad = src / "bad.zip"
+    bad.write_bytes(b"PK\x03\x04 garbage")
+    findings = broken_detector.scan_paths([src])
+    paths = [str(p) for p, _ in findings]
+    assert any("bad.zip" in p for p in paths)
+    assert not any("good.zip" in p for p in paths)
+
+
+def test_scan_paths_skips_irrelevant_extensions(tmp_path):
+    src = tmp_path / "src"
+    src.mkdir()
+    (src / "doc.txt").write_text("text")
+    (src / "data.csv").write_text("a,b,c")
+    findings = broken_detector.scan_paths([src])
+    assert findings == []
+
+
+def test_scan_paths_handles_missing_root(tmp_path):
+    findings = broken_detector.scan_paths([tmp_path / "no_such_dir"])
+    assert findings == []
+
+
+def test_scan_paths_respects_max_total(tmp_path):
+    src = tmp_path / "src"
+    src.mkdir()
+    # 5 broken zips
+    for i in range(5):
+        (src / f"bad_{i}.zip").write_bytes(b"PK\x03\x04 garbage")
+    findings = broken_detector.scan_paths([src], max_per_root=5, max_total=2)
+    assert len(findings) == 2
+
+
+def test_scan_paths_respects_max_per_root(tmp_path):
+    """Each source path is sampled, not exhaustively swept."""
+    src1 = tmp_path / "src1"
+    src1.mkdir()
+    src2 = tmp_path / "src2"
+    src2.mkdir()
+    for i in range(5):
+        (src1 / f"bad_{i}.zip").write_bytes(b"PK\x03\x04 garbage")
+        (src2 / f"bad_{i}.zip").write_bytes(b"PK\x03\x04 garbage")
+    findings = broken_detector.scan_paths(
+        [src1, src2], max_per_root=2, max_total=100,
+    )
+    # 2 from src1 + 2 from src2 = 4 total
+    assert len(findings) == 4
+    paths = [str(p) for p, _ in findings]
+    assert sum(1 for p in paths if "src1" in p) == 2
+    assert sum(1 for p in paths if "src2" in p) == 2
+
+
+def test_scan_paths_accepts_single_file_root(tmp_path):
+    """A path that points at a single broken file (not a dir) still gets checked."""
+    bad = tmp_path / "broken.zip"
+    bad.write_bytes(b"PK\x03\x04 truncated")
+    findings = broken_detector.scan_paths([bad])
+    assert len(findings) == 1
+    assert findings[0][0] == bad
+
+
+def test_scan_paths_progress_cb_invoked(tmp_path):
+    src = tmp_path / "src"
+    src.mkdir()
+    (src / "good.zip").write_bytes(b"")  # will fail open, but exercises cb
+    calls = []
+    broken_detector.scan_paths([src], progress_cb=lambda p, n: calls.append((p, n)))
+    assert calls
+    assert calls[0][0] == src
+    assert calls[0][1] == 0  # scan count BEFORE this root
+
+
+def test_scan_paths_silently_swallows_progress_cb_exceptions(tmp_path):
+    src = tmp_path / "src"
+    src.mkdir()
+    bad = src / "bad.zip"
+    bad.write_bytes(b"PK\x03\x04 garbage")
+
+    def boom(p, n):
+        raise RuntimeError("callback explosion")
+
+    findings = broken_detector.scan_paths([src], progress_cb=boom)
+    # The bad zip is still detected.
+    assert any("bad.zip" in str(p) for p, _ in findings)
+
+
+def test_scan_paths_drops_none_entries(tmp_path):
+    src = tmp_path / "src"
+    src.mkdir()
+    bad = src / "bad.zip"
+    bad.write_bytes(b"PK\x03\x04 garbage")
+    findings = broken_detector.scan_paths([None, src, None])
+    assert any("bad.zip" in str(p) for p, _ in findings)
+
+
 # ── asset_db schema migration ────────────────────────────────────────────
 
 
