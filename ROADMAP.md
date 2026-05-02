@@ -363,11 +363,15 @@ GUI export tile under Settings -> Rules -> Export as YAML still planned
 (deferred — CLI is the production path; GUI is sugar).
 - **Impact**: 4 | **Effort**: 2 | Source: [S8] https://github.com/tfeldmann/organize
 
-**NEXT-3: Hazel-style rule chains**
+**NEXT-3: Hazel-style rule chains** ✓ Core shipped
 Multi-condition chains: "if source matches X AND LLM confidence < 70 AND file size > Z, move to
-A THEN rename as B THEN webhook C". Nested conditions with AND/OR. AST:
-`RuleChain([Condition(...)], [Action(...)])`.
-- **Impact**: 4 | **Effort**: 4 | Parity with: [S20] Hazel, [S21] File Juggler, [S8] organize-cli
+A THEN rename as B THEN webhook C". Nested conditions with AND/OR. AST-based.
+- **Core shipped**: `fileorganizer/rule_chains.py` with RuleCondition (12+ condition types),
+  RuleAction (move, rename, delete, webhook, skip), RuleChain (recursive nesting), RuleChainManager.
+  JSON schema v1.0. Full variable substitution ($HOME, $CATEGORY, $YEAR/$MONTH/$DAY). 20+ tests passing.
+- **Remaining**: GUI rule builder (visual condition/action editor). Integration into organize_run.py
+  pipeline (evaluate chains before classification, skip/move based on rules).
+- **Impact**: 4 | **Effort**: 4 (core 3 + UI 1) | Parity with: [S20] Hazel, [S21] File Juggler, [S8] organize-cli
 - Source: [S20] https://www.noodlesoft.com/hazel/ , [S21] https://www.filejuggler.com/features/
 
 **NEXT-4: Dry-run simulation (all operations)** ✓ Core shipped
