@@ -934,6 +934,146 @@ Windows.Foundation contracts from WAS 2.0).
 - Source: [S95] winrt-runtime https://pypi.org/project/winrt-runtime/;
   [S96] Windows.Storage.FileProperties docs https://learn.microsoft.com/en-us/uwp/api/windows.storage.fileproperties
 
+**NEXT-56: Variable font axes detection**
+Integrate `fonttools` library for advanced font classification. Detect variable fonts via `TTFont`
+`fvar` table presence; extract axis metadata (tags: `wght`, `wdth`, `ital`, `opsz`; min/default/max
+values). COLRv1 detection via `tt["COLR"].version >= 1` for modern color fonts. Store axes array
+and COLRv1 flag in font asset record. Directly enables FileOrganizer's font classifier to distinguish
+standard fonts from variable-font and color-emoji fonts — a category differentiation users expect.
+This pairs with PyQt6 6.11.0's new `QFontInfo.variableAxes()` API for UI-level font capability
+reporting. **Effort is small** — fonttools is already a hard dependency (N-9 metadata extractors).
+- **Impact**: 3 | **Effort**: 1 | **Tier**: NEXT
+- Source: [S104] PyQt6 6.11.0 release notes (March 30, 2026);
+   [S105] fontTools library https://fonttools.readthedocs.io/en/latest/;
+   [S106] OpenType variable fonts spec https://learn.microsoft.com/en-us/typography/opentype/spec/otvaroverview
+
+**NEXT-57: Pillow 12.2.0 lazy plugin loading + pin**
+Pin `Pillow>=12.2.0` in requirements.txt. Pillow 12.2.0 introduces lazy plugin loading for image
+format handlers — speeds up `Image.open()` by 2.3–15.6× on first-file thumbnails. Contains fix for
+CVE-2026-42311 (OOB write on invalid PSD tile extents) — critical for FileOrganizer's PSD path.
+Update `_image_thumbnail()` in thumbnail pipeline to test lazy-load benefit and confirm backward
+compatibility with the `get_flattened_data()` migration from deprecated `getdata()`. Thread-safe
+under Python 3.13 free-threaded builds (not recommended for PyQt6, but worth documenting).
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT
+- Source: [S107] Pillow 12.2.0 release notes (2026);
+   [S108] CVE-2026-42311
+
+**NEXT-58: httpx migration for AI provider calls**
+Migrate all AI provider HTTP calls from `requests` to `httpx` (v0.28.1+). httpx offers HTTP/2
+support, native async iteration, granular timeout control, and is the transport layer for DeepSeek,
+Anthropic, and Ollama Python SDKs. **Breaking change**: httpx 0.28 removed the `proxies=` argument
+(use `proxy=` instead). Audit FileOrganizer's proxy configuration: if users rely on `proxies=dict`,
+code will break silently on httpx 0.28. Prepare fallback for requests if httpx causes issues.
+- **Impact**: 2 | **Effort**: 2 | **Tier**: NEXT
+- Source: [S109] httpx 0.28.1 release notes (Dec 6, 2024);
+   [S110] httpx breaking changes
+
+**NEXT-59: pydantic 2.13 discriminated union JSON schema**
+Update `ClassifyResult` Pydantic model to use pydantic 2.13.3 `Annotated` discriminated union
+metadata. This ensures `model_json_schema()` generates correct `oneOf` + discriminator mapping
+for Ollama structured output validation. Pydantic 2.13 also guarantees deterministic schema output
+(sets are sorted) — enabling use of the JSON schema as a prompt-cache key for LLM cost tracking.
+**Pairs well with NEXT-44 (LLM cache)**: use schema hash as part of cache key.
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Pairs with**: NEXT-44
+- Source: [S111] pydantic 2.13.3 release notes (2026)
+
+**NEXT-60: watchfiles v1.1.1 foundation for watch mode**
+Update dependencies: pin `watchfiles>=1.1.1` (Rust-backed filesystem watcher, async iteration,
+Python 3.13+ support). Implement async watch loop scaffold in `watch_daemon.py`:
+`async_watch_with_file_events()` for `ReadDirectoryChangesW` abstraction on Windows, `ReadDirChanges`
+on macOS/Linux. The scaffold does not integrate into the main classify/apply flow yet (see NEXT-1
+for full watch mode delivery) — this is the **plumbing foundation** that NEXT-1 depends on.
+Verify no FPS (frames-per-second) regressions on typical user drives (E:, I:\). Set max queue
+depth to 1000 to prevent memory bloat on rapid changes.
+- **Impact**: 2 | **Effort**: 2 | **Tier**: NEXT | **Unblocks**: NEXT-1
+- Source: [S112] watchfiles v1.1.1 release notes (Oct 2025);
+   [S113] watchfiles GitHub https://github.com/samuelcolvin/watchfiles
+
+**NEXT-61: IPTC 2025.1 AI metadata XMP sidecar writing**
+Write IPTC 2025.1 AI metadata fields to `.xmp` sidecars using PyExifTool 0.5.6 (the only viable
+Windows XMP writer). New fields: `Iptc4xmpExt:AISystemUsed` (store "FileOrganizer v8.x"), 
+`Iptc4xmpExt:AIPromptInformation` (store classification prompt + category result), 
+`Iptc4xmpExt:AIPromptWriterName` (store "FileOrganizer" or logged-in user). Also write standard
+`XMP-dc:Subject` (keyword array), `XMP-xmp:Rating` (confidence as 1–5 stars), and 
+`photoshop:Category` (for Adobe CC compatibility). **Requires**: ExifTool ≥12.15 on PATH.
+Sidecars survive NTFS copy-with-robocopy-/COPYALL; add to documentation.
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT
+- Source: [S114] IPTC 2025.1 AI fields spec (Nov 2025);
+   [S115] PyExifTool 0.5.6 https://pypi.org/project/PyExifTool/;
+   [S116] XMP namespace reference https://exiftool.org/TagNames/XMP.html
+
+**NEXT-62: PyMuPDF license audit**
+PyMuPDF 1.27.2.3 is **AGPL-3.0 licensed**. If FileOrganizer is distributed as closed-source or
+commercially, AGPL requires that the entire application also be open-sourced (or a commercial
+license from Artifex be purchased). Decision point: (1) accept AGPL and clarify in LICENSE/docs, 
+or (2) switch to alternative PDF thumbnail library (e.g., `ghostscript-python` + GS binary, or
+accept PDF-only support without thumbnails). This is a **pre-release blocker** — resolve before v9.0
+shipping. Document the decision in SECURITY.md + LICENSE file. No code change required yet; this is
+a policy + dependency-management task.
+- **Impact**: 1 | **Effort**: 1 | **Tier**: NEXT | **Blocks**: v9.0 release
+- Source: [S117] PyMuPDF 1.27.2.3 license (AGPL-3.0) https://pypi.org/pypi/pymupdf/json
+
+**NEXT-63: AVIF + JPEG XL format detection**
+Adobe Photoshop 2025/2026 added native support for AVIF (`.avif`) and JPEG XL (`.jxl`) files.
+FileOrganizer's format detection must recognize these new formats. Add magic-byte detection:
+AVIF uses `ftyp` at offset 4; JPEG XL uses magic `FF 0A` or `00 00 00 0C 4A 58 4C 20`. Update
+`supported_extensions()` in `classify.py` and `_get_image_thumb()` in thumbnail pipeline. Pillow
+12.2.0 supports both formats natively.
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT
+- Source: [S118] Adobe Photoshop 2025 whats-new (AVIF support);
+   [S119] Pillow 12.2.0 AVIF/JPEG XL support
+
+**NEXT-64: COLRv1 color font detection**
+Extend font classifier to detect COLRv1 (color layered OpenType v1) fonts — the modern standard
+for emoji and display fonts (Noto Color Emoji, Segoe UI Emoji, etc.). Detection: `fontTools.ttLib.TTFont(path)["COLR"].version >= 1`. Store `is_colrv1: bool` in font asset record. Pairs with NEXT-56 (variable font detection) to complete font capability matrix. COLRv1 detection helps users organize custom emoji font libraries or new display font collections.
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Pairs with**: NEXT-56
+- Source: [S120] fontTools COLRv1 support https://fonttools.readthedocs.io/en/latest/;
+   [S105] fontTools library
+
+**NEXT-65: WinAppSDK 2.0.1 SystemBackdropElement**
+Use `SystemBackdropElement` (placed FrameworkElement, not full-window) to apply Mica/Acrylic
+backdrop to specific panels in WinUI shell. This allows in-content Mica effect on Browse tab,
+Settings panel, or Apply Review dialogs — matching modern Windows 11 UI patterns without
+full-window backdrop blur performance hit. Replaces the current backdrop-on-window pattern with
+more granular control. This is a UX polish task with low effort; high visual impact.
+**Depends on**: NEXT-39 (WindowsAppSDK 2.0.1).
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Depends on**: NEXT-39
+- Source: [S121] WinAppSDK 2.0.1 release notes (April 29, 2026);
+   [S122] SystemBackdropElement docs https://learn.microsoft.com/en-us/windows/winui/api/microsoft.ui.xaml.media.systembackdropelement
+
+**NEXT-66: FolderPicker.PickMultipleFoldersAsync**
+WinAppSDK 2.0.1 adds `FolderPicker.PickMultipleFoldersAsync()` on the standard `FolderPicker` type
+(new in 2.0.1; was preview-only in 1.x). Integrate into SourcePanel to allow multi-folder source
+selection in a single picker dialog. Users can now drag multiple folders into FileOrganizer in one
+interaction, reducing friction for multi-project workflows. Saves a separate PickFolderAsync call
+for each folder. Low-effort UX improvement; high convenience value.
+**Depends on**: NEXT-39 (WindowsAppSDK 2.0.1).
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Depends on**: NEXT-39
+- Source: [S123] WinAppSDK 2.0.1 FolderPicker API docs
+
+**NEXT-67: Windows Search SHChangeNotify after organize**
+After file moves complete, call `SHChangeNotify(SHCNE_RENAMEITEM | SHCNE_CREATE, ...)` to signal
+Windows Explorer and Windows Search that files have moved. Use ctypes to call `Shell32.dll::SHChangeNotify`
+with `SHCNF_PATH | SHCNF_FLUSH` flags. This ensures Explorer's cached metadata is invalidated and
+Windows Search indexer re-indexes moved files promptly — avoiding stale search results and thumbnail
+cache conflicts. Add `notify_shell_after_organize()` to `organize_run.py`; call at end of `apply_moves_`.
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT
+- Source: [S124] SHChangeNotify API https://learn.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shchangenotify;
+   [S125] Windows Search indexing patterns
+
+**NEXT-68: Task Scheduler-based watch mode MVP**
+Implement watch-mode daemon registration via Windows Task Scheduler (not a Windows Service).
+Register `FileOrganizer_WatchMode` task with logon trigger + indefinite duration using 
+`win32com.client.Dispatch('Schedule.Service')` (Task Scheduler 2.0 COM API) or `schtasks.exe`.
+This runs the watch daemon at user logon without requiring admin elevation. Use `watchfiles` v1.1.1
+(NEXT-60) for filesystem monitoring; async loop with 60-second "deep-quiet protocol" (wait for
+stability before applying moves). Task runs as the logged-in user, with standard `%APPDATA%\FileOrganizer`
+settings access. **Upgrade path**: provide `--as-windows-service` flag for future v9.x to install
+as `LocalService`; this MVP is user-only. **Depends on**: NEXT-60 (watchfiles foundation).
+- **Impact**: 4 | **Effort**: 3 | **Tier**: NEXT | **Unblocks**: NEXT-1 (partial) | **Depends on**: NEXT-60
+- Source: [S126] Task Scheduler 2.0 API https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-start-page;
+   [S127] Downganizer 60s deep-quiet protocol pattern https://github.com/k3sra/Downganizer
+
 ---
 
 ## LATER -- Strategic, Not Yet Urgent
@@ -1253,6 +1393,13 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 | Iris [S99] | OSS Rust | Rust-native, cross-platform, fast directory walker, LLM API integration, 2025 active | NEXT-33 (blake3) pattern |
 | FIXXER [S102] | OSS Python | VLM-based photo organizer (faces, scenes), privacy-preserving local inference | NEXT-12 (VLM) pattern |
 | movi-organizer [S100] | OSS Python | MCP v1 server integration — exposes organize as an MCP tool for Claude/Cursor | UC-7 |
+| deta/surf [S128] | OSS TypeScript/Rust | Personal AI Notebooks; file library + semantic search + note generation from files. 3,370⭐ in 7 mo. Tangential use case (notes vs. asset classification). | L-1 (semantic), L-4 (NL search) |
+| hyperfield/ai-file-sorter (C++) [S129] | OSS C++ | v1.4.0+: cross-platform desktop, local GGUF + cloud LLM support, content-aware preview, 889⭐, AGPL-3.0. Focus on preview-before-apply UX. | NEXT-19 (preview UX) |
+| iamshrisawant/sorted [S130] | OSS Python | Semantic similarity learning (sentence-transformers + FAISS), learns user corrections, 50⭐, April 2026 active. | L-1 (embedding learning pattern) |
+| sarawagh27/smart-ai-file-organizer [S131] | OSS Python | Multi-format (PDF/DOCX/XLSX/ZIP), semantic search, watch mode, web demo (Gradio/Streamlit), 20⭐. | NEXT-1, L-1 |
+| xiaojiou176-open/movi-organizer [S132] | OSS Python | Review-first with dry-run, rollback, MCP-safe for agent calling, April 2026. | NEXT-19 (dry-run UX), UC-7 (MCP) |
+| k3sra/Downganizer [S133] | OSS C# | Windows Service file sorter, 700+ extensions, 60s "deep-quiet protocol" for watch mode, 20⭐. | NEXT-1 (watch mode pattern), NEXT-68 (Task Scheduler) |
+| Note Companion (formerly File Organizer 2000) [S134] | OSS TypeScript | Obsidian plugin rebranded, AI note assistant, 832⭐. Different model (notes vs. files). | Different use case |
 | Eagle App [S19] | Commercial | Visual search, designer UX | NEXT-22 (thumbnail browser) |
 | Hazel [S20] | Commercial macOS | Rule chains, Spotlight conditions | NEXT-3, NEXT-1 |
 | File Juggler [S21] | Commercial Win | Folder watch, content conditions | NEXT-1, NEXT-3 |
@@ -1262,13 +1409,14 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 **FileOrganizer's unique position**: design-asset-specialist classifier (384 categories, Envato
 marketplace ID enrichment, AEP-aware pipeline) + multi-TB real-world hardening + metadata-first
 AI cost reduction (N-9, shipped v8.3.0) + WinUI 3 shell (15 live pages, ui-v0.5.0). No OSS
-competitor combines all three. v8.3.0 is fully shipped (2026-05-02). v8.4.0 sprint is active:
-NEXT-46/47 close hard API-deprecation gaps; NEXT-48/49 harden reliability and security; NEXT-15,
-NEXT-44, NEXT-11 deliver the highest-ROI NEXT-tier features. Primary OSS threat is
-`curdriceaurora/Local-File-Organizer` v2.0-alpha.3 [S98] — cross-platform, 840 tests, strong TUI/
-WebUI multi-frontend, but still alpha and missing Windows-native shell, creative taxonomy depth,
-and PSD/font/AEP metadata. LlamaFS (13K GitHub stars) is effectively abandoned (last meaningful
-commit Oct 2024) — a significant audience capture opportunity for FileOrganizer's stable release.
+competitor combines all three. Wave 2 research (May 2026) confirms emerging patterns: semantic
+similarity learning (sorted), review-before-apply UX (movi-organizer, hyperfield), MCP integration
+(movi-organizer), and cross-platform/multi-frontend deployment (Local-File-Organizer). FileOrganizer
+remains the **only stable, creative-asset-focused desktop organizer** with Windows-native WinUI 3 UI,
+PSD/font/AEP metadata extraction, and 384-category Envato-aligned taxonomy. v8.3.0 shipped 2026-05-02.
+v8.4.0 sprint adds 13 new NEXT items (NEXT-56–NEXT-68) across dependency ecosystem, platform
+integration, and watch-mode MVP. Primary OSS threat remains `curdriceaurora/Local-File-Organizer`
+v2.0-alpha.3 [S98] — strong testing, multi-frontend, but still alpha and missing creative taxonomy depth.
 
 ---
 
@@ -1580,3 +1728,127 @@ for relevance; "directly portable" means the file can be copied with minor adapt
   https://github.com/SmartSortAI/smartsort
   (Python; GPT-4V + LLaVA hybrid; drag-and-drop GUI; confidence threshold slider; 2024-2025
   active; confirms UX pattern for NEXT-13 confidence calibration display)
+
+### Phase 3 Research Sources (May–June 2026) — Dependency Ecosystem & Platform Integration
+
+**Python Ecosystem (v3.13, PyQt6 6.11, Pillow 12.2, pydantic 2.13, fastembed 0.8, httpx 0.28, watchfiles 1.1.1)**
+- [S104] PyQt6 6.11.0 release notes (March 30, 2026) --
+  https://www.riverbankcomputing.com/news/pyqt-6-11-0-released
+  (Variable font axes via QFontInfo; D3D vblank thread; performance improvements)
+- [S105] fontTools library --
+  https://fonttools.readthedocs.io/en/latest/
+  (Open-source font utilities; TTFont API for OpenType parsing; fvar/COLR table support;
+  MIT license; already a FileOrganizer hard dependency via N-9)
+- [S106] OpenType variable fonts specification --
+  https://learn.microsoft.com/en-us/typography/opentype/spec/otvaroverview
+  (Variable font axes (wght, wdth, ital, opsz, etc.); axis metadata storage; font capability
+  detection via fvar table presence)
+- [S107] Pillow 12.2.0 release notes (2026) --
+  https://github.com/python-pillow/Pillow/releases/tag/12.2.0
+  (Lazy plugin loading for image format handlers (2.3–15.6× faster Image.open());
+  CVE-2026-42311 PSD OOB write fix; Python 3.13 free-threaded support)
+- [S108] CVE-2026-42311 -- Pillow PSD OOB write --
+  (OOB write on invalid PSD tile extents; affects thumbnail pipeline)
+- [S109] httpx 0.28.1 release notes (Dec 6, 2024) --
+  https://www.python-httpx.org/
+  (HTTP/2 support; native async iteration; proxies argument REMOVED (breaking change:
+  use proxy= instead); transport layer for DeepSeek/Anthropic/Ollama SDKs)
+- [S110] httpx breaking changes documentation --
+  https://www.python-httpx.org/compatibility/
+  (httpx 0.28 removed `proxies=` parameter in favor of `proxy=`)
+- [S111] pydantic 2.13.3 release notes (2026) --
+  https://docs.pydantic.dev/latest/changelog/
+  (Annotated discriminated union metadata; deterministic model_json_schema() output;
+  fixes for polymorphic serialization)
+- [S112] watchfiles v1.1.1 release notes (Oct 2025) --
+  https://github.com/samuelcolvin/watchfiles/releases/tag/v1.1.1
+  (Rust-backed filesystem watcher; ReadDirectoryChangesW abstraction on Windows;
+  async iteration; Python 3.13 support)
+- [S113] watchfiles GitHub repository --
+  https://github.com/samuelcolvin/watchfiles
+  (Filesystem monitoring library for Python; used by FastAPI, Ruff, and others;
+  handles cross-platform file event abstraction)
+
+**Windows Platform Integration (WAS 2.0.1, Task Scheduler, Shell API, Windows Search)**
+- [S114] IPTC Photo Metadata Standard 2025.1 --
+  https://iptc.org/std/photometadata/specification/IPTC-PhotoMetadata
+  (November 2025 update; Section 11 adds AI metadata fields: AISystemUsed, AIPromptInformation,
+  AIPromptWriterName, AISystemVersionUsed; XMP-iptcExt namespace; forward-compatible with
+  Adobe Bridge 2025+)
+- [S115] PyExifTool 0.5.6 --
+  https://pypi.org/project/PyExifTool/
+  (Wraps Phil Harvey ExifTool binary; only viable Windows XMP sidecar writer; ExifTool ≥12.15
+  required; set_tags() method for XMP write)
+- [S116] XMP namespace reference (exiftool.org) --
+  https://exiftool.org/TagNames/XMP.html
+  (XMP-dc, XMP-xmp, XMP-photoshop, XMP-iptcExt, XMP-acdsee namespace mappings; used by PyExifTool)
+- [S117] PyMuPDF 1.27.2.3 license --
+  https://pypi.org/pypi/pymupdf/json
+  (AGPL-3.0 licensed; PDF/XPS/EPUB/CBZ rendering; commercial license required if distributed
+  as closed-source; critical pre-release blocker for FileOrganizer licensing strategy)
+- [S118] Adobe Photoshop 2025 whats-new --
+  (AVIF file format support; JPEG XL support; both require magic-byte format detection in
+  FileOrganizer's classifier)
+- [S119] Pillow 12.2.0 AVIF/JPEG XL support --
+  (Native Pillow support for AVIF and JPEG XL; reduces external dependencies)
+- [S120] fontTools COLRv1 support --
+  https://fonttools.readthedocs.io/en/latest/
+  (COLRv1 = color layered OpenType v1; modern emoji/display font format; detection via
+  tt["COLR"].version >= 1 check)
+- [S121] WinAppSDK 2.0.1 release notes (April 29, 2026) --
+  https://github.com/microsoft/WindowsAppSDK/releases/tag/1.6.0
+  (SystemBackdropElement for in-content Mica/Acrylic; FolderPicker.PickMultipleFoldersAsync;
+  Semantic versioning; WebView2 drag support; AIFeatureReadyState extensions)
+- [S122] SystemBackdropElement documentation --
+  https://learn.microsoft.com/en-us/windows/winui/api/microsoft.ui.xaml.media.systembackdropelement
+  (Placed FrameworkElement (not full-window); applies Mica/Acrylic backdrop to specific panels;
+  performance-friendly alternative to full-window blur)
+- [S123] WinAppSDK 2.0.1 FolderPicker API --
+  https://learn.microsoft.com/en-us/windows/winui/api/microsoft.ui.xaml.storage.folderpicker
+  (PickMultipleFoldersAsync() enables multi-folder source selection in single picker dialog)
+- [S124] SHChangeNotify API --
+  https://learn.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shchangenotify
+  (Shell change notification API; SHCNE_RENAMEITEM, SHCNE_CREATE events; ctypes callable from
+  Python; ensures Windows Explorer and Search indexer refresh after file moves)
+- [S125] Windows Search indexing patterns --
+  https://learn.microsoft.com/en-us/windows/win32/search/windows-search
+  (WSE indexer monitoring; SHChangeNotify triggers refresh; avoids stale search results)
+- [S126] Task Scheduler 2.0 API --
+  https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-start-page
+  (COM API for programmatic task registration; logon trigger for watch mode; no admin required;
+  ITaskService, ITaskDefinition, ITrigger interfaces)
+- [S127] Downganizer deep-quiet protocol --
+  https://github.com/k3sra/Downganizer
+  (Windows Service file sorter; 60-second wait-for-stability pattern before moves;
+  prior art confirming demand for stable watch-mode UX)
+
+**Community Signals & Metadata Standards (May–June 2026)**
+- [S128] deta/surf -- Personal AI Notebooks --
+  https://github.com/deta/surf
+  (TypeScript/Rust; 3,370⭐ in 7 months (Feb–May 2026); file library + semantic search +
+  note generation; tangential competitor; confirms mindshare for "AI + local files" products)
+- [S129] hyperfield/ai-file-sorter (C++ desktop) --
+  https://github.com/hyperfield/ai-file-sorter | https://filesorter.app
+  (889⭐; C++; cross-platform; local GGUF + cloud LLM support; content-aware preview-before-apply
+  UX; AGPL-3.0; established pattern for preview-first classification workflow)
+- [S130] iamshrisawant/sorted -- Semantic similarity learning --
+  https://github.com/iamshrisawant/sorted
+  (Python; sentence-transformers + FAISS; learns from user corrections; 50⭐; April 2026 active;
+  corroborates L-1 (semantic embedding search) pattern for FileOrganizer)
+- [S131] sarawagh27/smart-ai-file-organizer --
+  https://github.com/sarawagh27/smart-ai-file-organizer
+  (Python; multi-format support (PDF/DOCX/XLSX/ZIP); semantic search; watch mode; Gradio/Streamlit
+  web demo; emerging pattern of browser-based DAM frontends)
+- [S132] xiaojiou176-open/movi-organizer --
+  https://github.com/xiaojiou176-open/movi-organizer
+  (Python; review-first UX with dry-run + rollback; MCP v1 integration for agent-safe calling;
+  April 2026 active; emerging best practice for preview-before-apply and AI agent compatibility)
+- [S133] k3sra/Downganizer --
+  https://github.com/k3sra/Downganizer
+  (C#; Windows Service file sorter; 700+ extensions; 60-second "deep-quiet protocol" for watch
+  mode stability; 20⭐; established pattern for Task Scheduler integration and wait-for-stability
+  design in watch mode daemons)
+- [S134] Note Companion (formerly File Organizer 2000) --
+  https://github.com/Nexus-JPF/note-companion
+  (TypeScript; Obsidian plugin; 832⭐; rebranded from "File Organizer 2000"; different model
+  (notes vs. files); shows namespace collision and UI differentiation demand)
