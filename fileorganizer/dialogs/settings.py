@@ -1063,20 +1063,39 @@ class AIProviderSettingsDialog(QDialog):
 
         gh_lay.addWidget(QLabel("Model:"))
         self.cmb_gh_model = QComboBox()
-        gh_models = [
-            'gpt-4.1', 'gpt-4.1-mini', 'gpt-4o', 'gpt-4o-mini',
-            'claude-opus-4-5', 'claude-sonnet-4-5', 'claude-haiku-4-5',
-            'Codestral-2501', 'Mistral-Large-2411',
-        ]
-        self.cmb_gh_model.addItems(gh_models)
-        cur_gh = self._settings.get('github_model', 'claude-sonnet-4-5')
-        idx = self.cmb_gh_model.findText(cur_gh)
-        if idx >= 0:
-            self.cmb_gh_model.setCurrentIndex(idx)
-        else:
-            self.cmb_gh_model.insertItem(0, cur_gh)
-            self.cmb_gh_model.setCurrentIndex(0)
-        gh_lay.addWidget(self.cmb_gh_model)
+        
+        # Load model catalog from providers
+        try:
+            from fileorganizer.providers import _GITHUB_MODEL_CATALOG
+            self._gh_model_names = [m['name'] for m in _GITHUB_MODEL_CATALOG]
+            self._gh_model_labels = [f"{m['label']} ({m['description'][:30]}...)" for m in _GITHUB_MODEL_CATALOG]
+            self.cmb_gh_model.addItems(self._gh_model_labels)
+            
+            # Set current selection based on stored model ID
+            cur_gh = self._settings.get('github_model', 'Anthropic/claude-3-5-sonnet-20241022')
+            try:
+                idx = self._gh_model_names.index(cur_gh)
+                self.cmb_gh_model.setCurrentIndex(idx)
+            except ValueError:
+                # Model not in catalog; show it as custom entry
+                self.cmb_gh_model.insertItem(0, f"{cur_gh} (custom)")
+                self.cmb_gh_model.setCurrentIndex(0)
+        except ImportError:
+            # Fallback if providers module not available
+            gh_models = [
+                'Anthropic/claude-3-5-sonnet-20241022',
+                'Anthropic/claude-3-7-sonnet-20250219',
+                'Anthropic/claude-3-5-haiku-20241022',
+                'openai/gpt-4o', 'openai/gpt-4o-mini',
+                'meta/meta-llama-3.3-70b-instruct',
+            ]
+            self._gh_model_names = gh_models
+            self._gh_model_labels = gh_models
+            self.cmb_gh_model.addItems(gh_models)
+            cur_gh = self._settings.get('github_model', 'Anthropic/claude-3-5-sonnet-20241022')
+            idx = self.cmb_gh_model.findText(cur_gh)
+            if idx >= 0:
+                self.cmb_gh_model.setCurrentIndex(idx)
 
         self.lbl_gh_status = QLabel("")
         self.lbl_gh_status.setProperty("class", "meta")
@@ -1174,7 +1193,12 @@ class AIProviderSettingsDialog(QDialog):
             tok = self.txt_gh_token.text().strip()
             if tok:
                 s['github_token'] = tok
-            s['github_model'] = self.cmb_gh_model.currentText()
+            # Get the actual model ID from the catalog, not the display label
+            idx = self.cmb_gh_model.currentIndex()
+            if hasattr(self, '_gh_model_names') and idx < len(self._gh_model_names):
+                s['github_model'] = self._gh_model_names[idx]
+            else:
+                s['github_model'] = self.cmb_gh_model.currentText()
             p = GitHubModelsProvider(s)
             ok, msg = p.test_connection()
         except Exception as e:
@@ -1207,7 +1231,14 @@ class AIProviderSettingsDialog(QDialog):
             s['github_token'] = gh_token
         if ds_key:
             s['deepseek_api_key'] = ds_key
-        s['github_model']   = self.cmb_gh_model.currentText()
+        
+        # Get the actual model ID from the catalog, not the display label
+        idx_gh = self.cmb_gh_model.currentIndex()
+        if hasattr(self, '_gh_model_names') and idx_gh < len(self._gh_model_names):
+            s['github_model'] = self._gh_model_names[idx_gh]
+        else:
+            s['github_model'] = self.cmb_gh_model.currentText()
+        
         s['deepseek_model'] = self.cmb_ds_model.currentText()
         s['routing'] = {
             'lightweight': self.cmb_route_lightweight.currentText(),
