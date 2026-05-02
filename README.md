@@ -1,7 +1,7 @@
 # FileOrganizer
 
-![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.5.0-22d3ee)
-![Core](https://img.shields.io/badge/core-Python%20v8.3.0-3776AB)
+![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.6.0-22d3ee)
+![Core](https://img.shields.io/badge/core-Python%20v8.4.0-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
 ![WinUI](https://img.shields.io/badge/WinUI-3-0078D6)
