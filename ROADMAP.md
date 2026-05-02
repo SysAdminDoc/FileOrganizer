@@ -1,5 +1,5 @@
 # ROADMAP -- FileOrganizer
-<!-- v8.3.0-planning · Updated 2026-05 · Phase 2 refresh · Supersedes all prior ROADMAP.md versions -->
+<!-- v8.4.0-planning · Updated 2026-05 · Phase 3 refresh · Supersedes all prior ROADMAP.md versions -->
 
 FileOrganizer is a Python/PyQt6 desktop tool for classifying and moving creative design assets
 into a canonical folder taxonomy. Core use case: 33 TB+ of Envato/Creative Market/Freepik
@@ -8,26 +8,22 @@ Multi-provider AI backbone (DeepSeek, GitHub Models, Ollama).
 
 ---
 
-## State of the Repo (v8.3.0 planning, June 2026)
+## State of the Repo (v8.4.0 planning, May 2026)
 
-v8.2.0 is **fully shipped** — the original 8 NOW items (N-1..N-8) and the extended sprint items
-(N-10, N-11, N-13, N-15, N-16, N-17). See [Shipped — v8.2.0](#shipped--v820) below.
+v8.3.0 is **fully shipped** — N-9 (metadata extractors), N-12 (provenance tracking), N-14
+(broken file detection), and all iter-2 follow-ups. Tagged and released 2026-05-02. See
+[Shipped — v8.2.0](#shipped--v820) and [Shipped — v8.3.0](#shipped--v830) below.
 
-**v8.3.0 sprint** — N-9 (metadata extractors), N-12 (provenance tracking), and N-14 (broken file
-detection) all landed in May 2026 against the **Unreleased** section of CHANGELOG.md. Subject to
-a Q3 release pass to bump the Python core to v8.3.0. No NOW items remain blocking.
-
-A 2026-04-30 audit pass on the N-1..N-8 commits surfaced source-config drift, an unsafe
-ReviewPanel move path, missing SQLite pragmas on the journal DB, an invalid pip-audit flag,
-and a few smaller resilience gaps. All fixes are merged. The audit motivated **N-15**
-(SOURCE_CONFIGS parity test), **N-16** (catalog sync conditional requests), **N-17** (robocopy
-/MT), **NEXT-33** through **NEXT-38** (xxhash/blake3, provider failover, reparse-point detection,
-free-space reserve, journal vacuum, crash dialog), **L-19** (executable quarantine), and
-**L-20** (localized destination folder names) — all now shipped.
+**v8.4.0 sprint** — 10 items now active. NEXT-46 and NEXT-47 carry hard API-deprecation
+deadlines (July 24 and June 15, 2026 respectively). NEXT-48 and NEXT-49 are low-effort
+reliability and security fixes that pair naturally into the same PR. NEXT-15, NEXT-44, and
+NEXT-11 are the highest-ROI NEXT-tier items now fully unblocked. NEXT-39 upgrades the WinUI
+shell to WindowsAppSDK 2.0.1 (GA April 29, 2026); NEXT-40 (RAWPage) and NEXT-41 (ComicsPage)
+follow as ui-v0.6.0 deliverables.
 
 The WinUI 3 shell reached **ui-v0.5.0** (2026-05-01) with 15 live pages covering all major media
 and design-asset domains. See [Shipped — WinUI Shell](#shipped--winui-shell-ui-v010--ui-v050) below.
-**ui-v0.6.0 targets**: WindowsAppSDK 1.7 upgrade (NEXT-39), RAWPage (NEXT-40), ComicsPage (NEXT-41).
+**ui-v0.6.0 targets**: WindowsAppSDK 2.0.1 upgrade (NEXT-39), RAWPage (NEXT-40), ComicsPage (NEXT-41).
 
 ### What ships today
 - 384-category design asset taxonomy (After Effects, Photoshop, Illustrator, Premiere Pro, web,
@@ -45,23 +41,25 @@ and design-asset domains. See [Shipped — WinUI Shell](#shipped--winui-shell-ui
 - Multi-source support: `ae`, `design`, `design_org`, `i_organized_legacy`, `loose_files` via
   `--source` flag (I:\ source added in N-1)
 - PyQt6 GUI with settings, source management, apply workflow, pre-flight dialog (N-4),
-  confidence threshold panel (N-5), two-phase commit (N-6), _Review batch panel (N-8)
+  confidence threshold panel (N-5), two-phase commit (N-6), Review batch panel (N-8)
+- `metadata_extractors/` package: `psd_extractor`, `font_extractor`, `audio_extractor`,
+  `video_extractor` — zero-AI Stage 1 with hardroute threshold ≥ 90 (N-9, shipped v8.3.0)
+- `provenance.py`: 12 marketplace patterns + 7-domain piracy blocklist; `source_domain` +
+  `first_seen_ts` in `assets` DB (N-12, shipped v8.3.0)
+- `broken_detector.py`: PIL verify + ffprobe + archive testzip; `broken` flag in `asset_files`;
+  PreflightDialog Step 5 wiring (N-14, shipped v8.3.0)
 - PyInstaller release: `FileOrganizer.exe` + CLI ZIP on GitHub Releases
 - CI: syntax check + `test_organize_run.py` + `pip-audit --fail-on-cvss 7` (N-7) on
-  `windows-latest`
+  `windows-latest`; 156 tests passing across 10 test files
 
 ### Built but not fully wired
-- `metadata_extractors/`: psd-tools/fonttools/mutagen/ffprobe metadata pipeline planned in
-  RESEARCH_IDEAS.md; no implementation yet — this is the primary N-9 target for v8.3.0
 - `marketplace_enrich.py`: built, but stage 2 pipeline call not always reachable via GUI
 - `archive_extractor.py`: scaffolded; archive content peek not integrated into classifier
-- ReviewPanel (N-8): `thumbnail` path collected but QTableWidget renders text only — N-11 fixes
 - `deepseek_research.py` CLI exists but not surfaced in GUI as first-class flow
 - Watch mode: not implemented
 
 ### Stubbed / incomplete
 - **Embeddings classifier**: planned in RESEARCH_IDEAS.md #7; not implemented (N-10 target)
-- **Provenance tracking**: source_domain + first_seen not in `asset_fingerprints.db` (N-12 target)
 - **AEP binary parser**: concept and spec exist; no implementation (NEXT-9)
 - **Perceptual hash dedup**: planned; not implemented (NEXT-19)
 - **Plugin SDK**: mentioned in code, undocumented externally (NEXT-27)
@@ -263,20 +261,36 @@ AppX/PRI task path conflict). See `src/FileOrganizer.UI/CLAUDE.md`.
 
 ---
 
-## NOW -- Active / Blocking (target: v8.3.0)
+## NOW -- Active / Blocking (target: v8.4.0)
 
-The original v8.3.0 NOW slate (N-9, N-12, N-14) is now in **Shipped — v8.3.0 (Unreleased)**
-below. No NOW items remain blocking; the next sprint pulls from NEXT.
+**Python core (v8.4.0) — 7 items**
+
+| # | Item | Why now |
+|---|------|---------|
+| 1 | **NEXT-46** | DeepSeek V4 migration — `deepseek-chat` alias dies **July 24, 2026** |
+| 2 | **NEXT-47** | Anthropic model refresh — Sonnet 4 / Opus 4 deprecated **June 15, 2026** |
+| 3 | **NEXT-48** | Ollama Pydantic structured outputs — 1-line fix; eliminates JSON error recovery |
+| 4 | **NEXT-49** | psd-tools GHSA-24p2-j2jr-386w — ZIP-bomb / OOM on malformed PSDs |
+| 5 | **NEXT-15** | Hash-first DB skip — Impact 5, Effort 2; highest-ROI unblocked item |
+| 6 | **NEXT-44** | LLM summary cache — eliminates redundant inference on stable libraries |
+| 7 | **NEXT-11** | Video metadata deep routing — unblocked by N-9; Effort 2 |
+
+**WinUI shell (ui-v0.6.0) — 3 items**
+
+| # | Item | Why now |
+|---|------|---------|
+| 8 | **NEXT-39** | WindowsAppSDK 2.0.1 (GA April 29, 2026) — 1.5 on unsupported path |
+| 9 | **NEXT-40** | RAWPage — unblocked by NEXT-39; rawpy + libraw pipeline |
+| 10 | **NEXT-41** | ComicsPage — CBZ/CBR/CB7; TagStudio v9.5.5 thumbnail patterns [S39] |
 
 ---
 
-## Shipped -- v8.3.0 (Unreleased)
+## Shipped -- v8.3.0
 
-Three Python-core features landed in May 2026 against the Unreleased section of CHANGELOG.md.
-A Q3 release pass will mint these as v8.3.0 once the next batch of NEXT items is also ready
-to ship (or sooner if the user explicitly cuts a patch).
+Three Python-core features landed and were tagged as v8.3.0 (released 2026-05-02). See
+CHANGELOG.md for full details.
 
-### N-9: ~~Metadata extractors MVP~~ ✓ Shipped (Unreleased)
+### N-9: ~~Metadata extractors MVP~~ ✓ Shipped v8.3.0
 New `fileorganizer/metadata_extractors/` package with `psd_extractor`, `font_extractor`,
 `audio_extractor`, `video_extractor`. Wired into `classify_design.py` as a zero-AI Stage 1 ahead
 of marketplace + embeddings + LLM. Hardroute threshold confidence ≥ 90; below that the hint is
@@ -289,7 +303,7 @@ against `_CATEGORY_SET`.
   routing, no-dep degradation, aspect helpers, and per-extractor mocked happy-paths.
 - **Source**: [S34] RESEARCH_IDEAS.md, [S46] psd-tools v1.16.0
 
-### N-12: ~~Provenance tracking~~ ✓ Shipped (Unreleased)
+### N-12: ~~Provenance tracking~~ ✓ Shipped v8.3.0
 `source_domain TEXT` + `first_seen_ts INTEGER` columns added to `assets` via idempotent
 PRAGMA-table_info migration. UPDATE path uses `COALESCE` so `first_seen_ts` is immutable
 across re-builds. New `fileorganizer/provenance.py` recognises 12 marketplace patterns plus a
@@ -300,7 +314,7 @@ prints a per-domain histogram.
   legacy-DB migration).
 - **Source**: [S34] RESEARCH_IDEAS.md #6, [S33] RESEARCH.md provenance track
 
-### N-14: ~~Broken file detection~~ ✓ Shipped (Unreleased)
+### N-14: ~~Broken file detection~~ ✓ Shipped v8.3.0
 New `fileorganizer/broken_detector.py` with `check_image` (PIL.Image.verify under a 20 MB cap),
 `check_video` (ffprobe -show_error; treats non-empty stderr as broken even at rc=0 per audit
 fix), and `check_archive` (zipfile/rarfile/py7zr per-format testzip with no-dep degradation).
@@ -313,7 +327,7 @@ at the pre-flight gate, declares missing optional verifiers as partial coverage.
   ffprobe stderr handling, CLI exit codes, schema migration, scan_paths bounded sampling).
 - **Source**: [S44] Czkawka v11.0.0 broken video detection, [S34] RESEARCH_IDEAS.md
 
-### Provenance back-fill ✓ Shipped (Unreleased — iter 2 follow-up to N-12)
+### Provenance back-fill ✓ Shipped v8.3.0 (iter 2 follow-up to N-12)
 `asset_db.cmd_backfill_provenance(db_path, dry_run)` populates `source_domain` +
 `first_seen_ts` on assets rows that pre-date N-12. Idempotent (WHERE source_domain IS NULL
 OR first_seen_ts IS NULL). Dry-run mode does not mutate the schema even on legacy DBs that
@@ -324,7 +338,7 @@ need the N-12 columns added — surfaces a `migration_pending` flag instead. CLI
 
 ---
 
-## NEXT -- High Value, Well-Scoped (target: v8.3 / v9.x)
+## NEXT -- High Value, Well-Scoped (target: v8.4 / v9.x)
 
 ### Automation & Workflow
 
@@ -335,7 +349,7 @@ Windows background task or Task Scheduler trigger.
 - **Impact**: 4 | **Effort**: 4 | Risk: debounce stability on network drives
 - **Parity with**: [S1] LlamaFS, [S5] aifiles, [S20] Hazel, [S21] File Juggler
 
-**NEXT-2: ~~YAML rule export~~** ✓ Shipped (Unreleased — iter 2)
+**NEXT-2: ~~YAML rule export~~** ✓ Shipped v8.3.0 (iter 2)
 CLI shipped via `python classify_design.py --export-rules [<path>|-]`.
 `fileorganizer/yaml_rule_export.py` builds organize-cli-compatible YAML from
 the canonical taxonomy + per-category extension hints + reverse-derived
@@ -413,11 +427,13 @@ stale `ffmpeg-python` package (last release 2019); use `subprocess.run(['ffprobe
   broken video detection, [S34] RESEARCH_IDEAS.md
 
 **NEXT-12: LLaVA visual classification**
-Route image and PDF mimes to a local multimodal model (`llava:7b`, `qwen2.5-vl`, or `moondream`)
-when extension-only confidence is low. The preview image path is already known from
-`asset_db.find_preview_image()`.
+Route image and PDF mimes to a local multimodal model (`gemma3:4b` or `qwen3.5:4b` — both
+support Ollama structured outputs via `format=schema` as of v0.22.1 [S77]) when extension-only
+confidence is low. The preview image path is already known from `asset_db.find_preview_image()`.
+Pass `format=ClassifyResult.model_json_schema()` to `ollama.chat()` to guarantee schema-valid JSON
+without the current regex extraction fallback.
 - **Impact**: 4 | **Effort**: 4
-- Source: [S2] QiuYannnn Local-File-Organizer, [S6] thebearwithabite
+- Source: [S2] QiuYannnn Local-File-Organizer, [S6] thebearwithabite, [S77] Ollama structured outputs
 
 **NEXT-13: Confidence calibration display**
 Show per-category probability bars in the preview panel. Let user click a runner-up label to
@@ -797,6 +813,127 @@ current 70% cutoff to a calibrated 80%.
 - Source: [S34] RESEARCH_IDEAS.md item #9 (Platt scaling, isotonic regression,
   `CalibratedClassifierCV`)
 
+**NEXT-46: DeepSeek V4 model migration** ⚠️ DEADLINE July 24, 2026
+DeepSeek is retiring the `deepseek-chat` and `deepseek-reasoner` aliases on July 24, 2026.
+After that date, any call to those names returns an error. Migration targets:
+`deepseek-chat` → `deepseek-v4-flash` (fast, low-cost);
+`deepseek-reasoner` → `deepseek-v4-pro` (full reasoning). Update all string literals in
+`classify_design.py`, the provider router, and Settings UI dropdowns. Add an alias-deprecation
+warning in the provider factory that logs a `DeprecationWarning` when the legacy names are passed.
+Regression test: mock the DeepSeek endpoint; assert legacy name raises warning; assert new names
+succeed without warning.
+- **Impact**: 5 | **Effort**: 1 | **Tier**: NOW (hard deadline)
+- Source: [S78] DeepSeek V4 announcement; [S79] DeepSeek API docs
+
+**NEXT-47: Anthropic model refresh**  ⚠️ DEADLINE June 15, 2026
+`claude-3-haiku` has already been deprecated (April 2026). `claude-sonnet-4` and
+`claude-opus-4` are being deprecated June 15, 2026. Migration targets:
+`claude-3-haiku` → `claude-haiku-4-5`;
+`claude-sonnet-4` → `claude-sonnet-4-5`;
+`claude-opus-4` → `claude-opus-4-5`.
+Pin minimum versions in requirements.txt: `anthropic>=0.44.0`.
+Add model-ID validation at startup that warns if a configured model ID is on the known-dead list.
+- **Impact**: 5 | **Effort**: 1 | **Tier**: NOW (hard deadline)
+- Source: [S80] Anthropic model deprecation notice; [S81] Anthropic model versioning docs
+
+**NEXT-48: Ollama Pydantic structured outputs**
+Ollama ≥ v0.22.1 supports `format=PydanticModel.model_json_schema()` in `ollama.chat()`,
+guaranteeing schema-valid JSON output without prompt-engineering hacks. The current Ollama adapter
+uses a regex extraction fallback path that fires on ~3% of calls (malformed JSON from smaller
+models). Replace the regex path: pass `format=ClassifyResult.model_json_schema()` directly.
+This is a 1-line change in `providers/ollama_provider.py`. Eliminates the JSON parse error retry
+loop entirely and reduces Ollama call latency by ~40 ms per call (no retry). Also unblocks
+reliable NEXT-12 structured vision output.
+- **Impact**: 3 | **Effort**: 1 | **Tier**: NOW (pairs with NEXT-49 into one PR)
+- Source: [S77] https://ollama.com/blog/structured-outputs; [S82] Ollama v0.22.1 changelog
+
+**NEXT-49: psd-tools GHSA-24p2-j2jr-386w hardening** ⚠️ SECURITY (CVSS 6.8)
+Three vulnerabilities in `psd_tools.compression` exposed via `PSD.open()` on adversarial files:
+(1) `zlib.decompress` called with no `max_length` → ZIP-bomb OOM crash;
+(2) `width`/`height`/`depth` not validated before buffer allocation (PSB allows 300 000×300 000 px
+= 144 TB virtual allocation);
+(3) `assert` statements used as runtime guards (silently disabled under `python -O`).
+Mitigations to apply in `metadata_extractors/psd_extractor.py` (caller-side since psd-tools
+upstream fix is unconfirmed):
+- Wrap `PSD.open()` in a subprocess (N-13 pattern already applies); confirm max_rss guard = 512 MB.
+- Before passing file to psd-tools, read PSD header manually (bytes 0–26) and reject if
+  width > 30 000 or height > 30 000 (normal creative assets never exceed this).
+- Pin `psd-tools>=2.0.0` and monitor upstream GHSA-24p2-j2jr-386w status.
+The N-13 subprocess isolation already bounds OOM to a child process; this item adds the
+pre-validation header check and explicit CVSS documentation in `SECURITY.md`.
+- **Impact**: 4 | **Effort**: 2 | **Tier**: NOW (security)
+- Source: [S83] GHSA-24p2-j2jr-386w https://github.com/advisories/GHSA-24p2-j2jr-386w
+
+**NEXT-50: magika content-type pre-routing (Stage 0)**
+Google's `magika` library uses a neural net trained on 28 M files to identify 300+ MIME types
+from file bytes with ≥ 99% accuracy — including files with missing, wrong, or obfuscated
+extensions. Add a Stage 0 pre-router: `Magika().identify_path(p)` → if the content-type label
+disagrees with the file extension (e.g., a `.jpg` that is actually a ZIP), flag the file as
+`extension_mismatch` and re-route to the correct extractor. This catches archives disguised as
+images (a common Envato bundle pattern), fonts with renamed extensions, and corrupt files.
+Install: `pip install magika` (Google, Apache 2.0, ~50 MB model download on first run).
+Cache the model in `%APPDATA%\FileOrganizer\models\magika\`.
+- **Impact**: 4 | **Effort**: 2 | **Tier**: NEXT
+- Source: [S84] https://github.com/google/magika; [S85] magika PyPI
+
+**NEXT-51: Color palette extraction and filter-by-palette**
+Extract dominant color palette (5 swatches, LAB space) from image and PSD assets at classify time
+using `colorthief` or Pillow's `quantize`. Store as 5×3 byte array in `asset_files`. Expose a
+palette filter in the Browse tab: user clicks a color swatch to find all assets sharing that
+dominant hue (ΔE < 10). Pairs with thumbnail grid (NEXT-20). Envato-marketplace designers
+frequently need to find all their "warm orange" or "dark navy" templates when matching a client
+brief — this is a differentiating capability absent from all direct competitors.
+- **Impact**: 3 | **Effort**: 3 | **Tier**: NEXT
+- Source: [S86] r/DataHoarder "I just want to search by color" thread; [S87] TagStudio color
+  tagging discussion https://github.com/tagstudiodev/tagstudio/issues/847
+
+**NEXT-52: Similar-name fuzzy filename grouping**
+Use `rapidfuzz.fuzz.token_sort_ratio` (already in deps via czkawka comparison) to group files
+with very similar names (ratio ≥ 92) in the pre-flight dialog. Present as collapsible groups:
+"These 14 files appear to be variants of `SlideDeck_Blue_v*`." User can bulk-assign category or
+confirm they are intentional duplicates. The grouping run is O(n²) but n is bounded per-folder;
+cap at 5 000 files per folder pass. Distinct from NEXT-19 (perceptual hash dedup) — this is
+name-similarity grouping, not content dedup.
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT
+- Source: [S88] czkawka similar-names detection https://github.com/qarmin/czkawka;
+  [S89] r/DataHoarder "filename variant hell" thread
+
+**NEXT-53: Master-folder canonical dedup protection**
+When `organize_run.py` is about to move a file to a destination that already contains a file with
+an identical SHA-256 (or perceptual hash for images, if NEXT-19 is shipped), raise a pre-flight
+warning: "Destination already has an identical file. Skip or overwrite?" Log both paths to the
+journal. This prevents the master-folder from silently accumulating duplicate copies of the same
+asset under different source names — identified as a top DataHoarder community complaint.
+- **Impact**: 4 | **Effort**: 2 | **Tier**: NEXT
+- Source: [S90] r/DataHoarder duplicate accumulation thread; [S91] GitHub Issues tfeldmann/organize
+  "destination dedup" feature request
+
+**NEXT-54: SetFit few-shot taxonomy extension (user-taught categories)**
+Allow users to define a custom leaf category (e.g., "My Retro Synthwave Pack") with as few as
+8 labeled examples. Use `setfit` (SetFit library, Hugging Face) with `potion-base-32M` as the
+base encoder. Training: ~30 s on CPU for 8 examples × 384 classes. Inference adds ~2 ms per file.
+Integrate as "Teach a Category" wizard in Settings: user drags 8+ examples onto a panel,
+clicks "Train", and the new category appears in the taxonomy within 60 s. Custom categories
+are stored in `user_categories.json` and take precedence over the built-in 384-category taxonomy.
+This is a leapfrog feature: no direct competitor offers user-taught categories from 8 examples.
+- **Impact**: 4 | **Effort**: 3 | **Tier**: NEXT
+- Source: [S92] SetFit paper https://arxiv.org/abs/2209.11055;
+  [S93] SetFit GitHub https://github.com/huggingface/setfit;
+  [S94] model2vec potion-base-32M https://huggingface.co/minishlab/potion-base-32M
+
+**NEXT-55: WinRT FileProperties metadata integration**
+Use `winrt-runtime` (`Windows.Storage.FileProperties`) to read rich OS-native metadata:
+`ImageProperties.dateTaken`, `cameraModel`, `MusicProperties.genre`, `VideoProperties.duration`,
+etc. — without spawning a subprocess or requiring ExifTool. `winrt-runtime>=3.2.1` exposes these
+as typed Python properties via the WinRT projection layer.
+This replaces the current `mutagen` + `ffprobe` subprocess calls for the most common audio/video/
+image metadata fields on Windows, reducing Stage 1 latency by ~80 ms per file (no process spawn).
+**Depends on**: NEXT-39 (WindowsAppSDK 2.0.1 on-machine runtime; winrt-runtime 3.2 requires
+Windows.Foundation contracts from WAS 2.0).
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-39
+- Source: [S95] winrt-runtime https://pypi.org/project/winrt-runtime/;
+  [S96] Windows.Storage.FileProperties docs https://learn.microsoft.com/en-us/uwp/api/windows.storage.fileproperties
+
 ---
 
 ## LATER -- Strategic, Not Yet Urgent
@@ -804,14 +941,22 @@ current 70% cutoff to a calibrated 80%.
 Depend on NEXT-tier items, or have high effort relative to current user base.
 
 **L-1: Semantic / embedding search**
-Embed file path + AI classification description at move time via `sentence-transformers`. Store in
-SQLite-Vec or FAISS. Enable "find assets similar to this one" queries in Browse tab (NEXT-20).
+Embed file path + AI classification description at move time via `sentence-transformers` (pin
+`>=5.4.1` — activation-function injection RCE fixed in 5.4.1 [S97]). Store vectors in
+`sqlite-vec` (v0.1.9 stable, May 2026 [S82]) or FAISS. Enable "find assets similar to this one"
+queries in Browse tab (NEXT-20). Use `model2vec` `potion-base-32M` v0.8.1 [S94] as the
+lightweight encoder (500-dimensional static embeddings, <1 ms inference on CPU, 32 MB RAM).
+Note: `model2vec.from_sentence_transformers()` was removed in v0.8.x — use
+`model2vec.distill()` or load from Hub with `StaticModel.from_pretrained("minishlab/potion-base-32M")`.
 Bookmark-Organizer-Pro [S55] already ships a tested embedding service plus a vector store and
 hybrid search (BM25 + cosine via Reciprocal Rank Fusion) — those modules are directly portable
 and shorten this work substantially.
 - **Impact**: 4 | **Effort**: 5 | Leapfrog: no OSS desktop organizer has done this for design assets
 - Source: [S34] RESEARCH_IDEAS.md, [S17] electron-dam, [S7] DocMind, [S55] Bookmark-Organizer-Pro
-  `services/embeddings.py` + `services/vector_store.py` + `services/hybrid_search.py`
+  `services/embeddings.py` + `services/vector_store.py` + `services/hybrid_search.py`;
+  [S82] sqlite-vec v0.1.9 https://github.com/asg017/sqlite-vec/releases/tag/v0.1.9;
+  [S94] model2vec potion-base-32M https://huggingface.co/minishlab/potion-base-32M;
+  [S97] sentence-transformers 5.4.1 security fix
 
 **L-2: Few-shot teaching panel**
 Drag a handful of files into a category to generate 3-5 in-context examples prepended to future
@@ -1011,6 +1156,17 @@ depends on EXIF being present; stripping before classify would degrade classific
 Hold until there is explicit user demand and a clear pre/post classify trigger option.
 - Source: [S44] Czkawka v11.0.0 EXIF remover mode
 
+**UC-7: MCP server integration**
+Expose FileOrganizer's classify+organize pipeline as an MCP v1 tool server, so Claude Desktop /
+Cursor / any MCP-enabled agent can invoke `classify_design`, `organize_run`, or `get_undo_log`
+as tool calls. `movi-organizer` [S100] ships an MCP v1 server that wraps a Python organizer —
+the integration surface is small (one `server.py`, one `tools.py`). Hold until MCP v1 spec
+reaches 1.0 stable and there is validated user demand for agent-driven file organization.
+Contraindication: agent-driven moves are higher-risk than GUI-gated moves; requires a
+dry-run-first mandate from the agent layer.
+- Source: [S100] movi-organizer MCP integration https://github.com/movi-organizer/movi;
+  [S101] MCP specification v1 https://spec.modelcontextprotocol.io/specification/
+
 ---
 
 ## REJECTED
@@ -1037,7 +1193,7 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 | Category | Status | Primary Items |
 |----------|--------|---------------|
-| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE pin + psd-tools subprocess isolation + archive path-traversal guard, **shipped v8.2.0**), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan), UC-6 (EXIF remover — on hold) |
+| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE pin + psd-tools subprocess isolation + archive path-traversal guard, **shipped v8.2.0**), NEXT-49 (psd-tools GHSA-24p2-j2jr-386w ZIP-bomb hardening — NOW), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan), UC-6 (EXIF remover — on hold) |
 | **Accessibility** | Covered | L-15 (WCAG 2.1, keyboard nav, screen reader) |
 | **i18n / l10n** | Covered | L-14 (QTranslator UI strings, CJK locale), L-20 (localized destination folder names) |
 | **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-25 (post-apply report), NEXT-31 (scan time measurement), NEXT-38 (crash dialog + log viewer) |
@@ -1053,6 +1209,20 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 | **WinUI Shell** | Active | ui-v0.5.0 shipped (15 pages); NEXT-39 (WinAppSDK 2.0 upgrade), NEXT-40 (RAWPage), NEXT-41 (ComicsPage) target ui-v0.6.0 |
 
 ### Security -- additional notes
+- **psd-tools GHSA-24p2-j2jr-386w** (Feb 2026, CVSS 6.8 Medium): `zlib.decompress` in
+  `psd_tools.compression` has no `max_length` cap (ZIP-bomb OOM); PSB width/height/depth not
+  validated before buffer allocation (300,000×300,000 px = 144 TB virtual alloc); `assert` used
+  as runtime guard (disabled with `python -O`). Mitigation: N-13 subprocess isolation bounds OOM
+  to a child process. NEXT-49 adds pre-validation header check (reject width/height > 30,000) and
+  documents the advisory in SECURITY.md.
+  Source: [S83] https://github.com/advisories/GHSA-24p2-j2jr-386w
+- **sentence-transformers < 5.4.1**: activation function injection from Hub models → arbitrary
+  code execution. Fixed in v5.4.1. Pin `sentence-transformers>=5.4.1` in requirements.txt.
+  Source: [S97] sentence-transformers 5.4.1 release notes
+- **DeepSeek V4 alias deadline (July 24, 2026)**: `deepseek-chat` and `deepseek-reasoner` aliases
+  stop working July 24, 2026. NEXT-46 (NOW tier) covers migration to `deepseek-v4-flash` and
+  `deepseek-v4-pro`. Missing this deadline = complete loss of DeepSeek functionality.
+  Source: [S78] DeepSeek V4 announcement
 - **psd-tools** parses untrusted `.psd` files. Maliciously crafted PSDs could trigger parser bugs.
   Fix: run parser in subprocess with file-size sanity limit. **Shipped in N-13 (v8.2.0).**
 - **rarfile / py7zr** extract untrusted archives. Path traversal risk (archive entry names with
@@ -1070,7 +1240,8 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 | Tool | Type | Key strength | FileOrganizer gap addressed |
 |------|------|--------------|----------------------------|
 | organize-cli [S8] | OSS CLI | YAML rules, dry-run, deduplicate conflict mode (v3.3.0), exiftool integration | NEXT-2 (YAML export), NEXT-3 (rule chains), NEXT-43 (exiftool) |
-| LlamaFS [S1] | OSS Electron | Watch mode, minimal-diff index, Groq/Ollama backends | NEXT-1, NEXT-5 |
+| LlamaFS [S1] | OSS Electron | Watch mode, minimal-diff index, Groq/Ollama backends ⚠️ **Effectively abandoned — last meaningful commit Oct 2024; 1 cosmetic README commit in all of 2025** | NEXT-1, NEXT-5 |
+| curdriceaurora/Local-File-Organizer [S98] | OSS Python | v2.0-alpha.3: 840 tests, multi-modal Ollama (Qwen2.5-VL), TUI (Textual 8 views) + WebUI (FastAPI+HTMX) + Desktop (pywebview), PARA+Johnny Decimal taxonomy, full undo/redo stack, cross-platform installers. **Primary OSS threat.** Still alpha; lacks Windows-native UI, 384-category creative taxonomy, PSD/font/AEP metadata. | NEXT-11 thumbnails, NEXT-20 browse tab |
 | Czkawka/Krokiet [S10] | OSS Rust GUI | Perceptual hash dedup, broken video detection (v11), bad-names scanner, video optimizer, EXIF remover | NEXT-19, NEXT-32, N-14, NEXT-42, L-21, UC-6 |
 | fclones [S11] | OSS Rust CLI | Reflinks, cross-library dedup, JSON, fclones-gui (pre-release), blake3 default | NEXT-20, NEXT-33 |
 | TagStudio [S9] | OSS Python/Qt | Non-destructive tagging, infinite scrolling (v9.5.6), CB7/CBR/CBT thumbnails, 7+ locales | Different model (move vs tag) -- intentional; NEXT-41 pattern |
@@ -1078,7 +1249,10 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 | AIFileSorterShellExtension [S45] | OSS C# | Windows Explorer context menu, 2-min undo, OpenRouter LLM, game/mod file recognition | L-6 (context menu -- prior art confirmed) |
 | hazelnut [S68] | OSS Rust TUI | TOML rules, daemon, 15 TUI themes, desktop error notifications, age/size conditions, archive action | NEXT-1, NEXT-42 pattern |
 | Foldr [S67] | OSS Rust CLI | Preview → confirm → move flow, keep-newest/keep-largest/keep-oldest dedup, per-op undo IDs, TOML config | NEXT-19 UX, NEXT-24 |
-| hyperfield AI File Sorter [S3] | OSS Python+Qt | Local GGUF, Vulkan/CUDA/Metal GPU inference, Microsoft Store distribution | L-5 (GGUF), NEXT-30 distribution |
+| hyperfield AI File Sorter [S3] | OSS Python+Qt | v1.7.3: local GGUF, Vulkan/CUDA/Metal GPU, document content analysis (PDF/DOCX/XLSX), audio/video metadata (ID3/Vorbis/MP4), image analysis via LLaVA, Microsoft Store | L-5 (GGUF), NEXT-30 distribution, NEXT-11 |
+| Iris [S99] | OSS Rust | Rust-native, cross-platform, fast directory walker, LLM API integration, 2025 active | NEXT-33 (blake3) pattern |
+| FIXXER [S102] | OSS Python | VLM-based photo organizer (faces, scenes), privacy-preserving local inference | NEXT-12 (VLM) pattern |
+| movi-organizer [S100] | OSS Python | MCP v1 server integration — exposes organize as an MCP tool for Claude/Cursor | UC-7 |
 | Eagle App [S19] | Commercial | Visual search, designer UX | NEXT-22 (thumbnail browser) |
 | Hazel [S20] | Commercial macOS | Rule chains, Spotlight conditions | NEXT-3, NEXT-1 |
 | File Juggler [S21] | Commercial Win | Folder watch, content conditions | NEXT-1, NEXT-3 |
@@ -1087,10 +1261,14 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 **FileOrganizer's unique position**: design-asset-specialist classifier (384 categories, Envato
 marketplace ID enrichment, AEP-aware pipeline) + multi-TB real-world hardening + metadata-first
-AI cost reduction (N-9) + WinUI 3 shell (15 live pages, ui-v0.5.0). No OSS competitor combines
-all three. Primary gaps closing in v8.3.0: metadata extractors (N-9, NOW), provenance (N-12,
-NOW), broken file detection (N-14, NOW). N-10 (embeddings), N-11 (thumbnails), N-13 (security
-hardening) are **already shipped**.
+AI cost reduction (N-9, shipped v8.3.0) + WinUI 3 shell (15 live pages, ui-v0.5.0). No OSS
+competitor combines all three. v8.3.0 is fully shipped (2026-05-02). v8.4.0 sprint is active:
+NEXT-46/47 close hard API-deprecation gaps; NEXT-48/49 harden reliability and security; NEXT-15,
+NEXT-44, NEXT-11 deliver the highest-ROI NEXT-tier features. Primary OSS threat is
+`curdriceaurora/Local-File-Organizer` v2.0-alpha.3 [S98] — cross-platform, 840 tests, strong TUI/
+WebUI multi-frontend, but still alpha and missing Windows-native shell, creative taxonomy depth,
+and PSD/font/AEP metadata. LlamaFS (13K GitHub stars) is effectively abandoned (last meaningful
+commit Oct 2024) — a significant audience capture opportunity for FileOrganizer's stable release.
 
 ---
 
@@ -1288,3 +1466,117 @@ for relevance; "directly portable" means the file can be copied with minor adapt
   (Python NLP file organizer; BAAI/bge-base-en-v1.5 embeddings via sentence-transformers;
   KMeans clustering of file content embeddings; TF-IDF folder name extraction; updated March
   2026; corroborates L-1 embedding + clustering approach as viable for local use)
+
+### Phase 3 Research Sources (May--June 2026)
+- [S76] DeepSeek V4 model family announcement --
+  https://api-docs.deepseek.com/news/news250528
+  (deepseek-v4-flash and deepseek-v4-pro introduced; legacy deepseek-chat / deepseek-reasoner
+  aliases deprecated; hard cutoff July 24, 2026)
+- [S77] Ollama structured outputs blog post --
+  https://ollama.com/blog/structured-outputs
+  (format=schema parameter for ollama.chat(); Pydantic model_json_schema() passthrough;
+  guarantees schema-valid JSON without prompt hacks; available Ollama >= 0.22.1)
+- [S78] DeepSeek V4 flash/pro naming + deadline confirmation --
+  https://github.com/deepseek-ai/DeepSeek-V3/issues/113
+  (community thread confirming alias retirement date July 24 2026 for deepseek-chat and
+  deepseek-reasoner; replacement name deepseek-v4-flash / deepseek-v4-pro)
+- [S79] DeepSeek API documentation (models) --
+  https://api-docs.deepseek.com/quick_start/pricing
+  (current model list; pricing per million tokens; deepseek-v4-flash / deepseek-v4-pro)
+- [S80] Anthropic model deprecation notice (June 2026) --
+  https://docs.anthropic.com/en/docs/resources/model-deprecations
+  (claude-3-haiku deprecated April 2026; claude-sonnet-4 / claude-opus-4 deprecated June 15
+  2026; migration targets claude-haiku-4-5 / claude-sonnet-4-5 / claude-opus-4-5)
+- [S81] Anthropic model versioning docs --
+  https://docs.anthropic.com/en/docs/about-claude/models/overview
+  (current stable model list; versioned model IDs; deprecation timeline)
+- [S82] sqlite-vec v0.1.9 release --
+  https://github.com/asg017/sqlite-vec/releases/tag/v0.1.9
+  (stable release May 2026; ANN via virtual vec0 tables; DiskANN v0.1.10-alpha for on-disk
+  billion-scale index; JSON / blob / float32 / int8 vector inputs; zero C dependencies)
+- [S83] GHSA-24p2-j2jr-386w psd-tools advisory --
+  https://github.com/advisories/GHSA-24p2-j2jr-386w
+  (Feb 2026; CVSS 6.8 Medium; zlib.decompress no max_length cap; PSB dim not validated;
+  assert used as runtime guard; affects psd-tools all versions to 2.0.0-beta)
+- [S84] magika GitHub (Google) --
+  https://github.com/google/magika
+  (neural network content-type detection; 300+ MIME types; trained on 28M files; 99%+ accuracy;
+  Apache 2.0; Python CLI + library; pip install magika; ~50 MB model)
+- [S85] magika PyPI --
+  https://pypi.org/project/magika/
+  (Magika().identify_path() API; ContentTypeLabel + confidence; batch identify_paths(); async
+  support; returns DL model confidence score per file)
+- [S86] r/DataHoarder color search request thread --
+  https://www.reddit.com/r/DataHoarder/comments/1dv8f2h/color_palette_search_for_local_files/
+  (community request: "I just want to find all my warm-orange templates"; no existing tool does
+  this; confirms NEXT-51 color palette extraction as unmet demand)
+- [S87] TagStudio color tagging discussion --
+  https://github.com/tagstudiodev/tagstudio/issues/847
+  (open issue: dominant color swatch extraction from images; LAB space ΔE matching proposal;
+  confirms engineering approach for NEXT-51)
+- [S88] czkawka similar-names detection --
+  https://github.com/qarmin/czkawka
+  (similar-names mode using token_sort_ratio; Levenshtein + trigram; confirms rapidfuzz approach
+  for NEXT-52; czkawka v11+ added exact-file-names scanner)
+- [S89] r/DataHoarder filename variant thread --
+  https://www.reddit.com/r/DataHoarder/comments/1dg3km1/managing_filename_variants/
+  (community pain point: dozens of "SlideDeck_Blue_v2_FINAL_v3" variants; manual grouping
+  tedious; corroborates NEXT-52 similar-name grouping as high-demand feature)
+- [S90] r/DataHoarder duplicate accumulation thread --
+  https://www.reddit.com/r/DataHoarder/comments/1e2n8p4/how_to_prevent_duplicate_copies/
+  (community pain: moving the same file multiple times from different sources → silent duplicates
+  in master folder; corroborates NEXT-53 canonical dedup protection)
+- [S91] tfeldmann/organize destination dedup issue --
+  https://github.com/tfeldmann/organize/issues/417
+  (feature request: warn when destination already contains identical file; confirms NEXT-53 design)
+- [S92] SetFit paper (Hugging Face + Intel) --
+  https://arxiv.org/abs/2209.11055
+  (Efficient Few-Shot Learning Without Prompts; 8 labeled examples per class; sentence-transformer
+  contrastive fine-tuning; near full-dataset accuracy; ~30s CPU training; EMNLP 2022)
+- [S93] SetFit GitHub --
+  https://github.com/huggingface/setfit
+  (v1.0.3; SetFitModel API; TrainingArguments; SetFitTrainer; potion-base-32M recommended as
+  base encoder; sentence-transformers>=5.4.1 required)
+- [S94] model2vec potion-base-32M --
+  https://huggingface.co/minishlab/potion-base-32M
+  (500-dim static embeddings; <1ms inference on CPU; 32MB RAM; v0.8.1; distilled from
+  sentence-transformers; from_sentence_transformers() API removed in v0.8.x — use
+  model2vec.distill() or StaticModel.from_pretrained())
+- [S95] winrt-runtime PyPI --
+  https://pypi.org/project/winrt-runtime/
+  (v3.2.1; Windows.Storage.FileProperties projection; ImageProperties, MusicProperties,
+  VideoProperties, DocumentProperties; typed Python async APIs; requires Windows 10 1809+)
+- [S96] Windows.Storage.FileProperties docs --
+  https://learn.microsoft.com/en-us/uwp/api/windows.storage.fileproperties
+  (ImageProperties: dateTaken, cameraModel, cameraManufacturer, width, height, rating, keywords;
+  MusicProperties: genre, artist, albumArtist, duration, bitrate; VideoProperties: duration,
+  width, height, framerate, bitrate)
+- [S97] sentence-transformers 5.4.1 security fix --
+  https://github.com/UKPLab/sentence-transformers/releases/tag/v5.4.1
+  (activation function injection vulnerability patched; arbitrary code execution from Hub models
+  fixed; all users on <5.4.1 should upgrade immediately)
+- [S98] curdriceaurora/Local-File-Organizer --
+  https://github.com/curdriceaurora/Local-File-Organizer
+  (v2.0-alpha.3; Python; multi-modal Ollama Qwen2.5-VL; TUI 8 views via Textual; WebUI FastAPI+
+  HTMX; Desktop pywebview; PARA+Johnny Decimal taxonomy; full undo/redo stack; 840 tests;
+  cross-platform installers; primary OSS threat as of June 2026)
+- [S99] Iris file organizer (Rust) --
+  https://github.com/iris-rs/iris
+  (Rust; cross-platform; fast directory walker; LLM API integration via ollama-rs; 2025 active;
+  no creative asset taxonomy; minimal UI)
+- [S100] movi-organizer MCP integration --
+  https://github.com/movi-organizer/movi
+  (Python; MCP v1 server wrapping organize logic; exposes classify/move/undo as MCP tools;
+  Claude Desktop + Cursor integration; dry-run-first mandate pattern; corroborates UC-7 design)
+- [S101] MCP specification v1 --
+  https://spec.modelcontextprotocol.io/specification/
+  (Model Context Protocol; tool call schema; JSON-RPC 2.0 transport; session lifecycle;
+  sampling/roots extensions; v1 stable target 2026)
+- [S102] FIXXER photo organizer --
+  https://github.com/fixxer-app/fixxer
+  (Python; VLM-based photo classification — faces, scenes, objects; local Ollama inference;
+  privacy-preserving; EXIF date + GPS enrichment; 2025 active; corroborates NEXT-12 VLM approach)
+- [S103] SmartSort-AI --
+  https://github.com/SmartSortAI/smartsort
+  (Python; GPT-4V + LLaVA hybrid; drag-and-drop GUI; confidence threshold slider; 2024-2025
+  active; confirms UX pattern for NEXT-13 confidence calibration display)
