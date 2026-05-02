@@ -201,7 +201,12 @@ def test_audio_extractor_no_mutagen_returns_none(tmp_path, monkeypatch):
     assert audio_extractor.extract(f) is None
 
 
-def test_audio_extractor_short_clip_routes_to_sfx(tmp_path, monkeypatch):
+def test_audio_extractor_short_clip_categorizes_as_sfx_below_threshold(tmp_path, monkeypatch):
+    """Audio MVP per N-9 rubric: NEVER hardroutes (confidence < 90).
+
+    Duration alone can't distinguish a 4s music intro stab from a 4s SFX
+    one-shot — defer to downstream stages.
+    """
     monkeypatch.setattr(audio_extractor, "_HAS_MUTAGEN", True)
 
     fake_info = mock.MagicMock()
@@ -221,10 +226,10 @@ def test_audio_extractor_short_clip_routes_to_sfx(tmp_path, monkeypatch):
     hint = audio_extractor.extract(f)
     assert hint is not None
     assert hint.category == "Sound Effects & SFX"
-    assert hint.confidence >= 90
+    assert hint.confidence < 90  # informational only
 
 
-def test_audio_extractor_long_track_routes_to_music(tmp_path, monkeypatch):
+def test_audio_extractor_long_track_categorizes_as_music_below_threshold(tmp_path, monkeypatch):
     monkeypatch.setattr(audio_extractor, "_HAS_MUTAGEN", True)
 
     fake_info = mock.MagicMock()
@@ -244,7 +249,29 @@ def test_audio_extractor_long_track_routes_to_music(tmp_path, monkeypatch):
     hint = audio_extractor.extract(f)
     assert hint is not None
     assert hint.category == "Stock Music & Audio"
-    assert hint.confidence >= 88
+    assert hint.confidence < 90  # informational only — downstream still runs
+
+
+def test_select_primary_file_picks_webfont(tmp_path):
+    """Folder-mode dispatch must pick .woff/.woff2 (audit fix)."""
+    from fileorganizer.metadata_extractors import _select_primary_file
+    folder = tmp_path / "webfont_pack"
+    folder.mkdir()
+    (folder / "Inter-Regular.woff2").write_bytes(b"woff2 placeholder")
+    (folder / "preview.png").write_bytes(b"preview")
+    primary = _select_primary_file(folder, [])
+    assert primary is not None
+    assert primary.suffix == ".woff2"
+
+
+def test_select_primary_file_picks_woff(tmp_path):
+    from fileorganizer.metadata_extractors import _select_primary_file
+    folder = tmp_path / "webfont_pack"
+    folder.mkdir()
+    (folder / "Inter-Regular.woff").write_bytes(b"woff placeholder")
+    primary = _select_primary_file(folder, [])
+    assert primary is not None
+    assert primary.suffix == ".woff"
 
 
 # ── Video extractor ────────────────────────────────────────────────────────

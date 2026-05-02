@@ -161,6 +161,23 @@ def test_check_video_ffprobe_healthy(tmp_path, monkeypatch):
     assert reason == ""
 
 
+def test_check_video_rc0_with_stderr_is_broken(tmp_path, monkeypatch):
+    """Audit fix: ffprobe sometimes emits warnings to stderr while returning rc=0.
+    Rubric requires treating any non-empty stderr as a broken signal."""
+    monkeypatch.setattr(broken_detector, "_FFPROBE", "ffprobe")
+    completed = mock.MagicMock()
+    completed.returncode = 0
+    completed.stdout = '{"streams":[],"format":{}}'
+    completed.stderr = "[mov,mp4,m4a,3gp,3g2,mj2 @ 0x1] moov atom not found"
+    monkeypatch.setattr(broken_detector.subprocess, "run", lambda *a, **k: completed)
+
+    f = tmp_path / "warn.mp4"
+    f.write_bytes(b"placeholder")
+    broken, reason = broken_detector.check_video(f)
+    assert broken is True
+    assert "moov atom" in reason
+
+
 # ── Archive check (real zipfile, no mocks needed) ─────────────────────────
 
 
