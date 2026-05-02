@@ -205,6 +205,152 @@ def test_init_db_migrates_legacy_db_without_provenance(tmp_path):
     con.close()
 
 
+def test_backfill_populates_null_columns(tmp_path):
+    """Back-fill walks rows where source_domain or first_seen_ts is NULL and
+    sets them from disk_name + added_at."""
+    import asset_db
+    db_path = tmp_path / "fp.db"
+    con = asset_db.init_db(str(db_path))
+    # Two pre-N-12 rows (both NULLs) + one fully populated row.
+    con.execute(
+        "INSERT INTO assets (clean_name, category, disk_name, added_at, updated_at, "
+        "                   source_domain, first_seen_ts) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+        ("modern logo", "After Effects - Logo Reveal",
+         "12345678-modern-logo-reveal", "2026-04-15T10:00:00Z", "2026-04-15T10:00:00Z",
+         None, None),
+    )
+    con.execute(
+        "INSERT INTO assets (clean_name, category, disk_name, added_at, updated_at, "
+        "                   source_domain, first_seen_ts) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+        ("freegfx pack", "Print - Other",
+         "freegfx_pack_2026", "2026-04-16T11:00:00Z", "2026-04-16T11:00:00Z",
+         None, None),
+    )
+    con.execute(
+        "INSERT INTO assets (clean_name, category, disk_name, added_at, updated_at, "
+        "                   source_domain, first_seen_ts) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+        ("already populated", "After Effects - Other",
+         "12345678-already-populated", "2026-04-17T12:00:00Z", "2026-04-17T12:00:00Z",
+         "videohive.net", 1700000000),
+    )
+    con.commit()
+    con.close()
+
+    summary = asset_db.cmd_backfill_provenance(str(db_path), dry_run=False)
+
+    assert summary['rows_scanned'] == 2  # only NULL-column rows
+    assert summary['rows_updated'] == 2
+    assert summary['domains'].get('videohive.net') == 1
+    assert summary['domains'].get('freegfx.net') == 1
+    assert summary['no_match'] == 0
+    assert summary['dry_run'] is False
+
+    # Verify the populated row was NOT touched.
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    row = con.execute(
+        "SELECT source_domain, first_seen_ts FROM assets WHERE clean_name='already populated'"
+    ).fetchone()
+    assert row['source_domain'] == "videohive.net"
+    assert row['first_seen_ts'] == 1700000000
+    # Verify back-filled rows.
+    row1 = con.execute(
+        "SELECT source_domain, first_seen_ts FROM assets WHERE clean_name='modern logo'"
+    ).fetchone()
+    assert row1['source_domain'] == "videohive.net"
+    assert row1['first_seen_ts'] is not None
+    assert row1['first_seen_ts'] > 0
+    row2 = con.execute(
+        "SELECT source_domain, first_seen_ts FROM assets WHERE clean_name='freegfx pack'"
+    ).fetchone()
+    assert row2['source_domain'] == "freegfx.net"
+    assert row2['first_seen_ts'] is not None
+    con.close()
+
+
+def test_backfill_dry_run_does_not_commit(tmp_path):
+    import asset_db
+    db_path = tmp_path / "fp.db"
+    con = asset_db.init_db(str(db_path))
+    con.execute(
+        "INSERT INTO assets (clean_name, category, disk_name, added_at, updated_at, "
+        "                   source_domain, first_seen_ts) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+        ("dry run", "After Effects - Other",
+         "VH-99887766-dry-run", "2026-04-18T09:00:00Z", "2026-04-18T09:00:00Z",
+         None, None),
+    )
+    con.commit()
+    con.close()
+
+    summary = asset_db.cmd_backfill_provenance(str(db_path), dry_run=True)
+    assert summary['dry_run'] is True
+    assert summary['rows_updated'] == 1
+
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    row = con.execute("SELECT source_domain, first_seen_ts FROM assets").fetchone()
+    assert row['source_domain'] is None  # nothing committed
+    assert row['first_seen_ts'] is None
+    con.close()
+
+
+def test_backfill_idempotent(tmp_path):
+    """Second back-fill is a no-op once columns are populated."""
+    import asset_db
+    db_path = tmp_path / "fp.db"
+    con = asset_db.init_db(str(db_path))
+    con.execute(
+        "INSERT INTO assets (clean_name, category, disk_name, added_at, updated_at, "
+        "                   source_domain, first_seen_ts) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+        ("once", "After Effects - Other",
+         "12345678-modern", "2026-04-19T09:00:00Z", "2026-04-19T09:00:00Z",
+         None, None),
+    )
+    con.commit()
+    con.close()
+
+    s1 = asset_db.cmd_backfill_provenance(str(db_path), dry_run=False)
+    s2 = asset_db.cmd_backfill_provenance(str(db_path), dry_run=False)
+    assert s1['rows_updated'] == 1
+    assert s2['rows_scanned'] == 0
+    assert s2['rows_updated'] == 0
+
+
+def test_backfill_unmatched_still_sets_first_seen(tmp_path):
+    """A row whose disk_name matches no known marketplace pattern should still
+    get first_seen_ts populated (source_domain stays NULL).
+    """
+    import asset_db
+    db_path = tmp_path / "fp.db"
+    con = asset_db.init_db(str(db_path))
+    con.execute(
+        "INSERT INTO assets (clean_name, category, disk_name, added_at, updated_at, "
+        "                   source_domain, first_seen_ts) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?)",
+        ("custom",  "After Effects - Other",
+         "MyOwnAssetFolder", "2026-04-20T09:00:00Z", "2026-04-20T09:00:00Z",
+         None, None),
+    )
+    con.commit()
+    con.close()
+
+    summary = asset_db.cmd_backfill_provenance(str(db_path), dry_run=False)
+    assert summary['no_match'] == 1
+    assert summary['rows_updated'] == 1
+
+    con = sqlite3.connect(str(db_path))
+    con.row_factory = sqlite3.Row
+    row = con.execute("SELECT source_domain, first_seen_ts FROM assets").fetchone()
+    assert row['source_domain'] is None
+    assert row['first_seen_ts'] is not None  # back-fill still set the timestamp
+    con.close()
+
+
 def test_first_seen_ts_immutable_via_coalesce(tmp_path):
     """Simulate the cmd_build UPDATE path: a row's first_seen_ts must not change
     when COALESCE is the source of truth."""
