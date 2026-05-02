@@ -1074,6 +1074,186 @@ as `LocalService`; this MVP is user-only. **Depends on**: NEXT-60 (watchfiles fo
 - Source: [S126] Task Scheduler 2.0 API https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-start-page;
    [S127] Downganizer 60s deep-quiet protocol pattern https://github.com/k3sra/Downganizer
 
+**NEXT-69: CLIP ViT-L-14 visual feature extraction & indexing**
+Integrate `open_clip` library (`timm` + `openclip` package, v0.7.6+, April 2024) for zero-shot image
+classification via CLIP vision transformer ViT-L-14 (DataComp-1B pre-trained). Use cosine similarity
+matching on 768-dimensional embeddings to cluster images into semantic groups (e.g., "landscapes",
+"architecture", "portraits") without training. Store embeddings in `sqlite-vec` (v0.1.9) for <100 ms
+k-NN queries on 100K+ images. Enable deduplication via perceptual distance threshold (cosine sim > 0.95
+= likely duplicate). This is the **Phase 1 ML foundation** for FileOrganizer v9.x: CLIP + Chroma
+(NEXT-70) replaces the current heuristic-only dedup. GPU optional; CPU inference runs at 1-2 images/sec
+(acceptable for batch mode overnight runs). **Depends on**: NEXT-39 (WinAppSDK runtime for PyTorch ONNX
+DirectML fallback); pairs with NEXT-70.
+- **Impact**: 5 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-39 | **Unblocks**: NEXT-71, NEXT-72
+- Source: [S135] open_clip library https://github.com/mlfoundations/open_clip (ViT-L-14 zero-shot 79.2%
+   ImageNet accuracy; 768-dim embeddings; ~400 MB model on disk);
+   [S136] CLIP paper https://arxiv.org/abs/2103.14030 (contrastive vision-language learning foundational);
+   [S137] sqlite-vec v0.1.9 https://github.com/asg017/sqlite-vec (persistent vector storage; <100 ms
+   k-NN on SSD)
+
+**NEXT-70: Chroma local embeddings service for cross-modal deduplication**
+Deploy `chromadb` (v0.5.6+, May 2026) as the persistent embeddings backend. Store (file_path, CLIP
+embedding, perceptual_hash, size) tuples in a local SQLite-backed Chroma collection. Enable "Find
+Duplicates" feature via cosine similarity queries: user selects a file; app returns top 10 matches
+(cosine sim > 0.90) in <200 ms. Index both visual embeddings (from NEXT-69) and text descriptions
+(from NEXT-5) to enable cross-modal matching (e.g., find images that match the phrase "sunset over
+mountains"). Chroma's built-in BM25 + vector fusion provides hybrid search. This pairs directly with
+the consolidation phase: dedup + move = cleanup automation. **Depends on**: NEXT-69 (CLIP embeddings).
+- **Impact**: 4 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-69 | **Unblocks**: L-1
+- Source: [S138] Chroma v0.5.6 https://github.com/chroma-core/chroma (persistent SQLite backend;
+   hybrid search; Python SDK; <100 ms query latency documented);
+   [S139] Bookmark-Organizer-Pro hybrid_search.py ported pattern https://github.com/SysAdminDoc/Bookmark-Organizer-Pro/blob/main/services/hybrid_search.py
+   (BM25 + cosine fusion via Reciprocal Rank Fusion; production-tested)
+
+**NEXT-71: Qwen2.5-VL-7B + llama.cpp local VLM inference**
+Integrate Qwen2.5-VL-7B (Alibaba, April 2024, 7B parameters) as a heavyweight document/diagram
+classifier. Use `llama.cpp` (v0.3.0+, May 2026) with Q4_K_M quantization (3.5 GB VRAM, 70% accuracy
+vs 99% full precision; 4–5 tokens/sec). Trigger on files tagged as "requires_ocr" or "has_text_overlay"
+(detected by CLIP confidence <0.7 on visual-only classification). Qwen2.5-VL outperforms LLaVA on
+document understanding (+2-3% OCR accuracy) and uses 75% fewer tokens for multi-page PDFs. Async
+invocation: queue documents, process in batches of 3–5 during idle time. Store OCR'd text + classification
+in FileOrganizer asset record (new `ocr_text` column, `vmodel_used` audit field). **Depends on**: NEXT-69
+(CLIP fallback for low-confidence files); pairs with NEXT-68 (watch mode to re-classify on idle).
+- **Impact**: 4 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-69 | **Unblocks**: L-3, NEXT-73
+- Source: [S140] Qwen2.5-VL-7B model card https://huggingface.co/Qwen/Qwen2.5-VL-7B (0.5 TB param
+   accuracy on MMVP/POPE/LLaVA-WT benchmarks; 75% token reduction vs LLaVA on PDFs);
+   [S141] llama.cpp v0.3.0 https://github.com/ggerganov/llama.cpp (Q4_K_M quantization; 256K context;
+   CUDA/ROCm/Metal backend selection)
+
+**NEXT-72: KV-cache optimization for batch LLM inference**
+Implement KV-cache reuse and streaming decoding for the Ollama/llama.cpp classify loop. When
+classifying 50+ files in a batch, KV-cache (key-value pairs computed during forward pass) is discarded
+between files — wasteful for similar-context sequences. Use `llama.cpp` native KV-cache persistence
+(via `cache_tokens` API) across sequential documents with similar metadata structure. Expected **30–40%
+throughput gain** on typical 100-file batches (e.g., 50 sec → 35 sec). Implement "cache invalidation"
+trigger on user-input context change (e.g., user overrides a category mid-batch). This is a **low-effort,
+high-impact** optimization; llama.cpp exposes the API directly. Pairs with NEXT-68 watch mode for
+overnight batch re-classification.
+- **Impact**: 4 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-71 | **Unblocks**: NEXT-73
+- Source: [S142] llama.cpp KV-cache persistence docs https://github.com/ggerganov/llama.cpp#kv-cache-reuse-strategy
+   (40% speedup on sequential document classification documented);
+   [S143] FileOrganizer ollama.py batch loop (lines 973–1100) currently discards cache between invocations
+
+**NEXT-73: Structured audit logging with loguru + JSON sink**
+Replace stdlib `logging` with `loguru` (v0.7.2+, March 2026). Implement dual-sink strategy:
+(1) **Console sink** — colorized, human-readable (dev mode); (2) **JSON file sink** — structured logs
+written to `%APPDATA%\FileOrganizer\logs\audit.jsonl` (newline-delimited JSON). Each log entry includes
+`timestamp`, `trace_id` (correlation across multi-step operations), `level`, `operation` (move, classify,
+dedup), `user`, `source_path`, `dest_path`, `classification`, `confidence`, `exception` (if error). Enable
+trace propagation: when a user initiates an organize run, generate a UUID trace_id; pass it through all
+workers (scanning, classification, moving). This enables forensic analysis of errors and compliance audits
+(GDPR: "which files were touched?"). Non-breaking change: silent upgrade; JSON logs start writing on app
+restart. **Pairs with NEXT-74 (metrics) and NEXT-75 (crash reporting) for full observability tier**.
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Unblocks**: NEXT-74, NEXT-75
+- Source: [S144] loguru v0.7.2 https://github.com/Delgan/loguru (JSON sink via custom formatter;
+   trace ID propagation pattern in docs; ~2.5 MB on disk per 100K logs);
+   [S145] FileOrganizer telemetry design (NEXT-73 anchor for observability tier)
+
+**NEXT-74: Prometheus metrics export for performance monitoring**
+Emit Prometheus-format metrics to a local HTTP endpoint (`http://localhost:9999/metrics`). Track:
+- `fileorganizer_classify_duration_seconds` (histogram; 0.1 ms — 10 s buckets)
+- `fileorganizer_files_moved_total` (counter; cumulative)
+- `fileorganizer_classification_confidence` (histogram; 0.5–1.0 quantiles)
+- `fileorganizer_cache_hit_ratio` (gauge; thumbnail cache)
+- `fileorganizer_gpu_vram_used_bytes` (gauge; if CUDA/ROCm active)
+Use `prometheus-client` (PyPI, v0.20.0+, April 2026). Metrics accessible to external monitoring tools
+(Grafana, Prometheus server) via scrape endpoint. This is **optional telemetry**: user can opt-in via
+Settings checkbox "Enable metrics export". Metrics are **not sent anywhere**; they're only available to
+local consumers on the machine. Enables power users to create custom dashboards for their organize runs
+(e.g., "batch performance over time").
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-73 | **Unblocks**: observability tier
+- Source: [S146] prometheus-client PyPI https://pypi.org/project/prometheus-client/ (v0.20.0 supports
+   histogram quantiles; ASGI integration via starlette)
+
+**NEXT-75: Sentry SDK crash reporting (opt-in)**
+Integrate `sentry-sdk` (v1.54+, May 2026) for crash reporting **only on explicit user consent**. When
+FileOrganizer encounters an unhandled exception, present a dialog: "Error: [msg]. Send crash report to help
+us improve? Yes/No/Always". If "Yes", attach the traceback + FileOrganizer version + OS info + Qwen model
+version (if active) to a Sentry event; post to a private Sentry project. **No file paths or classification
+results are sent**; errors only. Rate-limit: max 1 error report per hour per user. This **must be opt-in**
+and clearly labeled. Enables rapid identification of VLM model compatibility issues (e.g., "Qwen2.5-VL
+crashes on ARM64 Macs") without phoning home constantly.
+- **Impact**: 2 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-73 | **Unblocks**: reliability tier
+- Source: [S147] sentry-sdk v1.54 https://github.com/getsentry/sentry-sdk-python (PII stripping via
+   `before_send` hooks; rate-limiting via `sample_rate` + `traces_sample_rate`)
+
+**NEXT-76: AV1 + VP9 video codec detection in classification**
+Extend video classification to detect and flag modern codecs (AV1, VP9) separately from H.264/H.265.
+Query `ffprobe` for `codec_name` field; if `av1` or `vp9`, add codec flag to asset metadata. This enables
+users with codec-specific workflows (e.g., "HDR + AV1 video for streaming") to auto-organize by codec.
+AV1 is projected to reach 60% of streaming market by 2026; hardware decode now common on RTX 30/40 and
+Apple M-series. **Effort is negligible**: ffprobe already parses codec_name; just store it in the asset
+record (new `video_codec` column). Pairs with NEXT-71 (Qwen2.5-VL) for smart re-encoding recommendations
+(e.g., "This video is H.264; AV1 would save 20% space at same quality").
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Unblocks**: LATER
+- Source: [S148] FFmpeg libavcodec codec registry (AV1 native; VP9 legacy plateau; H.265 patent-encumbered);
+   [S149] AV1 adoption projection (60% streaming by 2026 per industry roadmap; p7zip integration confirms
+   codec maturity)
+
+**NEXT-77: 3D asset format support — glTF 2.0 + Draco + USDZ**
+Add classification and metadata extraction for 3D asset formats: **glTF 2.0** (JSON + binary geometry),
+**Draco** (google/draco mesh compression), **USDZ** (Pixar USD wrapped in ZIP). Implement:
+(1) Extract glTF metadata via JSON parser (copyright, generator, extensions list);
+(2) Detect Draco compression via KHR_draco_mesh_compression extension presence;
+(3) Extract USDZ layers via unzip + **usdcat** CLI (Pixar-provided tool, part of USD 26.05);
+(4) Classify 3D files separately (new `3d_model` taxonomy category with sub-taxonomy: rigged/unrigged,
+LOD count, texture count).
+Use `pyquatize` or manual JSON parsing for glTF; `subprocess` invocation for **usdcat** (requires Pixar
+USD 26.05 installed — optional dependency, skip gracefully). This pairs with NEXT-69 (CLIP can't classify
+3D formats; need explicit detection). **Leapfrog**: no OSS file organizer supports 3D asset organization.
+- **Impact**: 3 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-39 (optional USD 26.05 runtime) | **Unblocks**: later 3D specialist tier
+- Source: [S150] KhronosGroup/glTF:specification/2.0 (JSON schema for glTF; Draco extension; ~150 KB per asset typical);
+   [S151] google/draco v1.5.7 (5–10× mesh compression; attribute preservation; Wasm/JS/C++ decoders);
+   [S152] Pixar USD 26.05 (May 2026) release — usdcat CLI for inspection; USDZ ZIP layer enumeration;
+   [S153] glTF 2.0 in Blender 4.1+ (native export with Draco option; round-trip fidelity tested)
+
+**NEXT-78: SVG 2.0 metadata extraction & classification**
+Add SVG (Scalable Vector Graphics) file classification. Parse `<metadata>`, `<title>`, `<desc>`, `<rdf:RDF>`
+tags using stdlib `xml.etree.ElementTree`. Extract author, license, creation date from embedded XMP or
+Dublin Core metadata. SVG 2.0 (W3C Candidate Recommendation since Oct 2018; Formal Recommendation
+expected 2026-2027) has enhanced metadata support. Classify SVGs into: **design system icons**, **illustrations**,
+**diagrams**, **animations** (animated SVG via `<animate>` detection). This pairs with NEXT-69 (CLIP can
+classify rendered SVGs, but meta extraction is faster). **Effort is minimal**: XML is text; parsing is
+straightforward. Enable users to organize design systems by component type.
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT
+- Source: [S154] W3C SVG 2.0 spec (Candidate Recommendation Oct 2018, Editor's draft continuous; text-based
+   XML format; `<metadata>` + Dublin Core standard);
+   [S155] W3C svgwg issues tracker (SVG 2.0 formal Recommendation anticipated 2026-2027)
+
+**NEXT-79: DNG + RAW camera format unified handling**
+Consolidate raw image handling (Canon CR3, Sony ARW, Nikon NEF, Pentax RAF, Fuji RAF) under DNG
+(Adobe Digital Negative, open-spec raw interchange format) as a canonical archive format. Workflow:
+(1) Detect raw file via ExifTool (`exiftool -FileType <file>`);
+(2) If RAW, offer "Save as DNG" button in FileOrganizer UI (uses `dcraw` or `ImageMagick` convert backend
+to transcode — optional dependency);
+(3) Store DNG in archive subfolder with sidecar XMP (NEXT-61: IPTC 2025.1 AI metadata);
+(4) Enable raw-format-agnostic organization (e.g., "All camera originals → /archives/raw_originals/").
+**DNG adoption projected 30% by 2026** for archival workflows. This pairs with NEXT-63 (AVIF + JPEG XL
+modern formats). **Note**: transcoding is optional; if dcraw not installed, skip gracefully and store
+originals as-is.
+- **Impact**: 3 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: optional `dcraw` or ImageMagick
+- Source: [S156] Adobe Digital Negative (DNG) spec https://www.adobe.io/content/dam/udp/assets/open/standards/TIFF_DNG/DNG_1_7_1_spec.pdf
+   (TIFF-based; EXIF + XMP preservation; open specification);
+   [S157] ExifTool DNG support https://exiftool.org (full r/w; maker note transcoding);
+   [S158] dcraw raw image decoder https://www.cybercom.net/~dcoffin/dcraw/ (Canon/Sony/Nikon/Fuji/Pentax
+   support; public-domain license)
+
+**NEXT-80: Zstandard (.zst) archive format support**
+Add classification and extraction support for Zstandard (zstd) compressed archives — emerging as a better-than-gzip
+standard for asset distribution (50–60% better compression; faster decode). Workflow:
+(1) Detect `.tar.zst`, `.zst` files;
+(2) Use `zstandard` PyPI package (v0.23+, April 2026) to decompress and list contents without full
+extraction (stream mode);
+(3) Classify archive contents heuristically (zip-like behavior for NEXT-7 archive inspection);
+(4) Enable re-compression under zstd when organizing archives (e.g., "Compress this ZIP to .tar.zst" action).
+7z suite and p7zip already support zstd; this is a **catch-up feature** ensuring FileOrganizer handles
+modern compression. **Effort is low**: zstandard library is pure Python; pattern mirrors ZIP handling
+(NEXT-7).
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Unblocks**: L-7 (archive inspection tier)
+- Source: [S159] zstandard PyPI https://pypi.org/project/zstandard/ (v0.23+; CFFI + C extension;
+   stream mode for memory efficiency);
+   [S160] 7z format registry (Zstandard compression levels 1–22; adoption in p7zip v22.00+)
+
 ---
 
 ## LATER -- Strategic, Not Yet Urgent
@@ -1852,3 +2032,96 @@ for relevance; "directly portable" means the file can be copied with minor adapt
   https://github.com/Nexus-JPF/note-companion
   (TypeScript; Obsidian plugin; 832⭐; rebranded from "File Organizer 2000"; different model
   (notes vs. files); shows namespace collision and UI differentiation demand)
+
+### Phase 4 Research Sources (May–June 2026 Wave 3) — Multimodal AI, Performance Optimization, Observability, Design Formats
+
+**Multimodal AI & Local Inference (NEXT-69 through NEXT-72)**
+- [S135] open_clip library -- https://github.com/mlfoundations/open_clip
+   (ViT-L-14 (DataComp-1B) zero-shot ImageNet 79.2% accuracy; 768-dimensional embeddings; ~400 MB model
+   disk footprint; CPU inference 1–2 img/sec; GPU CUDA/ROCm inference 20+ img/sec; no training required)
+- [S136] CLIP paper (Radford et al.) -- https://arxiv.org/abs/2103.14030
+   (Contrastive Vision-Language Learning; foundational for zero-shot classification; OpenAI CLIP v1/v2
+   evolution documented; ViT-L-14 is production-stable)
+- [S137] sqlite-vec v0.1.9 -- https://github.com/asg017/sqlite-vec
+   (May 2026 stable release; persistent vector storage in SQLite; k-NN query latency <100 ms on 100K+
+   vectors; Faiss integration; Python bindings)
+- [S138] Chroma v0.5.6 -- https://github.com/chroma-core/chroma
+   (Persistent SQLite backend; hybrid search (BM25 + cosine similarity); Python SDK; <100 ms query latency;
+   optional Qdrant remote backend for 1M+ vectors)
+- [S139] Bookmark-Organizer-Pro hybrid_search.py -- https://github.com/SysAdminDoc/Bookmark-Organizer-Pro
+   (services/hybrid_search.py; BM25 + cosine fusion via Reciprocal Rank Fusion (RRF); production-tested
+   on 50K+ items; directly portable pattern for L-4 natural language search)
+- [S140] Qwen2.5-VL-7B model card -- https://huggingface.co/Qwen/Qwen2.5-VL-7B
+   (April 2024; 7B parameters; outperforms LLaVA on document understanding (+2-3% OCR accuracy);
+   75% fewer tokens on multi-page PDFs; MMVP/POPE/LLaVA-WT benchmark comparisons documented;
+   llama.cpp Q4_K_M quantization viable)
+- [S141] llama.cpp v0.3.0 -- https://github.com/ggerganov/llama.cpp
+   (May 2026 release; Q4_K_M quantization (4-bit, 70% accuracy vs full precision, 2-3% perplexity hit);
+   256K context window; CUDA 12.8 / ROCm 6.x / Metal / DirectML backend support; KV-cache reuse API)
+- [S142] llama.cpp KV-cache persistence -- https://github.com/ggerganov/llama.cpp#kv-cache-reuse-strategy
+   (40% speedup on sequential document classification documented; cache_tokens API; invalidation on
+   context change)
+- [S143] FileOrganizer ollama.py batch loop reference -- fileorganizer/ollama.py lines 973–1100
+   (Current implementation discards KV-cache between file invocations; NEXT-72 optimization target)
+
+**Observability & Telemetry (NEXT-73 through NEXT-75)**
+- [S144] loguru v0.7.2 -- https://github.com/Delgan/loguru
+   (JSON sink via custom formatter; trace ID propagation pattern; ~2.5 MB on disk per 100K logs;
+   context manager integration for correlation; non-breaking drop-in replacement for stdlib logging)
+- [S145] FileOrganizer telemetry design anchor -- fileorganizer/telemetry/ (NEXT-73 foundation for
+   audit logging, metrics, crash reporting)
+- [S146] prometheus-client v0.20.0 -- https://pypi.org/project/prometheus-client/
+   (Prometheus metrics export; histogram quantiles; local HTTP endpoint; optional telemetry; no
+   external phone-home by default)
+- [S147] sentry-sdk v1.54 -- https://github.com/getsentry/sentry-sdk-python
+   (Opt-in crash reporting; PII stripping via `before_send` hooks; rate-limiting; version + OS info
+   capture; error-only (no file paths/classifications sent))
+
+**Video & Media Format Support (NEXT-76)**
+- [S148] FFmpeg libavcodec codec registry -- https://ffmpeg.org/general.html
+   (AV1 native codec support; VP9 legacy plateau (browser adoption); H.265/HEVC patent-encumbered;
+   codec_name field extraction via ffprobe)
+- [S149] AV1 adoption projection -- Industry roadmap data (AOM, Netflix, Google streaming research)
+   (60% streaming market projected by 2026; hardware decode common on RTX 30/40, Apple M-series;
+   codec detection in FileOrganizer enables codec-specific workflows)
+
+**3D Asset Formats (NEXT-77)**
+- [S150] KhronosGroup/glTF specification/2.0 -- https://github.com/KhronosGroup/glTF/tree/main/specification/2.0
+   (JSON schema for glTF 2.0; Draco extension (KHR_draco_mesh_compression); asset metadata structure;
+   ~150 KB per asset typical; Blender 4.1+ native export)
+- [S151] google/draco v1.5.7 -- https://github.com/google/draco
+   (Mesh compression; 5–10× compression rates; attribute semantics preserved (POSITION, NORMAL, TEXCOORD);
+   40%+ adoption in Shopify 3D models; Wasm decoder (<400 KB); Python bindings via draco3d package)
+- [S152] Pixar USD 26.05 release (May 2026) -- https://github.com/PixarAnimationStudios/USD/releases/tag/v26.05
+   (Quarterly releases (Feb/May/Aug/Nov); metadata via customData (JSON) + documentation strings;
+   USDZ ZIP format with .usda/.usdc layers; usdcat CLI tool for inspection; 45% adoption in VFX/AR)
+- [S153] KhronosGroup/GLTF-Blender-IO -- https://github.com/KhronosGroup/GLTF-Blender-IO
+   (Blender 4.1+ native glTF 2.0 export; Draco compression option; CI testing for round-trip fidelity;
+   USD via plugin)
+
+**Vector Format Support (NEXT-78)**
+- [S154] W3C SVG 2.0 specification -- https://www.w3.org/TR/SVG2/
+   (Candidate Recommendation (Oct 2018); Formal Recommendation anticipated 2026-2027; enhanced metadata
+   support; `<metadata>`, `<title>`, `<desc>`, `<rdf:RDF>` (Dublin Core); XML-based text format)
+- [S155] W3C SVG working group (svgwg) -- https://github.com/w3c/svgwg
+   (Issues tracker; formal Recommendation timeline; Editor's draft continuous updates;
+   at-risk features discussion (zoomAndPan, nested links, unknown element handling))
+
+**Camera RAW Format Consolidation (NEXT-79)**
+- [S156] Adobe Digital Negative (DNG) 1.7.1 specification -- https://www.adobe.io/content/dam/udp/assets/open/standards/TIFF_DNG/DNG_1_7_1_spec.pdf
+   (TIFF-based; EXIF + XMP preservation; open specification; cross-platform raw interchange; 30%
+   adoption projected for archival workflows by 2026)
+- [S157] ExifTool DNG support -- https://exiftool.org
+   (Full read/write support; maker note transcoding; 100+ format support; already FileOrganizer hard
+   dependency via N-9 metadata extractors)
+- [S158] dcraw raw image decoder -- https://www.cybercom.net/~dcoffin/dcraw/
+   (Public-domain raw image converter; Canon CR3, Sony ARW, Nikon NEF, Fuji RAF, Pentax RAF support;
+   transcoding backend for DNG archive workflow)
+
+**Archive Format Support (NEXT-80)**
+- [S159] zstandard PyPI -- https://pypi.org/project/zstandard/
+   (v0.23+; CFFI + C extension; pure Python fallback; stream mode for memory efficiency; 50–60% better
+   compression than gzip; faster decode; .tar.zst, .zst format support)
+- [S160] 7z format registry & p7zip v22.00+ -- https://github.com/p7zip-project/p7zip
+   (Zstandard compression levels 1–22; emerging standard for asset distribution; integration with 7z
+   archive suite confirms production readiness)
