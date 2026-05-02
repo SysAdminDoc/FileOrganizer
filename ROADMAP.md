@@ -1,5 +1,5 @@
 # ROADMAP -- FileOrganizer
-<!-- v8.3.0-planning · Updated 2026-06 · Phase 1 refresh · Supersedes all prior ROADMAP.md versions -->
+<!-- v8.3.0-planning · Updated 2026-05 · Phase 2 refresh · Supersedes all prior ROADMAP.md versions -->
 
 FileOrganizer is a Python/PyQt6 desktop tool for classifying and moving creative design assets
 into a canonical folder taxonomy. Core use case: 33 TB+ of Envato/Creative Market/Freepik
@@ -666,20 +666,42 @@ plus `sys.excepthook` override that:
 
 ### WinUI Shell
 
-**NEXT-39: WindowsAppSDK 1.7 upgrade**
-Upgrade the WinUI 3 shell from WinAppSDK 1.5 (current) to 1.7. Concrete unlocks:
-- **`TitleBar` control**: replaces current manual `AppWindowTitleBar` wiring with a declarative
-  XAML control; cleaner drag region, subtitle support, icon slot.
-- **`SetTaskBarIcon` / `SetTitleBarIcon`**: independent icon control per page — show a camera
-  icon when PhotosPage is open vs. the default app icon.
-- **`AppWindowTitleBar.PreferredTheme`**: opt-in titlebar dark/light independent of OS system
-  setting; improves the Catppuccin + AMOLED black theme polish.
-- **`OAuth2Manager`**: replaces the current manual browser-launch + clipboard-paste flow for
+**NEXT-39: WindowsAppSDK 2.0 upgrade**
+Upgrade the WinUI 3 shell from WinAppSDK 1.5 (current) to 2.0.1 (GA April 29, 2026). 2.0 is
+the first major version since WinAppSDK 1.0 (Nov 2021) and adopts Semantic Versioning; the
+package family name now tracks the major version (`Microsoft.WindowsAppSDK.2.0`). Side-by-side
+install with 1.x is supported, but test the package manifest upgrade path before merging. A
+sensible approach is to stage via the 1.8 NuGet first (validate Storage Pickers / AI APIs), then
+bump to 2.0. Concrete unlocks (cumulative 1.7 → 1.8 → 2.0):
+- **`TitleBar` control** (1.7): replaces current manual `AppWindowTitleBar` wiring with a
+  declarative XAML control; cleaner drag region, subtitle support, icon slot.
+- **`SetTaskBarIcon` / `SetTitleBarIcon`** (1.7): independent icon control per page — show a
+  camera icon when PhotosPage is open vs. the default app icon.
+- **`AppWindowTitleBar.PreferredTheme`** (1.7): opt-in titlebar dark/light independent of OS
+  system setting; improves the Catppuccin + AMOLED black theme polish.
+- **`OAuth2Manager`** (1.7): replaces the current manual browser-launch + clipboard-paste flow for
   AcoustID API key registration in MusicPage with a proper in-app OAuth 2.0 PKCE flow.
-- **`BackgroundTaskBuilder`** (full-trust COM): register WatchPage as a proper Windows background
-  task instead of the current Task Scheduler workaround; survives user log-off, restarts cleanly.
-- **Impact**: 3 | **Effort**: 2
-- Source: [S62] WindowsAppSDK 1.7.0 release notes, [S63] WindowsAppSDK 1.6.0 release notes
+- **`BackgroundTaskBuilder`** (1.7, full-trust COM): register WatchPage as a proper Windows
+  background task instead of the current Task Scheduler workaround; survives user log-off.
+- **`Microsoft.Windows.Storage.Pickers`** (1.8, expanded in 2.0): `FolderPicker` gains
+  `PickMultipleFoldersAsync`, `SuggestedStartFolder`, `SuggestedFolder`, and
+  `SettingsIdentifier` (persists last-used folder across sessions). `FileOpenPicker` gains
+  `FileTypeChoices`, `SuggestedFolder`, and `Title`. Drop the current manual path-entry
+  dialog in SourcePage and DestPage in favor of these native pickers with persistent memory.
+- **`SystemBackdropElement`** (2.0): places Mica or Acrylic anywhere inside the XAML layout
+  tree with a `CornerRadius` for card-style frosted-glass panels. Closes the `AcrylicBrush.
+  BackgroundSource` gap that existed since WinUI 3 launch; directly improves the theme system.
+- **`IXamlCondition`** (2.0): custom XAML conditionals evaluated at parse time based on
+  feature flags, device capabilities, or config values — replaces code-behind `Visibility`
+  hacks for optional page sections (e.g., hide ExifTool row when not installed).
+- **Migration risk**: SemVer scheme change means the next side-by-side release will be 3.0, not
+  2.1. Package family name changes may break existing MSIX installation paths on dev machines;
+  run the CI packaging job against 2.0 before merging. ARM64EC+LTCG builds have a known MSVC
+  internal compiler error (WinAppSDK 2.0 provides an opt-out via
+  `WindowsAppSDK_Arm64EcCompilerWorkaround`).
+- **Impact**: 4 | **Effort**: 3 | (effort increase vs. prior: 1.7 had no breaking API surface)
+- Source: [S73] WindowsAppSDK 2.0.1 release notes, [S74] WindowsAppSDK 1.8.0 release notes,
+  [S62] WindowsAppSDK 1.7.0 release notes, [S63] WindowsAppSDK 1.6.0 release notes
 
 **NEXT-40: RAWPage — camera raw file organizer**
 New WinUI shell page for DNG / CR2 / NEF / ARW / ORF / RW2 raw photo files. Scope:
@@ -753,6 +775,24 @@ FileWizardAI [S66] and thebearwithabite [S65] both ship LLM caching; on stable a
 (the common case) this eliminates >90% of API calls on re-runs.
 - **Impact**: 4 | **Effort**: 2 | **Depends on**: N-9 (metadata pipeline wired in)
 - Source: [S66] FileWizardAI SQLite summary cache, [S65] thebearwithabite review-queue cache
+
+**NEXT-45: Confidence calibration (Platt scaling / isotonic regression)**
+The current classifier outputs raw logit-derived probabilities that are not well-calibrated:
+a reported "85% confidence" does not reliably mean the prediction is correct 85% of the time.
+This creates false trust in the pre-flight confidence display (NEXT-13) and pollutes the
+correction feedback loop (NEXT-7) with spuriously "high confidence" mislabels.
+Fix: wrap the final category predictor with `sklearn.calibration.CalibratedClassifierCV` using
+Platt scaling (`method='sigmoid'`) for multi-class outputs and isotonic regression
+(`method='isotonic'`) when the calibration set is ≥1000 samples. Calibration set: the
+`corrections.json` accumulation from NEXT-7. At <200 samples, use temperature scaling only
+(a single scalar learned via logit adjustment). Re-calibrate on every 500 new correction rows.
+Expose calibration quality as a reliability diagram (expected vs. actual confidence) in
+Settings → Diagnostics → Calibration. Post-calibration the NEXT-13 confidence bars will
+accurately reflect prediction reliability, and NEXT-7 thresholds can be tightened from the
+current 70% cutoff to a calibrated 80%.
+- **Impact**: 3 | **Effort**: 3 | **Depends on**: NEXT-7 (corrections accumulation), NEXT-13 (confidence display)
+- Source: [S34] RESEARCH_IDEAS.md item #9 (Platt scaling, isotonic regression,
+  `CalibratedClassifierCV`)
 
 ---
 
@@ -1007,7 +1047,7 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 | **Multi-user / collaboration** | Rejected | Single-user tool by design; see Rejected table |
 | **Migration paths** | Covered | N-1 (I:\ legacy reclassification), CATEGORY_ALIASES expansion (already shipped) |
 | **Upgrade strategy** | Covered | N-3 (schema version gate on catalog sync), UC-5 (in-app update notification) |
-| **WinUI Shell** | Active | ui-v0.5.0 shipped (15 pages); NEXT-39 (WinAppSDK 1.7 upgrade), NEXT-40 (RAWPage), NEXT-41 (ComicsPage) target ui-v0.6.0 |
+| **WinUI Shell** | Active | ui-v0.5.0 shipped (15 pages); NEXT-39 (WinAppSDK 2.0 upgrade), NEXT-40 (RAWPage), NEXT-41 (ComicsPage) target ui-v0.6.0 |
 
 ### Security -- additional notes
 - **psd-tools** parses untrusted `.psd` files. Maliciously crafted PSDs could trigger parser bugs.
@@ -1033,7 +1073,7 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 | TagStudio [S9] | OSS Python/Qt | Non-destructive tagging, infinite scrolling (v9.5.6), CB7/CBR/CBT thumbnails, 7+ locales | Different model (move vs tag) -- intentional; NEXT-41 pattern |
 | electron-dam [S43] | OSS Electron | Semantic search, virtual bundles, 3D/audio preview, Ollama embedding | L-1, L-17, L-18 |
 | AIFileSorterShellExtension [S45] | OSS C# | Windows Explorer context menu, 2-min undo, OpenRouter LLM, game/mod file recognition | L-6 (context menu -- prior art confirmed) |
-| hazelnut [S16] | OSS Rust TUI | TOML rules, daemon, 15 TUI themes, desktop error notifications, age/size conditions, archive action | NEXT-1, NEXT-42 pattern |
+| hazelnut [S68] | OSS Rust TUI | TOML rules, daemon, 15 TUI themes, desktop error notifications, age/size conditions, archive action | NEXT-1, NEXT-42 pattern |
 | Foldr [S67] | OSS Rust CLI | Preview → confirm → move flow, keep-newest/keep-largest/keep-oldest dedup, per-op undo IDs, TOML config | NEXT-19 UX, NEXT-24 |
 | hyperfield AI File Sorter [S3] | OSS Python+Qt | Local GGUF, Vulkan/CUDA/Metal GPU inference, Microsoft Store distribution | L-5 (GGUF), NEXT-30 distribution |
 | Eagle App [S19] | Commercial | Visual search, designer UX | NEXT-22 (thumbnail browser) |
@@ -1073,6 +1113,7 @@ Every claim in this roadmap traces to at least one source below.
 - [S14] Paperless-ngx -- https://github.com/paperless-ngx/paperless-ngx
 - [S15] digiKam -- https://www.digikam.org/about/
 - [S16] hazelnut (ricardodantas) -- https://github.com/ricardodantas/hazelnut
+  (see [S68] for full feature summary)
 - [S17] electron-dam (simeonradivoev) -- https://github.com/simeonradivoev/electron-dam
   (3D model preview, audio waveform, Ollama semantic search, virtual bundles)
 - [S18] fixxer -- GitHub topic: file-organizer scan
@@ -1223,3 +1264,24 @@ for relevance; "directly portable" means the file can be copied with minor adapt
 - [S72] hyperfield AI File Sorter v1.7.3 -- https://github.com/hyperfield/ai-file-sorter
   (local GGUF model registration; Vulkan/CUDA/Metal GPU acceleration; Microsoft Store listing;
   privacy-first design; batch-review panel pattern)
+
+### New Sources (Phase 2 refresh, May 2026)
+- [S73] WindowsAppSDK 2.0.1 release notes (GA April 29, 2026) --
+  https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/release-notes/windows-app-sdk-2-0
+  (SystemBackdropElement; IXamlCondition custom XAML conditionals; Storage Pickers expansion —
+  FolderPicker.PickMultipleFoldersAsync, SuggestedStartFolder, SettingsIdentifier; WebView2 drag
+  support in WinUI 3; Windows ML refactored into Microsoft.Windows.AI.MachineLearning + ONNX
+  Runtime 1.24.5; IPackageValidator deployment framework; PopupAnchor relative positioning;
+  SemVer major version scheme — package family name now tracks major number; side-by-side 1.x
+  install supported but upgrade path requires testing; ARM64EC+LTCG known MSVC ICE with opt-out)
+- [S74] WindowsAppSDK 1.8.0 release notes (Sept 2025) --
+  https://github.com/microsoft/WindowsAppSDK/releases/tag/v1.8.0
+  (Microsoft.Windows.Storage.Pickers first introduced here — modernized file/folder picker API
+  for desktop apps; NuGet metapackage refactor — each component now a separate package;
+  Phi Silica conversation summarization; Text Rewriter with Casual/Formal/General tones;
+  Object Erase AI API; Decimal high-precision numeric type; packageManagement capability now
+  required for AppContainer packaged apps)
+- [S75] connor (ycatsh) -- https://github.com/ycatsh/connor
+  (Python NLP file organizer; BAAI/bge-base-en-v1.5 embeddings via sentence-transformers;
+  KMeans clustering of file content embeddings; TF-IDF folder name extraction; updated March
+  2026; corroborates L-1 embedding + clustering approach as viable for local use)
