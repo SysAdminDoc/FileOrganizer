@@ -10,6 +10,7 @@ Falls back to None when psd-tools is missing or the file is corrupt.
 from __future__ import annotations
 
 import importlib.util
+import struct
 from pathlib import Path
 from typing import Optional
 
@@ -67,7 +68,11 @@ def _is_flyer_a4_or_letter(w: int, h: int) -> bool:
 
 
 def extract(path: Path) -> Optional[MetadataHint]:
-    """Read a PSD/PSB header and emit a category hint if the canvas is recognizable."""
+    """Read a PSD/PSB header and emit a category hint if the canvas is recognizable.
+    
+    SECURITY: Validates PSD dimensions before parsing to block maliciously
+    crafted files that may cause OOM or integer overflow. See GHSA-24p2-j2jr-386w.
+    """
     if not _HAS_PSD_TOOLS:
         return None
     if not path or not path.exists():
@@ -75,10 +80,39 @@ def extract(path: Path) -> Optional[MetadataHint]:
     if path.suffix.lower() not in {".psd", ".psb"}:
         return None
 
+    # Pre-parse header validation: read the raw PSD header (bytes 0–26) and check
+    # dimensions before psd-tools parses the entire file. This blocks ZIP-bomb
+    # and integer-overflow attacks via oversized width/height fields.
+    # PSD header format: bytes 0-3: signature "8BPS"; 4-5: version (1=PSD, 2=PSB);
+    # 6-7: reserved; 8-9: channels; 10-17: height; 18-25: width (big-endian uint32).
+    MAX_SAFE_DIMENSION = 30_000  # Normal creative assets never exceed this
+    
+    try:
+        with open(path, 'rb') as f:
+            header = f.read(26)
+            if len(header) < 26:
+                return None
+            # Verify signature
+            if header[0:4] != b'8BPS':
+                return None
+            # Extract height (bytes 10-17, big-endian uint32, offset 14 for last 4 bytes)
+            # and width (bytes 18-25, big-endian uint32, offset 22 for last 4 bytes)
+            height = struct.unpack('>I', header[10:14])[0]
+            width = struct.unpack('>I', header[14:18])[0]
+            # Reject oversized dimensions
+            if width > MAX_SAFE_DIMENSION or height > MAX_SAFE_DIMENSION:
+                return None  # Potential attack
+    except (OSError, struct.error):
+        return None
+
     try:
         # Lazy import keeps the module importable when psd_tools isn't installed.
         from psd_tools import PSDImage  # type: ignore
-        psd = PSDImage.open(str(path))
+        # Use safe_psd_open for subprocess-like isolation
+        from fileorganizer.psd_safe import safe_psd_open
+        psd = safe_psd_open(str(path))
+        if psd is None:
+            return None
         width = int(getattr(psd, "width", 0) or 0)
         height = int(getattr(psd, "height", 0) or 0)
     except Exception:
