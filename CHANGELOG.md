@@ -58,6 +58,36 @@ All notable changes to FileOrganizer will be documented in this file.
   over-broad second Videohive numeric pattern (matched any 8-9 digit
   prefix without separator) was removed.
 
+### Iteration 2 — N-12/N-14 follow-ups + NEXT-2
+
+- **Provenance back-fill CLI** — `python asset_db.py --backfill-provenance
+  [--dry-run]` populates `source_domain` + `first_seen_ts` on rows that
+  pre-date N-12. Idempotent; per-domain summary on completion. Dry-run
+  inspects without committing (does not eagerly migrate the schema).
+- **PreflightDialog "Broken files (N)"** — N-14 broken_detector wired into
+  the GUI pre-flight gate as Step 5. Sampled (max 10/source, 200 total) to
+  stay snappy on 33TB-scale runs. Surfaces missing verifier dependencies
+  (Pillow / ffprobe / rarfile / py7zr) so users know what isn't being
+  checked. Underlying scan logic lives in `broken_detector.scan_paths()`
+  and is fully testable without PyQt6.
+- **NEXT-2: YAML rule export** —
+  `python classify_design.py --export-rules [<path>|-]` serialises the
+  canonical taxonomy + alias map into an organize-cli-compatible
+  (tfeldmann/organize) YAML rules file. Per-category extension hints +
+  reverse-derived name keywords from `CATEGORY_ALIASES`. Default output
+  always lands at repo root regardless of CWD. PyYAML used when available,
+  hand-rolled deterministic emitter as fallback.
+
+### Iteration 2 audit fixes (cross-family review pass)
+
+- `--backfill-provenance --dry-run` no longer commits a schema migration
+  via `init_db()` on legacy DBs; surfaces `migration_pending=True` instead.
+- PreflightDialog suppresses the "no broken detected" all-clear line
+  when verification was partial (missing optional deps) or the probe
+  failed outright.
+- `--export-rules` default path resolved against the script's directory,
+  not the caller's CWD.
+
 ## [FileOrganizer.UI v0.5.0] - 2026-05-01
 
 ### Added (themes + missing pages + UX overhaul)
