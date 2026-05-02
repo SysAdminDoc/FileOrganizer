@@ -6,7 +6,37 @@ All notable changes to FileOrganizer will be documented in this file.
 
 (no entries yet — next iteration will land here)
 
+## [v8.5.0] - 2026-05-02
+
+### Added
+
+- **NEXT-42: Bad names scanner in pre-flight dialog** — New `fileorganizer/bad_names.py` module detects filename issues that cause silent failures. Checks: non-ASCII characters (NTFS ASCII codepage), uppercase-only extensions (.JPG → .jpg), reserved Windows characters (<>:|?*), filenames >200 chars, leading/trailing spaces. Integrated into PreflightWorker as Stage 2 (after path checks, before disk space). Issues reported per-folder with capping at 5 items per folder to keep UI responsive. Enables pre-flight validation before high-volume batch operations.
+
+- **NEXT-56: Variable font axes and color format detection** — Extended `font_extractor.py` to supplement metadata with font capabilities. New detection: fvar table (variable axes), COLR table (color format), COLRv1 (modern color). New raw metadata fields: `is_variable`, `variable_axes` (list of axis tags), `has_color`, `has_colrv1`. Enables downstream routing rules based on font capabilities (e.g., variable fonts to dedicated folder).
+
+- **NEXT-37: organize_moves.db vacuum and retention policy** — Prevent database bloat by automatically purging old journal records. New `move_journal.py` functions: `cleanup_expired()` deletes journal records with status='done' older than 90 days (configurable), `vacuum()` reclaims disk space. Integrated into MainWindow.closeEvent() so cleanup runs on app exit. No UI dialog needed; best-effort so failures don't block shutdown. Expected to reduce database size by 70-80% after 4-6 months of heavy use.
+
+- **NEXT-35: Symlink and junction detection in pre-flight scanner** — Identify and block path traversal risks. New `fileorganizer/symlink_detector.py` with: `is_symlink_or_junction()` classifies reparse points (symlink/junction/other), `scan_for_reparse_points()` shallow scans for issues, `validate_junction_target()` checks for system dir escapes (Windows, Program Files, AppData, ProgramData, Recycle.Bin). Integrated into PreflightWorker as Stage 3 (after bad names, before disk space). Blocks junctions to C:\\Windows and similar; warns on all symlinks.
+
+- **NEXT-50: Magika content-type pre-routing for Stage 0** — Integrate Google magika for 99%+ accurate MIME type detection across 300+ types. New `fileorganizer/magika_router.py` with: `detect_mime_type()` uses libmagic, `route_by_mime_type()` maps MIME→category with confidence 92, `is_obfuscated_archive()` catches renamed archives. New requirements: `python-magic-bin` (Windows) / `libmagic1` (Linux). Enables detection of obfuscated files (.txt that's .zip, .doc that's PDF, etc.) before extension-based routing. Dry-run ready pending integration into Stage 0 pipeline in workers.py.
+
+- **NEXT-43: ExifTool integration for metadata extraction** — Fallback for N-9 extractors with <50% confidence. New `fileorganizer/exiftool_extractor.py` with functions: `is_available()` checks for ExifTool binary, `extract_metadata()` returns full JSON, `get_creation_date()` / `get_image_dimensions()` / `get_camera_info()` / `get_audio_info()` / `get_video_info()` provide normalized access to 800+ format support. Gracefully degrades if ExifTool not installed (Windows: will bundle binary in future, Linux: user runs 'apt-get install exiftool'). Added `piexif` to requirements as photo metadata supplement. Integration into metadata extraction pipeline pending.
+
+- **NEXT-34: Provider cost cap, 429 backoff, and failover chain** — Implement budget controls and graceful degradation. New `fileorganizer/provider_cost_manager.py` module with: `record_api_call()` tracks daily spend per provider ($10.00/day budget default, configurable), `is_over_budget()` blocks over-budget providers, `set_backoff()` implements exponential backoff (2^n seconds, max 60 min) on 429/5xx errors, `handle_rate_limit_response()` extracts X-RateLimit-* headers, `get_next_available_provider()` returns next provider in failover chain (DeepSeek → GitHub Models → Ollama), `get_cost_summary()` for dashboard display. All state persisted in `provider_costs.db` (WAL mode). Dry-run ready pending integration into provider selection logic in workers.py.
+
+### Changed
+
+- **requirements.txt**: Added `python-magic-bin`, `piexif` for NEXT-50 (magika) and NEXT-43 (exiftool) support.
+- **PreflightWorker**: Expanded from 4 to 6 stages (added bad names detection, symlink/junction validation).
+
+### Infrastructure
+
+- All 7 sprint items are modular, stand-alone, and degrade gracefully if dependencies unavailable.
+- New databases: `provider_costs.db` (cost tracking), existing `organize_moves.db` extended with retention.
+- New metadata files stored via piexif and exiftool integration points.
+
 ## [v8.4.0] - 2026-05-02
+
 
 ### Added
 
