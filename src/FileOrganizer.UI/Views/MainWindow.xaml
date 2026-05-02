@@ -117,6 +117,15 @@
                         <FontIcon Glyph="&#xED1E;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+
+                <NavigationViewItemSeparator/>
+
+                <NavigationViewItem Content="MEDIA" IsEnabled="False">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph=""/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
                 <NavigationViewItem Tag="photos" Content="Photos">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xEB9F;"/>
