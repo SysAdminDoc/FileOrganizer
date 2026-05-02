@@ -185,12 +185,77 @@ def build_design_elements_index() -> list[dict]:
     return items
 
 
+_SOURCE_ROOTS = {
+    'design_org': DESIGN_ORG_ROOT,
+    'loose_files': LOOSE_FILES_ROOT,
+    'design_elements': DESIGN_ELEMENTS_ROOT,
+    'i_organized_legacy': I_ORGANIZED_ROOT,
+}
+
+
+def show_provenance_histogram(source: str) -> None:
+    """N-12 --show-provenance: histogram source domains across the source root."""
+    try:
+        from fileorganizer.provenance import (
+            parse_source_domain, is_piracy_domain, all_known_domains,
+        )
+    except ImportError:
+        print("ERROR: fileorganizer.provenance not importable. Run from repo root.")
+        sys.exit(2)
+
+    root = Path(_SOURCE_ROOTS[source])
+    if not root.exists():
+        print(f"ERROR: {root!r} not found on disk.")
+        sys.exit(1)
+
+    counts: dict[str, int] = {}
+    piracy_count = 0
+    unmatched = 0
+    total = 0
+    for entry in root.iterdir():
+        name = entry.name
+        total += 1
+        domain = parse_source_domain(name)
+        if domain is None:
+            unmatched += 1
+            continue
+        counts[domain] = counts.get(domain, 0) + 1
+        if is_piracy_domain(domain):
+            piracy_count += 1
+
+    print(f"Provenance scan: {root}")
+    print(f"  total entries    : {total}")
+    print(f"  matched          : {sum(counts.values())}")
+    print(f"  unmatched        : {unmatched}")
+    print(f"  piracy-domain    : {piracy_count}")
+    print()
+    if not counts:
+        print("  (no domains matched)")
+        return
+    width = max(len(d) for d in counts)
+    for domain, n in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])):
+        flag = "  [PIRACY]" if is_piracy_domain(domain) else ""
+        print(f"    {domain.ljust(width)}  {n:6d}{flag}")
+    print()
+    known = set(all_known_domains())
+    seen = set(counts.keys())
+    if known - seen:
+        print(f"  domains the parser knows but didn't see: {len(known - seen)}")
+
+
 def main():
     ap = argparse.ArgumentParser(description='Build index files for classification sources')
     ap.add_argument('--source', required=True,
                     choices=['design_org', 'loose_files', 'design_elements', 'i_organized_legacy'],
                     help='Which source to index')
+    ap.add_argument('--show-provenance', action='store_true',
+                    help='Print a per-domain histogram for the source root and exit '
+                         '(no index file is written).')
     args = ap.parse_args()
+
+    if args.show_provenance:
+        show_provenance_histogram(args.source)
+        return
 
     if args.source == 'design_org':
         print(f"Walking {DESIGN_ORG_ROOT} ...")

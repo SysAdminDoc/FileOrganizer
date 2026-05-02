@@ -19,10 +19,18 @@ Usage:
     python asset_db.py --stats                     # DB overview
     python asset_db.py --verify [G:\\Organized]    # check DB vs disk
 """
-import os, sys, json, sqlite3, hashlib, argparse, re
+import os, sys, json, sqlite3, hashlib, argparse, re, time
 from pathlib import Path
 from collections import defaultdict
 from datetime import datetime, timezone
+
+# N-12 provenance helper. Imported defensively so a fresh checkout that
+# hasn't installed in-tree dependencies can still load this module.
+try:
+    from fileorganizer.provenance import parse_source_domain as _parse_provenance
+except Exception:
+    def _parse_provenance(_name: str):  # type: ignore[no-redef]
+        return None
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 DB_FILE           = os.path.join(os.path.dirname(__file__), 'asset_fingerprints.db')
@@ -107,11 +115,32 @@ def init_db(db_path: str = DB_FILE) -> sqlite3.Connection:
     con = sqlite3.connect(db_path)
     con.row_factory = sqlite3.Row
     con.executescript(_SCHEMA)
+    _migrate_assets_provenance(con)
     now = _now()
     con.execute("INSERT OR IGNORE INTO db_meta VALUES ('version',    ?)", (str(DB_VERSION),))
     con.execute("INSERT OR IGNORE INTO db_meta VALUES ('created_at', ?)", (now,))
     con.commit()
     return con
+
+
+def _migrate_assets_provenance(con: sqlite3.Connection) -> None:
+    """Idempotent ALTER TABLE for N-12 provenance columns.
+
+    SQLite has no ``ALTER TABLE IF NOT COLUMN``, so we read PRAGMA table_info
+    and only add columns that aren't there yet. Safe to call on any DB:
+      - Fresh DB (created by _SCHEMA above): both columns missing → both added
+      - Existing DB pre-N-12: both columns missing → both added, existing rows
+        get NULL/0 (back-fill happens lazily on next index pass)
+      - Existing DB post-N-12: both columns present → no-op
+    """
+    have = {row[1] for row in con.execute("PRAGMA table_info(assets)").fetchall()}
+    if "source_domain" not in have:
+        con.execute("ALTER TABLE assets ADD COLUMN source_domain TEXT")
+    if "first_seen_ts" not in have:
+        con.execute("ALTER TABLE assets ADD COLUMN first_seen_ts INTEGER")
+    con.execute(
+        "CREATE INDEX IF NOT EXISTS idx_assets_source ON assets(source_domain)"
+    )
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
@@ -341,15 +370,24 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
         # Find best preview image
         preview_rel = find_preview_image(asset_path)
 
+        # N-12 provenance: parse the source domain from the disk folder name
+        # (clean_name strips marketplace prefixes; disk_name preserves them).
+        source_domain = _parse_provenance(disk_name or clean_name)
+        first_seen_ts_now = int(time.time())
+
         if existing:
-            # Update existing record
+            # Update existing record. NEVER overwrite first_seen_ts (immutable
+            # per N-12 spec) — only back-fill when the column was previously NULL.
             con.execute("""
                 UPDATE assets SET
                     file_count=?, total_bytes=?, skipped_bytes=?, folder_fingerprint=?,
-                    marketplace=?, confidence=?, disk_name=?, preview_image=?, updated_at=?
+                    marketplace=?, confidence=?, disk_name=?, preview_image=?, updated_at=?,
+                    source_domain=COALESCE(source_domain, ?),
+                    first_seen_ts=COALESCE(first_seen_ts, ?)
                 WHERE id=?
             """, (disk_file_count, total_bytes, skipped_bytes, fp,
-                  marketplace, conf, disk_name, preview_rel, now, existing['id']))
+                  marketplace, conf, disk_name, preview_rel, now,
+                  source_domain, first_seen_ts_now, existing['id']))
             asset_id = existing['id']
             # Remove old file rows and re-insert
             con.execute("DELETE FROM asset_files WHERE asset_id=?", (asset_id,))
@@ -359,11 +397,13 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
                 INSERT INTO assets
                     (clean_name, category, marketplace, confidence, disk_name,
                      file_count, total_bytes, skipped_bytes, folder_fingerprint,
-                     preview_image, added_at, updated_at)
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+                     preview_image, added_at, updated_at,
+                     source_domain, first_seen_ts)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
             """, (clean_name, category, marketplace, conf, disk_name,
                   disk_file_count, total_bytes, skipped_bytes, fp,
-                  preview_rel, now, now))
+                  preview_rel, now, now,
+                  source_domain, first_seen_ts_now))
             asset_id = cur.lastrowid
             added += 1
 
@@ -566,7 +606,7 @@ def export_json(db_path: str = DB_FILE, output_path: str = EXPORT_FILE) -> int:
     print(f"Exported {total} assets to {output_path}  ({size_mb:.1f} MB)")
     return total
 
-
+
 # ── Community import ────────────────────────────────────────────────────────────
 
 def import_community_json(json_data: dict, db_path: str = DB_FILE) -> tuple:
