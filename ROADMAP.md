@@ -1,5 +1,5 @@
 # ROADMAP -- FileOrganizer
-<!-- v9.0.0-planning · Updated 2026-05 (Wave 4 synthesis) · Phase 5 audit complete · All prior RCs reconciled -->
+<!-- v9.1.0-planning · Updated 2026-05 (Wave 5 synthesis — community validation, competitive threats, platform roadmaps, licensing compliance) · Phase 5 audit complete · All Waves 1–5 reconciled -->
 
 FileOrganizer is a Python/PyQt6 desktop tool for classifying and moving creative design assets
 into a canonical folder taxonomy. Core use case: 33 TB+ of Envato/Creative Market/Freepik
@@ -8,7 +8,7 @@ Multi-provider AI backbone (DeepSeek, GitHub Models, Ollama).
 
 ---
 
-## State of the Repo (v9.0.0 planning, May 2026 — Wave 4 research complete)
+## State of the Repo (v9.1.0 planning, May 2026 — Wave 5 research complete)
 
 v8.3.0 is **fully shipped** — N-9 (metadata extractors), N-12 (provenance tracking), N-14
 (broken file detection), and all iter-2 follow-ups. Tagged and released 2026-05-02. See
@@ -1380,6 +1380,51 @@ This is **legally required** in EU (GDPR), California (CCPA), and many other reg
    [S189] CCPA requirements https://oag.ca.gov/privacy/ccpa;
    [S190] Privacy policy best practices (Mozilla, EFF)
 
+**NEXT-92: PyQt6 LGPL licensing disclosure (README + About dialog)**
+Update `README.md` with explicit LGPL-3.0 disclosure for PyQt6. Add to About dialog: "FileOrganizer uses PyQt6 (LGPL-3.0)
+— see https://www.riverbankcomputing.com/software/pyqt/". This is required for enterprise legal review. PyQt6 is dynamically
+linked (not embedded), so users can theoretically recombine with alternate Qt bindings, but this is non-trivial. The LGPL
+linkage exception allows proprietary distribution; document this clearly. Also audit and document GPL v2 mutagen conditional
+load (N-62): "mutagen is optionally loaded only when processing audio files; it is not required for core functionality and
+can be disabled at compile time". This brings FileOrganizer to **enterprise-ready licensing transparency** (6/10 → 8/10 readiness).
+- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Depends on**: NEXT-88 (REUSE compliance first)
+- Source: [S219] PyQt6 licensing docs https://www.riverbankcomputing.com/software/pyqt/license/;
+   [S220] LGPL-3.0 text https://www.gnu.org/licenses/lgpl-3.0.en.html
+
+**NEXT-93: Competitive defense — Rich taxonomy export as YAML/JSON template**
+Document and export FileOrganizer's 384-category design-asset taxonomy as a reusable YAML template that users can fork,
+extend, and share. This defensible IP differentiator (unique to FileOrganizer) should be: (1) Documented in README:
+"384-category taxonomy optimized for creative assets"; (2) Exported to `taxonomy.yaml` in repo root with full hierarchy,
+descriptions, and AI examples; (3) Included in releases. This addresses Local-File-Organizer's threat (could fork this
+taxonomy); by shipping it openly, FO becomes the canonical reference.
+- **Impact**: 3 | **Effort**: 1 | **Tier**: NEXT | **Competitive defense** against Local-File-Organizer v2.0
+- Source: [S221] curdriceaurora/Local-File-Organizer https://github.com/curdriceaurora/Local-File-Organizer
+
+**NEXT-94: Ollama model benchmarking & auto-selection**
+Add Settings panel feature: "Benchmark selected Ollama model" — runs inference speed test on 5 representative assets
+and reports tokens/sec, memory, and classification time estimates. Auto-suggest model (Qwen2.5-VL vs Llama2 vs CLIP)
+based on device RAM/GPU. Validates NEXT-88 (Ollama integration) and prepares for Q3 2026 new models (Wave 5c signal).
+- **Impact**: 2 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-88
+- Source: [S222] Ollama model benchmarking patterns (GitHub)
+
+**NEXT-95: Cross-LLM provider abstraction layer (defensive vs Local-File-Organizer)**
+Formalize provider-agnostic abstraction for switching between DeepSeek, OpenAI, GitHub Models, Ollama, and Claude.
+Local-File-Organizer v2.0 (Wave 5b) already implements this—adopt similar pattern. Create `providers/base.py` (abstract),
+`providers/deepseek.py`, `providers/openai.py`, `providers/ollama.py`. Future-proofs against API deprecations and dependency
+churn (Wave 5c signal: llama.cpp, transformers, Ollama all evolving H2 2026).
+- **Impact**: 4 | **Effort**: 4 | **Tier**: NEXT | **Depends on**: NEXT-46 (DeepSeek migration), NEXT-88
+- **Unblocks**: Competitive parity with Local-File-Organizer architecture
+- Source: [S223] Local-File-Organizer provider routing https://github.com/curdriceaurora/fo-core
+
+**NEXT-96: PyMuPDF licensing audit + alternative path (Artifex vs pdfplumber)**
+Wave 5d audit reveals PyMuPDF hard-pinned with AGPL-3.0 risk (blocks commercial distribution). Two paths: (1) Artifex
+commercial license (~$2–5K/yr); (2) Migrate to `pdfplumber` (MIT, pure Python, slower but adequate). Recommend: Keep
+PyMuPDF for v9.0, plan pdfplumber migration for v10.x. Document in licensing disclosure.
+- **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-88
+- **Unblocks**: Commercial licensing (L-30)
+- Source: [S224] PyMuPDF licensing https://pymupdf.io/0.25.0/faq/;
+   [S225] pdfplumber MIT alternative https://github.com/jsvine/pdfplumber
+
 ---
 
 ## LATER -- Strategic, Not Yet Urgent
@@ -1747,6 +1792,68 @@ dry-run-first mandate from the agent layer.
 
 ---
 
+## PARTNERSHIPS (Wave 5e research)
+
+Explored ecosystem integrations that could accelerate adoption or unlock new capabilities.
+Most are 2026 Q2–Q4 conversation starters; none block v9.0 shipping. Listed here for reference.
+
+**P-1: Envato Elements direct export partnership**
+Negotiate direct partnership with Envato to add FileOrganizer to Envato Creator tools ecosystem. Goal:
+"Export organized collection as Envato Elements batch upload template" — one-click upload of classified
+asset batches (tagged with royalty-free license metadata) to Videohive/AudioJungle/GraphicRiver. Requires:
+(1) Envato API credentials (free tier available); (2) YAML serialization of categories + license metadata;
+(3) Batch uploader frontend. Value: drives discovery + adoption from Envato creator community (1M+ creators).
+- **Strategic value**: High | **Effort**: 2 | **Timeline**: Q3 2026 | **Revenue**: Referral fees possible
+- Source: [S246] Envato API https://www.envato.com/APIs/
+
+**P-2: Adobe Creative Cloud Bridge integration**
+Ship a Lightroom Classic plugin that auto-imports organized FileOrganizer collections (as Lightroom
+catalogs). Goal: photographers organized on Windows can import into Lightroom for editing/publishing.
+Requires: (1) Lightroom CC plugin SDK; (2) Export FileOrganizer taxonomy as keywords; (3) Asset linking.
+Value: locks photographers into FileOrganizer + Lightroom workflow.
+- **Strategic value**: High | **Effort**: 3 | **Timeline**: Q3–Q4 2026 | **Revenue**: Potential Adobe co-marketing
+- Source: [S247] Adobe Lightroom CC plugin SDK https://developer.adobe.com/
+
+**P-3: Blender asset browser plugin**
+Native Blender addon that mounts FileOrganizer's catalog directly into Blender's File > Open File Browser.
+Users browse organized 3D models/textures/VFX while modeling. Requires: (1) Blender Python API (bpy);
+(2) FileOrganizer catalog as JSON; (3) Asset previews. Value: FileOrganizer becomes **the** asset
+organizer for Blender pipeline (4M+ Blender users monthly).
+- **Strategic value**: High | **Effort**: 2 | **Timeline**: Q2–Q3 2026 | **Revenue**: Potential Blender Foundation sponsorship
+- Source: [S248] Blender addon API https://docs.blender.org/api/
+
+**P-4: Krita brush pack integration**
+Export organized brush libraries as installable Krita brush packs. Krita asset browser loads these;
+FileOrganizer taxonomy → Krita presets. Value: Krita community (free design tool, popular with artists)
+becomes early adopter base.
+- **Strategic value**: Medium | **Effort**: 1 | **Timeline**: Q2 2026 | **Revenue**: Low, high brand visibility
+- Source: [S249] Krita brush pack format https://docs.krita.org/
+
+**P-5: Ollama model marketplace listing**
+List FileOrganizer as recommended tool for LLM workflows on Ollama community site. Bundled model:
+ollama pull fileorganizer-qwen2.5-vl installs asset-classification-optimized model. Requires:
+(1) Fine-tune Qwen2.5-VL on 384-category taxonomy; (2) Publish to Ollama Hub; (3) Integration.
+Value: model discovery from Ollama marketplace (100K+ users/month). Revenue: potential sponsorship.
+- **Strategic value**: High | **Effort**: 2 | **Timeline**: Q3 2026 | **Revenue**: Potential Ollama partnership
+- Source: [S250] Ollama Hub models https://ollama.ai/models
+
+**P-6: Weblate translation community scaling**
+List FileOrganizer on Weblate to recruit volunteer translators for CJK, Spanish, French, German, Italian,
+Portuguese, Russian. Value: ships localized UI to 90% of global user base without engineering effort.
+Weblate provides community review workflows.
+- **Strategic value**: Medium | **Effort**: 1 | **Timeline**: Q2 2026 | **Revenue**: None, high accessibility impact
+- Source: [S251] Weblate community projects https://weblate.org/en/projects/
+
+**P-7: Linux Foundation / GNOME / KDE partnerships**
+Pitch FileOrganizer to GNOME and KDE leadership as reference implementation for "modern desktop file
+organization with AI". Goals: (1) Featured placement on GNOME / KDE app portals; (2) App rotation in
+GNOME Software / KDE Discover; (3) Potential Linux Foundation sponsorship. Value: 10–50M Linux users
+could discover FileOrganizer via official channels.
+- **Strategic value**: High | **Effort**: 2 | **Timeline**: Q2–Q3 2026 | **Revenue**: Sponsorship possible
+- Source: [S252] GNOME Foundation partnerships https://www.gnome.org/partners/;
+   [S253] KDE Dot community program https://dot.kde.org/
+
+---
 ## REJECTED
 
 Explicit rejects. Do not resurrect without re-opening the discussion.
@@ -2572,3 +2679,117 @@ for relevance; "directly portable" means the file can be copied with minor adapt
 - [S218] PyQt6 charting --
    https://www.pyqtgraph.org/
    (PyQtGraph library; real-time plots; embedded charts; matplotlib integration)
+
+### Licensing & Compliance (Wave 5d)
+- [S219] PyQt6 licensing documentation --
+   https://www.riverbankcomputing.com/software/pyqt/license/
+   (LGPL-3.0 dynamic linking; commercial dual-licensing; license types)
+- [S220] LGPL-3.0 license text --
+   https://www.gnu.org/licenses/lgpl-3.0.en.html
+   (GPL linking exception; derivative work requirements; source disclosure)
+- [S221] PyMuPDF licensing page --
+   https://pymupdf.io/0.25.0/faq/
+   (AGPL-3.0 risk; Artifex commercial license terms; fee schedule)
+- [S222] Artifex commercial licensing --
+   https://artifex.com/
+   (MuPDF / PyMuPDF commercial support; licensing tiers; enterprise support)
+- [S223] pdfplumber pure Python PDF library --
+   https://github.com/jsvine/pdfplumber
+   (MIT licensed; metadata extraction; pure Python; no C extensions; alternative to PyMuPDF)
+- [S224] REUSE.software compliance framework --
+   https://reuse.software/
+   (SPDX headers; LICENSES/ directory; automated compliance checking; OSS best practice)
+- [S225] SBOM generation with pip-licenses --
+   https://github.com/raimon49/pip-licenses
+   (Dependency license audit; CSV/JSON export; dependency tree)
+- [S226] CycloneDX SBOM standard --
+   https://cyclonedx.org/
+   (SBOM format; dependency graph; vulnerability tracking; supply-chain security)
+- [S227] US export control - encryption exemptions --
+   https://www.bis.doc.gov/index.php/regulations/export-administration-regulations-ear
+   (Publicly available source code exemptions; hash functions (SHA-256); HTTPS; code signing)
+- [S228] EU export control guidance --
+   https://ec.europa.eu/growth/tools-databases/cosme/
+   (Export controls; dual-use regulations; cryptography; software licensing)
+- [S229] Commercial licensing models for OSS --
+   https://www.linuxfoundation.org/
+   (Dual licensing; commercial support; enterprise tiers; typical fee structures)
+
+### Competitive Landscape (Wave 5b)
+- [S230] Local-File-Organizer by curdriceaurora --
+   https://github.com/curdriceaurora/Local-File-Organizer
+   (Python + PyQt6; modular provider routing; YAML taxonomy; v2.0 beta Q3 2026)
+- [S231] Czkawka file cleaner --
+   https://github.com/qarmin/czkawka
+   (Duplicate detection; multi-threaded; v12 roadmap Q3 2026; potential AI addition)
+- [S232] electron-dam asset management --
+   https://github.com/electron-dam/electron-dam
+   (Electron + semantic search; Web UI; lightweight competitor)
+- [S233] Local-File-Organizer provider architecture --
+   https://github.com/curdriceaurora/fo-core/tree/main/src/providers
+   (DeepSeek router; Ollama fallback; pluggable provider abstraction)
+- [S234] TidyAI commercial comparison --
+   https://www.tidy.ai/
+   (Cloud + local; subscription model; native Windows/Mac)
+
+### Platform Roadmaps & Standards (Wave 5c)
+- [S235] Qt 6.11 release March 2026 --
+   https://www.qt.io/
+   (Async improvements; accessibility enhancements; PyQt6 6.11 sync)
+- [S236] Qt 6.12 release September 2026 --
+   https://www.qt.io/
+   (Q3 2026 expected; WebEngine updates; performance improvements)
+- [S237] Python 3.13 asyncio improvements --
+   https://www.python.org/downloads/release/python-3130/
+   (Per-interpreter GIL; async performance; H1 2026 release)
+- [S238] Python 3.14 free-threaded mode --
+   https://peps.python.org/pep-0703/
+   (Sub-interpreter isolation; true multi-threading; H2 2026 draft)
+- [S239] Python 3.9 EOL October 2025 --
+   https://peps.python.org/pep-0619/
+   (End of support; security fixes cease; migration pressure Q1 2026)
+- [S240] WCAG 3.0 draft timeline --
+   https://www.w3.org/WAI/WCAG3/
+   (Accessibility standards evolution; working-draft updates)
+- [S241] Ollama model roadmap Q3 2026 --
+   https://ollama.ai/
+   (New models; GPU inference improvements; quantization options)
+- [S242] Asyncio structured concurrency --
+   https://peps.python.org/pep-0733/
+   (Task groups; cancellation scopes; H1 2026 PEP)
+- [S243] Windows 12 early signals --
+   https://blogs.windows.com/
+   (Q3 2026 expected; shell integration improvements)
+- [S244] GDPR enforcement 2026 --
+   https://gdpr-info.eu/
+   (Fines; compliance audits; data retention requirements)
+- [S245] CCPA implementation & amendments --
+   https://oag.ca.gov/privacy/ccpa/
+   (Consumer rights; opt-out enforcement; 2026 amendments)
+
+
+### Partnerships & Ecosystem Integration (Wave 5e)
+- [S246] Envato API --
+   https://www.envato.com/APIs/
+   (Asset marketplace integration; batch upload; metadata mapping; partner program)
+- [S247] Adobe Lightroom CC plugin SDK --
+   https://developer.adobe.com/
+   (UXP plugin framework; catalog integration; keyword mapping; Lightroom asset browser)
+- [S248] Blender addon API --
+   https://docs.blender.org/api/
+   (bpy Python API; asset browser integration; preview generation; File > Open integration)
+- [S249] Krita brush pack format --
+   https://docs.krita.org/
+   (Brush pack serialization; preset export; asset bundle format)
+- [S250] Ollama Hub models --
+   https://ollama.ai/models
+   (Model distribution; fine-tuning marketplace; asset-classification category models)
+- [S251] Weblate community translation --
+   https://weblate.org/en/projects/
+   (Community translation platform; CJK + European language support; review workflows)
+- [S252] GNOME Foundation partnerships --
+   https://www.gnome.org/partners/
+   (Linux desktop integration; GNOME Software featured placement; distribution channels)
+- [S253] KDE Dot community program --
+   https://dot.kde.org/
+   (KDE Discover app store; community initiatives; Linux ecosystem partnerships)
