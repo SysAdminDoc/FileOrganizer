@@ -122,6 +122,11 @@
                         <FontIcon Glyph="&#xEB9F;"/>
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem Tag="raw" Content="Raw Photos">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEBC6;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem Tag="watch" Content="Watch">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE7C8;"/>
