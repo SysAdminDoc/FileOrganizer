@@ -10,8 +10,24 @@ from collections import Counter
 from functools import lru_cache
 import xml.etree.ElementTree as ET
 
+def _is_frozen() -> bool:
+    """True when running inside a PyInstaller / cx_Freeze bundle.
+
+    When frozen, ``sys.executable`` points at the bundled GUI exe — calling
+    ``[sys.executable, '-m', 'pip', 'install', ...]`` would re-launch the
+    GUI in an infinite loop (the classic PyInstaller fork-bomb). The
+    bundled exe ships pre-installed deps anyway, so auto-install is both
+    pointless and dangerous in this mode.
+    """
+    return getattr(sys, "frozen", False) or hasattr(sys, "_MEIPASS")
+
+
 def _bootstrap():
     """Auto-install dependencies before any imports."""
+    # Fork-bomb guard: never spawn pip from a frozen GUI binary.
+    if _is_frozen():
+        return
+
     if sys.version_info < (3, 8):
         print("Python 3.8+ required"); sys.exit(1)
 
@@ -53,6 +69,11 @@ def _bootstrap():
         return importlib.util.find_spec(_mod_name(pkg)) is not None
 
     def _try_install(pkg):
+        # Defense-in-depth: also gate the pip subprocess directly so any
+        # future caller of _try_install gets the same protection without
+        # relying on _bootstrap's outer guard.
+        if _is_frozen():
+            return False
         for flags in [[], ['--user'], ['--break-system-packages']]:
             try:
                 subprocess.check_call(
