@@ -12,8 +12,10 @@ Multi-provider AI backbone (DeepSeek, GitHub Models, Ollama).
 
 v8.2.0 is **fully shipped** — the original 8 NOW items (N-1..N-8) and the extended sprint items
 (N-10, N-11, N-13, N-15, N-16, N-17). See [Shipped — v8.2.0](#shipped--v820) below.
-Active NOW items remaining: **N-9** (metadata extractors), **N-12** (provenance tracking),
-**N-14** (broken file detection).
+
+**v8.3.0 sprint** — N-9 (metadata extractors), N-12 (provenance tracking), and N-14 (broken file
+detection) all landed in May 2026 against the **Unreleased** section of CHANGELOG.md. Subject to
+a Q3 release pass to bump the Python core to v8.3.0. No NOW items remain blocking.
 
 A 2026-04-30 audit pass on the N-1..N-8 commits surfaced source-config drift, an unsafe
 ReviewPanel move path, missing SQLite pragmas on the journal DB, an invalid pip-audit flag,
@@ -263,64 +265,52 @@ AppX/PRI task path conflict). See `src/FileOrganizer.UI/CLAUDE.md`.
 
 ## NOW -- Active / Blocking (target: v8.3.0)
 
-These items extend v8.2.0 directly; all have clear implementation paths given the shipped stack.
+The original v8.3.0 NOW slate (N-9, N-12, N-14) is now in **Shipped — v8.3.0 (Unreleased)**
+below. No NOW items remain blocking; the next sprint pulls from NEXT.
 
-### AI Pipeline
+---
 
-**N-9: Metadata extractors MVP**
-Create `fileorganizer/metadata_extractors/` package with four extractors wired into
-`classify_design.py` as pre-AI stages. Classification order: metadata first → keyword/fuzzy
-fallback → AI last. Eliminates AI calls for ~40-60% of well-structured assets.
-- `psd_extractor.py`: psd-tools 1.16.0 layer names, document width/height → classify mockups,
-  social-media templates (9:16 canvas), print layouts without AI
-- `font_extractor.py`: fonttools `TTFont['name'].names` → font family, style variants → route to
-  `Fonts & Typography` subcategories at confidence 95
-- `audio_extractor.py`: mutagen → title, artist, BPM, duration → differentiate stock music,
-  SFX packs, tutorial audio tracks
-- `video_extractor.py`: `subprocess(['ffprobe', '-v', 'quiet', '-print_format', 'json',
-  '-show_streams', path])` → duration, codec, resolution, aspect ratio → route 9:16 vertical
-  video to `Social Media`, ProRes/DNXHD to `Broadcast / Cinema Stock`
-- **Why now**: psd-tools 1.16.0 (Apr 2026) adds Python 3.14 support; fonttools CVE-2025-66034
-  security pin (N-13) must land with or before fonttools use in code. RESEARCH_IDEAS.md rates
-  this the #1 priority for reducing per-item AI cost.
-- **Impact**: 5 | **Effort**: 3
-- Source: [S34] RESEARCH_IDEAS.md, [S8] organize-cli v3.3.0 filecontent filter, [S44] Czkawka
-  v11.0.0 ffprobe video analysis, [S46] psd-tools v1.16.0
+## Shipped -- v8.3.0 (Unreleased)
 
-### Data Enrichment
+Three Python-core features landed in May 2026 against the Unreleased section of CHANGELOG.md.
+A Q3 release pass will mint these as v8.3.0 once the next batch of NEXT items is also ready
+to ship (or sooner if the user explicitly cuts a patch).
 
-**N-12: Provenance tracking**
-Add `source_domain TEXT`, `first_seen_ts INTEGER` columns to `asset_fingerprints.db` via
-`ALTER TABLE IF NOT COLUMN` migration guard (safe for existing installs). Populate at index time:
-`source_domain` by normalizing folder path through a known-source parser (Envato, Creative Market,
-Freepik, Motion Array) plus a piracy-domain blocklist; `first_seen_ts` = Unix epoch at insert.
-Expose `source_domain` as sub-text in ReviewPanel row and in Browse tab tooltip. Strip piracy
-domains from UI display names and CSV exports. CLI: `build_source_index.py --show-provenance`.
-- **Why now**: RESEARCH_IDEAS.md #6 rates this high; N-10 embeddings can use domain as a prior
-  weight; NEXT-20 cross-library dedup needs stable domain metadata.
-- **Impact**: 4 | **Effort**: 2
-- Source: [S34] RESEARCH_IDEAS.md #6, [S33] RESEARCH.md provenance track
+### N-9: ~~Metadata extractors MVP~~ ✓ Shipped (Unreleased)
+New `fileorganizer/metadata_extractors/` package with `psd_extractor`, `font_extractor`,
+`audio_extractor`, `video_extractor`. Wired into `classify_design.py` as a zero-AI Stage 1 ahead
+of marketplace + embeddings + LLM. Hardroute threshold confidence ≥ 90; below that the hint is
+informational and downstream stages still run. Phantom-category guard validates emitted names
+against `_CATEGORY_SET`.
+- Routing: PSD aspect-driven (9:16/square/business-card/A4) at conf 90-92; valid font headers
+  (TTF/OTF/TTC/WOFF/WOFF2) at conf 95; ProRes/DNxHD video at conf 90; audio confidences capped
+  below 90 per audit (duration alone is ambiguous between SFX one-shots and music intro stabs).
+- Tests: 27 tests in `tests/test_metadata_extractors.py` covering import smoke, dispatcher
+  routing, no-dep degradation, aspect helpers, and per-extractor mocked happy-paths.
+- **Source**: [S34] RESEARCH_IDEAS.md, [S46] psd-tools v1.16.0
 
-### Quality
+### N-12: ~~Provenance tracking~~ ✓ Shipped (Unreleased)
+`source_domain TEXT` + `first_seen_ts INTEGER` columns added to `assets` via idempotent
+PRAGMA-table_info migration. UPDATE path uses `COALESCE` so `first_seen_ts` is immutable
+across re-builds. New `fileorganizer/provenance.py` recognises 12 marketplace patterns plus a
+7-domain piracy blocklist; piracy match wins over marketplace match. UI-safe `display_domain()`
+strips blocked domains. New `python build_source_index.py --source <name> --show-provenance`
+prints a per-domain histogram.
+- Tests: 33 tests in `tests/test_provenance.py` (parser, piracy override, COALESCE immutability,
+  legacy-DB migration).
+- **Source**: [S34] RESEARCH_IDEAS.md #6, [S33] RESEARCH.md provenance track
 
-**N-14: Broken file detection**
-During `build_source_index.py` scan, detect and flag corrupt/truncated assets before classify:
-- **Images**: `PIL.Image.verify()` on images ≤ 20 MB; catch `PIL.UnidentifiedImageError`,
-  `OSError` → flag `broken=True`
-- **Videos**: `subprocess(['ffprobe', '-v', 'error', '-print_format', 'json', '-show_error',
-  path])` → flag if `error` key present in parsed JSON output
-- **Archives**: `zipfile.ZipFile(f).testzip()`, `rarfile.RarFile(f).testrar()`,
-  `py7zr.SevenZipFile(f).testzip()` → flag if any returns non-None
-Add `broken INTEGER DEFAULT 0` column to `asset_files` table (schema migration). Pre-flight dialog
-(N-4, shipped) gets a collapsible "Broken files (N)" section listing affected paths before any
-move is attempted.
-- **Why now**: Running classify+move on a corrupt archive silently fails mid-extraction; broken
-  images cause Pillow tracebacks mid-batch. Czkawka v11.0.0 shipped broken-video detection via
-  ffprobe in 2026 — the pattern is proven and the tooling (Pillow, ffprobe, zipfile) is already
-  present.
-- **Impact**: 3 | **Effort**: 2
-- Source: [S44] Czkawka v11.0.0 broken video detection, [S34] RESEARCH_IDEAS.md, N-4 pre-flight
-  infra
+### N-14: ~~Broken file detection~~ ✓ Shipped (Unreleased)
+New `fileorganizer/broken_detector.py` with `check_image` (PIL.Image.verify under a 20 MB cap),
+`check_video` (ffprobe -show_error; treats non-empty stderr as broken even at rc=0 per audit
+fix), and `check_archive` (zipfile/rarfile/py7zr per-format testzip with no-dep degradation).
+`is_broken(path)` dispatcher. Standalone CLI: `python -m fileorganizer.broken_detector --scan
+<dir>` exits 1 on any broken file. New `broken INTEGER NOT NULL DEFAULT 0` column on
+`asset_files` (idempotent migration) for future GUI pre-flight wiring.
+- Tests: 24 tests in `tests/test_broken_detector.py` (dispatcher, no-dep, real corrupt zip,
+  ffprobe stderr handling, CLI exit codes, schema migration).
+- **Deferred**: GUI PreflightDialog "Broken files (N)" section (N-4 wiring) — separate task.
+- **Source**: [S44] Czkawka v11.0.0 broken video detection, [S34] RESEARCH_IDEAS.md
 
 ---
 
