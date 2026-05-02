@@ -4,9 +4,11 @@ Before any move touches disk, every planned move is written to organize_moves.db
 as 'pending'.  After each successful or failed move the record is updated.
 On clean completion the run is cleared.  Any remaining 'pending' rows after
 restart indicate a crash mid-apply and trigger the resume prompt.
+
+NEXT-37: Retention policy and periodic vacuum to prevent database bloat.
 """
 import os, sqlite3
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 from fileorganizer.config import _APP_DATA_DIR
 
@@ -15,6 +17,10 @@ _JOURNAL_DB = os.path.join(_APP_DATA_DIR, 'organize_moves.db')
 # 30s timeout lets the GUI thread retry instead of throwing when the worker
 # thread holds the write lock briefly.
 _CONN_TIMEOUT = 30.0
+
+# NEXT-37: Retention policy (days)
+_RETENTION_DAYS = 90  # configurable, default 90 days
+
 
 
 def _connect():
@@ -152,3 +158,25 @@ def get_pending_moves(run_id: str) -> list:
         }
         for r in rows
     ]
+
+
+def cleanup_expired(days: int = _RETENTION_DAYS):
+    """NEXT-37: Delete journal records older than retention period."""
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    cutoff_str = cutoff.strftime('%Y-%m-%dT%H:%M:%SZ')
+    con = _connect()
+    con.execute(
+        "DELETE FROM moves WHERE status='done' AND ts_done < ?",
+        (cutoff_str,)
+    )
+    con.commit()
+    con.close()
+
+
+def vacuum():
+    """NEXT-37: Reclaim disk space by vacuuming the database."""
+    con = _connect()
+    con.execute("VACUUM")
+    con.commit()
+    con.close()
+
