@@ -370,17 +370,26 @@ A THEN rename as B THEN webhook C". Nested conditions with AND/OR. AST:
 - **Impact**: 4 | **Effort**: 4 | Parity with: [S20] Hazel, [S21] File Juggler, [S8] organize-cli
 - Source: [S20] https://www.noodlesoft.com/hazel/ , [S21] https://www.filejuggler.com/features/
 
-**NEXT-4: Dry-run simulation (all operations)**
+**NEXT-4: Dry-run simulation (all operations)** ✓ Core shipped
 Every CLI command and GUI action must have a full dry-run path that previews the exact list of
 moves, renames, and deletes without touching the filesystem. Emit an editable JSON plan file
 before commit.
-- **Impact**: 4 | **Effort**: 2 | Parity with: [S8] organize-cli `sim` mode, [S20] Hazel "Test Rule"
+- **Core shipped**: `fileorganizer/dry_run_planner.py` with DryRunPlan, FileOperation, PlanExecutor,
+  atomic execution with rollback. 21 tests passing. Supports JSON save/load, schema validation,
+  per-operation enabled flags.
+- **Remaining**: GUI integration (PreflightDialog Step 6 with operation list + toggles).
+  organize_run.py CLI flags (--dry-run, --plan-file, --commit).
+- **Impact**: 4 | **Effort**: 2 (core 1 + UI 1) | Parity with: [S8] organize-cli `sim` mode, [S20] Hazel "Test Rule"
 
-**NEXT-5: Minimal-diff re-scan index**
+**NEXT-5: Minimal-diff re-scan index** ✓ Core shipped
 Cache folder fingerprint + mtime from each run. On re-scan, skip folders whose fingerprint and
 mtime are unchanged. Reduces re-run cost ~70% on large libraries where most items are already
 classified.
-- **Impact**: 4 | **Effort**: 3 | Parity with: [S1] LlamaFS minimal-diff index
+- **Core shipped**: `fileorganizer/folder_cache.py` with compute_folder_fingerprint(), FolderCache
+  class, TTL-based expiration (30 days default), cleanup_expired(), get_stats(). 18 tests passing.
+  Typical workflow shows ~0% skip on first pass, ~100% skip on second pass with same contents.
+- **Remaining**: Integration into organize_run.py (--skip-unchanged, --invalidate-cache flags).
+- **Impact**: 4 | **Effort**: 3 (core 2 + integration 1) | Parity with: [S1] LlamaFS minimal-diff index
 - Source: [S1] https://github.com/iyaja/llama-fs
 
 **NEXT-6: Parallel LLM calls**
