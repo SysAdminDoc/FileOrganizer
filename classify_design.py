@@ -72,7 +72,7 @@ FILE_MODE    = False
 
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
 DEEPSEEK_BASE    = 'https://api.deepseek.com'
-DEEPSEEK_MODEL   = 'deepseek-chat'
+DEEPSEEK_MODEL   = 'deepseek-v4-flash'
 
 # ── Full category taxonomy for G:\Organized ───────────────────────────────────
 # These match the categories already in G:\Organized plus expansions needed

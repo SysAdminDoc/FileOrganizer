@@ -5,7 +5,7 @@ Provider routing:
   Heavy (catalog lookup, batch classification, dynamic categories) → DeepSeekProvider
   Fallback / offline → OllamaProvider (existing)
 """
-import os, re, json, time, logging
+import os, re, json, time, logging, warnings
 from pathlib import Path
 from typing import Optional
 
@@ -27,7 +27,7 @@ _PROVIDER_DEFAULTS = {
     'deepseek_enabled': False,
     'deepseek_api_key': '',      # DEEPSEEK_API_KEY env var takes precedence
     'deepseek_endpoint': 'https://api.deepseek.com',
-    'deepseek_model': 'deepseek-chat',
+    'deepseek_model': 'deepseek-v4-flash',
     'deepseek_timeout': 120,
     # Routing
     'routing': 'auto',  # auto | github_only | deepseek_only | ollama_only
@@ -78,16 +78,28 @@ _GITHUB_MODEL_CATALOG = [
 
 _DEEPSEEK_MODEL_CATALOG = [
     {
-        'group': 'DeepSeek Chat (Recommended)',
-        'name': 'deepseek-chat',
-        'label': 'DeepSeek Chat  ·  Fast + affordable  ·  Best for catalog lookup',
+        'group': 'DeepSeek V4 (Recommended)',
+        'name': 'deepseek-v4-flash',
+        'label': 'DeepSeek V4 Flash  ·  Fast + affordable  ·  Best for catalog lookup',
         'description': 'Best cost/performance. Ideal for batch classification and catalog ID.',
     },
     {
-        'group': 'DeepSeek Reasoner',
-        'name': 'deepseek-reasoner',
-        'label': 'DeepSeek Reasoner (R1)  ·  Max accuracy  ·  Slower',
+        'group': 'DeepSeek V4 Reasoning',
+        'name': 'deepseek-v4-pro',
+        'label': 'DeepSeek V4 Pro  ·  Max accuracy  ·  Slower',
         'description': 'Chain-of-thought reasoning. Use for ambiguous or complex items.',
+    },
+    {
+        'group': 'DeepSeek Legacy (Deprecated July 24)',
+        'name': 'deepseek-chat',
+        'label': 'DeepSeek Chat (DEPRECATED)  ·  Dies July 24, 2026',
+        'description': 'DEPRECATED: will be removed July 24, 2026. Migrate to deepseek-v4-flash.',
+    },
+    {
+        'group': 'DeepSeek Legacy (Deprecated July 24)',
+        'name': 'deepseek-reasoner',
+        'label': 'DeepSeek Reasoner (DEPRECATED)  ·  Dies July 24, 2026',
+        'description': 'DEPRECATED: will be removed July 24, 2026. Migrate to deepseek-v4-pro.',
     },
 ]
 
@@ -256,10 +268,30 @@ class DeepSeekProvider(_OpenAICompatProvider):
     def __init__(self, settings: dict):
         key = (os.environ.get('DEEPSEEK_API_KEY', '')
                or settings.get('deepseek_api_key', ''))
+        model = settings.get('deepseek_model', _PROVIDER_DEFAULTS['deepseek_model'])
+        
+        # Emit deprecation warnings for retiring aliases
+        if model == 'deepseek-chat':
+            warnings.warn(
+                "Model 'deepseek-chat' is deprecated as of April 2026 and will stop working "
+                "on July 24, 2026. Migrate to 'deepseek-v4-flash' immediately.",
+                DeprecationWarning,
+                stacklevel=2
+            )
+            log.warning("DeepSeek model 'deepseek-chat' is deprecated; migrate to 'deepseek-v4-flash'")
+        elif model == 'deepseek-reasoner':
+            warnings.warn(
+                "Model 'deepseek-reasoner' is deprecated as of April 2026 and will stop working "
+                "on July 24, 2026. Migrate to 'deepseek-v4-pro' immediately.",
+                DeprecationWarning,
+                stacklevel=2
+            )
+            log.warning("DeepSeek model 'deepseek-reasoner' is deprecated; migrate to 'deepseek-v4-pro'")
+        
         super().__init__(
             base_url=settings.get('deepseek_endpoint', _PROVIDER_DEFAULTS['deepseek_endpoint']),
             api_key=key,
-            model=settings.get('deepseek_model', _PROVIDER_DEFAULTS['deepseek_model']),
+            model=model,
             timeout=settings.get('deepseek_timeout', 120),
         )
 

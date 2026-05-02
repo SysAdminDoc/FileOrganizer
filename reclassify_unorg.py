@@ -55,7 +55,7 @@ AE_EXTENSIONS = {'.aep', '.aet', '.ffx', '.mogrt', '.aex'}
 
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
 DEEPSEEK_URL     = 'https://api.deepseek.com/v1/chat/completions'
-DEEPSEEK_MODEL   = 'deepseek-chat'
+DEEPSEEK_MODEL   = 'deepseek-v4-flash'
 
 # ── Journal helpers ───────────────────────────────────────────────────────────
 def load_unorg_moves() -> list[dict]:
