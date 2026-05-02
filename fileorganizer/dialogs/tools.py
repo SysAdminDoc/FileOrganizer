@@ -835,17 +835,36 @@ class PreflightWorker(QThread):
         # files for corruption. Bounded to 10 per source / 200 total so
         # 33TB-scale apply jobs stay snappy at the pre-flight gate.
         self.progress.emit("Probing for broken files…")
+        probe_partial = False
+        probe_failed = False
+        findings = []
         try:
-            from fileorganizer.broken_detector import scan_paths
+            from fileorganizer import broken_detector as _bd
+            # Surface missing optional verifiers so "no broken detected"
+            # is never shown when verification was incomplete.
+            missing = []
+            if not _bd._HAS_PILLOW:
+                missing.append('Pillow (image verify skipped)')
+            if _bd._FFPROBE is None:
+                missing.append('ffprobe (video verify skipped)')
+            if not _bd._HAS_RARFILE:
+                missing.append('rarfile (.rar verify skipped)')
+            if not _bd._HAS_PY7ZR:
+                missing.append('py7zr (.7z verify skipped)')
+            if missing:
+                probe_partial = True
+                self.issue.emit('warning', 'Broken-file probe partial',
+                                ', '.join(missing))
+                n_warn += 1
             source_paths = [
                 getattr(it, 'full_source_path', '') for it in self._items
             ]
             source_paths = [p for p in source_paths if p]
-            findings = scan_paths(source_paths, max_per_root=10, max_total=200)
+            findings = _bd.scan_paths(source_paths, max_per_root=10, max_total=200)
         except Exception as exc:
+            probe_failed = True
             self.issue.emit('warning', 'Broken-file probe failed', str(exc))
             n_warn += 1
-            findings = []
         if findings:
             for path, reason in findings[:25]:    # cap UI table inserts
                 self.issue.emit('error', 'Broken file', f"{path} — {reason}")
@@ -856,7 +875,7 @@ class PreflightWorker(QThread):
                                 f"+{extra} more broken file(s) — see CLI scan "
                                 f"for the full list")
                 n_err += 1
-        else:
+        elif not probe_failed and not probe_partial:
             self.issue.emit('info', 'Broken-file probe',
                             'No broken images/videos/archives detected in sample')
             n_info += 1
