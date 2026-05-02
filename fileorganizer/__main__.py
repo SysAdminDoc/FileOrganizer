@@ -1,4 +1,12 @@
 """FileOrganizer — Application entry point."""
+# PyInstaller fork-bomb safeguard. MUST be the first executable statement
+# in the entry script: when the bundled exe re-spawns itself (e.g., a
+# child process for a Pool worker), freeze_support intercepts and runs
+# the worker entry instead of re-running main(). Skipping this is the
+# canonical PyInstaller fork-bomb.
+import multiprocessing as _mp
+_mp.freeze_support()
+
 import os, sys
 from datetime import datetime
 from pathlib import Path
