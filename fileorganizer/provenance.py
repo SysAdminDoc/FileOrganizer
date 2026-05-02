@@ -58,12 +58,10 @@ _DOMAIN_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
     # Videohive (Envato's video marketplace) — three explicit forms.
     (re.compile(r"^Videohive[_-]", re.IGNORECASE), "videohive.net"),
     (re.compile(r"^VH[_-]\d{4,}", re.IGNORECASE), "videohive.net"),
-    # 8-9 digit numeric prefix is the most common Videohive ID format.
-    # Use word boundary + a separator after to keep this from matching
-    # arbitrary numeric folder names like "1080p_render".
+    # 8-9 digit numeric prefix followed by a real separator. Without the
+    # separator requirement the pattern tags arbitrary numeric folders
+    # like "12345678" or "12345678abc" as Videohive — keep the gate strict.
     (re.compile(r"^\d{8,9}[-_ ]"), "videohive.net"),
-    (re.compile(r"^\d{8,9}[-_ ]?(INTRO-HD\.NET|HD\.NET)?", re.IGNORECASE),
-     "videohive.net"),
     (re.compile(r"\bvideohive\b", re.IGNORECASE), "videohive.net"),
 
     # Adobe Stock
@@ -89,7 +87,8 @@ _PIRACY_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
      "aidownload.net"),
     (re.compile(r"GFXDRUG\.COM|(?<![A-Za-z])gfxdrug(?![A-Za-z])", re.IGNORECASE),
      "gfxdrug.com"),
-    (re.compile(r"(?<![A-Za-z])sharea?e(?![A-Za-z])|ShareAE\.com", re.IGNORECASE),
+    (re.compile(r"(?<![A-Za-z])sharea?e(?![A-Za-z])|ShareAE\.com|share\.ae",
+                re.IGNORECASE),
      "shareae.com"),
     (re.compile(r"(?<![A-Za-z])freegfx(?![A-Za-z])", re.IGNORECASE), "freegfx.net"),
     (re.compile(r"(?<![A-Za-z])graphicux(?![A-Za-z])", re.IGNORECASE), "graphicux.com"),
