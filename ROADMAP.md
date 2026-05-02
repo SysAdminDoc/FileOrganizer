@@ -451,16 +451,17 @@ Template name, editable parameters, required fonts, minimum Premiere version. Pu
 - **Remaining**: Integration into asset classifier (use font requirements and parameter count as routing signals).
 - **Impact**: 4 | **Effort**: 2 (core 2 + integration 0)
 
-**NEXT-11: Video metadata deep routing (FFmpeg expansion)**
-Extend the N-9 `video_extractor.py` MVP with deep routing rules: 9:16 vertical video →
-`Social Media`, looping clips ≤ 15 s → `Motion Graphic`, codec=ProRes/DNXHD/XDCAM →
-`Broadcast / Cinema Stock`, duration > 5 min → `Tutorial Video`. Add `video_codec`,
-`video_resolution`, `video_duration`, `video_fps` to `asset_files.metadata`. The ffprobe
-subprocess pattern is established in N-9; this item adds routing rules only. Do not use the
-stale `ffmpeg-python` package (last release 2019); use `subprocess.run(['ffprobe', ...])` directly.
-- **Impact**: 4 | **Effort**: 2 | **Depends on**: N-9
-- Source: [S15] digiKam FFmpeg pipeline https://www.digikam.org/about/, [S44] Czkawka v11.0.0
-  broken video detection, [S34] RESEARCH_IDEAS.md
+**NEXT-11: Video metadata deep routing (FFmpeg expansion)** ✓ Core shipped
+Extend `video_extractor.py` with intelligent routing: 9:16 vertical → `Social Media`, 
+looping ≤15s + ProRes/DNXHD → `Motion Graphic`, broadcast codec → `Broadcast / Cinema Stock`,
+duration > 5min → `Tutorial Video`, 60fps 4K+ → `High-Performance`, etc.
+- **Core shipped**: `fileorganizer/video_routing.py` with VideoRoutingMetadata class,
+  analyze_video_metadata(), _route_video() with 7 routing rules (vertical, looping, broadcast codec,
+  high-performance, long duration, broadcast fps, default). extract_video_codecs() via ffprobe.
+  30+ tests covering all routing paths, codec detection, frame rate edge cases.
+- **Remaining**: Integration into classify pipeline (call analyze_video_metadata on .mp4/.mov/.mxf files before LLM).
+- **Impact**: 4 | **Effort**: 2 (core 2 + integration 0) | Depends on: N-9 (ffprobe integration)
+- Source: [S15] digiKam FFmpeg pipeline, [S44] Czkawka v11.0.0, [S34] RESEARCH_IDEAS.md
 
 **NEXT-12: LLaVA visual classification**
 Route image and PDF mimes to a local multimodal model (`gemma3:4b` or `qwen3.5:4b` — both
