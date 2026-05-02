@@ -53,7 +53,7 @@ def _name_table_lookup(font, name_id: int) -> str:
 
 
 def extract(path: Path) -> Optional[MetadataHint]:
-    """Read font name table and emit a Fonts & Typography hint at conf 95."""
+    """Read font name table and emit a Fonts & Typography hint at conf 95. Detects variable axes (NEXT-56)."""
     if not _HAS_FONTTOOLS:
         return None
     if not path or not path.exists():
@@ -77,6 +77,25 @@ def extract(path: Path) -> Optional[MetadataHint]:
         full_name = _name_table_lookup(font, 4)    # Full font name
         version = _name_table_lookup(font, 5)
         foundry = _name_table_lookup(font, 8)
+        
+        # NEXT-56: Detect variable axes and color formats
+        is_variable = "fvar" in font
+        var_axes = []
+        if is_variable:
+            try:
+                fvar = font["fvar"]
+                var_axes = [ax.axisTag for ax in fvar.axes]
+            except Exception:
+                pass
+        
+        has_colr = "COLR" in font
+        has_colrv1 = False
+        if has_colr:
+            try:
+                colr = font["COLR"]
+                has_colrv1 = colr.version >= 1
+            except Exception:
+                pass
     finally:
         try:
             font.close()
@@ -90,7 +109,7 @@ def extract(path: Path) -> Optional[MetadataHint]:
             confidence=80,
             extractor="font",
             reason=f"valid font header (no name fields) — {path.suffix.lower()}",
-            raw={"ext": path.suffix.lower()},
+            raw={"ext": path.suffix.lower(), "is_variable": is_variable, "color": has_colr},
         )
 
     return MetadataHint(
@@ -105,5 +124,9 @@ def extract(path: Path) -> Optional[MetadataHint]:
             "version": version,
             "foundry": foundry,
             "ext": path.suffix.lower(),
+            "is_variable": is_variable,
+            "variable_axes": var_axes if var_axes else None,
+            "has_color": has_colr,
+            "has_colrv1": has_colrv1,
         },
     )
