@@ -257,6 +257,13 @@ repo root:
 └── deepseek_research.py      ← _Review-folder ID resolver
 ```
 
+## Project Planning
+
+- `ROADMAP.md` — active roadmap and detailed backlog.
+- `COMPLETED.md` — shipped roadmap history.
+- `RESEARCH_REPORT.md` — research summary and archive index.
+- `CHANGELOG.md` — release-level details.
+
 ## FAQ
 
 **Should I install Path A (shell) or Path B (Python)?** — If you want the
