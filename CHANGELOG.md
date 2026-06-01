@@ -4,7 +4,12 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [Unreleased]
 
-(no entries yet — next iteration will land here)
+### Docs
+
+- Consolidated planning docs: active work remains in `ROADMAP.md`, shipped
+  roadmap history is summarized in `COMPLETED.md`, and research context is
+  summarized in `RESEARCH_REPORT.md` with the previous root research Markdown
+  files archived under `docs/archive/research/`.
 
 ## [v8.5.0] - 2026-05-02
 
