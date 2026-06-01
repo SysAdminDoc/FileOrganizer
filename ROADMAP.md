@@ -6,6 +6,11 @@ into a canonical folder taxonomy. Core use case: 33 TB+ of Envato/Creative Marke
 templates (After Effects, Photoshop, Illustrator, Premiere Pro, etc.) on Windows.
 Multi-provider AI backbone (DeepSeek, GitHub Models, Ollama).
 
+Shipped work is summarized in [COMPLETED.md](COMPLETED.md) and detailed in
+[CHANGELOG.md](CHANGELOG.md). Research context is summarized in
+[RESEARCH_REPORT.md](RESEARCH_REPORT.md), with the prior root research notes
+archived under `docs/archive/research/`.
+
 ---
 
 ## State of the Repo (v9.1.0 planning, May 2026 — Wave 5 research complete)
@@ -59,7 +64,7 @@ and design-asset domains. See [Shipped — WinUI Shell](#shipped--winui-shell-ui
 - Watch mode: not implemented
 
 ### Stubbed / incomplete
-- **Embeddings classifier**: planned in RESEARCH_IDEAS.md #7; not implemented (N-10 target)
+- **Embeddings classifier**: planned in `docs/archive/research/RESEARCH_IDEAS.md` #7; not implemented (N-10 target)
 - **AEP binary parser**: concept and spec exist; no implementation (NEXT-9)
 - **Perceptual hash dedup**: planned; not implemented (NEXT-19)
 - **Plugin SDK**: mentioned in code, undocumented externally (NEXT-27)
@@ -181,7 +186,7 @@ resume from pending entries.
   move, update to `done` per move, and on `__init__` check for prior `pending` rows.
 - **Pattern**: Dry-run-then-commit from [S3] hyperfield, [S1] LlamaFS, [S5] aifiles.
 - **Impact**: 5 | **Effort**: 3
-- Source: [S33] RESEARCH.md
+- Source: [S33] `docs/archive/research/RESEARCH.md`
 
 ### N-7: ~~Security dependency update + audit~~ ✓ Shipped v8.2.0
 Pin `Pillow>=12.2.0` and `PyQt6>=6.11.0` in `requirements.txt`. Add `pip-audit --fail-on-cvss 7`
@@ -301,7 +306,7 @@ against `_CATEGORY_SET`.
   below 90 per audit (duration alone is ambiguous between SFX one-shots and music intro stabs).
 - Tests: 27 tests in `tests/test_metadata_extractors.py` covering import smoke, dispatcher
   routing, no-dep degradation, aspect helpers, and per-extractor mocked happy-paths.
-- **Source**: [S34] RESEARCH_IDEAS.md, [S46] psd-tools v1.16.0
+- **Source**: [S34] `docs/archive/research/RESEARCH_IDEAS.md`, [S46] psd-tools v1.16.0
 
 ### N-12: ~~Provenance tracking~~ ✓ Shipped v8.3.0
 `source_domain TEXT` + `first_seen_ts INTEGER` columns added to `assets` via idempotent
@@ -312,7 +317,7 @@ strips blocked domains. New `python build_source_index.py --source <name> --show
 prints a per-domain histogram.
 - Tests: 33 tests in `tests/test_provenance.py` (parser, piracy override, COALESCE immutability,
   legacy-DB migration).
-- **Source**: [S34] RESEARCH_IDEAS.md #6, [S33] RESEARCH.md provenance track
+- **Source**: [S34] `docs/archive/research/RESEARCH_IDEAS.md` #6, [S33] `docs/archive/research/RESEARCH.md` provenance track
 
 ### N-14: ~~Broken file detection~~ ✓ Shipped v8.3.0
 New `fileorganizer/broken_detector.py` with `check_image` (PIL.Image.verify under a 20 MB cap),
@@ -325,7 +330,7 @@ fix), and `check_archive` (zipfile/rarfile/py7zr per-format testzip with no-dep 
 at the pre-flight gate, declares missing optional verifiers as partial coverage.
 - Tests: 33 tests in `tests/test_broken_detector.py` (dispatcher, no-dep, real corrupt zip,
   ffprobe stderr handling, CLI exit codes, schema migration, scan_paths bounded sampling).
-- **Source**: [S44] Czkawka v11.0.0 broken video detection, [S34] RESEARCH_IDEAS.md
+- **Source**: [S44] Czkawka v11.0.0 broken video detection, [S34] `docs/archive/research/RESEARCH_IDEAS.md`
 
 ### Provenance back-fill ✓ Shipped v8.3.0 (iter 2 follow-up to N-12)
 `asset_db.cmd_backfill_provenance(db_path, dry_run)` populates `source_domain` +
@@ -439,7 +444,7 @@ extract: composition names and durations, required plug-in names, minimum AE ver
 frame rate. Store in `asset_files.metadata` or a new `asset_meta` table.
 Candidate library: `aeptools` (Python) or custom RIFX reader.
 - **Impact**: 5 | **Effort**: 4 | Leapfrog: no OSS competitor parses AEP metadata for classification
-- Source: [S33] RESEARCH.md, [S34] RESEARCH_IDEAS.md, [S25] RIFX format
+- Source: [S33] `docs/archive/research/RESEARCH.md`, [S34] `docs/archive/research/RESEARCH_IDEAS.md`, [S25] RIFX format
 
 **NEXT-10: MOGRT manifest parser** ✓ Core shipped
 `.mogrt` files are ZIP archives with an embedded JSON manifest containing: Motion Graphics
@@ -461,7 +466,7 @@ duration > 5min → `Tutorial Video`, 60fps 4K+ → `High-Performance`, etc.
   30+ tests covering all routing paths, codec detection, frame rate edge cases.
 - **Remaining**: Integration into classify pipeline (call analyze_video_metadata on .mp4/.mov/.mxf files before LLM).
 - **Impact**: 4 | **Effort**: 2 (core 2 + integration 0) | Depends on: N-9 (ffprobe integration)
-- Source: [S15] digiKam FFmpeg pipeline, [S44] Czkawka v11.0.0, [S34] RESEARCH_IDEAS.md
+- Source: [S15] digiKam FFmpeg pipeline, [S44] Czkawka v11.0.0, [S34] `docs/archive/research/RESEARCH_IDEAS.md`
 
 **NEXT-12: LLaVA visual classification**
 Route image and PDF mimes to a local multimodal model (`gemma3:4b` or `qwen3.5:4b` — both
@@ -505,7 +510,7 @@ mnamer [S58] models exactly this pattern in `mnamer/providers.py` (Provider ABC)
 handling, and retry logic) — port the Provider ABC verbatim and add one subclass per
 marketplace.
 - **Impact**: 4 | **Effort**: 3
-- Source: [S34] RESEARCH_IDEAS.md, [S33] RESEARCH.md, [S58] mnamer Provider ABC pattern
+- Source: [S34] `docs/archive/research/RESEARCH_IDEAS.md`, [S33] `docs/archive/research/RESEARCH.md`, [S58] mnamer Provider ABC pattern
 
 **NEXT-18: Marketplace update alerts**
 For items with a known marketplace ID, periodically check if a newer version has been published.
@@ -847,7 +852,7 @@ Settings → Diagnostics → Calibration. Post-calibration the NEXT-13 confidenc
 accurately reflect prediction reliability, and NEXT-7 thresholds can be tightened from the
 current 70% cutoff to a calibrated 80%.
 - **Impact**: 3 | **Effort**: 3 | **Depends on**: NEXT-7 (corrections accumulation), NEXT-13 (confidence display)
-- Source: [S34] RESEARCH_IDEAS.md item #9 (Platt scaling, isotonic regression,
+- Source: [S34] `docs/archive/research/RESEARCH_IDEAS.md` item #9 (Platt scaling, isotonic regression,
   `CalibratedClassifierCV`)
 
 **NEXT-46: DeepSeek V4 model migration** ⚠️ DEADLINE July 24, 2026
@@ -1480,7 +1485,7 @@ Bookmark-Organizer-Pro [S55] already ships a tested embedding service plus a vec
 hybrid search (BM25 + cosine via Reciprocal Rank Fusion) — those modules are directly portable
 and shorten this work substantially.
 - **Impact**: 4 | **Effort**: 5 | Leapfrog: no OSS desktop organizer has done this for design assets
-- Source: [S34] RESEARCH_IDEAS.md, [S17] electron-dam, [S7] DocMind, [S55] Bookmark-Organizer-Pro
+- Source: [S34] `docs/archive/research/RESEARCH_IDEAS.md`, [S17] electron-dam, [S7] DocMind, [S55] Bookmark-Organizer-Pro
   `services/embeddings.py` + `services/vector_store.py` + `services/hybrid_search.py`;
   [S82] sqlite-vec v0.1.9 https://github.com/asg017/sqlite-vec/releases/tag/v0.1.9;
   [S94] model2vec potion-base-32M https://huggingface.co/minishlab/potion-base-32M;
@@ -1507,7 +1512,7 @@ favorites/history pattern; Bookmark-Organizer-Pro [S55] has `services/nl_query.p
 schema translation) + `services/rag_chat.py` (citation-aware summaries) + `services/hybrid_search.py`
 (keyword + semantic fusion).
 - **Impact**: 4 | **Effort**: 3
-- Source: [S4] FileWizardAI https://github.com/AIxHunter/FileWizardAI , [S34] RESEARCH_IDEAS.md,
+- Source: [S4] FileWizardAI https://github.com/AIxHunter/FileWizardAI , [S34] `docs/archive/research/RESEARCH_IDEAS.md`,
   [S61] PromptCompanion FTS5+BM25 schema, [S55] Bookmark-Organizer-Pro `nl_query.py` +
   `hybrid_search.py` + `rag_chat.py`
 
@@ -2053,8 +2058,8 @@ Every claim in this roadmap traces to at least one source below.
 
 ### Internal Sources
 - [S32] AUDIT_LESSONS.md -- Hard-won lessons from the April 2026 33 TB organize run
-- [S33] RESEARCH.md -- Implementation tracks: Plan-First Apply, Asset Catalog, Multimodal Router
-- [S34] RESEARCH_IDEAS.md -- 12 research areas: metadata extractors, embeddings, YAML rules
+- [S33] `docs/archive/research/RESEARCH.md` -- Implementation tracks: Plan-First Apply, Asset Catalog, Multimodal Router
+- [S34] `docs/archive/research/RESEARCH_IDEAS.md` -- 12 research areas: metadata extractors, embeddings, YAML rules
 - [S35] CHANGELOG.md v8.2.0 -- Audit findings, phantom category fixes, fix_duplicates hazard
 - [S36] CLAUDE.md -- Living working notes: architecture, known issues, version history
 
