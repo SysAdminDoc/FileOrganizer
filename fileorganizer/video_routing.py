@@ -251,7 +251,10 @@ def _route_video(metadata: VideoRoutingMetadata) -> Tuple[Optional[str], float]:
         return ('Tutorial Video', 0.65)
     
     # Rule 6: Broadcast frame rate → Broadcast
-    if metadata.is_broadcast_fps:
+    broadcast_fps_values = [23.976, 29.97, 59.94]
+    if metadata.is_broadcast_fps or (
+        metadata.fps and any(abs(metadata.fps - fps) < 0.02 for fps in broadcast_fps_values)
+    ):
         return ('Broadcast', 0.60)
     
     # Default: Stock footage or generic

@@ -52,7 +52,14 @@ def mock_response_valid():
 @pytest.fixture
 def classifier(sample_folders):
     """Create a classifier instance."""
-    return AsyncClassifier(concurrency=2, batch_size=2)
+    c = AsyncClassifier(concurrency=2, batch_size=2)
+    c.valid_cats = [
+        'Flyer / Poster',
+        'Logo / Icon',
+        'Promo / Demo Video',
+        'Design',
+    ]
+    return c
 
 
 def test_classifier_init():

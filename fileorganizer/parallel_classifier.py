@@ -14,6 +14,7 @@ Implementation:
 import json
 import re
 import asyncio
+import inspect
 import sys
 from pathlib import Path
 
@@ -121,11 +122,23 @@ class AsyncClassifier:
         
         try:
             timeout = aiohttp.ClientTimeout(total=self.timeout + 30 * len(folders_batch))
-            async with session.post(
+            request = session.post(
                 f"{self.url}/api/chat",
                 json=payload,
                 timeout=timeout
-            ) as resp:
+            )
+            if inspect.isawaitable(request):
+                request = await request
+
+            if getattr(request, "status", None) is None and hasattr(request, "__aenter__"):
+                async with request as resp:
+                    if resp.status != 200:
+                        return [{'name': f['folder_name'], 'category': None, 'confidence': 0,
+                                 'method': 'llm_parallel', 'detail': f'parallel:http_{resp.status}'}
+                                for f in folders_batch]
+                    result = await resp.json()
+            else:
+                resp = request
                 if resp.status != 200:
                     return [{'name': f['folder_name'], 'category': None, 'confidence': 0,
                              'method': 'llm_parallel', 'detail': f'parallel:http_{resp.status}'}
