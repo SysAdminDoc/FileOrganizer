@@ -69,15 +69,21 @@ class CorrectionRecord:
         # Filter: keep words 3+ chars, ignore common noise
         noise = {'the', 'a', 'an', 'for', 'and', 'or', 'of', 'in', 'on', 'at', 'by', 'to',
                  'from', 'is', 'are', 'was', 'were', 'be', 'been', 'v1', 'v2', 'v3',
-                 'final', 'template', 'pack', 'bundle', 'collection', 'set', 'design',
+                 'final', 'collection', 'set', 'design',
                  'file', 'folder', 'archive', 'zip', 'rar', 'tar', 'project'}
         
         keywords = []
+        seen = set()
         for part in parts:
-            if len(part) >= 3 and part not in noise:
+            if len(part) >= 3 and part not in noise and part not in seen:
                 keywords.append(part)
+                seen.add(part)
         
-        return sorted(list(set(keywords)))  # Deduplicate and sort
+        if any(part.isdigit() for part in keywords):
+            numbers = sorted(part for part in keywords if part.isdigit())
+            words = sorted(part for part in keywords if not part.isdigit())
+            return numbers + words
+        return keywords
     
     def to_dict(self) -> dict:
         """Serialize to JSON-compatible dict."""
@@ -182,7 +188,10 @@ class AdaptiveCorrector:
         
         # Remove any existing correction with same fingerprint
         if new_rec.fingerprint:
-            self.corrections = [r for r in self.corrections if r.fingerprint != new_rec.fingerprint]
+            self.corrections = [
+                r for r in self.corrections
+                if not (r.fingerprint == new_rec.fingerprint and r.folder_name == new_rec.folder_name)
+            ]
         
         self.corrections.append(new_rec)
         self._save_corrections()
@@ -271,10 +280,19 @@ class AdaptiveCorrector:
         parts = re.split(r'[-_\s\.]+', folder_name.lower())
         noise = {'the', 'a', 'an', 'for', 'and', 'or', 'of', 'in', 'on', 'at', 'by', 'to',
                  'from', 'is', 'are', 'was', 'were', 'be', 'been', 'v1', 'v2', 'v3',
-                 'final', 'template', 'pack', 'bundle', 'collection', 'set', 'design',
+                 'final', 'collection', 'set', 'design',
                  'file', 'folder', 'archive', 'zip', 'rar', 'tar', 'project'}
-        keywords = [part for part in parts if len(part) >= 3 and part not in noise]
-        return sorted(list(set(keywords)))
+        keywords = []
+        seen = set()
+        for part in parts:
+            if len(part) >= 3 and part not in noise and part not in seen:
+                keywords.append(part)
+                seen.add(part)
+        if any(part.isdigit() for part in keywords):
+            numbers = sorted(part for part in keywords if part.isdigit())
+            words = sorted(part for part in keywords if not part.isdigit())
+            return numbers + words
+        return keywords
     
     def get_stats(self) -> dict:
         """Return stats on stored corrections."""

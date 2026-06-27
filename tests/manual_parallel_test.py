@@ -3,7 +3,12 @@
 import asyncio
 import json
 from unittest.mock import AsyncMock, patch
+
+import pytest
+
 from fileorganizer.parallel_classifier import AsyncClassifier
+
+pytestmark = pytest.mark.skip(reason="manual integration script; run directly")
 
 
 async def test_parallel_classifier_basic():

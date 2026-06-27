@@ -85,7 +85,7 @@ class RuleCondition:
       RuleCondition(type='metadata_value', property='width', value=1920, operator='>=')
     """
     type: str  # extension, filename_pattern, file_size, file_count, llm_confidence, etc.
-    value: Any
+    value: Any = None
     operator: str = '=='
     property: Optional[str] = None  # For metadata_value conditions
     
