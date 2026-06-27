@@ -29,4 +29,5 @@ class MetadataHint:
                      else f"metadata_extractor:{self.extractor}",
             "_source_name": name,
             "_classifier": f"metadata_{self.extractor}",
+            "metadata": self.raw,
         }

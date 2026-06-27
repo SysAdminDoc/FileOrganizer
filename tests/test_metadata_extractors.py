@@ -27,6 +27,7 @@ from fileorganizer.metadata_extractors import (  # noqa: E402
     MetadataHint,
     extract_for_path,
     extract_hint,
+    aep_extractor,
     audio_extractor,
     font_extractor,
     psd_extractor,
@@ -51,6 +52,7 @@ def test_metadata_hint_to_result_shape():
         confidence=95,
         extractor="font",
         reason="Inter Regular",
+        raw={"family": "Inter", "style": "Regular"},
     )
     out = hint.to_result("Inter-Regular.ttf")
     assert out["name"] == "Inter-Regular.ttf"
@@ -58,6 +60,7 @@ def test_metadata_hint_to_result_shape():
     assert out["confidence"] == 95
     assert out["_classifier"] == "metadata_font"
     assert out["clean_name"] == "Inter-Regular.ttf"
+    assert out["metadata"] == {"family": "Inter", "style": "Regular"}
     assert "metadata_extractor:font" in out["notes"]
     assert "Inter Regular" in out["notes"]
 
@@ -73,6 +76,81 @@ def test_extract_for_path_rejects_unknown_extension(tmp_path):
     f = tmp_path / "data.xyz"
     f.write_bytes(b"\x00")
     assert extract_for_path(f) is None
+
+
+def _write_minimal_aep(path: Path, payload: bytes) -> None:
+    if len(payload) % 2:
+        payload += b"\0"
+    chunk = b"LIST" + len(payload).to_bytes(4, "big") + payload
+    path.write_bytes(b"RIFX" + (len(chunk) + 4).to_bytes(4, "big") + b"Egg!" + chunk)
+
+
+def _write_minimal_psd_header(path: Path, width: int, height: int) -> None:
+    header = bytearray(26)
+    header[0:4] = b"8BPS"
+    header[4:6] = (1).to_bytes(2, "big")
+    header[10:14] = height.to_bytes(4, "big")
+    header[14:18] = width.to_bytes(4, "big")
+    path.write_bytes(bytes(header))
+
+
+def test_aep_extractor_returns_none_for_non_aep(tmp_path):
+    f = tmp_path / "a.txt"
+    f.write_text("not aep")
+    assert aep_extractor.extract(f) is None
+
+
+def test_aep_extractor_rejects_non_rifx_header(tmp_path):
+    f = tmp_path / "bad.aep"
+    f.write_bytes(b"not a real project")
+    assert aep_extractor.extract(f) is None
+
+
+def test_aep_extractor_parses_rifx_strings(tmp_path):
+    f = tmp_path / "wedding-opener.aep"
+    payload = (
+        b"Main Wedding Opener\0"
+        b"Trapcode Particular\0"
+        b"After Effects 2024\0"
+        b"1920x1080\0"
+        b"Duration 00:00:15:00\0"
+        b"29.97 fps\0"
+    )
+    _write_minimal_aep(f, payload)
+
+    hint = aep_extractor.extract(f)
+    assert hint is not None
+    assert hint.category == "After Effects - 3D & Particle"
+    assert hint.confidence >= 90
+    assert hint.extractor == "aep"
+    assert "Main Wedding Opener" in hint.raw["composition_names"]
+    assert "Trapcode" in hint.raw["required_plugins"]
+    assert "After Effects 2024" in hint.raw["ae_versions"]
+    assert "1920x1080" in hint.raw["resolutions"]
+    assert "00:00:15:00" in hint.raw["durations"]
+    assert 29.97 in hint.raw["frame_rates"]
+    assert "LIST" in hint.raw["chunk_types"]
+
+
+def test_extract_for_path_dispatches_aep(tmp_path):
+    f = tmp_path / "logo-reveal.aep"
+    _write_minimal_aep(f, b"Main Logo Reveal\0")
+    hint = extract_for_path(f)
+    assert hint is not None
+    assert hint.category == "After Effects - Logo Reveal"
+
+
+def test_select_primary_file_picks_best_aep(tmp_path):
+    from fileorganizer.metadata_extractors import _select_primary_file
+    folder = tmp_path / "Epic Opener"
+    folder.mkdir()
+    generic = folder / "project.aep"
+    descriptive = folder / "Epic Opener Main.aep"
+    _write_minimal_aep(generic, b"Comp 1\0")
+    _write_minimal_aep(descriptive, b"Epic Opener Main Comp\0")
+
+    primary = _select_primary_file(folder, [".aep"])
+    assert primary == descriptive
 
 
 def test_extract_hint_requires_source_dir(tmp_path):
@@ -139,9 +217,11 @@ def test_psd_extractor_with_mock_psdimage(tmp_path, monkeypatch):
     fake_module = mock.MagicMock()
     fake_module.PSDImage.open.return_value = FakePSD(1080, 1920)
     monkeypatch.setitem(sys.modules, "psd_tools", fake_module)
+    import fileorganizer.psd_safe as psd_safe
+    monkeypatch.setattr(psd_safe, "safe_psd_open", lambda _path: FakePSD(1080, 1920))
 
     f = tmp_path / "story.psd"
-    f.write_bytes(b"placeholder")
+    _write_minimal_psd_header(f, 1080, 1920)
     hint = psd_extractor.extract(f)
     assert hint is not None
     assert hint.category == "Print - Social Media Graphics"
@@ -160,9 +240,11 @@ def test_psd_extractor_business_card_routing(tmp_path, monkeypatch):
     fake_module = mock.MagicMock()
     fake_module.PSDImage.open.return_value = FakePSD(1050, 600)
     monkeypatch.setitem(sys.modules, "psd_tools", fake_module)
+    import fileorganizer.psd_safe as psd_safe
+    monkeypatch.setattr(psd_safe, "safe_psd_open", lambda _path: FakePSD(1050, 600))
 
     f = tmp_path / "card.psd"
-    f.write_bytes(b"placeholder")
+    _write_minimal_psd_header(f, 1050, 600)
     hint = psd_extractor.extract(f)
     assert hint is not None
     assert hint.category == "Print - Business Cards & Stationery"

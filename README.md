@@ -1,7 +1,7 @@
 # FileOrganizer
 
 ![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.6.0-22d3ee)
-![Core](https://img.shields.io/badge/core-Python%20v8.5.0-3776AB)
+![Core](https://img.shields.io/badge/core-Python%20v8.5.1-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
 ![WinUI](https://img.shields.io/badge/WinUI-3-0078D6)
@@ -256,6 +256,10 @@ repo root:
 ├── classify_design.py        ← DeepSeek batch classifier for design assets
 └── deepseek_research.py      ← _Review-folder ID resolver
 ```
+
+Stage-1 metadata extractors cover PSD, font, audio, video, and AEP RIFX
+content. High-confidence metadata hints carry raw metadata into batch results
+before marketplace lookup, embeddings, or LLM routing run.
 
 ## Project Planning
 

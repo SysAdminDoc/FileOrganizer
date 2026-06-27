@@ -21,12 +21,13 @@ from pathlib import Path
 from typing import Optional
 
 from ._types import MetadataHint
-from . import psd_extractor, font_extractor, audio_extractor, video_extractor
+from . import aep_extractor, psd_extractor, font_extractor, audio_extractor, video_extractor
 
 __all__ = [
     "MetadataHint",
     "extract_hint",
     "extract_for_path",
+    "aep_extractor",
     "psd_extractor",
     "font_extractor",
     "audio_extractor",
@@ -36,6 +37,8 @@ __all__ = [
 
 # Map dominant file extension -> extractor module exposing .extract(Path).
 _EXT_DISPATCH = {
+    # After Effects
+    ".aep": aep_extractor,
     # PSD / Photoshop
     ".psd": psd_extractor,
     ".psb": psd_extractor,
@@ -119,10 +122,11 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
     """Pick the dominant file in a folder for metadata-driven classification.
 
     Priority:
-      1. If any .ttf/.otf — return the first (font folder).
-      2. Else if any .psd/.psb — return the largest (PSD bundle).
-      3. Else if any video — return the largest.
-      4. Else if any audio — return the largest.
+      1. If any .aep — return the best-scored project file.
+      2. Else if any .ttf/.otf — return the first (font folder).
+      3. Else if any .psd/.psb — return the largest (PSD bundle).
+      4. Else if any video — return the largest.
+      5. Else if any audio — return the largest.
     """
     try:
         files = [p for p in folder.iterdir() if p.is_file()]
@@ -146,6 +150,9 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
         except OSError:
             return candidates[0]
 
+    aep = _best_aep_file(folder, files, ext_hint)
+    if aep is not None:
+        return aep
     font = first_with_ext({".ttf", ".otf", ".ttc", ".woff", ".woff2"})
     if font is not None:
         return font
@@ -159,3 +166,28 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
     if audio is not None:
         return audio
     return None
+
+
+def _best_aep_file(folder: Path, files: list[Path], ext_hint: list[str]) -> Optional[Path]:
+    aep_exts = {".aep"}
+    candidates = [p for p in files if p.suffix.lower() in aep_exts]
+    hint_exts = {str(ext).lower() for ext in ext_hint}
+    if not candidates and hint_exts.intersection(aep_exts):
+        try:
+            for path in folder.rglob("*"):
+                if path.is_file() and path.suffix.lower() in aep_exts:
+                    candidates.append(path)
+                    if len(candidates) >= 500:
+                        break
+        except OSError:
+            return None
+    if not candidates:
+        return None
+    try:
+        from fileorganizer.categories import _score_aep
+        return max(candidates, key=lambda p: _score_aep(p, folder, folder.name)[0])
+    except Exception:
+        try:
+            return max(candidates, key=lambda p: p.stat().st_size)
+        except OSError:
+            return candidates[0]
