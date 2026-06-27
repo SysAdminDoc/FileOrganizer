@@ -30,9 +30,10 @@ py7zr
 # fixed in 4.61.0).  N-9 metadata extractors will use the name table; the
 # pin lands here ahead of that work to cover any transitive use today.
 fonttools>=4.62.1
-# NEXT-50: Google magika — 99%+ accurate content-type detection across 300+ MIME types.
-# Enables Stage 0 obfuscated-extension pre-routing (e.g., .txt that's actually .zip).
-python-magic-bin  # Windows fallback; on Linux use: apt-get install libmagic1
+# NEXT-50: Google Magika content-type detection across 300+ MIME types.
+# python-magic-bin remains the Windows fallback; on Linux install libmagic1.
+magika
+python-magic-bin
 # NEXT-43: ExifTool integration — 800+ format support via Python wrapper.
 # Supplements N-9 extractors on formats with <50% confidence.
 piexif

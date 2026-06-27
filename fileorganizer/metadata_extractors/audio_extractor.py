@@ -21,13 +21,14 @@ _CAT_SFX = "Sound Effects & SFX"
 _CAT_MUSIC = "Stock Music & Audio"
 
 
-def extract(path: Path) -> Optional[MetadataHint]:
+def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHint]:
     """Read audio tags + duration; emit a hint based on duration heuristics."""
     if not _HAS_MUTAGEN:
         return None
     if not path or not path.exists():
         return None
-    if path.suffix.lower() not in {".mp3", ".flac", ".wav", ".ogg", ".m4a", ".aac", ".aiff"}:
+    ext = (detected_ext or path.suffix).lower()
+    if ext not in {".mp3", ".flac", ".wav", ".ogg", ".m4a", ".aac", ".aiff"}:
         return None
 
     try:
@@ -59,7 +60,8 @@ def extract(path: Path) -> Optional[MetadataHint]:
         "title": title,
         "artist": artist,
         "album": album,
-        "ext": path.suffix.lower(),
+        "ext": ext,
+        "original_ext": path.suffix.lower(),
     }
 
     if duration <= 0:

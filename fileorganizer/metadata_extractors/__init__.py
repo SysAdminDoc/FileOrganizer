@@ -74,13 +74,14 @@ def extract_for_path(path: Path) -> Optional[MetadataHint]:
         return None
     ext = path.suffix.lower()
     mod = _EXT_DISPATCH.get(ext)
-    if mod is None:
-        return None
-    try:
-        return mod.extract(path)
-    except Exception:
-        # Extractors should swallow their own errors, but defend in depth.
-        return None
+    if mod is not None:
+        try:
+            hint = mod.extract(path)
+        except Exception:
+            hint = None
+        if hint is not None:
+            return _attach_content_mismatch(path, hint)
+    return _extract_from_content_type(path)
 
 
 def extract_hint(item: dict, source_dir: Optional[str] = None) -> Optional[MetadataHint]:
@@ -165,7 +166,115 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
     audio = largest_with_ext({".mp3", ".flac", ".wav", ".ogg", ".m4a", ".aac"})
     if audio is not None:
         return audio
+    content_detected = _select_content_detected_file(files)
+    if content_detected is not None:
+        return content_detected
     return None
+
+
+def _extract_from_content_type(path: Path) -> Optional[MetadataHint]:
+    """Use Magika/python-magic mismatch detection to route extensionless files."""
+    try:
+        from fileorganizer import magika_router
+    except Exception:
+        return None
+
+    detected_ext = magika_router.extractor_extension_for_path(path)
+    if detected_ext:
+        mod = _EXT_DISPATCH.get(detected_ext)
+        if mod is not None:
+            try:
+                hint = mod.extract(path, detected_ext=detected_ext)
+            except TypeError:
+                hint = mod.extract(path)
+            except Exception:
+                hint = None
+            if hint is not None:
+                return _attach_content_mismatch(path, hint)
+
+    routed = magika_router.route_by_mime_type(path)
+    mismatch = magika_router.detect_extension_mismatch(path)
+    if routed is None or mismatch is None:
+        return None
+    category, confidence = routed
+    raw = dict(mismatch)
+    return MetadataHint(
+        category=category,
+        confidence=confidence,
+        extractor="content_type",
+        reason=(
+            f"{raw.get('detected_mime') or raw.get('detected_label')} bytes do not match "
+            f"{raw.get('original_ext') or 'no extension'}"
+        ),
+        raw=raw,
+    )
+
+
+def _attach_content_mismatch(path: Path, hint: MetadataHint) -> MetadataHint:
+    """Add mismatch metadata to a successful extractor hint when applicable."""
+    try:
+        from fileorganizer import magika_router
+        mismatch = magika_router.detect_extension_mismatch(path)
+    except Exception:
+        mismatch = None
+    if not mismatch:
+        return hint
+    raw = dict(hint.raw)
+    raw.update(mismatch)
+    reason = hint.reason
+    detected = mismatch.get("detected_mime") or mismatch.get("detected_label")
+    if detected:
+        reason = f"{reason}; content-type {detected} differs from suffix"
+    return MetadataHint(
+        category=hint.category,
+        confidence=hint.confidence,
+        extractor=hint.extractor,
+        reason=reason,
+        raw=raw,
+    )
+
+
+def _select_content_detected_file(files: list[Path]) -> Optional[Path]:
+    """Find a top-level file whose bytes expose a supported extractor type."""
+    try:
+        from fileorganizer import magika_router
+    except Exception:
+        return None
+
+    candidates: list[tuple[int, int, Path]] = []
+    for path in files[:80]:
+        try:
+            detected_ext = magika_router.extractor_extension_for_path(path)
+            if not detected_ext:
+                routed = magika_router.route_by_mime_type(path)
+                if routed is None or not magika_router.detect_extension_mismatch(path):
+                    continue
+                priority = 99
+            else:
+                priority = _content_ext_priority(detected_ext)
+            size = path.stat().st_size
+        except OSError:
+            continue
+        except Exception:
+            continue
+        candidates.append((priority, -size, path))
+    if not candidates:
+        return None
+    return sorted(candidates, key=lambda row: (row[0], row[1], row[2].name.lower()))[0][2]
+
+
+def _content_ext_priority(ext: str) -> int:
+    if ext == ".aep":
+        return 0
+    if ext in {".ttf", ".otf", ".ttc", ".woff", ".woff2"}:
+        return 1
+    if ext in {".psd", ".psb"}:
+        return 2
+    if ext in {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v", ".mxf"}:
+        return 3
+    if ext in {".mp3", ".flac", ".wav", ".ogg", ".m4a", ".aac", ".aiff"}:
+        return 4
+    return 50
 
 
 def _best_aep_file(folder: Path, files: list[Path], ext_hint: list[str]) -> Optional[Path]:

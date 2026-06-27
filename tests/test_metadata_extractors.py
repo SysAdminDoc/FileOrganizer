@@ -140,6 +140,62 @@ def test_extract_for_path_dispatches_aep(tmp_path):
     assert hint.category == "After Effects - Logo Reveal"
 
 
+def test_extract_for_path_uses_content_detected_aep_extension(tmp_path, monkeypatch):
+    from fileorganizer import magika_router
+
+    f = tmp_path / "logo-reveal.bin"
+    _write_minimal_aep(f, b"Main Logo Reveal\0")
+
+    monkeypatch.setattr(
+        magika_router,
+        "detect_content_type",
+        lambda _path: magika_router.ContentTypeHint(
+            label="aep",
+            mime_type="application/octet-stream",
+            description="After Effects project",
+            confidence=0.98,
+            source="magika",
+        ),
+    )
+
+    hint = extract_for_path(f)
+
+    assert hint is not None
+    assert hint.category == "After Effects - Logo Reveal"
+    assert hint.raw["ext"] == ".aep"
+    assert hint.raw["original_ext"] == ".bin"
+    assert hint.raw["extension_mismatch"] is True
+    assert hint.raw["detected_exts"] == [".aep"]
+
+
+def test_extract_for_path_routes_obfuscated_archive_to_review(tmp_path, monkeypatch):
+    from fileorganizer import magika_router
+
+    f = tmp_path / "preview.jpg"
+    f.write_bytes(b"PK\x03\x04")
+
+    monkeypatch.setattr(
+        magika_router,
+        "detect_content_type",
+        lambda _path: magika_router.ContentTypeHint(
+            label="zip",
+            mime_type="application/zip",
+            description="Zip archive",
+            confidence=0.99,
+            source="magika",
+        ),
+    )
+
+    hint = extract_for_path(f)
+
+    assert hint is not None
+    assert hint.category == "_Review"
+    assert hint.confidence >= 90
+    assert hint.extractor == "content_type"
+    assert hint.raw["extension_mismatch"] is True
+    assert hint.raw["original_ext"] == ".jpg"
+
+
 def test_select_primary_file_picks_best_aep(tmp_path):
     from fileorganizer.metadata_extractors import _select_primary_file
     folder = tmp_path / "Epic Opener"
@@ -151,6 +207,31 @@ def test_select_primary_file_picks_best_aep(tmp_path):
 
     primary = _select_primary_file(folder, [".aep"])
     assert primary == descriptive
+
+
+def test_select_primary_file_uses_content_detected_project(tmp_path, monkeypatch):
+    from fileorganizer import magika_router
+    from fileorganizer.metadata_extractors import _select_primary_file
+
+    folder = tmp_path / "Epic Opener"
+    folder.mkdir()
+    disguised = folder / "project.bin"
+    _write_minimal_aep(disguised, b"Epic Opener Main Comp\0")
+
+    monkeypatch.setattr(
+        magika_router,
+        "detect_content_type",
+        lambda _path: magika_router.ContentTypeHint(
+            label="aep",
+            mime_type="application/octet-stream",
+            confidence=0.98,
+            source="magika",
+        ),
+    )
+
+    primary = _select_primary_file(folder, [])
+
+    assert primary == disguised
 
 
 def test_extract_hint_requires_source_dir(tmp_path):

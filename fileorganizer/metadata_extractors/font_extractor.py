@@ -52,19 +52,20 @@ def _name_table_lookup(font, name_id: int) -> str:
     return ""
 
 
-def extract(path: Path) -> Optional[MetadataHint]:
+def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHint]:
     """Read font name table and emit a Fonts & Typography hint at conf 95. Detects variable axes (NEXT-56)."""
     if not _HAS_FONTTOOLS:
         return None
     if not path or not path.exists():
         return None
-    if path.suffix.lower() not in {".ttf", ".otf", ".ttc", ".woff", ".woff2"}:
+    ext = (detected_ext or path.suffix).lower()
+    if ext not in {".ttf", ".otf", ".ttc", ".woff", ".woff2"}:
         return None
 
     try:
         from fontTools.ttLib import TTFont  # type: ignore
         # lazy=True avoids loading every glyph; fontNumber=0 picks first face in TTC.
-        if path.suffix.lower() == ".ttc":
+        if ext == ".ttc":
             font = TTFont(str(path), lazy=True, fontNumber=0)
         else:
             font = TTFont(str(path), lazy=True)
@@ -108,8 +109,13 @@ def extract(path: Path) -> Optional[MetadataHint]:
             category=_CAT_FONTS,
             confidence=80,
             extractor="font",
-            reason=f"valid font header (no name fields) — {path.suffix.lower()}",
-            raw={"ext": path.suffix.lower(), "is_variable": is_variable, "color": has_colr},
+            reason=f"valid font header (no name fields) - {ext}",
+            raw={
+                "ext": ext,
+                "original_ext": path.suffix.lower(),
+                "is_variable": is_variable,
+                "color": has_colr,
+            },
         )
 
     return MetadataHint(
@@ -123,7 +129,8 @@ def extract(path: Path) -> Optional[MetadataHint]:
             "full_name": full_name,
             "version": version,
             "foundry": foundry,
-            "ext": path.suffix.lower(),
+            "ext": ext,
+            "original_ext": path.suffix.lower(),
             "is_variable": is_variable,
             "variable_axes": var_axes if var_axes else None,
             "has_color": has_colr,
