@@ -1,7 +1,7 @@
 # FileOrganizer
 
 ![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.6.0-22d3ee)
-![Core](https://img.shields.io/badge/core-Python%20v8.5.1-3776AB)
+![Core](https://img.shields.io/badge/core-Python%20v8.5.2-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
 ![WinUI](https://img.shields.io/badge/WinUI-3-0078D6)
@@ -258,8 +258,10 @@ repo root:
 ```
 
 Stage-1 metadata extractors cover PSD, font, audio, video, and AEP RIFX
-content. High-confidence metadata hints carry raw metadata into batch results
-before marketplace lookup, embeddings, or LLM routing run.
+content. The content-type pre-router uses Magika first, then python-magic,
+to flag extension mismatches and send renamed PSD/font/audio/video/AEP files
+through the right extractor. High-confidence metadata hints carry raw metadata
+into batch results before marketplace lookup, embeddings, or LLM routing run.
 
 ## Project Planning
 

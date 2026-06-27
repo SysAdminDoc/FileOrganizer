@@ -63,9 +63,10 @@ _EXT_RX = re.compile(r"\.(?:aep|aepx|psd|png|jpe?g|mov|mp4|wav|mp3|ai|eps)$", re
 _MAX_SCAN_BYTES = 16 * 1024 * 1024
 
 
-def extract(path: Path) -> Optional[MetadataHint]:
+def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHint]:
     """Extract .aep RIFX metadata and return an After Effects category hint."""
-    if not path or not path.exists() or path.suffix.lower() != ".aep":
+    ext = (detected_ext or path.suffix).lower()
+    if not path or not path.exists() or ext != ".aep":
         return None
     try:
         data = path.read_bytes()[:_MAX_SCAN_BYTES]
@@ -102,6 +103,8 @@ def extract(path: Path) -> Optional[MetadataHint]:
             "form_type": header["form_type"],
             "container_size": header["container_size"],
             "chunk_types": chunk_types,
+            "ext": ext,
+            "original_ext": path.suffix.lower(),
             "composition_names": composition_names,
             "required_plugins": required_plugins,
             "ae_versions": ae_versions,

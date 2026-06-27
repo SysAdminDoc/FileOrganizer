@@ -67,7 +67,7 @@ def _is_flyer_a4_or_letter(w: int, h: int) -> bool:
     return 1.29 <= r <= 1.45 and h >= 2000
 
 
-def extract(path: Path) -> Optional[MetadataHint]:
+def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHint]:
     """Read a PSD/PSB header and emit a category hint if the canvas is recognizable.
     
     SECURITY: Validates PSD dimensions before parsing to block maliciously
@@ -77,7 +77,8 @@ def extract(path: Path) -> Optional[MetadataHint]:
         return None
     if not path or not path.exists():
         return None
-    if path.suffix.lower() not in {".psd", ".psb"}:
+    ext = (detected_ext or path.suffix).lower()
+    if ext not in {".psd", ".psb"}:
         return None
 
     # Pre-parse header validation: read the raw PSD header (bytes 0–26) and check
@@ -118,7 +119,7 @@ def extract(path: Path) -> Optional[MetadataHint]:
     except Exception:
         return None
 
-    raw = {"width": width, "height": height, "ext": path.suffix.lower()}
+    raw = {"width": width, "height": height, "ext": ext, "original_ext": path.suffix.lower()}
 
     if width <= 0 or height <= 0:
         return None

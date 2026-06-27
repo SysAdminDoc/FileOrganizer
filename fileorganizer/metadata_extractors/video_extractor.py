@@ -41,13 +41,14 @@ _CAT_VIDEO_OTHER = "Video Editing - General"
 _PRO_CODECS = {"prores", "prores_ks", "dnxhd", "dnxhr", "xdcam", "cineform"}
 
 
-def extract(path: Path) -> Optional[MetadataHint]:
+def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHint]:
     """ffprobe a video file and emit an aspect/codec-driven hint."""
     if _FFPROBE is None:
         return None
     if not path or not path.exists():
         return None
-    if path.suffix.lower() not in {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v", ".mxf"}:
+    ext = (detected_ext or path.suffix).lower()
+    if ext not in {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v", ".mxf"}:
         return None
 
     try:
@@ -92,7 +93,8 @@ def extract(path: Path) -> Optional[MetadataHint]:
         "codec": codec,
         "duration_s": duration,
         "fps": fps,
-        "ext": path.suffix.lower(),
+        "ext": ext,
+        "original_ext": path.suffix.lower(),
     }
 
     if width <= 0 or height <= 0:
