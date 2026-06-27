@@ -2,11 +2,11 @@
 Video metadata extractor — ffprobe (subprocess; no ffmpeg-python dep).
 
 NEXT-11 deep routing rules:
-  - 9:16 vertical → "Social Media - Templates" (Stories / Reels / Shorts) [confidence 85]
-  - 1:1 square    → "Social Media - Templates" (Instagram square) [confidence 78]
-  - ≤ 15s duration → "After Effects - Motion Graphics" (looping clips) [confidence 80]
-  - ProRes/DNxHD/XDCAM → "Broadcast / Cinema Stock" [confidence 90]
-  - > 5 min duration → "Tutorial Video" [confidence 75]
+  - 9:16 vertical -> "After Effects - Social Media" (Stories / Reels / Shorts) [confidence 85]
+  - 1:1 square    -> "After Effects - Social Media" (Instagram square) [confidence 78]
+  - <= 15s duration -> "After Effects - Motion Graphics Pack" (looping clips) [confidence 80]
+  - ProRes/DNxHD/XDCAM -> "Stock Footage - General" [confidence 90]
+  - > 5 min duration -> "Tutorial & Education" [confidence 75]
   - other 16:9 landscape (≥1080p) → "Stock Footage - General" [confidence 70]
 
 ffprobe is the only "external binary" dependency. We probe with a 5s timeout
@@ -31,10 +31,10 @@ _FFPROBE = shutil.which("ffprobe")
 # codec is unmistakably broadcast/cinema. Aspect-ratio hints stay below 90
 # (informational only) so downstream stages keep their say.
 _CAT_STOCK = "Stock Footage - General"
-_CAT_SOCIAL_TEMPLATES = "Social Media - Templates"
-_CAT_MOTION_GRAPHICS = "After Effects - Motion Graphics"
-_CAT_BROADCAST = "Broadcast / Cinema Stock"
-_CAT_TUTORIAL = "Tutorial Video"
+_CAT_SOCIAL_TEMPLATES = "After Effects - Social Media"
+_CAT_MOTION_GRAPHICS = "After Effects - Motion Graphics Pack"
+_CAT_BROADCAST = "Stock Footage - General"
+_CAT_TUTORIAL = "Tutorial & Education"
 _CAT_VIDEO_OTHER = "Video Editing - General"
 
 # Broadcast/cinema codecs (NEXT-11)
