@@ -1,7 +1,7 @@
 # FileOrganizer
 
 ![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.6.0-22d3ee)
-![Core](https://img.shields.io/badge/core-Python%20v8.5.12-3776AB)
+![Core](https://img.shields.io/badge/core-Python%20v8.5.13-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
 ![WinUI](https://img.shields.io/badge/WinUI-3-0078D6)
@@ -143,7 +143,8 @@ Python process tree.
   near-duplicate photos.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
-- **Watch mode** — monitor folders, auto-organize new files, system tray.
+- **Watch mode** — monitor configured sources, debounce new files, write
+  dry-run organize plans, and persist state in `watch_state.db`.
 
 These all work today through `python -m fileorganizer` (Path B). Shell
 pages will land in subsequent `ui-v0.X.Y` releases.
@@ -160,6 +161,9 @@ python organize_run.py --retry-errors             # Retry failed items
 # Design pipeline (G:\Design Unorganized → G:\Organized)
 python organize_run.py --source design --preview --quiet
 python organize_run.py --source design --apply --quiet
+
+# Watch configured source and emit dry-run plans for arriving files
+python -m fileorganizer.watch_mode --source design --start --duration 60
 
 # Plan-first apply
 python organize_run.py --source design --preview --plan-out plan.json
