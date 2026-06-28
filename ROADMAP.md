@@ -2807,13 +2807,6 @@ for relevance; "directly portable" means the file can be copied with minor adapt
    (KDE Discover app store; community initiatives; Linux ecosystem partnerships)
 ## Research-Driven Additions
 
-- [ ] P2 - Add a sidecar contract test suite for WinUI pages
-  Why: the shell depends on many root `*_run.py` NDJSON sidecars, but behavior is inconsistent around start/progress/error/complete events, cancellation, and runtime dependency handling.
-  Evidence: `cleanup_run.py`, `photos_run.py`, `raw_run.py`, `comics_run.py`, `src/FileOrganizer.UI/Services/PythonRunner.cs`, `src/FileOrganizer.UI/Services/SidecarRunner.cs`.
-  Touches: root `*_run.py` sidecars, `tests/`, WinUI service tests or harness scripts.
-  Acceptance: every live sidecar has tests proving valid NDJSON, stable event names, non-zero exit on fatal errors, graceful cancellation, and no runtime package installation.
-  Complexity: M
-
 - [ ] P2 - Align release and diagnostic version metadata
   Why: `src/Directory.Build.props` still reports `0.1.0` while README badges and release notes advertise newer shell/core versions.
   Evidence: `src/Directory.Build.props`; `README.md`; `CHANGELOG.md`; `SECURITY.md`.
