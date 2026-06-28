@@ -343,4 +343,8 @@ def main(argv: list[str] | None = None, rawpy_module_marker: Any = Ellipsis) -> 
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt:
+        emit("error", {"code": "cancelled", "message": "Cancelled."})
+        sys.exit(130)
