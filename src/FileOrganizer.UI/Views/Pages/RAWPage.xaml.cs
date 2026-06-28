@@ -14,6 +14,7 @@ public sealed class RawImageRow
     public string Camera { get; set; } = "";
     public string DateTaken { get; set; } = "";
     public string Iso { get; set; } = "";
+    public string FocalLength { get; set; } = "";
     public string Status { get; set; } = "";
 }
 
@@ -76,8 +77,9 @@ public sealed partial class RAWPage : Page
                 var camera = root.GetProperty("camera").GetString() ?? "Unknown";
                 var dateTaken = root.GetProperty("date_taken").GetString() ?? "Unknown";
                 var iso = root.GetProperty("iso").GetString() ?? "Unknown";
+                var focalLength = root.TryGetProperty("focal_length", out var focal) ? focal.GetString() ?? "Unknown" : "Unknown";
                 var status = root.GetProperty("status").GetString() ?? "OK";
-                Results.Add(new RawImageRow { Filename = filename, Camera = camera, DateTaken = dateTaken, Iso = iso, Status = status });
+                Results.Add(new RawImageRow { Filename = filename, Camera = camera, DateTaken = dateTaken, Iso = iso, FocalLength = focalLength, Status = status });
             }
             else if (ev == "progress")
             {
@@ -85,6 +87,15 @@ public sealed partial class RAWPage : Page
                 if (root.TryGetProperty("exif_read", out var exif)) ExifText.Text = exif.GetInt32().ToString("N0");
                 if (root.TryGetProperty("organized", out var organized)) OrganizedText.Text = organized.GetInt32().ToString("N0");
                 if (root.TryGetProperty("status", out var status)) StatusText.Text = status.GetString() ?? "";
+            }
+            else if (ev == "plan")
+            {
+                var path = root.TryGetProperty("path", out var p) ? p.GetString() ?? "" : "";
+                var items = root.TryGetProperty("items", out var i) ? i.GetInt32() : 0;
+                var dryRun = root.TryGetProperty("dry_run", out var d) && d.GetBoolean();
+                StatusText.Text = dryRun
+                    ? $"Dry-run plan written for {items:N0} RAW files: {path}"
+                    : $"Moved {items:N0} RAW files. Plan: {path}";
             }
         });
     }

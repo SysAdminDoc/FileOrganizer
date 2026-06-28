@@ -72,15 +72,17 @@
                     <DataTemplate x:DataType="local:RawImageRow">
                         <Grid ColumnSpacing="16" Padding="0,8">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200"/><ColumnDefinition Width="120"/>
-                                <ColumnDefinition Width="100"/><ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="200"/><ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="120"/><ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="90"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{x:Bind Filename, Mode=OneWay}" Style="{StaticResource BodyTextStyle}"/>
                             <TextBlock Grid.Column="1" Text="{x:Bind Camera, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
                             <TextBlock Grid.Column="2" Text="{x:Bind DateTaken, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
                             <TextBlock Grid.Column="3" Text="{x:Bind Iso, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
-                            <TextBlock Grid.Column="4" Text="{x:Bind Status, Mode=OneWay}" Style="{StaticResource MutedTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind FocalLength, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="{x:Bind Status, Mode=OneWay}" Style="{StaticResource MutedTextStyle}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
