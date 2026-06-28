@@ -1,6 +1,7 @@
 """FileOrganizer — Ollama LLM integration, model catalog, and AI classification."""
-import os, re, json, subprocess, sys, time, math, base64, io
+import os, re, json, subprocess, sys, time, math, base64, io, hashlib
 from pathlib import Path
+from typing import Annotated, Literal, Union
 
 from fileorganizer.bootstrap import HAS_PILLOW, HAS_MAGIC
 try:
@@ -26,18 +27,48 @@ from fileorganizer.naming import (
 
 # Pydantic model for structured JSON output (Ollama format parameter)
 try:
-    from pydantic import BaseModel, Field
+    from pydantic import BaseModel, Field, TypeAdapter
     
-    class ClassifyResult(BaseModel):
-        """Structured classification result for Ollama format=PydanticModel.model_json_schema()."""
+    class ClassificationResult(BaseModel):
+        """Structured successful classification result."""
+        kind: Literal["classification"] = Field("classification", description="Tagged result type")
         name: str = Field(..., description="Clean, English-translated project name")
         category: str = Field(..., description="Category from the provided list")
         confidence: int = Field(..., ge=0, le=100, description="Confidence 0–100")
     
+    class ReviewResult(BaseModel):
+        """Structured fallback when no category can be selected safely."""
+        kind: Literal["review"] = Field("review", description="Tagged result type")
+        name: str = Field("", description="Best cleaned project name, if known")
+        category: Literal["_Review"] = Field("_Review", description="Review queue marker")
+        confidence: int = Field(0, ge=0, le=49, description="Low confidence review score")
+        reason: str = Field("", description="Short reason review is required")
+
+    ClassifyResult = Annotated[
+        Union[ClassificationResult, ReviewResult],
+        Field(discriminator="kind"),
+    ]
+    _CLASSIFY_RESULT_ADAPTER = TypeAdapter(ClassifyResult)
+
+    def classify_result_json_schema() -> dict:
+        """Return deterministic structured-output schema for Ollama format."""
+        return _CLASSIFY_RESULT_ADAPTER.json_schema()
+
+    def classify_result_schema_hash() -> str:
+        payload = json.dumps(classify_result_json_schema(), sort_keys=True, separators=(',', ':'))
+        return hashlib.sha256(payload.encode('utf-8')).hexdigest()
+
     HAS_PYDANTIC = True
 except ImportError:
     HAS_PYDANTIC = False
     ClassifyResult = None
+    _CLASSIFY_RESULT_ADAPTER = None
+
+    def classify_result_json_schema() -> dict:
+        return {}
+
+    def classify_result_schema_hash() -> str:
+        return ""
 
 _OLLAMA_SETTINGS_FILE = os.path.join(_APP_DATA_DIR, 'ollama_settings.json')
 
@@ -391,7 +422,7 @@ def _ollama_generate(prompt: str, system: str = '', url: str = None,
     Uses the chat endpoint so that 'think: false' is honored via the chat
     template (the /api/generate endpoint ignores this option for Qwen3.x).
     
-    If structured=True and Pydantic is available, adds format=ClassifyResult.model_json_schema()
+    If structured=True and Pydantic is available, adds the ClassifyResult JSON schema
     to guarantee valid JSON output (Ollama >= v0.22.1).
     
     Raises on connection/timeout errors.
@@ -425,7 +456,7 @@ def _ollama_generate(prompt: str, system: str = '', url: str = None,
     
     # Add Pydantic structured format if requested and available (Ollama >= v0.22.1)
     if structured and HAS_PYDANTIC and ClassifyResult:
-        payload['format'] = ClassifyResult.model_json_schema()
+        payload['format'] = classify_result_json_schema()
 
     data = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(
@@ -805,7 +836,8 @@ def _build_llm_system_prompt() -> str:
         "'business-card' it's a business card. If there are .aep files, it's an After Effects template. "
         "If there are .psd files with topic names like 'Night Club', it's likely a flyer.\n\n"
         "Respond ONLY with valid JSON, no other text:\n"
-        '{\"name\": \"Clean Project Name\", \"category\": \"Exact Category Name\", \"confidence\": 85}\n\n'
+        '{"kind": "classification", "name": "Clean Project Name", "category": "Exact Category Name", "confidence": 85}\n'
+        'If no category is safe, return {"kind": "review", "name": "Clean Project Name", "category": "_Review", "confidence": 0, "reason": "short reason"}.\n\n'
         "VALID CATEGORIES (pick exactly one):\n"
         f"{cat_list}"
     )
@@ -928,8 +960,22 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
         if parsed is None:
             result['detail'] = f'llm:json_parse_failed raw={repr(raw[:80])}'
             return result
-        clean_name = parsed.get('name', '').strip()
-        category = parsed.get('category', '').strip()
+
+        if HAS_PYDANTIC and _CLASSIFY_RESULT_ADAPTER and parsed.get('kind'):
+            try:
+                parsed = _CLASSIFY_RESULT_ADAPTER.validate_python(parsed).model_dump()
+            except Exception:
+                pass
+
+        if parsed.get('kind') == 'review':
+            result['name'] = str(parsed.get('name', '') or folder_name).strip()
+            result['confidence'] = min(int(parsed.get('confidence', 0) or 0), 49)
+            reason = str(parsed.get('reason', '') or '').strip()
+            result['detail'] = f"llm:review:{reason}" if reason else "llm:review"
+            return result
+
+        clean_name = str(parsed.get('name', '') or '').strip()
+        category = str(parsed.get('category', '') or '').strip()
         confidence = int(parsed.get('confidence', 0))
 
         # Validate category exists

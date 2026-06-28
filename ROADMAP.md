@@ -272,7 +272,6 @@ AppX/PRI task path conflict). See `src/FileOrganizer.UI/CLAUDE.md`.
 
 | # | Item | Why now |
 |---|------|---------|
-| 1 | **NEXT-59** | pydantic 2.13 discriminated union JSON schema |
 
 ---
 
@@ -989,15 +988,6 @@ The N-13 subprocess isolation already bounds OOM to a child process; this item a
 pre-validation header check and explicit CVSS documentation in `SECURITY.md`.
 - **Impact**: 4 | **Effort**: 2 | **Tier**: NOW (security)
 - Source: [S83] GHSA-24p2-j2jr-386w https://github.com/advisories/GHSA-24p2-j2jr-386w
-
-**NEXT-59: pydantic 2.13 discriminated union JSON schema**
-Update `ClassifyResult` Pydantic model to use pydantic 2.13.3 `Annotated` discriminated union
-metadata. This ensures `model_json_schema()` generates correct `oneOf` + discriminator mapping
-for Ollama structured output validation. Pydantic 2.13 also guarantees deterministic schema output
-(sets are sorted) — enabling use of the JSON schema as a prompt-cache key for LLM cost tracking.
-**Pairs well with NEXT-44 (LLM cache)**: use schema hash as part of cache key.
-- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Pairs with**: NEXT-44
-- Source: [S111] pydantic 2.13.3 release notes (2026)
 
 **NEXT-60: watchfiles v1.1.1 foundation for watch mode**
 Update dependencies: pin `watchfiles>=1.1.1` (Rust-backed filesystem watcher, async iteration,
