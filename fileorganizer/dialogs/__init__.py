@@ -5,7 +5,7 @@ from fileorganizer.dialogs.settings import (
     AIProviderSettingsDialog, DesignWorkflowSettingsDialog,
 )
 from fileorganizer.dialogs.editors import (
-    CustomCategoriesDialog, DestTreeDialog, PCCategoryEditorDialog,
+    CustomCategoriesDialog, TeachCategoryDialog, DestTreeDialog, PCCategoryEditorDialog,
     TemplateBuilderWidget, _FileBrowserDialog, RuleEditorDialog
 )
 from fileorganizer.dialogs.cleanup import (
@@ -30,7 +30,7 @@ from fileorganizer.dialogs.marketplace import (
 __all__ = [
     'OllamaSettingsDialog', 'PhotoSettingsDialog', 'FaceManagerDialog', 'ModelManagerDialog',
     'AIProviderSettingsDialog', 'DesignWorkflowSettingsDialog',
-    'CustomCategoriesDialog', 'DestTreeDialog', 'PCCategoryEditorDialog',
+    'CustomCategoriesDialog', 'TeachCategoryDialog', 'DestTreeDialog', 'PCCategoryEditorDialog',
     'TemplateBuilderWidget', '_FileBrowserDialog', 'RuleEditorDialog',
     '_CleanupScanWorker', 'CleanupToolsDialog', 'CleanupPanel',
     '_DupScanWorker', 'DuplicateFinderDialog', 'DuplicatePanel', 'DuplicateCompareDialog',

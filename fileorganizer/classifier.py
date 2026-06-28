@@ -27,6 +27,7 @@ from fileorganizer.categories import (
     CATEGORIES, BUILTIN_CATEGORIES, get_all_categories, get_all_category_names,
     _CategoryIndex, GENERIC_AEP_NAMES, is_generic_aep, _score_aep
 )
+from fileorganizer.user_categories import classify_user_category
 from fileorganizer.naming import (
     _normalize, _beautify_name, _smart_name, _strip_source_name,
     _is_id_only_folder, _has_non_latin, MARKETPLACE_PREFIXES,
@@ -914,6 +915,20 @@ def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> d
     scan = None
     if has_folder:
         scan = _scan_folder_once(folder_path)
+
+    # User-taught categories take precedence over the built-in taxonomy.
+    try:
+        user_hit = classify_user_category(folder_name, scan=scan)
+    except Exception:
+        user_hit = None
+    if user_hit:
+        result.update(category=user_hit['category'],
+                      confidence=user_hit['confidence'],
+                      method=user_hit.get('method', 'user_category'),
+                      detail=user_hit.get('detail', 'user_category'))
+        if log_cb:
+            log_cb(f"    User category: {result['category']} ({result['confidence']:.0f}%)")
+        return result
 
     # ── Level 1: Extension-based classification ──
     if scan:

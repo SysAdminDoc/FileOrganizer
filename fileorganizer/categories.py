@@ -1,9 +1,10 @@
 """FileOrganizer — Category definitions, keyword index, and AEP scoring."""
-import os, re, math
+import json, os, re, math
 from pathlib import Path
 from functools import lru_cache
 
-from fileorganizer.config import _APP_DATA_DIR, _CUSTOM_CATS_FILE
+from fileorganizer.config import _APP_DATA_DIR, _CUSTOM_CATS_FILE, _USER_CATEGORIES_FILE
+from fileorganizer.user_categories import load_user_categories
 
 # Late import to avoid circular dependency
 def _get_normalize():
@@ -685,9 +686,30 @@ def get_or_create_category(name: str, keywords: list = None) -> str:
     add_dynamic_category(name, keywords)
     return name
 
+def _dedupe_categories(category_groups):
+    out = []
+    seen = set()
+    for group in category_groups:
+        for name, keywords in group:
+            key = name.casefold()
+            if key in seen:
+                continue
+            out.append((name, keywords))
+            seen.add(key)
+    return out
+
+
 def get_all_categories():
-    """Return built-in + custom categories."""
-    return BUILTIN_CATEGORIES + load_custom_categories()
+    """Return taught + built-in + custom categories.
+
+    User-taught categories are first so their keyword/model hints win ties
+    against the built-in taxonomy.
+    """
+    return _dedupe_categories([
+        load_user_categories(),
+        BUILTIN_CATEGORIES,
+        load_custom_categories(),
+    ])
 
 def get_all_category_names():
     """Return sorted list of all category names."""
@@ -702,6 +724,7 @@ class _CategoryIndex:
     """Pre-normalized keyword index for fast category matching."""
     _instance = None
     _custom_cats_mtime = None
+    _user_cats_mtime = None
 
     def __init__(self):
         self._build()
@@ -723,6 +746,10 @@ class _CategoryIndex:
             self._custom_cats_mtime = os.path.getmtime(_CUSTOM_CATS_FILE) if os.path.exists(_CUSTOM_CATS_FILE) else None
         except OSError:
             self._custom_cats_mtime = None
+        try:
+            self._user_cats_mtime = os.path.getmtime(_USER_CATEGORIES_FILE) if os.path.exists(_USER_CATEGORIES_FILE) else None
+        except OSError:
+            self._user_cats_mtime = None
 
     def _is_stale(self):
         """Check if custom categories file has changed since last build."""
@@ -730,7 +757,11 @@ class _CategoryIndex:
             current = os.path.getmtime(_CUSTOM_CATS_FILE) if os.path.exists(_CUSTOM_CATS_FILE) else None
         except OSError:
             current = None
-        return current != self._custom_cats_mtime
+        try:
+            user_current = os.path.getmtime(_USER_CATEGORIES_FILE) if os.path.exists(_USER_CATEGORIES_FILE) else None
+        except OSError:
+            user_current = None
+        return current != self._custom_cats_mtime or user_current != self._user_cats_mtime
 
     @classmethod
     def get(cls):
