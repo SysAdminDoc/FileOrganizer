@@ -12,8 +12,10 @@ Design file extensions that trigger extraction:
   .wav .mp3 .aiff .flac .ogg .mid .ttf .otf .lut .cube
 """
 import os, re, shutil, tempfile, zipfile, tarfile, logging
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Optional
+
+from fileorganizer.safe_archive import UnsafeArchiveEntryError, safe_extract_path
 
 log = logging.getLogger(__name__)
 
@@ -61,6 +63,41 @@ _JUNK_EXTENSIONS = {
 
 _ARCHIVE_EXTENSIONS = {'.zip', '.rar', '.7z', '.tar',
                        '.tar.gz', '.tgz', '.tar.bz2', '.tar.xz'}
+
+
+def _normalize_member_name(member_name: str) -> str:
+    return str(member_name or '').replace('\\', '/')
+
+
+def _member_output_name(member_name: str, top_folder: Optional[str], *,
+                        flatten: bool, strip_top_folder: bool) -> str:
+    normalized = _normalize_member_name(member_name)
+    p = PurePosixPath(normalized)
+    if flatten:
+        return p.name
+    if strip_top_folder and top_folder:
+        top = _normalize_member_name(top_folder).strip('/')
+        parts = p.parts
+        if parts and parts[0] == top:
+            return '/'.join(parts[1:])
+    return normalized
+
+
+def _safe_member_destination(dest_dir: str, member_name: str,
+                             top_folder: Optional[str] = None, *,
+                             flatten: bool = False,
+                             strip_top_folder: bool = True,
+                             validation_root: Optional[str] = None) -> str:
+    """Validate archive member and return its safe output path."""
+    normalized = _normalize_member_name(member_name)
+    safe_extract_path(validation_root or dest_dir, normalized)
+    output_name = _member_output_name(
+        normalized,
+        top_folder,
+        flatten=flatten,
+        strip_top_folder=strip_top_folder,
+    )
+    return safe_extract_path(dest_dir, output_name)
 
 
 def is_archive(path: str) -> bool:
@@ -246,19 +283,6 @@ def extract_archive(path: str, dest_dir: str, *,
         else:
             log.debug(msg)
 
-    def _dest_path(member_name: str, top_folder: Optional[str]) -> str:
-        """Compute destination path for a member, applying strip/flatten rules."""
-        p = Path(member_name)
-        if flatten:
-            return os.path.join(dest_dir, p.name)
-        if strip_top_folder and top_folder:
-            try:
-                rel = p.relative_to(top_folder)
-                return os.path.join(dest_dir, str(rel))
-            except ValueError:
-                pass
-        return os.path.join(dest_dir, member_name)
-
     try:
         if zipfile.is_zipfile(path):
             with zipfile.ZipFile(path, 'r') as zf:
@@ -267,12 +291,16 @@ def extract_archive(path: str, dest_dir: str, *,
                 for member in zf.infolist():
                     if member.is_dir():
                         continue
-                    dst = _dest_path(member.filename, top)
-                    os.makedirs(os.path.dirname(dst), exist_ok=True)
-                    # Avoid path traversal
-                    if not os.path.abspath(dst).startswith(os.path.abspath(dest_dir)):
+                    try:
+                        dst = _safe_member_destination(
+                            dest_dir, member.filename, top,
+                            flatten=flatten,
+                            strip_top_folder=strip_top_folder,
+                        )
+                    except UnsafeArchiveEntryError:
                         _log(f"  Skipped (path traversal): {member.filename}")
                         continue
+                    os.makedirs(os.path.dirname(dst), exist_ok=True)
                     with zf.open(member) as src, open(dst, 'wb') as out:
                         shutil.copyfileobj(src, out)
                     extracted.append(dst)
@@ -283,13 +311,18 @@ def extract_archive(path: str, dest_dir: str, *,
                 info = inspect_archive(path, max_entries=10)
                 top = info.get('top_level_folder') if strip_top_folder else None
                 for member in tf.getmembers():
-                    if member.isdir():
+                    if not member.isfile():
                         continue
-                    dst = _dest_path(member.name, top)
-                    os.makedirs(os.path.dirname(dst), exist_ok=True)
-                    if not os.path.abspath(dst).startswith(os.path.abspath(dest_dir)):
+                    try:
+                        dst = _safe_member_destination(
+                            dest_dir, member.name, top,
+                            flatten=flatten,
+                            strip_top_folder=strip_top_folder,
+                        )
+                    except UnsafeArchiveEntryError:
                         _log(f"  Skipped (path traversal): {member.name}")
                         continue
+                    os.makedirs(os.path.dirname(dst), exist_ok=True)
                     f = tf.extractfile(member)
                     if f:
                         with open(dst, 'wb') as out:
@@ -302,20 +335,30 @@ def extract_archive(path: str, dest_dir: str, *,
             with py7zr.SevenZipFile(path, 'r') as sz:
                 info = inspect_archive(path, max_entries=10)
                 top = info.get('top_level_folder') if strip_top_folder else None
-                # py7zr extracts to a directory; we then move files
                 with tempfile.TemporaryDirectory() as tmp:
-                    sz.extractall(tmp)
-                    for dirpath, _, filenames in os.walk(tmp):
-                        for fname in filenames:
-                            src_file = os.path.join(dirpath, fname)
-                            rel = os.path.relpath(src_file, tmp)
-                            dst = _dest_path(rel, top)
-                            os.makedirs(os.path.dirname(dst), exist_ok=True)
-                            if not os.path.abspath(dst).startswith(os.path.abspath(dest_dir)):
-                                continue
-                            shutil.move(src_file, dst)
-                            extracted.append(dst)
-                            _log(f"  Extracted: {os.path.relpath(dst, dest_dir)}")
+                    for member_name in sz.getnames():
+                        try:
+                            src_file = _safe_member_destination(
+                                tmp, member_name,
+                                flatten=False,
+                                strip_top_folder=False,
+                                validation_root=tmp,
+                            )
+                            dst = _safe_member_destination(
+                                dest_dir, member_name, top,
+                                flatten=flatten,
+                                strip_top_folder=strip_top_folder,
+                            )
+                        except UnsafeArchiveEntryError:
+                            _log(f"  Skipped (path traversal): {member_name}")
+                            continue
+                        sz.extract(path=tmp, targets=[member_name])
+                        if not os.path.isfile(src_file):
+                            continue
+                        os.makedirs(os.path.dirname(dst), exist_ok=True)
+                        shutil.move(src_file, dst)
+                        extracted.append(dst)
+                        _log(f"  Extracted: {os.path.relpath(dst, dest_dir)}")
 
         elif name_lower.endswith('.rar'):
             import rarfile
@@ -325,11 +368,16 @@ def extract_archive(path: str, dest_dir: str, *,
                 for member in rf.infolist():
                     if member.is_dir():
                         continue
-                    dst = _dest_path(member.filename, top)
-                    os.makedirs(os.path.dirname(dst), exist_ok=True)
-                    if not os.path.abspath(dst).startswith(os.path.abspath(dest_dir)):
+                    try:
+                        dst = _safe_member_destination(
+                            dest_dir, member.filename, top,
+                            flatten=flatten,
+                            strip_top_folder=strip_top_folder,
+                        )
+                    except UnsafeArchiveEntryError:
                         _log(f"  Skipped (path traversal): {member.filename}")
                         continue
+                    os.makedirs(os.path.dirname(dst), exist_ok=True)
                     with rf.open(member) as src, open(dst, 'wb') as out:
                         shutil.copyfileobj(src, out)
                     extracted.append(dst)

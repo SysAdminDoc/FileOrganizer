@@ -2817,13 +2817,6 @@ for relevance; "directly portable" means the file can be copied with minor adapt
    (KDE Discover app store; community initiatives; Linux ecosystem partnerships)
 ## Research-Driven Additions
 
-- [ ] P0 - Route all archive extraction through `safe_extract_path()`
-  Why: `fileorganizer/archive_extractor.py` still has ad hoc prefix checks and performs `py7zr.extractall(tmp)` before validating member paths.
-  Evidence: `fileorganizer/archive_extractor.py`; `fileorganizer/safe_archive.py`; Czkawka broken-file and archive-safety patterns; GitHub advisory database.
-  Touches: `fileorganizer/archive_extractor.py`, `fileorganizer/safe_archive.py`, `tests/test_safe_archive.py`, archive extraction tests.
-  Acceptance: ZIP, TAR, RAR, and 7z extraction reject absolute, UNC, drive-letter, sibling-prefix, and `..` traversal entries before any write outside the intended root; 7z extraction no longer calls unfiltered `extractall()`.
-  Complexity: M
-
 - [ ] P1 - Make watch mode start from real source configs
   Why: `fileorganizer/watch_mode.py --start` still exits with a TODO instead of loading source paths and feeding the journaled classify/apply path.
   Evidence: `fileorganizer/watch_mode.py`; NEXT-1/NEXT-68; Hazel and File Juggler watch-mode behavior.
