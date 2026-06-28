@@ -1,6 +1,7 @@
 """Tests for FileOrganizer watch_mode module."""
 import os
 import time
+import json
 import pytest
 import tempfile
 import sqlite3
@@ -283,6 +284,172 @@ class TestGetWatchLog:
             
             # Should return a list with an error entry
             assert isinstance(log, list)
+
+
+class TestWatchPlanning:
+    """Tests for source resolution and dry-run plan creation."""
+
+    def test_resolve_source_config_accepts_organize_source_alias(self, tmp_path):
+        source = tmp_path / 'source'
+        dest = tmp_path / 'dest'
+        source.mkdir()
+        dest.mkdir()
+
+        context = watch_mode.resolve_source_config(
+            'design',
+            source_path=str(source),
+            dest_root=str(dest),
+        )
+
+        assert context['classify_source'] == 'design_unorg'
+        assert context['organize_source'] == 'design'
+        assert context['source_path'] == str(source)
+        assert context['dest_root'] == str(dest)
+
+    def test_resolve_source_config_accepts_ae_source(self, tmp_path):
+        source = tmp_path / 'ae-source'
+        dest = tmp_path / 'dest'
+        source.mkdir()
+        dest.mkdir()
+
+        context = watch_mode.resolve_source_config(
+            'ae',
+            source_path=str(source),
+            dest_root=str(dest),
+        )
+
+        assert context['classify_source'] == 'ae'
+        assert context['organize_source'] == 'ae'
+        assert context['source_path'] == str(source)
+        assert context['file_mode'] is False
+
+    def test_process_ready_files_writes_dry_run_plan_for_asset_folder(self, tmp_path, monkeypatch):
+        source = tmp_path / 'source'
+        dest = tmp_path / 'organized'
+        asset = source / 'Summer Mockup Pack'
+        db_path = tmp_path / 'watch_state.db'
+        plan_path = tmp_path / 'watch-plan.json'
+        source.mkdir()
+        dest.mkdir()
+        asset.mkdir()
+        changed = asset / 'preview.psd'
+        changed.write_bytes(b'not a real psd')
+
+        context = watch_mode.resolve_source_config(
+            'design',
+            source_path=str(source),
+            dest_root=str(dest),
+        )
+        monkeypatch.setattr(watch_mode, '_WATCH_STATE_DB', str(db_path))
+        monkeypatch.setattr(
+            watch_mode,
+            '_classify_watch_entries',
+            lambda entries, source_path: [
+                {
+                    'name': entries[0]['name'],
+                    'category': 'Mockups - Print & Signage',
+                    'clean_name': entries[0]['name'],
+                    'confidence': 90,
+                }
+            ],
+        )
+
+        result = watch_mode.process_ready_files(
+            [str(changed)],
+            context,
+            plan_out=str(plan_path),
+        )
+
+        assert result['items'] == 1
+        assert result['plan_path'] == str(plan_path)
+        plan = json.loads(plan_path.read_text(encoding='utf-8'))
+        assert plan['source_mode'] == 'design'
+        assert plan['items'][0]['src'] == str(asset)
+        assert plan['items'][0]['category'] == 'Mockups - Print & Signage'
+        assert asset.exists()
+        assert not plan['items'][0]['low_confidence']
+
+        db = sqlite3.connect(db_path)
+        latest = watch_mode._get_setting(db, 'latest_plan_path')
+        statuses = [
+            row[0]
+            for row in db.execute(
+                "SELECT status FROM watch_events WHERE event_type = 'plan_written'"
+            ).fetchall()
+        ]
+        db.close()
+        assert latest == str(plan_path)
+        assert statuses == ['dry_run']
+
+    def test_process_ready_files_preserves_loose_file_mode(self, tmp_path, monkeypatch):
+        source = tmp_path / 'source'
+        dest = tmp_path / 'organized'
+        db_path = tmp_path / 'watch_state.db'
+        plan_path = tmp_path / 'loose-plan.json'
+        source.mkdir()
+        dest.mkdir()
+        changed = source / 'DisplayFont.ttf'
+        changed.write_bytes(b'font-ish')
+
+        context = watch_mode.resolve_source_config(
+            'loose_files',
+            source_path=str(source),
+            dest_root=str(dest),
+        )
+        monkeypatch.setattr(watch_mode, '_WATCH_STATE_DB', str(db_path))
+        monkeypatch.setattr(
+            watch_mode,
+            '_classify_watch_entries',
+            lambda entries, source_path: [
+                {
+                    'name': entries[0]['name'],
+                    'category': 'Fonts & Typography',
+                    'clean_name': entries[0]['name'],
+                    'confidence': 95,
+                }
+            ],
+        )
+
+        watch_mode.process_ready_files(
+            [str(changed)],
+            context,
+            plan_out=str(plan_path),
+        )
+
+        plan = json.loads(plan_path.read_text(encoding='utf-8'))
+        item = plan['items'][0]
+        assert item['src'] == str(changed)
+        assert item['is_file_item'] is True
+        assert item['file_ext'] == '.ttf'
+
+    def test_main_start_resolves_context_and_invokes_daemon(self, tmp_path, monkeypatch, capsys):
+        source = tmp_path / 'source'
+        dest = tmp_path / 'organized'
+        source.mkdir()
+        dest.mkdir()
+        captured = {}
+
+        def fake_watch_daemon(**kwargs):
+            captured.update(kwargs)
+
+        monkeypatch.setattr(watch_mode, 'watch_daemon', fake_watch_daemon)
+
+        watch_mode.main([
+            '--source', 'design',
+            '--source-path', str(source),
+            '--dest-root', str(dest),
+            '--start',
+            '--duration', '5',
+            '--plan-out', str(tmp_path / 'plan.json'),
+        ])
+
+        out = capsys.readouterr().out
+        assert 'Starting watch daemon' in out
+        assert captured['source_name'] == 'design'
+        assert captured['source_path'] == str(source)
+        assert captured['dest_root'] == str(dest)
+        assert captured['duration_secs'] == 5
+        assert callable(captured['on_files_ready'])
 
 
 # Integration tests (only if watchdog available)

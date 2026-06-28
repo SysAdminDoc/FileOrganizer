@@ -22,7 +22,7 @@ import threading
 import argparse
 from pathlib import Path
 from datetime import datetime
-from typing import Optional, Dict, Set, Callable
+from typing import Optional, Dict, Set, Callable, Any
 from collections import defaultdict
 
 try:
@@ -44,12 +44,42 @@ _DEBOUNCE_MIN_SECS = 5
 _DEBOUNCE_MAX_SECS = 120
 _LOG_HISTORY_SIZE = 50
 
+_CLASSIFY_SOURCE_ALIASES = {
+    'ae': 'ae',
+    'design': 'design_unorg',
+    'design_unorg': 'design_unorg',
+    'design_org': 'design_org',
+    'loose_files': 'loose_files',
+    'design_elements': 'design_elements',
+    'i_organized_legacy': 'i_organized_legacy',
+}
+
+_ORGANIZE_SOURCE_BY_CLASSIFY_SOURCE = {
+    'ae': 'ae',
+    'design_unorg': 'design',
+    'design_org': 'design_org',
+    'loose_files': 'loose_files',
+    'design_elements': 'design_elements',
+    'i_organized_legacy': 'i_organized_legacy',
+}
+
+
+def _repo_root() -> Path:
+    return Path(__file__).resolve().parents[1]
+
+
+def _ensure_repo_root_on_path() -> None:
+    root = str(_repo_root())
+    if root not in sys.path:
+        sys.path.insert(0, root)
+
 
 # ── Database Initialization ──────────────────────────────────────────────
-def _init_watch_db():
+def _init_watch_db(db_path: Optional[str] = None):
     """Initialize watch_state.db schema if not present."""
-    os.makedirs(_APP_DATA_DIR, exist_ok=True)
-    db = sqlite3.connect(_WATCH_STATE_DB)
+    target = db_path or _WATCH_STATE_DB
+    os.makedirs(os.path.dirname(os.path.abspath(target)), exist_ok=True)
+    db = sqlite3.connect(target)
     db.execute('''
         CREATE TABLE IF NOT EXISTS watch_settings (
             key TEXT PRIMARY KEY,
@@ -134,8 +164,10 @@ class DebounceQueue:
         self.debounce_secs = max(_DEBOUNCE_MIN_SECS, min(debounce_secs, _DEBOUNCE_MAX_SECS))
         self.queue: Dict[str, float] = {}  # path -> arrival_time
         self.lock = threading.Lock()
+        self.condition = threading.Condition(self.lock)
         self.timer: Optional[threading.Timer] = None
         self.on_ready = on_ready  # Callback when debounce expires
+        self.active_callbacks = 0
 
     def add(self, file_path: str):
         """Add/reset file to queue."""
@@ -154,11 +186,52 @@ class DebounceQueue:
 
     def _on_timeout(self):
         """Called when debounce period expires."""
+        files = []
         with self.lock:
-            if self.queue and self.on_ready:
+            if self.queue:
                 files = list(self.queue.keys())
                 self.queue.clear()
+                self.timer = None
+        if files and self.on_ready:
+            self._emit_ready(files)
+
+    def flush(self):
+        """Immediately emit any queued paths and cancel the pending timer."""
+        files = []
+        with self.lock:
+            if self.timer:
+                self.timer.cancel()
+                self.timer = None
+            if self.queue:
+                files = list(self.queue.keys())
+                self.queue.clear()
+        if files and self.on_ready:
+            self._emit_ready(files)
+
+    def _emit_ready(self, files: list[str]):
+        with self.lock:
+            self.active_callbacks += 1
+        try:
+            if self.on_ready:
                 self.on_ready(files)
+        finally:
+            with self.lock:
+                self.active_callbacks -= 1
+                self.condition.notify_all()
+
+    def wait_idle(self, timeout: Optional[float] = None) -> bool:
+        """Wait until all in-flight callbacks finish."""
+        deadline = time.time() + timeout if timeout is not None else None
+        with self.lock:
+            while self.active_callbacks:
+                if deadline is None:
+                    self.condition.wait()
+                    continue
+                remaining = deadline - time.time()
+                if remaining <= 0:
+                    return False
+                self.condition.wait(remaining)
+        return True
 
     def clear(self):
         """Clear queue and cancel timer."""
@@ -172,6 +245,310 @@ class DebounceQueue:
         """Return current queue size."""
         with self.lock:
             return len(self.queue)
+
+
+def _safe_default_dest_root() -> str:
+    _ensure_repo_root_on_path()
+    import organize_run
+
+    try:
+        return str(organize_run.get_dest_root())
+    except Exception:
+        return str(getattr(organize_run, 'DEST_PRIMARY', r'G:\Organized'))
+
+
+def _default_ae_source_path() -> str:
+    index_path = _repo_root() / 'org_index.json'
+    try:
+        with index_path.open('r', encoding='utf-8') as f:
+            rows = json.load(f)
+        if rows and rows[0].get('folder'):
+            return str(rows[0]['folder'])
+    except Exception:
+        pass
+    return r'I:\After Effects'
+
+
+def resolve_source_config(
+    source_name: str,
+    source_path: Optional[str] = None,
+    dest_root: Optional[str] = None,
+) -> dict[str, Any]:
+    """Resolve a watch source name to classify_design and organize_run config."""
+    _ensure_repo_root_on_path()
+    import classify_design
+
+    classify_source = _CLASSIFY_SOURCE_ALIASES.get(source_name, source_name)
+    if classify_source == 'ae':
+        return {
+            'requested_source': source_name,
+            'classify_source': 'ae',
+            'organize_source': 'ae',
+            'source_path': source_path or _default_ae_source_path(),
+            'dest_root': dest_root or _safe_default_dest_root(),
+            'file_mode': False,
+            'has_legacy': False,
+        }
+    if classify_source not in classify_design.SOURCE_CONFIGS:
+        known = ', '.join(sorted(_CLASSIFY_SOURCE_ALIASES))
+        raise ValueError(f"Unknown watch source {source_name!r}. Expected one of: {known}")
+
+    cfg = dict(classify_design.SOURCE_CONFIGS[classify_source])
+    return {
+        'requested_source': source_name,
+        'classify_source': classify_source,
+        'organize_source': _ORGANIZE_SOURCE_BY_CLASSIFY_SOURCE[classify_source],
+        'source_path': source_path or cfg['source_dir'],
+        'dest_root': dest_root or _safe_default_dest_root(),
+        'file_mode': bool(cfg.get('file_mode')),
+        'has_legacy': bool(cfg.get('has_legacy')),
+    }
+
+
+def _path_is_stable(path: str, delay: float = 0.25) -> bool:
+    """Return True when size and mtime stay unchanged across a short probe."""
+    try:
+        before = os.stat(path)
+        time.sleep(delay)
+        after = os.stat(path)
+    except OSError:
+        return False
+    return (before.st_size, before.st_mtime_ns) == (after.st_size, after.st_mtime_ns)
+
+
+def _asset_path_for_event(file_path: str, source_path: str, file_mode: bool) -> Path:
+    event_path = Path(file_path).resolve()
+    source_root = Path(source_path).resolve()
+    if file_mode:
+        return event_path
+    try:
+        rel = event_path.relative_to(source_root)
+    except ValueError:
+        return event_path if event_path.is_dir() else event_path.parent
+    if not rel.parts:
+        return event_path
+    top_level = source_root / rel.parts[0]
+    if top_level == event_path and event_path.is_file():
+        return event_path
+    return top_level
+
+
+def _legacy_category_for_asset(asset_path: Path, source_path: str, context: dict[str, Any]) -> str:
+    if not context.get('has_legacy'):
+        return ''
+    classify_source = context.get('classify_source', '')
+    if classify_source == 'design_elements':
+        return asset_path.name
+    source_root = Path(source_path).resolve()
+    try:
+        rel_parent = asset_path.parent.resolve().relative_to(source_root)
+    except ValueError:
+        rel_parent = None
+    if rel_parent and rel_parent.parts:
+        return rel_parent.parts[-1]
+    if asset_path.parent.resolve() != source_root:
+        return asset_path.parent.name
+    return ''
+
+
+def _index_entries_for_files(
+    file_paths: list[str],
+    context: dict[str, Any],
+) -> list[dict[str, Any]]:
+    source_path = context['source_path']
+    file_mode = bool(context.get('file_mode'))
+    assets: dict[str, Path] = {}
+
+    for file_path in file_paths:
+        if not os.path.exists(file_path):
+            continue
+        if os.path.isfile(file_path) and not _path_is_stable(file_path):
+            continue
+        asset_path = _asset_path_for_event(file_path, source_path, file_mode)
+        if not asset_path.exists():
+            continue
+        assets[os.path.normcase(str(asset_path.resolve()))] = asset_path
+
+    entries: list[dict[str, Any]] = []
+    for asset_path in sorted(assets.values(), key=lambda p: str(p).lower()):
+        if asset_path.is_file():
+            entry = {
+                'name': asset_path.stem,
+                'path': str(asset_path),
+                'file_ext': asset_path.suffix.lower(),
+                'is_file': True,
+            }
+        else:
+            entry = {
+                'name': asset_path.name,
+                'path': str(asset_path),
+            }
+            legacy = _legacy_category_for_asset(asset_path, source_path, context)
+            if legacy:
+                entry['legacy_category'] = legacy
+        entries.append(entry)
+    return entries
+
+
+def _review_result(item: dict[str, Any], reason: str) -> dict[str, Any]:
+    name = item.get('name', '') or Path(item.get('path', '')).stem or 'Unknown Asset'
+    return {
+        'name': name,
+        'category': 'After Effects - Other',
+        'clean_name': name,
+        'confidence': 0,
+        'notes': reason,
+        '_source_name': name,
+        '_classifier': 'watch_fallback',
+    }
+
+
+def _normalize_watch_result(result: Any, item: dict[str, Any], category_set: set[str]) -> dict[str, Any]:
+    if not isinstance(result, dict):
+        return _review_result(item, 'watch mode fallback: classifier returned no result')
+
+    out = dict(result)
+    name = item.get('name', '') or Path(item.get('path', '')).stem or 'Unknown Asset'
+    category = str(out.get('category') or '').strip()
+    try:
+        confidence = int(out.get('confidence', 0))
+    except (TypeError, ValueError):
+        confidence = 0
+
+    if category in ('', '_Review', '_Unresolved') or category not in category_set:
+        out = _review_result(item, f'watch mode fallback: unresolved category {category!r}')
+    else:
+        out['category'] = category
+        out['confidence'] = max(0, min(confidence, 100))
+        out.setdefault('clean_name', name)
+        out.setdefault('name', name)
+
+    out['_source_name'] = name
+    out['_watch_path'] = item.get('path', '')
+    return out
+
+
+def _classify_watch_entries(entries: list[dict[str, Any]], source_path: str) -> list[dict[str, Any]]:
+    if not entries:
+        return []
+
+    _ensure_repo_root_on_path()
+    import classify_design
+
+    old_source_dir = getattr(classify_design, 'SOURCE_DIR', '')
+    classify_design.SOURCE_DIR = source_path
+    category_set = set(classify_design.get_runtime_category_set())
+    resolved: dict[int, dict[str, Any]] = {}
+
+    try:
+        for stage in (
+            getattr(classify_design, '_try_fingerprint_db_lookup'),
+            getattr(classify_design, '_try_metadata_classify'),
+            getattr(classify_design, '_try_marketplace_enrich'),
+        ):
+            try:
+                for idx, result in stage(entries).items():
+                    resolved.setdefault(idx, result)
+            except Exception:
+                continue
+
+        try:
+            embed = classify_design._try_embeddings_classify(entries, set(resolved))
+            for idx, result in embed.items():
+                resolved.setdefault(idx, result)
+        except Exception:
+            pass
+
+        unresolved = [(idx, item) for idx, item in enumerate(entries) if idx not in resolved]
+        if unresolved and getattr(classify_design, 'DEEPSEEK_API_KEY', ''):
+            ai_items = [item for _, item in unresolved]
+            try:
+                ai_results = classify_design.call_deepseek_cached(
+                    classify_design.build_prompt(ai_items),
+                    ai_items,
+                    classify_design.DEEPSEEK_MODEL,
+                )
+                for (idx, _item), result in zip(unresolved, ai_results):
+                    resolved.setdefault(idx, result)
+            except Exception:
+                pass
+
+        return [
+            _normalize_watch_result(
+                resolved.get(idx) or _review_result(item, 'watch mode fallback: no configured AI result'),
+                item,
+                category_set,
+            )
+            for idx, item in enumerate(entries)
+        ]
+    finally:
+        classify_design.SOURCE_DIR = old_source_dir
+
+
+def _with_organize_dest_root(dest_root: str, build):
+    _ensure_repo_root_on_path()
+    import organize_run
+
+    old_get_dest_root = organize_run.get_dest_root
+    organize_run.get_dest_root = lambda: dest_root
+    try:
+        return build(organize_run)
+    finally:
+        organize_run.get_dest_root = old_get_dest_root
+
+
+def process_ready_files(
+    file_paths: list[str],
+    context: dict[str, Any],
+    plan_out: str = '',
+    db_path: str = '',
+) -> dict[str, Any]:
+    """Classify a debounced watch batch and emit a dry-run move plan."""
+    db_path = db_path or _WATCH_STATE_DB
+    db = _init_watch_db(db_path)
+    for file_path in file_paths:
+        _log_event(db, 'ready', file_path, 'stable_pending')
+
+    entries = _index_entries_for_files(file_paths, context)
+    if not entries:
+        _log_event(db, 'plan_skipped', json.dumps(file_paths), 'no_stable_files')
+        db.close()
+        return {'items': 0, 'plan_path': '', 'result': {}}
+
+    results = _classify_watch_entries(entries, context['source_path'])
+    pairs = list(zip(results, entries))
+    plan_id = f"watch-{context['organize_source']}-{int(time.time())}"
+
+    def _build(organize_run):
+        plan = organize_run.build_move_plan(
+            pairs,
+            source_override=context['source_path'],
+            source_mode=context['organize_source'],
+            plan_id=plan_id,
+        )
+        path = organize_run.write_move_plan(plan, plan_out or '')
+        result = organize_run.apply_move_plan(plan, dry_run=True, verbose=False)
+        return plan, path, result
+
+    plan, plan_path, result = _with_organize_dest_root(context['dest_root'], _build)
+    _set_setting(db, 'latest_plan_id', plan.plan_id)
+    _set_setting(db, 'latest_plan_path', plan_path)
+    _set_setting(db, 'latest_plan_result', json.dumps(result, sort_keys=True))
+    _log_event(db, 'plan_written', plan_path, 'dry_run')
+    db.close()
+    return {'items': len(plan.items), 'plan_path': plan_path, 'result': result}
+
+
+def build_watch_plan_callback(context: dict[str, Any], plan_out: str = '') -> Callable[[list[str]], None]:
+    def _on_files_ready(files: list[str]) -> None:
+        try:
+            process_ready_files(files, context, plan_out=plan_out)
+        except Exception as e:
+            db = _init_watch_db()
+            _log_event(db, 'plan_failed', json.dumps(files), str(e))
+            db.close()
+
+    return _on_files_ready
 
 
 # ── File System Event Handler ──────────────────────────────────────────────
@@ -274,6 +651,7 @@ def watch_daemon(
             
             # Check for one-shot duration limit
             if duration_secs and (time.time() - start_time) >= duration_secs:
+                queue.flush()
                 db = sqlite3.connect(_WATCH_STATE_DB)
                 _log_event(db, 'watch_timeout', source_path, 'completed')
                 db.close()
@@ -296,6 +674,8 @@ def watch_daemon(
         db.close()
     
     finally:
+        queue.flush()
+        queue.wait_idle()
         queue.clear()
         observer.stop()
         observer.join()
@@ -306,7 +686,7 @@ def watch_daemon(
 
 
 # ── CLI Entry Point ───────────────────────────────────────────────────────
-def main():
+def main(argv: Optional[list[str]] = None):
     """Command-line interface for watch mode."""
     parser = argparse.ArgumentParser(
         description='Watch mode daemon for FileOrganizer auto-classification'
@@ -342,12 +722,24 @@ def main():
         help=f'Debounce window in seconds (default {_DEFAULT_DEBOUNCE_SECS})'
     )
     parser.add_argument(
+        '--source-path',
+        help='Override the configured source path (for local smoke tests)'
+    )
+    parser.add_argument(
+        '--dest-root',
+        help='Override the organize destination root for generated dry-run plans'
+    )
+    parser.add_argument(
+        '--plan-out',
+        help='Write the generated dry-run move plan to this JSON path'
+    )
+    parser.add_argument(
         '--log',
         action='store_true',
         help='Show recent watch events'
     )
     
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     
     # Show status
     if args.status:
@@ -386,16 +778,36 @@ def main():
         return
     
     # Start daemon
-    if args.start:
+    if args.start or args.duration:
         if not args.source:
-            print('Error: --start requires --source')
+            print('Error: --start/--duration requires --source')
             sys.exit(1)
-        
-        # TODO: Load source config from classify_design.py SOURCE_CONFIGS
-        # For now, raise a placeholder error
-        print(f'Error: Watch mode for source "{args.source}" not yet configured.')
-        print('TODO: Integrate with SOURCE_CONFIGS from classify_design.py')
-        sys.exit(1)
+
+        try:
+            context = resolve_source_config(
+                args.source,
+                source_path=args.source_path,
+                dest_root=args.dest_root,
+            )
+            callback = build_watch_plan_callback(context, plan_out=args.plan_out or '')
+            print(
+                f"Starting watch daemon: {context['requested_source']} "
+                f"({context['source_path']}) -> {context['dest_root']}"
+            )
+            watch_daemon(
+                source_name=context['requested_source'],
+                source_path=context['source_path'],
+                dest_root=context['dest_root'],
+                debounce_secs=args.debounce,
+                duration_secs=args.duration,
+                on_files_ready=callback,
+            )
+        except Exception as e:
+            print(f'Error: {e}')
+            sys.exit(1)
+        return
+
+    parser.print_help()
 
 
 if __name__ == '__main__':

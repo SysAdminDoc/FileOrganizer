@@ -2807,13 +2807,6 @@ for relevance; "directly portable" means the file can be copied with minor adapt
    (KDE Discover app store; community initiatives; Linux ecosystem partnerships)
 ## Research-Driven Additions
 
-- [ ] P1 - Make watch mode start from real source configs
-  Why: `fileorganizer/watch_mode.py --start` still exits with a TODO instead of loading source paths and feeding the journaled classify/apply path.
-  Evidence: `fileorganizer/watch_mode.py`; NEXT-1/NEXT-68; Hazel and File Juggler watch-mode behavior.
-  Touches: `fileorganizer/watch_mode.py`, `classify_design.py`, `organize_run.py`, `watch_run.py`, `tests/test_watch_mode.py`.
-  Acceptance: `python -m fileorganizer.watch_mode --source design --start --duration 5` resolves the configured source, records pending events, waits for file stability, emits a dry-run plan, and leaves resumable state in `watch_state.db`.
-  Complexity: M
-
 - [ ] P1 - Replace RAW sidecar placeholders with real metadata and dry-run moves
   Why: `raw_run.py` emits hardcoded EXIF values and increments `organized` without moving or planning files.
   Evidence: `raw_run.py`; Adobe Bridge RAW metadata workflow; DNG/XMP standards.
