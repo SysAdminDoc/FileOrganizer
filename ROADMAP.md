@@ -2807,13 +2807,6 @@ for relevance; "directly portable" means the file can be copied with minor adapt
    (KDE Discover app store; community initiatives; Linux ecosystem partnerships)
 ## Research-Driven Additions
 
-- [ ] P1 - Replace RAW sidecar placeholders with real metadata and dry-run moves
-  Why: `raw_run.py` emits hardcoded EXIF values and increments `organized` without moving or planning files.
-  Evidence: `raw_run.py`; Adobe Bridge RAW metadata workflow; DNG/XMP standards.
-  Touches: `raw_run.py`, `src/FileOrganizer.UI/Views/Pages/RAWPage.xaml.cs`, RAW sidecar tests.
-  Acceptance: preview mode reports actual date/camera/ISO/focal fields when available, organize mode produces a dry-run plan before moving, and missing `rawpy` reports a deterministic install error without runtime pip installation.
-  Complexity: M
-
 - [ ] P1 - Finish comic sidecar organize mode with safe archive inspection
   Why: `comics_run.py` parses names but organize mode is a placeholder and CBR/CB7 are treated as assumed-readable.
   Evidence: `comics_run.py`; TagStudio comic thumbnail support; `safe_archive.py`.
