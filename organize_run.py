@@ -23,7 +23,7 @@ Known edge cases handled:
     - Every planned/applied move is journaled to organize_moves.db for full undo support
     - Errors logged to organize_errors.json for retry/audit
 """
-import os, sys, json, shutil, re, argparse, subprocess, sqlite3
+import os, sys, json, shutil, re, argparse, subprocess, sqlite3, hashlib
 from pathlib import Path
 from collections import defaultdict
 from dataclasses import asdict, dataclass, field
@@ -412,7 +412,10 @@ CREATE TABLE IF NOT EXISTS moves (
     error       TEXT,
     planned_at  TEXT,
     updated_at  TEXT,
-    partial_dest_exists INTEGER DEFAULT 0
+    partial_dest_exists INTEGER DEFAULT 0,
+    duplicate_source_file TEXT,
+    duplicate_existing_file TEXT,
+    duplicate_sha256 TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_moves_moved_at ON moves(moved_at);
 CREATE INDEX IF NOT EXISTS idx_moves_undone   ON moves(undone_at);
@@ -427,6 +430,9 @@ _JOURNAL_MIGRATIONS = {
     'planned_at': "ALTER TABLE moves ADD COLUMN planned_at TEXT",
     'updated_at': "ALTER TABLE moves ADD COLUMN updated_at TEXT",
     'partial_dest_exists': "ALTER TABLE moves ADD COLUMN partial_dest_exists INTEGER DEFAULT 0",
+    'duplicate_source_file': "ALTER TABLE moves ADD COLUMN duplicate_source_file TEXT",
+    'duplicate_existing_file': "ALTER TABLE moves ADD COLUMN duplicate_existing_file TEXT",
+    'duplicate_sha256': "ALTER TABLE moves ADD COLUMN duplicate_sha256 TEXT",
 }
 
 def _utc_now() -> str:
@@ -457,16 +463,21 @@ def journal_record(src: str, dest: str, disk_name: str,
                    clean_name: str, category: str, confidence: int,
                    status: str = 'done', plan_id: str = '',
                    plan_item_id: str = '', run_id: str = '',
-                   error: str = '', partial_dest_exists: bool = False) -> int:
+                   error: str = '', partial_dest_exists: bool = False,
+                   duplicate_source_file: str = '',
+                   duplicate_existing_file: str = '',
+                   duplicate_sha256: str = '') -> int:
     """Record a planned/completed move in the SQLite journal and return its row id."""
     now = _utc_now()
     con = _journal_conn()
     cur = con.execute(
         "INSERT INTO moves (src, dest, disk_name, clean_name, category, confidence, moved_at, "
-        "plan_id, plan_item_id, run_id, status, error, planned_at, updated_at, partial_dest_exists) "
-        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        "plan_id, plan_item_id, run_id, status, error, planned_at, updated_at, partial_dest_exists, "
+        "duplicate_source_file, duplicate_existing_file, duplicate_sha256) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         (src, dest, disk_name, clean_name, category, confidence, now,
-         plan_id, plan_item_id, run_id, status, error, now, now, int(partial_dest_exists))
+         plan_id, plan_item_id, run_id, status, error, now, now, int(partial_dest_exists),
+         duplicate_source_file, duplicate_existing_file, duplicate_sha256)
     )
     con.commit()
     row_id = cur.lastrowid
@@ -961,6 +972,8 @@ class MovePlanItem:
     status: str = 'planned'
     reason: str = ''
     error: str = ''
+    duplicate_matches: list = field(default_factory=list)
+    duplicate_policy: str = ''
 
 @dataclass
 class MovePlan:
@@ -1002,6 +1015,80 @@ def read_move_plan(path: str) -> dict:
         raise ValueError("Move plan missing items list")
     return data
 
+def _file_sha256(path: str) -> str:
+    h = hashlib.sha256()
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b''):
+            h.update(chunk)
+    return h.hexdigest()
+
+def _iter_hashable_files(root: str):
+    if os.path.isfile(root):
+        yield root, os.path.basename(root)
+        return
+    if not os.path.isdir(root):
+        return
+    for dirpath, _dirnames, filenames in os.walk(root):
+        for name in filenames:
+            full = os.path.join(dirpath, name)
+            rel = os.path.relpath(full, root)
+            yield full, rel
+
+def _hash_files(root: str) -> list[dict]:
+    records = []
+    for full, rel in _iter_hashable_files(root):
+        try:
+            records.append({
+                'sha256': _file_sha256(full),
+                'path': full,
+                'relative_path': rel,
+            })
+        except (OSError, PermissionError):
+            continue
+    return records
+
+def _destination_hash_index(dest_dir: str) -> dict:
+    index = {}
+    if not os.path.exists(dest_dir):
+        return index
+    for rec in _hash_files(dest_dir):
+        index.setdefault(rec['sha256'], rec['path'])
+    return index
+
+def _planned_dest_file(dest: str, src: str, source_file: str,
+                       is_file_item: bool) -> str:
+    if is_file_item:
+        return dest
+    try:
+        rel = os.path.relpath(source_file, src)
+    except ValueError:
+        rel = os.path.basename(source_file)
+    return os.path.join(dest, rel)
+
+def _duplicate_matches(source_hashes: list[dict], dest_hashes: dict,
+                       limit: int = 10) -> list[dict]:
+    matches = []
+    for rec in source_hashes:
+        existing = dest_hashes.get(rec['sha256'])
+        if not existing:
+            continue
+        if _path_key(existing) == _path_key(rec['path']):
+            continue
+        matches.append({
+            'sha256': rec['sha256'],
+            'source_file': rec['path'],
+            'existing_file': existing,
+        })
+        if len(matches) >= limit:
+            break
+    return matches
+
+def _duplicate_error(match: dict) -> str:
+    return (
+        "Destination already contains identical file: "
+        f"{match.get('source_file', '')} == {match.get('existing_file', '')}"
+    )
+
 def build_move_plan(pairs: list, source_override: str = '',
                     source_mode: str = 'ae', plan_id: str = '') -> MovePlan:
     """Convert classified/index pairs into an editable, collision-safe move plan."""
@@ -1013,6 +1100,7 @@ def build_move_plan(pairs: list, source_override: str = '',
     category_counts = defaultdict(int)
     reserved_dests = set()
     already_moved = journal_src_set()
+    dest_hash_cache = {}
     last_dest_root = first_dest_root
 
     for item, org_entry in pairs:
@@ -1061,6 +1149,20 @@ def build_move_plan(pairs: list, source_override: str = '',
             file_ext = ''
             dest = safe_dest_path(dest_root, eff_category, clean, reserved_dests)
 
+        dest_category_dir = _cat_path(dest_root, eff_category)
+        dest_key = _path_key(dest_category_dir)
+        if dest_key not in dest_hash_cache:
+            dest_hash_cache[dest_key] = _destination_hash_index(dest_category_dir)
+        source_hashes = _hash_files(src)
+        duplicate_hits = _duplicate_matches(source_hashes, dest_hash_cache[dest_key])
+        item_status = 'blocked_duplicate' if duplicate_hits else 'planned'
+        item_reason = 'destination_duplicate' if duplicate_hits else ''
+        duplicate_policy = 'skip' if duplicate_hits else ''
+        if not duplicate_hits:
+            for rec in source_hashes:
+                dest_file = _planned_dest_file(dest, src, rec['path'], is_file_item)
+                dest_hash_cache[dest_key].setdefault(rec['sha256'], dest_file)
+
         reserved_dests.add(_path_key(dest))
         category_counts[category] += 1
         planned.append(asdict(MovePlanItem(
@@ -1076,6 +1178,10 @@ def build_move_plan(pairs: list, source_override: str = '',
             is_file_item=is_file_item,
             file_ext=file_ext,
             low_confidence=low_conf,
+            status=item_status,
+            reason=item_reason,
+            duplicate_matches=duplicate_hits,
+            duplicate_policy=duplicate_policy,
         )))
 
     return MovePlan(
@@ -1129,6 +1235,28 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
         category_counts[category] += 1
 
         if src in already_moved:
+            skipped += 1
+            continue
+
+        duplicate_hits = item.get('duplicate_matches') or []
+        duplicate_policy = item.get('duplicate_policy') or ('skip' if duplicate_hits else '')
+        if duplicate_hits and duplicate_policy != 'move':
+            match = duplicate_hits[0]
+            err_msg = _duplicate_error(match)
+            if verbose:
+                tag = '[DRY-DUP-SKIP]' if dry_run else '[DUP-SKIP]'
+                log(f"  {tag} {disk_name!r}")
+                log(f"    {err_msg}", also_print=verbose)
+            if not dry_run:
+                journal_record(
+                    src, dest, disk_name, item.get('clean_name', ''), category,
+                    int(item.get('confidence', 0)), status='skipped_duplicate',
+                    plan_id=plan_id, plan_item_id=item.get('id', ''),
+                    run_id=run_id, error=err_msg,
+                    duplicate_source_file=match.get('source_file', ''),
+                    duplicate_existing_file=match.get('existing_file', ''),
+                    duplicate_sha256=match.get('sha256', ''),
+                )
             skipped += 1
             continue
 

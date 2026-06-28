@@ -1,7 +1,7 @@
 # FileOrganizer
 
 ![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.6.0-22d3ee)
-![Core](https://img.shields.io/badge/core-Python%20v8.5.4-3776AB)
+![Core](https://img.shields.io/badge/core-Python%20v8.5.5-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
 ![WinUI](https://img.shields.io/badge/WinUI-3-0078D6)
@@ -265,6 +265,7 @@ into batch results before marketplace lookup, embeddings, or LLM routing run.
 Image metadata also records dominant palette swatches for asset DB color
 filtering.
 Pre-flight checks flag similar filename variant groups before apply.
+Move plans skip destination folders that already contain identical SHA-256 files.
 
 ## Project Planning
 
