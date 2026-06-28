@@ -20,6 +20,8 @@ import subprocess
 from pathlib import Path
 from typing import Optional
 
+from fileorganizer import winrt_metadata
+
 from ._types import MetadataHint
 
 _FFPROBE = shutil.which("ffprobe")
@@ -43,12 +45,30 @@ _PRO_CODECS = {"prores", "prores_ks", "dnxhd", "dnxhr", "xdcam", "cineform"}
 
 def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHint]:
     """ffprobe a video file and emit an aspect/codec-driven hint."""
-    if _FFPROBE is None:
-        return None
     if not path or not path.exists():
         return None
     ext = (detected_ext or path.suffix).lower()
     if ext not in {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v", ".mxf"}:
+        return None
+
+    try:
+        winrt_raw = winrt_metadata.extract(path, detected_ext=detected_ext)
+    except Exception:
+        winrt_raw = {}
+    if winrt_raw and winrt_raw.get("kind") == "video":
+        return _hint_from_values(
+            width=int(winrt_raw.get("width") or 0),
+            height=int(winrt_raw.get("height") or 0),
+            codec="",
+            duration=float(winrt_raw.get("duration") or 0.0),
+            fps=0.0,
+            ext=ext,
+            original_ext=path.suffix.lower(),
+            source="winrt",
+            extra_raw=winrt_raw,
+        )
+
+    if _FFPROBE is None:
         return None
 
     try:
@@ -87,6 +107,32 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
     duration = float((data.get("format") or {}).get("duration") or 0.0)
     fps = float(video_stream.get("r_frame_rate", "0").split("/")[0] if "/" in str(video_stream.get("r_frame_rate", "0")) else video_stream.get("avg_frame_rate", 0) or 0.0)
 
+    return _hint_from_values(
+        width=width,
+        height=height,
+        codec=codec,
+        duration=duration,
+        fps=fps,
+        ext=ext,
+        original_ext=path.suffix.lower(),
+        source="ffprobe",
+    )
+
+
+def _hint_from_values(
+    *,
+    width: int,
+    height: int,
+    codec: str,
+    duration: float,
+    fps: float,
+    ext: str,
+    original_ext: str,
+    source: str,
+    extra_raw: dict | None = None,
+) -> Optional[MetadataHint]:
+    codec = (codec or "").lower()
+
     raw = {
         "width": width,
         "height": height,
@@ -94,8 +140,12 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
         "duration_s": duration,
         "fps": fps,
         "ext": ext,
-        "original_ext": path.suffix.lower(),
+        "original_ext": original_ext,
+        "source": source,
     }
+    if extra_raw:
+        for key, value in extra_raw.items():
+            raw.setdefault(key, value)
 
     if width <= 0 or height <= 0:
         return None

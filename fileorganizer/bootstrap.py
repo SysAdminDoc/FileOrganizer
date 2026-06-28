@@ -36,12 +36,15 @@ def _bootstrap():
         'Pillow': 'PIL', 'pillow-heif': 'pillow_heif',
         'psd-tools': 'psd_tools', 'python-docx': 'docx',
         'python-pptx': 'pptx', 'opencv-python-headless': 'cv2',
+        'winrt-Windows.Storage': 'winrt.windows.storage',
     }
     required = ['PyQt6']
     optional = ['rapidfuzz', 'psd-tools', 'unidecode',
                 'Pillow', 'pillow-heif', 'exifread', 'mutagen', 'pypdf', 'python-docx', 'openpyxl',
                 'python-pptx', 'reverse_geocoder', 'opencv-python-headless',
                 'cmake', 'dlib', 'face_recognition']
+    if sys.platform == 'win32':
+        optional.append('winrt-Windows.Storage')
 
     # Cache failed optional installs so we don't retry pip every launch (7-day TTL)
     _cache_dir = os.path.join(os.path.expanduser('~'), '.fileorganizer')
@@ -66,7 +69,10 @@ def _bootstrap():
         return _IMPORT_MAP.get(pkg, pkg.replace('-', '_').lower())
 
     def _is_installed(pkg):
-        return importlib.util.find_spec(_mod_name(pkg)) is not None
+        try:
+            return importlib.util.find_spec(_mod_name(pkg)) is not None
+        except (ModuleNotFoundError, ValueError):
+            return False
 
     def _try_install(pkg):
         # Defense-in-depth: also gate the pip subprocess directly so any
@@ -162,6 +168,12 @@ try:
     HAS_MUTAGEN = True
 except ImportError:
     HAS_MUTAGEN = False
+
+try:
+    import winrt.windows.storage as _winrt_storage  # type: ignore
+    HAS_WINRT_STORAGE = True
+except ImportError:
+    HAS_WINRT_STORAGE = False
 
 try:
     from pypdf import PdfReader as _PdfReader

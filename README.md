@@ -1,7 +1,7 @@
 # FileOrganizer
 
 ![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.6.0-22d3ee)
-![Core](https://img.shields.io/badge/core-Python%20v8.5.6-3776AB)
+![Core](https://img.shields.io/badge/core-Python%20v8.5.7-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
 ![WinUI](https://img.shields.io/badge/WinUI-3-0078D6)
@@ -269,6 +269,8 @@ Move plans skip destination folders that already contain identical SHA-256 files
 User-taught categories in `user_categories.json` load ahead of the built-in
 taxonomy; Settings -> Teach Category can train an optional SetFit model or
 fall back to derived keyword hints when the ML stack is not installed.
+On Windows, PyWinRT FileProperties can supply common image/audio/video metadata
+before the extractor falls back to Pillow, mutagen, or ffprobe.
 
 ## Project Planning
 
