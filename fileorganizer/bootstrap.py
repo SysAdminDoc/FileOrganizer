@@ -36,10 +36,11 @@ def _bootstrap():
         'Pillow': 'PIL', 'pillow-heif': 'pillow_heif',
         'psd-tools': 'psd_tools', 'python-docx': 'docx',
         'python-pptx': 'pptx', 'opencv-python-headless': 'cv2',
+        'httpx[http2]': 'httpx',
         'winrt-Windows.Storage': 'winrt.windows.storage',
     }
     required = ['PyQt6']
-    optional = ['rapidfuzz', 'psd-tools', 'unidecode',
+    optional = ['rapidfuzz', 'psd-tools', 'unidecode', 'httpx[http2]',
                 'Pillow', 'pillow-heif', 'exifread', 'mutagen', 'pypdf', 'python-docx', 'openpyxl',
                 'python-pptx', 'reverse_geocoder', 'opencv-python-headless',
                 'cmake', 'dlib', 'face_recognition']
