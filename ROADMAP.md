@@ -2807,13 +2807,6 @@ for relevance; "directly portable" means the file can be copied with minor adapt
    (KDE Discover app store; community initiatives; Linux ecosystem partnerships)
 ## Research-Driven Additions
 
-- [ ] P1 - Finish comic sidecar organize mode with safe archive inspection
-  Why: `comics_run.py` parses names but organize mode is a placeholder and CBR/CB7 are treated as assumed-readable.
-  Evidence: `comics_run.py`; TagStudio comic thumbnail support; `safe_archive.py`.
-  Touches: `comics_run.py`, `fileorganizer/safe_archive.py`, `src/FileOrganizer.UI/Views/Pages/ComicsPage.xaml.cs`, comic sidecar tests.
-  Acceptance: preview validates CBZ/CBT/CBR/CB7 readability without unsafe extraction, organize mode emits and applies a plan to `Comics/<Publisher>/<Series>/`, and corrupt archives surface per-item errors.
-  Complexity: M
-
 - [ ] P2 - Add a sidecar contract test suite for WinUI pages
   Why: the shell depends on many root `*_run.py` NDJSON sidecars, but behavior is inconsistent around start/progress/error/complete events, cancellation, and runtime dependency handling.
   Evidence: `cleanup_run.py`, `photos_run.py`, `raw_run.py`, `comics_run.py`, `src/FileOrganizer.UI/Services/PythonRunner.cs`, `src/FileOrganizer.UI/Services/SidecarRunner.cs`.

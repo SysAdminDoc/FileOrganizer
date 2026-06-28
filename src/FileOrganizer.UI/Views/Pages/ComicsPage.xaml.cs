@@ -14,6 +14,7 @@ public sealed class ComicRow
     public string Series { get; set; } = "";
     public string Volume { get; set; } = "";
     public string Publisher { get; set; } = "";
+    public string Pages { get; set; } = "";
     public string Status { get; set; } = "";
 }
 
@@ -76,8 +77,9 @@ public sealed partial class ComicsPage : Page
                 var series = root.GetProperty("series").GetString() ?? "Unknown";
                 var volume = root.GetProperty("volume").GetString() ?? "Unknown";
                 var publisher = root.GetProperty("publisher").GetString() ?? "Unknown";
+                var pages = root.TryGetProperty("pages", out var p) ? p.GetInt32().ToString("N0") : "0";
                 var status = root.GetProperty("status").GetString() ?? "OK";
-                Results.Add(new ComicRow { Filename = filename, Series = series, Volume = volume, Publisher = publisher, Status = status });
+                Results.Add(new ComicRow { Filename = filename, Series = series, Volume = volume, Publisher = publisher, Pages = pages, Status = status });
             }
             else if (ev == "progress")
             {
@@ -86,6 +88,15 @@ public sealed partial class ComicsPage : Page
                 if (root.TryGetProperty("series_count", out var series)) SeriesText.Text = series.GetInt32().ToString("N0");
                 if (root.TryGetProperty("organized", out var organized)) OrganizedText.Text = organized.GetInt32().ToString("N0");
                 if (root.TryGetProperty("status", out var status)) StatusText.Text = status.GetString() ?? "";
+            }
+            else if (ev == "plan")
+            {
+                var path = root.TryGetProperty("path", out var planPath) ? planPath.GetString() ?? "" : "";
+                var items = root.TryGetProperty("items", out var itemCount) ? itemCount.GetInt32() : 0;
+                var dryRun = root.TryGetProperty("dry_run", out var dry) && dry.GetBoolean();
+                StatusText.Text = dryRun
+                    ? $"Dry-run plan written for {items:N0} comic archives: {path}"
+                    : $"Moved {items:N0} comic archives. Plan: {path}";
             }
         });
     }
