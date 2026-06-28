@@ -1,7 +1,7 @@
 # FileOrganizer
 
 ![Shell](https://img.shields.io/badge/shell-FileOrganizer.UI%20v0.6.0-22d3ee)
-![Core](https://img.shields.io/badge/core-Python%20v8.5.8-3776AB)
+![Core](https://img.shields.io/badge/core-Python%20v8.5.9-3776AB)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
 ![WinUI](https://img.shields.io/badge/WinUI-3-0078D6)
@@ -139,7 +139,8 @@ Python process tree.
 ### Duplicates, Photos, Watch (Python-side, shell pages still placeholders)
 
 - **Progressive hash dedup** — Size > prefix hash > suffix hash > full
-  SHA-256, plus perceptual image hashing for near-duplicate photos.
+  SHA-256, plus Pillow 12.2-compatible perceptual image hashing for
+  near-duplicate photos.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor folders, auto-organize new files, system tray.

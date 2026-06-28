@@ -102,17 +102,25 @@ AUDIO_EXTS = {'.mp3', '.flac', '.wav', '.ogg', '.m4a', '.aac', '.wma',
 
 # ── Perceptual Hash Deduplication ────────────────────────────────────────────
 
+def _flattened_image_data(img):
+    """Return pixel data with Pillow 12.1+ API when available."""
+    flattened = getattr(img, "get_flattened_data", None)
+    if callable(flattened):
+        return list(flattened())
+    return list(img.getdata())
+
+
 def _compute_phash(filepath: str, hash_size: int = 8) -> str:
     """Compute perceptual hash of an image using average hash algorithm.
     Pure Python implementation using PIL - no heavy ML dependencies.
     Returns hex string of the hash, or empty string on failure."""
     try:
         from PIL import Image
-        img = Image.open(filepath)
-        if img.mode == 'P' and 'transparency' in img.info:
-            img = img.convert('RGBA')
-        img = img.convert('L').resize((hash_size + 1, hash_size), Image.LANCZOS)
-        pixels = list(img.getdata())
+        with Image.open(filepath) as img:
+            if img.mode == 'P' and 'transparency' in img.info:
+                img = img.convert('RGBA')
+            img = img.convert('L').resize((hash_size + 1, hash_size), Image.LANCZOS)
+            pixels = _flattened_image_data(img)
         # Difference hash (dHash): compare adjacent pixels
         bits = []
         for row in range(hash_size):
