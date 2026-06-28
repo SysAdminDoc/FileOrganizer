@@ -12,8 +12,7 @@ Decisions made:
      in _Review only because original confidence was low)
 
  _Review\Orphaned Documentation\*  (4 items)
-   → DELETE  (pure help/docs detached from parent bundles, per CLAUDE.md
-     gotcha "Documentation/Help File folders as bundle components")
+   → DELETE  (pure help/docs detached from parent bundles, per project convention "Documentation/Help File folders as bundle components")
 
  _Review\_Review\LightingEffctBundl1-vfxdownload.net.zip   → Cinematic FX & Overlays
  _Review\_Review\LightleaksVol1-vfxdownload.net.zip        → Cinematic FX & Overlays
