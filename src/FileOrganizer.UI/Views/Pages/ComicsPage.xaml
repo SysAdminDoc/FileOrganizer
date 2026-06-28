@@ -77,15 +77,17 @@
                     <DataTemplate x:DataType="local:ComicRow">
                         <Grid ColumnSpacing="16" Padding="0,8">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="220"/><ColumnDefinition Width="120"/>
-                                <ColumnDefinition Width="140"/><ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="220"/><ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="100"/><ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="70"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{x:Bind Filename, Mode=OneWay}" Style="{StaticResource BodyTextStyle}"/>
                             <TextBlock Grid.Column="1" Text="{x:Bind Series, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
                             <TextBlock Grid.Column="2" Text="{x:Bind Volume, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
                             <TextBlock Grid.Column="3" Text="{x:Bind Publisher, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
-                            <TextBlock Grid.Column="4" Text="{x:Bind Status, Mode=OneWay}" Style="{StaticResource MutedTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind Pages, Mode=OneWay}" Style="{StaticResource SubtitleTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="{x:Bind Status, Mode=OneWay}" Style="{StaticResource MutedTextStyle}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
