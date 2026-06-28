@@ -23,6 +23,32 @@ from fileorganizer.engine import ScheduleManager, EventGrouper
 from fileorganizer.plugins import PluginManager, ProfileManager, _PLUGINS_DIR
 
 
+def _format_similar_name_group(group) -> str:
+    root = getattr(group, 'root', '') or 'Pending items'
+    root_name = os.path.basename(str(root).rstrip(os.sep)) or str(root)
+    names = list(getattr(group, 'names', ()) or ())
+    samples = ', '.join(_short_detail_name(n) for n in names[:4])
+    extra = len(names) - 4
+    if extra > 0:
+        samples = f"{samples}, +{extra} more"
+    truncated = " (scan capped at 5,000 files)" if getattr(group, 'truncated', 0) else ""
+    pattern = getattr(group, 'pattern', '')
+    if not pattern:
+        pattern = _short_detail_name(names[0]) if names else 'variants'
+    score = getattr(group, 'score', 0.0)
+    return (
+        f"{root_name}: {len(names)} variants near {pattern} "
+        f"(score {score:.0f}) - {samples}{truncated}"
+    )
+
+
+def _short_detail_name(name: str, limit: int = 64) -> str:
+    text = str(name)
+    if len(text) <= limit:
+        return text
+    return text[:limit - 1] + "..."
+
+
 class UndoBatchDialog(QDialog):
     """Shows undo batches and lets user select which to undo."""
     def __init__(self, parent=None):
@@ -799,6 +825,35 @@ class PreflightWorker(QThread):
                 n_warn += 1
         except Exception:
             pass  # bad_names module optional
+
+        self.progress.emit("Checking for similar filename variants...")
+        try:
+            from fileorganizer import similar_names as _similar
+            source_paths = []
+            item_names = []
+            for it in self._items:
+                src = getattr(it, 'full_source_path', '')
+                if not src:
+                    continue
+                source_paths.append(src)
+                item_names.append(getattr(it, 'folder_name', '') or os.path.basename(src))
+            groups = _similar.group_similar_names(
+                item_names, source_paths, root='Pending items', max_items=5000,
+            )
+            groups.extend(_similar.scan_paths(
+                source_paths, max_per_root=5000, max_groups=25,
+            ))
+            for group in groups[:25]:
+                self.issue.emit('warning', 'Similar-name variants',
+                                _format_similar_name_group(group))
+            if len(groups) > 25:
+                self.issue.emit('warning', 'Similar-name variants (more)',
+                                f"+{len(groups) - 25} more groups; narrow the "
+                                f"selection to review every group")
+            if groups:
+                n_warn += 1
+        except Exception:
+            pass  # similar_names module optional
 
         # ── 3. Symlink/junction detection (NEXT-35) ───────────────────────────
         self.progress.emit("Checking for symlinks and junctions…")

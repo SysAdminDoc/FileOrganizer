@@ -80,7 +80,10 @@ _BADGE_PALETTE = [
 def _badge_color_for(ext: str) -> str:
     if not ext:
         return "#475569"
-    return _BADGE_PALETTE[hash(ext.lower()) % len(_BADGE_PALETTE)]
+    value = 0
+    for byte in ext.lower().encode('utf-8', errors='ignore'):
+        value = ((value * 131) + byte) & 0xFFFFFFFF
+    return _BADGE_PALETTE[value % len(_BADGE_PALETTE)]
 
 
 def extension_badge(ext: str, size: int = THUMB_SIZE) -> QPixmap:
