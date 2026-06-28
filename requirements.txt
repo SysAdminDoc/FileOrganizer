@@ -46,6 +46,12 @@ piexif
 # model2vec
 # sentence-transformers
 
+# Optional few-shot category trainer (NEXT-54). Install this stack to enable
+# Settings -> Teach Category SetFit model training; without it, taught
+# categories still save and match via derived keyword hints.
+# setfit
+# datasets
+
 # ── Per-media-type organization (FileOrganizer.UI v0.3.0) ──────────────────
 # Music tagger (Picard pipeline): Chromaprint -> AcoustID -> MusicBrainz.
 # pyacoustid needs `fpcalc` on PATH (set FPCALC env var to point at a custom

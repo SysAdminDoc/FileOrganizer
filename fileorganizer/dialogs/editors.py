@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import (
     QListWidget, QListWidgetItem, QInputDialog, QMessageBox, QFrame,
     QTreeWidget, QTreeWidgetItem
 )
-from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QColor
 
 from fileorganizer.config import (
@@ -18,12 +18,200 @@ from fileorganizer.config import (
 from fileorganizer.categories import (
     load_custom_categories
 )
+from fileorganizer.user_categories import MIN_EXAMPLES
 from fileorganizer.files import _load_pc_categories, _save_pc_categories, _DEFAULT_PC_CATEGORIES
 from fileorganizer.engine import RuleEngine, RenameTemplateEngine
 from fileorganizer.config import _APP_DATA_DIR
 
 
 _PC_CATEGORIES_DB = os.path.join(_APP_DATA_DIR, 'pc_categories.json')
+
+
+class _ExampleDropList(QListWidget):
+    examples_changed = pyqtSignal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setAcceptDrops(True)
+        self.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+        self.setAlternatingRowColors(True)
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+        else:
+            super().dragEnterEvent(event)
+
+    def dragMoveEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+        else:
+            super().dragMoveEvent(event)
+
+    def dropEvent(self, event):
+        urls = event.mimeData().urls()
+        paths = [u.toLocalFile() for u in urls if u.isLocalFile()]
+        if paths:
+            self.add_paths(paths)
+            event.acceptProposedAction()
+        else:
+            super().dropEvent(event)
+
+    def add_paths(self, paths):
+        existing = {self.item(i).text().casefold() for i in range(self.count())}
+        added = 0
+        for path in paths:
+            clean = os.path.normpath(str(path).strip())
+            if not clean or clean.casefold() in existing:
+                continue
+            self.addItem(clean)
+            existing.add(clean.casefold())
+            added += 1
+        if added:
+            self.examples_changed.emit()
+
+    def paths(self):
+        return [self.item(i).text() for i in range(self.count())]
+
+
+class _TeachCategoryWorker(QThread):
+    completed = pyqtSignal(dict)
+    failed = pyqtSignal(str)
+
+    def __init__(self, name, examples, keywords, parent=None):
+        super().__init__(parent)
+        self.name = name
+        self.examples = list(examples)
+        self.keywords = list(keywords)
+
+    def run(self):
+        try:
+            from fileorganizer.user_categories import teach_category
+            record = teach_category(self.name, self.examples, keywords=self.keywords, train=True)
+            self.completed.emit(record)
+        except Exception as exc:
+            self.failed.emit(str(exc))
+
+
+class TeachCategoryDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Teach Category")
+        self.setMinimumSize(680, 520)
+        self.setStyleSheet(get_active_stylesheet())
+        self.result_record = None
+        self._worker = None
+
+        lay = QVBoxLayout(self)
+        intro = QLabel(
+            "Create a user-taught category from at least eight representative examples. "
+            "SetFit training runs when the optional ML stack is installed; otherwise the "
+            "category is saved with keyword hints."
+        )
+        intro.setWordWrap(True)
+        lay.addWidget(intro)
+
+        name_row = QHBoxLayout()
+        name_row.addWidget(QLabel("Category name:"))
+        self.txt_name = QLineEdit()
+        self.txt_name.setPlaceholderText("e.g. Local Church Sermon Graphics")
+        self.txt_name.textChanged.connect(self._refresh_state)
+        name_row.addWidget(self.txt_name, 1)
+        lay.addLayout(name_row)
+
+        kw_row = QHBoxLayout()
+        kw_row.addWidget(QLabel("Keywords:"))
+        self.txt_keywords = QLineEdit()
+        self.txt_keywords.setPlaceholderText("Optional comma-separated hints")
+        kw_row.addWidget(self.txt_keywords, 1)
+        lay.addLayout(kw_row)
+
+        lay.addWidget(QLabel("Examples:"))
+        self.lst_examples = _ExampleDropList()
+        self.lst_examples.examples_changed.connect(self._refresh_state)
+        lay.addWidget(self.lst_examples, 1)
+
+        btn_row = QHBoxLayout()
+        btn_files = QPushButton("Add Files")
+        btn_files.clicked.connect(self._add_files)
+        btn_folder = QPushButton("Add Folder")
+        btn_folder.clicked.connect(self._add_folder)
+        btn_remove = QPushButton("Remove")
+        btn_remove.clicked.connect(self._remove_selected)
+        btn_row.addWidget(btn_files)
+        btn_row.addWidget(btn_folder)
+        btn_row.addWidget(btn_remove)
+        btn_row.addStretch()
+        self.lbl_count = QLabel("")
+        btn_row.addWidget(self.lbl_count)
+        lay.addLayout(btn_row)
+
+        self.lbl_status = QLabel("")
+        self.lbl_status.setWordWrap(True)
+        lay.addWidget(self.lbl_status)
+
+        bottom = QHBoxLayout()
+        bottom.addStretch()
+        self.btn_train = QPushButton("Train")
+        self.btn_train.setProperty("class", "apply")
+        self.btn_train.clicked.connect(self._train)
+        btn_cancel = QPushButton("Cancel")
+        btn_cancel.clicked.connect(self.reject)
+        bottom.addWidget(btn_cancel)
+        bottom.addWidget(self.btn_train)
+        lay.addLayout(bottom)
+        self._refresh_state()
+
+    def _add_files(self):
+        paths, _ = QFileDialog.getOpenFileNames(self, "Add Example Files", "", "All Files (*)")
+        if paths:
+            self.lst_examples.add_paths(paths)
+
+    def _add_folder(self):
+        path = QFileDialog.getExistingDirectory(self, "Add Example Folder")
+        if path:
+            self.lst_examples.add_paths([path])
+
+    def _remove_selected(self):
+        for item in self.lst_examples.selectedItems():
+            self.lst_examples.takeItem(self.lst_examples.row(item))
+        self._refresh_state()
+
+    def _refresh_state(self):
+        count = self.lst_examples.count()
+        self.lbl_count.setText(f"{count}/{MIN_EXAMPLES} examples")
+        ready = bool(self.txt_name.text().strip()) and count >= MIN_EXAMPLES and self._worker is None
+        self.btn_train.setEnabled(ready)
+
+    def _train(self):
+        keywords = [k.strip() for k in self.txt_keywords.text().split(',') if k.strip()]
+        self._worker = _TeachCategoryWorker(self.txt_name.text().strip(), self.lst_examples.paths(), keywords, self)
+        self._worker.completed.connect(self._on_completed)
+        self._worker.failed.connect(self._on_failed)
+        self._worker.finished.connect(self._on_finished)
+        self.lbl_status.setText("Training category...")
+        self.btn_train.setEnabled(False)
+        self._worker.start()
+
+    def _on_completed(self, record):
+        self.result_record = record
+        status = record.get("status", "keyword_only")
+        err = record.get("training", {}).get("error", "")
+        if status == "trained":
+            self.lbl_status.setText(f"Saved trained category: {record.get('name')}")
+        elif err:
+            self.lbl_status.setText(f"Saved keyword-only category: {record.get('name')} ({err})")
+        else:
+            self.lbl_status.setText(f"Saved keyword-only category: {record.get('name')}")
+        self.accept()
+
+    def _on_failed(self, message):
+        self.lbl_status.setText(message)
+        QMessageBox.warning(self, "Teach Category", message)
+
+    def _on_finished(self):
+        self._worker = None
+        self._refresh_state()
 
 
 class CustomCategoriesDialog(QDialog):

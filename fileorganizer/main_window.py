@@ -53,7 +53,7 @@ from fileorganizer.workers import (
     safe_merge_move, format_size
 )
 from fileorganizer.dialogs import (
-    CustomCategoriesDialog, DestTreeDialog, OllamaSettingsDialog,
+    CustomCategoriesDialog, TeachCategoryDialog, DestTreeDialog, OllamaSettingsDialog,
     PhotoSettingsDialog, FaceManagerDialog, ModelManagerDialog,
     AIProviderSettingsDialog, DesignWorkflowSettingsDialog,
     TemplateBuilderWidget, PCCategoryEditorDialog, _FileBrowserDialog,
@@ -420,6 +420,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # ── Menu bar ─────────────────────────────────────────────────────
         mbar = self.menuBar()
         menu_tools = mbar.addMenu("Settings")
+        menu_tools.addAction("Teach Category...", self._open_teach_category)
         menu_tools.addAction("Edit Categories", self._open_custom_cats)
         menu_tools.addAction("Envato API Key", self._set_envato_key)
         menu_tools.addAction("Ollama LLM", self._open_ollama_settings)
@@ -1425,6 +1426,13 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         if dlg.exec():
             save_custom_categories(dlg.get_categories())
             self._log(f"Custom categories saved ({len(dlg.get_categories())} categories)")
+
+    def _open_teach_category(self):
+        dlg = TeachCategoryDialog(self)
+        if dlg.exec() and dlg.result_record:
+            rec = dlg.result_record
+            status = rec.get('status', 'keyword_only')
+            self._log(f"Taught category saved: {rec.get('name')} [{status}]")
 
     # ═══ ENVATO API KEY ══════════════════════════════════════════════════════
     def _set_envato_key(self):

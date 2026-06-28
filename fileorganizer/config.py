@@ -14,6 +14,7 @@ os.makedirs(_APP_DATA_DIR, exist_ok=True)
 # One-time migration: move legacy files from script dir into _APP_DATA_DIR
 _MIGRATE_FILES = [
     'corrections.json', 'classification_cache.db', 'custom_categories.json',
+    'user_categories.json',
     'envato_api_key.txt', 'ollama_settings.json', 'undo_log.json',
     'move_log.csv', 'crash.log',
 ]
@@ -939,6 +940,9 @@ _PRESETS_DIR = os.path.join(_APP_DATA_DIR, 'category_presets')
 os.makedirs(_PRESETS_DIR, exist_ok=True)
 
 _CUSTOM_CATS_FILE = os.path.join(_APP_DATA_DIR, 'custom_categories.json')
+_USER_CATEGORIES_FILE = os.path.join(_APP_DATA_DIR, 'user_categories.json')
+_USER_CATEGORY_MODELS_DIR = os.path.join(_APP_DATA_DIR, 'user_category_models')
+os.makedirs(_USER_CATEGORY_MODELS_DIR, exist_ok=True)
 _FACE_DB_FILE = os.path.join(_APP_DATA_DIR, 'face_db.json')
 
 _PC_SCAN_CACHE_DB = os.path.join(_APP_DATA_DIR, 'scan_cache.db')

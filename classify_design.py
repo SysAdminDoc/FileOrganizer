@@ -243,6 +243,32 @@ _METADATA_HARDROUTE_THRESHOLD = 90
 
 CATEGORY_HINT = "\n".join(f"  {c}" for c in CATEGORIES)
 
+
+def get_runtime_categories() -> list[str]:
+    """Return user-taught categories ahead of the static canonical taxonomy."""
+    try:
+        from fileorganizer.user_categories import load_user_categories
+        user_names = [name for name, _keywords in load_user_categories()]
+    except Exception:
+        user_names = []
+    out: list[str] = []
+    seen: set[str] = set()
+    for category in [*user_names, *CATEGORIES]:
+        key = category.casefold()
+        if key in seen:
+            continue
+        out.append(category)
+        seen.add(key)
+    return out
+
+
+def get_runtime_category_set() -> frozenset[str]:
+    return frozenset(get_runtime_categories())
+
+
+def get_runtime_category_hint() -> str:
+    return "\n".join(f"  {c}" for c in get_runtime_categories())
+
 # ── Utilities ─────────────────────────────────────────────────────────────────
 def load_index() -> list[dict]:
     with open(INDEX_FILE, encoding='utf-8') as f:
@@ -508,7 +534,7 @@ def build_prompt(batch_items: list[dict]) -> str:
     return f"""You are a professional design asset librarian. Classify each folder into EXACTLY one category from the list below.
 
 CATEGORIES:
-{CATEGORY_HINT}
+{get_runtime_category_hint()}
 
 RULES:
 1. Use extension hints in [files: ...] to inform classification — they show what file types are inside.
@@ -677,7 +703,7 @@ def cmd_preview(index: list[dict]):
 
 def cmd_show_cats():
     print("Full category taxonomy:")
-    for c in CATEGORIES:
+    for c in get_runtime_categories():
         print(f"  {c}")
 
 def _try_metadata_classify(batch_items: list[dict]) -> dict[int, dict]:
@@ -689,7 +715,7 @@ def _try_metadata_classify(batch_items: list[dict]) -> dict[int, dict]:
     downstream stages. Lower-confidence hints are dropped silently so
     marketplace + embeddings + AI keep their say.
 
-    Categories are validated against _CATEGORY_SET — a phantom hint is
+    Categories are validated against the runtime category set — a phantom hint is
     rejected before it can land in the batch JSON.
     """
     try:
@@ -700,6 +726,7 @@ def _try_metadata_classify(batch_items: list[dict]) -> dict[int, dict]:
     if not SOURCE_DIR:
         return {}
 
+    category_set = get_runtime_category_set()
     out: dict[int, dict] = {}
     for idx, item in enumerate(batch_items):
         try:
@@ -710,7 +737,7 @@ def _try_metadata_classify(batch_items: list[dict]) -> dict[int, dict]:
             continue
         if hint.confidence < _METADATA_HARDROUTE_THRESHOLD:
             continue
-        if hint.category not in _CATEGORY_SET:
+        if hint.category not in category_set:
             # Phantom guard: do not let an extractor write a non-canonical
             # category, even at high confidence.
             continue
@@ -768,6 +795,7 @@ def _try_embeddings_classify(batch_items: list[dict],
     if not clf.available:
         return {}
 
+    runtime_categories = get_runtime_categories()
     out: dict[int, dict] = {}
     for idx, item in enumerate(batch_items):
         if idx in skip_indices:
@@ -776,7 +804,7 @@ def _try_embeddings_classify(batch_items: list[dict],
         if not name:
             continue
         result = clf.classify(
-            name, CATEGORIES,
+            name, runtime_categories,
             ext_set=item.get('extensions') or item.get('exts'),
             marketplace=item.get('marketplace'),
         )
