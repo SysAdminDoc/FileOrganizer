@@ -85,6 +85,76 @@ class OrganizeRunPlanTests(unittest.TestCase):
             self.assertNotEqual(plan.items[0]["dest"], plan.items[1]["dest"])
             self.assertTrue(plan.items[1]["dest"].endswith("Same Name (1)"))
 
+    def test_build_move_plan_flags_destination_duplicate_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src_root, dest_root = self._configure_temp_runner(tmp)
+            src = src_root / "Incoming"
+            src.mkdir()
+            (src / "preview-copy.png").write_bytes(b"same image bytes")
+            existing = dest_root / "Mockups" / "Existing Asset"
+            existing.mkdir(parents=True)
+            existing_file = existing / "preview.png"
+            existing_file.write_bytes(b"same image bytes")
+
+            plan = runner.build_move_plan(
+                [
+                    (
+                        {"name": "Incoming", "clean_name": "Incoming", "category": "Mockups", "confidence": 90},
+                        {"folder": str(src_root), "name": "Incoming"},
+                    ),
+                ],
+                source_mode="design",
+                plan_id="dedup-plan",
+            )
+
+            self.assertEqual(plan.item_count, 1)
+            item = plan.items[0]
+            self.assertEqual(item["status"], "blocked_duplicate")
+            self.assertEqual(item["reason"], "destination_duplicate")
+            self.assertEqual(item["duplicate_policy"], "skip")
+            self.assertEqual(item["duplicate_matches"][0]["source_file"], str(src / "preview-copy.png"))
+            self.assertEqual(item["duplicate_matches"][0]["existing_file"], str(existing_file))
+
+    def test_apply_move_plan_skips_duplicate_and_journals_paths(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src_root, dest_root = self._configure_temp_runner(tmp)
+            src = src_root / "Incoming"
+            src.mkdir()
+            source_file = src / "preview-copy.png"
+            source_file.write_bytes(b"same image bytes")
+            existing = dest_root / "Mockups" / "Existing Asset"
+            existing.mkdir(parents=True)
+            existing_file = existing / "preview.png"
+            existing_file.write_bytes(b"same image bytes")
+
+            plan = runner.build_move_plan(
+                [
+                    (
+                        {"name": "Incoming", "clean_name": "Incoming", "category": "Mockups", "confidence": 90},
+                        {"folder": str(src_root), "name": "Incoming"},
+                    ),
+                ],
+                source_mode="design",
+                plan_id="dedup-apply",
+            )
+
+            result = runner.apply_move_plan(plan, dry_run=False, verbose=False)
+
+            self.assertEqual(result["moved"], 0)
+            self.assertEqual(result["skipped"], 1)
+            self.assertEqual(result["errors"], 0)
+            self.assertTrue(src.exists())
+            con = sqlite3.connect(runner.JOURNAL_FILE)
+            row = con.execute(
+                "SELECT status, duplicate_source_file, duplicate_existing_file, duplicate_sha256 "
+                "FROM moves"
+            ).fetchone()
+            con.close()
+            self.assertEqual(row[0], "skipped_duplicate")
+            self.assertEqual(row[1], str(source_file))
+            self.assertEqual(row[2], str(existing_file))
+            self.assertEqual(len(row[3]), 64)
+
     def test_apply_move_plan_records_status_and_report(self):
         with tempfile.TemporaryDirectory() as tmp:
             src_root, _ = self._configure_temp_runner(tmp)
@@ -158,6 +228,9 @@ class OrganizeRunPlanTests(unittest.TestCase):
 
             self.assertIn("status", columns)
             self.assertIn("run_id", columns)
+            self.assertIn("duplicate_source_file", columns)
+            self.assertIn("duplicate_existing_file", columns)
+            self.assertIn("duplicate_sha256", columns)
             self.assertEqual(status, "done")
 
 
