@@ -359,9 +359,33 @@ def test_audio_extractor_returns_none_for_non_audio(tmp_path):
 
 def test_audio_extractor_no_mutagen_returns_none(tmp_path, monkeypatch):
     monkeypatch.setattr(audio_extractor, "_HAS_MUTAGEN", False)
+    monkeypatch.setattr(audio_extractor.winrt_metadata, "extract", lambda *_a, **_k: {})
     f = tmp_path / "fake.mp3"
     f.write_bytes(b"\x00")
     assert audio_extractor.extract(f) is None
+
+
+def test_audio_extractor_uses_winrt_without_mutagen(tmp_path, monkeypatch):
+    monkeypatch.setattr(audio_extractor, "_HAS_MUTAGEN", False)
+    monkeypatch.setattr(
+        audio_extractor.winrt_metadata,
+        "extract",
+        lambda *_args, **_kwargs: {
+            "kind": "audio",
+            "duration": 4.5,
+            "bitrate": 320,
+            "title": "Impact Hit",
+        },
+    )
+    f = tmp_path / "hit.mp3"
+    f.write_bytes(b"placeholder")
+
+    hint = audio_extractor.extract(f)
+
+    assert hint is not None
+    assert hint.category == "Sound Effects & SFX"
+    assert hint.raw["source"] == "winrt"
+    assert hint.raw["title"] == "Impact Hit"
 
 
 def test_audio_extractor_short_clip_categorizes_as_sfx_below_threshold(tmp_path, monkeypatch):
@@ -371,6 +395,7 @@ def test_audio_extractor_short_clip_categorizes_as_sfx_below_threshold(tmp_path,
     one-shot — defer to downstream stages.
     """
     monkeypatch.setattr(audio_extractor, "_HAS_MUTAGEN", True)
+    monkeypatch.setattr(audio_extractor.winrt_metadata, "extract", lambda *_a, **_k: {})
 
     fake_info = mock.MagicMock()
     fake_info.length = 4.5
@@ -394,6 +419,7 @@ def test_audio_extractor_short_clip_categorizes_as_sfx_below_threshold(tmp_path,
 
 def test_audio_extractor_long_track_categorizes_as_music_below_threshold(tmp_path, monkeypatch):
     monkeypatch.setattr(audio_extractor, "_HAS_MUTAGEN", True)
+    monkeypatch.setattr(audio_extractor.winrt_metadata, "extract", lambda *_a, **_k: {})
 
     fake_info = mock.MagicMock()
     fake_info.length = 215.0  # 3:35
@@ -448,13 +474,37 @@ def test_video_extractor_returns_none_for_non_video(tmp_path):
 
 def test_video_extractor_no_ffprobe_returns_none(tmp_path, monkeypatch):
     monkeypatch.setattr(video_extractor, "_FFPROBE", None)
+    monkeypatch.setattr(video_extractor.winrt_metadata, "extract", lambda *_a, **_k: {})
     f = tmp_path / "fake.mp4"
     f.write_bytes(b"\x00")
     assert video_extractor.extract(f) is None
 
 
+def test_video_extractor_uses_winrt_without_ffprobe(tmp_path, monkeypatch):
+    monkeypatch.setattr(video_extractor, "_FFPROBE", None)
+    monkeypatch.setattr(
+        video_extractor.winrt_metadata,
+        "extract",
+        lambda *_args, **_kwargs: {
+            "kind": "video",
+            "width": 1080,
+            "height": 1920,
+            "duration": 12.0,
+        },
+    )
+    f = tmp_path / "loop.mp4"
+    f.write_bytes(b"placeholder")
+
+    hint = video_extractor.extract(f)
+
+    assert hint is not None
+    assert hint.category == "After Effects - Motion Graphics Pack"
+    assert hint.raw["source"] == "winrt"
+
+
 def test_video_extractor_pro_codec_routes_to_stock(tmp_path, monkeypatch):
     monkeypatch.setattr(video_extractor, "_FFPROBE", "ffprobe")
+    monkeypatch.setattr(video_extractor.winrt_metadata, "extract", lambda *_a, **_k: {})
 
     completed = mock.MagicMock()
     completed.returncode = 0
@@ -478,6 +528,7 @@ def test_video_extractor_pro_codec_routes_to_stock(tmp_path, monkeypatch):
 def test_video_extractor_vertical_routes_below_threshold(tmp_path, monkeypatch):
     """9:16 vertical .mp4 should produce a hint but stay below the hardroute threshold."""
     monkeypatch.setattr(video_extractor, "_FFPROBE", "ffprobe")
+    monkeypatch.setattr(video_extractor.winrt_metadata, "extract", lambda *_a, **_k: {})
 
     completed = mock.MagicMock()
     completed.returncode = 0

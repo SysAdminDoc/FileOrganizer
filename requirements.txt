@@ -37,6 +37,9 @@ python-magic-bin
 # NEXT-43: ExifTool integration — 800+ format support via Python wrapper.
 # Supplements N-9 extractors on formats with <50% confidence.
 piexif
+# NEXT-55: Windows Runtime FileProperties metadata for image/audio/video.
+# Pulls the PyWinRT runtime and namespace projections on Windows only.
+winrt-Windows.Storage>=3.2.1; sys_platform == "win32"
 
 # Optional local embeddings classifier (N-10).  Install at least one to enable
 # the pre-AI cosine match against category anchors; the classifier degrades to

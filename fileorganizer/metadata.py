@@ -9,6 +9,7 @@ from fileorganizer.bootstrap import (
     HAS_PSD_TOOLS, HAS_RARFILE, HAS_PY7ZR
 )
 from fileorganizer.config import _APP_DATA_DIR
+from fileorganizer import winrt_metadata
 try:
     from PIL import Image as _PILImage
     from PIL.ExifTags import TAGS as _EXIF_TAGS, GPSTAGS as _GPS_TAGS
@@ -455,6 +456,15 @@ def _extract_file_content(file_path: str, max_chars: int = 800) -> str:
     return content[:max_chars]
 
 
+def _merge_missing_metadata(meta: dict, extra: dict) -> None:
+    for key, value in (extra or {}).items():
+        if key in {"kind", "source"}:
+            continue
+        if value is None or value == "" or value == []:
+            continue
+        if key not in meta or meta.get(key) in (None, "", []):
+            meta[key] = value
+
 
 class MetadataExtractor:
     """Extracts file metadata for PC File Organizer (Mode 3).
@@ -466,10 +476,11 @@ class MetadataExtractor:
     @staticmethod
     def capabilities() -> dict:
         """Return which extractors are available based on installed libraries."""
+        has_winrt, _ = winrt_metadata.available()
         return {
-            'images':  HAS_PILLOW or HAS_EXIFREAD,
-            'audio':   HAS_MUTAGEN,
-            'video':   shutil.which('ffprobe') is not None,
+            'images':  HAS_PILLOW or HAS_EXIFREAD or has_winrt,
+            'audio':   HAS_MUTAGEN or has_winrt,
+            'video':   shutil.which('ffprobe') is not None or has_winrt,
             'pdf':     HAS_PYPDF,
             'docx':    HAS_PYTHON_DOCX,
             'xlsx':    HAS_OPENPYXL,
@@ -670,6 +681,10 @@ class MetadataExtractor:
             except Exception:
                 pass
         try:
+            _merge_missing_metadata(meta, winrt_metadata.extract(filepath))
+        except Exception:
+            pass
+        try:
             from fileorganizer.color_palette import extract_palette, palette_to_bytes
             palette = extract_palette(filepath)
             if palette is not None:
@@ -745,6 +760,12 @@ class MetadataExtractor:
     @staticmethod
     def _extract_audio(filepath: str) -> dict:
         meta = {'_type': 'audio'}
+        try:
+            _merge_missing_metadata(meta, winrt_metadata.extract(filepath))
+        except Exception:
+            pass
+        if any(meta.get(k) for k in ('duration', 'title', 'artist', 'album', 'genre')):
+            return meta
         if not HAS_MUTAGEN:
             return meta
         try:
@@ -786,6 +807,12 @@ class MetadataExtractor:
     @staticmethod
     def _extract_video(filepath: str) -> dict:
         meta = {'_type': 'video'}
+        try:
+            _merge_missing_metadata(meta, winrt_metadata.extract(filepath))
+        except Exception:
+            pass
+        if meta.get('width') and meta.get('height') and meta.get('duration'):
+            return meta
         ffprobe_path = shutil.which('ffprobe')
         if not ffprobe_path:
             return meta

@@ -13,6 +13,8 @@ import importlib.util
 from pathlib import Path
 from typing import Optional
 
+from fileorganizer import winrt_metadata
+
 from ._types import MetadataHint
 
 _HAS_MUTAGEN = importlib.util.find_spec("mutagen") is not None
@@ -23,12 +25,33 @@ _CAT_MUSIC = "Stock Music & Audio"
 
 def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHint]:
     """Read audio tags + duration; emit a hint based on duration heuristics."""
-    if not _HAS_MUTAGEN:
-        return None
     if not path or not path.exists():
         return None
     ext = (detected_ext or path.suffix).lower()
     if ext not in {".mp3", ".flac", ".wav", ".ogg", ".m4a", ".aac", ".aiff"}:
+        return None
+
+    try:
+        winrt_raw = winrt_metadata.extract(path, detected_ext=detected_ext)
+    except Exception:
+        winrt_raw = {}
+    if winrt_raw and winrt_raw.get("kind") == "audio":
+        duration = float(winrt_raw.get("duration") or 0.0)
+        bitrate = int(winrt_raw.get("bitrate") or 0)
+        raw = {
+            "duration_s": duration,
+            "bitrate": bitrate,
+            "title": winrt_raw.get("title", ""),
+            "artist": winrt_raw.get("artist", ""),
+            "album": winrt_raw.get("album", ""),
+            "genre": winrt_raw.get("genre", ""),
+            "ext": ext,
+            "original_ext": path.suffix.lower(),
+            "source": "winrt",
+        }
+        return _hint_from_raw(raw)
+
+    if not _HAS_MUTAGEN:
         return None
 
     try:
@@ -62,8 +85,14 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
         "album": album,
         "ext": ext,
         "original_ext": path.suffix.lower(),
+        "source": "mutagen",
     }
 
+    return _hint_from_raw(raw)
+
+
+def _hint_from_raw(raw: dict) -> MetadataHint:
+    duration = float(raw.get("duration_s") or 0.0)
     if duration <= 0:
         # Header parsed but no playable info — informational only.
         return MetadataHint(
