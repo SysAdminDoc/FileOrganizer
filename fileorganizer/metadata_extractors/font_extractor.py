@@ -18,6 +18,14 @@ _HAS_FONTTOOLS = importlib.util.find_spec("fontTools") is not None
 _CAT_FONTS = "Fonts & Typography"
 
 
+def _num(value):
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return None
+    return int(numeric) if numeric.is_integer() else numeric
+
+
 def _name_table_lookup(font, name_id: int) -> str:
     """Pull a name_id from the 'name' table — Unicode preferred, then Mac, then anything."""
     try:
@@ -52,6 +60,55 @@ def _name_table_lookup(font, name_id: int) -> str:
     return ""
 
 
+def _variable_axes(font) -> list[dict]:
+    axes = []
+    try:
+        fvar = font["fvar"]
+    except Exception:
+        return axes
+    for axis in getattr(fvar, "axes", []) or []:
+        try:
+            tag = str(getattr(axis, "axisTag", "") or "").strip()
+            if not tag:
+                continue
+            name_id = int(getattr(axis, "axisNameID", 0) or 0)
+            axis_meta = {
+                "tag": tag,
+                "name": _name_table_lookup(font, name_id) or tag,
+                "min": _num(getattr(axis, "minValue", None)),
+                "default": _num(getattr(axis, "defaultValue", None)),
+                "max": _num(getattr(axis, "maxValue", None)),
+            }
+            axes.append({k: v for k, v in axis_meta.items() if v is not None})
+        except Exception:
+            continue
+    return axes
+
+
+def _color_flags(font) -> tuple[bool, bool]:
+    has_colr = "COLR" in font
+    has_colrv1 = False
+    if has_colr:
+        try:
+            colr = font["COLR"]
+            has_colrv1 = int(getattr(colr, "version", 0) or 0) >= 1
+        except Exception:
+            has_colrv1 = False
+    return has_colr, has_colrv1
+
+
+def _font_reason(family: str, full_name: str, axes: list[dict], has_colrv1: bool) -> str:
+    reason = f"{family or full_name}".strip()
+    traits = []
+    if axes:
+        traits.append("variable:" + ",".join(a["tag"] for a in axes if a.get("tag")))
+    if has_colrv1:
+        traits.append("COLRv1")
+    if traits:
+        reason = f"{reason} ({'; '.join(traits)})" if reason else "; ".join(traits)
+    return reason or "valid font"
+
+
 def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHint]:
     """Read font name table and emit a Fonts & Typography hint at conf 95. Detects variable axes (NEXT-56)."""
     if not _HAS_FONTTOOLS:
@@ -79,24 +136,10 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
         version = _name_table_lookup(font, 5)
         foundry = _name_table_lookup(font, 8)
         
-        # NEXT-56: Detect variable axes and color formats
-        is_variable = "fvar" in font
-        var_axes = []
-        if is_variable:
-            try:
-                fvar = font["fvar"]
-                var_axes = [ax.axisTag for ax in fvar.axes]
-            except Exception:
-                pass
-        
-        has_colr = "COLR" in font
-        has_colrv1 = False
-        if has_colr:
-            try:
-                colr = font["COLR"]
-                has_colrv1 = colr.version >= 1
-            except Exception:
-                pass
+        # NEXT-56: Detect variable axes and color font format.
+        var_axes = _variable_axes(font)
+        is_variable = bool(var_axes)
+        has_colr, has_colrv1 = _color_flags(font)
     finally:
         try:
             font.close()
@@ -114,15 +157,20 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
                 "ext": ext,
                 "original_ext": path.suffix.lower(),
                 "is_variable": is_variable,
-                "color": has_colr,
+                "variable_axes": var_axes if var_axes else None,
+                "variable_axis_tags": [a["tag"] for a in var_axes] if var_axes else None,
+                "has_color": has_colr,
+                "has_colrv1": has_colrv1,
+                "is_colrv1": has_colrv1,
             },
         )
 
+    reason = _font_reason(family, full_name, var_axes, has_colrv1)
     return MetadataHint(
         category=_CAT_FONTS,
         confidence=95,
         extractor="font",
-        reason=f"{family or full_name}".strip(),
+        reason=reason,
         raw={
             "family": family,
             "subfamily": subfamily,
@@ -133,7 +181,9 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
             "original_ext": path.suffix.lower(),
             "is_variable": is_variable,
             "variable_axes": var_axes if var_axes else None,
+            "variable_axis_tags": [a["tag"] for a in var_axes] if var_axes else None,
             "has_color": has_colr,
             "has_colrv1": has_colrv1,
+            "is_colrv1": has_colrv1,
         },
     )

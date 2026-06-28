@@ -13,6 +13,7 @@ from __future__ import annotations
 import os
 import sys
 import tempfile
+import types
 from pathlib import Path
 from unittest import mock
 
@@ -349,6 +350,82 @@ def test_font_extractor_no_fonttools_returns_none(tmp_path, monkeypatch):
 
 
 # ── Audio extractor ────────────────────────────────────────────────────────
+
+
+def test_font_extractor_records_variable_axes_and_colrv1(tmp_path, monkeypatch):
+    monkeypatch.setattr(font_extractor, "_HAS_FONTTOOLS", True)
+
+    class FakeNameTable:
+        names = []
+
+        def getName(self, name_id, *_args):
+            return {
+                1: "Acme Variable",
+                2: "Regular",
+                4: "Acme Variable Regular",
+                5: "Version 1.0",
+                8: "Acme Foundry",
+                256: "Weight",
+                257: "Width",
+            }.get(name_id)
+
+    class FakeFont:
+        def __init__(self):
+            self.tables = {
+                "name": FakeNameTable(),
+                "fvar": types.SimpleNamespace(
+                    axes=[
+                        types.SimpleNamespace(
+                            axisTag="wght",
+                            axisNameID=256,
+                            minValue=100.0,
+                            defaultValue=400.0,
+                            maxValue=900.0,
+                        ),
+                        types.SimpleNamespace(
+                            axisTag="wdth",
+                            axisNameID=257,
+                            minValue=75.0,
+                            defaultValue=100.0,
+                            maxValue=125.0,
+                        ),
+                    ]
+                ),
+                "COLR": types.SimpleNamespace(version=1),
+            }
+
+        def __contains__(self, key):
+            return key in self.tables
+
+        def __getitem__(self, key):
+            return self.tables[key]
+
+        def close(self):
+            pass
+
+    fake_pkg = types.ModuleType("fontTools")
+    fake_ttlib = types.ModuleType("fontTools.ttLib")
+    fake_ttlib.TTFont = lambda *_args, **_kwargs: FakeFont()
+    fake_pkg.ttLib = fake_ttlib
+    monkeypatch.setitem(sys.modules, "fontTools", fake_pkg)
+    monkeypatch.setitem(sys.modules, "fontTools.ttLib", fake_ttlib)
+
+    f = tmp_path / "acme-variable.ttf"
+    f.write_bytes(b"\x00\x01\x00\x00")
+
+    hint = font_extractor.extract(f)
+
+    assert hint is not None
+    assert hint.category == "Fonts & Typography"
+    assert hint.raw["variable_axis_tags"] == ["wght", "wdth"]
+    assert hint.raw["variable_axes"] == [
+        {"tag": "wght", "name": "Weight", "min": 100, "default": 400, "max": 900},
+        {"tag": "wdth", "name": "Width", "min": 75, "default": 100, "max": 125},
+    ]
+    assert hint.raw["has_color"] is True
+    assert hint.raw["has_colrv1"] is True
+    assert hint.raw["is_colrv1"] is True
+    assert "variable:wght,wdth" in hint.reason
 
 
 def test_audio_extractor_returns_none_for_non_audio(tmp_path):
