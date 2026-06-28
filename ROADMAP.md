@@ -2806,10 +2806,3 @@ for relevance; "directly portable" means the file can be copied with minor adapt
    https://dot.kde.org/
    (KDE Discover app store; community initiatives; Linux ecosystem partnerships)
 ## Research-Driven Additions
-
-- [ ] P2 - Align release and diagnostic version metadata
-  Why: `src/Directory.Build.props` still reports `0.1.0` while README badges and release notes advertise newer shell/core versions.
-  Evidence: `src/Directory.Build.props`; `README.md`; `CHANGELOG.md`; `SECURITY.md`.
-  Touches: `src/Directory.Build.props`, `src/FileOrganizer.UI/FileOrganizer.UI.csproj`, README badges, `CHANGELOG.md`, `SECURITY.md`, diagnostics/about surfaces.
-  Acceptance: About dialogs, assembly metadata, README badges, security supported versions, changelog, and release artifacts report the same current shell/core versions.
-  Complexity: S
