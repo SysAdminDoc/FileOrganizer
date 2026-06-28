@@ -56,6 +56,17 @@ try:
 except ImportError:
     pass
 
+_META_IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.tiff', '.tif', '.heic', '.heif',
+                    '.webp', '.gif', '.bmp', '.psd', '.psb'}
+_META_AUDIO_EXTS = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.wma', '.m4a',
+                    '.aiff', '.aif'}
+_META_VIDEO_EXTS = {'.mp4', '.mkv', '.avi', '.mov', '.wmv', '.flv', '.webm',
+                    '.m4v', '.mxf'}
+_META_PDF_EXTS   = {'.pdf'}
+_META_DOCX_EXTS  = {'.docx'}
+_META_XLSX_EXTS  = {'.xlsx'}
+_META_PPTX_EXTS  = {'.pptx'}
+
 # ── Level 3: Metadata extraction ─────────────────────────────────────────────
 
 def extract_prproj_metadata(filepath: str) -> list:
@@ -499,6 +510,8 @@ class MetadataExtractor:
         if mt == 'image':
             if meta.get('width') and meta.get('height'):
                 parts.append(f"{meta['width']}×{meta['height']}")
+            if meta.get('_palette_hex'):
+                parts.append("palette " + " ".join(meta['_palette_hex'][:3]))
             if meta.get('camera_make') or meta.get('camera_model'):
                 cam = ' '.join(filter(None, [meta.get('camera_make', ''),
                                               meta.get('camera_model', '')]))
@@ -570,6 +583,7 @@ class MetadataExtractor:
             'last_modified_by': 'Last Modified By', 'modified': 'Modified',
             'created': 'Created', 'revision': 'Revision', 'keywords': 'Keywords',
             'sheet_count': 'Sheets', 'slide_count': 'Slides',
+            '_palette_hex': 'Dominant Colors',
         }
         for k, v in meta.items():
             if k in skip or v is None or v == '':
@@ -655,6 +669,15 @@ class MetadataExtractor:
                             meta['gps_lon'] = lon
             except Exception:
                 pass
+        try:
+            from fileorganizer.color_palette import extract_palette, palette_to_bytes
+            palette = extract_palette(filepath)
+            if palette is not None:
+                meta['_palette_hex'] = palette.hex
+                meta['_palette_rgb'] = [list(rgb) for rgb in palette.rgb]
+                meta['_palette_rgb_bytes'] = palette_to_bytes(palette.rgb).hex()
+        except Exception:
+            pass
         return meta
 
     @staticmethod

@@ -32,6 +32,21 @@ except Exception:
     def _parse_provenance(_name: str):  # type: ignore[no-redef]
         return None
 
+try:
+    from fileorganizer.color_palette import (
+        extract_palette as _extract_palette,
+        hex_to_rgb as _hex_to_rgb,
+        min_delta_e as _min_delta_e,
+        palette_from_bytes as _palette_from_bytes,
+        palette_to_bytes as _palette_to_bytes,
+    )
+except Exception:
+    _extract_palette = None
+    _hex_to_rgb = None
+    _min_delta_e = None
+    _palette_from_bytes = None
+    _palette_to_bytes = None
+
 # ── Config ─────────────────────────────────────────────────────────────────────
 DB_FILE           = os.path.join(os.path.dirname(__file__), 'asset_fingerprints.db')
 RESULTS_DIR       = os.path.join(os.path.dirname(__file__), 'classification_results')
@@ -54,7 +69,7 @@ PROJECT_EXTS = frozenset({
     '.fla', '.flp', '.sketch',
 })
 
-DB_VERSION = 1
+DB_VERSION = 2
 
 # Image extensions used when scanning for preview thumbnails
 _PREVIEW_EXTS = frozenset({'.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp'})
@@ -117,7 +132,7 @@ def init_db(db_path: str = DB_FILE) -> sqlite3.Connection:
     con.executescript(_SCHEMA)
     _migrate_assets_provenance(con)
     now = _now()
-    con.execute("INSERT OR IGNORE INTO db_meta VALUES ('version',    ?)", (str(DB_VERSION),))
+    con.execute("INSERT OR REPLACE INTO db_meta VALUES ('version',    ?)", (str(DB_VERSION),))
     con.execute("INSERT OR IGNORE INTO db_meta VALUES ('created_at', ?)", (now,))
     con.commit()
     return con
@@ -152,6 +167,16 @@ def _migrate_files_broken(con: sqlite3.Connection) -> None:
     con.execute(
         "CREATE INDEX IF NOT EXISTS idx_files_broken ON asset_files(broken)"
     )
+    _migrate_files_palette(con)
+
+
+def _migrate_files_palette(con: sqlite3.Connection) -> None:
+    """Idempotent palette columns for NEXT-51."""
+    have = {row[1] for row in con.execute("PRAGMA table_info(asset_files)").fetchall()}
+    if "palette_rgb" not in have:
+        con.execute("ALTER TABLE asset_files ADD COLUMN palette_rgb BLOB")
+    if "palette_hex" not in have:
+        con.execute("ALTER TABLE asset_files ADD COLUMN palette_hex TEXT")
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
@@ -194,6 +219,18 @@ def find_preview_image(folder_path: str) -> str | None:
         return None
     scored.sort(key=lambda x: -x[0])
     return scored[0][1]
+
+
+def _palette_for_file(path: Path) -> tuple[bytes | None, str | None]:
+    if _extract_palette is None or _palette_to_bytes is None:
+        return None, None
+    try:
+        palette = _extract_palette(path)
+    except Exception:
+        return None, None
+    if palette is None:
+        return None, None
+    return _palette_to_bytes(palette.rgb), ",".join(palette.hex)
 
 
 def hash_file(path: str) -> str | None:
@@ -419,15 +456,19 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
             added += 1
 
         # Insert file rows
-        rows = [
-            (asset_id, f['filename'], f['relative_path'],
-             f['size_bytes'], f['sha256'], f['is_project_file'], now)
-            for f in hashed_files
-        ]
+        rows = []
+        for f in hashed_files:
+            palette_rgb, palette_hex = _palette_for_file(Path(asset_path) / f['relative_path'])
+            rows.append((
+                asset_id, f['filename'], f['relative_path'],
+                f['size_bytes'], f['sha256'], f['is_project_file'], now,
+                palette_rgb, palette_hex,
+            ))
         con.executemany(
             "INSERT INTO asset_files "
-            "(asset_id, filename, relative_path, size_bytes, sha256, is_project_file, added_at) "
-            "VALUES (?,?,?,?,?,?,?)",
+            "(asset_id, filename, relative_path, size_bytes, sha256, is_project_file, added_at, "
+            "palette_rgb, palette_hex) "
+            "VALUES (?,?,?,?,?,?,?,?,?)",
             rows
         )
         total_files += len(rows)
@@ -533,6 +574,58 @@ def lookup_folder(folder_path: str, db_path: str = DB_FILE) -> dict | None:
         return {'match_type': 'none', 'confidence': 0}
     finally:
         con.close()
+
+
+def find_by_palette(color_hex: str,
+                    tolerance: float = 10.0,
+                    limit: int = 100,
+                    db_path: str = DB_FILE) -> list[dict]:
+    """Find indexed files whose dominant palette is close to color_hex."""
+    if _hex_to_rgb is None or _palette_from_bytes is None or _min_delta_e is None:
+        return []
+    try:
+        target = _hex_to_rgb(color_hex)
+    except ValueError:
+        return []
+    if not os.path.exists(db_path):
+        return []
+
+    con = sqlite3.connect(db_path)
+    con.row_factory = sqlite3.Row
+    try:
+        rows = con.execute(
+            """
+            SELECT a.id AS asset_id, a.clean_name, a.category, a.preview_image,
+                   f.filename, f.relative_path, f.palette_rgb, f.palette_hex
+            FROM asset_files f
+            JOIN assets a ON a.id = f.asset_id
+            WHERE f.palette_rgb IS NOT NULL
+            """
+        ).fetchall()
+    except sqlite3.OperationalError:
+        return []
+    finally:
+        con.close()
+
+    matches: list[dict] = []
+    for row in rows:
+        palette = _palette_from_bytes(row["palette_rgb"])
+        if not palette:
+            continue
+        distance = _min_delta_e(palette, target)
+        if distance <= tolerance:
+            matches.append({
+                "asset_id": row["asset_id"],
+                "clean_name": row["clean_name"],
+                "category": row["category"],
+                "filename": row["filename"],
+                "relative_path": row["relative_path"],
+                "preview_image": row["preview_image"],
+                "palette_hex": row["palette_hex"] or "",
+                "delta_e": round(distance, 2),
+            })
+    matches.sort(key=lambda item: (item["delta_e"], item["category"], item["clean_name"]))
+    return matches[:max(0, int(limit))]
 
 
 def _match_result(row, match_type: str, confidence: int,
@@ -937,6 +1030,12 @@ def main():
                     help='Build/update database from organized directory')
     ap.add_argument('--lookup',  metavar='FOLDER',
                     help='Identify an unknown asset folder')
+    ap.add_argument('--palette', metavar='#RRGGBB',
+                    help='Find indexed files with dominant colors close to this color')
+    ap.add_argument('--palette-tolerance', type=float, default=10.0,
+                    help='Delta-E tolerance for --palette (default: 10.0)')
+    ap.add_argument('--limit', type=int, default=100,
+                    help='Maximum rows for --palette output (default: 100)')
     ap.add_argument('--export',  nargs='?', const=EXPORT_FILE, metavar='OUTPUT',
                     help='Export database to JSON for community sharing')
     ap.add_argument('--stats',   action='store_true',
@@ -972,6 +1071,17 @@ def main():
         else:
             print("No match found in database")
 
+    if args.palette:
+        matches = find_by_palette(args.palette, args.palette_tolerance, args.limit, args.db)
+        if not matches:
+            print("No palette matches found")
+        else:
+            for item in matches:
+                print(
+                    f"{item['delta_e']:>5.2f}  {item['category']} / "
+                    f"{item['clean_name']} / {item['relative_path']}  {item['palette_hex']}"
+                )
+
     if args.verify is not None:
         cmd_verify(args.verify, args.db)
 
@@ -979,7 +1089,7 @@ def main():
         cmd_backfill_provenance(args.db, dry_run=args.dry_run)
 
     if not any([args.stats, args.build is not None, args.export is not None,
-                args.lookup, args.verify is not None,
+                args.lookup, args.palette, args.verify is not None,
                 args.backfill_provenance]):
         ap.print_help()
 
