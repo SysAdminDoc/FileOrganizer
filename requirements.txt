@@ -2,7 +2,7 @@
 PyQt6>=6.11.0
 openai
 anthropic>=0.44.0
-pydantic>=2.0
+pydantic>=2.13.3
 requests
 httpx[http2]>=0.28.1
 rapidfuzz
