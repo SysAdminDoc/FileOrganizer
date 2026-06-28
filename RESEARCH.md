@@ -29,7 +29,7 @@ FileOrganizer is a Windows-first hybrid organizer: a Python classification and c
 - Refactor candidate: replace duplicated extraction guards in `fileorganizer/archive_extractor.py` with `safe_extract_path()` and test all archive formats against sibling-prefix, absolute-path, drive-letter, UNC, and traversal payloads.
 - Refactor candidate: move provider policy into one call wrapper in `fileorganizer/providers.py` that checks `provider_cost_manager`, records usage when response metadata is present, and distinguishes retryable rate limits from permanent auth/model failures.
 - Test gap: add source-config integration tests for `fileorganizer/watch_mode.py --start` so a watched path produces the same dry-run plan schema used by `organize_run.py`.
-- Documentation gap: when version drift is fixed, sync README badges, `CHANGELOG.md`, `SECURITY.md`, `CLAUDE.md`, WinUI assembly metadata, and release tags in one commit.
+- Documentation gap: when version drift is fixed, sync README badges, `CHANGELOG.md`, `SECURITY.md`, WinUI assembly metadata, and release tags in one commit.
 
 ## Rejected Ideas
 - Mandatory hosted sync: rejected because Eagle/TagStudio/Paperless patterns are useful without taking ownership of a user's multi-TB local library.
