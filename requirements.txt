@@ -4,6 +4,7 @@ openai
 anthropic>=0.44.0
 pydantic>=2.0
 requests
+httpx[http2]>=0.28.1
 rapidfuzz
 Pillow>=12.2.0
 psd-tools

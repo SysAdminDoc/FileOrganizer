@@ -154,8 +154,8 @@ class AIProvider:
 
 # ── OpenAI-compatible provider base ───────────────────────────────────────────
 
-class _OpenAICompatProvider(AIProvider):
-    """Base for OpenAI-SDK-compatible providers (GitHub Models, DeepSeek)."""
+class _ChatCompletionsProvider(AIProvider):
+    """Base for chat-completions providers."""
 
     def __init__(self, base_url: str, api_key: str, model: str, timeout: int = 60):
         self.base_url = base_url
@@ -167,17 +167,42 @@ class _OpenAICompatProvider(AIProvider):
     def _get_client(self):
         if self._client is None:
             try:
-                from openai import OpenAI
-                self._client = OpenAI(
-                    base_url=self.base_url,
-                    api_key=self.api_key,
-                    timeout=self.timeout,
+                import httpx
+                self._client = httpx.Client(
+                    timeout=httpx.Timeout(self.timeout),
+                    http2=True,
                 )
             except ImportError:
                 raise RuntimeError(
-                    "openai package not installed. Run: pip install openai"
+                    "httpx HTTP/2 support not installed. Run: pip install \"httpx[http2]>=0.28.1\""
                 )
         return self._client
+
+    def _chat_completion(self, messages: list[dict], timeout: int = 0,
+                         temperature: float = 0.1, max_tokens: int = 1024) -> str:
+        client = self._get_client()
+        url = f"{self.base_url.rstrip('/')}/chat/completions"
+        payload = {
+            'model': self.model,
+            'messages': messages,
+            'temperature': temperature,
+            'max_tokens': max_tokens,
+        }
+        headers = {
+            'Authorization': f"Bearer {self.api_key}",
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+        resp = client.post(
+            url,
+            headers=headers,
+            json=payload,
+            timeout=timeout or self.timeout,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        content = data.get('choices', [{}])[0].get('message', {}).get('content', '')
+        return str(content or '').strip()
 
     def is_available(self) -> bool:
         return bool(self.api_key and self.base_url and self.model)
@@ -187,19 +212,16 @@ class _OpenAICompatProvider(AIProvider):
         if not self.is_available():
             return None
         try:
-            client = self._get_client()
             messages = []
             if system:
                 messages.append({'role': 'system', 'content': system})
             messages.append({'role': 'user', 'content': prompt})
-            resp = client.chat.completions.create(
-                model=self.model,
+            return self._chat_completion(
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens,
                 timeout=timeout or self.timeout,
             )
-            return resp.choices[0].message.content.strip()
         except Exception as e:
             log.warning("%s classify error: %s", self.name, e)
             return None
@@ -212,20 +234,17 @@ class _OpenAICompatProvider(AIProvider):
         if not items:
             return None
         try:
-            client = self._get_client()
             prompt = _build_batch_prompt(items)
             messages = []
             if system:
                 messages.append({'role': 'system', 'content': system})
             messages.append({'role': 'user', 'content': prompt})
-            resp = client.chat.completions.create(
-                model=self.model,
+            return self._chat_completion(
                 messages=messages,
                 temperature=temperature,
                 max_tokens=max_tokens,
                 timeout=timeout or self.timeout,
             )
-            return resp.choices[0].message.content.strip()
         except Exception as e:
             log.warning("%s batch error: %s", self.name, e)
             return None
@@ -234,14 +253,11 @@ class _OpenAICompatProvider(AIProvider):
         if not self.api_key:
             return (False, "No API key configured.")
         try:
-            client = self._get_client()
-            resp = client.chat.completions.create(
-                model=self.model,
+            reply = self._chat_completion(
                 messages=[{'role': 'user', 'content': 'Reply with just the word OK.'}],
                 max_tokens=10,
                 timeout=15,
             )
-            reply = resp.choices[0].message.content.strip()
             return (True, f"Connected. Reply: {reply!r}")
         except Exception as e:
             return (False, str(e))
@@ -249,7 +265,7 @@ class _OpenAICompatProvider(AIProvider):
 
 # ── GitHub Models provider ─────────────────────────────────────────────────────
 
-class GitHubModelsProvider(_OpenAICompatProvider):
+class GitHubModelsProvider(_ChatCompletionsProvider):
     """GitHub Models marketplace — Claude, GPT-4o, Llama via GitHub PAT."""
     name = 'github'
 
@@ -283,7 +299,7 @@ class GitHubModelsProvider(_OpenAICompatProvider):
 
 # ── DeepSeek provider ──────────────────────────────────────────────────────────
 
-class DeepSeekProvider(_OpenAICompatProvider):
+class DeepSeekProvider(_ChatCompletionsProvider):
     """DeepSeek API — heavy batch classification and catalog lookup."""
     name = 'deepseek'
 
