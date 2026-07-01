@@ -708,9 +708,10 @@ def strip_trailing_spaces(root: str) -> list:
     renamed = []
     for dirpath, dirnames, filenames in os.walk(root, topdown=False):
         for name in filenames + dirnames:
-            if name != name.rstrip():
+            stripped = name.rstrip()
+            if name != stripped and stripped:
                 old = os.path.join(dirpath, name)
-                new = os.path.join(dirpath, name.rstrip())
+                new = os.path.join(dirpath, stripped)
                 if not os.path.exists(new):
                     try:
                         # Use extended-length prefix so Windows doesn't normalise
