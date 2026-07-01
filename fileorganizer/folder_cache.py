@@ -84,20 +84,22 @@ class FolderCache:
         """Create folder_cache table if not present."""
         try:
             db = sqlite3.connect(self.db_path)
-            db.execute('''
-                CREATE TABLE IF NOT EXISTS folder_cache (
-                    folder_path TEXT PRIMARY KEY,
-                    file_count INTEGER,
-                    total_size INTEGER,
-                    max_mtime INTEGER,
-                    filename_hash TEXT,
-                    fingerprint TEXT NOT NULL,
-                    cached_at INTEGER NOT NULL,
-                    ttl_seconds INTEGER DEFAULT 2592000
-                )
-            ''')
-            db.commit()
-            db.close()
+            try:
+                db.execute('''
+                    CREATE TABLE IF NOT EXISTS folder_cache (
+                        folder_path TEXT PRIMARY KEY,
+                        file_count INTEGER,
+                        total_size INTEGER,
+                        max_mtime INTEGER,
+                        filename_hash TEXT,
+                        fingerprint TEXT NOT NULL,
+                        cached_at INTEGER NOT NULL,
+                        ttl_seconds INTEGER DEFAULT 2592000
+                    )
+                ''')
+                db.commit()
+            finally:
+                db.close()
         except sqlite3.Error as e:
             logger.error(f'Failed to initialize folder_cache table: {e}')
 
@@ -108,13 +110,15 @@ class FolderCache:
         """
         try:
             db = sqlite3.connect(self.db_path)
-            cursor = db.execute(
-                'SELECT fingerprint, cached_at, ttl_seconds FROM folder_cache '
-                'WHERE folder_path = ?',
-                (folder_path,)
-            )
-            row = cursor.fetchone()
-            db.close()
+            try:
+                cursor = db.execute(
+                    'SELECT fingerprint, cached_at, ttl_seconds FROM folder_cache '
+                    'WHERE folder_path = ?',
+                    (folder_path,)
+                )
+                row = cursor.fetchone()
+            finally:
+                db.close()
 
             if not row:
                 return None
@@ -123,8 +127,6 @@ class FolderCache:
             age_seconds = time.time() - cached_at
 
             if age_seconds > ttl:
-                # Cache expired
-                logger.debug(f'Cache expired for {folder_path} (age {age_seconds:.0f}s, ttl {ttl}s)')
                 return None
 
             return {
@@ -141,16 +143,17 @@ class FolderCache:
         """Cache fingerprint for folder."""
         try:
             db = sqlite3.connect(self.db_path)
-            now = int(time.time())
-            db.execute(
-                'INSERT OR REPLACE INTO folder_cache '
-                '(folder_path, fingerprint, cached_at, ttl_seconds) '
-                'VALUES (?, ?, ?, ?)',
-                (folder_path, fingerprint, now, ttl_seconds)
-            )
-            db.commit()
-            db.close()
-            logger.debug(f'Cached fingerprint for {folder_path}')
+            try:
+                now = int(time.time())
+                db.execute(
+                    'INSERT OR REPLACE INTO folder_cache '
+                    '(folder_path, fingerprint, cached_at, ttl_seconds) '
+                    'VALUES (?, ?, ?, ?)',
+                    (folder_path, fingerprint, now, ttl_seconds)
+                )
+                db.commit()
+            finally:
+                db.close()
         except sqlite3.Error as e:
             logger.error(f'Failed to cache fingerprint for {folder_path}: {e}')
 
@@ -165,10 +168,11 @@ class FolderCache:
         """Remove cache entry for folder."""
         try:
             db = sqlite3.connect(self.db_path)
-            db.execute('DELETE FROM folder_cache WHERE folder_path = ?', (folder_path,))
-            db.commit()
-            db.close()
-            logger.debug(f'Invalidated cache for {folder_path}')
+            try:
+                db.execute('DELETE FROM folder_cache WHERE folder_path = ?', (folder_path,))
+                db.commit()
+            finally:
+                db.close()
         except sqlite3.Error as e:
             logger.error(f'Failed to invalidate cache for {folder_path}: {e}')
 
@@ -176,10 +180,11 @@ class FolderCache:
         """Clear entire cache."""
         try:
             db = sqlite3.connect(self.db_path)
-            db.execute('DELETE FROM folder_cache')
-            db.commit()
-            db.close()
-            logger.info('Cleared all folder cache entries')
+            try:
+                db.execute('DELETE FROM folder_cache')
+                db.commit()
+            finally:
+                db.close()
         except sqlite3.Error as e:
             logger.error(f'Failed to clear folder cache: {e}')
 
@@ -187,29 +192,25 @@ class FolderCache:
         """Remove expired cache entries."""
         try:
             db = sqlite3.connect(self.db_path)
-            now = int(time.time())
-
-            if max_age_seconds:
-                # Remove entries older than max_age_seconds
-                cutoff = now - max_age_seconds
-                cursor = db.execute(
-                    'DELETE FROM folder_cache WHERE cached_at < ?',
-                    (cutoff,)
-                )
-            else:
-                # Remove entries where cached_at + ttl_seconds < now
-                cursor = db.execute(
-                    'DELETE FROM folder_cache WHERE (cached_at + ttl_seconds) < ?',
-                    (now,)
-                )
-
-            db.commit()
-            deleted = cursor.rowcount
-            db.close()
-
+            try:
+                now = int(time.time())
+                if max_age_seconds:
+                    cutoff = now - max_age_seconds
+                    cursor = db.execute(
+                        'DELETE FROM folder_cache WHERE cached_at < ?',
+                        (cutoff,)
+                    )
+                else:
+                    cursor = db.execute(
+                        'DELETE FROM folder_cache WHERE (cached_at + ttl_seconds) < ?',
+                        (now,)
+                    )
+                db.commit()
+                deleted = cursor.rowcount
+            finally:
+                db.close()
             if deleted > 0:
                 logger.info(f'Cleaned up {deleted} expired cache entries')
-
         except sqlite3.Error as e:
             logger.error(f'Failed to cleanup expired cache: {e}')
 
