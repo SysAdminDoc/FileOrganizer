@@ -5,8 +5,14 @@ xml.etree.ElementTree. Classifies SVGs into: design system icons,
 illustrations, diagrams, animations (via <animate> detection).
 """
 import os
-import xml.etree.ElementTree as ET
 from typing import Dict, Any, Optional
+
+try:
+    from defusedxml.ElementTree import parse as _safe_parse
+except ImportError:
+    import xml.etree.ElementTree as _ET
+    _safe_parse = _ET.parse
+import xml.etree.ElementTree as ET
 
 _SVG_NS = "http://www.w3.org/2000/svg"
 _DC_NS = "http://purl.org/dc/elements/1.1/"
@@ -35,7 +41,7 @@ def extract_svg_metadata(file_path: str) -> Optional[Dict[str, Any]]:
         return None
 
     try:
-        tree = ET.parse(file_path)
+        tree = _safe_parse(file_path)
     except (ET.ParseError, Exception):
         return None
 

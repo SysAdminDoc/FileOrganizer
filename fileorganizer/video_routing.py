@@ -183,7 +183,7 @@ def analyze_video_metadata(file_path: str, codec_info: Optional[Dict[str, Any]] 
     metadata.has_audio = metadata.audio_codec is not None
     
     # Calculate aspect ratio
-    if metadata.width and metadata.height:
+    if metadata.width and metadata.height and metadata.height > 0:
         aspect = metadata.width / metadata.height
         metadata.aspect_ratio = aspect
         
