@@ -57,8 +57,27 @@ def build_payload(
     }
 
 
+def _is_safe_url(url: str) -> bool:
+    """Reject non-HTTP(S) schemes and loopback/metadata addresses."""
+    from urllib.parse import urlparse
+    try:
+        parsed = urlparse(url)
+    except Exception:
+        return False
+    if parsed.scheme not in ("http", "https"):
+        return False
+    host = (parsed.hostname or "").lower()
+    if host in ("localhost", "127.0.0.1", "::1", "0.0.0.0",
+                "169.254.169.254", "metadata.google.internal"):
+        return False
+    return True
+
+
 def send_webhook(url: str, payload: Dict) -> bool:
     """POST payload to a single URL. Returns True on success."""
+    if not _is_safe_url(url):
+        log.warning("Webhook blocked unsafe URL: %s", url)
+        return False
     try:
         body = json.dumps(payload).encode("utf-8")
         req = Request(url, data=body, method="POST")

@@ -906,25 +906,33 @@ def _fingerprint_db_lookup(folder_path: str, log_cb=None) -> dict:
     Returns a result dict if found, or empty dict if no match.
     """
     try:
-        import sys
-        sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-        from asset_db import folder_fingerprint as _fp_func
-        fp, _ = _fp_func(folder_path)
+        import importlib.util
+        import sqlite3
+
+        repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        spec = importlib.util.spec_from_file_location(
+            "asset_db", os.path.join(repo_root, "asset_db.py"))
+        if spec is None or spec.loader is None:
+            return {}
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        fp, _ = mod.folder_fingerprint(folder_path)
         if not fp:
             return {}
 
-        import sqlite3
-        db_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'asset_fingerprints.db')
+        db_path = os.path.join(repo_root, 'asset_fingerprints.db')
         if not os.path.isfile(db_path):
             return {}
 
         con = sqlite3.connect(db_path, timeout=5)
-        con.row_factory = sqlite3.Row
-        row = con.execute(
-            "SELECT category, source_name FROM assets WHERE folder_fingerprint=? LIMIT 1",
-            (fp,)
-        ).fetchone()
-        con.close()
+        try:
+            con.row_factory = sqlite3.Row
+            row = con.execute(
+                "SELECT category, source_name FROM assets WHERE folder_fingerprint=? LIMIT 1",
+                (fp,)
+            ).fetchone()
+        finally:
+            con.close()
 
         if row and row['category']:
             cat = row['category']

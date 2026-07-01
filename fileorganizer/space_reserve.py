@@ -102,13 +102,16 @@ def _create_sparse_windows(path: str, size: int) -> Optional[str]:
     FILE_ATTRIBUTE_NORMAL = 0x80
     GENERIC_WRITE = 0x40000000
     CREATE_ALWAYS = 2
+    INVALID_HANDLE_VALUE = ctypes.c_void_p(-1).value
 
     kernel32 = ctypes.windll.kernel32
+    kernel32.CreateFileW.restype = ctypes.c_void_p
+    kernel32.CloseHandle.argtypes = [ctypes.c_void_p]
 
     handle = kernel32.CreateFileW(
         path, GENERIC_WRITE, 0, None, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, None
     )
-    if handle == -1:
+    if handle == INVALID_HANDLE_VALUE or handle is None:
         return None
 
     try:

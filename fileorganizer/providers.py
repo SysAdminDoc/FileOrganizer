@@ -201,7 +201,8 @@ class _ChatCompletionsProvider(AIProvider):
         )
         resp.raise_for_status()
         data = resp.json()
-        content = data.get('choices', [{}])[0].get('message', {}).get('content', '')
+        choices = data.get('choices') or [{}]
+        content = choices[0].get('message', {}).get('content', '')
         return str(content or '').strip()
 
     def is_available(self) -> bool:
@@ -461,7 +462,8 @@ class ProviderRouter:
                 prompt, system=system, temperature=temperature, max_tokens=max_tokens
             )
             if result:
-                record_api_call(provider.name, max_tokens)
+                estimated_tokens = len(prompt) // 4 + len(result) // 4
+                record_api_call(provider.name, estimated_tokens)
                 return result
         return None
 
@@ -479,7 +481,9 @@ class ProviderRouter:
                 items, system=system, temperature=temperature, max_tokens=max_tokens
             )
             if result:
-                record_api_call(provider.name, max_tokens)
+                batch_text = str(items)
+                estimated_tokens = len(batch_text) // 4 + len(result) // 4
+                record_api_call(provider.name, estimated_tokens)
                 return result
         return None
 

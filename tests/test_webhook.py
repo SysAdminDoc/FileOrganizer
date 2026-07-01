@@ -60,7 +60,26 @@ class TestWebhook(unittest.TestCase):
         mock_send.return_value = True
         wh.notify_all("run-1", 5, 0, {"AE": 5})
         import time
-        time.sleep(0.1)
+        time.sleep(0.2)
+        self.assertTrue(mock_send.called)
+
+    def test_blocks_file_url(self):
+        result = wh.send_webhook("file:///etc/passwd", {"test": True})
+        self.assertFalse(result)
+
+    def test_blocks_localhost_url(self):
+        result = wh.send_webhook("http://localhost:8080/hook", {"test": True})
+        self.assertFalse(result)
+
+    def test_blocks_metadata_url(self):
+        result = wh.send_webhook("http://169.254.169.254/latest/", {"test": True})
+        self.assertFalse(result)
+
+    def test_allows_https_url(self):
+        self.assertTrue(wh._is_safe_url("https://example.com/hook"))
+
+    def test_blocks_ftp_url(self):
+        self.assertFalse(wh._is_safe_url("ftp://example.com/file"))
 
 
 if __name__ == "__main__":

@@ -17,6 +17,7 @@ from fileorganizer.config import _APP_DATA_DIR
 
 _CRASH_LOG = os.path.join(_APP_DATA_DIR, "crash.log")
 _MAX_LOG_SIZE = 5 * 1024 * 1024  # 5 MB
+_write_lock = threading.Lock()
 
 log = logging.getLogger(__name__)
 _on_crash_callback: Optional[Callable[[str], None]] = None
@@ -67,14 +68,14 @@ def _record_crash(exc_type, exc_value, exc_tb, thread_name=""):
         f"{'=' * 72}\n"
     )
 
-    _rotate_log()
-
-    try:
-        os.makedirs(_APP_DATA_DIR, exist_ok=True)
-        with open(_CRASH_LOG, "a", encoding="utf-8") as f:
-            f.write(entry)
-    except Exception:
-        pass
+    with _write_lock:
+        _rotate_log()
+        try:
+            os.makedirs(_APP_DATA_DIR, exist_ok=True)
+            with open(_CRASH_LOG, "a", encoding="utf-8") as f:
+                f.write(entry)
+        except Exception:
+            pass
 
     msg = f"Worker crash: {exc_type.__name__}: {exc_value}"
     log.error(msg)

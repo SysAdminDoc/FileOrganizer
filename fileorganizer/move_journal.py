@@ -69,95 +69,107 @@ def plan_run(run_id: str, work_items: list):
     """Write all work items as 'pending' for this run before any move starts."""
     now = _now()
     con = _connect()
-    for ri, it in work_items:
-        con.execute(
-            """
-            INSERT INTO moves
-                (run_id, ri, folder_name, src, dst, category,
-                 confidence, cleaned_name, status, ts_planned)
-            VALUES (?,?,?,?,?,?,?,?,'pending',?)
-            """,
-            (
-                run_id, ri,
-                getattr(it, 'folder_name', ''),
-                getattr(it, 'full_source_path', ''),
-                getattr(it, 'full_dest_path', ''),
-                getattr(it, 'category', ''),
-                float(getattr(it, 'confidence', 0)),
-                getattr(it, 'cleaned_name', ''),
-                now,
+    try:
+        for ri, it in work_items:
+            con.execute(
+                """
+                INSERT INTO moves
+                    (run_id, ri, folder_name, src, dst, category,
+                     confidence, cleaned_name, status, ts_planned)
+                VALUES (?,?,?,?,?,?,?,?,'pending',?)
+                """,
+                (
+                    run_id, ri,
+                    getattr(it, 'folder_name', ''),
+                    getattr(it, 'full_source_path', ''),
+                    getattr(it, 'full_dest_path', ''),
+                    getattr(it, 'category', ''),
+                    float(getattr(it, 'confidence', 0)),
+                    getattr(it, 'cleaned_name', ''),
+                    now,
+                )
             )
-        )
-    con.commit()
-    con.close()
+        con.commit()
+    finally:
+        con.close()
 
 
 def mark_done(run_id: str, ri: int, status: str):
     """Update a single move record to 'done' or 'error'."""
     con = _connect()
-    con.execute(
-        "UPDATE moves SET status=?, ts_done=? WHERE run_id=? AND ri=?",
-        (status, _now(), run_id, ri)
-    )
-    con.commit()
-    con.close()
+    try:
+        con.execute(
+            "UPDATE moves SET status=?, ts_done=? WHERE run_id=? AND ri=?",
+            (status, _now(), run_id, ri)
+        )
+        con.commit()
+    finally:
+        con.close()
 
 
 def clear_run(run_id: str):
     """Delete all journal records for this run (called on clean completion)."""
     con = _connect()
-    con.execute("DELETE FROM moves WHERE run_id=?", (run_id,))
-    con.commit()
-    con.close()
+    try:
+        con.execute("DELETE FROM moves WHERE run_id=?", (run_id,))
+        con.commit()
+    finally:
+        con.close()
 
 
 def clear_all():
     """Discard every pending record (user chose to start fresh)."""
     con = _connect()
-    con.execute("DELETE FROM moves WHERE status='pending'")
-    con.commit()
-    con.close()
+    try:
+        con.execute("DELETE FROM moves WHERE status='pending'")
+        con.commit()
+    finally:
+        con.close()
 
 
 def get_pending_summary() -> list:
     """Return [(run_id, count)] for runs that still have pending moves."""
     con = _connect()
-    rows = con.execute(
-        """
-        SELECT run_id, COUNT(*) AS n
-        FROM moves WHERE status = 'pending'
-        GROUP BY run_id
-        ORDER BY MIN(ts_planned)
-        """
-    ).fetchall()
-    con.close()
-    return [(r[0], r[1]) for r in rows]
+    try:
+        rows = con.execute(
+            """
+            SELECT run_id, COUNT(*) AS n
+            FROM moves WHERE status = 'pending'
+            GROUP BY run_id
+            ORDER BY MIN(ts_planned)
+            """
+        ).fetchall()
+        return [(r[0], r[1]) for r in rows]
+    finally:
+        con.close()
 
 
 def get_pending_moves(run_id: str) -> list:
     """Return all pending moves for a run as dicts (src/dst/etc.)."""
     con = _connect()
-    rows = con.execute(
-        """
-        SELECT ri, folder_name, src, dst, category, confidence, cleaned_name
-        FROM moves WHERE run_id=? AND status='pending'
-        ORDER BY id
-        """,
-        (run_id,)
-    ).fetchall()
-    con.close()
-    return [
-        {
-            'ri':          r[0],
-            'folder_name': r[1],
-            'src':         r[2],
-            'dst':         r[3],
-            'category':    r[4],
-            'confidence':  r[5],
-            'cleaned_name': r[6],
-        }
-        for r in rows
-    ]
+    try:
+        rows = con.execute(
+            """
+            SELECT ri, folder_name, src, dst, category, confidence, cleaned_name
+            FROM moves WHERE run_id=? AND status='pending'
+            ORDER BY id
+            """,
+            (run_id,)
+        ).fetchall()
+        return [
+            {
+                'ri':          r[0],
+                'folder_name': r[1],
+                'src':         r[2],
+                'dst':         r[3],
+                'category':    r[4],
+                'confidence':  r[5],
+                'cleaned_name': r[6],
+            }
+            for r in rows
+        ]
+    finally:
+        con.close()
 
 
 def cleanup_expired(days: int = _RETENTION_DAYS):
@@ -165,18 +177,22 @@ def cleanup_expired(days: int = _RETENTION_DAYS):
     cutoff = datetime.now(timezone.utc) - timedelta(days=days)
     cutoff_str = cutoff.strftime('%Y-%m-%dT%H:%M:%SZ')
     con = _connect()
-    con.execute(
-        "DELETE FROM moves WHERE status='done' AND ts_done < ?",
-        (cutoff_str,)
-    )
-    con.commit()
-    con.close()
+    try:
+        con.execute(
+            "DELETE FROM moves WHERE status='done' AND ts_done < ?",
+            (cutoff_str,)
+        )
+        con.commit()
+    finally:
+        con.close()
 
 
 def vacuum():
     """NEXT-37: Reclaim disk space by vacuuming the database."""
     con = _connect()
-    con.execute("VACUUM")
-    con.commit()
-    con.close()
+    try:
+        con.execute("VACUUM")
+        con.commit()
+    finally:
+        con.close()
 
