@@ -450,26 +450,36 @@ class ProviderRouter:
     def classify(self, prompt: str, system: str = '', task_type: str = 'lightweight',
                  temperature: float = 0.1, max_tokens: int = 1024) -> Optional[str]:
         """Run prompt through the appropriate provider, with fallback chain."""
+        from fileorganizer.provider_cost_manager import is_locked, is_over_budget, record_api_call
         for provider in self._resolve(task_type):
             if not provider.is_available():
+                continue
+            locked, _ = is_locked(provider.name)
+            if locked or is_over_budget(provider.name):
                 continue
             result = provider.classify(
                 prompt, system=system, temperature=temperature, max_tokens=max_tokens
             )
             if result:
+                record_api_call(provider.name, max_tokens)
                 return result
         return None
 
     def classify_batch(self, items: list, system: str = '', task_type: str = 'heavy',
                        temperature: float = 0.1, max_tokens: int = 4096) -> Optional[str]:
         """Run batch through the appropriate provider, with fallback chain."""
+        from fileorganizer.provider_cost_manager import is_locked, is_over_budget, record_api_call
         for provider in self._resolve(task_type):
             if not provider.is_available():
+                continue
+            locked, _ = is_locked(provider.name)
+            if locked or is_over_budget(provider.name):
                 continue
             result = provider.classify_batch(
                 items, system=system, temperature=temperature, max_tokens=max_tokens
             )
             if result:
+                record_api_call(provider.name, max_tokens)
                 return result
         return None
 

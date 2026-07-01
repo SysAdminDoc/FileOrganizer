@@ -900,6 +900,47 @@ def _apply_context_from_scan(result: dict, scan: dict, folder_path: str,
     return result
 
 
+def _fingerprint_db_lookup(folder_path: str, log_cb=None) -> dict:
+    """NEXT-15: Check asset DB for a known fingerprint before any AI call.
+
+    Returns a result dict if found, or empty dict if no match.
+    """
+    try:
+        import sys
+        sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+        from asset_db import folder_fingerprint as _fp_func
+        fp, _ = _fp_func(folder_path)
+        if not fp:
+            return {}
+
+        import sqlite3
+        db_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'asset_fingerprints.db')
+        if not os.path.isfile(db_path):
+            return {}
+
+        con = sqlite3.connect(db_path, timeout=5)
+        con.row_factory = sqlite3.Row
+        row = con.execute(
+            "SELECT category, source_name FROM assets WHERE folder_fingerprint=? LIMIT 1",
+            (fp,)
+        ).fetchone()
+        con.close()
+
+        if row and row['category']:
+            cat = row['category']
+            if log_cb:
+                log_cb(f"    DB fingerprint hit: {cat} (100%) [hash-first skip]")
+            return {
+                'category': cat,
+                'confidence': 100,
+                'method': 'fingerprint',
+                'detail': f'hash-first DB match (fp={fp[:12]}...)',
+            }
+    except Exception:
+        pass
+    return {}
+
+
 def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> dict:
     """Run the full tiered classification pipeline on a folder.
 
@@ -917,8 +958,15 @@ def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> d
         'method': '', 'detail': '', 'metadata': {}, 'topic': None
     }
 
-    # ── Single-pass folder scan: collect ALL data once for all levels ──
+    # ── NEXT-15: Hash-first DB skip (Stage 0) ──
     has_folder = folder_path and os.path.isdir(folder_path)
+    if has_folder:
+        db_hit = _fingerprint_db_lookup(folder_path, log_cb)
+        if db_hit:
+            result.update(db_hit)
+            return result
+
+    # ── Single-pass folder scan: collect ALL data once for all levels ──
     scan = None
     if has_folder:
         scan = _scan_folder_once(folder_path)
