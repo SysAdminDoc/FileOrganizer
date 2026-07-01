@@ -50,7 +50,7 @@ def generate_html_report(
             f"<td>{i}</td>"
             f"<td>{_esc(os.path.basename(op.get('dst', '')))}</td>"
             f"<td>{_esc(op.get('category', ''))}</td>"
-            f"<td>{conf}</td>"
+            f"<td>{_esc(str(conf))}</td>"
             f"<td>{_esc(status)}</td>"
             f"</tr>"
         )
