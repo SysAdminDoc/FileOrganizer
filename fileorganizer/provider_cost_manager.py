@@ -78,7 +78,7 @@ def _today() -> str:
 
 def _now() -> str:
     """Return current UTC timestamp."""
-    return datetime.now(timezone.utc).isoformat() + 'Z'
+    return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
 def record_api_call(provider: str, tokens_used: int, model: str = None):
@@ -148,7 +148,7 @@ def is_over_budget(provider: str, daily_budget: float = _COST_BUDGET_PER_DAY) ->
 def set_backoff(provider: str, seconds: int, reason: str = "Rate limit or error"):
     """Lock a provider for exponential backoff (max 60 min)."""
     lockout = min(seconds, _MAX_BACKOFF_SECONDS)
-    locked_until = (datetime.now(timezone.utc) + timedelta(seconds=lockout)).isoformat() + 'Z'
+    locked_until = (datetime.now(timezone.utc) + timedelta(seconds=lockout)).strftime('%Y-%m-%dT%H:%M:%SZ')
     
     conn = _get_db()
     conn.execute("""
