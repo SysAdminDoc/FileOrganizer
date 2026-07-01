@@ -80,9 +80,16 @@ def lookup_cached(folder_path: str, model_id: str, prompt_text: str) -> Optional
         if not row:
             return None
         
-        # Check TTL (only if accessed_at + TTL < now)
         now = int(time.time())
-        if now - row['accessed_at'] > DEFAULT_TTL:
+        created = row['accessed_at']
+        try:
+            created = con.execute(
+                "SELECT created_at FROM llm_cache WHERE fingerprint=? AND model_id=? AND prompt_hash=?",
+                (fp, model_id, p_hash)
+            ).fetchone()['created_at']
+        except (TypeError, KeyError):
+            pass
+        if now - created > DEFAULT_TTL:
             # Expired; delete and return None
             con.execute(
                 "DELETE FROM llm_cache "

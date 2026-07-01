@@ -62,7 +62,7 @@ class TestLlmCache(unittest.TestCase):
         llm_cache.store_cached("/tmp/folder", "model", "prompt", response)
         con = sqlite3.connect(str(llm_cache.DB_FILE))
         old_ts = int(time.time()) - (60 * 86400)
-        con.execute("UPDATE llm_cache SET accessed_at=?", (old_ts,))
+        con.execute("UPDATE llm_cache SET created_at=?, accessed_at=?", (old_ts, old_ts))
         con.commit()
         con.close()
         result = llm_cache.lookup_cached("/tmp/folder", "model", "prompt")
