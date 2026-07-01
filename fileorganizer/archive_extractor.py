@@ -62,7 +62,8 @@ _JUNK_EXTENSIONS = {
 }
 
 _ARCHIVE_EXTENSIONS = {'.zip', '.rar', '.7z', '.tar',
-                       '.tar.gz', '.tgz', '.tar.bz2', '.tar.xz'}
+                       '.tar.gz', '.tgz', '.tar.bz2', '.tar.xz',
+                       '.zst', '.tar.zst'}
 
 
 def _normalize_member_name(member_name: str) -> str:
@@ -104,7 +105,7 @@ def is_archive(path: str) -> bool:
     p = Path(path)
     name_lower = p.name.lower()
     return (p.suffix.lower() in _ARCHIVE_EXTENSIONS
-            or name_lower.endswith(('.tar.gz', '.tar.bz2', '.tar.xz')))
+            or name_lower.endswith(('.tar.gz', '.tar.bz2', '.tar.xz', '.tar.zst')))
 
 
 def is_design_file(path: str) -> bool:
