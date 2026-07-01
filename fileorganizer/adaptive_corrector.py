@@ -101,6 +101,7 @@ class CorrectionRecord:
         """Deserialize from JSON dict."""
         rec = CorrectionRecord.__new__(CorrectionRecord)
         rec.folder_name = d.get('folder_name', '')
+        rec.folder_path = d.get('folder_path', '')
         rec.fingerprint = d.get('fingerprint')
         rec.keywords = d.get('keywords', [])
         rec.corrected_category = d.get('category', '')

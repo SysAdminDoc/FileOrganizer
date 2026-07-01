@@ -409,7 +409,9 @@ class ScanMixin:
                 if raw_suffix.lower() not in dest_folder_name.lower():
                     dest_folder_name = f"{dest_folder_name} {raw_suffix}"
 
-        raw_dest = os.path.join(dst, r['category'], dest_folder_name)
+        safe_cat = re.sub(r'[<>:"|?*]', '-', r['category']).strip()
+        safe_dest = re.sub(r'[<>:"|?*]', '-', dest_folder_name).strip()
+        raw_dest = os.path.join(dst, safe_cat, safe_dest)
         it.full_dest_path = self._deduplicate_dest_path(raw_dest)
 
         it.method = r.get('method', ''); it.detail = r.get('detail', '')
