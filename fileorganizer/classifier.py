@@ -25,7 +25,8 @@ from fileorganizer.cache import (
 )
 from fileorganizer.categories import (
     CATEGORIES, BUILTIN_CATEGORIES, get_all_categories, get_all_category_names,
-    _CategoryIndex, GENERIC_AEP_NAMES, is_generic_aep, _score_aep
+    _CategoryIndex, GENERIC_AEP_NAMES, is_generic_aep, _score_aep,
+    check_negative_keywords,
 )
 from fileorganizer.user_categories import classify_user_category
 from fileorganizer.naming import (
@@ -98,6 +99,8 @@ def categorize_folder(folder_name):
             best_cat = cat_name
 
     if best_score >= 15:
+        if check_negative_keywords(best_cat, norm):
+            return (None, 0, cleaned)
         return (best_cat, min(best_score, 100), cleaned)
     return (None, 0, cleaned)
 
@@ -305,7 +308,7 @@ def _classify_by_composition(comp: dict) -> tuple:
 # ── Scan file-type filter sets ────────────────────────────────────────────────
 _FILTER_IMAGE_EXTS = {
     '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp',
-    '.heic', '.heif', '.avif', '.svg', '.ico', '.jfif', '.jpe',
+    '.heic', '.heif', '.avif', '.jxl', '.svg', '.ico', '.jfif', '.jpe',
     '.raw', '.cr2', '.cr3', '.nef', '.arw', '.dng', '.orf', '.rw2',
     '.pef', '.srw', '.raf', '.3fr', '.dcr', '.kdc', '.mrw', '.nrw',
     '.psd', '.psb', '.xcf', '.ai', '.eps',

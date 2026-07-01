@@ -227,7 +227,7 @@ class ThumbnailCard(QWidget):
     """Single thumbnail card for grid view: 170x200, thumbnail + name + category badge."""
     clicked = pyqtSignal(int)  # item index
 
-    _IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff', '.tif', '.ico', '.svg'}
+    _IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff', '.tif', '.ico', '.svg', '.avif', '.jxl'}
 
     def __init__(self, index: int, name: str, category: str, cat_color: str, file_path: str, parent=None):
         super().__init__(parent)

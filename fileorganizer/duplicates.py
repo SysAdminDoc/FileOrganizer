@@ -174,8 +174,8 @@ class _BKTree:
         return results
 
 
-IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp'}
-_PHASH_IMAGE_EXTS = IMAGE_EXTS | {'.heic', '.heif', '.avif', '.jxl'}
+IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp', '.avif', '.jxl'}
+_PHASH_IMAGE_EXTS = IMAGE_EXTS | {'.heic', '.heif'}
 
 
 class ProgressiveDuplicateDetector:

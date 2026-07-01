@@ -605,6 +605,37 @@ CATEGORIES = [
 
 BUILTIN_CATEGORIES = list(CATEGORIES)  # Keep original copy
 
+# ── NEXT-16: Negative keyword rules ──────────────────────────────────────────
+# Per-category "must NOT contain" terms. If a folder name matches both a
+# category's positive keywords AND any of its negative keywords, the match
+# is rejected and the classifier falls through to the next-best category.
+NEGATIVE_KEYWORDS = {
+    "After Effects - Wedding & Events": ["corporate", "business", "company", "brand"],
+    "After Effects - Intros & Openers": ["slideshow", "wedding slideshow"],
+    "After Effects - Slideshows": ["logo reveal", "logo animation", "logo intro"],
+    "After Effects - Logo Reveals": ["slideshow", "title sequence"],
+    "After Effects - Character Animation": ["template pack", "preset"],
+    "Premiere Pro - LUTs & Color": ["transition", "title"],
+    "Print - Wedding & Events": ["corporate", "business", "company"],
+    "Print - Flyers & Posters": ["business card", "stationery", "resume", "cv"],
+    "Print - Business Cards & Stationery": ["flyer", "poster", "brochure"],
+    "Photography Presets & Actions": ["mockup", "template", "ui kit"],
+    "3D - Models & Objects": ["after effects", "premiere", "photoshop"],
+    "Fonts & Typography": ["after effects", "premiere", "photoshop", "template"],
+}
+
+
+def check_negative_keywords(category: str, folder_norm: str) -> bool:
+    """Return True if the folder name triggers a negative keyword for this category."""
+    negatives = NEGATIVE_KEYWORDS.get(category)
+    if not negatives:
+        return False
+    for neg in negatives:
+        if neg in folder_norm:
+            return True
+    return False
+
+
 # ── Build TOPIC_CATEGORIES set ────────────────────────────────────────────────
 # Topic categories describe WHAT a design is ABOUT ("Night Club", "Christmas")
 # NOT what the design IS ("Flyers", "Business Cards").
