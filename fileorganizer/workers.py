@@ -1158,8 +1158,9 @@ class ApplyCatWorker(QThread):
                             pass
                 self.item_done.emit(ri, "Error")
 
-        # Clear journal on clean exit (crashed runs leave pending rows)
-        if not self.dry_run and not self._cancelled:
+        # Clear journal: on clean exit or user cancellation, remove all rows.
+        # Only a crash (no clear_run reached) should leave pending rows for resume.
+        if not self.dry_run:
             clear_run(run_id)
 
         # Notify Windows Explorer/Search of moved files
@@ -2363,7 +2364,7 @@ class ScanFilesLLMWorker(QThread):
                     try:
                         reclassify_prompt = (
                             f"An image was described as: \"{description[:500]}\"\n"
-                            f"The filename is: \"{re.sub(r'[{}\\[\\]<>]', '', name)[:200]}\"\n"
+                            f"The filename is: \"{re.sub('[{}[\\]<>]', '', name)[:200]}\"\n"
                             f"Classify into exactly ONE category: {', '.join(cat_names)}\n"
                             "Respond ONLY with JSON: {\"category\": \"<name>\", \"confidence\": <0-100>, "
                             "\"reason\": \"<brief>\", \"suggested_name\": \"<short_descriptive_name_no_ext>\"}"
