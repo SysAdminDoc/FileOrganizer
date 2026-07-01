@@ -45,7 +45,7 @@ _IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff", ".tif",
                ".webp", ".heic", ".avif", ".jxl"}
 _VIDEO_EXTS = {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v", ".mxf",
                ".flv", ".wmv"}
-_ARCHIVE_EXTS = {".zip", ".rar", ".7z"}
+_ARCHIVE_EXTS = {".zip", ".rar", ".7z", ".zst"}
 
 
 # ── Image ────────────────────────────────────────────────────────────────
