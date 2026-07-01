@@ -69,9 +69,8 @@ def _check_filename(filename: str, full_path: str) -> List[Tuple[str, str]]:
     
     # Check for uppercase-only extensions
     if '.' in filename:
-        ext = os.path.splitext(filename)[1].upper()
-        if ext in COMMON_UPPERCASE_EXTS:
-            # This is an uppercase extension that should be lowercase
+        ext = os.path.splitext(filename)[1]
+        if ext != ext.lower() and ext.upper() in COMMON_UPPERCASE_EXTS:
             issues.append((full_path, f"Uppercase extension {ext} (should be {ext.lower()})"))
     
     return issues
