@@ -580,11 +580,6 @@ with zero API cost. Expected skip rate: ~60-70% of common templates already in t
 - **Impact**: 5 | **Effort**: 2
 - Source: [S32] AUDIT_LESSONS.md ("Community fingerprint DB changes the cost model"), `asset_db.py`
 
-**NEXT-16: Negative keyword rules**
-Per-category "must NOT contain" term list to resolve overlapping categories.
-Example: `Wedding` must not contain "Corporate" -> routes to `After Effects - Corporate` instead.
-- **Impact**: 3 | **Effort**: 2
-
 **NEXT-17: Marketplace enrichment expansion**
 Extend `marketplace_enrich.py` beyond Envato to: Creative Market (API available), Freepik (API
 key), Motion Array, FilterGrade, Shutterstock, Adobe Stock. Each needs a URL pattern + parser.
@@ -687,26 +682,11 @@ self-hosted, Home Assistant downstream automations.
 
 ### Testing & Distribution
 
-**NEXT-29: Test coverage expansion**
-Add unit tests for: `_CATEGORY_SET` phantom rejection, position-based batch mapping, cross-drive
-path selection (os.rename vs robocopy), confidence threshold branching, ProviderRouter fallback
-chain. Target: 10+ test functions covering core safety invariants.
-- **Impact**: 4 | **Effort**: 3
-- Source: Internal -- currently only 1 test file (`test_organize_run.py`)
-
 **NEXT-30: CI multiplatform builds**
 Add macOS and Linux PyInstaller targets to `release.yml` using `macos-latest` and
 `ubuntu-latest` runners. Ship platform-specific binaries in GitHub Release.
 - **Impact**: 3 | **Effort**: 2
 - Source: [S1] LlamaFS CI, [S8] organize-cli cross-platform, [S2] Local-File-Organizer
-
-**NEXT-31: Scan time measurement**
-Record wall-clock time for each scan phase (index build, classification, enrichment, pre-flight)
-and display in the GUI status bar and in post-apply HTML report (NEXT-25). Store `scan_duration_ms`
-per run in `organize_moves.db`. Helps users identify which pipeline stage is the bottleneck on
-large libraries.
-- **Impact**: 2 | **Effort**: 1
-- Source: [S44] Czkawka v11.0.0 scan time display, internal profiling need
 
 **NEXT-32: Dedup similarity grouping improvements**
 When running perceptual hash dedup (NEXT-19), group near-identical items into clusters before
@@ -756,18 +736,6 @@ cost / backoff / failover logic on top.
 - Source: [S54] octopus-factory `cost-estimate.sh` + `copilot-fallback.sh`, [S55]
   Bookmark-Organizer-Pro `ai.py`, tenacity https://tenacity.readthedocs.io
 
-**NEXT-35: Symlink / junction / reparse-point detection in pre-flight**
-Windows junction points and reparse points cause `shutil.move` to traverse outside the source
-tree silently. The N-4 PreflightDialog scans for trailing-space and >260-char paths but does
-not flag reparse points. Extend `PreflightWorker` (in `fileorganizer/dialogs/tools.py`) with a
-`stat().st_file_attributes & FILE_ATTRIBUTE_REPARSE_POINT` check on every shallow child;
-report findings in the dialog under a new "Reparse points (N)" warning row. Block apply when
-a reparse target points outside the configured source root (path traversal risk).
-- **Why now**: This codepath has burned at least one user with a NetBIOS junction silently
-  re-pointing into `C:\Windows`. Pre-flight is the right place to catch it.
-- **Impact**: 3 | **Effort**: 2
-- Source: Microsoft `FILE_ATTRIBUTE_REPARSE_POINT` https://learn.microsoft.com/en-us/windows/win32/fileio/file-attribute-constants
-
 **NEXT-36: Free-space *reserve* via sparse file (not just check)**
 N-4 (shipped) checks `shutil.disk_usage` once at apply start, but a concurrent process can
 eat the buffer mid-run. Pre-allocate `dst_root/.fileorganizer.reserve` as a sparse file sized
@@ -778,19 +746,6 @@ filesystem rejects competing writes that would push it over the reserve.
   or another tool consumes the buffer. Cheap insurance for the multi-TB G:↔I: runs.
 - **Impact**: 3 | **Effort**: 2
 - Source: Win32 `FSCTL_SET_SPARSE` https://learn.microsoft.com/en-us/windows/win32/api/winioctl/ni-winioctl-fsctl_set_sparse
-
-**NEXT-37: organize_moves.db vacuum + retention policy**
-`organize_moves.db` (SQLite WAL after the N-6 audit fix) grows unbounded. After 100k moves
-the DB and its WAL can be hundreds of MB, hurting both startup time (the journal is read on
-every Apply click for crash detection) and `--undo-last N` query latency. Add:
-1. A maintenance hook on app exit: `VACUUM` after every 10 successful runs.
-2. A retention setting in `confidence_settings.json` (`journal_retention_days`, default 90):
-   on startup, `DELETE FROM moves WHERE status='done' AND ts_done < now-N`.
-3. Settings → Maintenance → "Vacuum journal now" button.
-- **Why now**: The journal already shipped with WAL pragmas (post-audit). Maintenance is the
-  natural follow-up before the 33 TB run produces a journal that's bigger than `org_index.json`.
-- **Impact**: 2 | **Effort**: 1
-- Source: SQLite VACUUM https://www.sqlite.org/lang_vacuum.html, internal observation
 
 **NEXT-38: GUI worker crash dialog + unified log viewer**
 Unhandled exceptions raised inside QThread workers (Apply, Scan, ReviewApply, CatalogSync, etc.)
@@ -876,35 +831,6 @@ working renderer for all four archive formats.
   [S42] rarfile Python bindings
 
 ### Classification & Pre-flight
-
-**NEXT-42: "Bad names" scanner in pre-flight**
-Extend `PreflightWorker` to flag files with naming problems that will cause silent failures
-or taxonomy drift downstream:
-- Non-ASCII characters in filename on NTFS volumes set to ASCII codepage.
-- Uppercase-only file extension (`.JPG`, `.MP4`): organize-cli [S69] normalizes extensions;
-  FileOrganizer should flag these before classify so the extension-based router sees `.jpg`.
-- Reserved Windows characters in filename (`< > : " / \ | ? *`).
-- Filename > 200 characters (leaves headroom below the 260-char path limit).
-- Trailing or leading spaces (already partially handled but not pre-flight reported).
-Show results in PreflightDialog under "Name issues (N)". Add `--fix-bad-names` CLI flag that
-auto-normalizes extensions and strips reserved characters in-place before classify.
-Czkawka v11.0.0 [S44] ships a "bad names" scanner as a first-class mode, confirming user demand.
-- **Impact**: 3 | **Effort**: 1
-- Source: [S44] Czkawka v11.0.0 "bad names" mode, N-4 pre-flight infra (shipped)
-
-**NEXT-43: ExifTool integration in metadata pipeline**
-Support `exiftool` as a supplementary metadata backend in `metadata_extractors/` (N-9).
-ExifTool reads 800+ formats including proprietary AE/PSD/Sketch embedded metadata not accessible
-via Python libraries. Integration:
-- Detect `exiftool` via `FILEORGANIZER_EXIFTOOL_PATH` env var (mirrors organize-cli's
-  `ORGANIZE_EXIFTOOL_PATH` pattern [S69]).
-- On N-9 extractor miss (result confidence < 50%), invoke `exiftool -json <path>` via subprocess
-  and merge the parsed fields into the existing extractor result dict.
-- Map ExifTool fields: `XMP:Category`, `XMP:Subject[]`, `IPTC:Keywords`, `QuickTime:Comment`
-  → keyword list fed into the keyword classifier (NEXT-2 path).
-- **Impact**: 4 | **Effort**: 2 | **Depends on**: N-9
-- Source: [S69] organize-cli v3.0.0 exiftool support, ExifTool docs
-  https://exiftool.org/exiftool_pod.html
 
 ### Performance & Caching
 
@@ -1025,23 +951,6 @@ a policy + dependency-management task.
 - **Impact**: 1 | **Effort**: 1 | **Tier**: NEXT | **Blocks**: v9.0 release
 - Source: [S117] PyMuPDF 1.27.2.3 license (AGPL-3.0) https://pypi.org/pypi/pymupdf/json
 
-**NEXT-63: AVIF + JPEG XL format detection**
-Adobe Photoshop 2025/2026 added native support for AVIF (`.avif`) and JPEG XL (`.jxl`) files.
-FileOrganizer's format detection must recognize these new formats. Add magic-byte detection:
-AVIF uses `ftyp` at offset 4; JPEG XL uses magic `FF 0A` or `00 00 00 0C 4A 58 4C 20`. Update
-`supported_extensions()` in `classify.py` and `_get_image_thumb()` in thumbnail pipeline. Pillow
-12.2.0 supports both formats natively.
-- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT
-- Source: [S118] Adobe Photoshop 2025 whats-new (AVIF support);
-   [S119] Pillow 12.2.0 AVIF/JPEG XL support
-
-**NEXT-64: COLRv1 color font detection**
-Extend font classifier to detect COLRv1 (color layered OpenType v1) fonts — the modern standard
-for emoji and display fonts (Noto Color Emoji, Segoe UI Emoji, etc.). Detection: `fontTools.ttLib.TTFont(path)["COLR"].version >= 1`. Store `is_colrv1: bool` in font asset record. Pairs with NEXT-56 (variable font detection) to complete font capability matrix. COLRv1 detection helps users organize custom emoji font libraries or new display font collections.
-- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Pairs with**: NEXT-56
-- Source: [S120] fontTools COLRv1 support https://fonttools.readthedocs.io/en/latest/;
-   [S105] fontTools library
-
 **NEXT-65: WinAppSDK 2.0.1 SystemBackdropElement**
 Use `SystemBackdropElement` (placed FrameworkElement, not full-window) to apply Mica/Acrylic
 backdrop to specific panels in WinUI shell. This allows in-content Mica effect on Browse tab,
@@ -1062,16 +971,6 @@ for each folder. Low-effort UX improvement; high convenience value.
 **Depends on**: NEXT-39 (WindowsAppSDK 2.0.1).
 - **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Depends on**: NEXT-39
 - Source: [S123] WinAppSDK 2.0.1 FolderPicker API docs
-
-**NEXT-67: Windows Search SHChangeNotify after organize**
-After file moves complete, call `SHChangeNotify(SHCNE_RENAMEITEM | SHCNE_CREATE, ...)` to signal
-Windows Explorer and Windows Search that files have moved. Use ctypes to call `Shell32.dll::SHChangeNotify`
-with `SHCNF_PATH | SHCNF_FLUSH` flags. This ensures Explorer's cached metadata is invalidated and
-Windows Search indexer re-indexes moved files promptly — avoiding stale search results and thumbnail
-cache conflicts. Add `notify_shell_after_organize()` to `organize_run.py`; call at end of `apply_moves_`.
-- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT
-- Source: [S124] SHChangeNotify API https://learn.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shchangenotify;
-   [S125] Windows Search indexing patterns
 
 **NEXT-68: Task Scheduler-based watch mode MVP**
 Implement watch-mode daemon registration via Windows Task Scheduler (not a Windows Service).
@@ -1189,19 +1088,6 @@ crashes on ARM64 Macs") without phoning home constantly.
 - Source: [S147] sentry-sdk v1.54 https://github.com/getsentry/sentry-sdk-python (PII stripping via
    `before_send` hooks; rate-limiting via `sample_rate` + `traces_sample_rate`)
 
-**NEXT-76: AV1 + VP9 video codec detection in classification**
-Extend video classification to detect and flag modern codecs (AV1, VP9) separately from H.264/H.265.
-Query `ffprobe` for `codec_name` field; if `av1` or `vp9`, add codec flag to asset metadata. This enables
-users with codec-specific workflows (e.g., "HDR + AV1 video for streaming") to auto-organize by codec.
-AV1 is projected to reach 60% of streaming market by 2026; hardware decode now common on RTX 30/40 and
-Apple M-series. **Effort is negligible**: ffprobe already parses codec_name; just store it in the asset
-record (new `video_codec` column). Pairs with NEXT-71 (Qwen2.5-VL) for smart re-encoding recommendations
-(e.g., "This video is H.264; AV1 would save 20% space at same quality").
-- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Unblocks**: LATER
-- Source: [S148] FFmpeg libavcodec codec registry (AV1 native; VP9 legacy plateau; H.265 patent-encumbered);
-   [S149] AV1 adoption projection (60% streaming by 2026 per industry roadmap; p7zip integration confirms
-   codec maturity)
-
 **NEXT-77: 3D asset format support — glTF 2.0 + Draco + USDZ**
 Add classification and metadata extraction for 3D asset formats: **glTF 2.0** (JSON + binary geometry),
 **Draco** (google/draco mesh compression), **USDZ** (Pixar USD wrapped in ZIP). Implement:
@@ -1218,19 +1104,6 @@ USD 26.05 installed — optional dependency, skip gracefully). This pairs with N
    [S151] google/draco v1.5.7 (5–10× mesh compression; attribute preservation; Wasm/JS/C++ decoders);
    [S152] Pixar USD 26.05 (May 2026) release — usdcat CLI for inspection; USDZ ZIP layer enumeration;
    [S153] glTF 2.0 in Blender 4.1+ (native export with Draco option; round-trip fidelity tested)
-
-**NEXT-78: SVG 2.0 metadata extraction & classification**
-Add SVG (Scalable Vector Graphics) file classification. Parse `<metadata>`, `<title>`, `<desc>`, `<rdf:RDF>`
-tags using stdlib `xml.etree.ElementTree`. Extract author, license, creation date from embedded XMP or
-Dublin Core metadata. SVG 2.0 (W3C Candidate Recommendation since Oct 2018; Formal Recommendation
-expected 2026-2027) has enhanced metadata support. Classify SVGs into: **design system icons**, **illustrations**,
-**diagrams**, **animations** (animated SVG via `<animate>` detection). This pairs with NEXT-69 (CLIP can
-classify rendered SVGs, but meta extraction is faster). **Effort is minimal**: XML is text; parsing is
-straightforward. Enable users to organize design systems by component type.
-- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT
-- Source: [S154] W3C SVG 2.0 spec (Candidate Recommendation Oct 2018, Editor's draft continuous; text-based
-   XML format; `<metadata>` + Dublin Core standard);
-   [S155] W3C svgwg issues tracker (SVG 2.0 formal Recommendation anticipated 2026-2027)
 
 **NEXT-79: DNG + RAW camera format unified handling**
 Consolidate raw image handling (Canon CR3, Sony ARW, Nikon NEF, Pentax RAF, Fuji RAF) under DNG
@@ -1249,22 +1122,6 @@ originals as-is.
    [S157] ExifTool DNG support https://exiftool.org (full r/w; maker note transcoding);
    [S158] dcraw raw image decoder https://www.cybercom.net/~dcoffin/dcraw/ (Canon/Sony/Nikon/Fuji/Pentax
    support; public-domain license)
-
-**NEXT-80: Zstandard (.zst) archive format support**
-Add classification and extraction support for Zstandard (zstd) compressed archives — emerging as a better-than-gzip
-standard for asset distribution (50–60% better compression; faster decode). Workflow:
-(1) Detect `.tar.zst`, `.zst` files;
-(2) Use `zstandard` PyPI package (v0.23+, April 2026) to decompress and list contents without full
-extraction (stream mode);
-(3) Classify archive contents heuristically (zip-like behavior for NEXT-7 archive inspection);
-(4) Enable re-compression under zstd when organizing archives (e.g., "Compress this ZIP to .tar.zst" action).
-7z suite and p7zip already support zstd; this is a **catch-up feature** ensuring FileOrganizer handles
-modern compression. **Effort is low**: zstandard library is pure Python; pattern mirrors ZIP handling
-(NEXT-7).
-- **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Unblocks**: L-7 (archive inspection tier)
-- Source: [S159] zstandard PyPI https://pypi.org/project/zstandard/ (v0.23+; CFFI + C extension;
-   stream mode for memory efficiency);
-   [S160] 7z format registry (Zstandard compression levels 1–22; adoption in p7zip v22.00+)
 
 **NEXT-81: Windows Authenticode code signing with Sectigo certificate**
 Implement code signing for FileOrganizer.exe using Authenticode (Microsoft's signing standard). Obtain an
