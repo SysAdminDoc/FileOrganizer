@@ -557,7 +557,9 @@ def infer_asset_type(initial_category: str, initial_confidence: float,
         conf = min(clues['asset_confidence'], 92)
         detail = f"context:{initial_category}+{clues['asset_detail']}"
         if log_cb:
-            log_cb(f"    Context: {initial_category} + filename \"{clues['asset_detail'].split('\"')[1]}\" → {clues['asset_type']}")
+            _parts = clues['asset_detail'].split('"')
+            _name = _parts[1] if len(_parts) > 1 else clues['asset_detail']
+            log_cb(f"    Context: {initial_category} + filename \"{_name}\" → {clues['asset_type']}")
         return (clues['asset_type'], conf, 'context', detail)
 
     # ── Priority 2: Folder name itself hints at an asset type ──
@@ -852,7 +854,9 @@ def _apply_context_from_scan(result: dict, scan: dict, folder_path: str,
         conf = min(clues['asset_confidence'], 92)
         detail = f"context:{initial_category}+{clues['asset_detail']}"
         if log_cb:
-            log_cb(f"    Context: {initial_category} + filename \"{clues['asset_detail'].split('\"')[1]}\" → {clues['asset_type']}")
+            _parts = clues['asset_detail'].split('"')
+            _name = _parts[1] if len(_parts) > 1 else clues['asset_detail']
+            log_cb(f"    Context: {initial_category} + filename \"{_name}\" → {clues['asset_type']}")
         result['topic'] = result['category']
         result['category'] = clues['asset_type']
         result['confidence'] = conf
