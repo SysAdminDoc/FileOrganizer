@@ -46,7 +46,9 @@ class VideoRoutingMetadata:
     is_high_performance: bool = False
     has_hdr: bool = False
     has_audio: bool = False
-    
+    is_modern_codec: bool = False
+    codec_family: Optional[str] = None
+
     # Final routing
     suggested_category: Optional[str] = None
     confidence: float = 0.0
@@ -197,6 +199,25 @@ def analyze_video_metadata(file_path: str, codec_info: Optional[Dict[str, Any]] 
             if bc in codec_lower:
                 metadata.is_broadcast_codec = True
                 break
+
+    # Classify codec family (NEXT-76: AV1 + VP9 detection)
+    if metadata.video_codec:
+        codec_lower = metadata.video_codec.lower()
+        if codec_lower in ('av1', 'libaom-av1', 'libsvtav1', 'av01'):
+            metadata.codec_family = 'av1'
+            metadata.is_modern_codec = True
+        elif codec_lower in ('vp9', 'libvpx-vp9', 'vp09'):
+            metadata.codec_family = 'vp9'
+            metadata.is_modern_codec = True
+        elif codec_lower in ('hevc', 'h265', 'libx265', 'hev1'):
+            metadata.codec_family = 'hevc'
+            metadata.is_modern_codec = True
+        elif codec_lower in ('h264', 'avc', 'libx264', 'avc1'):
+            metadata.codec_family = 'h264'
+        elif metadata.is_broadcast_codec:
+            metadata.codec_family = 'broadcast'
+        else:
+            metadata.codec_family = codec_lower
     
     # Detect broadcast frame rate (23.976, 29.97, 59.94, etc.)
     if metadata.fps:
