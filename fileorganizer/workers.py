@@ -1162,6 +1162,15 @@ class ApplyCatWorker(QThread):
         if not self.dry_run and not self._cancelled:
             clear_run(run_id)
 
+        # Notify Windows Explorer/Search of moved files
+        if not self.dry_run and undo_ops:
+            try:
+                from fileorganizer.shell_notify import notify_shell_moves
+                moves = [(op['dst'], op['src']) for op in undo_ops if op.get('status') == 'Done']
+                notify_shell_moves(moves)
+            except Exception:
+                pass
+
         self.finished.emit(ok, err, undo_ops)
 
 

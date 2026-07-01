@@ -558,5 +558,5 @@ class RenameTemplateEngine:
 # ══════════════════════════════════════════════════════════════════════════════
 
 _PHASH_IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff',
-                     '.webp', '.heic', '.heif', '.avif'}
+                     '.webp', '.heic', '.heif', '.avif', '.jxl'}
 
