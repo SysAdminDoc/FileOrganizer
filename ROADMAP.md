@@ -19,12 +19,10 @@ v8.3.0 is **fully shipped** — N-9 (metadata extractors), N-12 (provenance trac
 (broken file detection), and all iter-2 follow-ups. Tagged and released 2026-05-02. See
 [Shipped — v8.2.0](#shipped--v820) and [Shipped — v8.3.0](#shipped--v830) below.
 
-**v8.4.0 sprint** — 10 items now active. NEXT-46 and NEXT-47 carry hard API-deprecation
-deadlines (July 24 and June 15, 2026 respectively). NEXT-48 and NEXT-49 are low-effort
-reliability and security fixes that pair naturally into the same PR. NEXT-15, NEXT-44, and
-NEXT-11 are the highest-ROI NEXT-tier items now fully unblocked. NEXT-39 upgrades the WinUI
-shell to WindowsAppSDK 2.0.1 (GA April 29, 2026); NEXT-40 (RAWPage) and NEXT-41 (ComicsPage)
-follow as ui-v0.6.0 deliverables.
+**v8.4.0 shipped** — NEXT-44 (LLM cache), NEXT-46 (DeepSeek V4), NEXT-47 (Anthropic refresh),
+NEXT-48 (Ollama structured outputs), and NEXT-49 (psd-tools hardening) all landed.
+NEXT-39 upgrades the WinUI shell to WindowsAppSDK 2.0.1 (GA April 29, 2026); NEXT-40 (RAWPage)
+and NEXT-41 (ComicsPage) follow as ui-v0.6.0 deliverables.
 
 The WinUI 3 shell reached **ui-v0.5.0** (2026-05-01) with 15 live pages covering all major media
 and design-asset domains. See [Shipped — WinUI Shell](#shipped--winui-shell-ui-v010--ui-v050) below.
@@ -131,113 +129,8 @@ Every entry produced an on-disk bug before the fix was written.
 
 ## Shipped -- v8.2.0
 
-All 8 items shipped. See CHANGELOG.md for full details.
-
-### N-1: ~~I:\ legacy reclassification (Phase 4)~~ ✓ Shipped v8.2.0
-Run `build_source_index.py --source i_organized_legacy` on the 18,742-asset I:\Organized library,
-using the legacy folder name as a `legacy_category` hint, then route through the standard
-`classify_design` pipeline into canonical taxonomy.
-- **Why now**: The I:\ library is inaccessible to search, dedup, and enrichment. Every downstream
-  feature (dedup, preview browser, marketplace ID index) is blocked until it is organized.
-- **Technical sketch**: Add `i_organized_legacy` to `SOURCE_CONFIGS` in `classify_design.py`;
-  set `has_legacy=True`; add `legacy_category` as a pre-AI hint at stage 3.
-- **Impact**: 5 | **Effort**: 3
-- Source: [S32] AUDIT_LESSONS.md, [S35] CHANGELOG.md v8.2.0
-
-### N-2: ~~fix_duplicates.py incremental journal~~ ✓ Shipped v8.2.0
-Write a log entry after each successful merge, not at the end of the full run. Use append-mode
-`open(logfile, 'a')` with a flush after each entry.
-- **Why now**: An interrupted run leaves applied merges on disk but unrecorded. The user has no
-  way to know what happened.
-- **Impact**: 4 | **Effort**: 1
-- Source: [S35] CHANGELOG.md v8.2.0, [S32] AUDIT_LESSONS.md
-
-### N-3: ~~Community catalog auto-download~~ ✓ Shipped v8.2.0
-On startup, check the GitHub Releases API for a newer `asset_fingerprints.json`. Import into the
-local SQLite DB. Schema version gate: skip if DB_VERSION mismatch. Download sharded catalog/
-(10.6M entries, 400MB gzipped) in background on first run via a `CatalogSyncWorker` (QThread).
-- **Why now**: Manual catalog shipping is friction that prevents cold-start accuracy benefits.
-- **Impact**: 5 | **Effort**: 2
-- Source: [S32] AUDIT_LESSONS.md, existing `asset_db.py` pattern
-
-### N-4: ~~Pre-flight report UI~~ ✓ Shipped v8.2.0 wiring
-Surface the existing `--validate` CLI check as a mandatory step in the GUI Apply workflow:
-color-coded table of long-path issues, trailing-space hits, low-confidence items going to
-`_Review`, and free-space check result. Require acknowledgment before Apply proceeds.
-- **Why now**: `--validate` already exists in CLI; the GUI bypasses it, making it easy to start
-  a flawed run.
-- **Technical sketch**: Add `PreflightDialog(QDialog)` that runs `validate_plan()` in a worker
-  thread and renders results as a QTableWidget.
-- **Impact**: 4 | **Effort**: 2
-- Source: [S32] AUDIT_LESSONS.md
-
-### N-5: ~~Confidence threshold control~~ ✓ Shipped v8.2.0
-User-configurable thresholds: "auto-apply if confidence >= X; queue for manual approval between
-X and Y; send to _Review if < Y." Expose in Settings -> Classification.
-- **Why now**: No user-visible control over when the AI defers to `_Review`.
-- **Pattern**: NEVER/MINIMAL/SMART/ALWAYS confidence modes from thebearwithabite [S6].
-- **Impact**: 4 | **Effort**: 2
-- Source: [S6] https://github.com/thebearwithabite/ai-file-organizer
-
-### N-6: ~~Two-phase commit for GUI Apply~~ ✓ Shipped v8.2.0
-Before executing any move, write all planned moves to `organize_moves.db` with
-`status='pending'`. Mark `status='done'` atomically after each move. On crash/restart, offer to
-resume from pending entries.
-- **Why now**: Current GUI Apply is single-phase with no crash recovery.
-- **Technical sketch**: Modify `ApplyWorker.run()` to insert all rows as `pending`, execute per
-  move, update to `done` per move, and on `__init__` check for prior `pending` rows.
-- **Pattern**: Dry-run-then-commit from [S3] hyperfield, [S1] LlamaFS, [S5] aifiles.
-- **Impact**: 5 | **Effort**: 3
-- Source: [S33] `docs/archive/research/RESEARCH.md`
-
-### N-7: ~~Security dependency update + audit~~ ✓ Shipped v8.2.0
-Pin `Pillow>=12.2.0` and `PyQt6>=6.11.0` in `requirements.txt`. Add `pip-audit --fail-on-cvss 7`
-as a CI gate in `ci.yml`. Audit `psd-tools` and `rarfile`/`py7zr` for path-traversal risk (see
-Security notes in Coverage Matrix).
-- **Why now**: Pillow has 63 historical security advisories; 12.2.0 fixes libavif, libjpeg-turbo,
-  and harfbuzz issues. PyQt6 6.11.0 ships ARM64 improvements and bug fixes.
-- **Impact**: 3 | **Effort**: 1
-- Source: [S27] GitHub Advisory Database (Pillow), [S28] PyPI PyQt6 6.11.0
-
-### N-8: ~~_Review batch panel in GUI~~ ✓ Shipped v8.2.0
-Dedicated "Needs Review" tab showing `_Review` items with: preview image, AI confidence score,
-proposed category, dropdown to confirm/reassign. Corrections feed `corrections.json`.
-- **Why now**: `_Review` requires manual filesystem inspection today and grows unbounded.
-- **Technical sketch**: Add `ReviewTab(QWidget)` that scans `{dest_root}/_Review/`, loads preview
-  images via `asset_db.find_preview_image()`, renders as QListWidget with inline category picker.
-  On confirm, calls `robust_move()` and logs to `corrections.json`.
-- **Impact**: 5 | **Effort**: 3
-- Source: [S3] hyperfield/ai-file-sorter batch-review pattern
-
-### N-10: ~~Embeddings classifier MVP~~ ✓ Shipped v8.2.0
-fastembed/sentence-transformers embedding chain; cosine similarity against 384 category anchors;
-`--embeddings-only` CLI flag. See CHANGELOG.md v8.2.0.
-- Source: [S48] sentence-transformers, [S55] Bookmark-Organizer-Pro
-
-### N-11: ~~ReviewPanel thumbnail rendering~~ ✓ Shipped v8.2.0
-QLabel/QPixmap 80×80 px thumbnails; QPixmapCache; extension-badge fallback for non-image items;
-PSD composite via psd-tools `topil()`. See CHANGELOG.md v8.2.0.
-- Source: [S38] TagStudio virtual list pattern, [S56] TagStudio `previews/renderer.py`
-
-### N-13: ~~Security hardening — fonttools pin + archive isolation~~ ✓ Shipped v8.2.0
-`fonttools>=4.62.1` pin (CVE-2025-66034); psd-tools subprocess isolation; archive path-traversal
-validation (`os.path.realpath` prefix guard). See CHANGELOG.md v8.2.0.
-- Source: [S49] fonttools CVE-2025-66034, [S41] py7zr advisories, [S42] rarfile advisories
-
-### N-15: ~~SOURCE_CONFIGS parity test + alias-RHS guard~~ ✓ Shipped v8.2.0
-Unit tests asserting SOURCE_CONFIGS key parity across classify_design / organize_run /
-review_resolver, plus phantom-category alias guard. See CHANGELOG.md v8.2.0.
-- Source: [S35] CHANGELOG.md v8.2.0
-
-### N-16: ~~catalog_sync `If-Modified-Since` / ETag~~ ✓ Shipped v8.2.0
-ETag/If-Modified-Since header on CatalogSyncWorker startup check; state persisted in
-`catalog_sync.json`. See CHANGELOG.md v8.2.0.
-- Source: [S35] CHANGELOG.md v8.2.0
-
-### N-17: ~~Robocopy multi-thread (`/MT:8`) for cross-drive moves~~ ✓ Shipped v8.2.0
-`robust_move()` passes `/MT:8`; copy-threads slider (4 / 8 / 16) in Settings → Advanced.
-See CHANGELOG.md v8.2.0.
-- Source: [S32] AUDIT_LESSONS.md
+All items shipped. See CHANGELOG.md for full details.
+Items: N-1, N-2, N-3, N-4, N-5, N-6, N-7, N-8, N-10, N-11, N-13, N-15, N-16, N-17.
 
 ---
 
@@ -268,169 +161,52 @@ AppX/PRI task path conflict). See `src/FileOrganizer.UI/CLAUDE.md`.
 
 ---
 
-## NOW -- Active / Blocking (target: v8.5.11)
+## NOW -- Active / Blocking (target: v8.5.19)
 
 | # | Item | Why now |
 |---|------|---------|
 
----
+### Audit findings (v8.5.19 — deferred, need human decision or larger refactor)
 
-## Shipped -- v8.5.10
+- [ ] P1 — **API keys stored in plaintext JSON** — `provider_settings.json` stores keys
+  as plaintext. Use Windows Credential Manager (`keyring`) or DPAPI encryption.
+  Where: `fileorganizer/providers.py:17,125-128`
 
-### NEXT-58: ~~httpx migration for AI provider calls~~ Shipped v8.5.10
-GitHub Models and DeepSeek cloud provider calls now share a direct `httpx`
-chat-completions transport with HTTP/2 enabled, explicit JSON headers,
-per-call timeout overrides, and existing fallback error handling.
-`httpx[http2]>=0.28.1` is listed in requirements and bootstrap optional installs.
-- Tests: `tests/test_providers_httpx.py`.
+- [ ] P1 — **Provider endpoint SSRF** — `github_endpoint` and `deepseek_endpoint` from
+  settings file are used as base_url with Authorization headers. Validate against an
+  allowlist of known API domains.
+  Where: `fileorganizer/providers.py:289,330`
 
----
+- [ ] P2 — **workers.py missing imports** — 22+ names used but never imported (runtime NameError
+  on uncommon paths like vision analysis, Ollama setup). These are needed only in
+  PyQt6 GUI paths that import at runtime.
+  Where: `fileorganizer/workers.py` (various lines)
 
-## Shipped -- v8.5.9
+- [ ] P2 — **cache.py thread safety** — module-level `_cache_conn` created with default
+  `check_same_thread=True` but accessed from both GUI and worker threads.
+  Where: `fileorganizer/cache.py:83-112`
 
-### NEXT-57: ~~Pillow 12.2.0 lazy plugin loading + pin~~ Shipped v8.5.9
-`requirements.txt` already pins `Pillow>=12.2.0`. Perceptual duplicate
-hashing now prefers Pillow 12.1+'s `get_flattened_data()` pixel API, keeps a
-legacy `getdata()` fallback, and closes opened images with a context manager.
-- Tests: `tests/test_duplicates_phash.py`.
+- [ ] P2 — **_init() at import time** — `move_journal.py:59` and
+  `provider_cost_manager.py:71` create DB files on import. Lazy-init on first use
+  would improve testability and avoid side effects.
 
----
-
-## Shipped -- v8.5.8
-
-### NEXT-56: ~~Variable font axes detection~~ Shipped v8.5.8
-`fileorganizer/metadata_extractors/font_extractor.py` now extracts OpenType
-`fvar` axes as tag/name/min/default/max records and records `has_color`,
-`has_colrv1`, and `is_colrv1` for COLR/COLRv1 fonts. The hint reason includes
-variable axis tags and COLRv1 traits for quick review.
-- Tests: `tests/test_metadata_extractors.py`.
+- [ ] P3 — **bootstrap.py runtime pip install** — auto-installs packages at startup
+  including with `--break-system-packages`. Consider removing or gating behind
+  explicit user opt-in.
+  Where: `fileorganizer/bootstrap.py:84-92`
 
 ---
 
-## Shipped -- v8.5.7
+## Shipped -- v8.5.x
 
-### NEXT-55: ~~WinRT FileProperties metadata integration~~ Shipped v8.5.7
-`fileorganizer/winrt_metadata.py` now wraps Windows Runtime
-`Windows.Storage.FileProperties` for image, audio, and video files. General
-metadata extraction and Stage-1 audio/video hints try WinRT first on Windows,
-then fall back to Pillow, mutagen, or ffprobe. Requirements include
-`winrt-Windows.Storage>=3.2.1` only on `sys_platform == "win32"`.
-- Tests: `tests/test_winrt_metadata.py` and `tests/test_metadata_extractors.py`.
-
----
-
-## Shipped -- v8.5.6
-
-### NEXT-54: ~~SetFit few-shot taxonomy extension~~ Shipped v8.5.6
-`fileorganizer/user_categories.py` now stores taught categories in
-`user_categories.json`, derives keyword hints from 8+ example paths, and
-attempts optional SetFit training with `minishlab/potion-base-32M`. Taught
-categories load ahead of the built-in taxonomy in the PyQt classifier and
-`classify_design.py` runtime prompt, while Settings -> Teach Category provides
-drag/drop and browse-based example collection with background training.
-- Tests: `tests/test_user_categories.py`.
-
----
-
-## Shipped -- v8.5.5
-
-### NEXT-53: ~~Master-folder canonical dedup protection~~ Shipped v8.5.5
-`organize_run.py` now hashes planned source files against the destination category tree before
-apply. Items with matching SHA-256 files are marked `blocked_duplicate`, default to
-`duplicate_policy=skip`, and are skipped by `apply_move_plan()` unless the editable plan is
-changed to `duplicate_policy=move`. The move journal records `duplicate_source_file`,
-`duplicate_existing_file`, and `duplicate_sha256` for skipped duplicates.
-- Tests: `tests/test_organize_run.py`.
-
----
-
-## Shipped -- v8.5.4
-
-### NEXT-52: ~~Similar-name fuzzy filename grouping~~ Shipped v8.5.4
-`fileorganizer/similar_names.py` now clusters likely filename variants with RapidFuzz
-token-sort matching, caps each source scan at 5,000 files, and degrades cleanly when RapidFuzz is
-unavailable. `PreflightWorker` surfaces bounded warning rows for pending-item and source-file
-variant groups before apply.
-- Verification fix: extension badge fallback colors now use deterministic hashing instead of
-  Python's process-randomized `hash()`.
-- Tests: `tests/test_similar_names.py`.
-
----
-
-## Shipped -- v8.5.3
-
-### NEXT-51: ~~Color palette extraction and filter-by-palette~~ Shipped v8.5.3
-Image metadata now extracts up to five dominant swatches with RGB, HEX, and LAB values.
-`asset_db.py` stores packed palette bytes in `asset_files.palette_rgb` plus display swatches in
-`asset_files.palette_hex`, and exposes `find_by_palette()` plus `asset_db.py --palette #RRGGBB`
-for Delta-E filtered asset search.
-- Tests: `tests/test_color_palette.py` and `tests/test_asset_db_palette.py`.
-
----
-
-## Shipped -- v8.5.2
-
-### NEXT-50: ~~magika content-type pre-routing (Stage 0)~~ Shipped v8.5.2
-`fileorganizer/magika_router.py` now prefers Google Magika and falls back to
-`python-magic` for byte-based content-type detection. `metadata_extractors.extract_for_path()`
-uses detected-extension overrides for renamed AEP/PSD/font/audio/video files, folder-mode
-primary selection can choose content-detected project files, and obfuscated archives are
-hardrouted to `_Review` with `extension_mismatch` metadata.
-- Requirements: `magika` plus `python-magic-bin` fallback on Windows.
-- Tests: `tests/test_magika_router.py` and new content-detected metadata dispatcher coverage.
+All items shipped. See CHANGELOG.md for full details.
+Items: NEXT-50 (v8.5.2), NEXT-51 (v8.5.3), NEXT-52 (v8.5.4), NEXT-53 (v8.5.5),
+NEXT-54 (v8.5.6), NEXT-55 (v8.5.7), NEXT-56 (v8.5.8), NEXT-57 (v8.5.9), NEXT-58 (v8.5.10).
 
 ## Shipped -- v8.3.0
 
-Three Python-core features landed and were tagged as v8.3.0 (released 2026-05-02). See
-CHANGELOG.md for full details.
-
-### N-9: ~~Metadata extractors MVP~~ ✓ Shipped v8.3.0
-New `fileorganizer/metadata_extractors/` package with `psd_extractor`, `font_extractor`,
-`audio_extractor`, `video_extractor`, and `aep_extractor`. Wired into `classify_design.py` as a zero-AI Stage 1 ahead
-of marketplace + embeddings + LLM. Hardroute threshold confidence ≥ 90; below that the hint is
-informational and downstream stages still run. Phantom-category guard validates emitted names
-against `_CATEGORY_SET`.
-- Routing: PSD aspect-driven (9:16/square/business-card/A4) at conf 90-92; valid font headers
-  (TTF/OTF/TTC/WOFF/WOFF2) at conf 95; ProRes/DNxHD video at conf 90; audio confidences capped
-  below 90 per audit (duration alone is ambiguous between SFX one-shots and music intro stabs);
-  AEP RIFX chunk strings parse composition names, plug-ins, AE versions, resolution, duration,
-  frame rate, and chunk IDs for confidence 90+ After Effects routing.
-- Tests: 29 tests in `tests/test_metadata_extractors.py` covering import smoke, dispatcher
-  routing, no-dep degradation, aspect helpers, and per-extractor mocked happy-paths.
-- **Source**: [S34] `docs/archive/research/RESEARCH_IDEAS.md`, [S46] psd-tools v1.16.0
-
-### N-12: ~~Provenance tracking~~ ✓ Shipped v8.3.0
-`source_domain TEXT` + `first_seen_ts INTEGER` columns added to `assets` via idempotent
-PRAGMA-table_info migration. UPDATE path uses `COALESCE` so `first_seen_ts` is immutable
-across re-builds. New `fileorganizer/provenance.py` recognises 12 marketplace patterns plus a
-7-domain piracy blocklist; piracy match wins over marketplace match. UI-safe `display_domain()`
-strips blocked domains. New `python build_source_index.py --source <name> --show-provenance`
-prints a per-domain histogram.
-- Tests: 33 tests in `tests/test_provenance.py` (parser, piracy override, COALESCE immutability,
-  legacy-DB migration).
-- **Source**: [S34] `docs/archive/research/RESEARCH_IDEAS.md` #6, [S33] `docs/archive/research/RESEARCH.md` provenance track
-
-### N-14: ~~Broken file detection~~ ✓ Shipped v8.3.0
-New `fileorganizer/broken_detector.py` with `check_image` (PIL.Image.verify under a 20 MB cap),
-`check_video` (ffprobe -show_error; treats non-empty stderr as broken even at rc=0 per audit
-fix), and `check_archive` (zipfile/rarfile/py7zr per-format testzip with no-dep degradation).
-`is_broken(path)` dispatcher. Standalone CLI: `python -m fileorganizer.broken_detector --scan
-<dir>` exits 1 on any broken file. New `broken INTEGER NOT NULL DEFAULT 0` column on
-`asset_files` (idempotent migration). **Iter 2 follow-up**: PreflightDialog Step 5 wiring via
-`broken_detector.scan_paths(paths, max_per_root=10, max_total=200)` — surfaces broken files
-at the pre-flight gate, declares missing optional verifiers as partial coverage.
-- Tests: 33 tests in `tests/test_broken_detector.py` (dispatcher, no-dep, real corrupt zip,
-  ffprobe stderr handling, CLI exit codes, schema migration, scan_paths bounded sampling).
-- **Source**: [S44] Czkawka v11.0.0 broken video detection, [S34] `docs/archive/research/RESEARCH_IDEAS.md`
-
-### Provenance back-fill ✓ Shipped v8.3.0 (iter 2 follow-up to N-12)
-`asset_db.cmd_backfill_provenance(db_path, dry_run)` populates `source_domain` +
-`first_seen_ts` on assets rows that pre-date N-12. Idempotent (WHERE source_domain IS NULL
-OR first_seen_ts IS NULL). Dry-run mode does not mutate the schema even on legacy DBs that
-need the N-12 columns added — surfaces a `migration_pending` flag instead. CLI:
-`python asset_db.py --backfill-provenance [--dry-run]`.
-- Tests: 5 in `tests/test_provenance.py` (happy path, dry-run no-commit, idempotency,
-  unmatched-name, legacy-schema dry-run safety).
+All items shipped (released 2026-05-02). See CHANGELOG.md for full details.
+Items: N-9, N-12, N-14, Provenance back-fill, NEXT-2 (YAML rule export).
 
 ---
 
@@ -448,16 +224,6 @@ Windows background task or Task Scheduler trigger.
   Task Scheduler registration for Windows background task startup.
 - **Impact**: 4 | **Effort**: 4 (core 2 + UI 2) | Risk: debounce stability on network drives
 - **Parity with**: [S1] LlamaFS, [S5] aifiles, [S20] Hazel, [S21] File Juggler
-
-**NEXT-2: ~~YAML rule export~~** ✓ Shipped v8.3.0 (iter 2)
-CLI shipped via `python classify_design.py --export-rules [<path>|-]`.
-`fileorganizer/yaml_rule_export.py` builds organize-cli-compatible YAML from
-the canonical taxonomy + per-category extension hints + reverse-derived
-keywords from `CATEGORY_ALIASES`. PyYAML used when present, deterministic
-hand-rolled emitter as fallback (no new hard dep). 14 tests.
-GUI export tile under Settings -> Rules -> Export as YAML still planned
-(deferred — CLI is the production path; GUI is sugar).
-- **Impact**: 4 | **Effort**: 2 | Source: [S8] https://github.com/tfeldmann/organize
 
 **NEXT-3: Hazel-style rule chains** ✓ Core shipped
 Multi-condition chains: "if source matches X AND LLM confidence < 70 AND file size > Z, move to
@@ -573,13 +339,6 @@ cross-type misclassifications (e.g., a PSD classified as an After Effects templa
 - **Impact**: 4 | **Effort**: 2
 - Source: [S36] CLAUDE.md, existing `classify_design.py` analysis
 
-**NEXT-15: Hash-first DB skip (fingerprint lookup at classify time)**
-Before any AI call on a folder, compute the folder fingerprint (SHA-256 of contained file hashes)
-and query `asset_db`. If the fingerprint is known, return the stored category at confidence 100
-with zero API cost. Expected skip rate: ~60-70% of common templates already in the community DB.
-- **Impact**: 5 | **Effort**: 2
-- Source: [S32] AUDIT_LESSONS.md ("Community fingerprint DB changes the cost model"), `asset_db.py`
-
 **NEXT-17: Marketplace enrichment expansion**
 Extend `marketplace_enrich.py` beyond Envato to: Creative Market (API available), Freepik (API
 key), Motion Array, FilterGrade, Shutterstock, Adobe Stock. Each needs a URL pattern + parser.
@@ -651,11 +410,6 @@ Show: timestamp, source, destination, confidence score, undo button. Completes N
 - **Impact**: 5 | **Effort**: 3
 - Source: [S3] hyperfield/ai-file-sorter undo-after-close
 
-**NEXT-25: Post-apply HTML report**
-After each apply run, generate an HTML/JSON "what changed" report with thumbnails. Auto-open in
-default browser or display inline in a new Results tab.
-- **Impact**: 3 | **Effort**: 2
-
 **NEXT-26: Batch rename with preview**
 GUI dialog showing old name -> proposed canonical name (`{CAT_CODE}_{ID}_{CLEAN_NAME}`) for all
 items in a category, with inline edit before committing. CLI: opt-in `--rename` flag. mnamer
@@ -675,11 +429,6 @@ SD/ComfyUI output sorter (prompt keyword hash), DICOM medical image classifier. 
 - **Impact**: 4 | **Effort**: 3
 - Source: [S6] thebearwithabite plugin API, [S15] digiKam plugin system
 
-**NEXT-28: Webhook on organize**
-POST a JSON action summary to a user-configured URL on each apply completion. Enables n8n, Zapier
-self-hosted, Home Assistant downstream automations.
-- **Impact**: 3 | **Effort**: 2
-
 ### Testing & Distribution
 
 **NEXT-30: CI multiplatform builds**
@@ -697,71 +446,6 @@ contains both a genuine duplicate and a similar-but-different item.
 - Source: [S44] Czkawka v11.0.0 similarity grouping overhaul, [S47] imagehash clustering patterns
 
 ### Resilience & Operations
-
-**NEXT-33: xxhash / blake3 fast fingerprint mode**
-SHA-256 dominates dedup wall time on multi-TB scans. fclones [S11] switched to blake3 for
-exactly this reason; it is roughly 10× faster than SHA-256 on modern CPUs. Add a
-`--fingerprint-algo {sha256,blake3,xxhash}` flag to `asset_db.py` and `build_source_index.py`,
-default `blake3` when the optional `blake3` package is installed (fallback `sha256` when not),
-and store the algorithm tag in a new `algo TEXT NOT NULL DEFAULT 'sha256'` column on
-`assets.folder_fingerprint`. Mixing algorithms in one DB is fine because the column is
-self-describing and `INSERT OR IGNORE` already works on the textual fingerprint string.
-The DeDuper [S52] tiered-hash pattern (size → 64 KB head/tail partial hash → full hash) and
-the DuplicateFF [S53] 4 KB prefix/suffix elimination pipeline are both directly applicable
-as I/O-saving stages above any fingerprint algo.
-- **Why now**: NEXT-19 (perceptual dedup) and NEXT-20 (cross-library dedup) both gate on
-  fingerprint speed. The roadmap was missing a faster fingerprint primitive.
-- **Impact**: 4 | **Effort**: 2 | **Pairs with**: NEXT-19, NEXT-20
-- Source: [S11] fclones blake3 default, [S52] DeDuper tiered hash, [S53] DuplicateFF
-  staged hash pipeline, blake3 PyPI https://pypi.org/project/blake3/
-
-**NEXT-34: Provider cost cap + 429 backoff + automatic failover**
-Provider routing exists today (auto / github_only / deepseek_only / ollama_only) but has no
-daily $ budget cap, no automatic exponential backoff on 429s, and no failover-on-error chain.
-Production runs need all three:
-1. **Cost cap**: per-provider daily budget in `provider_costs.json`; pre-flight check before
-   each call against the embedded pricing table from octopus-factory [S54] `cost-estimate.sh`
-   (model → input/output/cache_read/cache_write $/M tokens).
-2. **429 backoff**: `tenacity` retry with exponential backoff on 429 / 5xx; lockout TTL of
-   60 min on persistent 429 (mirroring octopus-factory's `copilot-fallback.sh` quota lockout
-   pattern).
-3. **Failover chain**: when the active provider locks out, automatically fall through the
-   user-configured chain (e.g., DeepSeek → GitHub Models → Ollama).
-The Bookmark-Organizer-Pro [S55] `ai.py` `AIProviderInfo` dataclass already abstracts
-multi-provider routing in pure Python; FileOrganizer can lift that pattern and layer the
-cost / backoff / failover logic on top.
-- **Why now**: A 19,531-item loose-files run at 60 items/batch is 326 API calls. One 429
-  storm currently aborts the whole run with no retry.
-- **Impact**: 4 | **Effort**: 3 | **Pairs with**: NEXT-6 (parallel async)
-- Source: [S54] octopus-factory `cost-estimate.sh` + `copilot-fallback.sh`, [S55]
-  Bookmark-Organizer-Pro `ai.py`, tenacity https://tenacity.readthedocs.io
-
-**NEXT-36: Free-space *reserve* via sparse file (not just check)**
-N-4 (shipped) checks `shutil.disk_usage` once at apply start, but a concurrent process can
-eat the buffer mid-run. Pre-allocate `dst_root/.fileorganizer.reserve` as a sparse file sized
-to (estimated bytes-to-move × 1.10), delete on clean completion or crash recovery. Sparse
-files reserve no physical blocks until written, so the cost is metadata-only, but the
-filesystem rejects competing writes that would push it over the reserve.
-- **Why now**: A 50 GB Apply on a 60 GB free drive can fail mid-way today if Windows Update
-  or another tool consumes the buffer. Cheap insurance for the multi-TB G:↔I: runs.
-- **Impact**: 3 | **Effort**: 2
-- Source: Win32 `FSCTL_SET_SPARSE` https://learn.microsoft.com/en-us/windows/win32/api/winioctl/ni-winioctl-fsctl_set_sparse
-
-**NEXT-38: GUI worker crash dialog + unified log viewer**
-Unhandled exceptions raised inside QThread workers (Apply, Scan, ReviewApply, CatalogSync, etc.)
-die silently today — the worker's `run()` returns, the parent never sees a `finished` signal
-with error info, and the user sees a stalled progress bar. Install a `qInstallMessageHandler`
-plus `sys.excepthook` override that:
-1. Captures every uncaught exception from any thread to
-   `%APPDATA%/FileOrganizer/crash.log` with timestamp + traceback.
-2. Shows a non-blocking toast "An apply worker crashed — view log" with a one-click open of
-   the log viewer (a new `LogViewerDialog` in `fileorganizer/dialogs/`).
-3. Preserves any pending journal rows (the N-6 resume flow already handles re-attempting them).
-- **Why now**: When a worker dies the Qt event loop keeps the GUI responsive but reports no
-  failure — easy to mistake a crashed run for a slow one. Crash logs also feed the optional
-  L-16 telemetry channel.
-- **Impact**: 3 | **Effort**: 2
-- Source: Qt `qInstallMessageHandler` https://doc.qt.io/qt-6/qtlogging.html
 
 ### WinUI Shell
 
@@ -834,18 +518,6 @@ working renderer for all four archive formats.
 
 ### Performance & Caching
 
-**NEXT-44: LLM summary cache (SQLite)**
-Cache the LLM classification response for each folder fingerprint. On re-scan of a folder
-whose fingerprint matches the cache, return the cached result instantly without an API call.
-Schema: new `llm_cache` table in `organize_moves.db`:
-  `(fingerprint TEXT PK, model TEXT, prompt_hash TEXT, response_json TEXT, ts INTEGER)`.
-Cache key: `(fingerprint, model_id, prompt_hash)` — invalidates automatically when the model
-or prompt template changes. Expiry: user-configurable TTL (default 30 days) cleaned on startup.
-FileWizardAI [S66] and thebearwithabite [S65] both ship LLM caching; on stable asset libraries
-(the common case) this eliminates >90% of API calls on re-runs.
-- **Impact**: 4 | **Effort**: 2 | **Depends on**: N-9 (metadata pipeline wired in)
-- Source: [S66] FileWizardAI SQLite summary cache, [S65] thebearwithabite review-queue cache
-
 **NEXT-45: Confidence calibration (Platt scaling / isotonic regression)**
 The current classifier outputs raw logit-derived probabilities that are not well-calibrated:
 a reported "85% confidence" does not reliably mean the prediction is correct 85% of the time.
@@ -864,68 +536,6 @@ current 70% cutoff to a calibrated 80%.
 - Source: [S34] `docs/archive/research/RESEARCH_IDEAS.md` item #9 (Platt scaling, isotonic regression,
   `CalibratedClassifierCV`)
 
-**NEXT-46: DeepSeek V4 model migration** ⚠️ DEADLINE July 24, 2026
-DeepSeek is retiring the `deepseek-chat` and `deepseek-reasoner` aliases on July 24, 2026.
-After that date, any call to those names returns an error. Migration targets:
-`deepseek-chat` → `deepseek-v4-flash` (fast, low-cost);
-`deepseek-reasoner` → `deepseek-v4-pro` (full reasoning). Update all string literals in
-`classify_design.py`, the provider router, and Settings UI dropdowns. Add an alias-deprecation
-warning in the provider factory that logs a `DeprecationWarning` when the legacy names are passed.
-Regression test: mock the DeepSeek endpoint; assert legacy name raises warning; assert new names
-succeed without warning.
-- **Impact**: 5 | **Effort**: 1 | **Tier**: NOW (hard deadline)
-- Source: [S78] DeepSeek V4 announcement; [S79] DeepSeek API docs
-
-**NEXT-47: Anthropic model refresh**  ⚠️ DEADLINE June 15, 2026
-`claude-3-haiku` has already been deprecated (April 2026). `claude-sonnet-4` and
-`claude-opus-4` are being deprecated June 15, 2026. Migration targets:
-`claude-3-haiku` → `claude-haiku-4-5`;
-`claude-sonnet-4` → `claude-sonnet-4-5`;
-`claude-opus-4` → `claude-opus-4-5`.
-Pin minimum versions in requirements.txt: `anthropic>=0.44.0`.
-Add model-ID validation at startup that warns if a configured model ID is on the known-dead list.
-- **Impact**: 5 | **Effort**: 1 | **Tier**: NOW (hard deadline)
-- Source: [S80] Anthropic model deprecation notice; [S81] Anthropic model versioning docs
-
-**NEXT-48: Ollama Pydantic structured outputs**
-Ollama ≥ v0.22.1 supports `format=PydanticModel.model_json_schema()` in `ollama.chat()`,
-guaranteeing schema-valid JSON output without prompt-engineering hacks. The current Ollama adapter
-uses a regex extraction fallback path that fires on ~3% of calls (malformed JSON from smaller
-models). Replace the regex path: pass `format=ClassifyResult.model_json_schema()` directly.
-This is a 1-line change in `providers/ollama_provider.py`. Eliminates the JSON parse error retry
-loop entirely and reduces Ollama call latency by ~40 ms per call (no retry). Also unblocks
-reliable NEXT-12 structured vision output.
-- **Impact**: 3 | **Effort**: 1 | **Tier**: NOW (pairs with NEXT-49 into one PR)
-- Source: [S77] https://ollama.com/blog/structured-outputs; [S82] Ollama v0.22.1 changelog
-
-**NEXT-49: psd-tools GHSA-24p2-j2jr-386w hardening** ⚠️ SECURITY (CVSS 6.8)
-Three vulnerabilities in `psd_tools.compression` exposed via `PSD.open()` on adversarial files:
-(1) `zlib.decompress` called with no `max_length` → ZIP-bomb OOM crash;
-(2) `width`/`height`/`depth` not validated before buffer allocation (PSB allows 300 000×300 000 px
-= 144 TB virtual allocation);
-(3) `assert` statements used as runtime guards (silently disabled under `python -O`).
-Mitigations to apply in `metadata_extractors/psd_extractor.py` (caller-side since psd-tools
-upstream fix is unconfirmed):
-- Wrap `PSD.open()` in a subprocess (N-13 pattern already applies); confirm max_rss guard = 512 MB.
-- Before passing file to psd-tools, read PSD header manually (bytes 0–26) and reject if
-  width > 30 000 or height > 30 000 (normal creative assets never exceed this).
-- Pin `psd-tools>=2.0.0` and monitor upstream GHSA-24p2-j2jr-386w status.
-The N-13 subprocess isolation already bounds OOM to a child process; this item adds the
-pre-validation header check and explicit CVSS documentation in `SECURITY.md`.
-- **Impact**: 4 | **Effort**: 2 | **Tier**: NOW (security)
-- Source: [S83] GHSA-24p2-j2jr-386w https://github.com/advisories/GHSA-24p2-j2jr-386w
-
-**NEXT-60: watchfiles v1.1.1 foundation for watch mode**
-Update dependencies: pin `watchfiles>=1.1.1` (Rust-backed filesystem watcher, async iteration,
-Python 3.13+ support). Implement async watch loop scaffold in `watch_daemon.py`:
-`async_watch_with_file_events()` for `ReadDirectoryChangesW` abstraction on Windows, `ReadDirChanges`
-on macOS/Linux. The scaffold does not integrate into the main classify/apply flow yet (see NEXT-1
-for full watch mode delivery) — this is the **plumbing foundation** that NEXT-1 depends on.
-Verify no FPS (frames-per-second) regressions on typical user drives (E:, I:\). Set max queue
-depth to 1000 to prevent memory bloat on rapid changes.
-- **Impact**: 2 | **Effort**: 2 | **Tier**: NEXT | **Unblocks**: NEXT-1
-- Source: [S112] watchfiles v1.1.1 release notes (Oct 2025);
-   [S113] watchfiles GitHub https://github.com/samuelcolvin/watchfiles
 
 **NEXT-61: IPTC 2025.1 AI metadata XMP sidecar writing**
 Write IPTC 2025.1 AI metadata fields to `.xmp` sidecars using PyExifTool 0.5.6 (the only viable
@@ -1260,15 +870,6 @@ can be disabled at compile time". This brings FileOrganizer to **enterprise-read
 - Source: [S219] PyQt6 licensing docs https://www.riverbankcomputing.com/software/pyqt/license/;
    [S220] LGPL-3.0 text https://www.gnu.org/licenses/lgpl-3.0.en.html
 
-**NEXT-93: Competitive defense — Rich taxonomy export as YAML/JSON template**
-Document and export FileOrganizer's 384-category design-asset taxonomy as a reusable YAML template that users can fork,
-extend, and share. This defensible IP differentiator (unique to FileOrganizer) should be: (1) Documented in README:
-"384-category taxonomy optimized for creative assets"; (2) Exported to `taxonomy.yaml` in repo root with full hierarchy,
-descriptions, and AI examples; (3) Included in releases. This addresses Local-File-Organizer's threat (could fork this
-taxonomy); by shipping it openly, FO becomes the canonical reference.
-- **Impact**: 3 | **Effort**: 1 | **Tier**: NEXT | **Competitive defense** against Local-File-Organizer v2.0
-- Source: [S221] curdriceaurora/Local-File-Organizer https://github.com/curdriceaurora/Local-File-Organizer
-
 **NEXT-94: Ollama model benchmarking & auto-selection**
 Add Settings panel feature: "Benchmark selected Ollama model" — runs inference speed test on 5 representative assets
 and reports tokens/sec, memory, and classification time estimates. Auto-suggest model (Qwen2.5-VL vs Llama2 vs CLIP)
@@ -1281,7 +882,7 @@ Formalize provider-agnostic abstraction for switching between DeepSeek, OpenAI, 
 Local-File-Organizer v2.0 (Wave 5b) already implements this—adopt similar pattern. Create `providers/base.py` (abstract),
 `providers/deepseek.py`, `providers/openai.py`, `providers/ollama.py`. Future-proofs against API deprecations and dependency
 churn (Wave 5c signal: llama.cpp, transformers, Ollama all evolving H2 2026).
-- **Impact**: 4 | **Effort**: 4 | **Tier**: NEXT | **Depends on**: NEXT-46 (DeepSeek migration), NEXT-88
+- **Impact**: 4 | **Effort**: 4 | **Tier**: NEXT | **Depends on**: NEXT-88
 - **Unblocks**: Competitive parity with Local-File-Organizer architecture
 - Source: [S223] Local-File-Organizer provider routing https://github.com/curdriceaurora/fo-core
 
@@ -1747,7 +1348,7 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 
 | Category | Status | Primary Items |
 |----------|--------|---------------|
-| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE pin + psd-tools subprocess isolation + archive path-traversal guard, **shipped v8.2.0**), NEXT-49 (psd-tools GHSA-24p2-j2jr-386w ZIP-bomb hardening — NOW), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan), UC-6 (EXIF remover — on hold), NEXT-88 (REUSE.software compliance audit + LICENSES.md) |
+| **Security** | Covered | N-7 (Pillow/PyQt6 pins + pip-audit CI, shipped), N-13 (fonttools CVE pin + psd-tools subprocess isolation + archive path-traversal guard, **shipped v8.2.0**), NEXT-49 (psd-tools GHSA-24p2-j2jr-386w ZIP-bomb hardening, **shipped v8.4.0**), L-7 (archive content full implementation), L-19 (executable quarantine on archive scan), UC-6 (EXIF remover — on hold), NEXT-88 (REUSE.software compliance audit + LICENSES.md) |
 | **Accessibility** | Covered | NEXT-90 (WCAG 2.1 Level A baseline), NEXT-89 (keyboard shortcut customization), L-22 (WCAG 2.1 AA full compliance), L-15 (screen reader testing) |
 | **i18n / l10n** | Covered | L-23 (Qt Linguist UI string extraction + Chinese/Japanese/Spanish/French/German), L-24 (localized category taxonomy names), L-14 (QTranslator UI strings, CJK locale), L-20 (localized destination folder names) |
 | **Observability / telemetry** | Covered | L-16 (opt-in analytics), N-4 (pre-flight report), NEXT-25 (post-apply report), NEXT-31 (scan time measurement), NEXT-38 (crash dialog + log viewer), NEXT-91 (privacy policy + telemetry opt-out), L-31 (analytics dashboard) |
@@ -1756,7 +1357,7 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
 | **Plugin ecosystem** | Covered | L-25 (pluggy-based extensibility architecture), NEXT-27 (SDK + 3 reference plugins), NEXT-28 (webhook) |
 | **Mobile** | Rejected | Android app rejected (no server backend); revisit after UC-1 |
 | **Offline / resilience** | Covered | N-6 (two-phase commit), N-2 (incremental journal), N-17 (robocopy multi-thread, **shipped v8.2.0**), NEXT-34 (provider failover), NEXT-35 (reparse-point detection), NEXT-36 (free-space reserve), NEXT-37 (journal vacuum + retention), Ollama local fallback already in prod |
-| **Performance** | Covered | N-17 (robocopy /MT, **shipped**), NEXT-6 (parallel async LLM), NEXT-33 (xxhash/blake3 fast fingerprint), NEXT-5 (minimal-diff re-scan), NEXT-44 (LLM summary cache) |
+| **Performance** | Covered | N-17 (robocopy /MT, **shipped**), NEXT-6 (parallel async LLM), NEXT-33 (xxhash/blake3 fast fingerprint), NEXT-5 (minimal-diff re-scan), NEXT-44 (LLM summary cache, **shipped v8.4.0**) |
 | **Multi-user / collaboration** | Rejected | Single-user tool by design; see Rejected table |
 | **Migration paths** | Covered | N-1 (I:\ legacy reclassification), CATEGORY_ALIASES expansion (already shipped) |
 | **Upgrade strategy** | Covered | N-3 (schema version gate on catalog sync), UC-5 (in-app update notification), NEXT-86, NEXT-87 (auto-update frameworks) |
@@ -1768,14 +1369,14 @@ Explicit rejects. Do not resurrect without re-opening the discussion.
   `psd_tools.compression` has no `max_length` cap (ZIP-bomb OOM); PSB width/height/depth not
   validated before buffer allocation (300,000×300,000 px = 144 TB virtual alloc); `assert` used
   as runtime guard (disabled with `python -O`). Mitigation: N-13 subprocess isolation bounds OOM
-  to a child process. NEXT-49 adds pre-validation header check (reject width/height > 30,000) and
-  documents the advisory in SECURITY.md.
+  to a child process. NEXT-49 (shipped v8.4.0) added pre-validation header check (reject
+  width/height > 30,000) and documents the advisory in SECURITY.md.
   Source: [S83] https://github.com/advisories/GHSA-24p2-j2jr-386w
 - **sentence-transformers < 5.4.1**: activation function injection from Hub models → arbitrary
   code execution. Fixed in v5.4.1. Pin `sentence-transformers>=5.4.1` in requirements.txt.
   Source: [S97] sentence-transformers 5.4.1 release notes
 - **DeepSeek V4 alias deadline (July 24, 2026)**: `deepseek-chat` and `deepseek-reasoner` aliases
-  stop working July 24, 2026. NEXT-46 (NOW tier) covers migration to `deepseek-v4-flash` and
+  stop working July 24, 2026. NEXT-46 (shipped v8.4.0) covers migration to `deepseek-v4-flash` and
   `deepseek-v4-pro`. Missing this deadline = complete loss of DeepSeek functionality.
   Source: [S78] DeepSeek V4 announcement
 - **psd-tools** parses untrusted `.psd` files. Maliciously crafted PSDs could trigger parser bugs.
@@ -2352,14 +1953,6 @@ for relevance; "directly portable" means the file can be copied with minor adapt
 - [S158] dcraw raw image decoder -- https://www.cybercom.net/~dcoffin/dcraw/
    (Public-domain raw image converter; Canon CR3, Sony ARW, Nikon NEF, Fuji RAF, Pentax RAF support;
    transcoding backend for DNG archive workflow)
-
-**Archive Format Support (NEXT-80)**
-- [S159] zstandard PyPI -- https://pypi.org/project/zstandard/
-   (v0.23+; CFFI + C extension; pure Python fallback; stream mode for memory efficiency; 50–60% better
-   compression than gzip; faster decode; .tar.zst, .zst format support)
-- [S160] 7z format registry & p7zip v22.00+ -- https://github.com/p7zip-project/p7zip
-   (Zstandard compression levels 1–22; emerging standard for asset distribution; integration with 7z
-   archive suite confirms production readiness)
 
 ### Distribution & Code Signing (Wave 4)
 - [S161] Microsoft Authenticode documentation --
