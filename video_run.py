@@ -29,10 +29,8 @@ NDJSON events:
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
-import sys
 import time
 import traceback
 
@@ -43,10 +41,12 @@ from fileorganizer.path_safety import (
     validate_move,
     validate_rename_template,
 )
+from fileorganizer.sidecar_protocol import SidecarEmitter
 from collections import defaultdict
 
 VIDEO_EXTS = (".mp4", ".mkv", ".avi", ".mov", ".wmv", ".m4v", ".flv",
               ".webm", ".mpg", ".mpeg", ".ts", ".m2ts", ".vob", ".ogv")
+_PROTOCOL = SidecarEmitter("video")
 
 
 # Sonarr/Radarr-inspired scoring. Numbers are illustrative — tweak in YAML
@@ -73,8 +73,7 @@ AUDIO_SCORE = {
 
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def _safe_name(value: str) -> str:

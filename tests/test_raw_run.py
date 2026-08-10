@@ -29,13 +29,12 @@ def test_main_missing_rawpy_reports_deterministic_error(tmp_path, capsys):
 
     events = _events(capsys)
     assert rc == 2
-    assert events == [
-        {
-            "event": "error",
-            "code": "missing_dependency",
-            "message": "rawpy is required for RAW validation; install with: pip install rawpy",
-        }
-    ]
+    assert events[0]["event"] == "handshake"
+    error = events[-1]
+    assert error["event"] == "error"
+    assert error["code"] == "missing_dependency"
+    assert error["message"] == "rawpy is required for RAW validation; install with: pip install rawpy"
+    assert error["terminal"] is True
 
 
 def test_extract_exif_uses_real_metadata_sources(monkeypatch, tmp_path):

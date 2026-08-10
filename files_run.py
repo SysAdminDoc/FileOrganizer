@@ -18,15 +18,17 @@ NDJSON events:
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import shutil
-import sys
 import time
 import traceback
 from collections import Counter
 
 from fileorganizer.path_safety import validate_move
+from fileorganizer.sidecar_protocol import SidecarEmitter
+
+
+_PROTOCOL = SidecarEmitter("files")
 
 # Finer-grained categories than Smart Sort. Keeps power-users happy who
 # want Pictures/RAW separate from Pictures/JPEGs.
@@ -75,8 +77,7 @@ RULES: list[tuple[str, tuple[str, ...]]] = [
 
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def _classify(path: str) -> str:

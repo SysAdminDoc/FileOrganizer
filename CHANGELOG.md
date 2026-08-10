@@ -61,6 +61,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Ollama startup no longer downloads or executes installers or implicitly pulls
   models; missing setup is reported with an explicit Settings/Model Manager
   path for visible user-initiated acquisition.
+- Routed NDJSON sidecars now negotiate a versioned capability handshake and
+  emit bounded, sequence-checked records; the WinUI runners isolate malformed
+  events and produce deterministic terminal results for completion and cancel.
 
 ## [v8.5.19] - 2026-07-01
 

@@ -99,6 +99,7 @@ public sealed class SidecarRunner : ISidecarRunner
         long? finalSize = null;
         string? errorCode = null;
         string? errorMessage = null;
+        var protocol = new SidecarProtocolSession(toolName);
 
         var effectiveTimeout = silenceTimeout ?? ISidecarRunner.DefaultSilenceTimeout;
         using var watchdogCts = new CancellationTokenSource();
@@ -124,48 +125,44 @@ public sealed class SidecarRunner : ISidecarRunner
                     lct.ThrowIfCancellationRequested();
                     var line = await process.StandardOutput.ReadLineAsync(lct).ConfigureAwait(false);
                     if (string.IsNullOrWhiteSpace(line)) continue;
+                    lct.ThrowIfCancellationRequested();
 
                     ResetWatchdog();
 
-                    try
+                    var accepted = protocol.AcceptLine(line);
+                    var root = accepted.Payload;
+                    var evName = accepted.Name;
+
+                    onRawEvent?.Invoke(evName, root);
+
+                    switch (evName)
                     {
-                        using var doc = JsonDocument.Parse(line);
-                        var root = doc.RootElement;
-                        if (!root.TryGetProperty("event", out var ev)) continue;
-                        var evName = ev.GetString();
+                        case "progress":
+                            progress?.Report(new SidecarProgress(
+                                Percent: root.TryGetProperty("percent", out var p) && p.ValueKind == JsonValueKind.Number ? p.GetDouble() : 0,
+                                Stage: root.TryGetProperty("stage", out var s) ? s.GetString() ?? "" : "",
+                                EtaSeconds: root.TryGetProperty("eta_seconds", out var e) && e.ValueKind == JsonValueKind.Number ? e.GetInt32() : null));
+                            break;
 
-                        if (onRawEvent is not null && evName is not null)
-                            onRawEvent(evName, root.Clone());
+                        case "log":
+                            log?.Report(new SidecarLog(
+                                Level: root.TryGetProperty("level", out var lv) ? lv.GetString() ?? "info" : "info",
+                                Message: root.TryGetProperty("message", out var m) ? m.GetString() ?? "" : ""));
+                            break;
 
-                        switch (evName)
-                        {
-                            case "progress":
-                                progress?.Report(new SidecarProgress(
-                                    Percent: root.TryGetProperty("percent", out var p) && p.ValueKind == JsonValueKind.Number ? p.GetDouble() : 0,
-                                    Stage: root.TryGetProperty("stage", out var s) ? s.GetString() ?? "" : "",
-                                    EtaSeconds: root.TryGetProperty("eta_seconds", out var e) && e.ValueKind == JsonValueKind.Number ? e.GetInt32() : null));
-                                break;
+                        case "complete":
+                            finalOutput = root.TryGetProperty("output", out var o) ? o.GetString() : null;
+                            finalSize = root.TryGetProperty("size_bytes", out var sb) && sb.ValueKind == JsonValueKind.Number ? sb.GetInt64() : null;
+                            break;
 
-                            case "log":
-                                log?.Report(new SidecarLog(
-                                    Level: root.TryGetProperty("level", out var lv) ? lv.GetString() ?? "info" : "info",
-                                    Message: root.TryGetProperty("message", out var m) ? m.GetString() ?? "" : ""));
-                                break;
-
-                            case "complete":
-                                finalOutput = root.TryGetProperty("output", out var o) ? o.GetString() : null;
-                                finalSize = root.TryGetProperty("size_bytes", out var sb) && sb.ValueKind == JsonValueKind.Number ? sb.GetInt64() : null;
-                                break;
-
-                            case "error":
+                        case "error":
+                            if (root.TryGetProperty("terminal", out var terminal)
+                                && terminal.ValueKind == JsonValueKind.True)
+                            {
                                 errorCode = root.TryGetProperty("code", out var c) ? c.GetString() : "unknown";
                                 errorMessage = root.TryGetProperty("message", out var em) ? em.GetString() : null;
-                                break;
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        log?.Report(new SidecarLog("debug", line));
+                            }
+                            break;
                     }
                 }
             }
@@ -195,9 +192,16 @@ public sealed class SidecarRunner : ISidecarRunner
         {
             stuckByWatchdog = watchdogCts.IsCancellationRequested && !ct.IsCancellationRequested;
             try { if (!process.HasExited) process.Kill(entireProcessTree: true); } catch { }
+            try { await process.WaitForExitAsync(CancellationToken.None).ConfigureAwait(false); }
+            catch { }
+            await ObserveReaderTasksAsync(stdoutTask, stderrTask).ConfigureAwait(false);
 
             if (stuckByWatchdog)
             {
+                var stuck = SidecarProtocolSession.CreateTerminalError(
+                    "stuck_sidecar",
+                    $"{toolName} produced no output for {(int)effectiveTimeout.TotalSeconds}s and was terminated.");
+                onRawEvent?.Invoke(stuck.Name, stuck.Payload);
                 log?.Report(new SidecarLog(
                     "warn",
                     $"{toolName} emitted no output for " +
@@ -213,12 +217,24 @@ public sealed class SidecarRunner : ISidecarRunner
                     ExitCode: -1);
             }
 
+            var cancelled = SidecarProtocolSession.CreateTerminalError(
+                "cancelled",
+                "Cancelled by user.");
+            onRawEvent?.Invoke(cancelled.Name, cancelled.Payload);
             return new SidecarResult(false, null, null, "cancelled", "Cancelled by user.", -1);
         }
 
         await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
 
-        var success = process.ExitCode == 0 && errorCode is null;
+        if (process.ExitCode == 0 && errorCode is null && !protocol.IsComplete)
+        {
+            errorCode = "protocol_incomplete";
+            errorMessage = !protocol.HandshakeReceived
+                ? "Sidecar did not emit a protocol handshake."
+                : "Sidecar exited without a terminal protocol event.";
+        }
+
+        var success = process.ExitCode == 0 && errorCode is null && protocol.IsComplete;
         return new SidecarResult(
             Success: success,
             OutputPath: finalOutput,
@@ -226,5 +242,24 @@ public sealed class SidecarRunner : ISidecarRunner
             ErrorCode: success ? null : (errorCode ?? "exit_nonzero"),
             ErrorMessage: success ? null : (errorMessage ?? $"Sidecar exited with code {process.ExitCode}"),
             ExitCode: process.ExitCode);
+    }
+
+    private static async Task ObserveReaderTasksAsync(params Task[] tasks)
+    {
+        foreach (var task in tasks)
+        {
+            try
+            {
+                await task.ConfigureAwait(false);
+            }
+            catch (Exception ex) when (
+                ex is OperationCanceledException
+                or IOException
+                or ObjectDisposedException
+                or InvalidOperationException)
+            {
+                // Expected while a cancelled child process closes redirected pipes.
+            }
+        }
     }
 }

@@ -22,10 +22,8 @@ NDJSON events:
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
-import sys
 import time
 import traceback
 
@@ -36,7 +34,11 @@ from fileorganizer.path_safety import (
     validate_move,
     validate_rename_template,
 )
+from fileorganizer.sidecar_protocol import SidecarEmitter
 from collections import Counter
+
+
+_PROTOCOL = SidecarEmitter("code")
 
 # Marker files that strongly signal a project root.
 MARKERS = {
@@ -137,8 +139,7 @@ EXT_LANGUAGE = {
 
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def _safe_name(value: str) -> str:

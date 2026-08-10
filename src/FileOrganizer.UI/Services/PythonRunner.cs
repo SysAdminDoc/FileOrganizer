@@ -32,10 +32,9 @@ public interface IPythonRunner
 
     /// <summary>
     /// Run a Python script that emits NDJSON events on stdout. The callback
-    /// receives the event name and the raw JsonElement so the caller can
-    /// decode any custom fields. Lines that fail to parse as JSON are
-    /// forwarded as a synthetic <c>{"event":"log","level":"debug",...}</c>
-    /// to <paramref name="onEvent"/>.
+    /// receives the event name and the validated JsonElement so the caller can
+    /// decode any custom fields. Invalid, oversized, or unknown records are
+    /// isolated as bounded protocol diagnostic log events.
     /// </summary>
     Task<PythonResult> RunScriptNdjsonAsync(
         string scriptName,
@@ -155,6 +154,9 @@ public sealed class PythonRunner : IPythonRunner
         catch (OperationCanceledException)
         {
             try { if (!process.HasExited) process.Kill(entireProcessTree: true); } catch { }
+            try { await process.WaitForExitAsync(CancellationToken.None).ConfigureAwait(false); }
+            catch { }
+            await ObserveReaderTasksAsync(stdoutTask, stderrTask).ConfigureAwait(false);
             return new PythonResult(false, stdout.ToString(), stderr.ToString(), -1, "Cancelled by user.");
         }
 
@@ -216,9 +218,14 @@ public sealed class PythonRunner : IPythonRunner
         using var process = new Process { StartInfo = psi };
         var stderr = new StringBuilder();
         var dispatcher = DispatcherQueue.GetForCurrentThread();
+        var protocol = new SidecarProtocolSession(scriptName);
 
-        async Task DispatchEventAsync(string eventName, JsonElement payload)
+        async Task DispatchEventAsync(
+            string eventName,
+            JsonElement payload,
+            CancellationToken dispatchToken)
         {
+            dispatchToken.ThrowIfCancellationRequested();
             if (dispatcher is null)
             {
                 onEvent(eventName, payload);
@@ -229,9 +236,9 @@ public sealed class PythonRunner : IPythonRunner
                 TaskCreationOptions.RunContinuationsAsynchronously);
             if (!dispatcher.TryEnqueue(() =>
             {
-                if (ct.IsCancellationRequested)
+                if (dispatchToken.IsCancellationRequested)
                 {
-                    completion.TrySetCanceled(ct);
+                    completion.TrySetCanceled(dispatchToken);
                     return;
                 }
 
@@ -249,7 +256,7 @@ public sealed class PythonRunner : IPythonRunner
                 throw new InvalidOperationException("The WinUI dispatcher is unavailable.");
             }
 
-            await completion.Task.WaitAsync(ct).ConfigureAwait(false);
+            await completion.Task.WaitAsync(dispatchToken).ConfigureAwait(false);
         }
 
         try
@@ -270,24 +277,11 @@ public sealed class PythonRunner : IPythonRunner
                 var line = await process.StandardOutput.ReadLineAsync(ct).ConfigureAwait(false);
                 if (line is null) break;
                 if (string.IsNullOrWhiteSpace(line)) continue;
-
-                try
-                {
-                    using var doc = JsonDocument.Parse(line);
-                    var root = doc.RootElement;
-                    var evName = root.TryGetProperty("event", out var ev) && ev.ValueKind == JsonValueKind.String
-                        ? ev.GetString() ?? "log"
-                        : "log";
-                    await DispatchEventAsync(evName, root.Clone()).ConfigureAwait(false);
-                }
-                catch (JsonException)
-                {
-                    // Non-JSON line — surface as a synthetic debug log so the
-                    // UI can still display it without crashing.
-                    using var doc = JsonDocument.Parse(
-                        $"{{\"event\":\"log\",\"level\":\"debug\",\"message\":{JsonSerializer.Serialize(line)}}}");
-                    await DispatchEventAsync("log", doc.RootElement.Clone()).ConfigureAwait(false);
-                }
+                var accepted = protocol.AcceptLine(line);
+                await DispatchEventAsync(
+                    accepted.Name,
+                    accepted.Payload,
+                    ct).ConfigureAwait(false);
             }
         }, ct);
 
@@ -309,18 +303,54 @@ public sealed class PythonRunner : IPythonRunner
         catch (OperationCanceledException)
         {
             try { if (!process.HasExited) process.Kill(entireProcessTree: true); } catch { }
+            try { await process.WaitForExitAsync(CancellationToken.None).ConfigureAwait(false); }
+            catch { }
+            await ObserveReaderTasksAsync(stdoutTask, stderrTask).ConfigureAwait(false);
+            var cancelled = SidecarProtocolSession.CreateTerminalError(
+                "cancelled",
+                "Cancelled by user.");
+            await DispatchEventAsync(
+                cancelled.Name,
+                cancelled.Payload,
+                CancellationToken.None).ConfigureAwait(false);
             return new PythonResult(false, "", stderr.ToString(), -1, "Cancelled by user.");
         }
 
         await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
 
-        var success = process.ExitCode == 0;
+        var success = process.ExitCode == 0 && protocol.IsComplete;
+        string? errorMessage = null;
+        if (process.ExitCode != 0)
+            errorMessage = $"Python exited with code {process.ExitCode}";
+        else if (!protocol.HandshakeReceived)
+            errorMessage = "Sidecar did not emit a protocol handshake.";
+        else if (!protocol.TerminalReceived)
+            errorMessage = "Sidecar exited without a terminal protocol event.";
         return new PythonResult(
             Success: success,
             Stdout: "",
             Stderr: stderr.ToString(),
             ExitCode: process.ExitCode,
-            ErrorMessage: success ? null : $"Python exited with code {process.ExitCode}");
+            ErrorMessage: errorMessage);
+    }
+
+    private static async Task ObserveReaderTasksAsync(params Task[] tasks)
+    {
+        foreach (var task in tasks)
+        {
+            try
+            {
+                await task.ConfigureAwait(false);
+            }
+            catch (Exception ex) when (
+                ex is OperationCanceledException
+                or IOException
+                or ObjectDisposedException
+                or InvalidOperationException)
+            {
+                // Expected while a cancelled child process closes redirected pipes.
+            }
+        }
     }
 
     private static string ResolvePythonExecutable(string repoRoot)
