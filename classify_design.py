@@ -16,7 +16,7 @@ Usage:
 
 Results saved to classification_results/<prefix>NNN.json
 """
-import os, sys, json, re, argparse
+import os, sys, json, re, argparse, tempfile
 from pathlib import Path
 from datetime import datetime
 
@@ -277,8 +277,48 @@ def load_index() -> list[dict]:
 def batch_file(n: int) -> Path:
     return RESULTS_DIR / f'{BATCH_PREFIX}{n:03d}.json'
 
+
+def _atomic_write_json(path: Path, payload) -> None:
+    """Write a result file completely before replacing the visible batch file."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode='w',
+            encoding='utf-8',
+            dir=path.parent,
+            prefix=f'.{path.name}.',
+            suffix='.tmp',
+            delete=False,
+        ) as handle:
+            temp_path = Path(handle.name)
+            json.dump(payload, handle, indent=2, ensure_ascii=False)
+            handle.write('\n')
+        os.replace(temp_path, path)
+    finally:
+        if temp_path is not None:
+            try:
+                temp_path.unlink()
+            except FileNotFoundError:
+                pass
+
+
 def already_done(n: int) -> bool:
-    return batch_file(n).exists()
+    path = batch_file(n)
+    if not path.exists():
+        return False
+    try:
+        payload = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, json.JSONDecodeError):
+        return False
+    if not isinstance(payload, list) or not payload:
+        return False
+    return all(
+        isinstance(item, dict)
+        and not item.get('_retry_required')
+        and not item.get('error')
+        for item in payload
+    )
 
 _JUNK_STEM_RE = re.compile(
     r'(?:INTRO-HD\.NET|AIDOWNLOAD\.NET|aidownload\.net|ShareAE\.com|'
@@ -571,6 +611,79 @@ Return ONLY a JSON array with one object per item (same order as input):
 No markdown, no explanation outside the JSON array."""
 
 # ── DeepSeek caller ───────────────────────────────────────────────────────────
+
+class DeepSeekResponseError(RuntimeError):
+    """Raised when a model response cannot be safely used as a batch."""
+
+    def __init__(self, code: str, message: str):
+        self.code = code
+        self.message = message
+        super().__init__(f"{code}: {message}")
+
+
+def _validate_deepseek_batch_shape(payload, expected_count: int | None = None) -> list:
+    if not isinstance(payload, list):
+        raise DeepSeekResponseError(
+            'outer_type',
+            f"expected a JSON array, got {type(payload).__name__}",
+        )
+    if expected_count is not None and len(payload) != expected_count:
+        raise DeepSeekResponseError(
+            'cardinality',
+            f"expected {expected_count} result(s), got {len(payload)}",
+        )
+    return payload
+
+
+def _deepseek_unresolved(item: dict, index: int, reason: str) -> dict:
+    name = str(item.get('name', '') or '').strip() or f'item-{index + 1}'
+    return {
+        'name': name,
+        'category': '_Review',
+        'clean_name': name,
+        'confidence': 0,
+        'notes': f'DeepSeek schema validation failed: {reason}',
+        '_source_name': name,
+        '_classifier': 'deepseek_schema_guard',
+        '_retry_required': True,
+        '_schema_error': reason,
+    }
+
+
+def _normalize_deepseek_result(
+    raw,
+    item: dict,
+    index: int,
+    category_set,
+) -> dict:
+    if not isinstance(raw, dict):
+        return _deepseek_unresolved(item, index, 'result is not an object')
+    if raw.get('_retry_required'):
+        return _deepseek_unresolved(item, index, 'cached result is marked for retry')
+
+    for field in ('name', 'category', 'clean_name'):
+        value = raw.get(field)
+        if not isinstance(value, str) or not value.strip():
+            return _deepseek_unresolved(item, index, f'{field} must be a non-empty string')
+
+    confidence = raw.get('confidence')
+    if type(confidence) is not int or not 0 <= confidence <= 100:
+        return _deepseek_unresolved(
+            item,
+            index,
+            'confidence must be an integer from 0 through 100',
+        )
+    if raw['category'] not in category_set:
+        return _deepseek_unresolved(
+            item,
+            index,
+            f"category {raw['category']!r} is not in the runtime taxonomy",
+        )
+    if 'notes' in raw and not isinstance(raw['notes'], str):
+        return _deepseek_unresolved(item, index, 'notes must be a string when present')
+    return dict(raw)
+
+
 def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_MODEL) -> list[dict]:
     """
     Cached wrapper around call_deepseek (NEXT-44).
@@ -581,6 +694,7 @@ def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_M
     """
     from llm_cache import prompt_hash as p_hash
     
+    category_set = get_runtime_category_set()
     cached_results = {}
     uncached_indices = []
     
@@ -590,7 +704,13 @@ def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_M
         if path:
             cached = lookup_cached(path, model, prompt)
             if cached:
-                cached_results[i] = cached
+                normalized = _normalize_deepseek_result(
+                    cached, item, i, category_set
+                )
+                if not normalized.get('_retry_required'):
+                    cached_results[i] = normalized
+                else:
+                    uncached_indices.append(i)
             else:
                 uncached_indices.append(i)
         else:
@@ -609,30 +729,40 @@ def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_M
     
     # Call API for uncached batch
     try:
-        uncached_results = call_deepseek(uncached_prompt)
+        uncached_results = call_deepseek(
+            uncached_prompt,
+            expected_count=len(uncached_items),
+        )
     except Exception:
         raise  # Let caller handle the error
-    
-    # Cache the results
+
+    normalized_results = []
     for i, uncached_idx in enumerate(uncached_indices):
-        if i < len(uncached_results):
-            item = items[uncached_idx]
-            path = item.get('path', '').strip()
-            if path:
-                store_cached(path, model, uncached_prompt, uncached_results[i])
+        item = items[uncached_idx]
+        normalized = _normalize_deepseek_result(
+            uncached_results[i], item, uncached_idx, category_set
+        )
+        normalized_results.append(normalized)
+        if normalized.get('_retry_required'):
+            continue
+        path = item.get('path', '').strip()
+        if path:
+            store_cached(path, model, uncached_prompt, normalized)
     
     # Merge cached + API results in original order
     results = [None] * len(items)
     for i, cached in cached_results.items():
         results[i] = cached
     for i, uncached_idx in enumerate(uncached_indices):
-        if i < len(uncached_results):
-            results[uncached_idx] = uncached_results[i]
+        results[uncached_idx] = normalized_results[i]
     
     return results
 
 
-def call_deepseek(prompt: str) -> list[dict]:
+def call_deepseek(
+    prompt: str,
+    expected_count: int | None = None,
+) -> list:
     try:
         from openai import OpenAI
     except ImportError:
@@ -646,20 +776,37 @@ def call_deepseek(prompt: str) -> list[dict]:
         temperature=0.1,
         max_tokens=8000,
     )
-    raw = resp.choices[0].message.content.strip()
+    choices = getattr(resp, 'choices', None)
+    if not choices:
+        raise DeepSeekResponseError('empty_response', 'DeepSeek returned no choices')
+    content = getattr(getattr(choices[0], 'message', None), 'content', None)
+    if not isinstance(content, str) or not content.strip():
+        raise DeepSeekResponseError('empty_response', 'DeepSeek returned no message content')
+    raw = content.strip()
 
     # Strip markdown fences if present
     raw = re.sub(r'^```(?:json)?\s*', '', raw)
     raw = re.sub(r'\s*```$', '', raw)
 
     try:
-        return json.loads(raw)
+        payload = json.loads(raw)
     except json.JSONDecodeError as e:
         # Attempt to extract JSON array
         m = re.search(r'\[.*\]', raw, re.DOTALL)
         if m:
-            return json.loads(m.group())
-        raise RuntimeError(f"Could not parse DeepSeek response: {e}\n\nRaw:\n{raw[:800]}")
+            try:
+                payload = json.loads(m.group())
+            except json.JSONDecodeError as nested:
+                raise DeepSeekResponseError(
+                    'invalid_json',
+                    f"could not parse extracted DeepSeek array: {nested}",
+                ) from nested
+        else:
+            raise DeepSeekResponseError(
+                'invalid_json',
+                f"could not parse DeepSeek response: {e}; raw={raw[:800]!r}",
+            ) from e
+    return _validate_deepseek_batch_shape(payload, expected_count)
 
 # ── Commands ──────────────────────────────────────────────────────────────────
 def cmd_stats(index: list[dict]):
@@ -937,9 +1084,13 @@ def cmd_run(index: list[dict], only_batch: int = 0,
             except Exception as e:
                 print(f"  ERROR calling DeepSeek: {e}")
                 print("  Saving partial error marker and continuing...")
-                batch_file(n).write_text(
-                    json.dumps([{"error": str(e), "batch": n}], indent=2),
-                    encoding='utf-8'
+                _atomic_write_json(
+                    batch_file(n),
+                    [{
+                        'error': str(e),
+                        'batch': n,
+                        '_retry_required': True,
+                    }],
                 )
                 continue
 
@@ -969,7 +1120,7 @@ def cmd_run(index: list[dict], only_batch: int = 0,
             res['_batch_index'] = start + idx
             results.append(res)
 
-        batch_file(n).write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding='utf-8')
+        _atomic_write_json(batch_file(n), results)
         print(f"  Saved {batch_file(n).name}")
 
         # Quick sample

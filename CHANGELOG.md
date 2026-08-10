@@ -28,6 +28,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Archive extraction now enforces entry, byte, compression-ratio, and free-space
   quotas, checks cancellation during streaming, and promotes only clean staging
   output with structured limit and cancellation results.
+- DeepSeek batch results are now schema-checked across fresh and cached paths;
+  malformed entries become retry-marked review records, cardinality failures are
+  controlled, and batch result files are written atomically.
 - Ollama batch classification now passes the configured endpoint and model
   explicitly, and optional face-recognition failures no longer terminate GUI
   startup.
