@@ -13,6 +13,7 @@ public interface IUserSettings
 {
     string AcoustIdApiKey { get; set; }
     bool TrySetAcoustIdApiKey(string value);
+    SettingsSaveResult TrySavePreferences(UserPreferences preferences);
     string DefaultSubtitleLanguages { get; set; }
     string DefaultMusicRenamePattern { get; set; }
     string DefaultVideoRenamePattern { get; set; }
@@ -26,37 +27,20 @@ public sealed class UserSettings : IUserSettings
     private const string AcoustIdResource = "FileOrganizer.AcoustID";
     private const string AcoustIdUser = "api-key";
 
-    private static ApplicationDataContainer Values
+    private readonly IStringSettingsStore _localSettings = new LocalSettingsStore();
+
+    private string Get(string key, string fallback)
     {
-        get
-        {
-            try { return ApplicationData.Current.LocalSettings; }
-            catch { return null!; }
-        }
+        var stored = _localSettings.Read(key);
+        return stored.Success && stored.Exists ? stored.Value : fallback;
     }
 
-    private static string Get(string key, string fallback)
+    private void Set(string key, string value)
     {
-        try { return Values?.Values.TryGetValue(key, out var v) == true && v is string s ? s : fallback; }
-        catch { return fallback; }
+        _localSettings.TryWrite(key, value ?? "", out _);
     }
 
-    private static void Set(string key, string value)
-    {
-        try { if (Values is not null) Values.Values[key] = value ?? ""; }
-        catch { }
-    }
-
-    private static bool Remove(string key)
-    {
-        try
-        {
-            return Values is null
-                || !Values.Values.ContainsKey(key)
-                || Values.Values.Remove(key);
-        }
-        catch { return false; }
-    }
+    private bool Remove(string key) => _localSettings.TryRemove(key, out _);
 
     private static string ReadAcoustIdSecret()
     {
@@ -73,7 +57,7 @@ public sealed class UserSettings : IUserSettings
         }
     }
 
-    private static bool TryWriteAcoustIdSecret(string value)
+    private bool TryWriteAcoustIdSecret(string value, bool removeLegacy = true)
     {
         PasswordCredential? previous = null;
         var wrote = false;
@@ -97,7 +81,7 @@ public sealed class UserSettings : IUserSettings
                 wrote = true;
             }
 
-            if (!Remove("AcoustIdApiKey"))
+            if (removeLegacy && !Remove("AcoustIdApiKey"))
                 throw new InvalidOperationException("Could not remove the legacy AcoustID setting.");
             return true;
         }
@@ -150,6 +134,38 @@ public sealed class UserSettings : IUserSettings
     public bool TrySetAcoustIdApiKey(string value) =>
         TryWriteAcoustIdSecret(value?.Trim() ?? "");
 
+    public SettingsSaveResult TrySavePreferences(UserPreferences preferences)
+    {
+        ArgumentNullException.ThrowIfNull(preferences);
+
+        var previousSecret = ReadAcoustIdSecret();
+        if (!TryWriteAcoustIdSecret(preferences.AcoustIdApiKey.Trim()))
+        {
+            return new SettingsSaveResult(
+                false,
+                false,
+                "Windows Credential Locker did not accept the AcoustID key.");
+        }
+
+        var localResult = SettingsPersistence.Save(
+            _localSettings,
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["DefaultSubtitleLanguages"] = preferences.DefaultSubtitleLanguages,
+                ["DefaultMusicRenamePattern"] = preferences.DefaultMusicRenamePattern,
+                ["DefaultVideoRenamePattern"] = preferences.DefaultVideoRenamePattern,
+                ["DefaultBookRenamePattern"] = preferences.DefaultBookRenamePattern,
+            });
+        if (localResult.Success)
+            return localResult;
+
+        var secretRestored = TryWriteAcoustIdSecret(previousSecret, removeLegacy: false);
+        return localResult with
+        {
+            PreviousValuesRestored = localResult.PreviousValuesRestored && secretRestored,
+        };
+    }
+
     public string DefaultSubtitleLanguages
     {
         get => Get("DefaultSubtitleLanguages", "en");
@@ -186,5 +202,55 @@ public sealed class UserSettings : IUserSettings
     {
         get => Get("LastDestFolder", "");
         set => Set("LastDestFolder", value);
+    }
+
+    private sealed class LocalSettingsStore : IStringSettingsStore
+    {
+        public StoredStringResult Read(string key)
+        {
+            try
+            {
+                var values = ApplicationData.Current.LocalSettings.Values;
+                if (!values.TryGetValue(key, out var value))
+                    return StoredStringResult.Missing();
+                return value is string text
+                    ? StoredStringResult.Found(text)
+                    : StoredStringResult.Failed($"Stored value {key} has an invalid type.");
+            }
+            catch (Exception exception)
+            {
+                return StoredStringResult.Failed(exception.Message);
+            }
+        }
+
+        public bool TryWrite(string key, string value, out string? error)
+        {
+            try
+            {
+                ApplicationData.Current.LocalSettings.Values[key] = value;
+                error = null;
+                return true;
+            }
+            catch (Exception exception)
+            {
+                error = exception.Message;
+                return false;
+            }
+        }
+
+        public bool TryRemove(string key, out string? error)
+        {
+            try
+            {
+                ApplicationData.Current.LocalSettings.Values.Remove(key);
+                error = null;
+                return true;
+            }
+            catch (Exception exception)
+            {
+                error = exception.Message;
+                return false;
+            }
+        }
     }
 }

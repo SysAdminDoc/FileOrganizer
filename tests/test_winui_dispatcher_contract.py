@@ -72,7 +72,8 @@ def test_acoustid_secret_uses_credential_locker_and_never_argv():
     assert "PasswordVault" in settings
     assert "PasswordCredential" in settings
     assert 'Remove("AcoustIdApiKey")' in settings
-    assert "TrySetAcoustIdApiKey" in settings_page
+    assert "TrySavePreferences" in settings_page
+    assert "TryWriteAcoustIdSecret" in settings
     assert '"--api-key"' not in music
     assert '"ACOUSTID_API_KEY"' in music
     assert "IReadOnlyDictionary<string, string>? environmentVariables" in runner
@@ -170,3 +171,22 @@ def test_winui_app_uses_the_bounded_redacting_crash_log_writer():
     assert "DefaultArchiveCount = 2" in writer
     assert "File.Move(_logPath, ArchivePath(1), overwrite: true)" in writer
     assert "[REDACTED]" in writer
+
+
+def test_settings_page_only_reports_saved_after_verified_persistence():
+    settings = (REPO_ROOT / "src/FileOrganizer.UI/Services/UserSettings.cs").read_text(
+        encoding="utf-8"
+    )
+    page = (
+        REPO_ROOT / "src/FileOrganizer.UI/Views/Pages/SettingsPage.xaml.cs"
+    ).read_text(encoding="utf-8")
+
+    assert "SettingsPersistence.Save(" in settings
+    assert "TrySavePreferences" in settings
+    assert "var saveResult = _settings.TrySavePreferences" in page
+    assert "if (!saveResult.Success)" in page
+    assert "Previous settings remain active; choose Save to retry." in page
+    assert "These edits are only shown here; choose Save to retry." in page
+    assert page.index("if (!saveResult.Success)") < page.index(
+        'SaveStatusText.Text = "Saved."'
+    )
