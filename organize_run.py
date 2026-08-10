@@ -28,6 +28,7 @@ from pathlib import Path
 from collections import defaultdict
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
+from types import ModuleType
 
 from fileorganizer.path_safety import (
     PathSafetyError, canonical_path, is_within, validate_move,
@@ -752,6 +753,80 @@ def strip_trailing_spaces(root: str) -> list:
                         pass
     return renamed
 
+
+def _exact_path_exists(path: str) -> bool:
+    candidate = _win_longpath(path) if os.name == 'nt' else path
+    return os.path.lexists(candidate)
+
+
+def _rename_exact_path(source: str, destination: str) -> None:
+    if os.name == 'nt':
+        os.rename(_win_longpath(source), _win_longpath(destination))
+    else:
+        os.rename(source, destination)
+
+
+def _sanitized_component_destination(parent: str, name: str) -> str:
+    """Choose a no-overwrite name for a component after right-trimming it."""
+    candidate = os.path.join(parent, name)
+    if not _exact_path_exists(candidate):
+        return candidate
+    stem, extension = os.path.splitext(name)
+    index = 1
+    while True:
+        candidate = os.path.join(parent, f'{stem} ({index}){extension}')
+        if not _exact_path_exists(candidate):
+            return candidate
+        index += 1
+
+
+def sanitize_file_source_path(path: str, source_root: str) -> tuple[str, list[tuple[str, str]]]:
+    """Right-trim loose-file path components without overwriting siblings."""
+    path_module: ModuleType
+    if os.name == 'nt':
+        source_value = os.fspath(path).replace('/', '\\')
+        root_value = os.fspath(source_root).replace('/', '\\')
+        source_abs = (
+            source_value if ntpath.isabs(source_value)
+            else ntpath.join(os.getcwd(), source_value)
+        )
+        root_abs = (
+            root_value if ntpath.isabs(root_value)
+            else ntpath.join(os.getcwd(), root_value)
+        )
+        path_module = ntpath
+        root_prefix = root_abs if root_abs.endswith('\\') else root_abs + '\\'
+        if not path_module.normcase(source_abs).startswith(path_module.normcase(root_prefix)):
+            raise PathSafetyError('loose-file source escapes its source root')
+        relative = source_abs[len(root_prefix):]
+    else:
+        source_abs = os.path.abspath(path)
+        root_abs = os.path.abspath(source_root)
+        path_module = os.path
+        try:
+            common = path_module.commonpath((source_abs, root_abs))
+            if common != root_abs or source_abs == root_abs:
+                raise PathSafetyError('loose-file source escapes its source root')
+        except ValueError as exc:
+            raise PathSafetyError('loose-file source is on a different volume') from exc
+        relative = path_module.relpath(source_abs, root_abs)
+    current = root_abs
+    renamed: list[tuple[str, str]] = []
+    components = re.split(r'[\\/]', relative)
+    if any(component in {'', '.', '..'} for component in components):
+        raise PathSafetyError('loose-file source has an unsafe relative component')
+    for component in components:
+        old_path = path_module.join(current, component)
+        stripped = component.rstrip()
+        if stripped and stripped != component:
+            new_path = _sanitized_component_destination(current, stripped)
+            _rename_exact_path(old_path, new_path)
+            renamed.append((old_path, new_path))
+            current = new_path
+        else:
+            current = old_path
+    return (current if renamed else path), renamed
+
 def is_cross_drive(src: str, dst: str) -> bool:
     return os.path.splitdrive(src)[0].upper() != os.path.splitdrive(dst)[0].upper()
 
@@ -1294,13 +1369,29 @@ def build_move_plan(pairs: list, source_override: str = '',
         is_file_item = bool(org_entry.get('is_file'))
         if 'path' in org_entry:
             src = org_entry['path']
-            disk_name = os.path.basename(src)
-            source_root = org_entry.get('source_root') or os.path.dirname(src)
+            source_root = (
+                org_entry.get('source_root') or source_override or os.path.dirname(src)
+            )
         else:
             src_dir = source_override or org_entry['folder']
-            disk_name = org_entry['name']
-            src = os.path.join(src_dir, disk_name)
+            src = os.path.join(src_dir, org_entry['name'])
             source_root = src_dir
+
+        disk_name = os.path.basename(src)
+        if is_file_item:
+            try:
+                src, renamed = sanitize_file_source_path(src, source_root)
+            except (OSError, PathSafetyError) as exc:
+                skipped.append({
+                    'name': raw_name,
+                    'src': src,
+                    'reason': 'source_sanitize_failed',
+                    'error': str(exc),
+                })
+                continue
+            if renamed:
+                log(f"    Pre-sanitized {len(renamed)} trailing-space component(s) in {raw_name!r}")
+            disk_name = os.path.basename(src)
 
         clean = (item.get('clean_name') or raw_name or '').strip()
         if not clean:
@@ -1326,7 +1417,7 @@ def build_move_plan(pairs: list, source_override: str = '',
         eff_category = os.path.join(REVIEW_SUBDIR, category) if low_conf else category
 
         if is_file_item:
-            file_ext = org_entry.get('file_ext', Path(src).suffix.lower())
+            file_ext = Path(src).suffix.lower()
             disk_stem = sanitize(Path(disk_name).stem)
             dest_stem = disk_stem if disk_stem else clean
             dest = safe_dest_path_file(dest_root, eff_category, dest_stem, file_ext, reserved_dests)
@@ -1398,6 +1489,17 @@ def build_move_plan(pairs: list, source_override: str = '',
 def _move_plan_item(item: dict, plan_data: dict | None = None):
     src = item['src']
     dest = item['dest']
+    if item.get('is_file_item'):
+        src, renamed = sanitize_file_source_path(
+            src, item.get('source_root') or os.path.dirname(src))
+        if renamed:
+            item['src'] = src
+            item['disk_name'] = os.path.basename(src)
+            item['file_ext'] = Path(src).suffix.lower()
+            log(
+                f"    Pre-sanitized {len(renamed)} trailing-space component(s) "
+                f"in {item['disk_name']!r}"
+            )
     if plan_data is not None:
         _validate_plan_item(item, plan_data)
     else:
