@@ -244,6 +244,8 @@ python organize_run.py --retry-errors             # Retry failed items
 # Design pipeline (G:\Design Unorganized → G:\Organized)
 python organize_run.py --source design --preview --quiet
 python organize_run.py --source design --apply --quiet
+python organize_run.py --source design --skip-unchanged --dry-run
+python organize_run.py --invalidate-cache             # Clear re-scan fingerprints
 python organize_run.py --source design --preview --rules-file rules.json
 python organize_run.py --source design --preview --no-rules
 

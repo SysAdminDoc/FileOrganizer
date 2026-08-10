@@ -55,6 +55,11 @@ class OrganizeRunPlanTests(unittest.TestCase):
         self.assertTrue(commit.apply)
         self.assertEqual(commit.plan_file, "review.json")
 
+        incremental = parser.parse_args(["--skip-unchanged"])
+        invalidate = parser.parse_args(["--invalidate-cache"])
+        self.assertTrue(incremental.skip_unchanged)
+        self.assertTrue(invalidate.invalidate_cache)
+
     def test_cli_commit_plan_alias_applies_persisted_plan(self):
         result = {
             "plan_id": "saved-plan",
@@ -76,6 +81,57 @@ class OrganizeRunPlanTests(unittest.TestCase):
         apply_plan.assert_called_once_with(
             {"plan_id": "saved-plan"}, dry_run=False, verbose=False,
         )
+
+    def test_minimal_diff_cache_skips_only_unchanged_folders(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src_root, _ = self._configure_temp_runner(tmp)
+            source = src_root / "Cached Template"
+            source.mkdir()
+            (source / "project.aep").write_text("v1", encoding="utf-8")
+            pair = (
+                {
+                    "name": source.name,
+                    "clean_name": source.name,
+                    "category": "After Effects - Other",
+                    "confidence": 90,
+                },
+                {"folder": str(src_root), "name": source.name},
+            )
+            cache = runner.FolderCache(str(Path(tmp) / "fingerprints.db"))
+
+            first = runner.build_move_plan(
+                [pair], source_mode="ae", plan_id="cache-first", folder_cache=cache,
+            )
+            second = runner.build_move_plan(
+                [pair], source_mode="ae", plan_id="cache-second", folder_cache=cache,
+            )
+            (source / "new-file.txt").write_text("changed", encoding="utf-8")
+            changed = runner.build_move_plan(
+                [pair], source_mode="ae", plan_id="cache-changed", folder_cache=cache,
+            )
+
+            self.assertEqual(first.item_count, 1)
+            self.assertEqual(second.item_count, 0)
+            self.assertEqual(second.skipped[0]["reason"], "unchanged_cached")
+            self.assertEqual(changed.item_count, 1)
+
+    def test_invalidate_cache_flag_clears_and_exits(self):
+        class FakeCache:
+            invalidated = False
+
+            def invalidate_all(self):
+                self.invalidated = True
+
+        cache = FakeCache()
+        with patch.object(
+            sys, "argv", ["organize_run.py", "--invalidate-cache"]
+        ), patch.object(
+            runner, "FolderCache", return_value=cache
+        ), patch.object(runner, "load_all_with_index") as load_pairs:
+            runner.main()
+
+        self.assertTrue(cache.invalidated)
+        load_pairs.assert_not_called()
 
     def test_build_move_plan_routes_low_confidence_to_review(self):
         with tempfile.TemporaryDirectory() as tmp:

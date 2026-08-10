@@ -33,6 +33,7 @@ from types import ModuleType
 from fileorganizer.path_safety import (
     PathSafetyError, canonical_path, is_within, validate_move,
 )
+from fileorganizer.folder_cache import FolderCache, should_skip_folder
 from fileorganizer.rule_chains import RuleChainManager
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -1615,7 +1616,8 @@ def _preflight_move_plan(plan_data: dict, already_moved: set[str]) -> None:
 
 def build_move_plan(pairs: list, source_override: str = '',
                     source_mode: str = 'ae', plan_id: str = '',
-                    rule_manager: RuleChainManager | None = None) -> MovePlan:
+                    rule_manager: RuleChainManager | None = None,
+                    folder_cache: FolderCache | None = None) -> MovePlan:
     """Convert classified/index pairs into an editable, collision-safe move plan."""
     plan_id = plan_id or f"plan-{_compact_timestamp()}"
     created_at = _utc_now()
@@ -1681,6 +1683,16 @@ def build_move_plan(pairs: list, source_override: str = '',
         if src in already_moved:
             skipped.append({'name': disk_name, 'src': src, 'reason': 'already_moved'})
             continue
+        if folder_cache is not None and os.path.isdir(src):
+            unchanged, cache_detail = should_skip_folder(src, folder_cache)
+            if unchanged:
+                skipped.append({
+                    'name': disk_name,
+                    'src': src,
+                    'reason': 'unchanged_cached',
+                    'detail': cache_detail,
+                })
+                continue
 
         valid_category = _valid_category(category)
         rule_decision = None
@@ -2336,6 +2348,10 @@ def build_argument_parser() -> argparse.ArgumentParser:
                     help='Use a specific Hazel-style rule_chains.json file')
     ap.add_argument('--no-rules',      action='store_true',
                     help='Disable user rule-chain evaluation for this run')
+    ap.add_argument('--skip-unchanged', action='store_true',
+                    help='Skip folders whose cached fingerprint is unchanged')
+    ap.add_argument('--invalidate-cache', action='store_true',
+                    help='Clear the folder fingerprint cache and exit')
     return ap
 
 
@@ -2345,6 +2361,16 @@ def main():
 
     if args.plan_file and args.apply_plan:
         ap.error('--plan-file and --apply-plan cannot be used together')
+
+    folder_cache = None
+    if args.invalidate_cache or args.skip_unchanged:
+        folder_cache = FolderCache()
+    if args.invalidate_cache:
+        assert folder_cache is not None
+        folder_cache.invalidate_all()
+        print('Folder fingerprint cache cleared.')
+        if not args.skip_unchanged:
+            return
 
     if args.overflow_now:
         global _FORCE_OVERFLOW
@@ -2464,6 +2490,7 @@ def main():
         source_dir_override,
         source_mode,
         rule_manager=rule_manager,
+        folder_cache=folder_cache,
     )
     plan_path = write_move_plan(plan, args.plan_out or args.plan_file or '')
     log(f"Move plan written: {plan_path}")
