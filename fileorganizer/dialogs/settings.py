@@ -559,7 +559,8 @@ class FaceManagerDialog(QDialog):
         self.setWindowTitle("Face Manager")
         self.setObjectName("face_mgr")
         self.setMinimumSize(440, 400)
-        _t = get_active_theme()
+        self._t = get_active_theme()
+        _t = self._t
         self.setStyleSheet(f"""
             #face_mgr {{ background: {_t['bg_alt']}; }}
             #face_mgr QLabel {{ color: {_t['fg_bright']}; }}
@@ -605,7 +606,7 @@ class FaceManagerDialog(QDialog):
         layout.addLayout(row_tol)
 
         tol_hint = QLabel("Lower = stricter matching, higher = more lenient")
-        tol_hint.setStyleSheet(f"color: {_t['disabled']}; font-size: 10px; margin-left: 4px;")
+        tol_hint.setStyleSheet(f"color: {self._t['disabled']}; font-size: 10px; margin-left: 4px;")
         layout.addWidget(tol_hint)
 
         # ── Face list ───────────────────────────────────────────────────────

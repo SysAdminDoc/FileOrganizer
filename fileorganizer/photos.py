@@ -1,5 +1,5 @@
 """FileOrganizer — Photo library: face detection, geocoding, blur analysis, HEIC conversion."""
-import os, re, json, shutil, subprocess, sys
+import os, re, json, shutil, subprocess, sys, io, base64
 from functools import lru_cache
 from pathlib import Path
 
@@ -18,8 +18,12 @@ except ImportError:
 try:
     import face_recognition as _face_recognition
     import numpy as _np
-except ImportError:
-    pass
+except (ImportError, SystemExit):
+    # face_recognition calls quit() when its model package is absent.
+    # Treat that optional dependency failure like any other unavailable backend
+    # so importing the main GUI never terminates the process.
+    _face_recognition = None
+    _np = None
 try:
     import reverse_geocoder as _rg
 except ImportError:

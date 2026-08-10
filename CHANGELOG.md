@@ -10,6 +10,14 @@ All notable changes to FileOrganizer will be documented in this file.
   plaintext app-data JSON/text files, and configurable cloud endpoints are
   restricted to approved HTTPS provider hosts.
 
+### Fixed
+
+- Restored missing runtime imports across classification, metadata, PC-file,
+  face-detection, Ollama, rule, plugin, worker, and secondary PyQt paths.
+- Ollama batch classification now passes the configured endpoint and model
+  explicitly, and optional face-recognition failures no longer terminate GUI
+  startup.
+
 ## [v8.5.19] - 2026-07-01
 
 ### Security

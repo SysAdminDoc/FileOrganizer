@@ -26,7 +26,7 @@ from fileorganizer.cache import (
 from fileorganizer.categories import (
     CATEGORIES, BUILTIN_CATEGORIES, get_all_categories, get_all_category_names,
     _CategoryIndex, GENERIC_AEP_NAMES, is_generic_aep, _score_aep,
-    check_negative_keywords,
+    check_negative_keywords, TOPIC_CATEGORIES,
 )
 from fileorganizer.user_categories import classify_user_category
 from fileorganizer.naming import (

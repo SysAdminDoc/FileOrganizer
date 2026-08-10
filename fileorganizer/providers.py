@@ -482,7 +482,11 @@ class OllamaProvider(AIProvider):
         try:
             from fileorganizer.ollama import ollama_classify_batch, load_ollama_settings
             s = load_ollama_settings()
-            return ollama_classify_batch(items, s)
+            return ollama_classify_batch(
+                items,
+                url=s.get('url'),
+                model=s.get('model'),
+            )
         except Exception as e:
             log.warning("Ollama batch error: %s", e)
             return None

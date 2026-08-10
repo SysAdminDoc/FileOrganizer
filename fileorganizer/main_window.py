@@ -12,7 +12,7 @@ from PyQt6.QtWidgets import (
     QListWidget, QListWidgetItem, QInputDialog, QSplitter, QMessageBox, QFrame,
     QProgressBar, QScrollArea, QSystemTrayIcon, QStackedWidget
 )
-from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSettings, QMimeData, QUrl, QTimer, QSize
+from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSettings, QMimeData, QUrl, QTimer, QSize, QThreadPool
 from PyQt6.QtGui import QColor, QDragEnterEvent, QDropEvent, QAction, QPixmap, QImage, QTextCursor, QIcon
 
 from fileorganizer.config import (
@@ -34,7 +34,10 @@ from fileorganizer.categories import (
 from fileorganizer.naming import _normalize, _beautify_name, _smart_name
 from fileorganizer.classifier import tiered_classify, _SCAN_FILTERS
 from fileorganizer.workers import _collect_scan_folders
-from fileorganizer.metadata import extract_folder_metadata
+from fileorganizer.metadata import (
+    extract_folder_metadata, MetadataExtractor,
+    _load_envato_api_key, _save_envato_api_key,
+)
 from fileorganizer.ollama import load_ollama_settings, save_ollama_settings
 from fileorganizer.photos import (
     load_photo_settings, save_photo_settings, FaceDB,

@@ -731,7 +731,8 @@ class _FileBrowserDialog(QDialog):
         self.chosen_file = None   # raw filename for the detail log
         self.setWindowTitle(f"Pick File to Rename From  —  {os.path.basename(folder_path)}")
         self.setMinimumSize(640, 500)
-        _t = get_active_theme()
+        self._t = get_active_theme()
+        _t = self._t
         self.setStyleSheet(f"""
             QDialog {{ background:{_t['bg']}; }}
             QLabel  {{ color:{_t['muted']}; font-size:11px; }}
@@ -800,7 +801,7 @@ class _FileBrowserDialog(QDialog):
         prev_row = QHBoxLayout()
         prev_row.addWidget(QLabel("Result:"))
         self.lbl_preview = QLabel("—")
-        self.lbl_preview.setStyleSheet(f"color:{_t['green']}; font-size:13px; font-weight:bold; padding-left:6px;")
+        self.lbl_preview.setStyleSheet(f"color:{self._t['green']}; font-size:13px; font-weight:bold; padding-left:6px;")
         prev_row.addWidget(self.lbl_preview, 1)
         layout.addLayout(prev_row)
 
