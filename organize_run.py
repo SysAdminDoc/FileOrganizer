@@ -1189,6 +1189,165 @@ def _file_sha256(path: str) -> str:
             h.update(chunk)
     return h.hexdigest()
 
+
+class RetryCleanupError(RuntimeError):
+    """A stale or unowned retry destination could not be removed safely."""
+
+    def __init__(self, code: str, message: str) -> None:
+        super().__init__(message)
+        self.code = code
+
+
+def _is_reparse_entry(path: str, info=None) -> bool:
+    if os.path.islink(path):
+        return True
+    if info is None:
+        info = os.lstat(path)
+    return bool(getattr(info, 'st_file_attributes', 0) & 0x0400)
+
+
+def _partial_destination_signature(path: str, *, max_entries: int = 100_000) -> dict:
+    """Capture identity for a partial destination without following reparse points."""
+    if not os.path.lexists(path):
+        return {}
+    info = os.lstat(path)
+    if _is_reparse_entry(path, info):
+        kind = 'reparse'
+    elif os.path.isfile(path):
+        kind = 'file'
+    elif os.path.isdir(path):
+        kind = 'directory'
+    else:
+        kind = 'other'
+    signature = {
+        'kind': kind,
+        'st_dev': int(getattr(info, 'st_dev', 0)),
+        'st_ino': int(getattr(info, 'st_ino', 0)),
+        'size': int(info.st_size),
+        'mtime_ns': int(getattr(info, 'st_mtime_ns', int(info.st_mtime * 1_000_000_000))),
+        'cleanup_safe': kind in {'file', 'directory'},
+    }
+    if kind != 'directory':
+        return signature
+
+    digest = hashlib.sha256()
+    entry_count = 0
+    for dirpath, dirnames, filenames in os.walk(path, topdown=True, followlinks=False):
+        dirnames.sort()
+        filenames.sort()
+        for name in [*dirnames, *filenames]:
+            entry_count += 1
+            if entry_count > max_entries:
+                signature['cleanup_safe'] = False
+                signature['reason'] = 'partial destination exceeds cleanup entry limit'
+                return signature
+            entry_path = os.path.join(dirpath, name)
+            entry_info = os.lstat(entry_path)
+            if _is_reparse_entry(entry_path, entry_info):
+                signature['cleanup_safe'] = False
+                signature['reason'] = 'partial destination contains a reparse point'
+                return signature
+            relative = os.path.relpath(entry_path, path).replace('\\', '/')
+            entry_kind = 'directory' if os.path.isdir(entry_path) else 'file'
+            entry_record = (
+                f"{relative}\0{entry_kind}\0{entry_info.st_size}\0"
+                f"{getattr(entry_info, 'st_mtime_ns', 0)}\0"
+                f"{getattr(entry_info, 'st_dev', 0)}\0{getattr(entry_info, 'st_ino', 0)}\n"
+            )
+            digest.update(entry_record.encode('utf-8', errors='surrogatepass'))
+    signature['entry_count'] = entry_count
+    signature['tree_digest'] = digest.hexdigest()
+    return signature
+
+
+def _safe_partial_destination_signature(path: str) -> dict:
+    try:
+        return _partial_destination_signature(path)
+    except OSError as exc:
+        return {
+            'kind': 'unreadable',
+            'cleanup_safe': False,
+            'reason': f'could not inspect partial destination: {exc}',
+        }
+
+
+def _file_is_source_prefix(source: str, partial: str) -> bool:
+    try:
+        if os.path.getsize(partial) > os.path.getsize(source):
+            return False
+        with open(source, 'rb') as source_file, open(partial, 'rb') as partial_file:
+            while True:
+                partial_chunk = partial_file.read(1024 * 1024)
+                if not partial_chunk:
+                    return True
+                if source_file.read(len(partial_chunk)) != partial_chunk:
+                    return False
+    except OSError:
+        return False
+
+
+def _partial_destination_matches_source(
+    source: str,
+    destination: str,
+    *,
+    max_entries: int = 100_000,
+) -> bool:
+    if os.path.isfile(source) and os.path.isfile(destination):
+        return _file_is_source_prefix(source, destination)
+    if not os.path.isdir(source) or not os.path.isdir(destination):
+        return False
+
+    checked = 0
+    for dirpath, dirnames, filenames in os.walk(
+        destination, topdown=True, followlinks=False):
+        for name in [*dirnames, *filenames]:
+            checked += 1
+            if checked > max_entries:
+                return False
+            partial_path = os.path.join(dirpath, name)
+            if _is_reparse_entry(partial_path):
+                return False
+            relative = os.path.relpath(partial_path, destination)
+            source_path = os.path.join(source, relative)
+            if os.path.isdir(partial_path):
+                if not os.path.isdir(source_path):
+                    return False
+            elif not os.path.isfile(source_path) or not _file_is_source_prefix(
+                source_path, partial_path):
+                return False
+    return True
+
+
+def _cleanup_partial_destination(source: str, destination: str, expected: dict) -> None:
+    if not isinstance(expected, dict) or not expected.get('cleanup_safe'):
+        raise RetryCleanupError(
+            'partial_identity_missing',
+            'partial destination has no safe recorded identity',
+        )
+    current = _partial_destination_signature(destination)
+    if current != expected:
+        raise RetryCleanupError(
+            'partial_destination_changed',
+            'partial destination changed since the failed move',
+        )
+    if not _partial_destination_matches_source(source, destination):
+        raise RetryCleanupError(
+            'partial_destination_unrelated',
+            'occupied destination does not match the source partial copy',
+        )
+    if _partial_destination_signature(destination) != expected:
+        raise RetryCleanupError(
+            'partial_destination_changed',
+            'partial destination changed during retry validation',
+        )
+    if expected.get('kind') == 'file':
+        os.remove(destination)
+    elif expected.get('kind') == 'directory':
+        shutil.rmtree(destination)
+    else:
+        raise RetryCleanupError(
+            'partial_type_unsafe', 'partial destination type cannot be removed safely')
+
 def _iter_hashable_files(root: str):
     if os.path.isfile(root):
         yield root, os.path.basename(root)
@@ -1597,7 +1756,9 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
             moved += 1
         except Exception as e:
             err_msg = str(e)
-            partial = os.path.exists(dest)
+            partial = os.path.lexists(dest)
+            partial_signature = (
+                _safe_partial_destination_signature(dest) if partial else {})
             journal_update(move_id, 'failed', err_msg, partial_dest_exists=partial)
             log(f"    ERROR moving {disk_name!r}: {err_msg}")
             errors += 1
@@ -1610,6 +1771,9 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
                 'confidence': int(item.get('confidence', 0)),
                 'error': err_msg,
                 'partial_dest_exists': partial,
+                'partial_dest_signature': partial_signature,
+                'is_file_item': bool(item.get('is_file_item')),
+                'file_ext': item.get('file_ext', ''),
                 'plan_id': plan_id,
                 'plan_item_id': item.get('id', ''),
                 'run_id': run_id,
@@ -1678,62 +1842,53 @@ def retry_errors(source_mode: str = 'ae'):
             retried += 1
             still_failed += 1
             continue
-        # Recompute destination using current dest root so disk-full retries
-        # automatically redirect to I:\Organized when G:\ is still low.
-        dest_root   = get_dest_root()
-        eff_cat     = e.get('category', '')
-        clean       = e.get('clean_name', '')
-        conf        = int(e.get('confidence', 0))
+        dest_root = get_dest_root()
+        eff_cat = e.get('category', '')
+        clean = e.get('clean_name', '')
+        conf = int(e.get('confidence', 0))
         if conf < MIN_CONFIDENCE:
             eff_cat = os.path.join(REVIEW_SUBDIR, eff_cat)
-        # Prefer recomputed dest; fall back to stored dest if category data missing
-        try:
-            if eff_cat and clean:
-                dest = safe_dest_path(dest_root, eff_cat, clean)
-                approved_dest_root = dest_root
-            else:
-                dest = e['dest']
-                approved_dest_root = persisted_dest_root
-        except (PathSafetyError, OSError, ValueError) as exc:
-            log(f"  BLOCKED (unsafe retry destination): {e.get('disk_name', src)!r}: {exc}")
-            remaining.append({**e, 'error': str(exc)})
-            retried += 1
-            still_failed += 1
-            continue
+        dest = e.get('dest', '')
+        approved_dest_root = persisted_dest_root
         if not os.path.exists(src):
             log(f"  SKIP (src gone): {e['disk_name']!r}")
             retried += 1
             fixed   += 1
             continue
         try:
-            validate_move(
-                src,
-                dest,
-                source_root=source_root,
-                dest_root=approved_dest_root,
-                allow_existing_dest=bool(e.get('partial_dest_exists') and os.path.exists(dest)),
-            )
-            if e.get('partial_dest_exists') and os.path.exists(dest):
-                # Validate the occupied destination before deleting a partial
-                # result, then revalidate the empty target before moving.
+            partial_dest = e.get('dest', '')
+            if e.get('partial_dest_exists') and os.path.lexists(partial_dest):
                 validate_move(
                     src,
-                    dest,
+                    partial_dest,
                     source_root=source_root,
-                    dest_root=approved_dest_root,
+                    dest_root=persisted_dest_root,
                     allow_existing_dest=True,
                 )
-                log(f"  Cleaning partial dest: {dest!r}")
-                if os.path.isdir(dest) and not os.path.islink(dest):
-                    shutil.rmtree(dest)
-                else:
-                    os.remove(dest)
+                log(f"  Cleaning verified partial dest: {partial_dest!r}")
+                _cleanup_partial_destination(
+                    src, partial_dest, e.get('partial_dest_signature'))
                 validate_move(
                     src,
-                    dest,
+                    partial_dest,
                     source_root=source_root,
-                    dest_root=approved_dest_root,
+                    dest_root=persisted_dest_root,
                 )
+
+            # Recompute only after stale partial output is safely removed so
+            # collision allocation does not route the retry to a needless suffix.
+            if eff_cat and clean:
+                if e.get('is_file_item'):
+                    file_ext = e.get('file_ext') or Path(src).suffix.lower()
+                    dest = safe_dest_path_file(
+                        dest_root, eff_cat, clean, file_ext)
+                else:
+                    dest = safe_dest_path(dest_root, eff_cat, clean)
+                approved_dest_root = dest_root
+            else:
+                dest = e['dest']
+                approved_dest_root = persisted_dest_root
+
             renamed = strip_trailing_spaces(src)
             if renamed:
                 log(f"  Pre-sanitized {len(renamed)} trailing-space names in {e['disk_name']!r}")
@@ -1751,10 +1906,29 @@ def retry_errors(source_mode: str = 'ae'):
                            source_signature=e.get('source_signature'))
             log(f"  FIXED: {e['disk_name']!r}")
             fixed += 1
+        except RetryCleanupError as ex:
+            log(f"  BLOCKED [{ex.code}]: {e['disk_name']!r}: {ex}")
+            still_failed += 1
+            remaining.append({
+                **e,
+                'error': str(ex),
+                'retry_error_code': ex.code,
+                'partial_dest_exists': os.path.lexists(e.get('dest', '')),
+            })
         except Exception as ex:
             log(f"  STILL FAILED: {e['disk_name']!r}: {ex}")
             still_failed += 1
-            remaining.append({**e, 'error': str(ex), 'partial_dest_exists': os.path.exists(dest)})
+            partial = bool(dest and os.path.lexists(dest))
+            remaining.append({
+                **e,
+                'dest': dest,
+                'dest_root': approved_dest_root,
+                'error': str(ex),
+                'retry_error_code': 'retry_failed',
+                'partial_dest_exists': partial,
+                'partial_dest_signature': (
+                    _safe_partial_destination_signature(dest) if partial else {}),
+            })
         retried += 1
     log(f"\nRetry complete: {fixed} fixed, {still_failed} still failing")
     if remaining:
