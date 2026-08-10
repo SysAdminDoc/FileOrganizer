@@ -183,7 +183,7 @@ public sealed class MusicResultItem
         {
             "matched" => (Brush)Application.Current.Resources["AccentGreenBrush"],
             "untagged" => (Brush)Application.Current.Resources["AccentYellowBrush"],
-            "error" => (Brush)Application.Current.Resources["AccentRedBrush"],
+            "error" => (Brush)Application.Current.Resources["TextDangerBrush"],
             _ => (Brush)Application.Current.Resources["TextMutedBrush"],
         };
     }

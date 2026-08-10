@@ -119,7 +119,7 @@ public sealed class SubtitleResultItem
             "downloaded" => (Brush)Application.Current.Resources["AccentGreenBrush"],
             "embedded" => (Brush)Application.Current.Resources["AccentBlueBrush"],
             "no_match" => (Brush)Application.Current.Resources["AccentYellowBrush"],
-            "error" => (Brush)Application.Current.Resources["AccentRedBrush"],
+            "error" => (Brush)Application.Current.Resources["TextDangerBrush"],
             _ => (Brush)Application.Current.Resources["TextMutedBrush"],
         };
     }

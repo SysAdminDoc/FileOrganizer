@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- Helper/status text and destructive controls now use semantic colors that meet
+  WCAG AA across all seven themes and card surfaces, with explicit accessible
+  danger-button hover and pressed states.
 - All custom WinUI button styles now retain the Windows system focus indicator,
   including its built-in high-contrast behavior for keyboard navigation.
 - Default pytest runs now use unique workspace-owned temp roots and guarded
