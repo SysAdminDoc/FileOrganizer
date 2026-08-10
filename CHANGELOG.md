@@ -67,6 +67,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Classification-cache access is serialized across GUI and worker threads,
   while move-journal and provider-cost schemas now initialize lazily on first
   database use instead of creating files during module import.
+- Watch configuration now fails closed with one structured error for malformed
+  schemas or unsafe timing values, and long-running watches retain bounded,
+  identity-aware file state with observable eviction counts.
 
 ## [v8.5.19] - 2026-07-01
 

@@ -156,7 +156,7 @@ def test_smart_and_watch_reject_overlapping_roots(tmp_path, monkeypatch):
     assert smart_run.main() == 5
 
     monkeypatch.setattr("sys.argv", ["watch_run.py", "--watches", '[{"src": "' + str(source).replace('\\', '/') + '", "dest": "' + str(nested).replace('\\', '/') + '"}]'])
-    assert watch_run.main() == 3
+    assert watch_run.main() == 2
 
 
 @pytest.mark.parametrize("relationship", ["equal", "child", "parent"])
