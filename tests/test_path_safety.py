@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import sqlite3
+from pathlib import Path
+
 import pytest
 
 import fileorganizer.config as config
@@ -96,6 +99,100 @@ def test_tampered_plan_fails_preflight_before_first_move(tmp_path):
         runner.JOURNAL_FILE = old_journal
         runner.LOG_FILE = old_log
         runner.get_dest_root = old_dest
+
+
+def test_persisted_plan_revalidates_every_source_before_replay(
+    tmp_path,
+    monkeypatch,
+):
+    source_root = tmp_path / "source"
+    destination_root = tmp_path / "organized"
+    source_root.mkdir()
+    destination_root.mkdir()
+    first = source_root / "first"
+    second = source_root / "second"
+    first.mkdir()
+    second.mkdir()
+    (first / "asset.txt").write_text("first", encoding="utf-8")
+    (second / "asset.txt").write_text("second", encoding="utf-8")
+    monkeypatch.setattr(runner, "JOURNAL_FILE", str(tmp_path / "moves.db"))
+    monkeypatch.setattr(runner, "LOG_FILE", str(tmp_path / "run.log"))
+    monkeypatch.setattr(runner, "get_dest_root", lambda: str(destination_root))
+
+    plan = runner.build_move_plan(
+        [
+            (
+                {
+                    "name": name,
+                    "clean_name": name,
+                    "category": "Flyers & Print",
+                    "confidence": 90,
+                },
+                {"folder": str(source_root), "name": name},
+            )
+            for name in ("first", "second")
+        ],
+        source_mode="design",
+        plan_id="persisted-replay",
+    )
+    plan_path = tmp_path / "persisted-plan.json"
+    runner.write_move_plan(plan, str(plan_path))
+    persisted = runner.read_move_plan(str(plan_path))
+
+    second.rename(source_root / "original-second")
+    second.mkdir()
+    (second / "replacement.txt").write_text("replacement", encoding="utf-8")
+
+    with pytest.raises(PathSafetyError, match="planned source identity changed"):
+        runner.apply_move_plan(persisted, dry_run=False, verbose=False)
+
+    assert first.exists()
+    assert second.exists()
+    assert list(destination_root.iterdir()) == []
+
+
+def test_undo_rejects_tampered_journal_boundaries(tmp_path, monkeypatch):
+    source_root = tmp_path / "source"
+    destination_root = tmp_path / "organized"
+    source_root.mkdir()
+    destination_root.mkdir()
+    source = source_root / "asset"
+    source.mkdir()
+    (source / "asset.txt").write_text("payload", encoding="utf-8")
+    journal_path = tmp_path / "moves.db"
+    monkeypatch.setattr(runner, "JOURNAL_FILE", str(journal_path))
+    monkeypatch.setattr(runner, "LOG_FILE", str(tmp_path / "run.log"))
+    monkeypatch.setattr(runner, "get_dest_root", lambda: str(destination_root))
+
+    plan = runner.build_move_plan(
+        [(
+            {
+                "name": "asset",
+                "clean_name": "asset",
+                "category": "Flyers & Print",
+                "confidence": 90,
+            },
+            {"folder": str(source_root), "name": "asset"},
+        )],
+        source_mode="design",
+        plan_id="tampered-undo",
+    )
+    result = runner.apply_move_plan(plan, dry_run=False, verbose=False)
+    moved_destination = plan.items[0]["dest"]
+    assert result["moved"] == 1
+
+    with sqlite3.connect(journal_path) as connection:
+        connection.execute(
+            "UPDATE moves SET source_root=?",
+            (str(tmp_path / "attacker-controlled-root"),),
+        )
+        connection.commit()
+
+    undo = runner.undo_moves()
+
+    assert undo == {"reversed": 0, "skipped": 1, "failed": 0}
+    assert not source.exists()
+    assert Path(moved_destination).exists()
 
 
 def test_build_move_plan_blocks_traversal_category_and_clean_name(tmp_path):
