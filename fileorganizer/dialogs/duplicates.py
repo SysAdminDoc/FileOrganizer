@@ -599,7 +599,11 @@ class DuplicateFinderDialog(QDialog):
                 return
             for p in paths:
                 try:
-                    shutil.move(p, os.path.join(dest, os.path.basename(p)))
+                    target = os.path.join(dest, os.path.basename(p))
+                    from fileorganizer.path_safety import validate_move
+                    validate_move(p, target, dest_root=dest)
+                    os.makedirs(dest, exist_ok=True)
+                    shutil.move(p, target)
                     success += 1
                 except Exception:
                     failed += 1
@@ -940,7 +944,11 @@ class DuplicatePanel(QWidget):
                 return
             for p in paths:
                 try:
-                    shutil.move(p, os.path.join(dest, os.path.basename(p)))
+                    target = os.path.join(dest, os.path.basename(p))
+                    from fileorganizer.path_safety import validate_move
+                    validate_move(p, target, dest_root=dest)
+                    os.makedirs(dest, exist_ok=True)
+                    shutil.move(p, target)
                     success += 1
                 except Exception:
                     failed += 1

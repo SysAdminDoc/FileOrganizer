@@ -352,6 +352,8 @@ class ScanMixin:
             it = CategorizeItem(); it.folder_name = r['folder_name']; it.category = '[Uncategorized]'
             it.cleaned_name = r.get('cleaned_name', r['folder_name'])
             it.confidence = 0; it.full_source_path = r['folder_path']
+            it.source_root = os.path.dirname(r['folder_path'])
+            it.dest_root = dst
             it.full_dest_path = ''
             it.method = ''; it.detail = 'No classification match'; it.topic = ''
             it.status = "Skip"; it.selected = False
@@ -362,6 +364,8 @@ class ScanMixin:
         it = CategorizeItem(); it.folder_name = r['folder_name']; it.category = r['category']
         it.cleaned_name = r.get('cleaned_name', r['folder_name'])
         it.confidence = r['confidence']; it.full_source_path = r['folder_path']
+        it.source_root = os.path.dirname(r['folder_path'])
+        it.dest_root = dst
 
         # Use LLM-cleaned name for dest path if available (rename-on-move)
         llm_name = r.get('llm_name')
@@ -538,6 +542,7 @@ class ScanMixin:
         it = FileItem()
         it.name        = r['name']
         it.full_src    = r['full_src']
+        it.source_root = self._pc_src_path()
         it.category    = r['category']
         it.confidence  = r['confidence']
         it.method      = r['method']
@@ -605,6 +610,7 @@ class ScanMixin:
         else:
             raw_dst = os.path.join(self._pc_dst_for(it.category), it.display_name)
         it.full_dst = self._dedup_file_dst(raw_dst)
+        it.dest_root = self._pc_dst_for(it.category)
 
         self.file_items.append(it)
         self._add_files_row(it, len(self.file_items) - 1)

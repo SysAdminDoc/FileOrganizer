@@ -48,6 +48,8 @@ import time
 import traceback
 from collections import Counter
 
+from fileorganizer.path_safety import validate_move, validate_tree_pair
+
 # Extension → category routing.
 CATEGORY_EXTS: dict[str, tuple[str, ...]] = {
     "audio":    (".mp3", ".m4a", ".mp4", ".aac", ".flac", ".ogg", ".oga",
@@ -259,10 +261,13 @@ def main() -> int:
 
     dest_root = os.path.abspath(args.dest) if args.dest else os.path.abspath(args.root)
     src_root = os.path.abspath(args.root)
-    if args.mode == "apply" and dest_root.startswith(src_root + os.sep):
-        _emit({"event": "error", "code": "dest_inside_src",
-               "message": "Destination cannot be inside the source — would recurse forever."})
-        return 5
+    if args.mode == "apply":
+        try:
+            validate_tree_pair(src_root, dest_root)
+        except Exception as exc:
+            _emit({"event": "error", "code": "unsafe_roots",
+                   "message": f"Source and destination trees must not overlap: {exc}"})
+            return 5
 
     files = _walk_files(args.root)
     if args.max_files > 0:
@@ -305,6 +310,12 @@ def main() -> int:
 
             # Apply: ensure unique dest, then move/copy.
             target_unique = _resolve_collision(target)
+            validate_move(
+                path,
+                target_unique,
+                source_root=src_root,
+                dest_root=dest_root,
+            )
             os.makedirs(os.path.dirname(target_unique), exist_ok=True)
             if args.copy:
                 shutil.copy2(path, target_unique)

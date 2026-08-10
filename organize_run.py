@@ -23,11 +23,15 @@ Known edge cases handled:
     - Every planned/applied move is journaled to organize_moves.db for full undo support
     - Errors logged to organize_errors.json for retry/audit
 """
-import os, sys, json, shutil, re, argparse, subprocess, sqlite3, hashlib
+import os, sys, json, shutil, re, argparse, subprocess, sqlite3, hashlib, ntpath
 from pathlib import Path
 from collections import defaultdict
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
+
+from fileorganizer.path_safety import (
+    PathSafetyError, canonical_path, is_within, validate_move,
+)
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DEST_PRIMARY     = r'G:\Organized'
@@ -415,7 +419,10 @@ CREATE TABLE IF NOT EXISTS moves (
     partial_dest_exists INTEGER DEFAULT 0,
     duplicate_source_file TEXT,
     duplicate_existing_file TEXT,
-    duplicate_sha256 TEXT
+    duplicate_sha256 TEXT,
+    source_root TEXT,
+    dest_root TEXT,
+    source_signature TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_moves_moved_at ON moves(moved_at);
 CREATE INDEX IF NOT EXISTS idx_moves_undone   ON moves(undone_at);
@@ -433,6 +440,9 @@ _JOURNAL_MIGRATIONS = {
     'duplicate_source_file': "ALTER TABLE moves ADD COLUMN duplicate_source_file TEXT",
     'duplicate_existing_file': "ALTER TABLE moves ADD COLUMN duplicate_existing_file TEXT",
     'duplicate_sha256': "ALTER TABLE moves ADD COLUMN duplicate_sha256 TEXT",
+    'source_root': "ALTER TABLE moves ADD COLUMN source_root TEXT",
+    'dest_root': "ALTER TABLE moves ADD COLUMN dest_root TEXT",
+    'source_signature': "ALTER TABLE moves ADD COLUMN source_signature TEXT",
 }
 
 def _utc_now() -> str:
@@ -466,18 +476,20 @@ def journal_record(src: str, dest: str, disk_name: str,
                    error: str = '', partial_dest_exists: bool = False,
                    duplicate_source_file: str = '',
                    duplicate_existing_file: str = '',
-                   duplicate_sha256: str = '') -> int:
+                   duplicate_sha256: str = '', source_root: str = '',
+                   dest_root: str = '', source_signature: dict | None = None) -> int:
     """Record a planned/completed move in the SQLite journal and return its row id."""
     now = _utc_now()
     con = _journal_conn()
     cur = con.execute(
         "INSERT INTO moves (src, dest, disk_name, clean_name, category, confidence, moved_at, "
         "plan_id, plan_item_id, run_id, status, error, planned_at, updated_at, partial_dest_exists, "
-        "duplicate_source_file, duplicate_existing_file, duplicate_sha256) "
-        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        "duplicate_source_file, duplicate_existing_file, duplicate_sha256, source_root, dest_root, source_signature) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         (src, dest, disk_name, clean_name, category, confidence, now,
          plan_id, plan_item_id, run_id, status, error, now, now, int(partial_dest_exists),
-         duplicate_source_file, duplicate_existing_file, duplicate_sha256)
+         duplicate_source_file, duplicate_existing_file, duplicate_sha256,
+         source_root, dest_root, json.dumps(source_signature or {}, sort_keys=True))
     )
     con.commit()
     row_id = cur.lastrowid
@@ -564,10 +576,27 @@ def undo_moves(last_n: int = 0, dry_run: bool = False) -> dict:
             skipped += 1
             continue
 
+        source_root = row['dest_root'] or ''
+        dest_root = row['source_root'] or ''
+        if not source_root or not dest_root:
+            print(f"  SKIP (missing persisted path boundaries): {row['disk_name']!r}")
+            skipped += 1
+            continue
+        try:
+            validate_move(
+                src,
+                dest,
+                source_root=source_root,
+                dest_root=dest_root,
+            )
+        except PathSafetyError as exc:
+            print(f"  SKIP (unsafe undo path): {row['disk_name']!r}: {exc}")
+            skipped += 1
+            continue
+
         print(f"  {tag} {row['clean_name']!r}  {src!r} -> {dest!r}")
         if not dry_run:
             try:
-                os.makedirs(os.path.dirname(dest), exist_ok=True)
                 robust_move(src, dest)
                 con.execute(
                     "UPDATE moves SET undone_at=?, status=?, updated_at=? WHERE id=?",
@@ -771,6 +800,7 @@ def robust_move(src: str, dst: str) -> None:
     /MT:n thread count is loaded from advanced_settings.json (default 8); set
     robocopy_mt=0 or 1 to disable multi-thread on slow USB drives.
     """
+    validate_move(src, dst)
     if not is_cross_drive(src, dst):
         os.rename(src, dst)
         return
@@ -911,6 +941,37 @@ def get_dest_root() -> str:
 def sanitize(s: str, maxlen: int = 120) -> str:
     return re.sub(r'[<>:"/\\|?*]', '-', s).strip()[:maxlen]
 
+
+def _safe_name_component(value: str, label: str) -> str:
+    """Reject rooted/traversal values before display sanitization."""
+    if not isinstance(value, str):
+        raise PathSafetyError(f"{label} must be a string")
+    value = value.strip()
+    if not value or value in {'.', '..'}:
+        raise PathSafetyError(f"{label} is empty or a dot path")
+    if '\x00' in value or '/' in value or '\\' in value:
+        raise PathSafetyError(f"{label} contains a path separator")
+    if os.path.isabs(value) or ntpath.isabs(value) or ntpath.splitdrive(value)[0]:
+        raise PathSafetyError(f"{label} is rooted")
+    return value
+
+
+def _valid_category(category: str) -> bool:
+    """Return whether a normalized category is in the runtime allowlist."""
+    if not isinstance(category, str) or not category.strip():
+        return False
+    if '/' in category or '\\' in category or category in {'.', '..'}:
+        return False
+    try:
+        from fileorganizer.categories import get_all_category_names
+        allowed = set(get_all_category_names())
+    except Exception:
+        allowed = set()
+    # Historical batch aliases are normalized above and remain valid output
+    # names even when the current taxonomy has since renamed the category.
+    allowed.update(CATEGORY_ALIASES.values())
+    return category in allowed
+
 def _cat_path(dest_root: str, category: str) -> str:
     """
     Build the category sub-path under dest_root, preserving multi-level categories.
@@ -923,8 +984,18 @@ def _cat_path(dest_root: str, category: str) -> str:
     never eaten by sanitize() — which previously collapsed
     '_Review\\After Effects - Other' → '_Review-After Effects - Other'.
     """
+    if not isinstance(category, str):
+        raise PathSafetyError("category must be a string")
     parts = [p for p in category.replace('\\', '/').split('/') if p]
-    return os.path.join(dest_root, *[sanitize(p) for p in parts])
+    if not parts:
+        raise PathSafetyError("category path is empty")
+    safe_parts = [sanitize(_safe_name_component(part, 'category')) for part in parts]
+    if any(not part or part in {'.', '..'} for part in safe_parts):
+        raise PathSafetyError("category contains no usable filename component")
+    dest = os.path.join(dest_root, *safe_parts)
+    if not is_within(dest, dest_root):
+        raise PathSafetyError(f"category destination escapes root: {category!r}")
+    return dest
 
 def _path_key(path: str) -> str:
     return os.path.normcase(os.path.abspath(path))
@@ -934,7 +1005,10 @@ def _path_taken(path: str, reserved: set | None = None) -> bool:
 
 def safe_dest_path(dest_root: str, category: str, clean_name: str,
                    reserved: set | None = None) -> str:
+    clean_name = _safe_name_component(clean_name, 'clean_name')
     dest = os.path.join(_cat_path(dest_root, category), sanitize(clean_name))
+    if not is_within(dest, dest_root):
+        raise PathSafetyError("clean_name destination escapes root")
     if _path_taken(dest, reserved):
         base, i = dest, 1
         while _path_taken(dest, reserved):
@@ -946,8 +1020,12 @@ def safe_dest_path_file(dest_root: str, category: str, clean_name: str, ext: str
                         reserved: set | None = None) -> str:
     """Build collision-safe destination path for a flat file (not a directory)."""
     cat_dir = _cat_path(dest_root, category)
-    stem    = sanitize(clean_name)
+    stem    = sanitize(_safe_name_component(clean_name, 'clean_name'))
+    if not isinstance(ext, str) or '/' in ext or '\\' in ext or not ext.startswith('.'):
+        raise PathSafetyError("file extension is unsafe")
     dest    = os.path.join(cat_dir, f"{stem}{ext}")
+    if not is_within(dest, dest_root):
+        raise PathSafetyError("file destination escapes root")
     if _path_taken(dest, reserved):
         i = 1
         while _path_taken(dest, reserved):
@@ -967,6 +1045,8 @@ class MovePlanItem:
     category: str
     effective_category: str
     confidence: int
+    source_root: str = ''
+    source_signature: dict = field(default_factory=dict)
     is_file_item: bool = False
     file_ext: str = ''
     low_confidence: bool = False
@@ -1010,10 +1090,21 @@ def write_move_plan(plan: MovePlan | dict, path: str = '') -> str:
 def read_move_plan(path: str) -> dict:
     with open(path, 'r', encoding='utf-8') as f:
         data = json.load(f)
+    if not isinstance(data, dict):
+        raise ValueError("Move plan must be a JSON object")
     if int(data.get('schema_version', 0)) != PLAN_SCHEMA_VERSION:
         raise ValueError(f"Unsupported plan schema: {data.get('schema_version')!r}")
     if not isinstance(data.get('items'), list):
         raise ValueError("Move plan missing items list")
+    if not isinstance(data.get('dest_root'), str) or not data['dest_root']:
+        raise ValueError("Move plan missing destination boundary")
+    for index, item in enumerate(data['items']):
+        if not isinstance(item, dict):
+            raise ValueError(f"Move plan item {index} is not an object")
+        if not isinstance(item.get('src'), str) or not isinstance(item.get('dest'), str):
+            raise ValueError(f"Move plan item {index} has invalid paths")
+        if not isinstance(item.get('source_root'), str) or not item.get('source_root'):
+            raise ValueError(f"Move plan item {index} has no source boundary")
     return data
 
 def _file_sha256(path: str) -> str:
@@ -1090,6 +1181,76 @@ def _duplicate_error(match: dict) -> str:
         f"{match.get('source_file', '')} == {match.get('existing_file', '')}"
     )
 
+
+def _source_signature(path: str) -> dict:
+    """Capture enough source identity to detect a tampered persisted plan."""
+    info = os.stat(path, follow_symlinks=False)
+    return {
+        'st_dev': int(getattr(info, 'st_dev', 0)),
+        'st_ino': int(getattr(info, 'st_ino', 0)),
+        'size': int(info.st_size),
+        'mtime_ns': int(getattr(info, 'st_mtime_ns', int(info.st_mtime * 1_000_000_000))),
+        'is_file': bool(os.path.isfile(path)),
+        'is_dir': bool(os.path.isdir(path)),
+    }
+
+
+def _check_source_signature(item: dict, src: str) -> None:
+    expected = item.get('source_signature')
+    if not expected:
+        raise PathSafetyError(
+            f"plan item {item.get('id', '?')!r} has no source identity metadata"
+        )
+    try:
+        actual = _source_signature(src)
+    except OSError as exc:
+        raise PathSafetyError(f"cannot inspect planned source {src!r}: {exc}") from exc
+    for key in ('st_dev', 'st_ino', 'size', 'mtime_ns', 'is_file', 'is_dir'):
+        if key in expected and expected[key] != actual[key]:
+            raise PathSafetyError(
+                f"planned source identity changed for {src!r} ({key})"
+            )
+
+
+def _validate_plan_item(item: dict, plan_data: dict, *, require_source: bool = True) -> None:
+    if not isinstance(item, dict):
+        raise PathSafetyError("move plan item must be an object")
+    src = item.get('src')
+    dest = item.get('dest')
+    source_root = item.get('source_root')
+    dest_root = plan_data.get('dest_root')
+    if not isinstance(src, str) or not isinstance(dest, str):
+        raise PathSafetyError(f"plan item {item.get('id', '?')!r} has invalid paths")
+    if not isinstance(source_root, str) or not source_root:
+        raise PathSafetyError(f"plan item {item.get('id', '?')!r} has no source boundary")
+    if not isinstance(dest_root, str) or not dest_root:
+        raise PathSafetyError("move plan has no destination boundary")
+    validate_move(
+        src,
+        dest,
+        source_root=source_root,
+        dest_root=dest_root,
+        require_source=require_source,
+    )
+    if require_source and os.path.lexists(src):
+        _check_source_signature(item, src)
+
+
+def _preflight_move_plan(plan_data: dict, already_moved: set[str]) -> None:
+    """Validate every mutating item before the first move starts."""
+    approved_dest_root = get_dest_root()
+    if canonical_path(plan_data.get('dest_root', '')) != canonical_path(approved_dest_root):
+        raise PathSafetyError("move plan destination is not the current approved root")
+    for item in plan_data.get('items', []):
+        src = item.get('src') if isinstance(item, dict) else None
+        if src in already_moved:
+            continue
+        if isinstance(item, dict) and item.get('duplicate_matches') and item.get('duplicate_policy', 'skip') != 'move':
+            continue
+        _validate_plan_item(item, plan_data, require_source=False)
+        if isinstance(item, dict) and os.path.lexists(item.get('src', '')):
+            _check_source_signature(item, item['src'])
+
 def build_move_plan(pairs: list, source_override: str = '',
                     source_mode: str = 'ae', plan_id: str = '') -> MovePlan:
     """Convert classified/index pairs into an editable, collision-safe move plan."""
@@ -1108,7 +1269,19 @@ def build_move_plan(pairs: list, source_override: str = '',
         dest_root = get_dest_root()
         last_dest_root = dest_root
         raw_name = item.get('name', '?')
-        category = normalize_category(item.get('category', 'After Effects - Other').strip())
+        raw_category = item.get('category', 'After Effects - Other')
+        if not isinstance(raw_category, str):
+            skipped.append({'name': raw_name, 'reason': 'invalid_category'})
+            continue
+        raw_category = raw_category.strip()
+        category = normalize_category(raw_category)
+        if not _valid_category(category):
+            skipped.append({
+                'name': raw_name,
+                'category': raw_category,
+                'reason': 'invalid_category',
+            })
+            continue
         try:
             conf = int(item.get('confidence', 0))
         except (TypeError, ValueError):
@@ -1122,14 +1295,25 @@ def build_move_plan(pairs: list, source_override: str = '',
         if 'path' in org_entry:
             src = org_entry['path']
             disk_name = os.path.basename(src)
+            source_root = org_entry.get('source_root') or os.path.dirname(src)
         else:
             src_dir = source_override or org_entry['folder']
             disk_name = org_entry['name']
             src = os.path.join(src_dir, disk_name)
+            source_root = src_dir
 
         clean = (item.get('clean_name') or raw_name or '').strip()
         if not clean:
             clean = Path(disk_name).stem or disk_name or 'Unnamed Asset'
+        try:
+            _safe_name_component(clean, 'clean_name')
+        except PathSafetyError:
+            skipped.append({
+                'name': disk_name,
+                'src': src,
+                'reason': 'invalid_clean_name',
+            })
+            continue
 
         if not os.path.exists(src):
             skipped.append({'name': disk_name, 'src': src, 'reason': 'missing_source'})
@@ -1149,6 +1333,17 @@ def build_move_plan(pairs: list, source_override: str = '',
         else:
             file_ext = ''
             dest = safe_dest_path(dest_root, eff_category, clean, reserved_dests)
+
+        try:
+            source_signature = _source_signature(src)
+        except OSError as exc:
+            skipped.append({
+                'name': disk_name,
+                'src': src,
+                'reason': 'source_unreadable',
+                'error': str(exc),
+            })
+            continue
 
         dest_category_dir = _cat_path(dest_root, eff_category)
         dest_key = _path_key(dest_category_dir)
@@ -1171,6 +1366,8 @@ def build_move_plan(pairs: list, source_override: str = '',
             source_mode=source_mode,
             src=src,
             dest=dest,
+            source_root=os.path.abspath(source_root),
+            source_signature=source_signature,
             disk_name=disk_name,
             clean_name=clean,
             category=category,
@@ -1198,11 +1395,13 @@ def build_move_plan(pairs: list, source_override: str = '',
         items=planned,
     )
 
-def _move_plan_item(item: dict):
+def _move_plan_item(item: dict, plan_data: dict | None = None):
     src = item['src']
     dest = item['dest']
-    if os.path.exists(dest):
-        raise FileExistsError(f"Destination already exists: {dest}")
+    if plan_data is not None:
+        _validate_plan_item(item, plan_data)
+    else:
+        validate_move(src, dest)
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     if item.get('is_file_item'):
         try:
@@ -1227,6 +1426,10 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
     category_counts = defaultdict(int)
     error_log = []
     already_moved = journal_src_set()
+
+    # A persisted plan is untrusted input.  Validate every item, including
+    # source identity and both roots, before the first item can mutate disk.
+    _preflight_move_plan(plan_data, already_moved)
 
     for item in plan_data.get('items', []):
         src = item['src']
@@ -1257,6 +1460,9 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
                     duplicate_source_file=match.get('source_file', ''),
                     duplicate_existing_file=match.get('existing_file', ''),
                     duplicate_sha256=match.get('sha256', ''),
+                    source_root=item.get('source_root', ''),
+                    dest_root=plan_data.get('dest_root', ''),
+                    source_signature=item.get('source_signature'),
                 )
             skipped += 1
             continue
@@ -1275,12 +1481,15 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
             src, dest, disk_name, item.get('clean_name', ''), category,
             int(item.get('confidence', 0)), status='pending',
             plan_id=plan_id, plan_item_id=item.get('id', ''), run_id=run_id,
+            source_root=item.get('source_root', ''),
+            dest_root=plan_data.get('dest_root', ''),
+            source_signature=item.get('source_signature'),
         )
 
         try:
             if not os.path.exists(src):
                 raise FileNotFoundError(f"Source missing: {src}")
-            _move_plan_item(item)
+            _move_plan_item(item, plan_data)
             journal_update(move_id, 'done')
             already_moved.add(src)
             moved += 1
@@ -1302,6 +1511,9 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
                 'plan_id': plan_id,
                 'plan_item_id': item.get('id', ''),
                 'run_id': run_id,
+                'source_root': item.get('source_root', ''),
+                'dest_root': plan_data.get('dest_root', ''),
+                'source_signature': item.get('source_signature', {}),
             })
 
     tag = 'DRY PLAN' if dry_run else 'APPLIED PLAN'
@@ -1355,6 +1567,15 @@ def retry_errors(source_mode: str = 'ae'):
     remaining = []
     for e in errors:
         src  = e['src']
+        source_root = e.get('source_root', '')
+        persisted_dest_root = e.get('dest_root', '')
+        if not source_root or not persisted_dest_root:
+            msg = 'missing persisted source/destination boundaries'
+            log(f"  BLOCKED (unsafe retry metadata): {e.get('disk_name', src)!r}: {msg}")
+            remaining.append({**e, 'error': msg})
+            retried += 1
+            still_failed += 1
+            continue
         # Recompute destination using current dest root so disk-full retries
         # automatically redirect to I:\Organized when G:\ is still low.
         dest_root   = get_dest_root()
@@ -1364,27 +1585,68 @@ def retry_errors(source_mode: str = 'ae'):
         if conf < MIN_CONFIDENCE:
             eff_cat = os.path.join(REVIEW_SUBDIR, eff_cat)
         # Prefer recomputed dest; fall back to stored dest if category data missing
-        if eff_cat and clean:
-            dest = safe_dest_path(dest_root, eff_cat, clean)
-        else:
-            dest = e['dest']
+        try:
+            if eff_cat and clean:
+                dest = safe_dest_path(dest_root, eff_cat, clean)
+                approved_dest_root = dest_root
+            else:
+                dest = e['dest']
+                approved_dest_root = persisted_dest_root
+        except (PathSafetyError, OSError, ValueError) as exc:
+            log(f"  BLOCKED (unsafe retry destination): {e.get('disk_name', src)!r}: {exc}")
+            remaining.append({**e, 'error': str(exc)})
+            retried += 1
+            still_failed += 1
+            continue
         if not os.path.exists(src):
             log(f"  SKIP (src gone): {e['disk_name']!r}")
             retried += 1
             fixed   += 1
             continue
-        # Clean any partial destination first
-        if e.get('partial_dest_exists') and os.path.exists(dest):
-            log(f"  Cleaning partial dest: {dest!r}")
-            shutil.rmtree(dest, ignore_errors=True)
         try:
+            validate_move(
+                src,
+                dest,
+                source_root=source_root,
+                dest_root=approved_dest_root,
+                allow_existing_dest=bool(e.get('partial_dest_exists') and os.path.exists(dest)),
+            )
+            if e.get('partial_dest_exists') and os.path.exists(dest):
+                # Validate the occupied destination before deleting a partial
+                # result, then revalidate the empty target before moving.
+                validate_move(
+                    src,
+                    dest,
+                    source_root=source_root,
+                    dest_root=approved_dest_root,
+                    allow_existing_dest=True,
+                )
+                log(f"  Cleaning partial dest: {dest!r}")
+                if os.path.isdir(dest) and not os.path.islink(dest):
+                    shutil.rmtree(dest)
+                else:
+                    os.remove(dest)
+                validate_move(
+                    src,
+                    dest,
+                    source_root=source_root,
+                    dest_root=approved_dest_root,
+                )
             renamed = strip_trailing_spaces(src)
             if renamed:
                 log(f"  Pre-sanitized {len(renamed)} trailing-space names in {e['disk_name']!r}")
+            validate_move(
+                src,
+                dest,
+                source_root=source_root,
+                dest_root=approved_dest_root,
+            )
             os.makedirs(os.path.dirname(dest), exist_ok=True)
             robust_move(src, dest)
             journal_record(src, dest, e['disk_name'], e.get('clean_name', ''),
-                           e.get('category', ''), int(e.get('confidence', 0)))
+                           e.get('category', ''), int(e.get('confidence', 0)),
+                           source_root=source_root, dest_root=approved_dest_root,
+                           source_signature=e.get('source_signature'))
             log(f"  FIXED: {e['disk_name']!r}")
             fixed += 1
         except Exception as ex:

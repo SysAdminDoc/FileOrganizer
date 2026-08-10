@@ -26,6 +26,8 @@ import time
 import traceback
 from collections import Counter
 
+from fileorganizer.path_safety import validate_move
+
 # Finer-grained categories than Smart Sort. Keeps power-users happy who
 # want Pictures/RAW separate from Pictures/JPEGs.
 RULES: list[tuple[str, tuple[str, ...]]] = [
@@ -162,6 +164,12 @@ def main() -> int:
                 continue
 
             target_unique = _resolve_collision(target)
+            validate_move(
+                path,
+                target_unique,
+                source_root=args.root,
+                dest_root=dest_root,
+            )
             os.makedirs(os.path.dirname(target_unique), exist_ok=True)
             if args.copy:
                 shutil.copy2(path, target_unique)

@@ -7,7 +7,7 @@ restart indicate a crash mid-apply and trigger the resume prompt.
 
 NEXT-37: Retention policy and periodic vacuum to prevent database bloat.
 """
-import os, sqlite3
+import os, sqlite3, json
 from datetime import datetime, timezone, timedelta
 
 from fileorganizer.config import _APP_DATA_DIR
@@ -47,11 +47,22 @@ def _init():
             category     TEXT    NOT NULL,
             confidence   REAL    NOT NULL DEFAULT 0,
             cleaned_name TEXT    NOT NULL DEFAULT '',
+            source_root  TEXT    NOT NULL DEFAULT '',
+            dest_root    TEXT    NOT NULL DEFAULT '',
+            source_signature TEXT NOT NULL DEFAULT '{}',
             status       TEXT    NOT NULL DEFAULT 'pending',
             ts_planned   TEXT    NOT NULL,
             ts_done      TEXT
         )
     """)
+    existing = {row[1] for row in con.execute("PRAGMA table_info(moves)").fetchall()}
+    for column, definition in {
+        'source_root': "ALTER TABLE moves ADD COLUMN source_root TEXT NOT NULL DEFAULT ''",
+        'dest_root': "ALTER TABLE moves ADD COLUMN dest_root TEXT NOT NULL DEFAULT ''",
+        'source_signature': "ALTER TABLE moves ADD COLUMN source_signature TEXT NOT NULL DEFAULT '{}'",
+    }.items():
+        if column not in existing:
+            con.execute(definition)
     con.commit()
     con.close()
 
@@ -71,21 +82,38 @@ def plan_run(run_id: str, work_items: list):
     con = _connect()
     try:
         for ri, it in work_items:
+            src = getattr(it, 'full_source_path', '')
+            dst = getattr(it, 'full_dest_path', '')
+            source_root = getattr(it, 'source_root', '') or os.path.dirname(src)
+            dest_root = getattr(it, 'dest_root', '')
+            try:
+                info = os.stat(src, follow_symlinks=False)
+                signature = {
+                    'st_dev': int(getattr(info, 'st_dev', 0)),
+                    'st_ino': int(getattr(info, 'st_ino', 0)),
+                    'size': int(info.st_size),
+                    'mtime_ns': int(getattr(info, 'st_mtime_ns', int(info.st_mtime * 1_000_000_000))),
+                    'is_file': bool(os.path.isfile(src)),
+                    'is_dir': bool(os.path.isdir(src)),
+                }
+            except OSError:
+                signature = {}
             con.execute(
                 """
                 INSERT INTO moves
                     (run_id, ri, folder_name, src, dst, category,
-                     confidence, cleaned_name, status, ts_planned)
-                VALUES (?,?,?,?,?,?,?,?,'pending',?)
+                     confidence, cleaned_name, source_root, dest_root,
+                     source_signature, status, ts_planned)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,'pending',?)
                 """,
                 (
                     run_id, ri,
                     getattr(it, 'folder_name', ''),
-                    getattr(it, 'full_source_path', ''),
-                    getattr(it, 'full_dest_path', ''),
+                    src, dst,
                     getattr(it, 'category', ''),
                     float(getattr(it, 'confidence', 0)),
                     getattr(it, 'cleaned_name', ''),
+                    source_root, dest_root, json.dumps(signature, sort_keys=True),
                     now,
                 )
             )
@@ -150,7 +178,8 @@ def get_pending_moves(run_id: str) -> list:
     try:
         rows = con.execute(
             """
-            SELECT ri, folder_name, src, dst, category, confidence, cleaned_name
+            SELECT ri, folder_name, src, dst, category, confidence, cleaned_name,
+                   source_root, dest_root, source_signature
             FROM moves WHERE run_id=? AND status='pending'
             ORDER BY id
             """,
@@ -165,6 +194,9 @@ def get_pending_moves(run_id: str) -> list:
                 'category':    r[4],
                 'confidence':  r[5],
                 'cleaned_name': r[6],
+                'source_root': r[7],
+                'dest_root': r[8],
+                'source_signature': json.loads(r[9] or '{}'),
             }
             for r in rows
         ]

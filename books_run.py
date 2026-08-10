@@ -32,6 +32,8 @@ import sys
 import time
 import traceback
 
+from fileorganizer.path_safety import validate_move
+
 BOOK_EXTS = (".epub", ".mobi", ".azw", ".azw3", ".kfx", ".pdf",
              ".cbz", ".cbr", ".cb7", ".fb2", ".lit", ".pdb")
 
@@ -333,6 +335,13 @@ def main() -> int:
                 dest_root = args.rename_root or args.root
                 new_path = os.path.normpath(os.path.join(dest_root, rel))
                 if os.path.abspath(new_path) != os.path.abspath(path):
+                    validate_move(
+                        path,
+                        new_path,
+                        source_root=args.root,
+                        dest_root=dest_root,
+                        allow_existing_dest=os.path.exists(new_path),
+                    )
                     os.makedirs(os.path.dirname(new_path), exist_ok=True)
                     if not os.path.exists(new_path):
                         os.rename(path, new_path)

@@ -20,6 +20,16 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from fileorganizer import watch_mode
+import fileorganizer.config as config
+
+
+@pytest.fixture(autouse=True)
+def disable_default_protected_paths_for_temp_fixtures(monkeypatch):
+    monkeypatch.setattr(
+        config,
+        "_cached_protected_paths",
+        {"system": [], "custom": [], "enabled": False},
+    )
 
 
 class TestDebounceQueue:

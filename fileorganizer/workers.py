@@ -8,6 +8,9 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal, QRunnable, QThreadPool, QMutex
 from PyQt6.QtGui import QImage
 
 from fileorganizer.config import _APP_DATA_DIR, CONF_HIGH, CONF_MEDIUM, is_protected
+from fileorganizer.path_safety import (
+    source_signature, validate_move, validate_path, validate_source_signature,
+)
 from fileorganizer.bootstrap import (
     HAS_PILLOW, HAS_RAPIDFUZZ, HAS_PSD_TOOLS,
     HAS_CV2, HAS_FACE_RECOGNITION,
@@ -65,14 +68,20 @@ def safe_merge_move(src, dst, log_cb=None, check_hashes=False):
     """Move src into dst, merging contents. Only overwrites duplicate files.
     Preserves all unique files in both src and dst. Never deletes data.
     If check_hashes=True, skips identical files instead of overwriting."""
+    validate_path(src)
+    validate_path(dst, require_exists=False)
     merged = 0; skipped = 0
     for dirpath, dirnames, filenames in os.walk(src):
+        dirnames[:] = [name for name in dirnames
+                       if not os.path.islink(os.path.join(dirpath, name))]
         rel = os.path.relpath(dirpath, src)
         dest_dir = os.path.join(dst, rel) if rel != '.' else dst
         os.makedirs(dest_dir, exist_ok=True)
         for fname in filenames:
             src_file = os.path.join(dirpath, fname)
             dst_file = os.path.join(dest_dir, fname)
+            validate_path(src_file, root=src)
+            validate_path(dst_file, root=dst, require_exists=False)
             if os.path.exists(dst_file):
                 if check_hashes:
                     src_hash = hash_file(src_file)
@@ -113,6 +122,7 @@ def format_size(b):
 def action_copy(src: str, dst: str, *, overwrite: bool = False) -> tuple:
     """Copy file or folder to destination. Creates parent dirs as needed."""
     try:
+        validate_move(src, dst, allow_existing_dest=overwrite)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         if os.path.isdir(src):
             if os.path.exists(dst) and not overwrite:
@@ -129,9 +139,8 @@ def action_copy(src: str, dst: str, *, overwrite: bool = False) -> tuple:
 
 def action_delete(path: str, *, use_trash: bool = True) -> tuple:
     """Delete file or folder. Uses send2trash if available and requested."""
-    if is_protected(path):
-        return (False, "Protected path — operation blocked")
     try:
+        validate_path(path)
         if use_trash:
             try:
                 from send2trash import send2trash
@@ -152,6 +161,7 @@ def action_hardlink(src: str, dst: str) -> tuple:
     """Replace duplicate with a hard link to the original (same filesystem only).
     Saves disk space while keeping the file accessible at both paths."""
     try:
+        validate_move(src, dst, allow_existing_dest=True)
         if os.path.isdir(src):
             return (False, "Cannot hardlink directories")
         # Verify same filesystem
@@ -170,6 +180,8 @@ def action_hardlink(src: str, dst: str) -> tuple:
 def action_symlink(src: str, dst: str) -> tuple:
     """Create a symbolic link at dst pointing to src."""
     try:
+        validate_path(src)
+        validate_move(src, dst, allow_existing_dest=True)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         if os.path.exists(dst):
             os.remove(dst)
@@ -185,6 +197,9 @@ def action_compress(paths: list, archive_path: str, *,
     Supported formats: zip, tar.gz, tar.bz2, tar.xz."""
     import zipfile, tarfile
     try:
+        for path in paths:
+            validate_path(path)
+            validate_move(path, archive_path, allow_existing_dest=True)
         os.makedirs(os.path.dirname(archive_path), exist_ok=True)
         if format == 'zip':
             with zipfile.ZipFile(archive_path, 'w', zipfile.ZIP_DEFLATED) as zf:
@@ -1076,6 +1091,12 @@ class ApplyAepWorker(QThread):
             self.log.emit(f"  {label}[{idx+1}/{total}] {it.current_name}  ->  {it.new_name}")
             try:
                 if not self.dry_run:
+                    validate_move(
+                        it.full_current_path,
+                        it.full_new_path,
+                        source_root=os.path.dirname(it.full_current_path),
+                        dest_root=os.path.dirname(it.full_current_path),
+                    )
                     d = it.full_new_path
                     if os.path.exists(d):
                         merged, skipped = safe_merge_move(it.full_current_path, d,
@@ -1085,7 +1106,9 @@ class ApplyAepWorker(QThread):
                         os.rename(it.full_current_path, d)
                 ok += 1
                 undo_ops.append({'type': 'rename', 'src': it.full_new_path, 'dst': it.full_current_path,
-                    'timestamp': ts, 'category': '', 'confidence': '', 'status': 'Done'})
+                    'timestamp': ts, 'category': '', 'confidence': '', 'status': 'Done',
+                    'source_root': os.path.dirname(it.full_current_path),
+                    'dest_root': os.path.dirname(it.full_current_path)})
                 self.log.emit(f"  \u2705 Done")
                 self.item_done.emit(ri, "Done")
             except Exception as e:
@@ -1145,8 +1168,15 @@ class ApplyCatWorker(QThread):
             self.log.emit(f"  {label}[{idx+1}/{total}] {it.folder_name}  ->  {it.category}/")
             try:
                 if not self.dry_run:
-                    os.makedirs(os.path.dirname(it.full_dest_path), exist_ok=True)
                     d = it.full_dest_path
+                    validate_move(
+                        it.full_source_path,
+                        d,
+                        source_root=getattr(it, 'source_root', '') or os.path.dirname(it.full_source_path),
+                        dest_root=getattr(it, 'dest_root', ''),
+                        allow_existing_dest=os.path.exists(d),
+                    )
+                    os.makedirs(os.path.dirname(d), exist_ok=True)
                     if os.path.exists(d):
                         merged, skipped = safe_merge_move(it.full_source_path, d,
                             log_cb=self.log.emit, check_hashes=self.check_hashes)
@@ -1154,9 +1184,19 @@ class ApplyCatWorker(QThread):
                     else:
                         shutil.move(it.full_source_path, d)
                 ok += 1
+                destination_signature = {}
+                if not self.dry_run and os.path.lexists(it.full_dest_path):
+                    try:
+                        destination_signature = source_signature(it.full_dest_path)
+                    except OSError:
+                        destination_signature = {}
                 undo_ops.append({'type': 'move', 'src': it.full_dest_path, 'dst': it.full_source_path,
                     'timestamp': ts, 'category': it.category, 'confidence': f'{it.confidence:.0f}',
-                    'status': 'Done'})
+                    'status': 'Done',
+                    'source_root': getattr(it, 'source_root', '') or os.path.dirname(it.full_source_path),
+                    'dest_root': getattr(it, 'dest_root', ''),
+                    'destination_signature': destination_signature,
+                })
                 self.log.emit(f"  \u2705 Done")
                 self.item_done.emit(ri, "Done")
                 if not self.dry_run:
@@ -1225,17 +1265,35 @@ class ResumeApplyWorker(QThread):
             src  = mv['src']
             dst  = mv['dst']
             name = mv['folder_name']
+            source_root = mv.get('source_root', '')
+            dest_root = mv.get('dest_root', '')
             self.log.emit(f"  [{idx+1}/{total}] Resume: {name}  ->  {mv['category']}/")
             try:
                 if not os.path.exists(src):
                     # Already moved in a prior attempt that didn't update DB
                     if os.path.exists(dst):
+                        validate_move(
+                            src,
+                            dst,
+                            source_root=source_root,
+                            dest_root=dest_root,
+                            allow_existing_dest=True,
+                            require_source=False,
+                        )
                         mark_done(self._run_id, mv['ri'], 'done')
                         ok += 1
                         self.log.emit(f"  Already at destination — marked done")
                         continue
                     else:
                         raise FileNotFoundError(f"Source gone and dest missing: {src}")
+                validate_source_signature(src, mv.get('source_signature', {}))
+                validate_move(
+                    src,
+                    dst,
+                    source_root=source_root,
+                    dest_root=dest_root,
+                    allow_existing_dest=os.path.exists(dst),
+                )
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
                 if os.path.exists(dst):
                     merged, skipped = safe_merge_move(src, dst,
@@ -1620,8 +1678,17 @@ class ApplyFilesWorker(QThread):
             self.log.emit(f"  {label}[{seq+1}/{total}] {it.name}{rename_info}  →  {it.category}/")
             try:
                 if not self.dry_run:
-                    os.makedirs(os.path.dirname(it.full_dst), exist_ok=True)
                     dst = it.full_dst
+                    source_root = getattr(it, 'source_root', '') or os.path.dirname(it.full_src)
+                    dest_root = getattr(it, 'dest_root', '')
+                    validate_move(
+                        it.full_src,
+                        dst,
+                        source_root=source_root,
+                        dest_root=dest_root,
+                        allow_existing_dest=os.path.exists(dst),
+                    )
+                    os.makedirs(os.path.dirname(dst), exist_ok=True)
                     if os.path.exists(dst):
                         if it.is_folder:
                             merged, skipped = safe_merge_move(it.full_src, dst,
@@ -1633,18 +1700,26 @@ class ApplyFilesWorker(QThread):
                             n = 2
                             while os.path.exists(dst):
                                 dst = f"{base} ({n}){ext2}"; n += 1
+                            validate_move(
+                                it.full_src,
+                                dst,
+                                source_root=source_root,
+                                dest_root=dest_root,
+                            )
                             shutil.move(it.full_src, dst)
                     else:
                         shutil.move(it.full_src, dst)
                 ok += 1
-                undo_ops.append({'type': 'move', 'src': it.full_dst, 'dst': it.full_src,
+                undo_ops.append({'type': 'move', 'src': dst if not self.dry_run else it.full_dst, 'dst': it.full_src,
                     'timestamp': ts, 'category': it.category,
-                    'confidence': str(it.confidence), 'status': 'Done'})
+                    'confidence': str(it.confidence), 'status': 'Done',
+                    'source_root': getattr(it, 'source_root', '') or os.path.dirname(it.full_src),
+                    'dest_root': getattr(it, 'dest_root', '')})
                 self.log.emit(f"    ✅ Done")
                 self.item_done.emit(li, "Done")
                 # Plugin post-move hooks
                 try:
-                    PluginManager.run_post_move(it.full_src, it.full_dst, it.category)
+                    PluginManager.run_post_move(it.full_src, dst if not self.dry_run else it.full_dst, it.category)
                 except Exception:
                     pass
             except Exception as e:

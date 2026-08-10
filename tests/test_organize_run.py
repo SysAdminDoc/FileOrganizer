@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import organize_run as runner
+import fileorganizer.config as config
 
 
 class OrganizeRunPlanTests(unittest.TestCase):
@@ -14,11 +15,14 @@ class OrganizeRunPlanTests(unittest.TestCase):
         self._old_journal = runner.JOURNAL_FILE
         self._old_log = runner.LOG_FILE
         self._old_get_dest_root = runner.get_dest_root
+        self._old_protected_paths = config._cached_protected_paths
+        config._cached_protected_paths = {'system': [], 'custom': [], 'enabled': False}
 
     def tearDown(self):
         runner.JOURNAL_FILE = self._old_journal
         runner.LOG_FILE = self._old_log
         runner.get_dest_root = self._old_get_dest_root
+        config._cached_protected_paths = self._old_protected_paths
 
     def _configure_temp_runner(self, tmp: str) -> tuple[Path, Path]:
         root = Path(tmp)
@@ -69,11 +73,11 @@ class OrganizeRunPlanTests(unittest.TestCase):
             plan = runner.build_move_plan(
                 [
                     (
-                        {"name": "One", "clean_name": "Same Name", "category": "Mockups", "confidence": 90},
+                        {"name": "One", "clean_name": "Same Name", "category": "Mockups - Branding", "confidence": 90},
                         {"folder": str(src_root), "name": "One"},
                     ),
                     (
-                        {"name": "Two", "clean_name": "Same Name", "category": "Mockups", "confidence": 90},
+                        {"name": "Two", "clean_name": "Same Name", "category": "Mockups - Branding", "confidence": 90},
                         {"folder": str(src_root), "name": "Two"},
                     ),
                 ],
@@ -91,7 +95,7 @@ class OrganizeRunPlanTests(unittest.TestCase):
             src = src_root / "Incoming"
             src.mkdir()
             (src / "preview-copy.png").write_bytes(b"same image bytes")
-            existing = dest_root / "Mockups" / "Existing Asset"
+            existing = dest_root / "Mockups - Branding & Stationery" / "Existing Asset"
             existing.mkdir(parents=True)
             existing_file = existing / "preview.png"
             existing_file.write_bytes(b"same image bytes")
@@ -99,7 +103,7 @@ class OrganizeRunPlanTests(unittest.TestCase):
             plan = runner.build_move_plan(
                 [
                     (
-                        {"name": "Incoming", "clean_name": "Incoming", "category": "Mockups", "confidence": 90},
+                        {"name": "Incoming", "clean_name": "Incoming", "category": "Mockups - Branding", "confidence": 90},
                         {"folder": str(src_root), "name": "Incoming"},
                     ),
                 ],
@@ -122,7 +126,7 @@ class OrganizeRunPlanTests(unittest.TestCase):
             src.mkdir()
             source_file = src / "preview-copy.png"
             source_file.write_bytes(b"same image bytes")
-            existing = dest_root / "Mockups" / "Existing Asset"
+            existing = dest_root / "Mockups - Branding & Stationery" / "Existing Asset"
             existing.mkdir(parents=True)
             existing_file = existing / "preview.png"
             existing_file.write_bytes(b"same image bytes")
@@ -130,7 +134,7 @@ class OrganizeRunPlanTests(unittest.TestCase):
             plan = runner.build_move_plan(
                 [
                     (
-                        {"name": "Incoming", "clean_name": "Incoming", "category": "Mockups", "confidence": 90},
+                        {"name": "Incoming", "clean_name": "Incoming", "category": "Mockups - Branding", "confidence": 90},
                         {"folder": str(src_root), "name": "Incoming"},
                     ),
                 ],
@@ -166,7 +170,7 @@ class OrganizeRunPlanTests(unittest.TestCase):
                         {
                             "name": "Template B",
                             "clean_name": "Template B",
-                            "category": "Flyers",
+                            "category": "Flyers & Print",
                             "confidence": 95,
                         },
                         {"folder": str(src_root), "name": "Template B"},
