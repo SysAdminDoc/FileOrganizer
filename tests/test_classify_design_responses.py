@@ -146,6 +146,58 @@ def test_cached_and_fresh_results_share_schema_guard(monkeypatch):
     assert len(stored) == 0
 
 
+def test_parallel_cached_classification_chunks_and_preserves_order(monkeypatch):
+    items = [_item(f"item-{index}") for index in range(7)]
+    calls = []
+
+    def classify(_prompt, batch, _model):
+        calls.append([item['name'] for item in batch])
+        return [_valid(item['name']) for item in batch]
+
+    monkeypatch.setattr(classify_design, "call_deepseek_cached", classify)
+
+    results = classify_design.call_deepseek_parallel_cached(
+        items, concurrency=3, request_batch_size=2, model="test-model",
+    )
+
+    assert [result['name'] for result in results] == [item['name'] for item in items]
+    assert sorted(len(batch) for batch in calls) == [1, 2, 2, 2]
+
+
+def test_cmd_run_uses_parallel_cached_path(tmp_path, monkeypatch):
+    monkeypatch.setattr(classify_design, "RESULTS_DIR", tmp_path)
+    monkeypatch.setattr(classify_design, "BATCH_PREFIX", "batch_")
+    monkeypatch.setattr(classify_design, "BATCH_SIZE", 2)
+    monkeypatch.setattr(classify_design, "DEEPSEEK_API_KEY", "test-key")
+    monkeypatch.setattr(classify_design, "cleanup_expired", lambda **_kwargs: 0)
+    for name in (
+        "_try_fingerprint_db_lookup",
+        "_try_metadata_classify",
+        "_try_marketplace_enrich",
+        "_try_embeddings_classify",
+    ):
+        monkeypatch.setattr(classify_design, name, lambda *args, **kwargs: {})
+    calls = []
+
+    def classify(items, **kwargs):
+        calls.append((items, kwargs))
+        return [_valid(item['name']) for item in items]
+
+    monkeypatch.setattr(classify_design, "call_deepseek_parallel_cached", classify)
+    classify_design.cmd_run(
+        [_item("one"), _item("two")],
+        parallel=True,
+        concurrency=3,
+        request_batch_size=1,
+    )
+
+    assert len(calls) == 1
+    assert calls[0][1]['concurrency'] == 3
+    assert calls[0][1]['request_batch_size'] == 1
+    payload = json.loads(classify_design.batch_file(1).read_text(encoding="utf-8"))
+    assert [item['name'] for item in payload] == ["one", "two"]
+
+
 def test_already_done_does_not_skip_retry_markers(tmp_path, monkeypatch):
     monkeypatch.setattr(classify_design, "RESULTS_DIR", tmp_path)
     monkeypatch.setattr(classify_design, "BATCH_PREFIX", "batch_")

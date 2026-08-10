@@ -17,6 +17,7 @@ import asyncio
 import inspect
 import sys
 from pathlib import Path
+from typing import Callable
 
 try:
     import aiohttp
@@ -251,8 +252,8 @@ class AsyncClassifier:
         
         # Create queue and spawn workers
         queue = asyncio.Queue()
-        for batch in batches:
-            await queue.put(batch)
+        for start, batch in enumerate(batches):
+            await queue.put((start * self.batch_size, batch))
         
         results = [None] * len(folders)  # Preserve order
         result_lock = asyncio.Lock()
@@ -260,17 +261,11 @@ class AsyncClassifier:
         async def worker(session):
             while True:
                 try:
-                    batch = queue.get_nowait()
+                    batch_start_idx, batch = queue.get_nowait()
                 except asyncio.QueueEmpty:
                     break
                 
                 batch_results = await self._request_batch_async(batch, session)
-                # Find original indices of folders in this batch
-                batch_start_idx = None
-                for i, f in enumerate(folders):
-                    if batch[0]['folder_name'] == f['folder_name'] and batch_start_idx is None:
-                        batch_start_idx = i
-                        break
                 
                 async with result_lock:
                     for j, res in enumerate(batch_results):
@@ -344,3 +339,52 @@ def classify_parallel(folders, concurrency=4, batch_size=3, url=None, model=None
     
     classifier = AsyncClassifier(concurrency=concurrency, batch_size=batch_size, url=url, model=model)
     return classifier.classify_sync(folders)
+
+
+async def classify_batches_async(
+    items: list[dict],
+    classify_batch: Callable[[list[dict]], list[dict]],
+    *,
+    concurrency: int = 4,
+    batch_size: int = 12,
+) -> list[dict]:
+    """Run a synchronous provider batch function with bounded concurrency."""
+    if not items:
+        return []
+    concurrency = max(1, min(int(concurrency), 8))
+    batch_size = max(1, min(int(batch_size), 60))
+    semaphore = asyncio.Semaphore(concurrency)
+
+    async def run_batch(batch: list[dict]) -> list[dict]:
+        async with semaphore:
+            results = await asyncio.to_thread(classify_batch, batch)
+        if not isinstance(results, list):
+            raise TypeError('parallel classifier batch result must be a list')
+        if len(results) != len(batch):
+            raise ValueError(
+                f'parallel classifier expected {len(batch)} results, got {len(results)}'
+            )
+        return results
+
+    tasks = [
+        asyncio.create_task(run_batch(items[start:start + batch_size]))
+        for start in range(0, len(items), batch_size)
+    ]
+    batches = await asyncio.gather(*tasks)
+    return [result for batch in batches for result in batch]
+
+
+def classify_batches_parallel(
+    items: list[dict],
+    classify_batch: Callable[[list[dict]], list[dict]],
+    *,
+    concurrency: int = 4,
+    batch_size: int = 12,
+) -> list[dict]:
+    """Synchronous CLI wrapper for :func:`classify_batches_async`."""
+    return asyncio.run(classify_batches_async(
+        items,
+        classify_batch,
+        concurrency=concurrency,
+        batch_size=batch_size,
+    ))

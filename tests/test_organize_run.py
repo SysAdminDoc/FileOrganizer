@@ -57,8 +57,15 @@ class OrganizeRunPlanTests(unittest.TestCase):
 
         incremental = parser.parse_args(["--skip-unchanged"])
         invalidate = parser.parse_args(["--invalidate-cache"])
+        parallel = parser.parse_args([
+            "--source", "design", "--parallel", "--concurrency", "3",
+            "--request-batch-size", "10",
+        ])
         self.assertTrue(incremental.skip_unchanged)
         self.assertTrue(invalidate.invalidate_cache)
+        self.assertTrue(parallel.parallel)
+        self.assertEqual(parallel.concurrency, 3)
+        self.assertEqual(parallel.request_batch_size, 10)
 
     def test_cli_commit_plan_alias_applies_persisted_plan(self):
         result = {
