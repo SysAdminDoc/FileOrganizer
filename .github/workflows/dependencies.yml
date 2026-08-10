@@ -16,13 +16,15 @@ on:
 
 jobs:
   dependency-audit:
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Set up supported Python baseline
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.10"
 
@@ -43,7 +45,7 @@ jobs:
         run: pip-licenses --format=csv --with-urls --output-file "$env:RUNNER_TEMP\fileorganizer-dependency-licenses.csv"
 
       - name: Upload dependency license report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: fileorganizer-dependency-licenses
           path: "${{ runner.temp }}/fileorganizer-dependency-licenses.csv"
