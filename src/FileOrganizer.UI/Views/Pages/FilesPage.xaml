@@ -76,7 +76,7 @@
                 <StackPanel Grid.Column="2" Spacing="2">
                     <TextBlock Text="ERRORS" Style="{StaticResource MetricLabelTextStyle}"/>
                     <TextBlock x:Name="ErrorsText" Text="0" Style="{StaticResource MetricNumberTextStyle}"
-                               Foreground="{StaticResource AccentRedBrush}"/>
+                               Foreground="{StaticResource TextDangerBrush}"/>
                 </StackPanel>
                 <TextBlock Grid.Column="3" x:Name="StatusText"
                            Text="Idle. Drop a folder in Source above."

@@ -181,7 +181,7 @@ public sealed class SmartItemRow
             "moved" => "AccentGreenBrush",
             "planned" => "AccentPrimaryBrush",
             "skipped" => "TextMutedBrush",
-            "error" => "AccentRedBrush",
+            "error" => "TextDangerBrush",
             _ => "TextSecondaryBrush",
         }];
     }

@@ -5,6 +5,31 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+def _contrast(first: str, second: str) -> float:
+    def luminance(hex_color: str) -> float:
+        channels = [int(hex_color[index : index + 2], 16) / 255 for index in (1, 3, 5)]
+        linear = [
+            value / 12.92
+            if value <= 0.04045
+            else ((value + 0.055) / 1.055) ** 2.4
+            for value in channels
+        ]
+        return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+    light, dark = sorted((luminance(first), luminance(second)), reverse=True)
+    return (light + 0.05) / (dark + 0.05)
+
+
+def _theme_palettes(source: str) -> dict[str, dict[str, str]]:
+    blocks = source.split('new AppTheme("')[1:]
+    return {
+        block.split('"', 1)[0]: dict(
+            re.findall(r'\["([^"]+)"\] = C\("(#[0-9a-fA-F]{6})"\)', block)
+        )
+        for block in blocks
+    }
+
+
 def test_raw_and_comics_pages_rely_on_the_central_dispatcher_contract():
     for relative_path in (
         "src/FileOrganizer.UI/Views/Pages/RAWPage.xaml.cs",
@@ -126,32 +151,16 @@ def test_every_title_bar_palette_has_readable_icon_contrast():
         encoding="utf-8"
     )
 
-    def luminance(hex_color: str) -> float:
-        channels = [int(hex_color[index : index + 2], 16) / 255 for index in (1, 3, 5)]
-        linear = [
-            value / 12.92
-            if value <= 0.04045
-            else ((value + 0.055) / 1.055) ** 2.4
-            for value in channels
-        ]
-        return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
-
-    def contrast(first: str, second: str) -> float:
-        light, dark = sorted((luminance(first), luminance(second)), reverse=True)
-        return (light + 0.05) / (dark + 0.05)
-
-    theme_blocks = source.split('new AppTheme("')[1:]
-    assert len(theme_blocks) == 7
-    for block in theme_blocks:
-        theme_id = block.split('"', 1)[0]
-        colors = dict(re.findall(r'\["([^"]+)"\] = C\("(#[0-9a-fA-F]{6})"\)', block))
+    palettes = _theme_palettes(source)
+    assert len(palettes) == 7
+    for theme_id, colors in palettes.items():
         for foreground, background in (
             ("BrandTextPrimary", "BrandBackground"),
             ("BrandTextPrimary", "BrandSurfaceLight"),
             ("BrandTextPrimary", "BrandBorderStrong"),
             ("BrandTextMuted", "BrandBackground"),
         ):
-            assert contrast(colors[foreground], colors[background]) >= 3.0, (
+            assert _contrast(colors[foreground], colors[background]) >= 3.0, (
                 theme_id,
                 foreground,
                 background,
@@ -216,3 +225,65 @@ def test_every_custom_button_style_uses_system_focus_visuals():
     assert 'UseSystemFocusVisuals" Value="False"' not in resources
     for style_name in expected_styles:
         assert 'Property="UseSystemFocusVisuals" Value="True"' in button_styles[style_name]
+
+
+def test_all_theme_text_roles_and_danger_states_meet_wcag_aa():
+    service = (REPO_ROOT / "src/FileOrganizer.UI/Services/ThemeService.cs").read_text(
+        encoding="utf-8"
+    )
+    resources = (REPO_ROOT / "src/FileOrganizer.UI/App.xaml").read_text(
+        encoding="utf-8"
+    )
+    palettes = _theme_palettes(service)
+    content_surfaces = (
+        "BrandBackground",
+        "BrandSurface",
+        "BrandSurfaceMuted",
+        "BrandSurfaceLight",
+        "BrandSurfaceSoft",
+        "BrandSurfaceWarm",
+        "BrandSurfaceInfo",
+    )
+    danger_surfaces = (
+        "BrandSurfaceDanger",
+        "BrandSurfaceDangerHover",
+        "BrandSurfaceDangerPressed",
+    )
+
+    assert len(palettes) == 7
+    for theme_id, colors in palettes.items():
+        for role in ("BrandTextSecondary", "BrandTextMuted", "BrandTextSubtle"):
+            for surface in content_surfaces:
+                assert _contrast(colors[role], colors[surface]) >= 4.5, (
+                    theme_id,
+                    role,
+                    surface,
+                )
+        for surface in (*content_surfaces, *danger_surfaces):
+            assert _contrast(colors["BrandTextDanger"], colors[surface]) >= 4.5, (
+                theme_id,
+                "BrandTextDanger",
+                surface,
+            )
+
+    app_colors = dict(
+        re.findall(r'<Color x:Key="([^"]+)">(#[0-9a-fA-F]{6})</Color>', resources)
+    )
+    for key in (*content_surfaces, *danger_surfaces, "BrandTextMuted", "BrandTextSubtle", "BrandTextDanger"):
+        assert app_colors[key].lower() == palettes["steam-dark"][key].lower()
+
+    danger_style = re.search(
+        r'<Style x:Key="DangerButtonStyle".*?</Style>',
+        resources,
+        flags=re.DOTALL,
+    )
+    assert danger_style is not None
+    for required_resource in (
+        "TextDangerBrush",
+        "SurfaceDangerBrush",
+        "SurfaceDangerHoverBrush",
+        "SurfaceDangerPressedBrush",
+    ):
+        assert required_resource in danger_style.group(0)
+    assert 'VisualState x:Name="PointerOver"' in danger_style.group(0)
+    assert 'VisualState x:Name="Pressed"' in danger_style.group(0)

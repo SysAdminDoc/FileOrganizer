@@ -213,7 +213,7 @@ public sealed class WatchEvent(string time, string status, string message)
     {
         "moved" or "copied" => "AccentGreenBrush",
         "detected" => "AccentBlueBrush",
-        "error" => "AccentRedBrush",
+        "error" => "TextDangerBrush",
         _ => "TextMutedBrush",
     }];
 }

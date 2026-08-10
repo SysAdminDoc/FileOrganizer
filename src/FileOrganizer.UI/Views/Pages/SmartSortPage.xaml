@@ -104,7 +104,7 @@
                     <StackPanel Grid.Column="3" Spacing="2">
                         <TextBlock Text="ERRORS" Style="{StaticResource MetricLabelTextStyle}"/>
                         <TextBlock x:Name="ErrorsText" Text="0" Style="{StaticResource MetricNumberTextStyle}"
-                                   Foreground="{StaticResource AccentRedBrush}"/>
+                                   Foreground="{StaticResource TextDangerBrush}"/>
                     </StackPanel>
                     <TextBlock Grid.Column="4" x:Name="StatusText"
                                Text="Idle. Drop a source and destination, then run."
