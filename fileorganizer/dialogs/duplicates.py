@@ -1,5 +1,5 @@
 """FileOrganizer — Duplicate finder dialogs and panels."""
-import os, shutil
+import os
 from datetime import datetime
 
 from PyQt6.QtWidgets import (
@@ -14,6 +14,42 @@ from PyQt6.QtGui import QColor, QPixmap
 
 from fileorganizer.config import get_active_theme, get_active_stylesheet
 from fileorganizer.workers import format_size
+
+
+def move_duplicate_selection(
+    paths: list[str],
+    destination: str,
+    source_root: str,
+) -> tuple[list[dict], str]:
+    """Run the shared safe mover and build bounded per-item UI feedback."""
+    from fileorganizer.safe_move import move_duplicate_files
+
+    outcomes = move_duplicate_files(
+        paths,
+        destination,
+        source_root=source_root,
+    )
+    serialized = [outcome.to_dict() for outcome in outcomes]
+    moved = sum(outcome.status in {'moved', 'conflict_renamed'} for outcome in outcomes)
+    conflicts = sum(outcome.status == 'conflict_renamed' for outcome in outcomes)
+    skipped = sum(outcome.status == 'skipped_identical' for outcome in outcomes)
+    failed = sum(outcome.status == 'error' for outcome in outcomes)
+    parts = [f"{moved} moved"]
+    if conflicts:
+        parts.append(f"{conflicts} collision-renamed")
+    if skipped:
+        parts.append(f"{skipped} identical skipped")
+    if failed:
+        parts.append(f"{failed} failed")
+    details = [
+        f"{os.path.basename(outcome.source)}: {outcome.message}"
+        for outcome in outcomes
+        if outcome.status != 'moved'
+    ][:3]
+    summary = "Done: " + ", ".join(parts)
+    if details:
+        summary += " — " + " | ".join(details)
+    return serialized, summary
 
 
 class DuplicateCompareDialog(QDialog):
@@ -248,6 +284,7 @@ class DuplicateFinderDialog(QDialog):
         self._dup_map = {}
         self._groups = {}  # group_id -> [paths]
         self._worker = None
+        self._last_action_results = []
         self._build_ui()
 
     def _build_ui(self):
@@ -560,6 +597,7 @@ class DuplicateFinderDialog(QDialog):
 
         success = 0
         failed = 0
+        move_summary = ''
 
         if action_idx in (0, 1):  # Delete (trash or permanent)
             use_trash = (action_idx == 0)
@@ -597,19 +635,17 @@ class DuplicateFinderDialog(QDialog):
             dest = QFileDialog.getExistingDirectory(self, "Select Destination Folder")
             if not dest:
                 return
-            for p in paths:
-                try:
-                    target = os.path.join(dest, os.path.basename(p))
-                    from fileorganizer.path_safety import validate_move
-                    validate_move(p, target, dest_root=dest)
-                    os.makedirs(dest, exist_ok=True)
-                    shutil.move(p, target)
-                    success += 1
-                except Exception:
-                    failed += 1
+            self._last_action_results, move_summary = move_duplicate_selection(
+                paths, dest, self.txt_path.text().strip())
+            success = sum(
+                result['status'] in {'moved', 'conflict_renamed'}
+                for result in self._last_action_results)
+            failed = sum(
+                result['status'] == 'error'
+                for result in self._last_action_results)
 
-        self.lbl_status.setText(
-            f"Done: {success} succeeded" + (f", {failed} failed" if failed else ""))
+        self.lbl_status.setText(move_summary or (
+            f"Done: {success} succeeded" + (f", {failed} failed" if failed else "")))
 
         # Refresh — re-scan to update tree
         if success > 0:
@@ -625,6 +661,7 @@ class DuplicatePanel(QWidget):
         self._dup_map = {}
         self._groups = {}
         self._worker = None
+        self._last_action_results = []
         self._build_ui()
 
     def _build_ui(self):
@@ -907,9 +944,9 @@ class DuplicatePanel(QWidget):
         if confirm != QMessageBox.StandardButton.Yes:
             return
         from fileorganizer.workers import action_delete, action_hardlink
-        import shutil
         success = 0
         failed = 0
+        move_summary = ''
         if action_idx in (0, 1):
             use_trash = (action_idx == 0)
             for p in paths:
@@ -942,17 +979,15 @@ class DuplicatePanel(QWidget):
             dest = QFileDialog.getExistingDirectory(self, "Select Destination Folder")
             if not dest:
                 return
-            for p in paths:
-                try:
-                    target = os.path.join(dest, os.path.basename(p))
-                    from fileorganizer.path_safety import validate_move
-                    validate_move(p, target, dest_root=dest)
-                    os.makedirs(dest, exist_ok=True)
-                    shutil.move(p, target)
-                    success += 1
-                except Exception:
-                    failed += 1
-        self.lbl_status.setText(
-            f"Done: {success} succeeded" + (f", {failed} failed" if failed else ""))
+            self._last_action_results, move_summary = move_duplicate_selection(
+                paths, dest, self.txt_path.text().strip())
+            success = sum(
+                result['status'] in {'moved', 'conflict_renamed'}
+                for result in self._last_action_results)
+            failed = sum(
+                result['status'] == 'error'
+                for result in self._last_action_results)
+        self.lbl_status.setText(move_summary or (
+            f"Done: {success} succeeded" + (f", {failed} failed" if failed else "")))
         if success > 0:
             self._start_scan()
