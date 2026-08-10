@@ -22,11 +22,53 @@ param(
 $ErrorActionPreference = "Stop"
 
 $ProjectPath = Join-Path $PSScriptRoot "FileOrganizer.UI" "FileOrganizer.UI.csproj"
-$MSBuild = "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\amd64\MSBuild.exe"
+$msbuildCandidates = @()
 
-if (-not (Test-Path $MSBuild)) {
-    throw "VS 2026 MSBuild not found at $MSBuild. Install Visual Studio 2026 Community."
+# Honor an explicit CI/developer override first, then use Microsoft's
+# installation locator when available.  The final filesystem scan covers
+# Build Tools installs where vswhere is not on PATH.
+$explicitMsBuild = [Environment]::GetEnvironmentVariable("MSBUILD_EXE_PATH")
+if (-not [string]::IsNullOrWhiteSpace($explicitMsBuild)) {
+    $msbuildCandidates += $explicitMsBuild
 }
+
+$vswhere = $null
+if (-not [string]::IsNullOrWhiteSpace(${env:ProgramFiles(x86)})) {
+    $vswhere = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe"
+}
+if ($vswhere -and (Test-Path $vswhere -PathType Leaf)) {
+    $located = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild `
+        -find "MSBuild\**\Bin\amd64\MSBuild.exe" 2>$null
+    if ($located) { $msbuildCandidates += $located }
+}
+
+$pathMsBuild = Get-Command "MSBuild.exe" -ErrorAction SilentlyContinue
+if ($pathMsBuild) { $msbuildCandidates += $pathMsBuild.Source }
+
+$visualStudioRoots = @(${env:ProgramFiles}, ${env:ProgramFiles(x86)}) |
+    Where-Object { -not [string]::IsNullOrWhiteSpace($_) } |
+    ForEach-Object { Join-Path $_ "Microsoft Visual Studio" }
+foreach ($root in $visualStudioRoots) {
+    if (-not (Test-Path $root -PathType Container)) { continue }
+    $msbuildCandidates += Get-ChildItem -Path $root -Filter "MSBuild.exe" -File -Recurse `
+        -ErrorAction SilentlyContinue |
+        Where-Object { $_.FullName -match "\\MSBuild\\Current\\Bin(\\amd64)?\\MSBuild\.exe$" } |
+        Sort-Object FullName |
+        Select-Object -ExpandProperty FullName
+}
+
+$MSBuild = $msbuildCandidates |
+    Where-Object { $_ -and (Test-Path $_ -PathType Leaf) } |
+    Select-Object -First 1
+if (-not $MSBuild) {
+    throw "MSBuild was not found. Install Visual Studio/Build Tools with the MSBuild component or set MSBUILD_EXE_PATH to a compatible MSBuild.exe."
+}
+$msbuildBin = Split-Path $MSBuild -Parent
+$sdkResolver = Join-Path $msbuildBin "SdkResolvers\Microsoft.DotNet.MSBuildSdkResolver.dll"
+if (-not (Test-Path $sdkResolver -PathType Leaf)) {
+    throw "MSBuild was found at $MSBuild, but its .NET SDK resolver is missing. Install the Visual Studio .NET SDK/MSBuild workload or set MSBUILD_EXE_PATH to a complete installation."
+}
+Write-Host "Using MSBuild: $MSBuild" -ForegroundColor DarkGray
 
 Write-Host "== Cleaning obj/ and bin/ ==" -ForegroundColor Cyan
 $projectDir = Split-Path $ProjectPath -Parent

@@ -57,3 +57,12 @@ def test_acoustid_secret_uses_credential_locker_and_never_argv():
     assert '"ACOUSTID_API_KEY"' in music
     assert "IReadOnlyDictionary<string, string>? environmentVariables" in runner
     assert "psi.EnvironmentVariables[pair.Key] = pair.Value" in runner
+
+
+def test_build_wrapper_does_not_pin_an_unavailable_visual_studio_installation():
+    source = (REPO_ROOT / "src/build.ps1").read_text(encoding="utf-8")
+
+    assert "Microsoft Visual Studio\\18\\Community" not in source
+    assert "MSBUILD_EXE_PATH" in source
+    assert "vswhere.exe" in source
+    assert "Microsoft.DotNet.MSBuildSdkResolver.dll" in source
