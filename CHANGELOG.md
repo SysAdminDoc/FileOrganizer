@@ -50,6 +50,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Security
 
+- Python startup no longer invokes pip, retries with elevated environment
+  override flags, or writes an installation-failure cache; dependencies are
+  installed explicitly from the checked-in requirements manifest.
 - Community catalog updates now require a pinned GitHub release asset and
   verified SHA-256 digest, enforce bounded schemas, stage and integrity-check
   SQLite imports before atomic replacement, retain rollback backups, preserve
