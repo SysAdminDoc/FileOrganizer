@@ -6,6 +6,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- WinUI Settings now configures opt-in Watch Mode startup at user logon with a
+  2–120 second quiet window, hidden least-privilege Task Scheduler execution,
+  validated atomic configuration, enable/disable/removal controls, and a
+  bounded rollover log viewer.
 - Local NTFS catalogs can now resume from a persisted USN Change Journal
   cursor, rehash only affected asset roots, reconcile deletes and renames,
   invalidate folder caches, expose lag/status, and recover watcher downtime;

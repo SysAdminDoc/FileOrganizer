@@ -18,6 +18,10 @@
              Link="CrashLogWriter.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\SettingsPersistence.cs"
              Link="SettingsPersistence.cs" />
+    <Compile Include="..\..\src\FileOrganizer.UI\Services\WatchPathValidator.cs"
+             Link="WatchPathValidator.cs" />
+    <Compile Include="..\..\src\FileOrganizer.UI\Services\WatchTaskProtocol.cs"
+             Link="WatchTaskProtocol.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\UserSettings.cs"
              Link="UserSettings.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\UiStreamBuffer.cs"

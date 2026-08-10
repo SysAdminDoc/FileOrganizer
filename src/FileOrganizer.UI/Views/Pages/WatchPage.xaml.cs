@@ -154,26 +154,19 @@ public sealed partial class WatchPage : Page
         }
     }
 
-    // Persistence — comma-joined "src||dest||copy" lines in a single string.
+    // Persistence — newline-separated "src||dest||copy" entries.
     private const string WatchesKey = "Watches.v1";
 
     private void LoadSavedWatches()
     {
         try
         {
-            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(WatchesKey, out var v) && v is string raw)
+            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(WatchesKey, out var v)
+                && v is string raw
+                && WatchTaskProtocol.TryParseSavedWatches(raw, out var watches, out _))
             {
-                foreach (var line in raw.Split('\n', StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var parts = line.Split("||");
-                    if (parts.Length >= 2
-                        && WatchPathValidator.TryValidate(parts[0], parts[1],
-                            out var normalizedSrc, out var normalizedDst, out _))
-                    {
-                        bool copy = parts.Length > 2 && parts[2] == "1";
-                        Watches.Add(new WatchSpec(normalizedSrc, normalizedDst, copy));
-                    }
-                }
+                foreach (var watch in watches)
+                    Watches.Add(new WatchSpec(watch.Source, watch.Destination, watch.Copy));
             }
         }
         catch { }
