@@ -6,6 +6,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Legacy desktop Preview and Apply now share a Step 6 preflight operation
+  table with per-row toggles and atomically save the selected moves/renames as
+  editable JSON before mutation; `organize_run.py` also accepts the plan-first
+  `--dry-run --plan-file` and `--plan-file --commit` command forms.
 - Hazel-style nested rule chains now have a visual IF/AND/OR/THEN editor and
   participate in organize planning before category routing; skip, destination,
   and rename decisions flow through dry-run plans, path validation, collision

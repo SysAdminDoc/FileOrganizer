@@ -19,6 +19,9 @@ from fileorganizer.config import (
     load_confidence_settings,
 )
 from fileorganizer.cache import _load_undo_stack
+from fileorganizer.dry_run_planner import (
+    default_plan_path, plan_from_items, save_plan, validate_plan,
+)
 from fileorganizer.engine import ScheduleManager, EventGrouper
 from fileorganizer.plugins import PluginManager, ProfileManager, _PLUGINS_DIR
 
@@ -759,6 +762,23 @@ class WatchHistoryDialog(QDialog):
 
 # ═══ PRE-FLIGHT CHECK ════════════════════════════════════════════════════════
 
+def _pending_source_path(item) -> str:
+    return str(
+        getattr(item, 'full_source_path', '')
+        or getattr(item, 'full_current_path', '')
+        or getattr(item, 'full_src', '')
+        or ''
+    )
+
+
+def _pending_destination_path(item) -> str:
+    return str(
+        getattr(item, 'full_dest_path', '')
+        or getattr(item, 'full_new_path', '')
+        or getattr(item, 'full_dst', '')
+        or ''
+    )
+
 class PreflightWorker(QThread):
     """Scan pending work items for path issues, disk space, and low confidence."""
 
@@ -779,7 +799,7 @@ class PreflightWorker(QThread):
         # ── 1. Source path checks (shallow: folder + one level deep) ─────────
         self.progress.emit("Checking source paths…")
         for it in self._items:
-            src = getattr(it, 'full_source_path', '')
+            src = _pending_source_path(it)
             if not src:
                 continue
             if not os.path.exists(src):
@@ -793,8 +813,8 @@ class PreflightWorker(QThread):
                 n_err += 1
             # Shallow scan: first-level children only
             try:
-                children = os.listdir(src)
-            except PermissionError:
+                children = os.listdir(src) if os.path.isdir(src) else []
+            except OSError:
                 children = []
             for child in children:
                 if child != child.rstrip():
@@ -812,7 +832,7 @@ class PreflightWorker(QThread):
             from fileorganizer import bad_names as _bad_names
             bad_count = 0
             for it in self._items:
-                src = getattr(it, 'full_source_path', '')
+                src = _pending_source_path(it)
                 if src:
                     bad_issues = _bad_names.check_bad_names(src)
                     for path, reason in bad_issues[:5]:  # cap UI inserts per folder
@@ -832,7 +852,7 @@ class PreflightWorker(QThread):
             source_paths = []
             item_names = []
             for it in self._items:
-                src = getattr(it, 'full_source_path', '')
+                src = _pending_source_path(it)
                 if not src:
                     continue
                 source_paths.append(src)
@@ -861,7 +881,7 @@ class PreflightWorker(QThread):
             from fileorganizer import symlink_detector as _sd
             reparse_count = 0
             for it in self._items:
-                src = getattr(it, 'full_source_path', '')
+                src = _pending_source_path(it)
                 if src:
                     reparse_issues = _sd.scan_for_reparse_points(src)
                     for path, issue_type in reparse_issues:
@@ -883,15 +903,15 @@ class PreflightWorker(QThread):
         # ── 4. Destination path length ────────────────────────────────────────
         self.progress.emit("Checking destination paths…")
         for it in self._items:
-            dst = getattr(it, 'full_dest_path', '')
+            dst = _pending_destination_path(it)
             if dst and len(dst) > 260:
                 self.issue.emit('warning', 'Dest path > 260 chars', dst)
                 n_warn += 1
 
         # ── 5. Destination free space ─────────────────────────────────────────
         self.progress.emit("Checking destination disk space…")
-        dest_paths = [getattr(it, 'full_dest_path', '') for it in self._items
-                      if getattr(it, 'full_dest_path', '')]
+        dest_paths = [_pending_destination_path(it) for it in self._items
+                      if _pending_destination_path(it)]
         if dest_paths:
             try:
                 dest_root = os.path.splitdrive(dest_paths[0])[0] or dest_paths[0][:2]
@@ -930,7 +950,7 @@ class PreflightWorker(QThread):
                             f"All items meet the {rb}% confidence threshold")
             n_info += 1
 
-        # ── 6. Broken file detection (sampled, bounded) — N-14 wiring ────────
+        # ── 7. Broken file detection (sampled, bounded) — N-14 wiring ────────
         # Probes a fingerprint sample of each source's image/video/archive
         # files for corruption. Bounded to 10 per source / 200 total so
         # 33TB-scale apply jobs stay snappy at the pre-flight gate.
@@ -957,7 +977,7 @@ class PreflightWorker(QThread):
                                 ', '.join(missing))
                 n_warn += 1
             source_paths = [
-                getattr(it, 'full_source_path', '') for it in self._items
+                _pending_source_path(it) for it in self._items
             ]
             source_paths = [p for p in source_paths if p]
             findings = _bd.scan_paths(source_paths, max_per_root=10, max_total=200)
@@ -990,12 +1010,16 @@ class PreflightDialog(QDialog):
     then enables 'Continue' / 'Cancel' when complete.
     """
 
-    def __init__(self, items, parent=None):
+    def __init__(self, items, parent=None, plan_file: str = '', preview_only=False):
         super().__init__(parent)
         self.setWindowTitle("Pre-flight Check")
-        self.setMinimumSize(780, 420)
+        self.setMinimumSize(920, 620)
         self.setStyleSheet(get_active_stylesheet())
         self._accepted = False
+        self._preview_only = preview_only
+        self.plan = plan_from_items(items)
+        self.plan_file = ''
+        self._plan_target = plan_file or default_plan_path()
 
         conf = load_confidence_settings()
         review_below = conf.get('review_below', 50)
@@ -1008,20 +1032,63 @@ class PreflightDialog(QDialog):
         self._tbl = QTableWidget(0, 3)
         self._tbl.setHorizontalHeaderLabels(["Severity", "Issue", "Details"])
         hdr = self._tbl.horizontalHeader()
-        hdr.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
-        hdr.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
-        hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        if hdr is not None:
+            hdr.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+            hdr.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+            hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
         self._tbl.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self._tbl.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
         self._tbl.setWordWrap(False)
         lay.addWidget(self._tbl, 1)
 
+        op_header = QHBoxLayout()
+        op_header.addWidget(QLabel("Step 6 — Review exact operations"))
+        op_header.addStretch()
+        btn_all = QPushButton("Select All")
+        btn_none = QPushButton("Select None")
+        btn_all.clicked.connect(lambda: self._set_all_operations(True))
+        btn_none.clicked.connect(lambda: self._set_all_operations(False))
+        op_header.addWidget(btn_all)
+        op_header.addWidget(btn_none)
+        lay.addLayout(op_header)
+
+        self._op_tbl = QTableWidget(len(self.plan.operations), 5)
+        self._op_tbl.setHorizontalHeaderLabels(
+            ["Use", "Operation", "Source", "Destination", "Reason"]
+        )
+        op_hdr = self._op_tbl.horizontalHeader()
+        if op_hdr is not None:
+            op_hdr.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+            op_hdr.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+            op_hdr.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+            op_hdr.setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
+            op_hdr.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+        self._op_tbl.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        for row, operation in enumerate(self.plan.operations):
+            enabled = QTableWidgetItem()
+            enabled.setFlags(enabled.flags() | Qt.ItemFlag.ItemIsUserCheckable)
+            enabled.setCheckState(
+                Qt.CheckState.Checked if operation.enabled else Qt.CheckState.Unchecked
+            )
+            enabled.setData(Qt.ItemDataRole.UserRole, operation.id)
+            self._op_tbl.setItem(row, 0, enabled)
+            self._op_tbl.setItem(row, 1, QTableWidgetItem(operation.type.upper()))
+            self._op_tbl.setItem(row, 2, QTableWidgetItem(operation.source_path))
+            self._op_tbl.setItem(row, 3, QTableWidgetItem(operation.dest_path or ''))
+            self._op_tbl.setItem(row, 4, QTableWidgetItem(operation.reason))
+        self._op_tbl.itemChanged.connect(self._operation_toggled)
+        lay.addWidget(self._op_tbl, 1)
+
         self._lbl_summary = QLabel("")
         lay.addWidget(self._lbl_summary)
+        self._lbl_plan = QLabel(f"JSON plan will be saved to: {self._plan_target}")
+        self._lbl_plan.setWordWrap(True)
+        lay.addWidget(self._lbl_plan)
 
         btn_row = QHBoxLayout()
         self._btn_cancel   = QPushButton("Cancel")
-        self._btn_continue = QPushButton("Continue")
+        button_text = "Save Plan && Close" if preview_only else "Save Plan && Continue"
+        self._btn_continue = QPushButton(button_text)
         self._btn_continue.setEnabled(False)
         btn_row.addStretch()
         btn_row.addWidget(self._btn_cancel)
@@ -1036,6 +1103,38 @@ class PreflightDialog(QDialog):
         self._worker.progress.connect(self._lbl_status.setText)
         self._worker.done.connect(self._on_done)
         self._worker.start()
+
+    def _operation_toggled(self, _item=None):
+        enabled = len(self.enabled_indices())
+        self._lbl_plan.setText(
+            f"{enabled}/{len(self.plan.operations)} operations enabled. "
+            f"JSON plan will be saved to: {self._plan_target}"
+        )
+
+    def _set_all_operations(self, enabled: bool):
+        state = Qt.CheckState.Checked if enabled else Qt.CheckState.Unchecked
+        self._op_tbl.blockSignals(True)
+        try:
+            for row in range(self._op_tbl.rowCount()):
+                item = self._op_tbl.item(row, 0)
+                if item is not None:
+                    item.setCheckState(state)
+        finally:
+            self._op_tbl.blockSignals(False)
+        self._operation_toggled()
+
+    def enabled_indices(self) -> list[int]:
+        enabled = []
+        for row in range(self._op_tbl.rowCount()):
+            item = self._op_tbl.item(row, 0)
+            if item is not None and item.checkState() == Qt.CheckState.Checked:
+                enabled.append(row)
+        return enabled
+
+    def _sync_operation_flags(self):
+        enabled = set(self.enabled_indices())
+        for index, operation in enumerate(self.plan.operations):
+            operation.enabled = index in enabled
 
     # ── slots ────────────────────────────────────────────────────────────────
 
@@ -1060,23 +1159,40 @@ class PreflightDialog(QDialog):
             f"{n_err} error(s)  |  {n_warn} warning(s)  |  {n_info} info")
         self._btn_continue.setEnabled(True)
         if n_err > 0:
-            self._btn_continue.setText("Continue Anyway")
+            self._btn_continue.setText(
+                "Save Plan && Close Anyway" if self._preview_only
+                else "Save Plan && Continue Anyway"
+            )
             self._btn_continue.setProperty("class", "danger")
         else:
             self._btn_continue.setProperty("class", "apply")
-        self._btn_continue.style().unpolish(self._btn_continue)
-        self._btn_continue.style().polish(self._btn_continue)
+        style = self._btn_continue.style()
+        if style is not None:
+            style.unpolish(self._btn_continue)
+            style.polish(self._btn_continue)
+        # Persisted only after the worker has completed and the user continues.
 
     def _on_continue(self):
+        self._sync_operation_flags()
+        is_valid, errors = validate_plan(self.plan)
+        if not is_valid:
+            self._lbl_plan.setText("Plan not saved: " + "; ".join(errors))
+            return
+        try:
+            save_plan(self.plan, self._plan_target)
+        except OSError as exc:
+            self._lbl_plan.setText(f"Plan not saved: {exc}")
+            return
+        self.plan_file = self._plan_target
         self._accepted = True
         self.accept()
 
     def was_accepted(self) -> bool:
         return self._accepted
 
-    def closeEvent(self, event):
+    def closeEvent(self, a0):
         if self._worker.isRunning():
             self._worker.quit()
             self._worker.wait(2000)
-        super().closeEvent(event)
+        super().closeEvent(a0)
 

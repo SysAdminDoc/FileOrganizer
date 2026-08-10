@@ -9,6 +9,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from fileorganizer import dry_run_planner as drp
+from fileorganizer.models import CategorizeItem, FileItem, RenameItem
 
 
 class TestFileOperation:
@@ -167,6 +168,55 @@ class TestPlanIO:
 
         assert plan2.operations[0].enabled == True
         assert plan2.operations[1].enabled == False
+
+    def test_gui_items_translate_to_one_editable_operation_schema(self, tmp_path):
+        rename = RenameItem()
+        rename.current_name = 'Old Folder'
+        rename.new_name = 'New Folder'
+        rename.full_current_path = str(tmp_path / 'Old Folder')
+        rename.full_new_path = str(tmp_path / 'New Folder')
+
+        category = CategorizeItem()
+        category.full_source_path = str(tmp_path / 'Unsorted')
+        category.full_dest_path = str(tmp_path / 'Organized' / 'Design' / 'Unsorted')
+        category.source_root = str(tmp_path)
+        category.dest_root = str(tmp_path / 'Organized')
+        category.category = 'Design'
+        category.confidence = 87
+        category.detail = 'Extension match'
+
+        file_item = FileItem()
+        file_item.full_src = str(tmp_path / 'loose.psd')
+        file_item.full_dst = str(tmp_path / 'Organized' / 'Design' / 'loose.psd')
+        file_item.source_root = str(tmp_path)
+        file_item.dest_root = str(tmp_path / 'Organized')
+        file_item.category = 'Design'
+        file_item.selected = False
+
+        plan = drp.plan_from_items([rename, category, file_item])
+
+        assert [operation.type for operation in plan.operations] == [
+            'rename', 'move', 'move',
+        ]
+        assert plan.operations[0].old_name == 'Old Folder'
+        assert plan.operations[0].new_name == 'New Folder'
+        assert plan.operations[1].confidence == 87
+        assert plan.operations[2].enabled is False
+        assert plan.dest_root
+
+    def test_save_plan_atomically_replaces_existing_file(self, tmp_path):
+        plan_file = tmp_path / 'operation-plan.json'
+        plan_file.write_text('{"stale": true}', encoding='utf-8')
+        plan = drp.DryRunPlan(source='/source', dest_root='/dest')
+        plan.operations.append(drp.FileOperation(
+            id='op_001', type='move', source_path='/source/a', dest_path='/dest/a',
+        ))
+
+        drp.save_plan(plan, str(plan_file))
+
+        payload = json.loads(plan_file.read_text(encoding='utf-8'))
+        assert payload['operations'][0]['id'] == 'op_001'
+        assert not list(tmp_path.glob('.plan-*.tmp'))
 
 
 class TestValidatePlan:
@@ -418,6 +468,25 @@ class TestShowPlanSummary:
 
         assert 'Moves:' in captured.out
         assert 'Total:' in captured.out
+
+
+def test_preflight_gui_wires_toggles_to_every_apply_path():
+    root = Path(__file__).resolve().parents[1]
+    dialog_source = (root / 'fileorganizer' / 'dialogs' / 'tools.py').read_text(
+        encoding='utf-8'
+    )
+    apply_source = (root / 'fileorganizer' / 'apply_mixin.py').read_text(
+        encoding='utf-8'
+    )
+    window_source = (root / 'fileorganizer' / 'main_window.py').read_text(
+        encoding='utf-8'
+    )
+
+    assert 'Step 6 — Review exact operations' in dialog_source
+    assert 'Qt.ItemFlag.ItemIsUserCheckable' in dialog_source
+    assert 'save_plan(self.plan, self._plan_target)' in dialog_source
+    assert apply_source.count('self._review_operation_plan(work)') == 3
+    assert 'self._review_operation_plan(work, preview_only=True)' in window_source
 
 
 if __name__ == '__main__':

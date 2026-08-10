@@ -2307,11 +2307,15 @@ def generate_report(identifier: str, output: str = '') -> str:
         f.write('\n'.join(lines) + '\n')
     return out
 
-def main():
+def build_argument_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
-    ap.add_argument('--preview',       action='store_true', help='Dry run (default)')
-    ap.add_argument('--apply',         action='store_true', help='Apply moves')
+    ap.add_argument('--preview', '--dry-run', dest='preview', action='store_true',
+                    help='Dry run and emit an editable move plan (default)')
+    ap.add_argument('--apply', '--commit', dest='apply', action='store_true',
+                    help='Commit a generated or persisted move plan')
     ap.add_argument('--plan-out',      type=str,            help='Write generated move plan to this JSON path')
+    ap.add_argument('--plan-file',     type=str,
+                    help='Write a dry-run plan, or read it when used with --commit')
     ap.add_argument('--apply-plan',    type=str,            help='Apply a previously generated move plan JSON')
     ap.add_argument('--report',        type=str,            help='Generate Markdown report for a run id, plan id, or plan JSON path')
     ap.add_argument('--output',        type=str,            help='Output path for --report')
@@ -2332,7 +2336,15 @@ def main():
                     help='Use a specific Hazel-style rule_chains.json file')
     ap.add_argument('--no-rules',      action='store_true',
                     help='Disable user rule-chain evaluation for this run')
+    return ap
+
+
+def main():
+    ap = build_argument_parser()
     args = ap.parse_args()
+
+    if args.plan_file and args.apply_plan:
+        ap.error('--plan-file and --apply-plan cannot be used together')
 
     if args.overflow_now:
         global _FORCE_OVERFLOW
@@ -2343,8 +2355,9 @@ def main():
         print(f"Report written: {out}")
         return
 
-    if args.apply_plan:
-        plan = read_move_plan(args.apply_plan)
+    persisted_plan = args.apply_plan or (args.plan_file if args.apply else '')
+    if persisted_plan:
+        plan = read_move_plan(persisted_plan)
         result = apply_move_plan(plan, dry_run=(args.preview and not args.apply), verbose=not args.quiet)
         print(f"Plan id: {result['plan_id']}")
         print(f"Run id: {result['run_id']}")
@@ -2452,7 +2465,7 @@ def main():
         source_mode,
         rule_manager=rule_manager,
     )
-    plan_path = write_move_plan(plan, args.plan_out or '')
+    plan_path = write_move_plan(plan, args.plan_out or args.plan_file or '')
     log(f"Move plan written: {plan_path}")
     result = apply_move_plan(plan, dry_run=dry, verbose=verbose)
     if not dry:
