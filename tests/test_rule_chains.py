@@ -8,7 +8,7 @@ import shutil
 from pathlib import Path
 
 from fileorganizer.rule_chains import (
-    RuleCondition, RuleAction, RuleChain, RuleChainManager
+    RuleCondition, RuleAction, RuleChain, RuleChainManager, RuleValidationError
 )
 
 
@@ -365,3 +365,95 @@ def test_rule_condition_operators():
     
     for cond, context, expected in test_cases:
         assert cond.evaluate(context) == expected, f"Failed for {cond.operator}"
+
+
+def test_nested_rule_planning_is_pure_and_applies_actions_in_order(tmp_path):
+    source = tmp_path / "source"
+    source.mkdir()
+    nested = RuleChain(
+        name="then-rename",
+        conditions=[RuleCondition("filename_pattern", "incoming", "contains")],
+        actions=[RuleAction("rename", template="Curated-$NAME")],
+    )
+    manager = RuleChainManager(str(tmp_path / "rules.json"))
+    manager.replace_chains([
+        RuleChain(
+            name="route-low-confidence",
+            conditions=[RuleCondition("llm_confidence", 70, "<")],
+            actions=[RuleAction("move", destination="Rules/$CATEGORY")],
+            then_chains=[nested],
+        )
+    ])
+
+    decision = manager.plan({
+        "filename": "incoming",
+        "folder_name": "incoming",
+        "llm_confidence": 40,
+        "category": "Mockups",
+        "dest_root": str(tmp_path / "dest"),
+    })
+
+    assert decision.matched_rules == ["route-low-confidence", "then-rename"]
+    assert decision.destination == "Rules/Mockups"
+    assert decision.rename == "Curated-incoming"
+    assert source.exists()
+
+
+def test_skip_rule_stops_later_root_rules(tmp_path):
+    manager = RuleChainManager(str(tmp_path / "rules.json"))
+    manager.replace_chains([
+        RuleChain(name="stop", actions=[RuleAction("skip")]),
+        RuleChain(name="must-not-run", actions=[RuleAction("rename", template="changed")]),
+    ])
+
+    decision = manager.plan({"folder_name": "original"})
+
+    assert decision.skip is True
+    assert decision.matched_rules == ["stop"]
+    assert decision.rename is None
+
+
+def test_rule_schema_rejects_unknown_actions_invalid_regex_and_non_boolean_enabled():
+    with pytest.raises(RuleValidationError, match="unknown action"):
+        RuleAction.from_dict({"type": "delete"})
+    with pytest.raises(RuleValidationError, match="regular expression"):
+        RuleCondition.from_dict({
+            "type": "filename_pattern",
+            "operator": "matches",
+            "value": "[",
+        })
+    with pytest.raises(RuleValidationError, match="enabled"):
+        RuleChain.from_dict({"enabled": "yes"})
+
+
+def test_manager_rejects_duplicate_names_and_saves_atomically(tmp_path):
+    rules_file = tmp_path / "rules.json"
+    manager = RuleChainManager(str(rules_file))
+
+    with pytest.raises(RuleValidationError, match="duplicate rule name"):
+        manager.replace_chains([
+            RuleChain(name="Same", actions=[RuleAction("skip")]),
+            RuleChain(name="same", actions=[RuleAction("skip")]),
+        ])
+
+    manager.replace_chains([RuleChain(name="valid", actions=[RuleAction("skip")])])
+    assert json.loads(rules_file.read_text(encoding="utf-8"))["version"] == "1.0"
+    assert not list(tmp_path.glob(".rules.json.*.tmp"))
+
+
+def test_visual_builder_and_organize_cli_remain_connected_to_rule_schema():
+    root = Path(__file__).resolve().parents[1]
+    editor = (root / "fileorganizer/dialogs/rule_chain_editor.py").read_text(
+        encoding="utf-8"
+    )
+    organizer = (root / "organize_run.py").read_text(encoding="utf-8")
+
+    assert "class RuleChainEditorDialog" in editor
+    assert "QTreeWidget" in editor
+    assert "self.conditions_table" in editor
+    assert "self.actions_table" in editor
+    assert 'QPushButton("+ THEN")' in editor
+    assert "self.manager.replace_chains(self.chains)" in editor
+    assert "rule_manager.plan(" in organizer
+    assert "--rules-file" in organizer
+    assert "--no-rules" in organizer

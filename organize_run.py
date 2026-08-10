@@ -33,6 +33,7 @@ from types import ModuleType
 from fileorganizer.path_safety import (
     PathSafetyError, canonical_path, is_within, validate_move,
 )
+from fileorganizer.rule_chains import RuleChainManager
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DEST_PRIMARY     = r'G:\Organized'
@@ -1116,6 +1117,94 @@ def safe_dest_path_file(dest_root: str, category: str, clean_name: str, ext: str
             i += 1
     return dest
 
+
+def _rule_context(
+    src: str,
+    item: dict,
+    org_entry: dict,
+    *,
+    confidence: int,
+    category: str,
+    dest_root: str,
+) -> dict:
+    """Build the bounded, read-only context exposed to user rule chains."""
+    metadata = item.get('metadata')
+    if not isinstance(metadata, dict):
+        metadata = org_entry.get('metadata')
+    if not isinstance(metadata, dict):
+        metadata = {}
+    file_size = org_entry.get('size', item.get('file_size', 0))
+    file_count = org_entry.get('file_count', item.get('file_count', 0))
+    try:
+        file_size = int(file_size or 0)
+    except (TypeError, ValueError, OverflowError):
+        file_size = 0
+    try:
+        file_count = int(file_count or 0)
+    except (TypeError, ValueError, OverflowError):
+        file_count = 0
+    if os.path.isfile(src):
+        try:
+            file_size = os.path.getsize(src)
+        except OSError:
+            pass
+        file_count = 1
+    extension = org_entry.get('file_ext') or item.get('extension') or Path(src).suffix
+    return {
+        'extension': str(extension).lower().lstrip('.'),
+        'filename': os.path.basename(src),
+        'folder_name': os.path.basename(src),
+        'file_size': file_size,
+        'file_count': file_count,
+        'llm_confidence': confidence,
+        'metadata': metadata,
+        'category': category,
+        'dest_root': dest_root,
+    }
+
+
+def _rule_destination_container(destination: str, dest_root: str) -> str:
+    if not isinstance(destination, str) or not destination.strip():
+        raise PathSafetyError('rule move destination is empty')
+    destination = destination.strip()
+    if os.path.isabs(destination) or ntpath.isabs(destination):
+        container = os.path.abspath(destination)
+    else:
+        container = os.path.abspath(os.path.join(dest_root, destination))
+    if not is_within(container, dest_root, allow_equal=True):
+        raise PathSafetyError(
+            'rule move destination escapes the approved destination root')
+    return container
+
+
+def _safe_dest_in_container(
+    container: str,
+    clean_name: str,
+    *,
+    file_ext: str = '',
+    reserved: set | None = None,
+) -> str:
+    stem = sanitize(_safe_name_component(clean_name, 'rule rename'))
+    if file_ext:
+        if '/' in file_ext or '\\' in file_ext or not file_ext.startswith('.'):
+            raise PathSafetyError('file extension is unsafe')
+        candidate = os.path.join(container, f'{stem}{file_ext}')
+        base = os.path.join(container, stem)
+        index = 1
+        while _path_taken(candidate, reserved):
+            candidate = f'{base} ({index}){file_ext}'
+            index += 1
+    else:
+        candidate = os.path.join(container, stem)
+        base = candidate
+        index = 1
+        while _path_taken(candidate, reserved):
+            candidate = f'{base} ({index})'
+            index += 1
+    if not is_within(candidate, container):
+        raise PathSafetyError('rule destination name escapes its container')
+    return candidate
+
 # ── Move plans ────────────────────────────────────────────────────────────────
 @dataclass
 class MovePlanItem:
@@ -1139,6 +1228,8 @@ class MovePlanItem:
     duplicate_matches: list = field(default_factory=list)
     duplicate_policy: str = ''
     provenance: dict = field(default_factory=dict)
+    rule_matches: list = field(default_factory=list)
+    rule_deferred_actions: list = field(default_factory=list)
 
 @dataclass
 class MovePlan:
@@ -1523,7 +1614,8 @@ def _preflight_move_plan(plan_data: dict, already_moved: set[str]) -> None:
             _check_source_signature(item, item['src'])
 
 def build_move_plan(pairs: list, source_override: str = '',
-                    source_mode: str = 'ae', plan_id: str = '') -> MovePlan:
+                    source_mode: str = 'ae', plan_id: str = '',
+                    rule_manager: RuleChainManager | None = None) -> MovePlan:
     """Convert classified/index pairs into an editable, collision-safe move plan."""
     plan_id = plan_id or f"plan-{_compact_timestamp()}"
     created_at = _utc_now()
@@ -1541,18 +1633,8 @@ def build_move_plan(pairs: list, source_override: str = '',
         last_dest_root = dest_root
         raw_name = item.get('name', '?')
         raw_category = item.get('category', 'After Effects - Other')
-        if not isinstance(raw_category, str):
-            skipped.append({'name': raw_name, 'reason': 'invalid_category'})
-            continue
-        raw_category = raw_category.strip()
-        category = normalize_category(raw_category)
-        if not _valid_category(category):
-            skipped.append({
-                'name': raw_name,
-                'category': raw_category,
-                'reason': 'invalid_category',
-            })
-            continue
+        raw_category_text = raw_category.strip() if isinstance(raw_category, str) else ''
+        category = normalize_category(raw_category_text) if raw_category_text else ''
         try:
             conf = int(item.get('confidence', 0))
         except (TypeError, ValueError):
@@ -1592,6 +1674,49 @@ def build_move_plan(pairs: list, source_override: str = '',
         clean = (item.get('clean_name') or raw_name or '').strip()
         if not clean:
             clean = Path(disk_name).stem or disk_name or 'Unnamed Asset'
+
+        if not os.path.exists(src):
+            skipped.append({'name': disk_name, 'src': src, 'reason': 'missing_source'})
+            continue
+        if src in already_moved:
+            skipped.append({'name': disk_name, 'src': src, 'reason': 'already_moved'})
+            continue
+
+        valid_category = _valid_category(category)
+        rule_decision = None
+        if rule_manager is not None and rule_manager.chains:
+            rule_decision = rule_manager.plan(_rule_context(
+                src,
+                item,
+                org_entry,
+                confidence=conf,
+                category=category or raw_category_text,
+                dest_root=dest_root,
+            ))
+            if rule_decision.skip:
+                skipped.append({
+                    'name': disk_name,
+                    'src': src,
+                    'reason': 'rule_skip',
+                    'rule_matches': list(rule_decision.matched_rules),
+                })
+                continue
+            if rule_decision.rename:
+                clean = rule_decision.rename.strip()
+                if is_file_item and Path(clean).suffix.lower() == Path(src).suffix.lower():
+                    clean = Path(clean).stem
+                try:
+                    _safe_name_component(clean, 'rule rename')
+                except PathSafetyError as exc:
+                    skipped.append({
+                        'name': disk_name,
+                        'src': src,
+                        'reason': 'invalid_rule_rename',
+                        'error': str(exc),
+                        'rule_matches': list(rule_decision.matched_rules),
+                    })
+                    continue
+
         try:
             _safe_name_component(clean, 'clean_name')
         except PathSafetyError:
@@ -1602,24 +1727,69 @@ def build_move_plan(pairs: list, source_override: str = '',
             })
             continue
 
-        if not os.path.exists(src):
-            skipped.append({'name': disk_name, 'src': src, 'reason': 'missing_source'})
-            continue
-        if src in already_moved:
-            skipped.append({'name': disk_name, 'src': src, 'reason': 'already_moved'})
-            continue
+        if not valid_category:
+            if rule_decision is None or not rule_decision.destination:
+                skipped.append({
+                    'name': raw_name,
+                    'category': raw_category_text,
+                    'reason': 'invalid_category',
+                })
+                continue
+            category = 'After Effects - Other'
 
         low_conf = conf < MIN_CONFIDENCE
-        eff_category = os.path.join(REVIEW_SUBDIR, category) if low_conf else category
+        rule_destination = rule_decision.destination if rule_decision is not None else None
+        has_rule_destination = bool(rule_destination)
+        eff_category = (
+            category if has_rule_destination
+            else os.path.join(REVIEW_SUBDIR, category) if low_conf else category
+        )
 
-        if is_file_item:
-            file_ext = Path(src).suffix.lower()
-            disk_stem = sanitize(Path(disk_name).stem)
-            dest_stem = disk_stem if disk_stem else clean
-            dest = safe_dest_path_file(dest_root, eff_category, dest_stem, file_ext, reserved_dests)
-        else:
-            file_ext = ''
-            dest = safe_dest_path(dest_root, eff_category, clean, reserved_dests)
+        try:
+            rule_container = (
+                _rule_destination_container(rule_destination or '', dest_root)
+                if has_rule_destination
+                else ''
+            )
+            if is_file_item:
+                file_ext = Path(src).suffix.lower()
+                disk_stem = sanitize(Path(disk_name).stem)
+                dest_stem = (
+                    clean if rule_decision and rule_decision.rename
+                    else disk_stem or clean
+                )
+                dest = (
+                    _safe_dest_in_container(
+                        rule_container,
+                        dest_stem,
+                        file_ext=file_ext,
+                        reserved=reserved_dests,
+                    )
+                    if rule_container else
+                    safe_dest_path_file(
+                        dest_root, eff_category, dest_stem, file_ext, reserved_dests
+                    )
+                )
+            else:
+                file_ext = ''
+                dest = (
+                    _safe_dest_in_container(
+                        rule_container, clean, reserved=reserved_dests
+                    )
+                    if rule_container else
+                    safe_dest_path(dest_root, eff_category, clean, reserved_dests)
+                )
+        except PathSafetyError as exc:
+            skipped.append({
+                'name': disk_name,
+                'src': src,
+                'reason': 'invalid_rule_destination',
+                'error': str(exc),
+                'rule_matches': (
+                    list(rule_decision.matched_rules) if rule_decision else []
+                ),
+            })
+            continue
 
         try:
             source_signature = _source_signature(src)
@@ -1632,7 +1802,7 @@ def build_move_plan(pairs: list, source_override: str = '',
             })
             continue
 
-        dest_category_dir = _cat_path(dest_root, eff_category)
+        dest_category_dir = rule_container or _cat_path(dest_root, eff_category)
         dest_key = _path_key(dest_category_dir)
         if dest_key not in dest_hash_cache:
             dest_hash_cache[dest_key] = _destination_hash_index(dest_category_dir)
@@ -1669,6 +1839,12 @@ def build_move_plan(pairs: list, source_override: str = '',
             duplicate_policy=duplicate_policy,
             provenance=_safe_provenance_descriptor(
                 item.get('_provenance') or item.get('provenance')
+            ),
+            rule_matches=(
+                list(rule_decision.matched_rules) if rule_decision else []
+            ),
+            rule_deferred_actions=(
+                list(rule_decision.deferred_actions) if rule_decision else []
             ),
         )))
 
@@ -2152,6 +2328,10 @@ def main():
     ap.add_argument('--quiet',         action='store_true', help='Suppress per-item output')
     ap.add_argument('--overflow-now',  action='store_true',
                     help='Force all moves to I:\\Organized immediately (bypass G:\\ free-space check)')
+    ap.add_argument('--rules-file',    type=str,
+                    help='Use a specific Hazel-style rule_chains.json file')
+    ap.add_argument('--no-rules',      action='store_true',
+                    help='Disable user rule-chain evaluation for this run')
     args = ap.parse_args()
 
     if args.overflow_now:
@@ -2259,7 +2439,19 @@ def main():
 
     dry     = not args.apply
     verbose = not args.quiet
-    plan = build_move_plan(pairs, source_dir_override, source_mode)
+    rule_manager = None
+    if not args.no_rules:
+        rule_manager = RuleChainManager(args.rules_file)
+        if rule_manager.load_error:
+            raise SystemExit(f"Rule chains are invalid: {rule_manager.load_error}")
+        if rule_manager.chains:
+            log(f"Loaded {len(rule_manager.chains)} rule chain(s)")
+    plan = build_move_plan(
+        pairs,
+        source_dir_override,
+        source_mode,
+        rule_manager=rule_manager,
+    )
     plan_path = write_move_plan(plan, args.plan_out or '')
     log(f"Move plan written: {plan_path}")
     result = apply_move_plan(plan, dry_run=dry, verbose=verbose)
