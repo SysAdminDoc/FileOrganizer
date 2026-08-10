@@ -1,5 +1,6 @@
 """FileOrganizer — Metadata extraction from files (EXIF, audio, documents, archives)."""
-import os, re, json, hashlib, base64, io, zipfile, gzip
+import os, re, json, hashlib, base64, io, zipfile, gzip, logging, shutil, subprocess
+from collections import Counter
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
@@ -10,6 +11,8 @@ from fileorganizer.bootstrap import (
 )
 from fileorganizer.config import _APP_DATA_DIR
 from fileorganizer import winrt_metadata
+
+log = logging.getLogger(__name__)
 try:
     from PIL import Image as _PILImage
     from PIL.ExifTags import TAGS as _EXIF_TAGS, GPSTAGS as _GPS_TAGS
@@ -232,20 +235,42 @@ _ENVATO_CAT_MAP = {
 _ENVATO_KEY_FILE = os.path.join(_APP_DATA_DIR, 'envato_api_key.txt')
 
 def _load_envato_api_key() -> str:
-    """Load Envato API key from file. Returns empty string if not set."""
+    """Load the Envato API key from the Windows user-protected store."""
+    try:
+        from fileorganizer.secret_store import SecretStoreError, get_secret, set_secret
+        protected = get_secret('envato_api_key')
+        if protected:
+            return protected
+    except (ImportError, OSError):
+        protected = ''
+
+    # Migrate the pre-v8.5 plaintext file on first use.  Do not continue to
+    # treat it as a supported store when DPAPI is unavailable.
     try:
         with open(_ENVATO_KEY_FILE, 'r') as f:
-            return f.read().strip()
+            legacy = f.read().strip()
     except (FileNotFoundError, OSError):
         return ''
+    if not legacy:
+        return ''
+    try:
+        set_secret('envato_api_key', legacy)
+    except (SecretStoreError, OSError) as exc:
+        log.warning('Could not migrate Envato token to protected storage: %s', exc)
+        return legacy
+    try:
+        os.remove(_ENVATO_KEY_FILE)
+    except OSError as exc:
+        log.warning('Protected Envato token saved, but legacy file remains: %s', exc)
+    return legacy
 
 def _save_envato_api_key(key: str):
-    """Save Envato API key to file."""
+    """Save or clear the Envato API key in the protected user store."""
     try:
-        with open(_ENVATO_KEY_FILE, 'w') as f:
-            f.write(key.strip())
-    except OSError:
-        pass
+        from fileorganizer.secret_store import set_secret
+        set_secret('envato_api_key', key.strip())
+    except (ImportError, OSError, RuntimeError) as exc:
+        log.warning('Could not save Envato API key in protected storage: %s', exc)
 
 # Simple in-memory cache for API responses
 _envato_cache = {}
