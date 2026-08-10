@@ -1,10 +1,38 @@
 """FileOrganizer — Plugins, profiles, category presets, cloud path resolution."""
-import os, re, json, csv, importlib.util, subprocess, sys
-from pathlib import Path
+import csv
+import importlib.util
+import json
+import os
+import tempfile
 
 from fileorganizer.config import (
     _APP_DATA_DIR, _PROFILES_DIR, _PRESETS_DIR, _CSV_LOG_FILE,
 )
+from fileorganizer.path_safety import validate_path, validate_storage_name
+
+
+def _safe_json_path(directory: str, name: str) -> str:
+    """Resolve a profile/preset filename beneath its app-data directory."""
+    safe_name = validate_storage_name(name)
+    candidate = os.path.join(directory, f"{safe_name}.json")
+    validate_path(candidate, root=directory, require_exists=False)
+    return os.path.abspath(os.path.normpath(candidate))
+
+
+def _write_json_atomically(path: str, value) -> None:
+    """Write JSON through a same-directory temp file and atomic replacement."""
+    directory = os.path.dirname(path)
+    fd, temporary = tempfile.mkstemp(prefix=".fileorganizer-", suffix=".tmp", dir=directory)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            json.dump(value, handle, indent=2)
+            handle.flush()
+            os.fsync(handle.fileno())
+        validate_path(path, root=directory, require_exists=False)
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.remove(temporary)
 
 class ProfileManager:
     """Manages saved scan configuration profiles."""
@@ -13,31 +41,37 @@ class ProfileManager:
     def list_profiles() -> list:
         """Return list of profile names (without .json extension)."""
         try:
-            return sorted(
-                os.path.splitext(f)[0] for f in os.listdir(_PROFILES_DIR)
-                if f.endswith('.json'))
+            names = []
+            for filename in os.listdir(_PROFILES_DIR):
+                if not filename.endswith('.json'):
+                    continue
+                name = filename[:-len('.json')]
+                try:
+                    validate_storage_name(name)
+                except ValueError:
+                    continue
+                names.append(name)
+            return sorted(names)
         except OSError:
             return []
 
     @staticmethod
     def save(name: str, config: dict):
         """Save a profile to disk."""
-        path = os.path.join(_PROFILES_DIR, f"{name}.json")
-        with open(path, 'w', encoding='utf-8') as f:
-            json.dump(config, f, indent=2)
+        _write_json_atomically(_safe_json_path(_PROFILES_DIR, name), config)
 
     @staticmethod
     def load(name: str) -> dict:
         """Load a profile from disk."""
-        path = os.path.join(_PROFILES_DIR, f"{name}.json")
+        path = _safe_json_path(_PROFILES_DIR, name)
         with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
 
     @staticmethod
     def delete(name: str):
         """Delete a profile."""
-        path = os.path.join(_PROFILES_DIR, f"{name}.json")
-        if os.path.exists(path):
+        path = _safe_json_path(_PROFILES_DIR, name)
+        if os.path.lexists(path):
             os.remove(path)
 
 
@@ -85,27 +119,35 @@ class CategoryPresetManager:
 
     @staticmethod
     def save(name, categories):
-        path = os.path.join(_PRESETS_DIR, f"{name}.json")
-        with open(path, 'w', encoding='utf-8') as f:
-            json.dump(categories, f, indent=2)
+        _write_json_atomically(_safe_json_path(_PRESETS_DIR, name), categories)
 
     @staticmethod
     def load(name) -> list:
-        path = os.path.join(_PRESETS_DIR, f"{name}.json")
+        path = _safe_json_path(_PRESETS_DIR, name)
         with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
 
     @staticmethod
     def list_presets() -> list:
         try:
-            return sorted(os.path.splitext(f)[0] for f in os.listdir(_PRESETS_DIR) if f.endswith('.json'))
+            names = []
+            for filename in os.listdir(_PRESETS_DIR):
+                if not filename.endswith('.json'):
+                    continue
+                name = filename[:-len('.json')]
+                try:
+                    validate_storage_name(name)
+                except ValueError:
+                    continue
+                names.append(name)
+            return sorted(names)
         except OSError:
             return []
 
     @staticmethod
     def delete(name):
-        path = os.path.join(_PRESETS_DIR, f"{name}.json")
-        if os.path.exists(path):
+        path = _safe_json_path(_PRESETS_DIR, name)
+        if os.path.lexists(path):
             os.remove(path)
 
     @staticmethod

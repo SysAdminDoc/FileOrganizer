@@ -15,6 +15,8 @@ All notable changes to FileOrganizer will be documented in this file.
 - Move plans, retry records, journals, undo entries, watcher roots, and sidecar
   mutations now use canonical/reparse-aware source and destination boundary
   checks with source identity validation and no-overwrite defaults.
+- Profile and category-preset names now stay within validated app-data files,
+  reject traversal/device names, and use atomic JSON replacement.
 
 ### Fixed
 
