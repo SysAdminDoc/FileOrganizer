@@ -52,6 +52,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Ollama batch classification now passes the configured endpoint and model
   explicitly, and optional face-recognition failures no longer terminate GUI
   startup.
+- Plan-based deletes now fail closed when the Recycle Bin provider is missing or
+  unavailable; no permanent-delete fallback is attempted, and failed trash
+  operations preserve the source for retry.
 
 ## [v8.5.19] - 2026-07-01
 

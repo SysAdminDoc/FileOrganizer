@@ -264,15 +264,36 @@ class PlanExecutor:
         """Delete file (move to trash, not permanent delete)."""
         try:
             import send2trash
-            # Save to temp for rollback
-            temp_backup = os.path.join(self.temp_dir, op.id)
-            shutil.copy2(op.source_path, temp_backup)
-            send2trash.send2trash(op.source_path)
-            logger.info(f'Deleted {op.source_path}')
         except ImportError:
-            # Fallback: permanent delete if send2trash unavailable
-            logger.warning('send2trash not available, doing permanent delete')
-            os.remove(op.source_path)
+            raise RuntimeError(
+                'Delete blocked: send2trash is required to move files to the Recycle Bin'
+            ) from None
+
+        # Keep a rollback copy before asking the platform trash provider to
+        # remove the source.  There is deliberately no permanent-delete
+        # fallback when the optional provider is unavailable or fails.
+        temp_backup = os.path.join(self.temp_dir, op.id)
+        shutil.copy2(op.source_path, temp_backup)
+        try:
+            send2trash.send2trash(op.source_path)
+        except Exception as exc:
+            # A provider should either leave the source in place or complete
+            # the move atomically. Restore the source if a failing provider
+            # removed it before raising, without overwriting a path that may
+            # have been recreated concurrently.
+            if not os.path.exists(op.source_path) and os.path.exists(temp_backup):
+                try:
+                    shutil.move(temp_backup, op.source_path)
+                except Exception as restore_exc:
+                    raise RuntimeError(
+                        f'Delete blocked and source recovery failed for {op.source_path}: '
+                        f'{restore_exc}'
+                    ) from exc
+            raise RuntimeError(
+                f'Delete blocked: could not move {op.source_path} to the Recycle Bin: {exc}'
+            ) from exc
+
+        logger.info(f'Deleted {op.source_path} to the Recycle Bin')
 
     def _rollback_all(self):
         """Rollback all executed operations."""

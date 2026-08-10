@@ -322,6 +322,52 @@ class TestPlanExecutor:
         assert success
         assert not source_file.exists()
 
+    def test_delete_blocks_without_trash_provider(self, tmp_path, monkeypatch):
+        source_file = tmp_path / 'delete_me.txt'
+        original = b'content that must remain recoverable'
+        source_file.write_bytes(original)
+
+        monkeypatch.setitem(sys.modules, 'send2trash', None)
+        monkeypatch.setattr(
+            drp.os,
+            'remove',
+            lambda _path: (_ for _ in ()).throw(AssertionError('permanent delete called')),
+        )
+
+        plan = drp.DryRunPlan(source=str(tmp_path), dest_root=str(tmp_path))
+        plan.operations.append(
+            drp.FileOperation(id='op_001', type='delete', source_path=str(source_file))
+        )
+
+        success, msg = drp.PlanExecutor(plan).execute()
+
+        assert not success
+        assert 'Recycle Bin' in msg
+        assert source_file.read_bytes() == original
+
+    def test_delete_failure_preserves_source(self, tmp_path, monkeypatch):
+        source_file = tmp_path / 'delete_me.txt'
+        original = b'content that must remain recoverable'
+        source_file.write_bytes(original)
+
+        import send2trash
+
+        def fail(_path):
+            raise OSError('trash unavailable')
+
+        monkeypatch.setattr(send2trash, 'send2trash', fail)
+
+        plan = drp.DryRunPlan(source=str(tmp_path), dest_root=str(tmp_path))
+        plan.operations.append(
+            drp.FileOperation(id='op_001', type='delete', source_path=str(source_file))
+        )
+
+        success, msg = drp.PlanExecutor(plan).execute()
+
+        assert not success
+        assert 'Recycle Bin' in msg
+        assert source_file.read_bytes() == original
+
     def test_execute_rollback_on_error(self, tmp_path):
         """Executor should rollback on operation failure."""
         file1 = tmp_path / 'file1.txt'
