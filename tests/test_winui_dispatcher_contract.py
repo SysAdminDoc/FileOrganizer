@@ -28,6 +28,24 @@ def test_ndjson_runner_dispatches_and_propagates_callback_failures():
     assert "accepted.Payload" in source
 
 
+def test_runners_drain_cancelled_readers_before_same_sidecar_restart():
+    services = REPO_ROOT / "src/FileOrganizer.UI/Services"
+    gate = (services / "RunLifecycleGate.cs").read_text(encoding="utf-8")
+    assert "ConcurrentDictionary<string, SemaphoreSlim>" in gate
+    assert "await gate.WaitAsync(cancellationToken)" in gate
+    assert "Interlocked.Exchange(ref _gate, null)?.Release()" in gate
+
+    python_runner = (services / "PythonRunner.cs").read_text(encoding="utf-8")
+    assert "_runGate.EnterAsync(scriptName, ct)" in python_runner
+    assert python_runner.count("await ObserveReaderTasksAsync(stdoutTask, stderrTask)") == 2
+    assert "ct.ThrowIfCancellationRequested();\n                stdout.AppendLine(line);" in python_runner
+
+    sidecar_runner = (services / "SidecarRunner.cs").read_text(encoding="utf-8")
+    assert "_runGate.EnterAsync(toolName, ct)" in sidecar_runner
+    assert "await ObserveReaderTasksAsync(stdoutTask, stderrTask)" in sidecar_runner
+    assert "lct.ThrowIfCancellationRequested();\n                    onRawEvent?.Invoke" in sidecar_runner
+
+
 def test_shell_cleanup_and_duplicates_are_explicitly_read_only_with_handoff():
     for relative_path in (
         "src/FileOrganizer.UI/Views/Pages/CleanupPage.xaml",

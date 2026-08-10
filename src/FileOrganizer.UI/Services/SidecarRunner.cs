@@ -38,6 +38,8 @@ public interface ISidecarRunner
 
 public sealed class SidecarRunner : ISidecarRunner
 {
+    private readonly RunLifecycleGate _runGate = new();
+
     public string? Locate(string toolName)
     {
         var exeName = toolName + ".exe";
@@ -59,6 +61,43 @@ public sealed class SidecarRunner : ISidecarRunner
     }
 
     public async Task<SidecarResult> RunAsync(
+        string toolName,
+        IEnumerable<string> args,
+        IProgress<SidecarProgress>? progress = null,
+        IProgress<SidecarLog>? log = null,
+        CancellationToken ct = default,
+        Action<string, JsonElement>? onRawEvent = null,
+        TimeSpan? silenceTimeout = null)
+    {
+        IDisposable lease;
+        try
+        {
+            lease = await _runGate.EnterAsync(toolName, ct).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            var cancelled = SidecarProtocolSession.CreateTerminalError(
+                "cancelled",
+                "Cancelled by user.");
+            onRawEvent?.Invoke(cancelled.Name, cancelled.Payload);
+            return new SidecarResult(
+                false, null, null, "cancelled", "Cancelled by user.", -1);
+        }
+
+        using (lease)
+        {
+            return await RunCoreAsync(
+                toolName,
+                args,
+                progress,
+                log,
+                ct,
+                onRawEvent,
+                silenceTimeout).ConfigureAwait(false);
+        }
+    }
+
+    private async Task<SidecarResult> RunCoreAsync(
         string toolName,
         IEnumerable<string> args,
         IProgress<SidecarProgress>? progress = null,
@@ -133,6 +172,7 @@ public sealed class SidecarRunner : ISidecarRunner
                     var root = accepted.Payload;
                     var evName = accepted.Name;
 
+                    lct.ThrowIfCancellationRequested();
                     onRawEvent?.Invoke(evName, root);
 
                     switch (evName)
