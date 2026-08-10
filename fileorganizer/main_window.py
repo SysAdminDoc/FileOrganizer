@@ -143,7 +143,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self._build_ui()
         self._load_settings()
 
-        # Launch Ollama auto-setup in background
+        # Check the user-installed Ollama setup in the background; installation
+        # and model acquisition remain explicit settings actions.
         self._start_ollama_setup()
 
         # Check for community catalog update in background
@@ -199,7 +200,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
     # ═══ OLLAMA AUTO-SETUP ════════════════════════════════════════════════════
     def _start_ollama_setup(self):
-        """Launch background Ollama setup (install + pull model) on app start."""
+        """Check the local Ollama setup on app start without downloading."""
         self._log("Ollama LLM: initializing...")
         s = load_ollama_settings()
         self._ollama_worker = OllamaSetupWorker(s['model'], s['url'])

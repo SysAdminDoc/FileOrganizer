@@ -65,13 +65,15 @@ python -m pip install -r requirements.txt
 ```bash
 git clone https://github.com/SysAdminDoc/FileOrganizer.git
 cd FileOrganizer
-python run.py        # auto-installs deps + Ollama, opens the PyQt6 GUI
+python run.py        # opens the PyQt6 GUI; Ollama setup is explicit
 ```
 
-On first launch this path will:
-1. Install PyQt6, rapidfuzz, psd-tools, and other dependencies if missing.
-2. Download and install [Ollama](https://ollama.com) if not found.
-3. Pull the `qwen2.5:7b` model if not already downloaded.
+On first launch this path will install missing Python dependencies when the
+legacy bootstrap allows it, then check the local Ollama setup. It will not
+download or execute an Ollama installer, and it will not pull a model
+automatically. Install Ollama from the [official download
+page](https://ollama.com/download), then open **Settings → Ollama LLM** and
+use **Pull Model** or **Model Manager** as an explicit, visible action.
 
 ## Build the WinUI 3 shell from source
 
@@ -296,8 +298,9 @@ new UI and you're on Windows, Path A. If you're on Linux/macOS, or you
 need the photo / duplicates / watch features today, Path B. Both share
 the same `fileorganizer/` package so you can switch later.
 
-**Ollama won't install automatically** — Download from
-[ollama.com/download](https://ollama.com/download), then restart.
+**Ollama isn't installed** — Download it from
+[ollama.com/download](https://ollama.com/download), restart FileOrganizer, then
+use **Settings → Ollama LLM → Pull Model** for the selected model.
 
 **Classification is slow** — Use DeepSeek for bulk batches (60 items/call,
 ~1–2s). Ollama is per-item; use it only for small jobs.
