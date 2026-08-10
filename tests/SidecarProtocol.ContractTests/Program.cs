@@ -38,6 +38,90 @@ Assert(cancelled.Name == "error", "Synthetic cancellation is not an error event.
 Assert(cancelled.Payload.GetProperty("terminal").GetBoolean(), "Cancellation is not terminal.");
 Assert(cancelled.Payload.GetProperty("status").GetString() == "cancelled", "Cancellation status drifted.");
 
+var crashRoot = Path.Combine(
+    Path.GetTempPath(),
+    $"fileorganizer-crash-contract-{Guid.NewGuid():N}");
+Directory.CreateDirectory(crashRoot);
+try
+{
+    const int maxCrashLogBytes = 900;
+    const int maxCrashRecords = 2;
+    const string knownSecret = "known-secret-value";
+    var crashPath = Path.Combine(crashRoot, "fileorganizer_crash.log");
+    File.WriteAllText(
+        crashPath,
+        string.Concat(Enumerable.Repeat(
+            "legacy api_key=legacy-secret C:\\Users\\Alice\\Private\\legacy.txt\n---\n",
+            100)));
+    File.WriteAllText($"{crashPath}.3", "expired archive");
+    var crashLog = new CrashLogWriter(
+        crashPath,
+        maxCrashLogBytes,
+        maxCrashRecords,
+        archiveCount: 2,
+        knownSecretValues: [knownSecret]);
+
+    for (var cycle = 0; cycle < 12; cycle++)
+    {
+        try
+        {
+            throw new InvalidOperationException(
+                $"cycle={cycle} api_key=inline-secret --token command-secret "
+                + $"Bearer bearer-secret {knownSecret} ghp_1234567890abcdefghijkl "
+                + "at \"C:\\Users\\Alice\\Private\\report.csv\"");
+        }
+        catch (InvalidOperationException exception)
+        {
+            crashLog.Write(exception);
+        }
+    }
+
+    var crashFiles = Directory.GetFiles(crashRoot, "fileorganizer_crash.log*");
+    Assert(crashFiles.Length == 3, "Crash log archive retention was not bounded.");
+    Assert(File.Exists($"{crashPath}.1") && File.Exists($"{crashPath}.2"),
+        "Crash log rotation names were not deterministic.");
+    foreach (var crashFile in crashFiles)
+    {
+        Assert(new FileInfo(crashFile).Length <= maxCrashLogBytes,
+            "A rotated crash log exceeded its byte cap.");
+        Assert(File.ReadLines(crashFile).Count(line => line == "---") <= maxCrashRecords,
+            "A rotated crash log exceeded its record cap.");
+    }
+
+    var currentCrashLog = File.ReadAllText(crashPath);
+    var allCrashLogs = string.Join("\n", crashFiles.Select(File.ReadAllText));
+    Assert(currentCrashLog.Contains("cycle=11", StringComparison.Ordinal),
+        "The newest crash context was not retained.");
+    Assert(allCrashLogs.Contains(nameof(InvalidOperationException), StringComparison.Ordinal),
+        "Crash exception type was lost.");
+    Assert(allCrashLogs.Contains("Program.cs", StringComparison.Ordinal),
+        "Actionable stack source context was lost.");
+    foreach (var (label, value) in new[]
+    {
+        ("known", knownSecret),
+        ("legacy", "legacy-secret"),
+        ("labeled", "inline-secret"),
+        ("argument", "command-secret"),
+        ("bearer", "bearer-secret"),
+        ("recognizable", "ghp_1234567890abcdefghijkl"),
+        ("path", "Alice"),
+    })
+    {
+        Assert(!allCrashLogs.Contains(value, StringComparison.OrdinalIgnoreCase),
+            $"Sensitive {label} crash context was persisted.");
+    }
+    Assert(allCrashLogs.Contains("[REDACTED]", StringComparison.Ordinal),
+        "Crash log did not mark redacted secrets.");
+    Assert(allCrashLogs.Contains("[PATH]", StringComparison.Ordinal),
+        "Crash log did not minimize a sensitive path.");
+    Assert(!File.Exists($"{crashPath}.3"),
+        "Crash log archives beyond the retention limit were not removed.");
+}
+finally
+{
+    Directory.Delete(crashRoot, recursive: true);
+}
+
 var lifecycleGate = new RunLifecycleGate();
 for (var cycle = 0; cycle < 10; cycle++)
 {

@@ -155,3 +155,18 @@ def test_every_title_bar_palette_has_readable_icon_contrast():
                 foreground,
                 background,
             )
+
+
+def test_winui_app_uses_the_bounded_redacting_crash_log_writer():
+    app = (REPO_ROOT / "src/FileOrganizer.UI/App.xaml.cs").read_text(encoding="utf-8")
+    writer = (
+        REPO_ROOT / "src/FileOrganizer.UI/Services/CrashLogWriter.cs"
+    ).read_text(encoding="utf-8")
+
+    assert "CrashLog.Write(exception)" in app
+    assert "File.AppendAllText" not in app
+    assert "DefaultMaxFileBytes = 512 * 1024" in writer
+    assert "DefaultMaxRecords = 100" in writer
+    assert "DefaultArchiveCount = 2" in writer
+    assert "File.Move(_logPath, ArchivePath(1), overwrite: true)" in writer
+    assert "[REDACTED]" in writer

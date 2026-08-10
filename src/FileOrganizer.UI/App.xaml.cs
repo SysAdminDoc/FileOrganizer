@@ -9,6 +9,11 @@ namespace FileOrganizer.UI;
 public partial class App : Application
 {
     private static MainWindow? _mainWindow;
+    private static readonly CrashLogWriter CrashLog = new(Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "FileOrganizer",
+        "logs",
+        "fileorganizer_crash.log"));
 
     public static IServiceProvider Services { get; private set; } = null!;
 
@@ -62,15 +67,7 @@ public partial class App : Application
     {
         try
         {
-            var logDirectory = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "FileOrganizer",
-                "logs");
-            Directory.CreateDirectory(logDirectory);
-
-            var log = Path.Combine(logDirectory, "fileorganizer_crash.log");
-            File.AppendAllText(log,
-                $"[{DateTime.Now:o}] {exception?.GetType().FullName}: {exception?.Message}\n{exception?.StackTrace}\n---\n");
+            CrashLog.Write(exception);
         }
         catch
         {
