@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- Critical contract coverage now directly exercises persisted move-plan replay,
+  source-identity revalidation, and fail-closed undo of tampered journal roots,
+  alongside classifier, watch, NDJSON, retry, collision, and WinUI service paths.
 - Windows CI now runs the isolated Python suite, compiled sidecar/service
   contracts, the WinUI release build, and exact-version Ruff/mypy/pyright
   ratchets, while publishing test, quality, build-log, and shell artifacts.
