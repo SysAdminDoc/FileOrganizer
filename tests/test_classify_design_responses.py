@@ -122,6 +122,11 @@ def test_cached_and_fresh_results_share_schema_guard(monkeypatch):
     monkeypatch.setattr(classify_design, "lookup_cached", lambda *_args: None)
     monkeypatch.setattr(
         classify_design,
+        "record_classification",
+        lambda *_args, **_kwargs: {"record_id": "cls-test"},
+    )
+    monkeypatch.setattr(
+        classify_design,
         "call_deepseek",
         lambda _prompt, expected_count=None: [_valid("good"), 99],
     )
@@ -137,6 +142,7 @@ def test_cached_and_fresh_results_share_schema_guard(monkeypatch):
     assert result[0]["category"] == "After Effects - Other"
     assert result[1]["category"] == "_Review"
     assert result[1]["_retry_required"] is True
+    assert result[0]["_provenance"]["record_id"] == "cls-test"
     assert len(stored) == 0
 
 

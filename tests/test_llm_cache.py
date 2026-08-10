@@ -71,7 +71,7 @@ class TestLlmCache(unittest.TestCase):
         self.assertIn("llm_cache_schema", tables)
         self.assertIn("idx_llm_fingerprint", indexes)
         self.assertIn("idx_llm_accessed", indexes)
-        self.assertEqual(schema_version, 1)
+        self.assertEqual(schema_version, 2)
 
     @patch("llm_cache.folder_fingerprint", return_value="abc123")
     def test_store_and_lookup(self, _):
@@ -80,6 +80,27 @@ class TestLlmCache(unittest.TestCase):
         result = llm_cache.lookup_cached("/tmp/folder", "deepseek-v4-flash", "classify this")
         self.assertIsNotNone(result)
         self.assertEqual(result["category"], "After Effects - Slideshow")
+
+    @patch("llm_cache.folder_fingerprint", return_value="abc123")
+    def test_store_links_cache_entry_to_provenance(self, _):
+        llm_cache.store_cached(
+            "/tmp/folder",
+            "model",
+            "prompt",
+            {"category": "Test"},
+            {"record_id": "cls-fixture"},
+        )
+
+        result = llm_cache.lookup_cached("/tmp/folder", "model", "prompt")
+
+        assert result is not None
+        self.assertEqual(result["_cached_provenance_id"], "cls-fixture")
+        con = sqlite3.connect(str(llm_cache.DB_FILE))
+        response_hash = con.execute(
+            "SELECT response_hash FROM llm_cache"
+        ).fetchone()[0]
+        con.close()
+        self.assertEqual(len(response_hash), 64)
 
     @patch("llm_cache.folder_fingerprint", return_value="abc123")
     def test_lookup_miss(self, _):

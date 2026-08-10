@@ -17,11 +17,16 @@ Design:
 import json
 import os
 import re
+import sqlite3
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 
 from fileorganizer.config import _APP_DATA_DIR
+from fileorganizer.classification_provenance import (
+    DEFAULT_DB_PATH as _PROVENANCE_DB_PATH,
+    record_correction as record_provenance_correction,
+)
 from fileorganizer.folder_cache import compute_folder_fingerprint
 from fileorganizer.naming import _normalize, _extract_name_hints
 
@@ -175,7 +180,8 @@ class AdaptiveCorrector:
             pass  # Fail silently; corrections are optional
     
     def record_correction(self, folder_name: str, folder_path: str,
-                         corrected_category: str, original_confidence: int = 0):
+                          corrected_category: str, original_confidence: int = 0,
+                          provenance_record_id: str = ''):
         """Record a user correction.
         
         Args:
@@ -196,6 +202,15 @@ class AdaptiveCorrector:
         
         self.corrections.append(new_rec)
         self._save_corrections()
+        if provenance_record_id or _PROVENANCE_DB_PATH.exists():
+            try:
+                record_provenance_correction(
+                    record_id=provenance_record_id,
+                    input_value=None if provenance_record_id else folder_path,
+                    corrected_decision=corrected_category,
+                )
+            except (OSError, sqlite3.Error, ValueError):
+                pass  # Adaptive hints remain useful if provenance is unavailable.
     
     def apply_correction(self, folder_path: str) -> Optional[Tuple[str, int]]:
         """Check if folder matches a known correction by fingerprint.

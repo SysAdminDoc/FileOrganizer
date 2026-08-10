@@ -11,6 +11,7 @@ from pathlib import Path
 from fileorganizer.adaptive_corrector import (
     CorrectionRecord, AdaptiveCorrector, build_adaptive_system_prompt
 )
+import fileorganizer.adaptive_corrector as adaptive_corrector
 
 
 @pytest.fixture
@@ -129,6 +130,34 @@ def test_adaptive_corrector_record_correction(temp_corrections_file, temp_lib_di
     with open(temp_corrections_file, 'r') as f:
         data = json.load(f)
     assert len(data['corrections']) == 1
+
+
+def test_correction_updates_matching_provenance(
+    temp_corrections_file, temp_lib_dir, tmp_path, monkeypatch
+):
+    provenance_db = tmp_path / "provenance.db"
+    provenance_db.touch()
+    calls = []
+    monkeypatch.setattr(adaptive_corrector, "_PROVENANCE_DB_PATH", provenance_db)
+    monkeypatch.setattr(
+        adaptive_corrector,
+        "record_provenance_correction",
+        lambda **kwargs: calls.append(kwargs) or 1,
+    )
+    corrector = AdaptiveCorrector(corrections_file=temp_corrections_file)
+    folder_path = os.path.join(temp_lib_dir, 'summer-flyer-2025')
+
+    corrector.record_correction(
+        'summer-flyer-2025', folder_path, 'Flyer / Poster', 60
+    )
+
+    assert calls == [
+        {
+            "record_id": "",
+            "input_value": folder_path,
+            "corrected_decision": "Flyer / Poster",
+        }
+    ]
 
 
 def test_adaptive_corrector_deduplication(temp_corrections_file, temp_lib_dir):

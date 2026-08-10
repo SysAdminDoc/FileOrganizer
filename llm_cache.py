@@ -17,7 +17,7 @@ from typing import Optional
 DB_FILE = Path(__file__).parent / 'organize_moves.db'
 DEFAULT_TTL = 30 * 86400  # 30 days in seconds
 _SCHEMA_NAME = 'llm_cache'
-_SCHEMA_VERSION = 1
+_SCHEMA_VERSION = 2
 
 
 def _ensure_schema(con: sqlite3.Connection) -> None:
@@ -30,6 +30,8 @@ def _ensure_schema(con: sqlite3.Connection) -> None:
             model_id       TEXT NOT NULL,
             prompt_hash    TEXT NOT NULL,
             response_json  TEXT NOT NULL,
+            response_hash  TEXT NOT NULL DEFAULT '',
+            provenance_id  TEXT NOT NULL DEFAULT '',
             created_at     INTEGER NOT NULL,
             accessed_at    INTEGER NOT NULL,
             UNIQUE(fingerprint, model_id, prompt_hash)
@@ -47,6 +49,14 @@ def _ensure_schema(con: sqlite3.Connection) -> None:
     if missing:
         raise sqlite3.DatabaseError(
             f"llm_cache table is missing required columns: {', '.join(missing)}"
+        )
+    if 'response_hash' not in columns:
+        con.execute(
+            "ALTER TABLE llm_cache ADD COLUMN response_hash TEXT NOT NULL DEFAULT ''"
+        )
+    if 'provenance_id' not in columns:
+        con.execute(
+            "ALTER TABLE llm_cache ADD COLUMN provenance_id TEXT NOT NULL DEFAULT ''"
         )
     con.execute(
         'CREATE INDEX IF NOT EXISTS idx_llm_fingerprint ON llm_cache(fingerprint)'
@@ -130,7 +140,7 @@ def lookup_cached(folder_path: str, model_id: str, prompt_text: str) -> Optional
     con = get_cache_db()
     try:
         row = con.execute(
-            "SELECT response_json, created_at, accessed_at FROM llm_cache "
+            "SELECT response_json, provenance_id, created_at, accessed_at FROM llm_cache "
             "WHERE fingerprint = ? AND model_id = ? AND prompt_hash = ?",
             (fp, model_id, p_hash)
         ).fetchone()
@@ -159,14 +169,18 @@ def lookup_cached(folder_path: str, model_id: str, prompt_text: str) -> Optional
         con.commit()
         
         try:
-            return json.loads(row['response_json'])
+            result = json.loads(row['response_json'])
+            if isinstance(result, dict) and row['provenance_id']:
+                result['_cached_provenance_id'] = row['provenance_id']
+            return result
         except (TypeError, json.JSONDecodeError):
             return None
     finally:
         con.close()
 
 
-def store_cached(folder_path: str, model_id: str, prompt_text: str, response: dict) -> bool:
+def store_cached(folder_path: str, model_id: str, prompt_text: str, response: dict,
+                 provenance: dict | None = None) -> bool:
     """
     Store LLM response in cache by (fingerprint, model_id, prompt_hash).
     
@@ -177,15 +191,18 @@ def store_cached(folder_path: str, model_id: str, prompt_text: str, response: di
         return False
     
     p_hash = prompt_hash(prompt_text)
+    response_json = json.dumps(response, sort_keys=True)
+    response_hash = hashlib.sha256(response_json.encode('utf-8')).hexdigest()
+    provenance_id = str((provenance or {}).get('record_id', '') or '')
     now = int(time.time())
     
     con = get_cache_db()
     try:
         con.execute(
             "INSERT OR REPLACE INTO llm_cache "
-            "(fingerprint, model_id, prompt_hash, response_json, created_at, accessed_at) "
-            "VALUES (?, ?, ?, ?, ?, ?)",
-            (fp, model_id, p_hash, json.dumps(response), now, now)
+            "(fingerprint, model_id, prompt_hash, response_json, response_hash, provenance_id, "
+            "created_at, accessed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (fp, model_id, p_hash, response_json, response_hash, provenance_id, now, now)
         )
         con.commit()
         return True

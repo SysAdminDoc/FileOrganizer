@@ -89,6 +89,10 @@ def test_chat_completions_provider_uses_httpx_transport(monkeypatch):
         "temperature": 0.25,
         "max_tokens": 77,
     }
+    assert provider.provenance_context() == {
+        "provider": "base",
+        "model": "model-a",
+    }
 
 
 def test_chat_completions_provider_batch_builds_prompt(monkeypatch):

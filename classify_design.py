@@ -20,6 +20,8 @@ import os, sys, json, re, argparse, tempfile
 from pathlib import Path
 from datetime import datetime
 
+from fileorganizer.classification_provenance import record_classification
+
 # Stage 0: fingerprint DB lookup (for NEXT-15)
 try:
     from asset_db import lookup_folder
@@ -684,6 +686,30 @@ def _normalize_deepseek_result(
     return dict(raw)
 
 
+def _attach_deepseek_provenance(
+    item: dict,
+    result: dict,
+    prompt: str,
+    model: str,
+) -> dict:
+    """Persist a hash-only evaluation record and stamp its stable ID."""
+    output = dict(result)
+    output.pop('_cached_provenance_id', None)
+    descriptor = record_classification(
+        item.get('path') or {'name': item.get('name', '')},
+        provider='deepseek',
+        model=model,
+        prompt=prompt,
+        taxonomy=sorted(get_runtime_category_set()),
+        response=output,
+        response_id=str(output.pop('_response_id', '') or ''),
+        confidence=int(output.get('confidence', 0) or 0),
+        suggested_decision=str(output.get('category', '') or ''),
+    )
+    output['_provenance'] = descriptor
+    return output
+
+
 def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_MODEL) -> list[dict]:
     """
     Cached wrapper around call_deepseek (NEXT-44).
@@ -720,7 +746,7 @@ def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_M
     if not uncached_indices:
         results = [None] * len(items)
         for i, cached in cached_results.items():
-            results[i] = cached
+            results[i] = _attach_deepseek_provenance(items[i], cached, prompt, model)
         return results
     
     # Build prompt for uncached items only
@@ -744,15 +770,28 @@ def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_M
         )
         normalized_results.append(normalized)
         if normalized.get('_retry_required'):
+            normalized_results[i] = _attach_deepseek_provenance(
+                item, normalized, uncached_prompt, model
+            )
             continue
+        attached = _attach_deepseek_provenance(
+            item, normalized, uncached_prompt, model
+        )
         path = item.get('path', '').strip()
         if path:
-            store_cached(path, model, uncached_prompt, normalized)
+            store_cached(
+                path,
+                model,
+                uncached_prompt,
+                normalized,
+                attached.get('_provenance'),
+            )
+        normalized_results[i] = attached
     
     # Merge cached + API results in original order
     results = [None] * len(items)
     for i, cached in cached_results.items():
-        results[i] = cached
+        results[i] = _attach_deepseek_provenance(items[i], cached, prompt, model)
     for i, uncached_idx in enumerate(uncached_indices):
         results[uncached_idx] = normalized_results[i]
     
@@ -806,7 +845,13 @@ def call_deepseek(
                 'invalid_json',
                 f"could not parse DeepSeek response: {e}; raw={raw[:800]!r}",
             ) from e
-    return _validate_deepseek_batch_shape(payload, expected_count)
+    validated = _validate_deepseek_batch_shape(payload, expected_count)
+    response_id = str(getattr(resp, 'id', '') or '')
+    if response_id:
+        for item in validated:
+            if isinstance(item, dict):
+                item['_response_id'] = response_id
+    return validated
 
 # ── Commands ──────────────────────────────────────────────────────────────────
 def cmd_stats(index: list[dict]):

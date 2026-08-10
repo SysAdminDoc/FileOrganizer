@@ -1,3 +1,4 @@
+import json
 import sqlite3
 import sys
 import tempfile
@@ -172,6 +173,11 @@ class OrganizeRunPlanTests(unittest.TestCase):
                             "clean_name": "Template B",
                             "category": "Flyers & Print",
                             "confidence": 95,
+                            "_provenance": {
+                                "record_id": "cls-test",
+                                "provider": "deepseek",
+                                "model": "deepseek-v4-flash",
+                            },
                         },
                         {"folder": str(src_root), "name": "Template B"},
                     )
@@ -187,11 +193,14 @@ class OrganizeRunPlanTests(unittest.TestCase):
             self.assertTrue(Path(plan.items[0]["dest"]).exists())
 
             con = sqlite3.connect(runner.JOURNAL_FILE)
-            row = con.execute("SELECT status, plan_id, run_id FROM moves").fetchone()
+            row = con.execute(
+                "SELECT status, plan_id, run_id, provenance_id FROM moves"
+            ).fetchone()
             con.close()
             self.assertEqual(row[0], "done")
             self.assertEqual(row[1], "apply-plan")
             self.assertEqual(row[2], result["run_id"])
+            self.assertEqual(row[3], "cls-test")
 
             report_path = Path(tmp) / "report.md"
             written = runner.generate_report(result["run_id"], str(report_path))
@@ -199,6 +208,33 @@ class OrganizeRunPlanTests(unittest.TestCase):
             report = report_path.read_text(encoding="utf-8")
             self.assertIn("FileOrganizer Move Report", report)
             self.assertIn("Flyers", report)
+            self.assertIn("cls-test", report)
+
+    def test_v1_move_plan_is_migrated_with_empty_provenance(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "legacy-plan.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": 1,
+                        "plan_id": "legacy",
+                        "dest_root": str(Path(tmp) / "dest"),
+                        "items": [
+                            {
+                                "src": str(Path(tmp) / "src"),
+                                "dest": str(Path(tmp) / "dest" / "item"),
+                                "source_root": str(Path(tmp)),
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            migrated = runner.read_move_plan(str(path))
+
+            self.assertEqual(migrated["schema_version"], runner.PLAN_SCHEMA_VERSION)
+            self.assertEqual(migrated["items"][0]["provenance"], {})
 
     def test_old_journal_schema_is_migrated_before_status_queries(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -235,6 +271,8 @@ class OrganizeRunPlanTests(unittest.TestCase):
             self.assertIn("duplicate_source_file", columns)
             self.assertIn("duplicate_existing_file", columns)
             self.assertIn("duplicate_sha256", columns)
+            self.assertIn("provenance_id", columns)
+            self.assertIn("provenance_json", columns)
             self.assertEqual(status, "done")
 
 
