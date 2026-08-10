@@ -1,8 +1,10 @@
 """FileOrganizer — Plugins, profiles, category presets, cloud path resolution."""
-import os, re, json, importlib.util, subprocess, sys
+import os, re, json, csv, importlib.util, subprocess, sys
 from pathlib import Path
 
-from fileorganizer.config import _APP_DATA_DIR, _PROFILES_DIR, _PRESETS_DIR
+from fileorganizer.config import (
+    _APP_DATA_DIR, _PROFILES_DIR, _PRESETS_DIR, _CSV_LOG_FILE,
+)
 
 class ProfileManager:
     """Manages saved scan configuration profiles."""

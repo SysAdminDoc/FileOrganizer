@@ -2,8 +2,11 @@
 import os, re, json, math, subprocess, sys
 from datetime import datetime, timedelta
 from pathlib import Path
+from collections import Counter
 
 from fileorganizer.config import _APP_DATA_DIR
+
+_RULES_FILE = os.path.join(_APP_DATA_DIR, 'rules.json')
 
 class RuleEngine:
     """User-defined classification rules with priority ordering."""

@@ -22,7 +22,7 @@ except ImportError:
     _rfuzz = None
 from fileorganizer.naming import (
     _is_id_only_folder, _extract_name_hints, _smart_name,
-    _is_generic_name, _normalize, _beautify_name
+    _is_generic_name, _normalize, _beautify_name, _ASSET_FOLDER_NAMES
 )
 
 # Pydantic model for structured JSON output (Ollama format parameter)
@@ -851,6 +851,9 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
     result = {'name': None, 'category': None, 'confidence': 0,
               'method': 'llm', 'detail': ''}
 
+    # Collect the prompt context before adding ID-only enrichment hints.
+    context_lines = [f"Folder name: \"{folder_name}\""]
+
     # ── Smart ID-only enrichment ──────────────────────────────────────────────
     # If the folder name is just a marketplace ID (e.g. "VH-12345678"), scan
     # inside for project files (.aep, .prproj, .psd…) to extract a real name.
@@ -864,7 +867,6 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
             context_lines.append("Use the project file name as the cleaned 'name' field.")
 
     # Collect file/subfolder context from the folder
-    context_lines = [f"Folder name: \"{folder_name}\""]
     if folder_path and os.path.isdir(folder_path):
         files = []
         subdirs = []
