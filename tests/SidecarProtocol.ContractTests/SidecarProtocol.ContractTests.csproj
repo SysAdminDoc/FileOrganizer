@@ -12,6 +12,8 @@
              Link="SidecarProtocol.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\RunLifecycleGate.cs"
              Link="RunLifecycleGate.cs" />
+    <Compile Include="..\..\src\FileOrganizer.UI\Services\CrashLogWriter.cs"
+             Link="CrashLogWriter.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\PythonRunner.cs"
              Link="PythonRunner.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\SidecarRunner.cs"

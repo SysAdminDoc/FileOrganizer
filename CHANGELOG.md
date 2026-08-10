@@ -12,6 +12,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Security
 
+- WinUI crash reports now use bounded atomic rotation, enforce file and record
+  retention caps, redact secret-bearing arguments and environment values, and
+  minimize private paths while retaining actionable stack context.
 - Provider and Envato credentials now use Windows-user DPAPI storage instead of
   plaintext app-data JSON/text files, and configurable cloud endpoints are
   restricted to approved HTTPS provider hosts.
