@@ -341,10 +341,13 @@ class ModelRouter:
         cls._cache_ts = 0
 
     @classmethod
-    def get_model(cls, task: str, url: str = None, log_cb=None, auto_pull: bool = True) -> str:
-        """Return the best available model for the given task.
-        Prepends the user's selected model for text/reasoning tasks.
-        Auto-pulls first preference if nothing installed for that task."""
+    def get_model(cls, task: str, url: str = None, log_cb=None, auto_pull: bool = False) -> str:
+        """Return the best installed model for the given task.
+
+        ``auto_pull`` remains accepted for compatibility with older callers,
+        but model acquisition is always an explicit settings/model-manager
+        action and is never performed during classification.
+        """
         prefs = list(cls._TASK_PREFS.get(task, []))
         # For text/reasoning tasks, user's selected model goes first
         if task in ('text_classify', 'deep_reasoning'):
@@ -365,17 +368,14 @@ class ModelRouter:
                     if im.startswith(base + ':') or im == base:
                         return im
 
-        # Nothing installed for this task — auto-pull first preference
+        # Nothing installed for this task. Never download a model implicitly.
         if auto_pull and prefs:
             target = prefs[0]
             if log_cb:
-                log_cb(f"  [ModelRouter] No model for '{task}' — auto-pulling {target}...")
-            success = _ollama_pull_model_streaming(target, url=url, log_cb=log_cb)
-            if success:
-                cls.invalidate_cache()
-                return target
-            if log_cb:
-                log_cb(f"  [ModelRouter] Pull failed for {target}")
+                log_cb(
+                    f"  [ModelRouter] No installed model for '{task}' "
+                    f"(download {target} from Settings > Ollama LLM)"
+                )
 
         # Last resort: return user's model (may not be ideal but better than nothing)
         return load_ollama_settings().get('model', '')
@@ -521,12 +521,14 @@ def _is_vision_model(model_name: str) -> bool:
     return any(name_lower.startswith(p) for p in _VISION_MODEL_PREFIXES)
 
 
-def _find_vision_model(url: str = None, auto_upgrade: bool = True) -> str:
-    """Find the best available vision model. Always returns the top-ranked
-    model (for auto-pull) unless auto_upgrade is False, in which case it
-    returns the best already-installed model.
-    Returns model name or empty string if none available."""
-    # Ranked best-to-worst — the #1 entry is the default auto-pull target
+def _find_vision_model(url: str = None, auto_upgrade: bool = False) -> str:
+    """Find the best already-installed vision model.
+
+    ``auto_upgrade`` remains accepted for compatibility but is ignored;
+    missing models must be acquired explicitly from the model manager.
+    Returns a model name or an empty string if none is available.
+    """
+    # Ranked best-to-worst for choosing among installed models.
     _VISION_RANK = ['qwen2.5vl:7b', 'gemma3:12b', 'minicpm-v:8b',
                     'llama3.2-vision:11b', 'qwen2.5vl:3b', 'gemma3:4b',
                     'llava:13b', 'llava:7b', 'bakllava:7b', 'moondream:1.8b']
@@ -553,10 +555,6 @@ def _find_vision_model(url: str = None, auto_upgrade: bool = True) -> str:
             if _is_vision_model(m):
                 best_installed = m
                 break
-    # If auto_upgrade, always return the top-ranked model so the caller
-    # will auto-pull it if not already installed
-    if auto_upgrade:
-        return _VISION_RANK[0]
     return best_installed
 
 
