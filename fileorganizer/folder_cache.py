@@ -3,8 +3,9 @@
 Cache folder fingerprints (file count, size, mtime, filename hash) to skip
 unchanged folders on re-scan. Reduces overhead by ~70% on stable libraries.
 
-Fingerprints are cached in asset_db with 30-day TTL. On re-scan, if fingerprint
-matches, skip folder entirely. If mismatch or expired, re-scan and update cache.
+Fingerprints are cached in a per-user SQLite database with a 30-day TTL. On
+re-scan, if a fingerprint matches, skip the folder entirely. If it differs or
+has expired, re-scan and update the cache.
 
 API:
   compute_folder_fingerprint(folder_path) -> str
@@ -21,9 +22,12 @@ import logging
 from pathlib import Path
 from typing import Optional, Dict, List
 
+from fileorganizer.config import _APP_DATA_DIR
+
 logger = logging.getLogger(__name__)
 
 _DEFAULT_CACHE_TTL_SECONDS = 30 * 24 * 60 * 60  # 30 days
+DEFAULT_CACHE_DB = os.path.join(_APP_DATA_DIR, 'folder_fingerprints.db')
 
 
 def compute_folder_fingerprint(folder_path: str) -> str:
@@ -76,7 +80,7 @@ def compute_folder_fingerprint(folder_path: str) -> str:
 class FolderCache:
     """Manages folder fingerprint cache in SQLite."""
 
-    def __init__(self, db_path: str):
+    def __init__(self, db_path: str = DEFAULT_CACHE_DB):
         self.db_path = db_path
         self._init_schema()
 

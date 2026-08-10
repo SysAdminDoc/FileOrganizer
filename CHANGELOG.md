@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- `organize_run.py --skip-unchanged` now uses the durable folder fingerprint
+  cache to omit stable source folders from generated plans, while
+  `--invalidate-cache` clears the cache as an explicit standalone action.
 - Legacy desktop Preview and Apply now share a Step 6 preflight operation
   table with per-row toggles and atomically save the selected moves/renames as
   editable JSON before mutation; `organize_run.py` also accepts the plan-first
