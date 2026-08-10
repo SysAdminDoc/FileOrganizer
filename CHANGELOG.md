@@ -6,6 +6,8 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- All custom WinUI button styles now retain the Windows system focus indicator,
+  including its built-in high-contrast behavior for keyboard navigation.
 - Default pytest runs now use unique workspace-owned temp roots and guarded
   teardown, avoiding Windows `pytest-current` lock collisions across repeated
   and concurrent runs.
