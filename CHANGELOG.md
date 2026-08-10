@@ -70,6 +70,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Watch configuration now fails closed with one structured error for malformed
   schemas or unsafe timing values, and long-running watches retain bounded,
   identity-aware file state with observable eviction counts.
+- Community catalog downloads are restricted to the owned GitHub release
+  asset, stream within fixed metadata/payload byte budgets, validate media
+  types and schema limits, and support cancellation between chunks.
 
 ## [v8.5.19] - 2026-07-01
 
