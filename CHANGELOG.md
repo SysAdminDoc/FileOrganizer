@@ -76,6 +76,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Loose-file plans now pre-sanitize trailing-space path components before
   hashing, preserve colliding siblings with numbered suffixes, and journal the
   renamed source path used by the move.
+- Retry cleanup now removes only unchanged, identity-recorded partial files or
+  directories whose contents match the live source; reparse points, stale
+  output, legacy records, and unrelated occupied destinations fail closed.
 
 ## [v8.5.19] - 2026-07-01
 

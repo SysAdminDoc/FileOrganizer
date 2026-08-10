@@ -997,16 +997,6 @@ UI + SQLite queries (~1 week).
 
 ---
 
-- [ ] P2 — Retry cleanup silently leaves partial file destinations in place
-  Category: reliability
-  Where: `organize_run.py:1342-1402`
-  Problem: When an error record marks `partial_dest_exists`, retry unconditionally calls `shutil.rmtree(dest, ignore_errors=True)`. `rmtree` does not remove a partial destination that is a regular file (the observed file remains), so the subsequent move still collides and the retry is retained as failed instead of recovering.
-  Evidence: A probe created a regular destination file and ran the exact `shutil.rmtree(path, ignore_errors=True)` call; the file still existed afterward. `retry_errors()` has no `isfile`/unlink branch before `robust_move()`.
-  Fix: Inspect the destination type with reparse-safe semantics and unlink a regular partial file, remove a directory only when it is an approved directory, and handle cleanup errors inside the retry try/except with a structured reason. Never delete an unrelated occupied destination.
-  Acceptance: Retry fixtures with a partial file, partial directory, symlink, and unrelated occupied destination produce the documented safe outcome; a valid partial file is removed and the source is retried successfully without deleting unrelated data.
-  Confidence: Verified
-  Effort: S
-
 - [ ] P2 — Duplicate move actions have no collision policy and give misleading failure feedback
   Category: reliability
   Where: `fileorganizer/dialogs/duplicates.py:596-605,937-946`
