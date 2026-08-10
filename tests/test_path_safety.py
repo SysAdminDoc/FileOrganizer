@@ -4,7 +4,7 @@ import pytest
 
 import fileorganizer.config as config
 import organize_run as runner
-from fileorganizer.path_safety import PathSafetyError, validate_move
+from fileorganizer.path_safety import PathSafetyError, validate_move, validate_tree_pair
 
 
 @pytest.fixture(autouse=True)
@@ -157,3 +157,34 @@ def test_smart_and_watch_reject_overlapping_roots(tmp_path, monkeypatch):
 
     monkeypatch.setattr("sys.argv", ["watch_run.py", "--watches", '[{"src": "' + str(source).replace('\\', '/') + '", "dest": "' + str(nested).replace('\\', '/') + '"}]'])
     assert watch_run.main() == 3
+
+
+@pytest.mark.parametrize("relationship", ["equal", "child", "parent"])
+def test_validate_tree_pair_rejects_all_overlapping_relationships(tmp_path, relationship):
+    source = tmp_path / "source"
+    source.mkdir()
+    if relationship == "equal":
+        destination = source
+    elif relationship == "child":
+        destination = source / "organized"
+        destination.mkdir()
+    else:
+        destination = tmp_path
+
+    with pytest.raises(PathSafetyError, match="overlap"):
+        validate_tree_pair(source, destination)
+
+
+def test_validate_tree_pair_rejects_reparse_root(tmp_path):
+    source = tmp_path / "source"
+    real_destination = tmp_path / "destination"
+    source.mkdir()
+    real_destination.mkdir()
+    linked_destination = tmp_path / "linked-destination"
+    try:
+        linked_destination.symlink_to(real_destination, target_is_directory=True)
+    except (OSError, NotImplementedError) as exc:
+        pytest.skip(f"symlink unavailable: {exc}")
+
+    with pytest.raises(PathSafetyError, match="symlink|reparse"):
+        validate_tree_pair(source, linked_destination)

@@ -48,17 +48,18 @@ public sealed partial class WatchPage : Page
     {
         var src = NewSrcBox.Text?.Trim() ?? "";
         var dst = NewDstBox.Text?.Trim() ?? "";
-        if (!Directory.Exists(src) || string.IsNullOrEmpty(dst))
+        if (!WatchPathValidator.TryValidate(src, dst, out var normalizedSrc,
+                out var normalizedDst, out var pathError))
         {
-            StatusText.Text = "Source must exist; destination must be set.";
+            StatusText.Text = pathError;
             return;
         }
-        if (Watches.Any(w => w.Src.Equals(src, StringComparison.OrdinalIgnoreCase)))
+        if (Watches.Any(w => w.Src.Equals(normalizedSrc, StringComparison.OrdinalIgnoreCase)))
         {
             StatusText.Text = "That source is already watched.";
             return;
         }
-        Watches.Add(new WatchSpec(src, dst, NewCopyCheck.IsChecked == true));
+        Watches.Add(new WatchSpec(normalizedSrc, normalizedDst, NewCopyCheck.IsChecked == true));
         SaveWatches();
         NewSrcBox.Text = ""; NewDstBox.Text = ""; NewCopyCheck.IsChecked = false;
         StatusText.Text = "Watch added.";
@@ -81,6 +82,16 @@ public sealed partial class WatchPage : Page
     {
         if (_cts is not null) return;
         if (Watches.Count == 0) { StatusText.Text = "Add at least one watch first."; return; }
+
+        foreach (var watch in Watches)
+        {
+            if (!WatchPathValidator.TryValidate(watch.Src, watch.Dest,
+                    out _, out _, out var pathError))
+            {
+                StatusText.Text = $"Cannot start watch: {pathError}";
+                return;
+            }
+        }
 
         var json = JsonSerializer.Serialize(
             Watches.Select(w => new { src = w.Src, dest = w.Dest, copy = w.Copy }));
@@ -160,10 +171,12 @@ public sealed partial class WatchPage : Page
                 foreach (var line in raw.Split('\n', StringSplitOptions.RemoveEmptyEntries))
                 {
                     var parts = line.Split("||");
-                    if (parts.Length >= 2 && Directory.Exists(parts[0]))
+                    if (parts.Length >= 2
+                        && WatchPathValidator.TryValidate(parts[0], parts[1],
+                            out var normalizedSrc, out var normalizedDst, out _))
                     {
                         bool copy = parts.Length > 2 && parts[2] == "1";
-                        Watches.Add(new WatchSpec(parts[0], parts[1], copy));
+                        Watches.Add(new WatchSpec(normalizedSrc, normalizedDst, copy));
                     }
                 }
             }

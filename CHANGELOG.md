@@ -20,6 +20,8 @@ All notable changes to FileOrganizer will be documented in this file.
 
 - Restored missing runtime imports across classification, metadata, PC-file,
   face-detection, Ollama, rule, plugin, worker, and secondary PyQt paths.
+- Watch folders now reject equal, nested, ancestor, junction, and symbolic-link
+  source/destination roots before persistence or startup.
 - Ollama batch classification now passes the configured endpoint and model
   explicitly, and optional face-recognition failures no longer terminate GUI
   startup.
