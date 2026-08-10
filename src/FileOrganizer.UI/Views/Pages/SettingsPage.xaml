@@ -89,7 +89,7 @@
                         <TextBlock Text="AcoustID API key (optional)"
                                    Style="{StaticResource LabelTextStyle}"/>
                         <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
-                                   Text="Only needed if you want fingerprint-based identification of untagged music. Existing-tag matching works without one. Free, no email required."/>
+                                   Text="Only needed if you want fingerprint-based identification of untagged music. Existing-tag matching works without one. Stored in Windows Credential Locker, never ordinary app settings."/>
                         <Grid ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>

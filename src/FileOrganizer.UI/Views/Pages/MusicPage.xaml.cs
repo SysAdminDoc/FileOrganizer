@@ -63,8 +63,9 @@ public sealed partial class MusicPage : Page
         if (!string.IsNullOrEmpty(pattern))
             args.AddRange(new[] { "--rename-pattern", pattern });
         var apiKey = ApiKeyBox.Password?.Trim() ?? "";
-        if (!string.IsNullOrEmpty(apiKey))
-            args.AddRange(new[] { "--api-key", apiKey });
+        // Explicitly clear inherited values when the user has no stored key.
+        IReadOnlyDictionary<string, string> environmentVariables =
+            new Dictionary<string, string> { ["ACOUSTID_API_KEY"] = apiKey };
 
         _cts = new CancellationTokenSource();
         SetRunning(true);
@@ -77,7 +78,7 @@ public sealed partial class MusicPage : Page
         try
         {
             var result = await _python.RunScriptNdjsonAsync(
-                "music_run.py", args, HandleEvent, _cts.Token);
+                "music_run.py", args, HandleEvent, _cts.Token, environmentVariables);
 
             if (result.Success)
                 StatusText.Text = $"Done. {Results.Count:N0} files processed.";

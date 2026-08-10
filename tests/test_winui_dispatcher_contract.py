@@ -41,3 +41,19 @@ def test_shell_cleanup_and_duplicates_are_explicitly_read_only_with_handoff():
     duplicates = (REPO_ROOT / "src/FileOrganizer.UI/Views/Pages/DuplicatesPage.xaml").read_text(encoding="utf-8")
     assert 'SelectionMode="None"' in cleanup
     assert 'SelectionMode="None"' in duplicates
+
+
+def test_acoustid_secret_uses_credential_locker_and_never_argv():
+    settings = (REPO_ROOT / "src/FileOrganizer.UI/Services/UserSettings.cs").read_text(encoding="utf-8")
+    music = (REPO_ROOT / "src/FileOrganizer.UI/Views/Pages/MusicPage.xaml.cs").read_text(encoding="utf-8")
+    runner = (REPO_ROOT / "src/FileOrganizer.UI/Services/PythonRunner.cs").read_text(encoding="utf-8")
+    settings_page = (REPO_ROOT / "src/FileOrganizer.UI/Views/Pages/SettingsPage.xaml.cs").read_text(encoding="utf-8")
+
+    assert "PasswordVault" in settings
+    assert "PasswordCredential" in settings
+    assert 'Remove("AcoustIdApiKey")' in settings
+    assert "TrySetAcoustIdApiKey" in settings_page
+    assert '"--api-key"' not in music
+    assert '"ACOUSTID_API_KEY"' in music
+    assert "IReadOnlyDictionary<string, string>? environmentVariables" in runner
+    assert "psi.EnvironmentVariables[pair.Key] = pair.Value" in runner

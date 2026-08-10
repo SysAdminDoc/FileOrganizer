@@ -23,6 +23,9 @@ All notable changes to FileOrganizer will be documented in this file.
   dispatcher queue, preserve event ordering, and propagate callback failures.
 - WinUI Cleanup and Duplicates now clearly identify their shell scans as
   read-only and direct users to the Python desktop action flows.
+- WinUI AcoustID credentials now migrate to Windows Credential Locker and are
+  supplied to the music sidecar through an explicit environment channel rather
+  than process arguments.
 
 ### Fixed
 
