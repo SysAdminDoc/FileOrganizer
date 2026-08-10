@@ -20,7 +20,12 @@ Results saved to classification_results/<prefix>NNN.json
 import os, sys, json, re, argparse, tempfile
 from pathlib import Path
 from datetime import datetime
+from typing import Callable
 
+from fileorganizer.adaptive_corrector import (
+    AdaptiveCorrector,
+    build_adaptive_batch_system_prompt,
+)
 from fileorganizer.classification_provenance import record_classification
 
 # Stage 0: fingerprint DB lookup (for NEXT-15)
@@ -526,7 +531,10 @@ def looks_generic(name: str) -> bool:
         _PIRACY_DOMAIN_RE.search(name)                 # piracy/distribution site domains in name
     )
 
-def build_prompt(batch_items: list[dict]) -> str:
+def build_prompt(
+    batch_items: list[dict],
+    corrector: AdaptiveCorrector | None = None,
+) -> str:
     lines = []
     for i, item in enumerate(batch_items, 1):
         name = item['name']
@@ -574,7 +582,7 @@ def build_prompt(batch_items: list[dict]) -> str:
 
     items_block = '\n'.join(lines)
 
-    return f"""You are a professional design asset librarian. Classify each folder into EXACTLY one category from the list below.
+    prompt = f"""You are a professional design asset librarian. Classify each folder into EXACTLY one category from the list below.
 
 CATEGORIES:
 {get_runtime_category_hint()}
@@ -612,6 +620,13 @@ Return ONLY a JSON array with one object per item (same order as input):
   ...
 ]
 No markdown, no explanation outside the JSON array."""
+    if corrector is None:
+        return prompt
+    return build_adaptive_batch_system_prompt(
+        [str(item.get('name', '')) for item in batch_items],
+        prompt,
+        corrector,
+    )
 
 # ── DeepSeek caller ───────────────────────────────────────────────────────────
 
@@ -711,7 +726,12 @@ def _attach_deepseek_provenance(
     return output
 
 
-def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_MODEL) -> list[dict]:
+def call_deepseek_cached(
+    prompt: str,
+    items: list[dict],
+    model: str = DEEPSEEK_MODEL,
+    corrector: AdaptiveCorrector | None = None,
+) -> list[dict]:
     """
     Cached wrapper around call_deepseek (NEXT-44).
     
@@ -752,7 +772,7 @@ def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_M
     
     # Build prompt for uncached items only
     uncached_items = [items[i] for i in uncached_indices]
-    uncached_prompt = build_prompt(uncached_items)
+    uncached_prompt = build_prompt(uncached_items, corrector)
     
     # Call API for uncached batch
     try:
@@ -805,12 +825,15 @@ def call_deepseek_parallel_cached(
     concurrency: int = 4,
     request_batch_size: int = 12,
     model: str = DEEPSEEK_MODEL,
+    corrector: AdaptiveCorrector | None = None,
 ) -> list[dict]:
     """Classify cached DeepSeek request chunks concurrently and in input order."""
     from fileorganizer.parallel_classifier import classify_batches_parallel
 
     def classify_batch(batch: list[dict]) -> list[dict]:
-        return call_deepseek_cached(build_prompt(batch), batch, model)
+        return call_deepseek_cached(
+            build_prompt(batch, corrector), batch, model, corrector
+        )
 
     return classify_batches_parallel(
         items,
@@ -1071,12 +1094,58 @@ def _try_fingerprint_db_lookup(batch_items: list[dict]) -> dict[int, dict]:
     return out
 
 
+def _try_adaptive_corrections(
+    batch_items: list[dict],
+    corrector: AdaptiveCorrector,
+) -> dict[int, dict]:
+    """Return exact fingerprint corrections keyed by batch position."""
+    resolved = {}
+    for index, item in enumerate(batch_items):
+        path = str(item.get('path', '') or '')
+        match = corrector.apply_correction(path)
+        if match is None:
+            continue
+        category, weight = match
+        name = str(item.get('name', '') or Path(path).name)
+        resolved[index] = {
+            'name': name,
+            'category': category,
+            'clean_name': name,
+            'confidence': 100,
+            'notes': f'adaptive correction (weight {weight})',
+            '_source_name': name,
+            '_classifier': 'adaptive_correction',
+        }
+    return resolved
+
+
+def _run_unresolved_stage(
+    batch_items: list[dict],
+    resolved: dict[int, dict],
+    stage: Callable[[list[dict]], dict[int, dict]],
+) -> dict[int, dict]:
+    """Run a position-keyed classifier only for unresolved batch items."""
+    pending = [
+        (index, item) for index, item in enumerate(batch_items)
+        if index not in resolved
+    ]
+    if not pending:
+        return {}
+    local_results = stage([item for _, item in pending])
+    return {
+        pending[local_index][0]: result
+        for local_index, result in local_results.items()
+        if 0 <= local_index < len(pending)
+    }
+
+
 def cmd_run(index: list[dict], only_batch: int = 0,
             embeddings_only: bool = False, parallel: bool = False,
             concurrency: int = 4, request_batch_size: int = 12):
     """Classify all unprocessed batches.
 
     Stages run in order; each stage skips items resolved by an earlier one:
+     -1. adaptive correction — exact user-corrected folder fingerprint
       0. fingerprint_db     — exact folder fingerprint match vs community DB
                               (zero AI cost; ~60-70% skip rate for common templates)
       1. metadata_extractors   — file-content metadata (PSD canvas, font name
@@ -1087,10 +1156,6 @@ def cmd_run(index: list[dict], only_batch: int = 0,
                                   (zero AI cost when top1 ≥ 0.65 AND margin ≥ 0.15)
       4. DeepSeek AI           — everything else (skipped when embeddings_only=True)
     """
-    if not embeddings_only and not DEEPSEEK_API_KEY:
-        print("ERROR: DEEPSEEK_API_KEY not set in environment.")
-        sys.exit(1)
-
     # Clean up expired cache entries (NEXT-44)
     expired_count = cleanup_expired(max_age_days=30)
     if expired_count > 0:
@@ -1100,6 +1165,7 @@ def cmd_run(index: list[dict], only_batch: int = 0,
     num_batches = (total + BATCH_SIZE - 1) // BATCH_SIZE
 
     batches_to_run = [only_batch] if only_batch else range(1, num_batches + 1)
+    corrector = AdaptiveCorrector()
 
     for n in batches_to_run:
         if already_done(n) and not only_batch:
@@ -1112,36 +1178,62 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         ts = datetime.now().strftime('%H:%M:%S')
         print(f"[{ts}] Batch {n:03d}/{num_batches}  items {start+1}-{end}  ({len(batch_items)} items)")
 
+        # Stage -1: user correction by exact folder fingerprint (NEXT-7)
+        adaptive_resolved = _try_adaptive_corrections(batch_items, corrector)
+        if adaptive_resolved:
+            print(
+                f"  Adaptive corrections matched {len(adaptive_resolved)} item(s) "
+                "— skipping all downstream for those"
+            )
+
         # Stage 0: fingerprint DB lookup (hash-first skip, NEXT-15)
-        fp_resolved = _try_fingerprint_db_lookup(batch_items)
+        fp_resolved = _run_unresolved_stage(
+            batch_items, adaptive_resolved, _try_fingerprint_db_lookup
+        )
         if fp_resolved:
             print(f"  Fingerprint DB matched {len(fp_resolved)} item(s) — skipping all downstream for those")
 
         # Stage 1: metadata extractors (file-content driven, zero AI cost)
-        meta_resolved = _try_metadata_classify(batch_items)
+        prior = {**adaptive_resolved, **fp_resolved}
+        meta_resolved = _run_unresolved_stage(
+            batch_items, prior, _try_metadata_classify
+        )
         if meta_resolved:
             print(f"  Metadata pre-classified {len(meta_resolved)} item(s) — skipping downstream for those")
 
         # Stage 2: marketplace ID pre-classification (zero AI cost for known items)
-        pre_enriched = _try_marketplace_enrich(batch_items)
+        prior = {**prior, **meta_resolved}
+        pre_enriched = _run_unresolved_stage(
+            batch_items, prior, _try_marketplace_enrich
+        )
         if pre_enriched:
-            # Drop any positions already resolved by Stage 0 or Stage 1.
-            pre_enriched = {k: v for k, v in pre_enriched.items() if k not in fp_resolved and k not in meta_resolved}
-            if pre_enriched:
-                print(f"  Marketplace pre-classified {len(pre_enriched)} item(s) — skipping AI for those")
+            print(f"  Marketplace pre-classified {len(pre_enriched)} item(s) — skipping AI for those")
 
         # Stage 3: local embeddings classifier
-        already_resolved = set(fp_resolved.keys()) | set(meta_resolved.keys()) | set(pre_enriched.keys())
-        embed_resolved = _try_embeddings_classify(batch_items, already_resolved)
+        prior = {**prior, **pre_enriched}
+        embed_resolved = _run_unresolved_stage(
+            batch_items,
+            prior,
+            lambda items: _try_embeddings_classify(items, set()),
+        )
         if embed_resolved:
             print(f"  Embeddings pre-classified {len(embed_resolved)} item(s) — skipping AI for those")
 
-        resolved = {**fp_resolved, **meta_resolved, **pre_enriched, **embed_resolved}
+        resolved = {
+            **fp_resolved,
+            **meta_resolved,
+            **pre_enriched,
+            **embed_resolved,
+            **adaptive_resolved,
+        }
 
         # Build AI prompt only for items NOT yet resolved
         ai_items  = [(i, it) for i, it in enumerate(batch_items) if i not in resolved]
         ai_results: list[dict] = []
         if ai_items and not embeddings_only:
+            if not DEEPSEEK_API_KEY:
+                print("ERROR: DEEPSEEK_API_KEY not set in environment.")
+                sys.exit(1)
             ai_only_batch = [it for _, it in ai_items]
             try:
                 # Use cached wrapper (NEXT-44) to eliminate >90% of API calls on re-runs
@@ -1155,10 +1247,14 @@ def cmd_run(index: list[dict], only_batch: int = 0,
                         concurrency=concurrency,
                         request_batch_size=request_batch_size,
                         model=DEEPSEEK_MODEL,
+                        corrector=corrector,
                     )
                 else:
                     ai_results = call_deepseek_cached(
-                        build_prompt(ai_only_batch), ai_only_batch, DEEPSEEK_MODEL
+                        build_prompt(ai_only_batch, corrector),
+                        ai_only_batch,
+                        DEEPSEEK_MODEL,
+                        corrector,
                     )
                 cache_hits = sum(1 for r in ai_results if r is not None)
                 if cache_hits > 0:

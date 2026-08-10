@@ -9,7 +9,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from fileorganizer.adaptive_corrector import (
-    CorrectionRecord, AdaptiveCorrector, build_adaptive_system_prompt
+    CorrectionRecord,
+    AdaptiveCorrector,
+    build_adaptive_batch_system_prompt,
+    build_adaptive_system_prompt,
 )
 import fileorganizer.adaptive_corrector as adaptive_corrector
 
@@ -388,3 +391,59 @@ def test_adaptive_corrector_malformed_json(temp_corrections_file):
     # Should not crash, just load empty
     corrector = AdaptiveCorrector(corrections_file=temp_corrections_file)
     assert len(corrector.corrections) == 0
+
+
+def test_adaptive_corrector_migrates_legacy_name_mapping(temp_corrections_file):
+    Path(temp_corrections_file).write_text(
+        json.dumps({'summer-flyer': 'Flyer / Poster'}),
+        encoding='utf-8',
+    )
+
+    corrector = AdaptiveCorrector(corrections_file=temp_corrections_file)
+
+    assert len(corrector.corrections) == 1
+    assert corrector.corrections[0].folder_name == 'summer-flyer'
+    assert corrector.corrections[0].corrected_category == 'Flyer / Poster'
+    assert corrector.corrections[0].keywords == ['summer', 'flyer']
+
+
+def test_adaptive_batch_prompt_deduplicates_matching_examples():
+    class FakeCorrector(AdaptiveCorrector):
+        def __init__(self):
+            pass
+
+        def inject_few_shot(self, folder_name, num_examples=3):
+            assert folder_name
+            assert num_examples == 3
+            return [{'name': 'Summer Flyer', 'category': 'Flyer / Poster'}]
+
+    prompt = build_adaptive_batch_system_prompt(
+        ['Spring Flyer', 'Autumn Flyer'],
+        'Base prompt',
+        FakeCorrector(),
+    )
+
+    assert prompt.count('Summer Flyer → Flyer / Poster') == 1
+
+
+def test_legacy_cache_writer_preserves_structured_corrections(
+    temp_corrections_file, temp_lib_dir, monkeypatch
+):
+    from fileorganizer import cache
+
+    folder_path = os.path.join(temp_lib_dir, 'summer-flyer-2025')
+    corrector = AdaptiveCorrector(corrections_file=temp_corrections_file)
+    corrector.record_correction(
+        'summer-flyer-2025', folder_path, 'Flyer / Poster', 55
+    )
+    monkeypatch.setattr(cache, '_CORRECTIONS_FILE', temp_corrections_file)
+
+    cache.save_correction('logo-pack-v3', 'Logo / Icon')
+
+    reloaded = AdaptiveCorrector(corrections_file=temp_corrections_file)
+    assert any(
+        record.folder_name == 'summer-flyer-2025'
+        and record.corrected_category == 'Flyer / Poster'
+        for record in reloaded.corrections
+    )
+    assert cache.check_corrections('logo-pack-v3') == 'Logo / Icon'

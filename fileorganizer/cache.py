@@ -20,9 +20,25 @@ def load_corrections():
     """Load user corrections: {folder_name_pattern: category}"""
     try:
         with open(_CORRECTIONS_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
+    if not isinstance(data, dict):
+        return {}
+    corrections = {
+        key: value for key, value in data.items()
+        if key not in {'version', 'corrections'} and isinstance(value, str)
+    }
+    records = data.get('corrections', [])
+    if isinstance(records, list):
+        for record in records:
+            if not isinstance(record, dict):
+                continue
+            folder_name = record.get('folder_name')
+            category = record.get('category')
+            if isinstance(folder_name, str) and isinstance(category, str):
+                corrections[folder_name.lower()] = category
+    return corrections
 
 # In-memory corrections cache for scan performance (avoids re-reading JSON per folder)
 _corrections_cache = None
@@ -42,7 +58,12 @@ def _invalidate_corrections_cache():
 
 def save_correction(folder_name, category):
     """Save a single correction for future learning."""
-    corrections = load_corrections()
+    try:
+        with open(_CORRECTIONS_FILE, 'r', encoding='utf-8') as f:
+            stored = json.load(f)
+        corrections = stored if isinstance(stored, dict) else {}
+    except (FileNotFoundError, json.JSONDecodeError):
+        corrections = {}
     key = re.sub(r'[\d_\-]+$', '', folder_name).strip().lower()
     if key:
         corrections[key] = category

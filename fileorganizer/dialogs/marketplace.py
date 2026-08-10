@@ -1121,8 +1121,10 @@ class _ReviewApplyWorker(QThread):
 
     def run(self):
         from fileorganizer.cache import save_correction as _save_corr
+        from fileorganizer.adaptive_corrector import AdaptiveCorrector
         _orun = _load_script('organize_run')
         moved = errs = 0
+        adaptive_corrector = AdaptiveCorrector()
 
         for item in self.corrections:
             src_str = item["folder_path"]
@@ -1131,6 +1133,7 @@ class _ReviewApplyWorker(QThread):
 
             # Persist correction for future scans
             try:
+                adaptive_corrector.record_correction(name, src_str, cat)
                 _save_corr(name, cat)
             except Exception as e:
                 self.log.emit(f"  WARN save_correction({name}): {e}")

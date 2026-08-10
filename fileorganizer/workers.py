@@ -51,6 +51,7 @@ from fileorganizer.photos import (
     _reverse_geocode, _compute_blur_score, FaceDB, _convert_image_to_jpg,
     _PHOTO_SCENES,
 )
+from fileorganizer.adaptive_corrector import AdaptiveCorrector
 _cv2 = getattr(_photo_module, '_cv2', None)
 _face_recognition = getattr(_photo_module, '_face_recognition', None)
 from fileorganizer.duplicates import (
@@ -571,6 +572,7 @@ class ScanCategoryWorker(QThread):
 
         # ── Pre-load caches for scan performance ──
         _preload_corrections()
+        adaptive_corrector = AdaptiveCorrector()
         _CategoryIndex.get()  # Build keyword index once
 
         # ── Check Ollama availability for escalation ──
@@ -597,7 +599,11 @@ class ScanCategoryWorker(QThread):
             self.progress.emit(idx + 1, total)
 
             # Check corrections first (learned from user overrides)
-            corr_cat = check_corrections(folder.name)
+            adaptive_match = adaptive_corrector.apply_correction(str(folder))
+            corr_cat = (
+                adaptive_match[0] if adaptive_match
+                else check_corrections(folder.name)
+            )
             if corr_cat:
                 correction_hits += 1
                 self.log.emit(f"  {folder.name}")
@@ -606,7 +612,11 @@ class ScanCategoryWorker(QThread):
                     'folder_name': folder.name, 'folder_path': str(folder),
                     'category': corr_cat, 'confidence': 100,
                     'cleaned_name': folder.name, 'source_depth': 0,
-                    'method': 'learned', 'detail': 'From user correction history',
+                    'method': 'learned',
+                    'detail': (
+                        'From exact folder fingerprint correction'
+                        if adaptive_match else 'From user correction history'
+                    ),
                     'topic': None,
                 })
                 continue
@@ -733,6 +743,7 @@ class ScanLLMWorker(QThread):
 
         # ── Pre-load caches for scan performance ──
         _preload_corrections()
+        adaptive_corrector = AdaptiveCorrector()
         _CategoryIndex.get()
 
         # Verify Ollama connection first
@@ -765,14 +776,22 @@ class ScanLLMWorker(QThread):
             self.progress.emit(idx + 1, total)
 
             # Check corrections first
-            corr_cat = check_corrections(folder.name)
+            adaptive_match = adaptive_corrector.apply_correction(str(folder))
+            corr_cat = (
+                adaptive_match[0] if adaptive_match
+                else check_corrections(folder.name)
+            )
             if corr_cat:
                 correction_hits += 1
                 self.result_ready.emit({
                     'folder_name': folder.name, 'folder_path': str(folder),
                     'category': corr_cat, 'confidence': 100,
                     'cleaned_name': folder.name, 'source_depth': 0,
-                    'method': 'learned', 'detail': 'From correction history',
+                    'method': 'learned',
+                    'detail': (
+                        'From exact folder fingerprint correction'
+                        if adaptive_match else 'From correction history'
+                    ),
                     'topic': None, 'llm_name': None,
                 })
                 continue

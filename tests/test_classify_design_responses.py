@@ -150,7 +150,7 @@ def test_parallel_cached_classification_chunks_and_preserves_order(monkeypatch):
     items = [_item(f"item-{index}") for index in range(7)]
     calls = []
 
-    def classify(_prompt, batch, _model):
+    def classify(_prompt, batch, _model, _corrector=None):
         calls.append([item['name'] for item in batch])
         return [_valid(item['name']) for item in batch]
 
@@ -253,3 +253,60 @@ def test_cmd_run_writes_retry_marker_instead_of_invalid_partial_batch(tmp_path, 
     assert payload[0]["_retry_required"] is True
     assert classify_design.already_done(1) is False
     assert list(tmp_path.glob("*.tmp")) == []
+
+
+def test_build_prompt_injects_relevant_user_corrections():
+    class FakeCorrector(classify_design.AdaptiveCorrector):
+        def __init__(self):
+            pass
+
+        def inject_few_shot(self, folder_name, num_examples=3):
+            assert folder_name == 'Spring Flyer'
+            assert num_examples == 3
+            return [{'name': 'Summer Flyer', 'category': 'Print - Flyers & Posters'}]
+
+    prompt = classify_design.build_prompt(
+        [_item('Spring Flyer')],
+        FakeCorrector(),
+    )
+
+    assert 'RECENT EXAMPLES' in prompt
+    assert 'Summer Flyer → Print - Flyers & Posters' in prompt
+
+
+def test_cmd_run_applies_exact_correction_without_provider_key(tmp_path, monkeypatch):
+    class FakeCorrector(classify_design.AdaptiveCorrector):
+        def __init__(self):
+            pass
+
+        def apply_correction(self, folder_path):
+            assert folder_path == 'C:/library/Summer Flyer'
+            return ('Print - Flyers & Posters', 92)
+
+    monkeypatch.setattr(classify_design, 'AdaptiveCorrector', FakeCorrector)
+    monkeypatch.setattr(classify_design, 'RESULTS_DIR', tmp_path)
+    monkeypatch.setattr(classify_design, 'BATCH_PREFIX', 'batch_')
+    monkeypatch.setattr(classify_design, 'BATCH_SIZE', 1)
+    monkeypatch.setattr(classify_design, 'DEEPSEEK_API_KEY', '')
+    monkeypatch.setattr(classify_design, 'cleanup_expired', lambda **_kwargs: 0)
+
+    def provider_call(*_args, **_kwargs):
+        pytest.fail('provider should not run')
+
+    monkeypatch.setattr(classify_design, 'call_deepseek_cached', provider_call)
+    for name in (
+        '_try_fingerprint_db_lookup',
+        '_try_metadata_classify',
+        '_try_marketplace_enrich',
+        '_try_embeddings_classify',
+    ):
+        monkeypatch.setattr(classify_design, name, provider_call)
+
+    classify_design.cmd_run([
+        {'name': 'Summer Flyer', 'path': 'C:/library/Summer Flyer'},
+    ])
+
+    result = json.loads(classify_design.batch_file(1).read_text(encoding='utf-8'))[0]
+    assert result['category'] == 'Print - Flyers & Posters'
+    assert result['confidence'] == 100
+    assert result['_classifier'] == 'adaptive_correction'

@@ -113,7 +113,7 @@ def test_ollama_provider_passes_configured_batch_url_and_model(monkeypatch):
     }
 
 
-def test_secondary_pyqt_dialogs_and_main_window_import(tmp_path):
+def test_secondary_pyqt_dialogs_and_main_window_import(tmp_path, monkeypatch):
     from PyQt6.QtWidgets import QApplication
 
     app = QApplication.instance() or QApplication([])
@@ -124,10 +124,20 @@ def test_secondary_pyqt_dialogs_and_main_window_import(tmp_path):
     folder = tmp_path / "assets"
     folder.mkdir()
     (folder / "project.psd").write_bytes(b"not-a-real-psd")
-    browser = _FileBrowserDialog(str(folder), "Original")
+    browser = _FileBrowserDialog(
+        str(folder), "Original", "After Effects - Other", 42
+    )
     faces = FaceManagerDialog()
 
+    monkeypatch.setattr(
+        "fileorganizer.dialogs.editors.QInputDialog.getItem",
+        lambda *_args, **_kwargs: ("Print - Flyers & Posters", True),
+    )
+    browser._choose_correction()
+
     assert browser.tree.columnCount() == 3
+    assert browser.corrected_category == "Print - Flyers & Posters"
+    assert browser.btn_ok.isEnabled()
     assert faces.windowTitle() == "Face Manager"
     browser.close()
     faces.close()

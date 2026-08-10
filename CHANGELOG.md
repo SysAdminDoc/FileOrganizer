@@ -6,6 +6,11 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Category overrides now feed one adaptive correction store shared by the
+  rename dialog, review queue, rule/LLM workers, and design classifier: exact
+  folder fingerprints bypass providers and related keyword examples are
+  injected into bounded DeepSeek/Ollama prompts, with legacy corrections
+  migrated without data loss.
 - Design classification can now split unresolved DeepSeek work into
   order-preserving cached request chunks with bounded concurrency;
   `classify_design.py` and `organize_run.py` expose parallel CLI controls, and
