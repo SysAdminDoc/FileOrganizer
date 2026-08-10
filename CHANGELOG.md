@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- Default pytest runs now use unique workspace-owned temp roots and guarded
+  teardown, avoiding Windows `pytest-current` lock collisions across repeated
+  and concurrent runs.
 - Settings now report success only after LocalSettings values are written and
   reread; partial failures roll back the durable batch and clearly distinguish
   restored settings from edits that remain only in the form.
