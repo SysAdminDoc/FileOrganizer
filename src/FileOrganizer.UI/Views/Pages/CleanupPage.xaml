@@ -18,7 +18,7 @@
 
         <StackPanel Grid.Row="0" Spacing="6">
             <TextBlock Text="Cleanup" Style="{StaticResource TitleTextStyle}"/>
-            <TextBlock Text="Find empty folders, junk files, broken files, big files, and stale downloads. Results stream live as the scanner finds them."
+            <TextBlock Text="Read-only review: find empty folders, junk files, broken files, big files, and stale downloads. Results stream live; no files are changed. Use the Python desktop Cleanup Tools to act on results."
                        Style="{StaticResource SubtitleTextStyle}"/>
         </StackPanel>
 
@@ -139,7 +139,7 @@
                 </StackPanel>
                 <TextBlock Grid.Column="3"
                            x:Name="StatusText"
-                           Text="Idle. Pick a folder and a scanner."
+                           Text="Read-only review. Pick a folder and a scanner."
                            Style="{StaticResource MutedTextStyle}"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"
@@ -176,7 +176,7 @@
                 </Border>
                 <ListView x:Name="ResultsList"
                           Grid.Row="1"
-                          SelectionMode="Extended"
+                          SelectionMode="None"
                           IsItemClickEnabled="False"
                           Padding="0,4">
                     <ListView.ItemContainerStyle>

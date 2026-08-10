@@ -12,7 +12,7 @@
         <StackPanel Grid.Row="0" Spacing="6">
             <TextBlock Text="Duplicates" Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Style="{StaticResource SubtitleTextStyle}"
-                       Text="Two engines: progressive size→prefix→full SHA-256 for byte-identical files (Czkawka pipeline), or BK-tree perceptual hashing for near-duplicate images (sublinear similarity search)."/>
+                       Text="Read-only review: progressive SHA-256 finds byte-identical files, or BK-tree perceptual hashing finds near-duplicate images. No files are changed; use the Python desktop Duplicate Finder to choose and apply an action."/>
         </StackPanel>
         <Border Grid.Row="1" Style="{StaticResource CardStyle}">
             <StackPanel Spacing="14">
@@ -87,7 +87,7 @@
                                Foreground="{StaticResource AccentOrangeBrush}"/>
                 </StackPanel>
                 <TextBlock Grid.Column="3" x:Name="StatusText"
-                           Text="Idle. Pick a folder."
+                           Text="Read-only review. Pick a folder."
                            Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"
                            HorizontalAlignment="Right" TextTrimming="CharacterEllipsis"/>
             </Grid>
