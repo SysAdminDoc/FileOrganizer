@@ -8,6 +8,7 @@ then sends batches of 60 to DeepSeek for classification into G:\Organized catego
 Usage:
     python classify_design.py --preview                      # show batches
     python classify_design.py --run                          # classify all pending batches
+    python classify_design.py --run --parallel               # bounded concurrent requests
     python classify_design.py --run --batch 5                # classify only batch 5
     python classify_design.py --stats                        # show progress
     python classify_design.py --show-cats                    # print full category taxonomy
@@ -798,6 +799,27 @@ def call_deepseek_cached(prompt: str, items: list[dict], model: str = DEEPSEEK_M
     return results
 
 
+def call_deepseek_parallel_cached(
+    items: list[dict],
+    *,
+    concurrency: int = 4,
+    request_batch_size: int = 12,
+    model: str = DEEPSEEK_MODEL,
+) -> list[dict]:
+    """Classify cached DeepSeek request chunks concurrently and in input order."""
+    from fileorganizer.parallel_classifier import classify_batches_parallel
+
+    def classify_batch(batch: list[dict]) -> list[dict]:
+        return call_deepseek_cached(build_prompt(batch), batch, model)
+
+    return classify_batches_parallel(
+        items,
+        classify_batch,
+        concurrency=concurrency,
+        batch_size=request_batch_size,
+    )
+
+
 def call_deepseek(
     prompt: str,
     expected_count: int | None = None,
@@ -1050,7 +1072,8 @@ def _try_fingerprint_db_lookup(batch_items: list[dict]) -> dict[int, dict]:
 
 
 def cmd_run(index: list[dict], only_batch: int = 0,
-            embeddings_only: bool = False):
+            embeddings_only: bool = False, parallel: bool = False,
+            concurrency: int = 4, request_batch_size: int = 12):
     """Classify all unprocessed batches.
 
     Stages run in order; each stage skips items resolved by an earlier one:
@@ -1122,7 +1145,21 @@ def cmd_run(index: list[dict], only_batch: int = 0,
             ai_only_batch = [it for _, it in ai_items]
             try:
                 # Use cached wrapper (NEXT-44) to eliminate >90% of API calls on re-runs
-                ai_results = call_deepseek_cached(build_prompt(ai_only_batch), ai_only_batch, DEEPSEEK_MODEL)
+                if parallel:
+                    print(
+                        f"  Parallel AI: {len(ai_only_batch)} item(s), "
+                        f"concurrency={concurrency}, request_batch={request_batch_size}"
+                    )
+                    ai_results = call_deepseek_parallel_cached(
+                        ai_only_batch,
+                        concurrency=concurrency,
+                        request_batch_size=request_batch_size,
+                        model=DEEPSEEK_MODEL,
+                    )
+                else:
+                    ai_results = call_deepseek_cached(
+                        build_prompt(ai_only_batch), ai_only_batch, DEEPSEEK_MODEL
+                    )
                 cache_hits = sum(1 for r in ai_results if r is not None)
                 if cache_hits > 0:
                     print(f"  LLM cache hit {cache_hits}/{len(ai_results)} item(s) — skipped API calls")
@@ -1182,6 +1219,63 @@ def cmd_run(index: list[dict], only_batch: int = 0,
     cmd_stats(index)
 
 # ── Main ──────────────────────────────────────────────────────────────────────
+def configure_source(source: str) -> None:
+    """Apply one validated source configuration to the module pipeline."""
+    if source not in SOURCE_CONFIGS:
+        raise ValueError(f'Unknown classification source: {source}')
+    cfg = SOURCE_CONFIGS[source]
+    global INDEX_FILE, BATCH_PREFIX, SOURCE_DIR, FILE_MODE
+    INDEX_FILE = Path(__file__).parent / str(cfg['index_file'])
+    BATCH_PREFIX = str(cfg['batch_prefix'])
+    SOURCE_DIR = str(cfg['source_dir'])
+    FILE_MODE = bool(cfg.get('file_mode', False))
+
+
+def _provider_runtime_settings() -> dict:
+    """Load protected provider credentials and bounded parallel defaults."""
+    from fileorganizer.providers import load_provider_settings
+
+    settings = load_provider_settings()
+    global DEEPSEEK_API_KEY, DEEPSEEK_BASE, DEEPSEEK_MODEL
+    DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '') or str(
+        settings.get('deepseek_api_key', '') or ''
+    )
+    DEEPSEEK_BASE = str(settings.get('deepseek_endpoint', DEEPSEEK_BASE))
+    DEEPSEEK_MODEL = str(settings.get('deepseek_model', DEEPSEEK_MODEL))
+    return settings
+
+
+def run_source(
+    source: str,
+    *,
+    only_batch: int = 0,
+    embeddings_only: bool = False,
+    parallel: bool | None = None,
+    concurrency: int | None = None,
+    request_batch_size: int | None = None,
+) -> None:
+    """Run one configured source for CLI orchestration such as organize_run."""
+    configure_source(source)
+    if not INDEX_FILE.exists():
+        raise FileNotFoundError(
+            f'{INDEX_FILE} not found; run build_source_index.py --source {source} first'
+        )
+    settings = _provider_runtime_settings()
+    use_parallel = (
+        settings.get('parallel_enabled') is True if parallel is None else parallel
+    )
+    worker_count = concurrency or int(settings.get('parallel_concurrency', 4))
+    chunk_size = request_batch_size or int(settings.get('parallel_batch_size', 12))
+    cmd_run(
+        load_index(),
+        only_batch=only_batch,
+        embeddings_only=embeddings_only,
+        parallel=use_parallel,
+        concurrency=max(1, min(worker_count, 8)),
+        request_batch_size=max(1, min(chunk_size, 60)),
+    )
+
+
 def main():
     ap = argparse.ArgumentParser(description='Design asset batch classifier')
     ap.add_argument('--preview',   action='store_true', help='Show batches without calling API')
@@ -1195,8 +1289,14 @@ def main():
     ap.add_argument('--embeddings-only', action='store_true',
                     help='Run only marketplace + local embeddings stages; skip the '
                          'AI call entirely.  Items below the embedding threshold are '
-                         'recorded as _Unresolved at confidence 0.  Useful for '
-                         'benchmarking the embeddings skip-rate before paying for AI.')
+                          'recorded as _Unresolved at confidence 0.  Useful for '
+                          'benchmarking the embeddings skip-rate before paying for AI.')
+    ap.add_argument('--parallel', action='store_true', default=None,
+                    help='Classify unresolved request chunks concurrently')
+    ap.add_argument('--concurrency', type=int, choices=range(1, 9), metavar='N',
+                    help='Concurrent API requests for --parallel (1-8)')
+    ap.add_argument('--request-batch-size', type=int, choices=range(1, 61), metavar='N',
+                    help='Folders in each parallel API request (1-60)')
     # Default export path resolves against this script's directory so the file
     # always lands at repo root regardless of the caller's CWD.
     _default_rules_path = str(Path(__file__).parent / 'organize_rules.yaml')
@@ -1228,12 +1328,7 @@ def main():
         return
 
     # Wire up globals for the selected source
-    cfg = SOURCE_CONFIGS[args.source]
-    global INDEX_FILE, BATCH_PREFIX, SOURCE_DIR, FILE_MODE
-    INDEX_FILE   = Path(__file__).parent / cfg['index_file']
-    BATCH_PREFIX = cfg['batch_prefix']
-    SOURCE_DIR   = cfg['source_dir']
-    FILE_MODE    = bool(cfg.get('file_mode', False))
+    configure_source(args.source)
 
     if not INDEX_FILE.exists():
         print(f"ERROR: {INDEX_FILE} not found. Run build_source_index.py --source {args.source} first.")
@@ -1248,7 +1343,21 @@ def main():
     elif args.preview:
         cmd_preview(index)
     elif args.run:
-        cmd_run(index, only_batch=args.batch, embeddings_only=args.embeddings_only)
+        settings = _provider_runtime_settings()
+        use_parallel = (
+            settings.get('parallel_enabled') is True
+            if args.parallel is None else args.parallel
+        )
+        cmd_run(
+            index,
+            only_batch=args.batch,
+            embeddings_only=args.embeddings_only,
+            parallel=use_parallel,
+            concurrency=args.concurrency or settings['parallel_concurrency'],
+            request_batch_size=(
+                args.request_batch_size or settings['parallel_batch_size']
+            ),
+        )
     else:
         ap.print_help()
 

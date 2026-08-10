@@ -246,6 +246,7 @@ python organize_run.py --source design --preview --quiet
 python organize_run.py --source design --apply --quiet
 python organize_run.py --source design --skip-unchanged --dry-run
 python organize_run.py --invalidate-cache             # Clear re-scan fingerprints
+python organize_run.py --source design --parallel --dry-run
 python organize_run.py --source design --preview --rules-file rules.json
 python organize_run.py --source design --preview --no-rules
 
@@ -308,12 +309,17 @@ successful catalog release and sync status.
 
 | Provider | Use | Model |
 |---|---|---|
-| DeepSeek | Heavy classification batches | `deepseek-chat` |
-| GitHub Models | Fast lightweight checks | `claude-3-5-haiku` |
+| DeepSeek | Heavy classification batches | `deepseek-v4-flash` |
+| GitHub Models | Fast lightweight checks | `Anthropic/claude-3-5-haiku-20241022` |
 | Ollama | Local / offline fallback | Any local model |
 
 Set `DEEPSEEK_API_KEY` to enable DeepSeek routing.
 GitHub Models and DeepSeek use the shared `httpx` chat-completions transport.
+The AI Provider settings dialog stores bounded parallel defaults (1–8 requests,
+1–60 folders per request). Use `classify_design.py --run --parallel` directly,
+or `organize_run.py --source design --parallel` to classify pending batches
+before building the move plan; both accept `--concurrency` and
+`--request-batch-size` overrides.
 
 ### Ollama models
 
@@ -419,8 +425,9 @@ the same `fileorganizer/` package so you can switch later.
 [ollama.com/download](https://ollama.com/download), restart FileOrganizer, then
 use **Settings → Ollama LLM → Pull Model** for the selected model.
 
-**Classification is slow** — Use DeepSeek for bulk batches (60 items/call,
-~1–2s). Ollama is per-item; use it only for small jobs.
+**Classification is slow** — Enable bounded parallel DeepSeek classification
+and tune concurrency to the provider rate limit. Ollama is best kept for small
+local/offline jobs.
 
 **Why position-based batch mapping?** — AI agents may clean or reformat
 folder names in their response. The only reliable mapping is by position:

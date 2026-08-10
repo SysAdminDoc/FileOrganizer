@@ -2352,6 +2352,12 @@ def build_argument_parser() -> argparse.ArgumentParser:
                     help='Skip folders whose cached fingerprint is unchanged')
     ap.add_argument('--invalidate-cache', action='store_true',
                     help='Clear the folder fingerprint cache and exit')
+    ap.add_argument('--parallel', action='store_true',
+                    help='Classify pending source batches concurrently before planning')
+    ap.add_argument('--concurrency', type=int, choices=range(1, 9), metavar='N',
+                    help='Concurrent classifier requests for --parallel (1-8)')
+    ap.add_argument('--request-batch-size', type=int, choices=range(1, 61), metavar='N',
+                    help='Folders in each parallel classifier request (1-60)')
     return ap
 
 
@@ -2403,6 +2409,29 @@ def main():
         return
 
     source_mode = args.source
+
+    if args.parallel:
+        if args.load:
+            ap.error('--parallel cannot be combined with --load')
+        classify_source = {
+            'design': 'design_unorg',
+            'design_org': 'design_org',
+            'loose_files': 'loose_files',
+            'design_elements': 'design_elements',
+            'i_organized_legacy': 'i_organized_legacy',
+        }.get(source_mode)
+        if classify_source is None:
+            ap.error('--parallel requires a design, loose_files, or legacy source')
+        import classify_design
+        try:
+            classify_design.run_source(
+                classify_source,
+                parallel=True,
+                concurrency=args.concurrency,
+                request_batch_size=args.request_batch_size,
+            )
+        except FileNotFoundError as exc:
+            raise SystemExit(str(exc)) from exc
 
     if args.stats:
         files = sorted(Path(RESULTS_DIR).glob('*.json'))

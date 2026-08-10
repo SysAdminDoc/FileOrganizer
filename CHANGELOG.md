@@ -6,6 +6,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Design classification can now split unresolved DeepSeek work into
+  order-preserving cached request chunks with bounded concurrency;
+  `classify_design.py` and `organize_run.py` expose parallel CLI controls, and
+  AI Provider settings persist safe concurrency and request-size defaults.
 - `organize_run.py --skip-unchanged` now uses the durable folder fingerprint
   cache to omit stable source folders from generated plans, while
   `--invalidate-cache` clears the cache as an explicit standalone action.

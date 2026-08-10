@@ -41,6 +41,9 @@ _PROVIDER_DEFAULTS = {
     'deepseek_endpoint': 'https://api.deepseek.com',
     'deepseek_model': 'deepseek-v4-flash',
     'deepseek_timeout': 120,
+    'parallel_enabled': False,
+    'parallel_concurrency': 4,
+    'parallel_batch_size': 12,
     # Routing
     'routing': 'auto',  # auto | github_only | deepseek_only | ollama_only
     'lightweight_provider': 'github',   # github | deepseek | ollama
@@ -215,6 +218,17 @@ def load_provider_settings() -> dict:
 
     settings['github_endpoint'] = _safe_endpoint(settings, 'github_endpoint', 'github')
     settings['deepseek_endpoint'] = _safe_endpoint(settings, 'deepseek_endpoint', 'deepseek')
+    try:
+        settings['parallel_concurrency'] = max(
+            1, min(int(settings.get('parallel_concurrency', 4)), 8)
+        )
+        settings['parallel_batch_size'] = max(
+            1, min(int(settings.get('parallel_batch_size', 12)), 60)
+        )
+    except (TypeError, ValueError):
+        settings['parallel_concurrency'] = 4
+        settings['parallel_batch_size'] = 12
+    settings['parallel_enabled'] = settings.get('parallel_enabled') is True
 
     if migrated_fields:
         sanitized = {key: value for key, value in stored.items() if key not in migrated_fields}

@@ -3,8 +3,16 @@
 import pytest
 import asyncio
 import json
+import threading
+import time
+from pathlib import Path
 from unittest.mock import Mock, AsyncMock, patch, MagicMock
-from fileorganizer.parallel_classifier import AsyncClassifier, classify_parallel, HAS_AIOHTTP
+from fileorganizer.parallel_classifier import (
+    AsyncClassifier,
+    HAS_AIOHTTP,
+    classify_batches_parallel,
+    classify_parallel,
+)
 
 
 # Skip all tests if aiohttp not available
@@ -72,6 +80,55 @@ def test_classifier_init():
     c = AsyncClassifier(concurrency=0, batch_size=10)
     assert c.concurrency == 1
     assert c.batch_size == 5
+
+
+def test_generic_parallel_batches_scale_to_1000_items_in_order():
+    items = [{'index': index} for index in range(1000)]
+    lock = threading.Lock()
+    active = 0
+    max_active = 0
+
+    def classify_batch(batch):
+        nonlocal active, max_active
+        with lock:
+            active += 1
+            max_active = max(max_active, active)
+        time.sleep(0.002)
+        with lock:
+            active -= 1
+        return [{'index': item['index']} for item in batch]
+
+    results = classify_batches_parallel(
+        items, classify_batch, concurrency=4, batch_size=25,
+    )
+
+    assert [result['index'] for result in results] == list(range(1000))
+    assert 2 <= max_active <= 4
+
+
+def test_generic_parallel_batches_reject_bad_cardinality():
+    with pytest.raises(ValueError, match='expected 2 results'):
+        classify_batches_parallel(
+            [{'index': 1}, {'index': 2}],
+            lambda _batch: [],
+            concurrency=2,
+            batch_size=2,
+        )
+
+
+def test_parallel_tuning_is_exposed_in_provider_settings_ui():
+    root = Path(__file__).resolve().parents[1]
+    settings_source = (
+        root / 'fileorganizer' / 'dialogs' / 'settings.py'
+    ).read_text(encoding='utf-8')
+    provider_source = (root / 'fileorganizer' / 'providers.py').read_text(
+        encoding='utf-8'
+    )
+
+    assert 'self.spn_parallel_concurrency' in settings_source
+    assert 'self.spn_parallel_batch' in settings_source
+    assert "'parallel_concurrency': 4" in provider_source
+    assert "'parallel_batch_size': 12" in provider_source
 
 
 def test_classifier_batch_splits():

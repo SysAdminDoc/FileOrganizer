@@ -1133,6 +1133,26 @@ class AIProviderSettingsDialog(QDialog):
             self.cmb_ds_model.setCurrentIndex(idx_ds)
         ds_lay.addWidget(self.cmb_ds_model)
 
+        self.chk_parallel = QCheckBox("Enable parallel classification by default")
+        self.chk_parallel.setChecked(self._settings.get('parallel_enabled', False))
+        ds_lay.addWidget(self.chk_parallel)
+        parallel_row = QHBoxLayout()
+        parallel_row.addWidget(QLabel("Concurrent requests:"))
+        self.spn_parallel_concurrency = QSpinBox()
+        self.spn_parallel_concurrency.setRange(1, 8)
+        self.spn_parallel_concurrency.setValue(
+            int(self._settings.get('parallel_concurrency', 4))
+        )
+        parallel_row.addWidget(self.spn_parallel_concurrency)
+        parallel_row.addWidget(QLabel("Folders per request:"))
+        self.spn_parallel_batch = QSpinBox()
+        self.spn_parallel_batch.setRange(1, 60)
+        self.spn_parallel_batch.setValue(
+            int(self._settings.get('parallel_batch_size', 12))
+        )
+        parallel_row.addWidget(self.spn_parallel_batch)
+        ds_lay.addLayout(parallel_row)
+
         self.lbl_ds_status = QLabel("")
         self.lbl_ds_status.setProperty("class", "meta")
         btn_ds_test = QPushButton("Test DeepSeek")
@@ -1244,6 +1264,9 @@ class AIProviderSettingsDialog(QDialog):
             s['github_model'] = self.cmb_gh_model.currentText()
         
         s['deepseek_model'] = self.cmb_ds_model.currentText()
+        s['parallel_enabled'] = self.chk_parallel.isChecked()
+        s['parallel_concurrency'] = self.spn_parallel_concurrency.value()
+        s['parallel_batch_size'] = self.spn_parallel_batch.value()
         s['routing'] = {
             'lightweight': self.cmb_route_lightweight.currentText(),
             'heavy':       self.cmb_route_heavy.currentText(),
