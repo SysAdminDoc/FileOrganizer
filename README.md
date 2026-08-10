@@ -46,7 +46,7 @@ keeps working in parallel until the shell reaches feature parity.
 | Photos | Preview or apply EXIF-aware organization | `photos_run.py` |
 | Raw Photos | Preview or apply RAW metadata organization | `raw_run.py` |
 | Comics | Preview or apply comic metadata organization | `comics_run.py` |
-| Watch | Configure watches and stream live events | `watch_run.py` |
+| Watch | Configure watches and stream live or logon-started events | `watch_run.py`, `watch_task_run.py` |
 | Toolbox | Run explicit maintenance and reporting commands | Python CLI tools |
 | Settings | Theme, defaults, and credential settings | Native shell services |
 
@@ -57,8 +57,10 @@ Current shell boundaries:
   hard-link, move, and undo.
 - The self-contained .NET shell still needs the Python runtime and packages
   described below because workflow pages launch local Python sidecars.
-- Watch runs for the active shell session. Automatic launch at user logon is
-  not yet exposed through Task Scheduler.
+- Background Watch startup is opt-in under **Settings → Watch Mode**. It
+  registers a hidden, least-privilege per-user Task Scheduler entry and keeps
+  one bounded rollover log; removing or disabling the task is available from
+  the same panel.
 
 ## Get FileOrganizer
 
@@ -215,7 +217,9 @@ Python process tree.
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write
   dry-run organize plans, persist state in `watch_state.db`, and recover
-  supported NTFS changes that occurred while the watcher was stopped.
+  supported NTFS changes that occurred while the watcher was stopped. The
+  shell can also start its configured source/destination pairs at user logon,
+  tune the 2–120 second quiet window, and inspect the bounded background log.
 
 These workflows work today through `python -m fileorganizer` (Path B) and the
 shell sidecars where noted above.
@@ -235,6 +239,9 @@ python organize_run.py --source design --apply --quiet
 
 # Watch configured source and emit dry-run plans for arriving files
 python -m fileorganizer.watch_mode --source design --start --duration 60
+
+# Inspect the per-user background Watch task configured by the shell
+python watch_task_run.py --status
 
 # Plan-first apply
 python organize_run.py --source design --preview --plan-out plan.json
@@ -351,6 +358,7 @@ fileorganizer/
 ├── files.py                  ← PC file organizer
 ├── workers.py                ← QThread workers (legacy GUI)
 ├── main_window.py            ← legacy PyQt6 main window
+├── watch_task.py             ← validated logon task config + bounded logging
 └── ...
 
 repo root:
@@ -359,6 +367,7 @@ repo root:
 ├── asset_db.py               ← community SHA-256 fingerprint DB
 ├── classify_design.py        ← DeepSeek batch classifier for design assets
 ├── provenance_run.py         ← redacted evaluation export/replay CLI
+├── watch_task_run.py         ← Watch Task Scheduler management/runner
 └── deepseek_research.py      ← _Review-folder ID resolver
 ```
 

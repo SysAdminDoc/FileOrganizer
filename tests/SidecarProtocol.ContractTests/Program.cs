@@ -211,6 +211,42 @@ Assert(restartedSettings.AcoustIdApiKey == "acoustid-fixture"
     && restartedSettings.DefaultBookRenamePattern == "Books/{title}.{ext}",
     "Integrated settings did not survive a service restart.");
 
+var watchContractRoot = Path.Combine(
+    Environment.CurrentDirectory, $".watch-contract-{Guid.NewGuid():N}");
+Directory.CreateDirectory(watchContractRoot);
+try
+{
+    var watchSource = Path.Combine(watchContractRoot, "source");
+    var watchDestination = Path.Combine(watchContractRoot, "destination");
+    Directory.CreateDirectory(watchSource);
+    Directory.CreateDirectory(watchDestination);
+    Assert(WatchTaskProtocol.TryParseSavedWatches(
+            $"{watchSource}||{watchDestination}||1",
+            out var watchEntries,
+            out var watchParseError),
+        $"Saved watch parsing failed: {watchParseError}");
+    Assert(watchEntries.Count == 1 && watchEntries[0].Copy,
+        "Saved watch copy semantics drifted.");
+    Assert(WatchTaskProtocol.SerializeWatches(watchEntries).Contains("\"copy\":true"),
+        "Watch task JSON did not preserve copy mode.");
+    Assert(WatchTaskProtocol.ClampDebounce(-5) == 2
+        && WatchTaskProtocol.ClampDebounce(500) == 120,
+        "Watch task debounce bounds drifted.");
+    Assert(WatchTaskProtocol.TryParseState(
+            "{\"supported\":true,\"configured\":true,\"enabled\":true,"
+            + "\"registered\":true,\"watch_count\":1,\"debounce_seconds\":30,"
+            + "\"task_name\":\"FileOrganizer_WatchMode\",\"log_path\":\"watch.log\","
+            + "\"message\":null,\"log\":null,\"error\":null}",
+            out var watchState,
+            out var watchStateError)
+        && watchState is { Enabled: true, WatchCount: 1 },
+        $"Watch task status parsing failed: {watchStateError}");
+}
+finally
+{
+    Directory.Delete(watchContractRoot, recursive: true);
+}
+
 var collectionNotifications = 0;
 var streamedRows = new BoundedObservableCollection<StreamFixture>(
     UiStreamLimits.MaxResultRows,

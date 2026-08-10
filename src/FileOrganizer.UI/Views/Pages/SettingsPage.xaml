@@ -9,7 +9,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Spacing="6">
@@ -142,8 +142,59 @@
                 </StackPanel>
             </Border>
 
+            <!-- Watch mode startup -->
+            <Border Grid.Row="4" Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="14">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE7C8;" FontSize="16"
+                                  Foreground="{StaticResource AccentGreenBrush}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="Watch Mode" Style="{StaticResource PanelTitleTextStyle}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="Start the configured Watch page folders automatically when you sign in to Windows. The per-user Task Scheduler entry runs hidden and does not require administrator access."/>
+
+                    <ToggleSwitch x:Name="WatchStartupToggle"
+                                  Header="Start configured watches at user logon"
+                                  OffContent="Disabled" OnContent="Enabled"/>
+
+                    <Grid ColumnSpacing="14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Quiet window" Style="{StaticResource LabelTextStyle}"
+                                   VerticalAlignment="Center"/>
+                        <Slider Grid.Column="1" x:Name="WatchDebounceSlider"
+                                Minimum="2" Maximum="120" Value="30"
+                                StepFrequency="1" ValueChanged="WatchDebounce_ValueChanged"/>
+                        <TextBlock Grid.Column="2" x:Name="WatchDebounceValueText" Text="30 seconds"
+                                   MinWidth="78" TextAlignment="Right"
+                                   Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center"/>
+                    </Grid>
+                    <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="A file must remain unchanged for this long before the background watcher routes it. Configure source and destination pairs on the Watch page first."/>
+
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="Apply startup setting" Style="{StaticResource PrimaryButtonStyle}"
+                                Click="WatchApply_Click"/>
+                        <Button Content="Remove startup task" Style="{StaticResource GhostButtonStyle}"
+                                Click="WatchRemove_Click"/>
+                        <Button Content="Refresh log" Style="{StaticResource SecondaryButtonStyle}"
+                                Click="WatchLog_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="WatchTaskStatusText" Text="Checking Task Scheduler…"
+                               Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"/>
+                    <TextBox x:Name="WatchLogBox" Header="Recent background events"
+                             IsReadOnly="True" AcceptsReturn="True" TextWrapping="NoWrap"
+                             Height="180" FontFamily="Cascadia Mono" FontSize="12"
+                             PlaceholderText="No background events recorded yet."
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                </StackPanel>
+            </Border>
+
             <!-- Buttons -->
-            <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="12">
+            <StackPanel Grid.Row="5" Orientation="Horizontal" Spacing="12">
                 <Button Content="Save defaults" Style="{StaticResource PrimaryButtonStyle}"
                         Click="Save_Click"/>
                 <Button Content="Restore defaults" Style="{StaticResource GhostButtonStyle}"
