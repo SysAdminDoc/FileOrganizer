@@ -27,7 +27,10 @@ from fileorganizer.photos import (
 from fileorganizer.bootstrap import (
     HAS_REVERSE_GEOCODER, HAS_FACE_RECOGNITION, HAS_CV2
 )
-from fileorganizer.workers import ModelListWorker, ModelPullWorker, ModelDeleteWorker, format_size
+from fileorganizer.workers import (
+    ModelListWorker, ModelPullWorker, ModelDeleteWorker, format_size,
+    load_catalog_sync_state,
+)
 
 
 class OllamaSettingsDialog(QDialog):
@@ -1268,7 +1271,7 @@ class DesignWorkflowSettingsDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Design Workflow Settings")
-        self.setMinimumSize(480, 380)
+        self.setMinimumSize(520, 430)
         self.setStyleSheet(get_active_stylesheet())
         try:
             from fileorganizer.config import load_design_settings, save_design_settings, \
@@ -1335,6 +1338,23 @@ class DesignWorkflowSettingsDialog(QDialog):
 
         self.chk_extract   = _chk("Extract archives before organizing (ZIP/RAR/7z)", "extract_archives")
         self.chk_catalog   = _chk("Use DeepSeek to identify marketplace items",        "catalog_lookup")
+        self.chk_community_sync = _chk(
+            "Update the verified community fingerprint catalog at startup",
+            "community_catalog_sync",
+        )
+        self.chk_community_sync.setToolTip(
+            "Disable for a fully local-only startup. The last verified local catalog remains available."
+        )
+        sync_state = load_catalog_sync_state()
+        last_success = sync_state.get('last_success_at') or 'never'
+        last_tag = sync_state.get('last_tag') or 'no release imported'
+        last_status = sync_state.get('last_status') or 'not checked'
+        self.lbl_community_sync = QLabel(
+            f"Community catalog: {last_status} · last success {last_success} · {last_tag}"
+        )
+        self.lbl_community_sync.setProperty("class", "meta")
+        self.lbl_community_sync.setWordWrap(True)
+        layout.addWidget(self.lbl_community_sync)
         self.chk_dynamic   = _chk("Allow AI to propose new categories",                "dynamic_categories")
         self.chk_confirm   = _chk("Require hash verification before marking duplicates","confirm_duplicates")
         self.chk_del_after = _chk("Delete original archives after successful extraction","delete_archives_after_extract")
@@ -1384,6 +1404,7 @@ class DesignWorkflowSettingsDialog(QDialog):
         s['overflow_threshold_gb'] = self.spn_thresh.value()
         s['extract_archives']    = self.chk_extract.isChecked()
         s['catalog_lookup']      = self.chk_catalog.isChecked()
+        s['community_catalog_sync'] = self.chk_community_sync.isChecked()
         s['dynamic_categories']  = self.chk_dynamic.isChecked()
         s['confirm_duplicates']  = self.chk_confirm.isChecked()
         s['delete_archives_after_extract'] = self.chk_del_after.isChecked()

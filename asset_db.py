@@ -20,6 +20,8 @@ Usage:
     python asset_db.py --verify [G:\\Organized]    # check DB vs disk
 """
 import os, sys, json, sqlite3, hashlib, argparse, re, time
+import shutil
+import tempfile
 from pathlib import Path
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -789,6 +791,113 @@ def import_community_json(json_data: dict, db_path: str = DB_FILE) -> tuple:
         con.close()
 
     return new_assets, skipped
+
+
+def _checkpoint_database_for_replace(db_path: str) -> None:
+    """Fold any WAL into the database and release swap-sensitive sidecars."""
+    if not os.path.exists(db_path):
+        return
+    con = sqlite3.connect(db_path, timeout=2)
+    try:
+        checkpoint = con.execute("PRAGMA wal_checkpoint(TRUNCATE)").fetchone()
+        if checkpoint and checkpoint[0] != 0:
+            raise RuntimeError("asset database is busy; catalog update deferred")
+        mode = con.execute("PRAGMA journal_mode=DELETE").fetchone()[0]
+        if str(mode).lower() != 'delete':
+            raise RuntimeError("asset database could not enter swap-safe journal mode")
+    finally:
+        con.close()
+    if os.path.exists(f"{db_path}-wal") or os.path.exists(f"{db_path}-shm"):
+        raise RuntimeError("asset database still has active WAL sidecars")
+
+
+def _backup_sqlite_database(source_path: str, destination_path: str) -> None:
+    source = sqlite3.connect(source_path, timeout=2)
+    destination = sqlite3.connect(destination_path)
+    try:
+        source.backup(destination)
+    finally:
+        destination.close()
+        source.close()
+
+
+def _verify_community_database(db_path: str) -> None:
+    con = sqlite3.connect(db_path)
+    try:
+        integrity = con.execute("PRAGMA integrity_check").fetchone()
+        if not integrity or integrity[0] != 'ok':
+            raise RuntimeError("staged community catalog failed SQLite integrity check")
+        imported = con.execute(
+            "SELECT value FROM db_meta WHERE key='last_community_import'"
+        ).fetchone()
+        if not imported or not imported[0]:
+            raise RuntimeError("staged community catalog has no import marker")
+    finally:
+        con.close()
+
+
+def _remove_sqlite_temporary_files(db_path: str) -> None:
+    for candidate in (db_path, f"{db_path}-wal", f"{db_path}-shm"):
+        try:
+            os.remove(candidate)
+        except FileNotFoundError:
+            pass
+
+
+def import_community_json_atomic(json_data: dict, db_path: str = DB_FILE) -> tuple:
+    """Import into a staged database, then atomically replace the live catalog.
+
+    The previous live database is retained as ``.community-backup``. Any
+    failure before replacement leaves the live database untouched; any failed
+    post-swap verification restores the backup.
+    """
+    target_path = os.path.abspath(db_path)
+    target_directory = os.path.dirname(target_path) or '.'
+    os.makedirs(target_directory, exist_ok=True)
+    target_existed = os.path.exists(target_path)
+    backup_path = f"{target_path}.community-backup"
+    staging_handle, staging_path = tempfile.mkstemp(
+        prefix='.asset_fingerprints_staging_', suffix='.db', dir=target_directory)
+    os.close(staging_handle)
+    backup_temporary = ''
+    replaced = False
+
+    try:
+        if target_existed:
+            _checkpoint_database_for_replace(target_path)
+            _backup_sqlite_database(target_path, staging_path)
+            backup_handle, backup_temporary = tempfile.mkstemp(
+                prefix='.asset_fingerprints_backup_', suffix='.db',
+                dir=target_directory)
+            os.close(backup_handle)
+            _backup_sqlite_database(target_path, backup_temporary)
+            os.replace(backup_temporary, backup_path)
+            backup_temporary = ''
+
+        result = import_community_json(json_data, staging_path)
+        _checkpoint_database_for_replace(staging_path)
+        _verify_community_database(staging_path)
+        os.replace(staging_path, target_path)
+        staging_path = ''
+        replaced = True
+        _verify_community_database(target_path)
+        return result
+    except Exception:
+        if replaced:
+            if target_existed and os.path.exists(backup_path):
+                os.replace(backup_path, target_path)
+                try:
+                    shutil.copy2(target_path, backup_path)
+                except OSError:
+                    pass
+            elif not target_existed:
+                _remove_sqlite_temporary_files(target_path)
+        raise
+    finally:
+        if staging_path:
+            _remove_sqlite_temporary_files(staging_path)
+        if backup_temporary:
+            _remove_sqlite_temporary_files(backup_temporary)
 
 
 

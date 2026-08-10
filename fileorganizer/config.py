@@ -956,6 +956,7 @@ _DESIGN_DEFAULTS = {
     'overflow_threshold_gb': 50,     # Switch to overflow when primary has < N GB free
     'extract_archives':    True,     # Unpack ZIP/RAR/7z before organizing
     'catalog_lookup':      True,     # Use DeepSeek to identify marketplace items
+    'community_catalog_sync': True,  # Check verified community fingerprints on startup
     'dynamic_categories':  True,     # Allow AI to propose new categories
     'confirm_duplicates':  True,     # Hash-verify before marking as duplicate
     'delete_archives_after_extract': False,  # Keep original archives after extraction
