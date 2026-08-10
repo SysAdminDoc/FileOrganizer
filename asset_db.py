@@ -13,7 +13,8 @@ Matching strategy (strongest → weakest):
     overlap40 — ≥40 % of file hashes overlap                    → conf 60
 
 Usage:
-    python asset_db.py --build [G:\\Organized]      # hash + store (incremental)
+    python asset_db.py --build [G:\\Organized]      # hash + store
+    python asset_db.py --build --incremental       # resume NTFS USN journal
     python asset_db.py --lookup PATH               # identify an unknown folder
     python asset_db.py --export [out.json]         # export for community sharing
     python asset_db.py --stats                     # DB overview
@@ -71,7 +72,7 @@ PROJECT_EXTS = frozenset({
     '.fla', '.flp', '.sketch',
 })
 
-DB_VERSION = 2
+DB_VERSION = 3
 
 # Image extensions used when scanning for preview thumbnails
 _PREVIEW_EXTS = frozenset({'.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp'})
@@ -133,6 +134,9 @@ def init_db(db_path: str = DB_FILE) -> sqlite3.Connection:
     con.row_factory = sqlite3.Row
     con.executescript(_SCHEMA)
     _migrate_assets_provenance(con)
+    from fileorganizer.usn_index import ensure_schema as _ensure_usn_schema
+
+    _ensure_usn_schema(con)
     now = _now()
     con.execute("INSERT OR REPLACE INTO db_meta VALUES ('version',    ?)", (str(DB_VERSION),))
     con.execute("INSERT OR IGNORE INTO db_meta VALUES ('created_at', ?)", (now,))
@@ -347,9 +351,12 @@ def _norm(s: str) -> str:
 
 # ── Build ───────────────────────────────────────────────────────────────────────
 
-def build_database(organized_root: str = DEFAULT_ORGANIZED,
-                   db_path: str = DB_FILE,
-                   progress_cb=None) -> dict:
+def _build_database_core(organized_root: str = DEFAULT_ORGANIZED,
+                         db_path: str = DB_FILE,
+                         progress_cb=None,
+                         asset_keys: set[tuple[str, str]] | None = None,
+                         prune_asset_keys: set[tuple[str, str]] | None = None,
+                         force_rehash: bool = False) -> dict:
     """
     Walk `organized_root` (structure: category_dir/asset_dir/...files...) and
     hash every file into the asset fingerprint database.  Incremental: already-
@@ -367,6 +374,7 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
     root = Path(organized_root)
     if not root.exists():
         print(f"ERROR: {organized_root} does not exist")
+        con.close()
         return {}
 
     for cat_dir in sorted(root.iterdir()):
@@ -376,11 +384,23 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
         for asset_dir in sorted(cat_dir.iterdir()):
             if not asset_dir.is_dir():
                 continue
+            if asset_keys is not None and (category, asset_dir.name) not in asset_keys:
+                continue
             asset_dirs.append((category, asset_dir.name, str(asset_dir)))
 
     total    = len(asset_dirs)
-    added    = updated = skipped = errors = total_files = 0
+    added    = updated = skipped = removed = errors = total_files = 0
     now      = _now()
+
+    keys_to_prune = asset_keys if asset_keys is not None else prune_asset_keys
+    if keys_to_prune is not None:
+        discovered = {(category, clean_name) for category, clean_name, _ in asset_dirs}
+        for category, clean_name in sorted(keys_to_prune - discovered):
+            cur = con.execute(
+                "DELETE FROM assets WHERE category=? AND clean_name=?",
+                (category, clean_name),
+            )
+            removed += cur.rowcount
 
     print(f"Found {total} asset folders in {organized_root}")
 
@@ -396,7 +416,7 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
             (clean_name, category)
         ).fetchone()
 
-        if existing and existing['file_count'] == disk_file_count:
+        if existing and existing['file_count'] == disk_file_count and not force_rehash:
             skipped += 1
             continue
 
@@ -487,10 +507,73 @@ def build_database(organized_root: str = DEFAULT_ORGANIZED,
     con.commit()
     con.close()
 
-    result = {'added': added, 'updated': updated, 'skipped': skipped,
+    result = {'added': added, 'updated': updated, 'skipped': skipped, 'removed': removed,
               'errors': errors, 'total_files': total_files}
-    print(f"\nBuild complete: {added} added, {updated} updated, {skipped} unchanged, "
-          f"{errors} errors, {total_files} files hashed")
+    print(f"\nBuild complete: {added} added, {updated} updated, {removed} removed, "
+          f"{skipped} unchanged, {errors} errors, {total_files} files hashed")
+    return result
+
+
+def build_database(organized_root: str = DEFAULT_ORGANIZED,
+                   db_path: str = DB_FILE,
+                   progress_cb=None,
+                   use_usn: bool = False,
+                   _usn_backend=None) -> dict:
+    """Build the catalog, optionally resuming from a durable NTFS USN cursor."""
+    if not use_usn:
+        result = _build_database_core(organized_root, db_path, progress_cb)
+        if result:
+            result.update({'index_mode': 'full', 'usn_lag_bytes': 0})
+        return result
+
+    from fileorganizer.usn_index import UsnIncrementalIndex
+
+    tracker = UsnIncrementalIndex(db_path, backend=_usn_backend)
+    plan = tracker.prepare(organized_root)
+    print(
+        f"USN index mode={plan.mode} reason={plan.reason}; "
+        f"lag={plan.lag_bytes} bytes, records={len(plan.changes)}"
+    )
+
+    if plan.mode == 'incremental':
+        result = _build_database_core(
+            organized_root,
+            db_path,
+            progress_cb,
+            asset_keys=plan.affected_assets,
+            force_rehash=True,
+        )
+        if result and result.get('errors', 0) == 0:
+            tracker.complete_incremental(plan)
+            checkpoint_advanced = True
+        else:
+            checkpoint_advanced = False
+    else:
+        result = _build_database_core(
+            organized_root,
+            db_path,
+            progress_cb,
+            prune_asset_keys=plan.previous_assets,
+            force_rehash=plan.mode == 'full_rebuild',
+        )
+        checkpoint_advanced = False
+        if (
+            result
+            and result.get('errors', 0) == 0
+            and plan.mode == 'full_rebuild'
+            and plan.cursor is not None
+        ):
+            tracker.complete_full_scan(plan)
+            checkpoint_advanced = True
+
+    if result:
+        result.update({
+            'index_mode': plan.mode,
+            'index_reason': plan.reason,
+            'usn_lag_bytes': plan.lag_bytes,
+            'usn_records': len(plan.changes),
+            'usn_checkpoint_advanced': checkpoint_advanced,
+        })
     return result
 
 
@@ -1137,6 +1220,10 @@ def main():
     )
     ap.add_argument('--build',   nargs='?', const=DEFAULT_ORGANIZED, metavar='DIR',
                     help='Build/update database from organized directory')
+    ap.add_argument('--incremental', action='store_true',
+                    help='With --build, resume the NTFS USN journal when supported')
+    ap.add_argument('--usn-status', nargs='?', const=DEFAULT_ORGANIZED, metavar='DIR',
+                    help='Show the saved USN checkpoint and lag for a root')
     ap.add_argument('--lookup',  metavar='FOLDER',
                     help='Identify an unknown asset folder')
     ap.add_argument('--palette', metavar='#RRGGBB',
@@ -1164,7 +1251,16 @@ def main():
         cmd_stats(args.db)
 
     if args.build is not None:
-        build_database(args.build, args.db)
+        build_database(args.build, args.db, use_usn=args.incremental)
+
+    if args.usn_status is not None:
+        from fileorganizer.usn_index import UsnIncrementalIndex
+
+        print(json.dumps(
+            UsnIncrementalIndex(args.db).stats(args.usn_status),
+            indent=2,
+            sort_keys=True,
+        ))
 
     if args.export is not None:
         export_json(args.db, args.export)
@@ -1198,7 +1294,7 @@ def main():
         cmd_backfill_provenance(args.db, dry_run=args.dry_run)
 
     if not any([args.stats, args.build is not None, args.export is not None,
-                args.lookup, args.palette, args.verify is not None,
+                args.usn_status is not None, args.lookup, args.palette, args.verify is not None,
                 args.backfill_provenance]):
         ap.print_help()
 

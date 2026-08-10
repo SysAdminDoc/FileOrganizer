@@ -34,6 +34,7 @@ class WatchConfig:
     debounce_ms: int = _DEFAULT_DEBOUNCE_MS
     max_queue: int = _MAX_QUEUE_DEPTH
     recursive: bool = True
+    usn_state_db: str = ""
     ignore_patterns: Set[str] = field(default_factory=lambda: {
         "__pycache__", ".git", ".DS_Store", "Thumbs.db",
         ".fileorganizer.reserve", "organize_moves.db",
@@ -48,6 +49,7 @@ class WatchDaemon:
         self.on_stable = on_stable
         self._queue: dict = {}  # path -> FileEvent
         self._running = False
+        self.resume_status: dict[str, dict] = {}
 
     def is_available(self) -> bool:
         """Check if watchfiles is installed."""
@@ -57,6 +59,7 @@ class WatchDaemon:
         """Start the async watch loop."""
         self._running = True
         log.info("Watch daemon starting for %d paths", len(self.config.paths))
+        self._resume_usn_changes()
 
         if _HAS_WATCHFILES:
             await self._watch_with_watchfiles()
@@ -66,6 +69,34 @@ class WatchDaemon:
     def stop(self):
         """Signal the watch loop to stop."""
         self._running = False
+
+    def _resume_usn_changes(self):
+        if not self.config.usn_state_db:
+            return
+        from fileorganizer.usn_index import resume_usn_changes
+
+        for path in self.config.paths:
+            if not os.path.isdir(path):
+                continue
+            try:
+                result = resume_usn_changes(path, self.config.usn_state_db)
+                self.resume_status[path] = result
+                events = result.get("events", [])
+                if isinstance(events, list):
+                    for event in events:
+                        if (
+                            isinstance(event, dict)
+                            and isinstance(event.get("path"), str)
+                            and isinstance(event.get("change_type"), str)
+                        ):
+                            self._enqueue(event["path"], event["change_type"])
+            except Exception as exc:
+                self.resume_status[path] = {
+                    "mode": "full_fallback",
+                    "reason": str(exc),
+                    "events": [],
+                    "lag_bytes": 0,
+                }
 
     def pending_count(self) -> int:
         """Number of events waiting in the debounce queue."""

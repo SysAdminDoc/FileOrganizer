@@ -675,6 +675,36 @@ def watch_daemon(
     
     # Set up debounce queue
     queue = DebounceQueue(debounce_secs, on_ready=on_files_ready)
+
+    # Recover changes that happened while the watcher was stopped.  Unsupported
+    # volumes simply continue with watchdog's existing live/full fallback.
+    try:
+        from fileorganizer.usn_index import resume_usn_changes
+
+        resume = resume_usn_changes(source_path, _WATCH_STATE_DB)
+        db = _init_watch_db()
+        _set_setting(db, 'watch_usn_mode', str(resume['mode']))
+        _set_setting(db, 'watch_usn_lag_bytes', str(resume['lag_bytes']))
+        _log_event(
+            db,
+            'usn_resume',
+            source_path,
+            f"{resume['mode']}:{resume['reason']}",
+        )
+        db.close()
+        resumed_events = resume.get('events', [])
+        if isinstance(resumed_events, list):
+            for resumed_event in resumed_events:
+                if (
+                    isinstance(resumed_event, dict)
+                    and resumed_event.get('change_type') != 'deleted'
+                    and isinstance(resumed_event.get('path'), str)
+                ):
+                    queue.add(resumed_event['path'])
+    except Exception as exc:
+        db = _init_watch_db()
+        _log_event(db, 'usn_resume_failed', source_path, str(exc))
+        db.close()
     
     # Set up file system watcher
     event_handler = WatchEventHandler(queue, _WATCH_STATE_DB, skip_patterns={'.tmp', '.partial'})
@@ -795,10 +825,13 @@ def main(argv: Optional[list[str]] = None):
         source = _get_setting(db, 'watch_source', 'none')
         source_path = _get_setting(db, 'watch_source_path', '')
         started_at = _get_setting(db, 'watch_started_at')
+        usn_mode = _get_setting(db, 'watch_usn_mode', 'not_initialized')
+        usn_lag = _get_setting(db, 'watch_usn_lag_bytes', '0')
         
         print(f'Status: {status}')
         print(f'Source: {source}')
         print(f'Path: {source_path}')
+        print(f'USN resume: {usn_mode} (lag {usn_lag} bytes)')
         if started_at:
             dt = datetime.fromtimestamp(int(started_at))
             print(f'Started: {dt.strftime("%Y-%m-%d %H:%M:%S")}')

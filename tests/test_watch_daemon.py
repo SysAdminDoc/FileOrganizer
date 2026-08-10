@@ -100,3 +100,27 @@ class TestWatchDaemon(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_usn_resume_queues_downtime_events(tmp_path, monkeypatch):
+    watched = tmp_path / "watched"
+    watched.mkdir()
+    changed = watched / "changed.txt"
+    changed.write_text("changed", encoding="utf-8")
+    monkeypatch.setattr(
+        "fileorganizer.usn_index.resume_usn_changes",
+        lambda *_args: {
+            "mode": "incremental",
+            "reason": "journal resumed",
+            "events": [{"path": str(changed), "change_type": "modified"}],
+            "lag_bytes": 25,
+        },
+    )
+    daemon = WatchDaemon(
+        WatchConfig(paths=[str(watched)], usn_state_db=str(tmp_path / "watch.db"))
+    )
+
+    daemon._resume_usn_changes()
+
+    assert daemon.pending_count() == 1
+    assert daemon.resume_status[str(watched)]["lag_bytes"] == 25

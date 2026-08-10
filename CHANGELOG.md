@@ -6,6 +6,11 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Local NTFS catalogs can now resume from a persisted USN Change Journal
+  cursor, rehash only affected asset roots, reconcile deletes and renames,
+  invalidate folder caches, expose lag/status, and recover watcher downtime;
+  journal wrap, volume changes, network roots, and unsupported filesystems
+  automatically take the existing full-scan path.
 - AI-assisted batch classifications now write bounded, migratable evaluation
   provenance with input/provider/model/prompt/schema/taxonomy/response hashes,
   durable correction and final-decision linkage, redacted JSONL export, fixture

@@ -274,6 +274,24 @@ class TestShouldSkipFolder:
 class TestIntegration:
     """Integration tests."""
 
+    def test_bulk_invalidation_removes_descendants_only(self, tmp_path):
+        db_path = tmp_path / 'test.db'
+        cache = fc.FolderCache(str(db_path))
+        changed = str(tmp_path / 'changed')
+        child = str(tmp_path / 'changed' / 'child')
+        untouched = str(tmp_path / 'untouched')
+        cache.set(changed, 'one')
+        cache.set(child, 'two')
+        cache.set(untouched, 'three')
+
+        cache.invalidate_many([changed])
+
+        assert cache.get(changed) is None
+        assert cache.get(child) is None
+        untouched_record = cache.get(untouched)
+        assert untouched_record is not None
+        assert untouched_record['fingerprint'] == 'three'
+
     def test_typical_workflow(self, tmp_path):
         """Typical usage: cache hits reduce re-scan cost."""
         db_path = tmp_path / 'test.db'
