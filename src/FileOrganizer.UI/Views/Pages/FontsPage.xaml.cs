@@ -12,7 +12,7 @@ public sealed partial class FontsPage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
-    public ObservableCollection<FontResultItem> Results { get; } = [];
+    public BoundedObservableCollection<FontResultItem> Results { get; } = [];
 
     public FontsPage()
     {
@@ -50,11 +50,13 @@ public sealed partial class FontsPage : Page
         try
         {
             var r = await _python.RunScriptNdjsonAsync("fonts_run.py", args, HandleEvent, _cts.Token);
-            StatusText.Text = r.Success ? $"Done. {Results.Count:N0} fonts." : (r.ErrorMessage ?? r.Stderr);
+            StatusText.Text = r.Success
+                ? $"Done. {Results.TotalAdded:N0} fonts.{Results.RetentionNotice}"
+                : (r.ErrorMessage ?? r.Stderr);
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; SetRunning(false); }
+        finally { Results.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
     private void HandleEvent(string ev, JsonElement root)
@@ -72,7 +74,7 @@ public sealed partial class FontsPage : Page
                 var designer = root.TryGetProperty("designer", out var d) ? d.GetString() ?? "" : "";
                 var fmt = root.TryGetProperty("format", out var fo) ? fo.GetString() ?? "" : "";
                 Results.Add(new FontResultItem(path, family, style, weight, designer, fmt));
-                MatchedText.Text = Results.Count.ToString("N0", CultureInfo.CurrentCulture);
+                MatchedText.Text = Results.TotalAdded.ToString("N0", CultureInfo.CurrentCulture);
                 break;
             case "progress":
                 if (root.TryGetProperty("scanned", out var sc) && sc.ValueKind == JsonValueKind.Number)

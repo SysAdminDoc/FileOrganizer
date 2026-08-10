@@ -13,8 +13,10 @@ public sealed partial class VideoPage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
+    private long _matchedCount;
 
-    public ObservableCollection<VideoResultItem> Results { get; } = [];
+    public BoundedObservableCollection<VideoResultItem> Results { get; } =
+        new(isImportant: item => item.Status.Equals("error", StringComparison.OrdinalIgnoreCase));
 
     public VideoPage()
     {
@@ -68,6 +70,7 @@ public sealed partial class VideoPage : Page
         _cts = new CancellationTokenSource();
         SetRunning(true);
         Results.Clear();
+        _matchedCount = 0;
         ScannedText.Text = "0";
         MatchedText.Text = "0";
         RenamedText.Text = "0";
@@ -79,7 +82,7 @@ public sealed partial class VideoPage : Page
                 "video_run.py", args, HandleEvent, _cts.Token);
 
             if (result.Success)
-                StatusText.Text = $"Done. {Results.Count:N0} files processed.";
+                StatusText.Text = $"Done. {Results.TotalAdded:N0} files processed.{Results.RetentionNotice}";
             else if (result.ExitCode == -1 && !string.IsNullOrEmpty(result.ErrorMessage))
                 StatusText.Text = result.ErrorMessage;
             else
@@ -89,6 +92,7 @@ public sealed partial class VideoPage : Page
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
         finally
         {
+            Results.FlushPendingChanges();
             _cts?.Dispose();
             _cts = null;
             SetRunning(false);
@@ -124,7 +128,10 @@ public sealed partial class VideoPage : Page
                 if (string.IsNullOrEmpty(title)) title = Path.GetFileName(path);
                 Results.Add(new VideoResultItem(path, title, year, se, resolution, source, codec, score, keeper, status));
                 if (status == "matched")
-                    MatchedText.Text = Results.Count.ToString("N0", CultureInfo.CurrentCulture);
+                {
+                    _matchedCount++;
+                    MatchedText.Text = _matchedCount.ToString("N0", CultureInfo.CurrentCulture);
+                }
                 break;
 
             case "progress":
@@ -176,6 +183,7 @@ public sealed class VideoResultItem
     public string Codec { get; }
     public string Score { get; }
     public string KeeperBadge { get; }
+    public string Status { get; }
     public Brush KeeperBrush { get; }
 
     public VideoResultItem(string path, string title, string year, string se,
@@ -189,6 +197,7 @@ public sealed class VideoResultItem
         Source = source;
         Codec = codec;
         Score = score;
+        Status = status;
         KeeperBadge = keeper switch
         {
             true => "★",

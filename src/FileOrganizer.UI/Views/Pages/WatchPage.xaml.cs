@@ -17,7 +17,10 @@ public sealed partial class WatchPage : Page
     private long _detected;
     private long _moved;
     public ObservableCollection<WatchSpec> Watches { get; } = [];
-    public ObservableCollection<WatchEvent> Events { get; } = [];
+    public BoundedObservableCollection<WatchEvent> Events { get; } =
+        new(capacity: 200,
+            isImportant: item => item.Status.Equals("error", StringComparison.OrdinalIgnoreCase),
+            importantCapacity: 50);
 
     public WatchPage()
     {
@@ -111,7 +114,7 @@ public sealed partial class WatchPage : Page
         }
         catch (OperationCanceledException) { StatusText.Text = "Stopped."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; StartButton.IsEnabled = true; StopButton.IsEnabled = false; }
+        finally { Events.FlushPendingChanges(); _cts?.Dispose(); _cts = null; StartButton.IsEnabled = true; StopButton.IsEnabled = false; }
     }
 
     private void Stop_Click(object sender, RoutedEventArgs e)
@@ -130,7 +133,6 @@ public sealed partial class WatchPage : Page
                 DetectedText.Text = _detected.ToString("N0", CultureInfo.CurrentCulture);
                 Events.Add(new WatchEvent(now, "detected",
                     $"Detected: {Path.GetFileName(root.GetProperty("path").GetString() ?? "")}"));
-                TrimEvents();
                 break;
             case "item":
                 var status = root.TryGetProperty("status", out var s) ? s.GetString() ?? "" : "";
@@ -140,7 +142,6 @@ public sealed partial class WatchPage : Page
                 MovedText.Text = _moved.ToString("N0", CultureInfo.CurrentCulture);
                 Events.Add(new WatchEvent(now, status,
                     $"{Path.GetFileName(path)} → {newPath}"));
-                TrimEvents();
                 break;
             case "heartbeat":
                 if (root.TryGetProperty("checked", out var ch) && root.TryGetProperty("moved", out var mv))
@@ -149,14 +150,8 @@ public sealed partial class WatchPage : Page
             case "error":
                 Events.Add(new WatchEvent(now, "error",
                     root.TryGetProperty("message", out var m) ? m.GetString() ?? "" : ""));
-                TrimEvents();
                 break;
         }
-    }
-
-    private void TrimEvents()
-    {
-        while (Events.Count > 200) Events.RemoveAt(0);
     }
 
     // Persistence — comma-joined "src||dest||copy" lines in a single string.

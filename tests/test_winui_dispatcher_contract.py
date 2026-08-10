@@ -287,3 +287,46 @@ def test_all_theme_text_roles_and_danger_states_meet_wcag_aa():
         assert required_resource in danger_style.group(0)
     assert 'VisualState x:Name="PointerOver"' in danger_style.group(0)
     assert 'VisualState x:Name="Pressed"' in danger_style.group(0)
+
+
+def test_all_streamed_winui_results_and_text_outputs_are_bounded():
+    page_root = REPO_ROOT / "src/FileOrganizer.UI/Views/Pages"
+    result_pages = (
+        "SmartSortPage.xaml.cs",
+        "FilesPage.xaml.cs",
+        "CleanupPage.xaml.cs",
+        "DuplicatesPage.xaml.cs",
+        "MusicPage.xaml.cs",
+        "VideoPage.xaml.cs",
+        "BooksPage.xaml.cs",
+        "FontsPage.xaml.cs",
+        "CodePage.xaml.cs",
+        "SubtitlesPage.xaml.cs",
+        "PhotosPage.xaml.cs",
+        "RAWPage.xaml.cs",
+        "ComicsPage.xaml.cs",
+        "WatchPage.xaml.cs",
+    )
+    for page_name in result_pages:
+        source = (page_root / page_name).read_text(encoding="utf-8")
+        assert "BoundedObservableCollection<" in source, page_name
+        assert "FlushPendingChanges()" in source, page_name
+
+    for page_name in ("OrganizePage.xaml.cs", "ToolboxPage.xaml.cs"):
+        source = (page_root / page_name).read_text(encoding="utf-8")
+        assert "BoundedTextBuffer" in source, page_name
+        assert "RenderOutput()" in source, page_name
+        assert "StringBuilder" not in source, page_name
+
+    runner = (REPO_ROOT / "src/FileOrganizer.UI/Services/PythonRunner.cs").read_text(
+        encoding="utf-8"
+    )
+    assert runner.count("new BoundedTextBuffer()") == 3
+    assert "new StringBuilder()" not in runner
+
+    smart_sort = (page_root / "SmartSortPage.xaml.cs").read_text(encoding="utf-8")
+    duplicates = (page_root / "DuplicatesPage.xaml.cs").read_text(encoding="utf-8")
+    assert "UiStreamLimits.MaxCategoryRows" in smart_sort
+    assert "UiStreamLimits.MaxFilesPerGroup" in duplicates
+    assert "TotalAdded" in smart_sort
+    assert "_duplicateCount" in duplicates

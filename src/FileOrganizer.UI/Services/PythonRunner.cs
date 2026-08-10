@@ -135,8 +135,8 @@ public sealed class PythonRunner : IPythonRunner
 
         using var process = new Process { StartInfo = psi };
 
-        var stdout = new StringBuilder();
-        var stderr = new StringBuilder();
+        var stdout = new BoundedTextBuffer();
+        var stderr = new BoundedTextBuffer();
 
         try
         {
@@ -184,14 +184,14 @@ public sealed class PythonRunner : IPythonRunner
             try { await process.WaitForExitAsync(CancellationToken.None).ConfigureAwait(false); }
             catch { }
             await ObserveReaderTasksAsync(stdoutTask, stderrTask).ConfigureAwait(false);
-            return new PythonResult(false, stdout.ToString(), stderr.ToString(), -1, "Cancelled by user.");
+            return new PythonResult(false, stdout.Snapshot(), stderr.Snapshot(), -1, "Cancelled by user.");
         }
 
         var success = process.ExitCode == 0;
         return new PythonResult(
             Success: success,
-            Stdout: stdout.ToString(),
-            Stderr: stderr.ToString(),
+            Stdout: stdout.Snapshot(),
+            Stderr: stderr.Snapshot(),
             ExitCode: process.ExitCode,
             ErrorMessage: success ? null : $"Python exited with code {process.ExitCode}");
     }
@@ -273,7 +273,7 @@ public sealed class PythonRunner : IPythonRunner
         psi.EnvironmentVariables["PYTHONUTF8"] = "1";
 
         using var process = new Process { StartInfo = psi };
-        var stderr = new StringBuilder();
+        var stderr = new BoundedTextBuffer();
         var dispatcher = DispatcherQueue.GetForCurrentThread();
         var protocol = new SidecarProtocolSession(scriptName);
 
@@ -371,7 +371,7 @@ public sealed class PythonRunner : IPythonRunner
                 cancelled.Name,
                 cancelled.Payload,
                 CancellationToken.None).ConfigureAwait(false);
-            return new PythonResult(false, "", stderr.ToString(), -1, "Cancelled by user.");
+            return new PythonResult(false, "", stderr.Snapshot(), -1, "Cancelled by user.");
         }
 
         var success = process.ExitCode == 0 && protocol.IsComplete;
@@ -385,7 +385,7 @@ public sealed class PythonRunner : IPythonRunner
         return new PythonResult(
             Success: success,
             Stdout: "",
-            Stderr: stderr.ToString(),
+            Stderr: stderr.Snapshot(),
             ExitCode: process.ExitCode,
             ErrorMessage: errorMessage);
     }

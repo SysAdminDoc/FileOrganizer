@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -11,7 +10,7 @@ public sealed partial class ToolboxPage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
-    private readonly StringBuilder _output = new();
+    private readonly BoundedTextBuffer _output = new();
 
     public ObservableCollection<ToolTile> Tools { get; } = [];
 
@@ -66,9 +65,8 @@ public sealed partial class ToolboxPage : Page
 
         var progress = new Progress<string>(line =>
         {
-            _output.AppendLine(line);
-            OutputBlock.Text = _output.ToString();
-            OutputScroller.ChangeView(null, double.MaxValue, null, true);
+            if (_output.AppendLine(line))
+                RenderOutput();
         });
 
         try
@@ -79,7 +77,7 @@ public sealed partial class ToolboxPage : Page
                 _output.AppendLine();
                 _output.AppendLine("--- stderr ---");
                 _output.Append(r.Stderr);
-                OutputBlock.Text = _output.ToString();
+                RenderOutput();
             }
             StatusText.Text = r.Success
                 ? $"Done. ({tool.Title})"
@@ -87,7 +85,21 @@ public sealed partial class ToolboxPage : Page
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; CancelButton.IsEnabled = false; }
+        finally
+        {
+            RenderOutput();
+            if (_output.TruncatedCharacters > 0)
+                StatusText.Text += " Showing the latest bounded output.";
+            _cts?.Dispose();
+            _cts = null;
+            CancelButton.IsEnabled = false;
+        }
+    }
+
+    private void RenderOutput()
+    {
+        OutputBlock.Text = _output.Snapshot();
+        OutputScroller.ChangeView(null, double.MaxValue, null, true);
     }
 
     private void Cancel_Click(object sender, RoutedEventArgs e)

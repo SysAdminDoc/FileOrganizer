@@ -14,7 +14,8 @@ public sealed partial class DuplicatesPage : Page
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
     private long _wastedBytes;
-    public ObservableCollection<DupeGroup> Groups { get; } = [];
+    private long _duplicateCount;
+    public BoundedObservableCollection<DupeGroup> Groups { get; } = [];
 
     public DuplicatesPage()
     {
@@ -74,18 +75,19 @@ public sealed partial class DuplicatesPage : Page
         SetRunning(true);
         Groups.Clear();
         _wastedBytes = 0;
+        _duplicateCount = 0;
         GroupsText.Text = "0"; DupesText.Text = "0"; WastedText.Text = "0 B";
         StatusText.Text = "Scanning...";
         try
         {
             var r = await _python.RunScriptNdjsonAsync("dedup_run.py", args, HandleEvent, _cts.Token);
             StatusText.Text = r.Success
-                ? $"Review complete: {Groups.Count:N0} groups. No files changed; use the Python desktop Duplicate Finder to act."
+                ? $"Review complete: {Groups.TotalAdded:N0} groups.{Groups.RetentionNotice} No files changed; use the Python desktop Duplicate Finder to act."
                 : (r.ErrorMessage ?? r.Stderr);
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; SetRunning(false); }
+        finally { Groups.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
     private void HandleEvent(string ev, JsonElement root)
@@ -96,9 +98,10 @@ public sealed partial class DuplicatesPage : Page
                 var key = root.TryGetProperty("key", out var k) ? k.GetString() ?? "" : "";
                 var mode = root.TryGetProperty("mode", out var mm) ? mm.GetString() ?? "" : "";
                 var files = new List<DupeFile>();
+                var totalFiles = 0;
+                long biggest = 0;
                 if (root.TryGetProperty("files", out var farr) && farr.ValueKind == JsonValueKind.Array)
                 {
-                    int idx = 0;
                     foreach (var f in farr.EnumerateArray())
                     {
                         var path = f.TryGetProperty("path", out var p) ? p.GetString() ?? "" : "";
@@ -107,17 +110,19 @@ public sealed partial class DuplicatesPage : Page
                         int? distance = null;
                         if (f.TryGetProperty("distance", out var d) && d.ValueKind == JsonValueKind.Number)
                             distance = d.GetInt32();
-                        files.Add(new DupeFile(path, size, distance, isKeeper: idx == 0));
-                        idx++;
+                        biggest = Math.Max(biggest, size);
+                        if (files.Count < UiStreamLimits.MaxFilesPerGroup)
+                            files.Add(new DupeFile(path, size, distance, isKeeper: totalFiles == 0));
+                        totalFiles++;
                     }
                 }
-                if (files.Count >= 2)
+                if (totalFiles >= 2)
                 {
-                    var biggest = files.Max(x => x.Size);
-                    _wastedBytes += biggest * (files.Count - 1);
-                    Groups.Add(new DupeGroup(key, mode, files));
-                    GroupsText.Text = Groups.Count.ToString("N0", CultureInfo.CurrentCulture);
-                    DupesText.Text = Groups.Sum(g => g.Files.Count - 1).ToString("N0", CultureInfo.CurrentCulture);
+                    _wastedBytes += biggest * (totalFiles - 1);
+                    _duplicateCount += totalFiles - 1;
+                    Groups.Add(new DupeGroup(key, mode, files, totalFiles, biggest));
+                    GroupsText.Text = Groups.TotalAdded.ToString("N0", CultureInfo.CurrentCulture);
+                    DupesText.Text = _duplicateCount.ToString("N0", CultureInfo.CurrentCulture);
                     WastedText.Text = FormatSize(_wastedBytes);
                 }
                 break;
@@ -164,17 +169,23 @@ public sealed class DupeGroup
     public string Subheader { get; }
     public IReadOnlyList<DupeFile> Files { get; }
 
-    public DupeGroup(string key, string mode, IReadOnlyList<DupeFile> files)
+    public DupeGroup(
+        string key,
+        string mode,
+        IReadOnlyList<DupeFile> files,
+        int totalFiles,
+        long biggest)
     {
         Files = files;
         Header = mode == "images"
-            ? $"Image cluster · {files.Count} similar"
-            : $"Identical · {files.Count} copies · key {key}";
-        var biggest = files.Max(x => x.Size);
-        var wasted = biggest * (files.Count - 1);
+            ? $"Image cluster · {totalFiles} similar"
+            : $"Identical · {totalFiles} copies · key {key}";
+        var wasted = biggest * (totalFiles - 1);
         Subheader = wasted > 0
-            ? $"~{FormatSize(wasted)} wasted (one keeper, {files.Count - 1} dupes)"
+            ? $"~{FormatSize(wasted)} wasted (one keeper, {totalFiles - 1} dupes)"
             : "";
+        if (totalFiles > files.Count)
+            Subheader += $" · showing first {files.Count:N0}";
     }
 
     private static string FormatSize(long bytes)

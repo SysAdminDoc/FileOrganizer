@@ -22,7 +22,8 @@ public sealed partial class RAWPage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
-    public ObservableCollection<RawImageRow> Results { get; } = [];
+    public BoundedObservableCollection<RawImageRow> Results { get; } =
+        new(isImportant: item => item.Status.Equals("error", StringComparison.OrdinalIgnoreCase));
 
     public RAWPage()
     {
@@ -60,11 +61,13 @@ public sealed partial class RAWPage : Page
         try
         {
             var r = await _python.RunScriptNdjsonAsync("raw_run.py", args, HandleEvent, _cts.Token);
-            StatusText.Text = r.Success ? $"Done. {Results.Count:N0} raw images." : (r.ErrorMessage ?? r.Stderr);
+            StatusText.Text = r.Success
+                ? $"Done. {Results.TotalAdded:N0} raw images.{Results.RetentionNotice}"
+                : (r.ErrorMessage ?? r.Stderr);
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; SetRunning(false); }
+        finally { Results.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
     private void HandleEvent(string ev, JsonElement root)

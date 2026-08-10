@@ -12,7 +12,7 @@ public sealed partial class CodePage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
-    public ObservableCollection<CodeResultItem> Results { get; } = [];
+    public BoundedObservableCollection<CodeResultItem> Results { get; } = [];
 
     public CodePage()
     {
@@ -48,11 +48,13 @@ public sealed partial class CodePage : Page
         try
         {
             var r = await _python.RunScriptNdjsonAsync("code_run.py", args, HandleEvent, _cts.Token);
-            StatusText.Text = r.Success ? $"Done. {Results.Count:N0} projects." : (r.ErrorMessage ?? r.Stderr);
+            StatusText.Text = r.Success
+                ? $"Done. {Results.TotalAdded:N0} projects.{Results.RetentionNotice}"
+                : (r.ErrorMessage ?? r.Stderr);
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; SetRunning(false); }
+        finally { Results.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
     private void HandleEvent(string ev, JsonElement root)
@@ -71,7 +73,7 @@ public sealed partial class CodePage : Page
                 if (root.TryGetProperty("markers", out var m) && m.ValueKind == JsonValueKind.Array)
                     markers = string.Join(", ", m.EnumerateArray().Select(x => x.GetString()).Where(x => x != null));
                 Results.Add(new CodeResultItem(path, name, lang, fc, markers));
-                MatchedText.Text = Results.Count.ToString("N0", CultureInfo.CurrentCulture);
+                MatchedText.Text = Results.TotalAdded.ToString("N0", CultureInfo.CurrentCulture);
                 break;
             case "progress":
                 if (root.TryGetProperty("scanned", out var sc) && sc.ValueKind == JsonValueKind.Number)

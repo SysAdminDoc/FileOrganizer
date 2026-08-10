@@ -12,7 +12,8 @@ public sealed partial class PhotosPage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
-    public ObservableCollection<PhotoRow> Results { get; } = [];
+    private long _exifCount;
+    public BoundedObservableCollection<PhotoRow> Results { get; } = [];
 
     public PhotosPage()
     {
@@ -45,16 +46,19 @@ public sealed partial class PhotosPage : Page
         _cts = new CancellationTokenSource();
         SetRunning(true);
         Results.Clear();
+        _exifCount = 0;
         ScannedText.Text = "0"; ExifText.Text = "0"; RenamedText.Text = "0";
         StatusText.Text = "Reading EXIF...";
         try
         {
             var r = await _python.RunScriptNdjsonAsync("photos_run.py", args, HandleEvent, _cts.Token);
-            StatusText.Text = r.Success ? $"Done. {Results.Count:N0} photos." : (r.ErrorMessage ?? r.Stderr);
+            StatusText.Text = r.Success
+                ? $"Done. {Results.TotalAdded:N0} photos.{Results.RetentionNotice}"
+                : (r.ErrorMessage ?? r.Stderr);
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; SetRunning(false); }
+        finally { Results.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
     private void HandleEvent(string ev, JsonElement root)
@@ -74,8 +78,10 @@ public sealed partial class PhotosPage : Page
                     gps = $"{lat.GetDouble():F2}, {lon.GetDouble():F2}";
                 Results.Add(new PhotoRow(path, date, camera, iso, aperture, shutter, gps));
                 if (!string.IsNullOrEmpty(date))
-                    ExifText.Text = Results.Count(x => !string.IsNullOrEmpty(x.Date))
-                        .ToString("N0", CultureInfo.CurrentCulture);
+                {
+                    _exifCount++;
+                    ExifText.Text = _exifCount.ToString("N0", CultureInfo.CurrentCulture);
+                }
                 break;
             case "progress":
                 if (root.TryGetProperty("scanned", out var sc) && sc.ValueKind == JsonValueKind.Number)

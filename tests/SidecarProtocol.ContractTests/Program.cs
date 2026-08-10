@@ -202,6 +202,52 @@ Assert(restartedSettings.AcoustIdApiKey == "acoustid-fixture"
     && restartedSettings.DefaultBookRenamePattern == "Books/{title}.{ext}",
     "Integrated settings did not survive a service restart.");
 
+var collectionNotifications = 0;
+var streamedRows = new BoundedObservableCollection<StreamFixture>(
+    UiStreamLimits.MaxResultRows,
+    item => item.IsImportant,
+    UiStreamLimits.MaxImportantRows,
+    UiStreamLimits.ReplacementNotificationInterval);
+streamedRows.CollectionChanged += (_, _) => collectionNotifications++;
+var streamTimer = System.Diagnostics.Stopwatch.StartNew();
+for (var index = 0; index < 100_000; index++)
+    streamedRows.Add(new StreamFixture(index, IsImportant: index % 100 == 0));
+streamedRows.FlushPendingChanges();
+streamTimer.Stop();
+Assert(streamedRows.Count == UiStreamLimits.MaxResultRows,
+    "Streamed result rows exceeded their visible cap.");
+Assert(streamedRows.TotalAdded == 100_000 && streamedRows.TotalEvicted == 99_000,
+    "Streamed result totals drifted after eviction.");
+Assert(streamedRows.Count(item => item.IsImportant) == UiStreamLimits.MaxImportantRows,
+    "Recent important rows did not retain their dedicated capacity.");
+Assert(streamedRows.Any(item => item.Id == 99_900),
+    "The newest important row was not retained.");
+Assert(collectionNotifications < 10_000,
+    "Replacement collection notifications were not coalesced.");
+Assert(streamTimer.Elapsed < TimeSpan.FromSeconds(10),
+    "The 100,000-event bounded collection fixture exceeded its latency budget.");
+
+var outputBuffer = new BoundedTextBuffer();
+var outputRefreshes = 0;
+for (var index = 0; index < 100_000; index++)
+{
+    if (outputBuffer.AppendLine($"event-{index:D6} {new string('x', 48)}"))
+    {
+        _ = outputBuffer.Snapshot();
+        outputRefreshes++;
+    }
+}
+var boundedOutput = outputBuffer.Snapshot();
+Assert(outputBuffer.Length <= UiStreamLimits.MaxOutputCharacters,
+    "Streamed text exceeded its character cap.");
+Assert(outputBuffer.TruncatedCharacters > 0
+    && boundedOutput.StartsWith("[... earlier output truncated ...]", StringComparison.Ordinal),
+    "Streamed text did not expose truncation.");
+Assert(boundedOutput.Contains("event-099999", StringComparison.Ordinal),
+    "Streamed text did not retain the newest output.");
+Assert(outputRefreshes < 2_000,
+    "Streamed text refreshes were not coalesced.");
+
 var lifecycleGate = new RunLifecycleGate();
 for (var cycle = 0; cycle < 10; cycle++)
 {
@@ -340,3 +386,5 @@ sealed class FakeSettingsStore(IDictionary<string, string> values) : IStringSett
         return true;
     }
 }
+
+sealed record StreamFixture(int Id, bool IsImportant);
