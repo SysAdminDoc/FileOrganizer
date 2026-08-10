@@ -13,8 +13,10 @@ public sealed partial class MusicPage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
+    private long _matchedCount;
 
-    public ObservableCollection<MusicResultItem> Results { get; } = [];
+    public BoundedObservableCollection<MusicResultItem> Results { get; } =
+        new(isImportant: item => item.Status.Equals("error", StringComparison.OrdinalIgnoreCase));
 
     public MusicPage()
     {
@@ -70,6 +72,7 @@ public sealed partial class MusicPage : Page
         _cts = new CancellationTokenSource();
         SetRunning(true);
         Results.Clear();
+        _matchedCount = 0;
         ScannedText.Text = "0";
         MatchedText.Text = "0";
         RenamedText.Text = "0";
@@ -81,7 +84,7 @@ public sealed partial class MusicPage : Page
                 "music_run.py", args, HandleEvent, _cts.Token, environmentVariables);
 
             if (result.Success)
-                StatusText.Text = $"Done. {Results.Count:N0} files processed.";
+                StatusText.Text = $"Done. {Results.TotalAdded:N0} files processed.{Results.RetentionNotice}";
             else if (result.ExitCode == -1 && !string.IsNullOrEmpty(result.ErrorMessage))
                 StatusText.Text = result.ErrorMessage;
             else
@@ -91,6 +94,7 @@ public sealed partial class MusicPage : Page
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
         finally
         {
+            Results.FlushPendingChanges();
             _cts?.Dispose();
             _cts = null;
             SetRunning(false);
@@ -114,8 +118,8 @@ public sealed partial class MusicPage : Page
                 Results.Add(new MusicResultItem(path, title, artist, album, year, matchType, status));
                 if (status == "matched")
                 {
-                    var n = Results.Count(r => r.Status == "matched");
-                    MatchedText.Text = n.ToString("N0", CultureInfo.CurrentCulture);
+                    _matchedCount++;
+                    MatchedText.Text = _matchedCount.ToString("N0", CultureInfo.CurrentCulture);
                 }
                 break;
 

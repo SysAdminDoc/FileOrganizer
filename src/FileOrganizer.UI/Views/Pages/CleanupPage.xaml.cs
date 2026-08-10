@@ -13,7 +13,7 @@ public sealed partial class CleanupPage : Page
     private CancellationTokenSource? _cts;
     private long _totalSize;
 
-    public ObservableCollection<CleanupResultItem> Results { get; } = [];
+    public BoundedObservableCollection<CleanupResultItem> Results { get; } = [];
 
     public CleanupPage()
     {
@@ -119,7 +119,7 @@ public sealed partial class CleanupPage : Page
 
             if (result.Success)
             {
-                StatusText.Text = $"Review complete: {Results.Count:N0} item(s) found. No files changed; use the Python desktop Cleanup Tools to act.";
+                StatusText.Text = $"Review complete: {Results.TotalAdded:N0} item(s) found.{Results.RetentionNotice} No files changed; use the Python desktop Cleanup Tools to act.";
             }
             else if (result.ExitCode == -1 && string.IsNullOrEmpty(result.ErrorMessage) is false)
             {
@@ -140,6 +140,7 @@ public sealed partial class CleanupPage : Page
         }
         finally
         {
+            Results.FlushPendingChanges();
             _cts?.Dispose();
             _cts = null;
             SetRunning(false);
@@ -157,7 +158,7 @@ public sealed partial class CleanupPage : Page
                 var reason = root.TryGetProperty("reason", out var r) ? r.GetString() ?? "" : "";
                 _totalSize += size;
                 Results.Add(new CleanupResultItem(path, size, reason));
-                FoundText.Text = Results.Count.ToString("N0", CultureInfo.CurrentCulture);
+                FoundText.Text = Results.TotalAdded.ToString("N0", CultureInfo.CurrentCulture);
                 TotalSizeText.Text = FormatSize(_totalSize);
                 break;
 

@@ -1,4 +1,3 @@
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -10,7 +9,7 @@ public sealed partial class OrganizePage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
-    private readonly StringBuilder _liveOutput = new();
+    private readonly BoundedTextBuffer _liveOutput = new();
 
     public OrganizePage()
     {
@@ -68,13 +67,11 @@ public sealed partial class OrganizePage : Page
         OutputBlock.Text = "";
         OutputSummary.Text = "running...";
 
-        var dispatcher = DispatcherQueue;
         var lineProgress = new Progress<string>(line =>
         {
             // Already on UI thread because Progress<T> captures the current sync context.
-            _liveOutput.AppendLine(line);
-            OutputBlock.Text = _liveOutput.ToString();
-            OutputScroller.ChangeView(null, double.MaxValue, null, disableAnimation: true);
+            if (_liveOutput.AppendLine(line))
+                RenderOutput();
         });
 
         try
@@ -90,7 +87,7 @@ public sealed partial class OrganizePage : Page
                 _liveOutput.AppendLine();
                 _liveOutput.AppendLine("--- stderr ---");
                 _liveOutput.Append(result.Stderr);
-                OutputBlock.Text = _liveOutput.ToString();
+                RenderOutput();
             }
 
             if (result.Success)
@@ -103,7 +100,7 @@ public sealed partial class OrganizePage : Page
                 StatusText.Text = result.ErrorMessage;
                 OutputSummary.Text = "failed to start";
                 _liveOutput.AppendLine(result.ErrorMessage);
-                OutputBlock.Text = _liveOutput.ToString();
+                RenderOutput();
             }
             else
             {
@@ -123,14 +120,23 @@ public sealed partial class OrganizePage : Page
             _liveOutput.AppendLine();
             _liveOutput.AppendLine("--- exception ---");
             _liveOutput.AppendLine(ex.ToString());
-            OutputBlock.Text = _liveOutput.ToString();
+            RenderOutput();
         }
         finally
         {
+            RenderOutput();
+            if (_liveOutput.TruncatedCharacters > 0)
+                OutputSummary.Text += $" · showing latest {UiStreamLimits.MaxOutputCharacters:N0} chars";
             _cts?.Dispose();
             _cts = null;
             SetRunning(false);
         }
+    }
+
+    private void RenderOutput()
+    {
+        OutputBlock.Text = _liveOutput.Snapshot();
+        OutputScroller.ChangeView(null, double.MaxValue, null, disableAnimation: true);
     }
 
     private void SetRunning(bool running)

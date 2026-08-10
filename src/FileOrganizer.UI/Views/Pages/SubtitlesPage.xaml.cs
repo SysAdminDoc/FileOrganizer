@@ -13,7 +13,9 @@ public sealed partial class SubtitlesPage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
-    public ObservableCollection<SubtitleResultItem> Results { get; } = [];
+    private long _downloadedCount;
+    public BoundedObservableCollection<SubtitleResultItem> Results { get; } =
+        new(isImportant: item => item.Status.Equals("error", StringComparison.OrdinalIgnoreCase));
 
     public SubtitlesPage()
     {
@@ -50,16 +52,19 @@ public sealed partial class SubtitlesPage : Page
         _cts = new CancellationTokenSource();
         SetRunning(true);
         Results.Clear();
+        _downloadedCount = 0;
         ScannedText.Text = "0"; DownloadedText.Text = "0";
         StatusText.Text = "Searching...";
         try
         {
             var r = await _python.RunScriptNdjsonAsync("subtitles_run.py", args, HandleEvent, _cts.Token);
-            StatusText.Text = r.Success ? $"Done. {Results.Count(x => x.Status == "downloaded"):N0} subtitles fetched." : (r.ErrorMessage ?? r.Stderr);
+            StatusText.Text = r.Success
+                ? $"Done. {_downloadedCount:N0} subtitles fetched.{Results.RetentionNotice}"
+                : (r.ErrorMessage ?? r.Stderr);
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; SetRunning(false); }
+        finally { Results.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
     private void HandleEvent(string ev, JsonElement root)
@@ -73,8 +78,10 @@ public sealed partial class SubtitlesPage : Page
                 var prov = root.TryGetProperty("provider", out var pr) ? pr.GetString() ?? "" : "";
                 Results.Add(new SubtitleResultItem(path, lang, prov, status));
                 if (status == "downloaded")
-                    DownloadedText.Text = Results.Count(x => x.Status == "downloaded")
-                        .ToString("N0", CultureInfo.CurrentCulture);
+                {
+                    _downloadedCount++;
+                    DownloadedText.Text = _downloadedCount.ToString("N0", CultureInfo.CurrentCulture);
+                }
                 break;
             case "progress":
                 if (root.TryGetProperty("scanned", out var sc) && sc.ValueKind == JsonValueKind.Number)

@@ -28,7 +28,8 @@ public sealed partial class SmartSortPage : Page
         ["other"] = ("\uE713", "TextMutedBrush"),
     };
 
-    public ObservableCollection<SmartItemRow> Results { get; } = [];
+    public BoundedObservableCollection<SmartItemRow> Results { get; } =
+        new(isImportant: row => row.Status.Equals("error", StringComparison.OrdinalIgnoreCase));
     public ObservableCollection<CategoryStat> Categories { get; } = [];
 
     public SmartSortPage()
@@ -82,13 +83,13 @@ public sealed partial class SmartSortPage : Page
         {
             var r = await _python.RunScriptNdjsonAsync("smart_run.py", args, HandleEvent, _cts.Token);
             if (r.Success)
-                StatusText.Text = $"Done. {Results.Count:N0} items processed across {Categories.Count} categories.";
+                StatusText.Text = $"Done. {Results.TotalAdded:N0} items processed.{Results.RetentionNotice}";
             else
                 StatusText.Text = r.ErrorMessage ?? r.Stderr ?? $"Failed (exit {r.ExitCode}).";
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; SetRunning(false); }
+        finally { Results.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
     private void HandleEvent(string ev, JsonElement root)
@@ -102,13 +103,20 @@ public sealed partial class SmartSortPage : Page
                 var status = root.TryGetProperty("status", out var s) ? s.GetString() ?? "" : "";
                 Results.Add(new SmartItemRow(src, dst, cat, status));
 
-                if (!_categoryStats.TryGetValue(cat, out var stat))
+                var categoryKey = cat;
+                if (!_categoryStats.ContainsKey(categoryKey)
+                    && _categoryStats.Count >= UiStreamLimits.MaxCategoryRows - 1)
                 {
-                    var (glyph, brushKey) = _categoryMeta.TryGetValue(cat, out var meta)
+                    categoryKey = "other";
+                }
+
+                if (!_categoryStats.TryGetValue(categoryKey, out var stat))
+                {
+                    var (glyph, brushKey) = _categoryMeta.TryGetValue(categoryKey, out var meta)
                         ? meta : ("\uE713", "TextMutedBrush");
-                    stat = new CategoryStat(cat, glyph,
+                    stat = new CategoryStat(categoryKey, glyph,
                         (Brush)Application.Current.Resources[brushKey]);
-                    _categoryStats[cat] = stat;
+                    _categoryStats[categoryKey] = stat;
                     Categories.Add(stat);
                 }
                 stat.Increment();

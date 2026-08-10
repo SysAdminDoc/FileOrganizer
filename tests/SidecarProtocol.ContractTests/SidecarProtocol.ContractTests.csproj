@@ -18,6 +18,8 @@
              Link="SettingsPersistence.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\UserSettings.cs"
              Link="UserSettings.cs" />
+    <Compile Include="..\..\src\FileOrganizer.UI\Services\UiStreamBuffer.cs"
+             Link="UiStreamBuffer.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\PythonRunner.cs"
              Link="PythonRunner.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\SidecarRunner.cs"

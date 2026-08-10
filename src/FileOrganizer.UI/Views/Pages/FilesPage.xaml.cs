@@ -12,7 +12,7 @@ public sealed partial class FilesPage : Page
 {
     private readonly IPythonRunner _python;
     private CancellationTokenSource? _cts;
-    public ObservableCollection<FilesRow> Results { get; } = [];
+    public BoundedObservableCollection<FilesRow> Results { get; } = [];
 
     public FilesPage()
     {
@@ -58,11 +58,13 @@ public sealed partial class FilesPage : Page
         try
         {
             var r = await _python.RunScriptNdjsonAsync("files_run.py", args, HandleEvent, _cts.Token);
-            StatusText.Text = r.Success ? $"Done. {Results.Count:N0} items." : (r.ErrorMessage ?? r.Stderr);
+            StatusText.Text = r.Success
+                ? $"Done. {Results.TotalAdded:N0} items.{Results.RetentionNotice}"
+                : (r.ErrorMessage ?? r.Stderr);
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
-        finally { _cts?.Dispose(); _cts = null; SetRunning(false); }
+        finally { Results.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
     private void HandleEvent(string ev, JsonElement root)
@@ -74,7 +76,7 @@ public sealed partial class FilesPage : Page
                 var dst = root.TryGetProperty("new_path", out var d) ? d.GetString() ?? "" : "";
                 var cat = root.TryGetProperty("category", out var c) ? c.GetString() ?? "Other" : "Other";
                 Results.Add(new FilesRow(src, cat, dst));
-                MovedText.Text = Results.Count.ToString("N0", CultureInfo.CurrentCulture);
+                MovedText.Text = Results.TotalAdded.ToString("N0", CultureInfo.CurrentCulture);
                 break;
             case "progress":
                 if (root.TryGetProperty("scanned", out var sc) && sc.ValueKind == JsonValueKind.Number)

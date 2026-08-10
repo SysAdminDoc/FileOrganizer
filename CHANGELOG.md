@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- Streamed WinUI result views now retain bounded recent and error rows with
+  exact totals and coalesced updates; page and sidecar output buffers retain a
+  capped recent tail and clearly report truncation.
 - Helper/status text and destructive controls now use semantic colors that meet
   WCAG AA across all seven themes and card surfaces, with explicit accessible
   danger-button hover and pressed states.
