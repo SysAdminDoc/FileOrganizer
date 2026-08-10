@@ -51,6 +51,21 @@ public sealed partial class SettingsPage : Page
 
     private void Save_Click(object sender, RoutedEventArgs e)
     {
+        var patterns = new[]
+        {
+            MusicPatternBox.Text ?? "",
+            VideoPatternBox.Text ?? "",
+            BookPatternBox.Text ?? ""
+        };
+        foreach (var pattern in patterns)
+        {
+            if (!RenamePatternValidator.TryValidate(pattern, out var error))
+            {
+                SaveStatusText.Text = $"Rename pattern not saved: {error}";
+                return;
+            }
+        }
+
         _settings.AcoustIdApiKey = ApiKeyBox.Password ?? "";
         _settings.DefaultMusicRenamePattern = MusicPatternBox.Text ?? "";
         _settings.DefaultVideoRenamePattern = VideoPatternBox.Text ?? "";

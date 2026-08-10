@@ -9,6 +9,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Provider and Envato credentials now use Windows-user DPAPI storage instead of
   plaintext app-data JSON/text files, and configurable cloud endpoints are
   restricted to approved HTTPS provider hosts.
+- Rename templates are parsed against an allowlist, must resolve beneath the
+  selected destination root, and use collision suffixes instead of overwriting
+  existing files across the media/code/font sidecars.
 - Move plans, retry records, journals, undo entries, watcher roots, and sidecar
   mutations now use canonical/reparse-aware source and destination boundary
   checks with source identity validation and no-overwrite defaults.

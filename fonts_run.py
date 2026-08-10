@@ -27,7 +27,13 @@ import sys
 import time
 import traceback
 
-from fileorganizer.path_safety import validate_move
+from fileorganizer.path_safety import (
+    PathSafetyError,
+    resolve_rename_destination,
+    unique_rename_destination,
+    validate_move,
+    validate_rename_template,
+)
 
 FONT_EXTS = (".ttf", ".otf", ".woff", ".woff2", ".ttc", ".otc")
 
@@ -140,6 +146,15 @@ def main() -> int:
         return 2
 
     try:
+        validate_rename_template(
+            args.rename_pattern, {"family", "style", "weight", "ext"}
+        )
+    except PathSafetyError as exc:
+        _emit({"event": "error", "code": "invalid_rename_pattern",
+               "message": str(exc)})
+        return 2
+
+    try:
         from fontTools.ttLib import TTFont  # noqa: F401
     except ImportError:
         _emit({"event": "error", "code": "missing_dep",
@@ -178,20 +193,19 @@ def main() -> int:
                     weight=info.get("weight", 400),
                     ext=ext)
                 dest_root = args.rename_root or args.root
-                new_path = os.path.normpath(os.path.join(dest_root, rel))
+                new_path = resolve_rename_destination(dest_root, rel)
                 if os.path.abspath(new_path) != os.path.abspath(path):
+                    new_path = unique_rename_destination(new_path, path)
                     validate_move(
                         path,
                         new_path,
                         source_root=args.root,
                         dest_root=dest_root,
-                        allow_existing_dest=os.path.exists(new_path),
                     )
                     os.makedirs(os.path.dirname(new_path), exist_ok=True)
-                    if not os.path.exists(new_path):
-                        os.rename(path, new_path)
-                        state["renamed"] += 1
-                        info["new_path"] = new_path
+                    os.rename(path, new_path)
+                    state["renamed"] += 1
+                    info["new_path"] = new_path
 
             info["status"] = "matched"
             state["matched"] += 1

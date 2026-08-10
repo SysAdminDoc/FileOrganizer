@@ -29,7 +29,13 @@ import sys
 import time
 import traceback
 
-from fileorganizer.path_safety import validate_move
+from fileorganizer.path_safety import (
+    PathSafetyError,
+    resolve_rename_destination,
+    unique_rename_destination,
+    validate_move,
+    validate_rename_template,
+)
 from collections import Counter
 
 # Marker files that strongly signal a project root.
@@ -225,6 +231,13 @@ def main() -> int:
         return 2
 
     try:
+        validate_rename_template(args.rename_pattern, {"language", "name"})
+    except PathSafetyError as exc:
+        _emit({"event": "error", "code": "invalid_rename_pattern",
+               "message": str(exc)})
+        return 2
+
+    try:
         children = [os.path.join(args.root, d) for d in os.listdir(args.root)]
     except PermissionError as exc:
         _emit({"event": "error", "code": "permission_denied", "message": str(exc)})
@@ -255,20 +268,19 @@ def main() -> int:
                     language=_safe_name(info["language"]),
                     name=_safe_name(info["name"]))
                 dest_root = args.rename_root or args.root
-                new_path = os.path.normpath(os.path.join(dest_root, rel))
+                new_path = resolve_rename_destination(dest_root, rel)
                 if os.path.abspath(new_path) != os.path.abspath(child):
+                    new_path = unique_rename_destination(new_path, child)
                     validate_move(
                         child,
                         new_path,
                         source_root=args.root,
                         dest_root=dest_root,
-                        allow_existing_dest=os.path.exists(new_path),
                     )
                     os.makedirs(os.path.dirname(new_path), exist_ok=True)
-                    if not os.path.exists(new_path):
-                        os.rename(child, new_path)
-                        state["renamed"] += 1
-                        info["new_path"] = new_path
+                    os.rename(child, new_path)
+                    state["renamed"] += 1
+                    info["new_path"] = new_path
 
             state["matched"] += 1
             _emit({"event": "item", "path": child, "status": "matched", **info})

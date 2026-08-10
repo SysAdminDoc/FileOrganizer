@@ -36,7 +36,13 @@ import sys
 import time
 import traceback
 
-from fileorganizer.path_safety import validate_move
+from fileorganizer.path_safety import (
+    PathSafetyError,
+    resolve_rename_destination,
+    unique_rename_destination,
+    validate_move,
+    validate_rename_template,
+)
 from collections import defaultdict
 
 VIDEO_EXTS = (".mp4", ".mkv", ".avi", ".mov", ".wmv", ".m4v", ".flv",
@@ -188,6 +194,16 @@ def main() -> int:
                "message": f"Root directory does not exist: {args.root}"})
         return 2
 
+    if args.rename_pattern:
+        try:
+            validate_rename_template(
+                args.rename_pattern, {"title", "year", "season", "episode", "ext"}
+            )
+        except PathSafetyError as exc:
+            _emit({"event": "error", "code": "invalid_rename_pattern",
+                   "message": str(exc)})
+            return 2
+
     try:
         import guessit  # noqa: F401
     except ImportError:
@@ -233,20 +249,19 @@ def main() -> int:
             ext = os.path.splitext(item["path"])[1].lstrip(".") or "mkv"
             rel = _format_path(args.rename_pattern, {**item, "ext": ext})
             dest_root = args.rename_root or args.root
-            new_path = os.path.normpath(os.path.join(dest_root, rel))
+            new_path = resolve_rename_destination(dest_root, rel)
             if os.path.abspath(new_path) != os.path.abspath(item["path"]):
+                new_path = unique_rename_destination(new_path, item["path"])
                 validate_move(
                     item["path"],
                     new_path,
                     source_root=args.root,
                     dest_root=dest_root,
-                    allow_existing_dest=os.path.exists(new_path),
                 )
                 os.makedirs(os.path.dirname(new_path), exist_ok=True)
-                if not os.path.exists(new_path):
-                    os.rename(item["path"], new_path)
-                    state["renamed"] += 1
-                    item["new_path"] = new_path
+                os.rename(item["path"], new_path)
+                state["renamed"] += 1
+                item["new_path"] = new_path
         state["matched"] += 1
         _emit({"event": "item", **item})
 

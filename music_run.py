@@ -34,7 +34,14 @@ import sys
 import time
 import traceback
 
-from fileorganizer.path_safety import validate_move, validate_path
+from fileorganizer.path_safety import (
+    PathSafetyError,
+    resolve_rename_destination,
+    unique_rename_destination,
+    validate_move,
+    validate_path,
+    validate_rename_template,
+)
 from typing import Any
 
 AUDIO_EXTS = (".mp3", ".m4a", ".mp4", ".aac", ".flac", ".ogg", ".oga",
@@ -324,6 +331,17 @@ def main() -> int:
                "message": f"Root directory does not exist: {args.root}"})
         return 2
 
+    if args.rename_pattern:
+        try:
+            validate_rename_template(
+                args.rename_pattern,
+                {"albumartist", "year", "album", "disc", "track", "title", "ext"},
+            )
+        except PathSafetyError as exc:
+            _emit({"event": "error", "code": "invalid_rename_pattern",
+                   "message": str(exc)})
+            return 2
+
     try:
         import musicbrainzngs as mb
     except ImportError:
@@ -387,19 +405,18 @@ def main() -> int:
                 ext = os.path.splitext(path)[1].lstrip(".") or "mp3"
                 rel = _format_path(args.rename_pattern, {**fields, "ext": ext})
                 dest_root = args.rename_root or args.root
-                new_path = os.path.normpath(os.path.join(dest_root, rel))
+                new_path = resolve_rename_destination(dest_root, rel)
                 if args.mode == "tag" and os.path.abspath(new_path) != os.path.abspath(path):
+                    new_path = unique_rename_destination(new_path, path)
                     validate_move(
                         path,
                         new_path,
                         source_root=args.root,
                         dest_root=dest_root,
-                        allow_existing_dest=os.path.exists(new_path),
                     )
                     os.makedirs(os.path.dirname(new_path), exist_ok=True)
-                    if not os.path.exists(new_path):
-                        os.rename(path, new_path)
-                        state["renamed"] += 1
+                    os.rename(path, new_path)
+                    state["renamed"] += 1
 
             state["matched"] += 1
             _emit({"event": "item", "path": path, "status": "matched",

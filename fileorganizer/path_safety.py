@@ -9,11 +9,144 @@ watcher, and PyQt callers can share the same policy.
 from __future__ import annotations
 
 import os
+import ntpath
+import re
 import stat
+import string
 
 
 class PathSafetyError(ValueError):
     """Raised when a filesystem operation would cross a safety boundary."""
+
+
+_RENAME_FIELD = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+_RENAME_FORMAT_SPEC = re.compile(
+    r"^[<>=^+\- 0#]*\d*(?:\.\d+)?[bcdeEfFgGnosxX%]*$"
+)
+_WINDOWS_RESERVED_NAMES = {
+    "CON", "PRN", "AUX", "NUL",
+    *(f"COM{i}" for i in range(1, 10)),
+    *(f"LPT{i}" for i in range(1, 10)),
+}
+_RENAME_INVALID_LITERAL = set('<>:"|?*\x00')
+
+
+def _is_windows_rooted(path: str) -> bool:
+    """Recognize Windows rooted/drive/UNC paths on every host platform."""
+    drive, _ = ntpath.splitdrive(path)
+    return bool(drive) or path.startswith(("/", "\\")) or ntpath.isabs(path)
+
+
+def _validate_relative_rename_path(path: str) -> str:
+    """Validate a formatted rename path as safe relative Windows components."""
+    if not isinstance(path, str) or not path.strip():
+        raise PathSafetyError("rename destination must be a non-empty path")
+    if "{" in path or "}" in path:
+        raise PathSafetyError("rename destination contains an unexpanded template")
+    if len(path) > 1024:
+        raise PathSafetyError("rename destination is too long")
+    if any(ord(char) < 32 for char in path) or "\x00" in path:
+        raise PathSafetyError("rename destination contains a control character")
+    if _is_windows_rooted(path):
+        raise PathSafetyError("rename destination must be relative")
+
+    components = re.split(r"[\\/]", path)
+    if not components or any(not component for component in components):
+        raise PathSafetyError("rename destination contains an empty path component")
+    for component in components:
+        if component in {".", ".."}:
+            raise PathSafetyError("rename destination contains a dot path component")
+        if component.endswith((".", " ")):
+            raise PathSafetyError("rename destination has a trailing dot or space")
+        stem = component.rstrip(" .").split(".", 1)[0].upper()
+        if stem in _WINDOWS_RESERVED_NAMES:
+            raise PathSafetyError("rename destination uses a reserved Windows name")
+    return path
+
+
+def validate_rename_template(
+    template: str,
+    allowed_fields: set[str] | frozenset[str] | tuple[str, ...],
+) -> str:
+    """Validate a tokenized rename template before any filesystem work.
+
+    Templates may contain forward or backward separators to create nested
+    destination folders, but every component must remain relative and safe.
+    Only simple, explicitly allowed fields and numeric format specifications
+    are accepted; attribute/index traversal and conversions are rejected.
+    """
+    if not isinstance(template, str) or not template.strip():
+        raise PathSafetyError("rename template must be a non-empty string")
+    if len(template) > 1024:
+        raise PathSafetyError("rename template is too long")
+    if any(ord(char) < 32 for char in template) or "\x00" in template:
+        raise PathSafetyError("rename template contains a control character")
+    if _is_windows_rooted(template):
+        raise PathSafetyError("rename template must be relative")
+
+    fields = set(allowed_fields)
+    formatter = string.Formatter()
+    static_parts: list[str] = []
+    try:
+        parsed = list(formatter.parse(template))
+    except (TypeError, ValueError) as exc:
+        raise PathSafetyError(f"invalid rename template: {exc}") from exc
+
+    for literal, field_name, format_spec, conversion in parsed:
+        if any(char in _RENAME_INVALID_LITERAL for char in literal):
+            raise PathSafetyError("rename template contains an invalid filename character")
+        static_parts.append(literal)
+        if field_name is None:
+            continue
+        if not _RENAME_FIELD.fullmatch(field_name) or field_name not in fields:
+            raise PathSafetyError(f"rename template field is not allowed: {field_name!r}")
+        if conversion is not None:
+            raise PathSafetyError("rename template conversions are not allowed")
+        if "{" in format_spec or "}" in format_spec \
+                or not _RENAME_FORMAT_SPEC.fullmatch(format_spec):
+            raise PathSafetyError("rename template format specification is not allowed")
+        static_parts.append("__field__")
+
+    # Validate the literal shape with fields replaced by a safe component so
+    # ../, rooted paths, empty components, and reserved literal names fail
+    # before any user metadata is formatted.
+    _validate_relative_rename_path("".join(static_parts))
+    return template
+
+
+def resolve_rename_destination(
+    dest_root: str | os.PathLike[str],
+    relative_path: str,
+) -> str:
+    """Resolve a formatted rename path and enforce containment under root."""
+    _validate_relative_rename_path(relative_path)
+    root = absolute_path(dest_root)
+    candidate = absolute_path(os.path.join(root, relative_path))
+    if not is_within(candidate, root):
+        raise PathSafetyError("rename destination escapes its root")
+    return candidate
+
+
+def unique_rename_destination(
+    candidate: str,
+    source: str | os.PathLike[str],
+    *,
+    max_attempts: int = 10000,
+) -> str:
+    """Return a no-overwrite candidate, suffixing collisions as ``(2)``."""
+    source_abs = absolute_path(source)
+    candidate_abs = absolute_path(candidate)
+    if os.path.normcase(candidate_abs) == os.path.normcase(source_abs):
+        return candidate_abs
+    if not os.path.lexists(candidate_abs):
+        return candidate_abs
+
+    stem, extension = os.path.splitext(candidate_abs)
+    for index in range(2, max_attempts + 2):
+        alternate = f"{stem} ({index}){extension}"
+        if not os.path.lexists(alternate):
+            return alternate
+    raise PathSafetyError("could not find a collision-free rename destination")
 
 
 def absolute_path(path: str | os.PathLike[str]) -> str:
