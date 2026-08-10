@@ -64,6 +64,34 @@ def _validate_relative_rename_path(path: str) -> str:
     return path
 
 
+def validate_storage_name(name: str) -> str:
+    """Validate a user-controlled single filename component.
+
+    Profile and preset names become filenames under an application-owned
+    directory.  They may contain spaces and Unicode, but never path syntax,
+    Windows device names, control characters, or invalid/trailing filename
+    characters.
+    """
+    if not isinstance(name, str) or not name.strip():
+        raise PathSafetyError("storage name must be a non-empty string")
+    if len(name) > 255:
+        raise PathSafetyError("storage name is too long")
+    if name in {".", ".."}:
+        raise PathSafetyError("storage name cannot be a dot path component")
+    if _is_windows_rooted(name) or any(separator in name for separator in ("/", "\\")):
+        raise PathSafetyError("storage name must be a single relative component")
+    if any(ord(char) < 32 for char in name) or "\x00" in name:
+        raise PathSafetyError("storage name contains a control character")
+    if any(char in _RENAME_INVALID_LITERAL or char in ":/\\" for char in name):
+        raise PathSafetyError("storage name contains an invalid filename character")
+    if name.endswith((".", " ")):
+        raise PathSafetyError("storage name has a trailing dot or space")
+    stem = name.rstrip(" .").split(".", 1)[0].upper()
+    if stem in _WINDOWS_RESERVED_NAMES:
+        raise PathSafetyError("storage name uses a reserved Windows name")
+    return name
+
+
 def validate_rename_template(
     template: str,
     allowed_fields: set[str] | frozenset[str] | tuple[str, ...],

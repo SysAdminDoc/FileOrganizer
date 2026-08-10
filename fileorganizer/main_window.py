@@ -1949,7 +1949,11 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             return
         name = name.strip()
         cfg = self._get_current_profile_config()
-        ProfileManager.save(name, cfg)
+        try:
+            ProfileManager.save(name, cfg)
+        except (ValueError, OSError) as exc:
+            self._log(f"Could not save profile '{name}': {exc}")
+            return
         self._log(f"Profile saved: {name}")
         self._refresh_profiles_menu()
 
@@ -3150,7 +3154,12 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         """Save current categories as a named preset."""
         name, ok = QInputDialog.getText(self, "Save Preset", "Preset name:")
         if ok and name.strip():
-            CategoryPresetManager.save(name.strip(), self._pc_categories)
+            name = name.strip()
+            try:
+                CategoryPresetManager.save(name, self._pc_categories)
+            except (ValueError, OSError) as exc:
+                self._log(f"Could not save category preset '{name}': {exc}")
+                return
             self._log(f"Saved category preset: {name}")
             self._refresh_presets_menu()
 
