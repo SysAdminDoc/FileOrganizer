@@ -16,18 +16,19 @@ from pathlib import Path
 from typing import Any
 
 from fileorganizer.safe_archive import UnsafeArchiveEntryError, safe_extract_path
+from fileorganizer.sidecar_protocol import SidecarEmitter, emit_named
 
 
 COMIC_EXTENSIONS = {'.cbz', '.cbr', '.cb7', '.cbt'}
 IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.tiff', '.webp'}
 PLAN_SCHEMA_VERSION = 1
 _SAFE_CHECK_ROOT = os.path.join(os.getcwd(), "__comic_archive_safety_root__")
+_PROTOCOL = SidecarEmitter("comics")
 
 
 def emit(event: str, data: dict[str, Any]) -> None:
     """Emit a structured NDJSON event for the WinUI shell."""
-    obj = {"event": event} | data
-    print(json.dumps(obj, ensure_ascii=False), flush=True)
+    emit_named(_PROTOCOL, event, data)
 
 
 def _load_pillow_image():
@@ -291,6 +292,7 @@ def scan_folder(
     image_module=None,
 ) -> int:
     """Scan folder for comic archives, emit events, and optionally apply a plan."""
+    _PROTOCOL.reset()
     root_path = Path(root)
     if not root_path.is_dir():
         emit("error", {"code": "invalid_root", "message": f"Not a folder: {root}"})
@@ -389,6 +391,7 @@ def scan_folder(
 
 
 def main(argv: list[str] | None = None) -> int:
+    _PROTOCOL.reset()
     parser = argparse.ArgumentParser(description="Comic archive metadata extractor")
     parser.add_argument("--root", required=True, help="Root folder to scan")
     parser.add_argument("--mode", default="preview", choices=["preview", "organize"],

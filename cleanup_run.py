@@ -16,16 +16,19 @@ old_downloads.
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import sys
 import time
 import traceback
 
+from fileorganizer.sidecar_protocol import SidecarEmitter
+
+
+_PROTOCOL = SidecarEmitter("cleanup")
+
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def main() -> int:

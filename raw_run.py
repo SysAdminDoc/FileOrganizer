@@ -13,15 +13,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from fileorganizer.sidecar_protocol import SidecarEmitter, emit_named
+
 
 RAW_EXTENSIONS = {'.dng', '.cr2', '.nef', '.arw', '.orf', '.rw2', '.crw', '.raf', '.pef', '.x3f'}
 PLAN_SCHEMA_VERSION = 1
+_PROTOCOL = SidecarEmitter("raw")
 
 
 def emit(event: str, data: dict[str, Any]) -> None:
     """Emit a structured NDJSON event for the WinUI shell."""
-    obj = {"event": event} | data
-    print(json.dumps(obj, ensure_ascii=False), flush=True)
+    emit_named(_PROTOCOL, event, data)
 
 
 def _load_rawpy():
@@ -233,6 +235,7 @@ def scan_folder(
     apply: bool = False,
 ) -> int:
     """Scan a folder for RAW files and emit NDJSON events."""
+    _PROTOCOL.reset()
     root_path = Path(root)
     if not root_path.is_dir():
         emit("error", {"code": "invalid_root", "message": f"Not a folder: {root}"})
@@ -315,6 +318,7 @@ def scan_folder(
 
 
 def main(argv: list[str] | None = None, rawpy_module_marker: Any = Ellipsis) -> int:
+    _PROTOCOL.reset()
     parser = argparse.ArgumentParser(description="RAW photo metadata extractor")
     parser.add_argument("--root", required=True, help="Root folder to scan")
     parser.add_argument("--mode", default="preview", choices=["preview", "organize"],

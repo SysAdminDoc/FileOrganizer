@@ -25,19 +25,19 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import json
 import os
-import sys
 import time
 import traceback
 from collections import defaultdict
 
+from fileorganizer.sidecar_protocol import SidecarEmitter
+
 IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".tiff", ".tif")
+_PROTOCOL = SidecarEmitter("dedup")
 
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def _walk(root: str, only_images: bool) -> list[str]:

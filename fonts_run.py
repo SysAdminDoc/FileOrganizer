@@ -20,10 +20,8 @@ NDJSON events:
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
-import sys
 import time
 import traceback
 
@@ -34,8 +32,10 @@ from fileorganizer.path_safety import (
     validate_move,
     validate_rename_template,
 )
+from fileorganizer.sidecar_protocol import SidecarEmitter
 
 FONT_EXTS = (".ttf", ".otf", ".woff", ".woff2", ".ttc", ".otc")
+_PROTOCOL = SidecarEmitter("fonts")
 
 # Name table IDs (per the OpenType spec).
 NID_COPYRIGHT = 0
@@ -52,8 +52,7 @@ NID_PREFERRED_SUBFAMILY = 17
 
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def _safe_name(value: str) -> str:

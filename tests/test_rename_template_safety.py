@@ -105,5 +105,8 @@ def test_each_specialized_sidecar_rejects_unsafe_pattern(tmp_path, script, field
 
     assert result.returncode == 2
     events = [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
-    assert events and events[0]["code"] == "invalid_rename_pattern"
+    assert events and events[0]["event"] == "handshake"
+    error = next(event for event in events if event["event"] == "error")
+    assert error["code"] == "invalid_rename_pattern"
+    assert error["terminal"] is True
     assert not (tmp_path / "outside").exists()

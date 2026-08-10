@@ -25,11 +25,14 @@ import time
 import traceback
 
 from fileorganizer.path_safety import validate_move, validate_tree_pair
+from fileorganizer.sidecar_protocol import SidecarEmitter
+
+
+_PROTOCOL = SidecarEmitter("watch")
 
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def _stable_size(path: str, settle: float) -> bool:
@@ -66,13 +69,13 @@ def main() -> int:
         src = w.get("src", "")
         dst = w.get("dest", "")
         if not (src and dst and os.path.isdir(src)):
-            _emit({"event": "error", "code": "bad_watch",
+            _emit({"event": "error", "code": "bad_watch", "terminal": False,
                    "message": f"Skipping watch with missing/invalid src: {w}"})
             continue
         try:
             src_real, dst_real = validate_tree_pair(src, dst)
         except Exception as exc:
-            _emit({"event": "error", "code": "unsafe_watch",
+            _emit({"event": "error", "code": "unsafe_watch", "terminal": False,
                    "message": f"Skipping unsafe watch {src!r}: {exc}"})
             continue
         watches.append({"src": src_real,

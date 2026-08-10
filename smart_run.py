@@ -39,7 +39,6 @@ NDJSON events:
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
 import shutil
@@ -49,6 +48,10 @@ import traceback
 from collections import Counter
 
 from fileorganizer.path_safety import validate_move, validate_tree_pair
+from fileorganizer.sidecar_protocol import SidecarEmitter
+
+
+_PROTOCOL = SidecarEmitter("smart")
 
 # Extension → category routing.
 CATEGORY_EXTS: dict[str, tuple[str, ...]] = {
@@ -80,8 +83,7 @@ VIDEO_PREFER_PARENT = re.compile(r"music|songs?|albums?|tracks?", re.I)
 
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def _safe_name(value: str) -> str:

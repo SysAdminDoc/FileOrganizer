@@ -22,9 +22,10 @@ def test_app_owns_the_safe_main_window_handle_used_by_pages():
 def test_ndjson_runner_dispatches_and_propagates_callback_failures():
     source = (REPO_ROOT / "src/FileOrganizer.UI/Services/PythonRunner.cs").read_text(encoding="utf-8")
     assert "DispatcherQueue.GetForCurrentThread()" in source
-    assert "await completion.Task.WaitAsync(ct)" in source
+    assert "await completion.Task.WaitAsync(dispatchToken)" in source
     assert "completion.TrySetException(ex)" in source
-    assert "await DispatchEventAsync(evName, root.Clone())" in source
+    assert "var accepted = protocol.AcceptLine(line)" in source
+    assert "accepted.Payload" in source
 
 
 def test_shell_cleanup_and_duplicates_are_explicitly_read_only_with_handoff():

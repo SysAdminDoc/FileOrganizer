@@ -15,6 +15,8 @@ src/**/obj/
 src/**/publish/
 src/**/.vs/
 src/.vs/
+tests/**/bin/
+tests/**/obj/
 
 # Release-staging artifacts (zips, sha256, staged trees)
 artifacts/

@@ -21,11 +21,10 @@ NDJSON events:
 from __future__ import annotations
 
 import argparse
-import json
 import os
-import sys
 import time
 import traceback
+from datetime import datetime
 
 from fileorganizer.path_safety import (
     PathSafetyError,
@@ -34,7 +33,10 @@ from fileorganizer.path_safety import (
     validate_move,
     validate_rename_template,
 )
-from datetime import datetime
+from fileorganizer.sidecar_protocol import SidecarEmitter
+
+
+_PROTOCOL = SidecarEmitter("photos")
 
 PHOTO_EXTS = (".jpg", ".jpeg", ".png", ".tif", ".tiff", ".heic", ".heif",
               ".cr2", ".cr3", ".nef", ".arw", ".dng", ".orf", ".rw2", ".raf",
@@ -42,8 +44,7 @@ PHOTO_EXTS = (".jpg", ".jpeg", ".png", ".tif", ".tiff", ".heic", ".heif",
 
 
 def _emit(obj: dict) -> None:
-    sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
-    sys.stdout.flush()
+    _PROTOCOL.emit(obj)
 
 
 def _walk(root: str) -> list[str]:
