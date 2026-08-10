@@ -23,6 +23,7 @@ public sealed class SidecarProtocolSession
         "handshake", "start", "progress", "item", "group", "summary",
         "file", "comic", "plan", "log", "complete", "error", "watching",
         "detected", "heartbeat",
+        "review", "review_exported",
     };
 
     private readonly string _sidecarName;
@@ -175,6 +176,16 @@ public sealed class SidecarProtocolSession
             case "detected":
                 if (!TryString(root, "path", out _))
                     return $"{eventName} requires a nonempty path.";
+                break;
+
+            case "review":
+                if (!TryString(root, "scan_id", out _))
+                    return "Review requires a nonempty scan_id.";
+                break;
+
+            case "review_exported":
+                if (!TryString(root, "scan_id", out _) || !TryString(root, "path", out _))
+                    return "Review export requires nonempty scan_id and path fields.";
                 break;
 
             case "log":

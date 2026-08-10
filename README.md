@@ -174,6 +174,10 @@ Python process tree.
 - **Shell Cleanup and Duplicates pages** — read-only review screens that do
   not mutate files. Use the Python desktop Cleanup Tools or Duplicate Finder
   for confirmation, Trash/quarantine, hard-link, move, and undo actions.
+- **Resumable cleanup and duplicate reviews** — each shell scan is saved under
+  a review ID and can be reopened, exported, or imported. Reopened paths are
+  checked for existence, size, modification time, and exact-duplicate hash;
+  changed or missing entries are labeled stale and excluded from actions.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write

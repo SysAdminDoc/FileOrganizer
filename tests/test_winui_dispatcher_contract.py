@@ -330,3 +330,18 @@ def test_all_streamed_winui_results_and_text_outputs_are_bounded():
     assert "UiStreamLimits.MaxFilesPerGroup" in duplicates
     assert "TotalAdded" in smart_sort
     assert "_duplicateCount" in duplicates
+
+
+def test_cleanup_and_duplicate_reviews_expose_resume_import_export_controls():
+    page_root = REPO_ROOT / "src/FileOrganizer.UI/Views/Pages"
+    for page_name in ("CleanupPage", "DuplicatesPage"):
+        xaml = (page_root / f"{page_name}.xaml").read_text(encoding="utf-8")
+        code = (page_root / f"{page_name}.xaml.cs").read_text(encoding="utf-8")
+        for control in ("ScanIdTextBox", "ResumeButton", "ImportButton", "ExportButton"):
+            assert f'x:Name="{control}"' in xaml, (page_name, control)
+        for argument in ("--resume-scan", "--import-review", "--export-scan"):
+            assert argument in code, (page_name, argument)
+        assert 'case "review":' in code
+        assert 'case "review_exported":' in code
+        assert "validation_status" in code
+        assert "cannot be acted on" in code

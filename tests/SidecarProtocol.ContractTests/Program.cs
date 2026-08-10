@@ -24,13 +24,22 @@ var progress = session.AcceptLine(
     """{"event":"progress","protocol_version":"1.0","sequence":1,"stage":"scan","current":1,"total":2,"percent":50}""");
 Assert(progress.Name == "progress" && !progress.IsDiagnostic, "Valid progress was rejected.");
 
+var review = session.AcceptLine(
+    """{"event":"review","protocol_version":"1.0","sequence":2,"scan_id":"abc123","status":"running"}""");
+Assert(review.Name == "review" && !review.IsDiagnostic, "Valid review metadata was rejected.");
+
+var reviewExport = session.AcceptLine(
+    """{"event":"review_exported","protocol_version":"1.0","sequence":3,"scan_id":"abc123","path":"C:\\review.json"}""");
+Assert(reviewExport.Name == "review_exported" && !reviewExport.IsDiagnostic,
+    "Valid review export metadata was rejected.");
+
 var complete = session.AcceptLine(
-    """{"event":"complete","protocol_version":"1.0","sequence":2,"status":"ok","total":2,"terminal":true}""");
+    """{"event":"complete","protocol_version":"1.0","sequence":4,"status":"ok","total":2,"terminal":true}""");
 Assert(complete.Name == "complete", "Valid terminal record was rejected.");
 Assert(session.IsComplete, "Completed protocol stream was not recognized.");
 
 var late = session.AcceptLine(
-    """{"event":"log","protocol_version":"1.0","sequence":3,"level":"info","message":"late"}""");
+    """{"event":"log","protocol_version":"1.0","sequence":5,"level":"info","message":"late"}""");
 Assert(late.Name == "log" && late.IsDiagnostic, "Post-terminal event was not isolated.");
 
 var cancelled = SidecarProtocolSession.CreateTerminalError("cancelled", "Cancelled by user.");

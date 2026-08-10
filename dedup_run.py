@@ -26,11 +26,13 @@ from __future__ import annotations
 import argparse
 import hashlib
 import os
+import sqlite3
 import time
 import traceback
 from collections import defaultdict
 
 from fileorganizer.sidecar_protocol import SidecarEmitter
+from fileorganizer.review_store import ReviewStore
 
 IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".tiff", ".tif")
 _PROTOCOL = SidecarEmitter("dedup")
@@ -131,7 +133,7 @@ def _dedup_files(root: str, min_size: int) -> tuple[list[dict], int, int, int]:
             continue
         paths_sorted = sorted(paths, key=len)  # shortest path = canonical keeper
         wasted += size * (len(paths_sorted) - 1)
-        groups.append({"key": full_hash[:16],
+        groups.append({"key": full_hash[:16], "content_sha256": full_hash,
                        "files": [{"path": p, "size": size} for p in paths_sorted]})
 
     return groups, len(files), wasted, len(by_full)
@@ -201,21 +203,116 @@ def _dedup_images(root: str, threshold: int) -> tuple[list[dict], int, int]:
     return groups, len(files), len(groups)
 
 
+def _emit_saved_review(store: ReviewStore, scan_id: str) -> int:
+    try:
+        scan = store.get_scan(scan_id)
+        if scan["status"] == "running":
+            store.finish_scan(scan_id, "interrupted", total_size=int(scan["total_size"]))
+        scan = store.get_scan(scan_id, revalidate=True)
+    except KeyError as exc:
+        _emit({"event": "error", "code": "review_not_found", "message": str(exc)})
+        return 2
+    if scan["kind"] != "duplicates":
+        _emit({"event": "error", "code": "wrong_review_kind",
+               "message": "That scan ID does not contain duplicate results."})
+        return 2
+    _emit({"event": "review", "scan_id": scan_id, "status": scan["status"],
+           "root": scan["root"], "mode": scan["mode"],
+           "truncated": scan["truncated"]})
+    _emit({"event": "start", "mode": scan["mode"], "root": scan["root"],
+           "resumed": True})
+    groups: dict[str, list[dict]] = defaultdict(list)
+    validation: dict[str, int] = {}
+    total_size = 0
+    for entry in scan["entries"]:
+        status = str(entry["validation_status"])
+        validation[status] = validation.get(status, 0) + 1
+        total_size += int(entry["size"])
+        groups[str(entry["group_key"])].append(entry)
+    wasted = 0
+    for key, entries in groups.items():
+        files = []
+        for entry in entries:
+            files.append({
+                "entry_id": entry["id"], "path": entry["path"], "size": entry["size"],
+                "distance": entry["distance"], "decision": entry["decision"],
+                "is_reference": entry["is_reference"],
+                "validation_status": entry["validation_status"],
+                "validation_reason": entry["validation_reason"],
+            })
+        if len(files) >= 2:
+            wasted += max(int(item["size"]) for item in files) * (len(files) - 1)
+        _emit({"event": "group", "mode": scan["mode"], "key": key, "files": files})
+    _emit({"event": "complete", "total_files": len(scan["entries"]),
+           "groups": len(groups), "wasted_bytes": wasted,
+           "validation": validation, "resumed": True,
+           "review_truncated": scan["truncated"]})
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="NDJSON duplicate detector")
-    parser.add_argument("--root", required=True)
+    parser.add_argument("--root")
     parser.add_argument("--mode", choices=["files", "images"], default="files")
+    parser.add_argument("--review-db", help=argparse.SUPPRESS)
+    parser.add_argument("--resume-scan", metavar="SCAN_ID")
+    parser.add_argument("--export-scan", metavar="SCAN_ID")
+    parser.add_argument("--import-review", metavar="JSON_FILE")
+    parser.add_argument("--output", help="Destination for --export-scan")
     parser.add_argument("--min-size", type=int, default=1024,
                         help="Files smaller than this many bytes are ignored (file mode).")
     parser.add_argument("--threshold", type=int, default=8,
                         help="Hamming distance threshold for image mode (0=exact, 8=very similar, 16=loose).")
     args = parser.parse_args()
 
+    if args.export_scan or args.import_review or args.resume_scan:
+        try:
+            store = ReviewStore(args.review_db)
+            if args.export_scan:
+                if not args.output:
+                    parser.error("--export-scan requires --output")
+                exported = store.export_scan(args.export_scan, args.output)
+                _emit({"event": "review_exported", "scan_id": args.export_scan,
+                       "path": str(exported)})
+                _emit({"event": "complete", "total_count": 1, "operation": "review_export"})
+                return 0
+            if args.import_review:
+                imported_id = store.import_scan(args.import_review)
+                return _emit_saved_review(store, imported_id)
+            if args.resume_scan:
+                return _emit_saved_review(store, args.resume_scan)
+        except (OSError, ValueError, RuntimeError, sqlite3.Error) as exc:
+            _emit({"event": "error", "code": "review_store_error",
+                   "message": f"Could not use saved review: {exc}"})
+            return 2
+
+    if not args.root:
+        parser.error("--root is required for a new scan")
+
     if not os.path.isdir(args.root):
         _emit({"event": "error", "code": "root_not_found",
                "message": f"Root not found: {args.root}"})
         return 2
 
+    try:
+        store = ReviewStore(args.review_db)
+    except (OSError, ValueError, RuntimeError, sqlite3.Error) as exc:
+        _emit({"event": "error", "code": "review_store_error",
+               "message": f"Could not open saved reviews: {exc}"})
+        return 2
+
+    try:
+        scan_id = store.create_scan(
+            "duplicates", args.root, args.mode,
+            {"min_size": args.min_size, "threshold": args.threshold},
+        )
+    except (OSError, ValueError, sqlite3.Error) as exc:
+        _emit({"event": "error", "code": "review_store_error",
+               "message": f"Could not create saved review: {exc}"})
+        return 2
+
+    _emit({"event": "review", "scan_id": scan_id, "status": "running",
+           "root": os.path.abspath(args.root), "mode": args.mode, "truncated": False})
     _emit({"event": "start", "mode": args.mode, "root": args.root})
 
     try:
@@ -225,20 +322,35 @@ def main() -> int:
             groups, total, group_count = _dedup_images(args.root, args.threshold)
             wasted = sum(f["size"] for g in groups for f in g["files"][1:])
     except KeyboardInterrupt:
+        store.finish_scan(scan_id, "cancelled")
         _emit({"event": "error", "code": "cancelled", "message": "Cancelled."})
         return 130
     except Exception as exc:
+        store.finish_scan(scan_id, "failed")
         _emit({"event": "error", "code": "crashed",
                "message": f"{type(exc).__name__}: {exc}"})
         return 1
 
     for g in groups:
+        digest = str(g.get("content_sha256", ""))
+        store.append_entries(scan_id, [
+            {
+                **file,
+                "group_key": g["key"],
+                "content_sha256": digest,
+                "decision": "keep" if index == 0 else "review",
+                "is_reference": index == 0,
+            }
+            for index, file in enumerate(g["files"])
+        ])
         _emit({"event": "group", "mode": args.mode, **g})
 
+    store.finish_scan(scan_id, "complete", total_size=wasted)
     _emit({"event": "complete",
            "total_files": total,
            "groups": group_count,
-           "wasted_bytes": wasted})
+           "wasted_bytes": wasted,
+           "scan_id": scan_id})
     return 0
 
 

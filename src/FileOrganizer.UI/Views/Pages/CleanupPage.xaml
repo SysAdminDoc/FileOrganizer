@@ -111,6 +111,26 @@
                     <CheckBox x:Name="CheckArchivesCheck" Content="Validate ZIP/TAR integrity (slower)"
                               IsChecked="True"/>
                 </StackPanel>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Review ID"
+                               Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="1" x:Name="ScanIdTextBox"
+                             Style="{StaticResource PremiumTextBoxStyle}"
+                             PlaceholderText="Saved automatically after every result"/>
+                    <Button Grid.Column="2" x:Name="ResumeButton" Content="Resume"
+                            Style="{StaticResource SecondaryButtonStyle}" Click="Resume_Click"/>
+                    <Button Grid.Column="3" x:Name="ImportButton" Content="Import"
+                            Style="{StaticResource SecondaryButtonStyle}" Click="Import_Click"/>
+                    <Button Grid.Column="4" x:Name="ExportButton" Content="Export"
+                            Style="{StaticResource SecondaryButtonStyle}" Click="Export_Click"/>
+                </Grid>
             </StackPanel>
         </Border>
 
@@ -208,7 +228,8 @@
                                            Text="{Binding Reason}"
                                            Style="{StaticResource CodeTextStyle}"
                                            Foreground="{StaticResource TextMutedBrush}"
-                                           TextTrimming="CharacterEllipsis"/>
+                                           TextTrimming="CharacterEllipsis"
+                                           ToolTipService.ToolTip="{Binding Reason}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
