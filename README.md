@@ -18,7 +18,7 @@
 ## What's in this repo
 
 ```
-src/FileOrganizer.UI/   ← C# / WinUI 3 desktop shell (new — v0.2.0)
+src/FileOrganizer.UI/   ← C# / .NET 8 / WinUI 3 desktop shell
 fileorganizer/          ← Python core (legacy PyQt6 GUI + library code)
 *.py at repo root       ← CLI runners + NDJSON sidecars (organize_run, cleanup_run, asset_db, ...)
 ```
@@ -29,12 +29,36 @@ the AI / dedup / photo logic in Python where the ecosystem lives. The
 two halves talk over `stdout` (text or NDJSON). The legacy PyQt6 GUI
 keeps working in parallel until the shell reaches feature parity.
 
-| Page in shell | Status (v0.2.0) | Wraps |
+| Shell page | Current role | Integration |
 |---|---|---|
-| Home | Live | — |
-| Organize | Live | `organize_run.py` |
-| Cleanup | Live | `cleanup_run.py` |
-| Files / Duplicates / Photos / Watch / Toolbox | Placeholder | TBD |
+| Home | Dashboard and workflow navigation | Native shell |
+| Smart Sort | Preview or apply type-aware routing | `smart_run.py` |
+| Organize | Preview, plan, apply, undo, and provenance | `organize_run.py`, `provenance_run.py` |
+| Files | Preview or apply extension-based routing | `files_run.py` |
+| Cleanup | Read-only streamed scan and persisted review | `cleanup_run.py` |
+| Duplicates | Read-only exact/perceptual scan and persisted review | `dedup_run.py` |
+| Music | Preview or apply music metadata organization | `music_run.py` |
+| Video | Preview or apply video metadata organization | `video_run.py` |
+| Books | Preview or apply e-book metadata organization | `books_run.py` |
+| Fonts | Preview or apply font metadata organization | `fonts_run.py` |
+| Source Code | Preview or apply project-aware routing | `code_run.py` |
+| Subtitles | Preview or apply subtitle matching | `subtitles_run.py` |
+| Photos | Preview or apply EXIF-aware organization | `photos_run.py` |
+| Raw Photos | Preview or apply RAW metadata organization | `raw_run.py` |
+| Comics | Preview or apply comic metadata organization | `comics_run.py` |
+| Watch | Configure watches and stream live events | `watch_run.py` |
+| Toolbox | Run explicit maintenance and reporting commands | Python CLI tools |
+| Settings | Theme, defaults, and credential settings | Native shell services |
+
+Current shell boundaries:
+
+- Cleanup and Duplicates are deliberately read-only review surfaces. Use the
+  Python desktop tools for destructive actions such as Trash, quarantine,
+  hard-link, move, and undo.
+- The self-contained .NET shell still needs the Python runtime and packages
+  described below because workflow pages launch local Python sidecars.
+- Watch runs for the active shell session. Automatic launch at user logon is
+  not yet exposed through Task Scheduler.
 
 ## Get FileOrganizer
 
@@ -280,12 +304,12 @@ GitHub Models and DeepSeek use the shared `httpx` chat-completions transport.
 | `llama3.2:3b` | 2.0 GB | Fastest | Good | `ollama pull llama3.2:3b` |
 | `gemma3:4b` | 3.3 GB | Fast | Good | `ollama pull gemma3:4b` |
 
-### Themes (legacy PyQt6 GUI)
+### Themes
 
-Six dark themes with live preview: **Steam Dark** (default), Catppuccin
-Mocha, OLED Black, GitHub Dark, Nord, Dracula. The WinUI 3 shell uses the
-Steam Dark palette with a cyan accent and currently does not expose a
-theme picker.
+The WinUI Settings page has a live, persisted seven-theme picker:
+**Steam Dark** (default), **Catppuccin Mocha**, **OLED Black**,
+**GitHub Dark**, **Nord**, **Dracula**, and **Light**. The legacy PyQt6 GUI
+supports the six dark palettes.
 
 ## Architecture
 
@@ -297,13 +321,17 @@ src/FileOrganizer.UI/
 ├── Views/
 │   ├── MainWindow.xaml(.cs)  ← side-tab NavigationView shell
 │   └── Pages/
-│       ├── HomePage          ← hero + tile grid + cluster cards
-│       ├── OrganizePage      ← live, runs organize_run.py
-│       ├── CleanupPage       ← live, runs cleanup_run.py over NDJSON
-│       └── PlaceholderPage   ← parameterized stub for unwired routes
+│       ├── HomePage, SettingsPage
+│       ├── SmartSortPage, OrganizePage, FilesPage
+│       ├── CleanupPage, DuplicatesPage  ← read-only persisted reviews
+│       ├── MusicPage, VideoPage, BooksPage, FontsPage, CodePage
+│       ├── SubtitlesPage, PhotosPage, RAWPage, ComicsPage
+│       └── WatchPage, ToolboxPage
 ├── Services/
 │   ├── PythonRunner.cs       ← text + NDJSON Python invocation
-│   └── SidecarRunner.cs      ← NDJSON for future tools/<name>/<name>.exe
+│   ├── ThemeService.cs       ← seven persisted shell palettes
+│   ├── CapabilityHealthService.cs ← shared workflow preflight state
+│   └── SidecarRunner.cs      ← compiled NDJSON sidecar invocation
 └── FileOrganizer.UI.csproj
 ```
 
@@ -353,8 +381,8 @@ before the extractor falls back to Pillow, mutagen, or ffprobe.
 ## Project Planning
 
 - `ROADMAP.md` — active roadmap and detailed backlog.
-- `COMPLETED.md` — shipped roadmap history.
-- `RESEARCH_REPORT.md` — research summary and archive index.
+- `Roadmap_Blocked.md` — work waiting on external input or decisions.
+- `RESEARCH.md` — supporting research and design context.
 - `CHANGELOG.md` — release-level details.
 
 ## FAQ

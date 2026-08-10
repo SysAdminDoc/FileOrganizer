@@ -18,6 +18,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- README shell guidance now matches every routed page, the read-only review
+  boundaries, the seven-theme picker, and the current sidecar architecture;
+  a source-backed documentation contract prevents future route/theme drift.
 - Every shell workflow now publishes a shared capability-health preflight with
   dependency/tool versions, scope, online status, and remediation; the shell
   displays the bounded matrix globally and dependency failures use one schema.
