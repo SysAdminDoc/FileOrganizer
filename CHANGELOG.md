@@ -32,6 +32,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Security
 
+- Community catalog updates now require a pinned GitHub release asset and
+  verified SHA-256 digest, enforce bounded schemas, stage and integrity-check
+  SQLite imports before atomic replacement, retain rollback backups, preserve
+  offline startup, and expose opt-out and last-success status in settings.
 - WinUI crash reports now use bounded atomic rotation, enforce file and record
   retention caps, redact secret-bearing arguments and environment values, and
   minimize private paths while retaining actionable stack context.

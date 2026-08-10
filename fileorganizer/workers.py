@@ -1,6 +1,7 @@
 """FileOrganizer — Background worker threads for scanning, applying, and LLM tasks."""
 import os, re, json, shutil, tempfile, time, math, hashlib, base64, sys, subprocess
-from datetime import datetime
+import hmac
+from datetime import datetime, timezone
 from pathlib import Path
 from collections import Counter
 from urllib.parse import unquote, urlsplit
@@ -2964,6 +2965,8 @@ _CATALOG_ASSET_MAX_BYTES = 64 * 1024 * 1024
 _CATALOG_READ_CHUNK_BYTES = 64 * 1024
 _CATALOG_MAX_ASSETS = 250_000
 _CATALOG_MAX_FILES = 5_000_000
+_CATALOG_MAX_TEXT_CHARS = 4096
+_CATALOG_SYNC_STATE_MAX_BYTES = 64 * 1024
 _CATALOG_DOWNLOAD_PREFIX = '/SysAdminDoc/FileOrganizer/releases/download/'
 _CATALOG_REDIRECT_HOSTS = frozenset({
     'github.com',
@@ -2992,7 +2995,53 @@ class CatalogSyncCancelled(CatalogSyncError):
         super().__init__('cancelled', 'catalog synchronization was cancelled')
 
 
-def _validate_catalog_download_url(url: str) -> str:
+def load_catalog_sync_state() -> dict:
+    """Load bounded, non-sensitive catalog diagnostics for settings/status UI."""
+    try:
+        if os.path.getsize(_CATALOG_SYNC_FILE) > _CATALOG_SYNC_STATE_MAX_BYTES:
+            return {}
+        state = json.loads(Path(_CATALOG_SYNC_FILE).read_text(encoding='utf-8'))
+        return state if isinstance(state, dict) else {}
+    except (FileNotFoundError, OSError, json.JSONDecodeError):
+        return {}
+
+
+def _write_catalog_sync_state(state: dict) -> None:
+    os.makedirs(_APP_DATA_DIR, exist_ok=True)
+    directory = os.path.dirname(_CATALOG_SYNC_FILE) or '.'
+    handle, temporary_path = tempfile.mkstemp(
+        prefix='.catalog_sync_', suffix='.tmp', dir=directory)
+    try:
+        with os.fdopen(handle, 'w', encoding='utf-8') as stream:
+            json.dump(state, stream, indent=2, sort_keys=True)
+            stream.write('\n')
+            stream.flush()
+            os.fsync(stream.fileno())
+        if os.path.getsize(temporary_path) > _CATALOG_SYNC_STATE_MAX_BYTES:
+            raise CatalogSyncError('state_too_large', 'catalog sync state exceeded its limit')
+        os.replace(temporary_path, _CATALOG_SYNC_FILE)
+        temporary_path = ''
+    finally:
+        if temporary_path and os.path.exists(temporary_path):
+            os.remove(temporary_path)
+
+
+def _record_catalog_sync_status(status: str, message: str) -> bool:
+    try:
+        state = load_catalog_sync_state()
+        state.update({
+            'schema_version': 1,
+            'last_attempt_at': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'last_status': str(status)[:64],
+            'last_message': str(message)[:1024],
+        })
+        _write_catalog_sync_state(state)
+        return True
+    except (OSError, CatalogSyncError, TypeError, ValueError):
+        return False
+
+
+def _validate_catalog_download_url(url: str, expected_tag: str = '') -> str:
     """Accept only this repository's named GitHub release asset URL."""
     if not isinstance(url, str) or not url:
         raise CatalogSyncError('invalid_url', 'catalog asset URL is missing')
@@ -3010,7 +3059,64 @@ def _validate_catalog_download_url(url: str) -> str:
     tag, separator, filename = relative.partition('/')
     if not tag or separator != '/' or filename != _CATALOG_ASSET_NAME:
         raise CatalogSyncError('invalid_url', 'catalog asset URL does not name the approved asset')
+    if expected_tag and tag != expected_tag:
+        raise CatalogSyncError('invalid_url', 'catalog asset URL does not match the release tag')
     return url
+
+
+def _validate_catalog_digest(value: str) -> str:
+    if not isinstance(value, str) or not re.fullmatch(r'sha256:[0-9a-fA-F]{64}', value):
+        raise CatalogSyncError(
+            'missing_digest', 'catalog release asset has no valid SHA-256 digest')
+    return value.split(':', 1)[1].lower()
+
+
+def _select_catalog_release_asset(release: dict) -> tuple[str, str]:
+    matches = [
+        asset for asset in release.get('assets', [])
+        if asset.get('name') == _CATALOG_ASSET_NAME
+    ]
+    if not matches:
+        raise CatalogSyncError('missing_asset', 'catalog release has no fingerprint asset')
+    if len(matches) != 1:
+        raise CatalogSyncError('ambiguous_asset', 'catalog release has duplicate fingerprint assets')
+
+    asset = matches[0]
+    size = asset.get('size')
+    if (
+        not isinstance(size, int)
+        or isinstance(size, bool)
+        or size < 0
+        or size > _CATALOG_ASSET_MAX_BYTES
+    ):
+        raise CatalogSyncError('invalid_asset_size', 'catalog release asset has an invalid size')
+    tag = release.get('tag_name', '')
+    url = _validate_catalog_download_url(asset.get('browser_download_url', ''), tag)
+    return url, _validate_catalog_digest(asset.get('digest', ''))
+
+
+def _verify_catalog_digest(raw: bytes, expected_digest: str) -> str:
+    actual_digest = hashlib.sha256(raw).hexdigest()
+    if not hmac.compare_digest(actual_digest, expected_digest):
+        raise CatalogSyncError('digest_mismatch', 'catalog asset SHA-256 digest mismatch')
+    return actual_digest
+
+
+def _validate_catalog_metadata_response_url(response) -> None:
+    get_url = getattr(response, 'geturl', None)
+    final_url = get_url() if callable(get_url) else _CATALOG_GITHUB_API
+    parsed = urlsplit(final_url) if isinstance(final_url, str) else None
+    expected = urlsplit(_CATALOG_GITHUB_API)
+    if (
+        parsed is None
+        or parsed.scheme != 'https'
+        or parsed.hostname != expected.hostname
+        or parsed.path != expected.path
+        or parsed.query
+        or parsed.fragment
+    ):
+        raise CatalogSyncError(
+            'invalid_redirect', 'catalog release metadata left the approved GitHub API URL')
 
 
 def _validate_catalog_response_url(response, requested_url: str) -> None:
@@ -3108,20 +3214,60 @@ def _validate_catalog_payload(payload: dict) -> None:
     assets = payload.get('assets')
     if not isinstance(assets, list) or len(assets) > _CATALOG_MAX_ASSETS:
         raise CatalogSyncError('invalid_schema', 'catalog payload has an invalid assets list')
+    asset_count = payload.get('asset_count', len(assets))
+    if (
+        not isinstance(asset_count, int)
+        or isinstance(asset_count, bool)
+        or asset_count != len(assets)
+    ):
+        raise CatalogSyncError('invalid_schema', 'catalog payload asset count does not match')
 
     total_files = 0
     for asset in assets:
         if not isinstance(asset, dict):
             raise CatalogSyncError('invalid_schema', 'catalog payload contains an invalid asset')
         fingerprint = asset.get('folder_fingerprint')
-        if not isinstance(fingerprint, str) or not fingerprint or len(fingerprint) > 256:
+        if not isinstance(fingerprint, str) or not re.fullmatch(
+            r'[0-9a-fA-F]{64}', fingerprint
+        ):
             raise CatalogSyncError('invalid_schema', 'catalog asset has an invalid fingerprint')
+        for field in ('clean_name', 'category', 'marketplace', 'disk_name', 'preview_image'):
+            value = asset.get(field, '')
+            if not isinstance(value, str) or len(value) > _CATALOG_MAX_TEXT_CHARS or '\x00' in value:
+                raise CatalogSyncError(
+                    'invalid_schema', f'catalog asset field {field} is invalid')
+        confidence = asset.get('confidence', 0)
+        if not isinstance(confidence, int) or isinstance(confidence, bool) or not 0 <= confidence <= 100:
+            raise CatalogSyncError('invalid_schema', 'catalog asset confidence is invalid')
+        for field in ('file_count', 'total_bytes'):
+            value = asset.get(field, 0)
+            if not isinstance(value, int) or isinstance(value, bool) or not 0 <= value <= 2**63 - 1:
+                raise CatalogSyncError(
+                    'invalid_schema', f'catalog asset field {field} is invalid')
         files = asset.get('files', [])
         if not isinstance(files, list) or any(not isinstance(item, dict) for item in files):
             raise CatalogSyncError('invalid_schema', 'catalog asset has an invalid files list')
         total_files += len(files)
         if total_files > _CATALOG_MAX_FILES:
             raise CatalogSyncError('invalid_schema', 'catalog payload has too many file records')
+        for file_record in files:
+            relative_path = file_record.get('p')
+            digest = file_record.get('h')
+            size = file_record.get('s')
+            key_file = file_record.get('k')
+            if (
+                not isinstance(relative_path, str)
+                or not relative_path
+                or len(relative_path) > _CATALOG_MAX_TEXT_CHARS
+                or '\x00' in relative_path
+            ):
+                raise CatalogSyncError('invalid_schema', 'catalog file path is invalid')
+            if not isinstance(digest, str) or not re.fullmatch(r'[0-9a-fA-F]{64}', digest):
+                raise CatalogSyncError('invalid_schema', 'catalog file digest is invalid')
+            if not isinstance(size, int) or isinstance(size, bool) or not 0 <= size <= 2**63 - 1:
+                raise CatalogSyncError('invalid_schema', 'catalog file size is invalid')
+            if key_file not in (0, 1, False, True):
+                raise CatalogSyncError('invalid_schema', 'catalog project-file flag is invalid')
 
 
 class CatalogSyncWorker(QThread):
@@ -3136,8 +3282,9 @@ class CatalogSyncWorker(QThread):
     log      = pyqtSignal(str)
     finished = pyqtSignal(bool, str)   # (success, summary_message)
 
-    def __init__(self) -> None:
+    def __init__(self, *, enabled: bool = True) -> None:
         super().__init__()
+        self._enabled = enabled
         self._cancelled = False
 
     def cancel(self) -> None:
@@ -3149,18 +3296,20 @@ class CatalogSyncWorker(QThread):
         import urllib.request
 
         try:
+            if not self._enabled:
+                message = "Catalog sync disabled; using the local catalog"
+                _record_catalog_sync_status('disabled', message)
+                self.finished.emit(True, message)
+                return
+
             # ── Load last-sync state ─────────────────────────────────────────
-            last_published = ''
-            last_etag      = ''
-            last_modified  = ''
-            if os.path.exists(_CATALOG_SYNC_FILE):
-                try:
-                    state = json.loads(Path(_CATALOG_SYNC_FILE).read_text(encoding='utf-8'))
-                    last_published = state.get('last_published_at', '')
-                    last_etag      = state.get('last_etag', '')
-                    last_modified  = state.get('last_modified', '')
-                except Exception:
-                    pass
+            state = load_catalog_sync_state()
+            last_published = state.get('last_published_at', '')
+            last_etag      = state.get('last_etag', '')
+            last_modified  = state.get('last_modified', '')
+            last_published = last_published if isinstance(last_published, str) else ''
+            last_etag = last_etag if isinstance(last_etag, str) else ''
+            last_modified = last_modified if isinstance(last_modified, str) else ''
 
             # ── Fetch latest release metadata (unauthenticated, 60 req/hr) ──
             # Use conditional headers so GitHub returns 304 Not Modified when
@@ -3175,8 +3324,14 @@ class CatalogSyncWorker(QThread):
             req = urllib.request.Request(_CATALOG_GITHUB_API, headers=headers)
             try:
                 with urllib.request.urlopen(req, timeout=10) as resp:
-                    response_etag     = resp.headers.get('ETag', '')
+                    _validate_catalog_metadata_response_url(resp)
+                    response_etag = resp.headers.get('ETag', '')
                     response_modified = resp.headers.get('Last-Modified', '')
+                    response_etag = (
+                        response_etag[:512] if isinstance(response_etag, str) else '')
+                    response_modified = (
+                        response_modified[:512]
+                        if isinstance(response_modified, str) else '')
                     release_raw = _read_bounded_http_body(
                         resp,
                         max_bytes=_CATALOG_METADATA_MAX_BYTES,
@@ -3188,15 +3343,23 @@ class CatalogSyncWorker(QThread):
             except urllib.error.HTTPError as exc:
                 # 304 Not Modified — the release hasn't changed since last sync.
                 if exc.code == 304:
-                    self.finished.emit(True, "Catalog up-to-date (304 Not Modified)")
+                    message = "Catalog up-to-date (304 Not Modified)"
+                    _record_catalog_sync_status('up_to_date', message)
+                    self.finished.emit(True, message)
                     return
-                self.finished.emit(True, f"Catalog sync skipped (HTTP {exc.code}: {exc.reason})")
+                message = f"Catalog sync skipped (HTTP {exc.code}: {exc.reason})"
+                _record_catalog_sync_status('http_unavailable', message)
+                self.finished.emit(True, message)
                 return
             except urllib.error.URLError as exc:
-                self.finished.emit(True, f"Catalog sync skipped (offline: {exc.reason})")
+                message = f"Catalog sync skipped (offline: {exc.reason}); using local catalog"
+                _record_catalog_sync_status('offline', message)
+                self.finished.emit(True, message)
                 return
             except socket.timeout:
-                self.finished.emit(True, "Catalog sync skipped (release metadata timeout)")
+                message = "Catalog sync skipped (release metadata timeout); using local catalog"
+                _record_catalog_sync_status('offline', message)
+                self.finished.emit(True, message)
                 return
             published_at = release.get('published_at', '')
             tag          = release.get('tag_name', '')
@@ -3206,21 +3369,13 @@ class CatalogSyncWorker(QThread):
                 self._persist_sync_state(
                     last_published or published_at, tag,
                     response_etag, response_modified, 0, 0,
+                    status='up_to_date',
                 )
                 self.finished.emit(True, f"Catalog up-to-date ({tag})")
                 return
 
             # ── Find the fingerprint JSON asset ──────────────────────────────
-            download_url = ''
-            for asset in release.get('assets', []):
-                if asset.get('name') == _CATALOG_ASSET_NAME:
-                    download_url = asset.get('browser_download_url', '')
-                    break
-
-            if not download_url:
-                self.finished.emit(True, "Catalog release found but no fingerprint asset attached")
-                return
-            download_url = _validate_catalog_download_url(download_url)
+            download_url, expected_digest = _select_catalog_release_asset(release)
 
             # ── Download ─────────────────────────────────────────────────────
             self.log.emit(f"Catalog: downloading {_CATALOG_ASSET_NAME} from {tag}…")
@@ -3242,9 +3397,12 @@ class CatalogSyncWorker(QThread):
                     )
             except (urllib.error.URLError, socket.timeout) as exc:
                 reason = getattr(exc, 'reason', exc)
-                self.finished.emit(True, f"Catalog sync skipped (download failed: {reason})")
+                message = f"Catalog sync skipped (download failed: {reason}); using local catalog"
+                _record_catalog_sync_status('offline', message)
+                self.finished.emit(True, message)
                 return
 
+            content_sha256 = _verify_catalog_digest(raw, expected_digest)
             json_data = _decode_catalog_json(raw, 'asset payload')
             _validate_catalog_payload(json_data)
 
@@ -3254,7 +3412,7 @@ class CatalogSyncWorker(QThread):
             # ── Persist sync state ───────────────────────────────────────────
             self._persist_sync_state(
                 published_at, tag, response_etag, response_modified,
-                new_assets, skipped,
+                new_assets, skipped, content_sha256=content_sha256,
             )
 
             msg = (f"Catalog updated from {tag}: "
@@ -3263,11 +3421,17 @@ class CatalogSyncWorker(QThread):
             self.finished.emit(True, msg)
 
         except CatalogSyncCancelled:
-            self.finished.emit(True, "Catalog sync skipped (cancelled)")
+            message = "Catalog sync skipped (cancelled); using local catalog"
+            _record_catalog_sync_status('cancelled', message)
+            self.finished.emit(True, message)
         except CatalogSyncError as exc:
-            self.finished.emit(False, f"Catalog sync blocked [{exc.code}]: {exc}")
+            message = f"Catalog sync blocked [{exc.code}]: {exc}"
+            _record_catalog_sync_status('blocked', message)
+            self.finished.emit(False, message)
         except Exception as exc:
-            self.finished.emit(False, f"Catalog sync error: {exc}")
+            message = f"Catalog sync error: {exc}"
+            _record_catalog_sync_status('error', message)
+            self.finished.emit(False, message)
 
     @staticmethod
     def _import_catalog(json_data: dict) -> tuple[int, int]:
@@ -3281,20 +3445,30 @@ class CatalogSyncWorker(QThread):
             raise CatalogSyncError('import_unavailable', 'asset database importer is unavailable')
         asset_db_mod = _ilu.module_from_spec(spec)
         spec.loader.exec_module(asset_db_mod)
-        return asset_db_mod.import_community_json(json_data, db_path)
+        return asset_db_mod.import_community_json_atomic(json_data, db_path)
 
     @staticmethod
     def _persist_sync_state(published_at: str, tag: str,
                             etag: str, last_modified: str,
-                            new_assets: int, skipped: int) -> None:
-        os.makedirs(_APP_DATA_DIR, exist_ok=True)
-        Path(_CATALOG_SYNC_FILE).write_text(json.dumps({
+                            new_assets: int, skipped: int,
+                            *, content_sha256: str = '',
+                            status: str = 'updated') -> None:
+        now = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        state = load_catalog_sync_state()
+        state.update({
+            'schema_version':     1,
             'last_published_at': published_at,
             'last_tag':          tag,
             'last_etag':         etag,
             'last_modified':     last_modified,
-            'last_sync_at':      datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'last_attempt_at':   now,
+            'last_success_at':   now,
+            'last_status':       status,
+            'last_message':      '',
             'new_assets':        new_assets,
             'skipped':           skipped,
-        }, indent=2), encoding='utf-8')
+        })
+        if content_sha256:
+            state['content_sha256'] = content_sha256
+        _write_catalog_sync_state(state)
 

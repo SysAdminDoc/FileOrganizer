@@ -224,6 +224,13 @@ Match locally-downloaded templates against a community-curated catalog of
 already-classified assets by SHA-256 — get clean names and categories
 instantly without an AI API call.
 
+Startup catalog checks are offline-first: network failures keep the last local
+catalog available. Updates are accepted only from this repository's GitHub
+release asset after its published SHA-256 digest and bounded schema validate,
+then imported through a staged SQLite database with a last-known-good backup.
+Use **Design Workflow Settings** to disable startup updates or view the last
+successful catalog release and sync status.
+
 ## Configuration
 
 ### AI Providers

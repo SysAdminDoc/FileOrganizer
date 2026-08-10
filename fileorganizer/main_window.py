@@ -238,8 +238,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
     def _start_catalog_sync(self):
         """Check for a newer community asset_fingerprints.json on startup."""
+        from fileorganizer.config import load_design_settings
         from fileorganizer.workers import CatalogSyncWorker
-        self._catalog_sync_worker = CatalogSyncWorker()
+        enabled = bool(load_design_settings().get('community_catalog_sync', True))
+        self._catalog_sync_worker = CatalogSyncWorker(enabled=enabled)
         self._catalog_sync_worker.log.connect(self._log)
         self._catalog_sync_worker.finished.connect(self._on_catalog_sync_done)
         self._catalog_sync_worker.start()
@@ -247,9 +249,13 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
     def _on_catalog_sync_done(self, success: bool, msg: str):
         if not success:
             self._log(f"Catalog sync: {msg}")
+            self.lbl_statusbar.setText(msg[:120])
         elif msg.startswith("Catalog updated"):
             self._log(msg)
             self.lbl_statusbar.setText(msg)
+        elif 'offline' in msg.lower() or 'disabled' in msg.lower():
+            self._log(msg)
+            self.lbl_statusbar.setText(msg[:120])
 
     # ═══ BUILD UI ═════════════════════════════════════════════════════════════
 
