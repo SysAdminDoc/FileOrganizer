@@ -31,6 +31,8 @@ All notable changes to FileOrganizer will be documented in this file.
 - DeepSeek batch results are now schema-checked across fresh and cached paths;
   malformed entries become retry-marked review records, cardinality failures are
   controlled, and batch result files are written atomically.
+- LLM cache connections now create or migrate their schema, indexes, and version
+  marker transactionally at the canonical database path on first use.
 - Ollama batch classification now passes the configured endpoint and model
   explicitly, and optional face-recognition failures no longer terminate GUI
   startup.

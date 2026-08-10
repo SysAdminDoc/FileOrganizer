@@ -16,12 +16,70 @@ from typing import Optional
 # Use organize_moves.db as the persistent cache
 DB_FILE = Path(__file__).parent / 'organize_moves.db'
 DEFAULT_TTL = 30 * 86400  # 30 days in seconds
+_SCHEMA_NAME = 'llm_cache'
+_SCHEMA_VERSION = 1
+
+
+def _ensure_schema(con: sqlite3.Connection) -> None:
+    """Create or migrate the cache schema inside one transaction."""
+    con.execute('BEGIN')
+    con.execute('''
+        CREATE TABLE IF NOT EXISTS llm_cache (
+            id             INTEGER PRIMARY KEY AUTOINCREMENT,
+            fingerprint    TEXT NOT NULL,
+            model_id       TEXT NOT NULL,
+            prompt_hash    TEXT NOT NULL,
+            response_json  TEXT NOT NULL,
+            created_at     INTEGER NOT NULL,
+            accessed_at    INTEGER NOT NULL,
+            UNIQUE(fingerprint, model_id, prompt_hash)
+        )
+    ''')
+    columns = {
+        row[1]
+        for row in con.execute('PRAGMA table_info(llm_cache)').fetchall()
+    }
+    required = {
+        'fingerprint', 'model_id', 'prompt_hash', 'response_json',
+        'created_at', 'accessed_at',
+    }
+    missing = sorted(required - columns)
+    if missing:
+        raise sqlite3.DatabaseError(
+            f"llm_cache table is missing required columns: {', '.join(missing)}"
+        )
+    con.execute(
+        'CREATE INDEX IF NOT EXISTS idx_llm_fingerprint ON llm_cache(fingerprint)'
+    )
+    con.execute(
+        'CREATE INDEX IF NOT EXISTS idx_llm_accessed ON llm_cache(accessed_at)'
+    )
+    con.execute('''
+        CREATE TABLE IF NOT EXISTS llm_cache_schema (
+            schema_name TEXT PRIMARY KEY,
+            version INTEGER NOT NULL
+        )
+    ''')
+    con.execute(
+        '''INSERT INTO llm_cache_schema(schema_name, version) VALUES (?, ?)
+           ON CONFLICT(schema_name) DO UPDATE SET version=excluded.version
+           WHERE llm_cache_schema.version < excluded.version''',
+        (_SCHEMA_NAME, _SCHEMA_VERSION),
+    )
+    con.commit()
 
 
 def get_cache_db() -> sqlite3.Connection:
     """Open the cache database."""
-    con = sqlite3.connect(str(DB_FILE))
+    db_path = Path(DB_FILE)
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    con = sqlite3.connect(str(db_path), timeout=30)
     con.row_factory = sqlite3.Row
+    try:
+        _ensure_schema(con)
+    except Exception:
+        con.close()
+        raise
     return con
 
 
@@ -72,7 +130,7 @@ def lookup_cached(folder_path: str, model_id: str, prompt_text: str) -> Optional
     con = get_cache_db()
     try:
         row = con.execute(
-            "SELECT response_json, accessed_at FROM llm_cache "
+            "SELECT response_json, created_at, accessed_at FROM llm_cache "
             "WHERE fingerprint = ? AND model_id = ? AND prompt_hash = ?",
             (fp, model_id, p_hash)
         ).fetchone()
@@ -81,14 +139,7 @@ def lookup_cached(folder_path: str, model_id: str, prompt_text: str) -> Optional
             return None
         
         now = int(time.time())
-        created = row['accessed_at']
-        try:
-            created = con.execute(
-                "SELECT created_at FROM llm_cache WHERE fingerprint=? AND model_id=? AND prompt_hash=?",
-                (fp, model_id, p_hash)
-            ).fetchone()['created_at']
-        except (TypeError, KeyError):
-            pass
+        created = row['created_at']
         if now - created > DEFAULT_TTL:
             # Expired; delete and return None
             con.execute(
@@ -109,7 +160,7 @@ def lookup_cached(folder_path: str, model_id: str, prompt_text: str) -> Optional
         
         try:
             return json.loads(row['response_json'])
-        except json.JSONDecodeError:
+        except (TypeError, json.JSONDecodeError):
             return None
     finally:
         con.close()

@@ -43,6 +43,36 @@ class TestLlmCache(unittest.TestCase):
         h2 = llm_cache.prompt_hash("prompt B")
         self.assertNotEqual(h1, h2)
 
+    def test_fresh_database_initializes_schema_on_first_cleanup(self):
+        fresh_db = os.path.join(self._tmp, "fresh", "cache.db")
+        llm_cache.DB_FILE = fresh_db
+
+        self.assertEqual(llm_cache.cleanup_expired(), 0)
+
+        con = sqlite3.connect(fresh_db)
+        tables = {
+            row[0]
+            for row in con.execute(
+                "SELECT name FROM sqlite_master WHERE type='table'"
+            )
+        }
+        indexes = {
+            row[0]
+            for row in con.execute(
+                "SELECT name FROM sqlite_master WHERE type='index'"
+            )
+        }
+        schema_version = con.execute(
+            "SELECT version FROM llm_cache_schema WHERE schema_name='llm_cache'"
+        ).fetchone()[0]
+        con.close()
+
+        self.assertIn("llm_cache", tables)
+        self.assertIn("llm_cache_schema", tables)
+        self.assertIn("idx_llm_fingerprint", indexes)
+        self.assertIn("idx_llm_accessed", indexes)
+        self.assertEqual(schema_version, 1)
+
     @patch("llm_cache.folder_fingerprint", return_value="abc123")
     def test_store_and_lookup(self, _):
         response = {"category": "After Effects - Slideshow", "confidence": 85}
