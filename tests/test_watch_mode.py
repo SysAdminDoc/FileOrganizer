@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from fileorganizer import watch_mode
 import fileorganizer.config as config
+from fileorganizer.path_safety import PathSafetyError
 
 
 @pytest.fixture(autouse=True)
@@ -432,6 +433,104 @@ class TestWatchPlanning:
         assert item['is_file_item'] is True
         assert item['file_ext'] == '.ttf'
 
+    def test_process_ready_files_applies_only_when_explicitly_enabled(self, tmp_path, monkeypatch):
+        source = tmp_path / 'source'
+        dest = tmp_path / 'organized'
+        asset = source / 'Summer Mockup Pack'
+        db_path = tmp_path / 'watch_state.db'
+        plan_path = tmp_path / 'watch-plan.json'
+        source.mkdir()
+        dest.mkdir()
+        asset.mkdir()
+        changed = asset / 'preview.psd'
+        changed.write_bytes(b'not a real psd')
+        context = watch_mode.resolve_source_config(
+            'design', source_path=str(source), dest_root=str(dest)
+        )
+        monkeypatch.setattr(watch_mode, '_WATCH_STATE_DB', str(db_path))
+        monkeypatch.setattr(
+            watch_mode,
+            '_classify_watch_entries',
+            lambda entries, source_path: [{
+                'name': entries[0]['name'],
+                'category': 'Mockups - Print & Signage',
+                'clean_name': entries[0]['name'],
+                'confidence': 90,
+            }],
+        )
+        import organize_run
+        calls = []
+
+        def fake_apply(plan, *, dry_run, verbose):
+            calls.append(dry_run)
+            return {'moved': 1 if not dry_run else 0, 'errors': 0}
+
+        monkeypatch.setattr(organize_run, 'apply_move_plan', fake_apply)
+
+        result = watch_mode.process_ready_files(
+            [str(changed)], context, plan_out=str(plan_path), auto_apply=True,
+        )
+
+        assert calls == [False]
+        assert result['auto_applied'] is True
+        assert result['result']['moved'] == 1
+        assert asset.exists()
+        db = sqlite3.connect(db_path)
+        status = db.execute(
+            "SELECT status FROM watch_events WHERE event_type = 'plan_applied'"
+        ).fetchone()[0]
+        db.close()
+        assert status == 'applied'
+
+    def test_process_ready_files_defaults_to_preview_only(self, tmp_path, monkeypatch):
+        source = tmp_path / 'source'
+        dest = tmp_path / 'organized'
+        source.mkdir()
+        dest.mkdir()
+        changed = source / 'DisplayFont.ttf'
+        changed.write_bytes(b'font-ish')
+        context = watch_mode.resolve_source_config(
+            'loose_files', source_path=str(source), dest_root=str(dest)
+        )
+        monkeypatch.setattr(watch_mode, '_WATCH_STATE_DB', str(tmp_path / 'watch_state.db'))
+        monkeypatch.setattr(
+            watch_mode,
+            '_classify_watch_entries',
+            lambda entries, source_path: [{
+                'name': entries[0]['name'],
+                'category': 'Fonts & Typography',
+                'clean_name': entries[0]['name'],
+                'confidence': 95,
+            }],
+        )
+        import organize_run
+        calls = []
+        monkeypatch.setattr(
+            organize_run,
+            'apply_move_plan',
+            lambda plan, *, dry_run, verbose: calls.append(dry_run) or {'moved': 0},
+        )
+
+        result = watch_mode.process_ready_files([str(changed)], context, auto_apply='false')
+
+        assert calls == [True]
+        assert result['auto_applied'] is False
+        assert changed.exists()
+
+    def test_process_ready_files_blocks_overlapping_auto_apply_roots(self, tmp_path, monkeypatch):
+        source = tmp_path / 'source'
+        source.mkdir()
+        nested_dest = source / 'organized'
+        nested_dest.mkdir()
+        context = watch_mode.resolve_source_config(
+            'loose_files', source_path=str(source), dest_root=str(nested_dest)
+        )
+        db_path = tmp_path / 'watch_state.db'
+        monkeypatch.setattr(watch_mode, '_WATCH_STATE_DB', str(db_path))
+
+        with pytest.raises(PathSafetyError, match='overlap'):
+            watch_mode.process_ready_files([], context, auto_apply=True)
+
     def test_main_start_resolves_context_and_invokes_daemon(self, tmp_path, monkeypatch, capsys):
         source = tmp_path / 'source'
         dest = tmp_path / 'organized'
@@ -460,6 +559,24 @@ class TestWatchPlanning:
         assert captured['dest_root'] == str(dest)
         assert captured['duration_secs'] == 5
         assert callable(captured['on_files_ready'])
+
+        watch_mode.main([
+            '--source', 'design',
+            '--source-path', str(source),
+            '--dest-root', str(dest),
+            '--start',
+            '--duration', '5',
+            '--auto-apply',
+        ])
+        assert captured['on_files_ready'] is not None
+        calls = []
+        monkeypatch.setattr(
+            watch_mode,
+            'process_ready_files',
+            lambda files, context, plan_out='', auto_apply=False: calls.append(auto_apply),
+        )
+        captured['on_files_ready'](['ready.txt'])
+        assert calls == [True]
 
 
 # Integration tests (only if watchdog available)

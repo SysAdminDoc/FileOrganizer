@@ -17,6 +17,7 @@ from fileorganizer.photos import load_photo_settings, _PHOTO_FOLDER_PRESETS
 from fileorganizer.duplicates import ConflictResolver
 from fileorganizer.plugins import PluginManager
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
+from fileorganizer.path_safety import PathSafetyError, validate_tree_pair
 from fileorganizer.workers import (
     ScanAepWorker, ScanCategoryWorker, ScanLLMWorker,
     ScanFilesWorker, ScanFilesLLMWorker, format_size
@@ -668,6 +669,31 @@ class ScanMixin:
                 pass
         if total == 0:
             self.lbl_empty.setText("No files or folders found"); self.lbl_empty.show()
+
+        watch_auto_apply = getattr(self, '_watch_auto_apply', None)
+        if watch_auto_apply is not None:
+            self._watch_auto_apply = None
+            dry_run = watch_auto_apply is not True
+            if not dry_run:
+                try:
+                    for item in self.file_items:
+                        if not item.selected or item.status != "Pending":
+                            continue
+                        validate_tree_pair(
+                            item.source_root or os.path.dirname(item.full_src),
+                            item.dest_root or os.path.dirname(item.full_dst),
+                        )
+                except (OSError, ValueError, PathSafetyError) as exc:
+                    dry_run = True
+                    self._log(f"Watch auto-apply blocked: {exc}")
+            mode = "auto-apply" if not dry_run else "preview-only"
+            self._log(f"Watch scan complete: {mode} mode")
+            QTimer.singleShot(
+                0,
+                lambda dry_run=dry_run: self._apply_files(
+                    dry_run=dry_run
+                ),
+            )
 
     def _resolve_conflicts(self):
         """Auto-resolve destination path conflicts using saved strategy."""

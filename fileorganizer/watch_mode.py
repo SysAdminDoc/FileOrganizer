@@ -25,6 +25,8 @@ from datetime import datetime
 from typing import Optional, Dict, Set, Callable, Any
 from collections import defaultdict
 
+from fileorganizer.path_safety import PathSafetyError, validate_tree_pair
+
 try:
     from watchdog.observers import Observer
     from watchdog.events import FileSystemEventHandler
@@ -502,10 +504,32 @@ def process_ready_files(
     context: dict[str, Any],
     plan_out: str = '',
     db_path: str = '',
+    auto_apply: bool = False,
 ) -> dict[str, Any]:
-    """Classify a debounced watch batch and emit a dry-run move plan."""
+    """Classify a debounced watch batch and preview or apply its move plan.
+
+    Preview is the default.  Applying requires the explicit ``auto_apply``
+    flag supplied by the caller, so a persisted or malformed setting can
+    never turn a normal watch start into an implicit destructive operation.
+    """
+    apply_enabled = auto_apply is True
     db_path = db_path or _WATCH_STATE_DB
     db = _init_watch_db(db_path)
+    if apply_enabled:
+        try:
+            validate_tree_pair(context['source_path'], context['dest_root'])
+        except (OSError, ValueError, PathSafetyError) as exc:
+            _log_event(
+                db,
+                'plan_blocked',
+                json.dumps({
+                    'source_path': context.get('source_path', ''),
+                    'dest_root': context.get('dest_root', ''),
+                }, sort_keys=True),
+                str(exc),
+            )
+            db.close()
+            raise
     for file_path in file_paths:
         _log_event(db, 'ready', file_path, 'stable_pending')
 
@@ -527,22 +551,40 @@ def process_ready_files(
             plan_id=plan_id,
         )
         path = organize_run.write_move_plan(plan, plan_out or '')
-        result = organize_run.apply_move_plan(plan, dry_run=True, verbose=False)
+        result = organize_run.apply_move_plan(
+            plan, dry_run=not apply_enabled, verbose=False
+        )
         return plan, path, result
 
     plan, plan_path, result = _with_organize_dest_root(context['dest_root'], _build)
     _set_setting(db, 'latest_plan_id', plan.plan_id)
     _set_setting(db, 'latest_plan_path', plan_path)
     _set_setting(db, 'latest_plan_result', json.dumps(result, sort_keys=True))
-    _log_event(db, 'plan_written', plan_path, 'dry_run')
+    _log_event(
+        db,
+        'plan_applied' if apply_enabled else 'plan_written',
+        plan_path,
+        'applied' if apply_enabled else 'dry_run',
+    )
     db.close()
-    return {'items': len(plan.items), 'plan_path': plan_path, 'result': result}
+    return {
+        'items': len(plan.items),
+        'plan_path': plan_path,
+        'result': result,
+        'auto_applied': apply_enabled,
+    }
 
 
-def build_watch_plan_callback(context: dict[str, Any], plan_out: str = '') -> Callable[[list[str]], None]:
+def build_watch_plan_callback(
+    context: dict[str, Any],
+    plan_out: str = '',
+    auto_apply: bool = False,
+) -> Callable[[list[str]], None]:
     def _on_files_ready(files: list[str]) -> None:
         try:
-            process_ready_files(files, context, plan_out=plan_out)
+            process_ready_files(
+                files, context, plan_out=plan_out, auto_apply=auto_apply
+            )
         except Exception as e:
             db = _init_watch_db()
             _log_event(db, 'plan_failed', json.dumps(files), str(e))
@@ -734,6 +776,11 @@ def main(argv: Optional[list[str]] = None):
         help='Write the generated dry-run move plan to this JSON path'
     )
     parser.add_argument(
+        '--auto-apply',
+        action='store_true',
+        help='Apply each generated plan; without this flag watch mode is preview-only'
+    )
+    parser.add_argument(
         '--log',
         action='store_true',
         help='Show recent watch events'
@@ -789,7 +836,11 @@ def main(argv: Optional[list[str]] = None):
                 source_path=args.source_path,
                 dest_root=args.dest_root,
             )
-            callback = build_watch_plan_callback(context, plan_out=args.plan_out or '')
+            callback = build_watch_plan_callback(
+                context,
+                plan_out=args.plan_out or '',
+                auto_apply=args.auto_apply,
+            )
             print(
                 f"Starting watch daemon: {context['requested_source']} "
                 f"({context['source_path']}) -> {context['dest_root']}"

@@ -2982,7 +2982,11 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                     self._watch_manager = WatchModeManager(self)
                 folders = new_settings.get('folders', [])
                 if folders:
-                    self._watch_manager.start(folders, new_settings.get('delay_seconds', 5))
+                    self._watch_manager.start(
+                        folders,
+                        new_settings.get('delay_seconds', 5),
+                        auto_apply=new_settings.get('auto_apply', False),
+                    )
                     self._log(f"Watch mode active: monitoring {len(folders)} folder(s)")
                     _t = get_active_theme()
                     self.btn_watch.setStyleSheet(

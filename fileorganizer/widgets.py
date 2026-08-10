@@ -492,9 +492,10 @@ class WatchModeManager:
         self._watcher.directoryChanged.connect(self._on_dir_changed)
         self._delay_timers = {}  # folder -> QTimer
         self._active = False
+        self.auto_apply = False
 
-    def start(self, folders: list, delay: int = 5):
-        """Start watching the given folders."""
+    def start(self, folders: list, delay: int = 5, auto_apply: bool = False):
+        """Start watching folders in preview-only or explicit auto-apply mode."""
         # Clear existing
         watched = self._watcher.directories()
         if watched:
@@ -503,6 +504,9 @@ class WatchModeManager:
             if os.path.isdir(folder):
                 self._watcher.addPath(folder)
         self._delay = delay
+        # Only a real JSON boolean enables destructive watch behavior.  Values
+        # such as the string "false" must fail closed.
+        self.auto_apply = auto_apply is True
         self._active = True
 
     def stop(self):
@@ -514,6 +518,7 @@ class WatchModeManager:
             t.stop()
         self._delay_timers.clear()
         self._active = False
+        self.auto_apply = False
 
     @property
     def is_active(self) -> bool:
@@ -531,6 +536,18 @@ class WatchModeManager:
 
     def _trigger_scan(self, folder: str):
         """Trigger a mini-scan for the changed folder."""
+        if not self._active:
+            return
+        if getattr(self.parent, '_scanning', False):
+            if hasattr(self.parent, '_log'):
+                self.parent._log("Watch: change deferred while a scan is active")
+            return
+        apply_worker = getattr(self.parent, 'apply_worker', None)
+        if (apply_worker is not None
+                and getattr(apply_worker, 'isRunning', lambda: False)()):
+            if hasattr(self.parent, '_log'):
+                self.parent._log("Watch: change deferred while an apply is active")
+            return
         if hasattr(self.parent, '_log'):
             self.parent._log(f"Watch: change detected in {folder}")
         append_watch_event({
@@ -544,6 +561,7 @@ class WatchModeManager:
         if hasattr(self.parent, 'txt_pc_src'):
             self.parent.txt_pc_src.setText(folder)
         self.parent.cmb_op.setCurrentIndex(3)  # OP_FILES
+        self.parent._watch_auto_apply = self.auto_apply
         QTimer.singleShot(100, self.parent._on_scan)
 
 
