@@ -3,6 +3,7 @@ import os, re, json, shutil, tempfile, time, math, hashlib, base64, sys, subproc
 from datetime import datetime
 from pathlib import Path
 from collections import Counter
+from urllib.parse import unquote, urlsplit
 
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QRunnable, QThreadPool, QMutex, QMutexLocker, QObject
 from PyQt6.QtGui import QImage
@@ -2958,6 +2959,169 @@ class ArchiveExtractionWorker(QThread):
 _CATALOG_SYNC_FILE  = os.path.join(_APP_DATA_DIR, 'catalog_sync.json')
 _CATALOG_GITHUB_API = 'https://api.github.com/repos/SysAdminDoc/FileOrganizer/releases/latest'
 _CATALOG_ASSET_NAME = 'asset_fingerprints.json'
+_CATALOG_METADATA_MAX_BYTES = 2 * 1024 * 1024
+_CATALOG_ASSET_MAX_BYTES = 64 * 1024 * 1024
+_CATALOG_READ_CHUNK_BYTES = 64 * 1024
+_CATALOG_MAX_ASSETS = 250_000
+_CATALOG_MAX_FILES = 5_000_000
+_CATALOG_DOWNLOAD_PREFIX = '/SysAdminDoc/FileOrganizer/releases/download/'
+_CATALOG_REDIRECT_HOSTS = frozenset({
+    'github.com',
+    'objects.githubusercontent.com',
+    'release-assets.githubusercontent.com',
+})
+_CATALOG_JSON_TYPES = frozenset({'application/json'})
+_CATALOG_ASSET_TYPES = frozenset({
+    'application/json',
+    'application/octet-stream',
+    'text/json',
+    'text/plain',
+})
+
+
+class CatalogSyncError(ValueError):
+    """Controlled catalog download or schema failure."""
+
+    def __init__(self, code: str, message: str) -> None:
+        super().__init__(message)
+        self.code = code
+
+
+class CatalogSyncCancelled(CatalogSyncError):
+    def __init__(self) -> None:
+        super().__init__('cancelled', 'catalog synchronization was cancelled')
+
+
+def _validate_catalog_download_url(url: str) -> str:
+    """Accept only this repository's named GitHub release asset URL."""
+    if not isinstance(url, str) or not url:
+        raise CatalogSyncError('invalid_url', 'catalog asset URL is missing')
+    parsed = urlsplit(url)
+    if parsed.scheme != 'https' or parsed.netloc.lower() != 'github.com':
+        raise CatalogSyncError(
+            'invalid_url', 'catalog asset URL must use the approved GitHub release host')
+    if parsed.query or parsed.fragment:
+        raise CatalogSyncError('invalid_url', 'catalog asset URL cannot contain a query or fragment')
+
+    path = unquote(parsed.path)
+    if not path.startswith(_CATALOG_DOWNLOAD_PREFIX):
+        raise CatalogSyncError('invalid_url', 'catalog asset URL has an unapproved release path')
+    relative = path[len(_CATALOG_DOWNLOAD_PREFIX):]
+    tag, separator, filename = relative.partition('/')
+    if not tag or separator != '/' or filename != _CATALOG_ASSET_NAME:
+        raise CatalogSyncError('invalid_url', 'catalog asset URL does not name the approved asset')
+    return url
+
+
+def _validate_catalog_response_url(response, requested_url: str) -> None:
+    """Fail closed if an HTTP redirect leaves GitHub's release asset hosts."""
+    get_url = getattr(response, 'geturl', None)
+    final_url = get_url() if callable(get_url) else requested_url
+    if not isinstance(final_url, str):
+        raise CatalogSyncError('invalid_redirect', 'catalog download returned an invalid URL')
+    parsed = urlsplit(final_url)
+    if parsed.scheme != 'https' or parsed.hostname not in _CATALOG_REDIRECT_HOSTS:
+        raise CatalogSyncError('invalid_redirect', 'catalog download redirected to an unapproved host')
+
+
+def _response_media_type(response) -> str:
+    raw = response.headers.get('Content-Type', '')
+    return raw.split(';', 1)[0].strip().lower()
+
+
+def _read_bounded_http_body(
+    response,
+    *,
+    max_bytes: int,
+    media_types: frozenset[str],
+    cancel_cb=None,
+) -> bytes:
+    """Read an HTTP body without retaining more than ``max_bytes`` bytes."""
+    media_type = _response_media_type(response)
+    if media_type not in media_types:
+        raise CatalogSyncError(
+            'invalid_content_type',
+            f"catalog response has unsupported content type {media_type or '(missing)'}",
+        )
+
+    content_length = response.headers.get('Content-Length')
+    if content_length not in (None, ''):
+        try:
+            declared_length = int(content_length)
+        except (TypeError, ValueError) as exc:
+            raise CatalogSyncError(
+                'invalid_content_length', 'catalog response has an invalid Content-Length') from exc
+        if declared_length < 0 or declared_length > max_bytes:
+            raise CatalogSyncError(
+                'response_too_large', f'catalog response exceeds the {max_bytes}-byte limit')
+
+    body = bytearray()
+    while len(body) < max_bytes:
+        if cancel_cb is not None and cancel_cb():
+            raise CatalogSyncCancelled()
+        remaining = max_bytes - len(body)
+        chunk = response.read(min(_CATALOG_READ_CHUNK_BYTES, remaining))
+        if not chunk:
+            return bytes(body)
+        if not isinstance(chunk, bytes):
+            raise CatalogSyncError('invalid_response', 'catalog response returned non-byte data')
+        if len(chunk) > remaining:
+            raise CatalogSyncError(
+                'response_too_large', f'catalog response exceeds the {max_bytes}-byte limit')
+        body.extend(chunk)
+
+    if cancel_cb is not None and cancel_cb():
+        raise CatalogSyncCancelled()
+    if response.read(1):
+        raise CatalogSyncError(
+            'response_too_large', f'catalog response exceeds the {max_bytes}-byte limit')
+    return bytes(body)
+
+
+def _decode_catalog_json(raw: bytes, label: str) -> dict:
+    try:
+        value = json.loads(raw.decode('utf-8'))
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        raise CatalogSyncError('invalid_json', f'malformed {label}: {exc}') from exc
+    if not isinstance(value, dict):
+        raise CatalogSyncError('invalid_schema', f'{label} must be a JSON object')
+    return value
+
+
+def _validate_release_metadata(release: dict) -> None:
+    assets = release.get('assets')
+    if not isinstance(assets, list) or len(assets) > 10_000:
+        raise CatalogSyncError('invalid_schema', 'release metadata has an invalid assets list')
+    if any(not isinstance(asset, dict) for asset in assets):
+        raise CatalogSyncError('invalid_schema', 'release metadata contains an invalid asset')
+    for field in ('published_at', 'tag_name'):
+        value = release.get(field, '')
+        if not isinstance(value, str) or len(value) > 512:
+            raise CatalogSyncError('invalid_schema', f'release metadata field {field} is invalid')
+
+
+def _validate_catalog_payload(payload: dict) -> None:
+    schema_version = payload.get('schema_version')
+    if schema_version != 2:
+        raise CatalogSyncError(
+            'unsupported_schema', f'unsupported catalog schema version: {schema_version!r}')
+    assets = payload.get('assets')
+    if not isinstance(assets, list) or len(assets) > _CATALOG_MAX_ASSETS:
+        raise CatalogSyncError('invalid_schema', 'catalog payload has an invalid assets list')
+
+    total_files = 0
+    for asset in assets:
+        if not isinstance(asset, dict):
+            raise CatalogSyncError('invalid_schema', 'catalog payload contains an invalid asset')
+        fingerprint = asset.get('folder_fingerprint')
+        if not isinstance(fingerprint, str) or not fingerprint or len(fingerprint) > 256:
+            raise CatalogSyncError('invalid_schema', 'catalog asset has an invalid fingerprint')
+        files = asset.get('files', [])
+        if not isinstance(files, list) or any(not isinstance(item, dict) for item in files):
+            raise CatalogSyncError('invalid_schema', 'catalog asset has an invalid files list')
+        total_files += len(files)
+        if total_files > _CATALOG_MAX_FILES:
+            raise CatalogSyncError('invalid_schema', 'catalog payload has too many file records')
 
 
 class CatalogSyncWorker(QThread):
@@ -2972,8 +3136,17 @@ class CatalogSyncWorker(QThread):
     log      = pyqtSignal(str)
     finished = pyqtSignal(bool, str)   # (success, summary_message)
 
+    def __init__(self) -> None:
+        super().__init__()
+        self._cancelled = False
+
+    def cancel(self) -> None:
+        self._cancelled = True
+
     def run(self):
-        import urllib.request, urllib.error, socket
+        import socket
+        import urllib.error
+        import urllib.request
 
         try:
             # ── Load last-sync state ─────────────────────────────────────────
@@ -3004,7 +3177,14 @@ class CatalogSyncWorker(QThread):
                 with urllib.request.urlopen(req, timeout=10) as resp:
                     response_etag     = resp.headers.get('ETag', '')
                     response_modified = resp.headers.get('Last-Modified', '')
-                    release = json.loads(resp.read().decode())
+                    release_raw = _read_bounded_http_body(
+                        resp,
+                        max_bytes=_CATALOG_METADATA_MAX_BYTES,
+                        media_types=_CATALOG_JSON_TYPES,
+                        cancel_cb=lambda: self._cancelled,
+                    )
+                    release = _decode_catalog_json(release_raw, 'release metadata')
+                    _validate_release_metadata(release)
             except urllib.error.HTTPError as exc:
                 # 304 Not Modified — the release hasn't changed since last sync.
                 if exc.code == 304:
@@ -3018,10 +3198,6 @@ class CatalogSyncWorker(QThread):
             except socket.timeout:
                 self.finished.emit(True, "Catalog sync skipped (release metadata timeout)")
                 return
-            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
-                self.finished.emit(False, f"Catalog sync: malformed release metadata: {exc}")
-                return
-
             published_at = release.get('published_at', '')
             tag          = release.get('tag_name', '')
 
@@ -3044,45 +3220,36 @@ class CatalogSyncWorker(QThread):
             if not download_url:
                 self.finished.emit(True, "Catalog release found but no fingerprint asset attached")
                 return
+            download_url = _validate_catalog_download_url(download_url)
 
             # ── Download ─────────────────────────────────────────────────────
             self.log.emit(f"Catalog: downloading {_CATALOG_ASSET_NAME} from {tag}…")
             dl_req = urllib.request.Request(
                 download_url,
-                headers={'User-Agent': 'FileOrganizer-CatalogSync/1.0'}
+                headers={
+                    'Accept': 'application/json, application/octet-stream',
+                    'User-Agent': 'FileOrganizer-CatalogSync/1.0',
+                }
             )
             try:
-                with urllib.request.urlopen(dl_req, timeout=60) as resp:
-                    raw = resp.read()
+                with urllib.request.urlopen(dl_req, timeout=30) as resp:
+                    _validate_catalog_response_url(resp, download_url)
+                    raw = _read_bounded_http_body(
+                        resp,
+                        max_bytes=_CATALOG_ASSET_MAX_BYTES,
+                        media_types=_CATALOG_ASSET_TYPES,
+                        cancel_cb=lambda: self._cancelled,
+                    )
             except (urllib.error.URLError, socket.timeout) as exc:
                 reason = getattr(exc, 'reason', exc)
                 self.finished.emit(True, f"Catalog sync skipped (download failed: {reason})")
                 return
 
-            try:
-                json_data = json.loads(raw.decode('utf-8'))
-            except (json.JSONDecodeError, UnicodeDecodeError) as exc:
-                self.finished.emit(False, f"Catalog sync: malformed asset payload: {exc}")
-                return
-
-            # Validate shape before importing — import_community_json expects
-            # {"assets": [ {...}, ... ]}.  Guard against unexpected schema so a
-            # malformed release doesn't silently insert zero rows.
-            if not isinstance(json_data, dict) or not isinstance(json_data.get('assets'), list):
-                self.finished.emit(False, "Catalog sync: asset payload missing 'assets' list")
-                return
+            json_data = _decode_catalog_json(raw, 'asset payload')
+            _validate_catalog_payload(json_data)
 
             # ── Import via asset_db module ────────────────────────────────────
-            db_path     = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                                       'asset_fingerprints.db')
-            db_mod_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                                       'asset_db.py')
-            import importlib.util as _ilu
-            spec = _ilu.spec_from_file_location('asset_db', db_mod_path)
-            asset_db_mod = _ilu.module_from_spec(spec)
-            spec.loader.exec_module(asset_db_mod)
-
-            new_assets, skipped = asset_db_mod.import_community_json(json_data, db_path)
+            new_assets, skipped = self._import_catalog(json_data)
 
             # ── Persist sync state ───────────────────────────────────────────
             self._persist_sync_state(
@@ -3095,8 +3262,26 @@ class CatalogSyncWorker(QThread):
             self.log.emit(f"Catalog: {msg}")
             self.finished.emit(True, msg)
 
+        except CatalogSyncCancelled:
+            self.finished.emit(True, "Catalog sync skipped (cancelled)")
+        except CatalogSyncError as exc:
+            self.finished.emit(False, f"Catalog sync blocked [{exc.code}]: {exc}")
         except Exception as exc:
             self.finished.emit(False, f"Catalog sync error: {exc}")
+
+    @staticmethod
+    def _import_catalog(json_data: dict) -> tuple[int, int]:
+        db_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)), 'asset_fingerprints.db')
+        db_mod_path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)), 'asset_db.py')
+        import importlib.util as _ilu
+        spec = _ilu.spec_from_file_location('asset_db', db_mod_path)
+        if spec is None or spec.loader is None:
+            raise CatalogSyncError('import_unavailable', 'asset database importer is unavailable')
+        asset_db_mod = _ilu.module_from_spec(spec)
+        spec.loader.exec_module(asset_db_mod)
+        return asset_db_mod.import_community_json(json_data, db_path)
 
     @staticmethod
     def _persist_sync_state(published_at: str, tag: str,
