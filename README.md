@@ -213,6 +213,10 @@ Python process tree.
   evaluation ID through the move plan, journal, and report. The durable store
   retains fingerprints and hashes—not prompts, responses, API keys, file names,
   or paths—and the Organize page can review counts or export redacted JSONL.
+- **Adaptive corrections** — category overrides in the legacy rename/review
+  workflow are remembered by exact folder fingerprint. Exact matches bypass AI
+  on later scans, while keyword-related corrections become bounded few-shot
+  examples for DeepSeek and Ollama without exposing paths in prompts.
 - **Hazel-style automation rules** — the legacy desktop Settings menu includes
   a visual nested IF/AND/OR/THEN editor. Matching skip, move, and rename actions
   are translated into the same editable, boundary-validated move plan used by
@@ -320,6 +324,11 @@ The AI Provider settings dialog stores bounded parallel defaults (1–8 requests
 or `organize_run.py --source design --parallel` to classify pending batches
 before building the move plan; both accept `--concurrency` and
 `--request-batch-size` overrides.
+
+Manual category changes and the rename dialog's **Correct Category** action are
+saved as adaptive corrections. An unchanged folder is classified from its
+fingerprint before cache, metadata, marketplace, embeddings, or provider work;
+similar names contribute deduplicated examples to subsequent AI prompts.
 
 ### Ollama models
 

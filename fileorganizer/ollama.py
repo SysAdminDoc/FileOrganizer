@@ -848,6 +848,22 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
     Returns dict: {name, category, confidence, method, detail} or empty on failure."""
     result = {'name': None, 'category': None, 'confidence': 0,
               'method': 'llm', 'detail': ''}
+    from fileorganizer.adaptive_corrector import (
+        AdaptiveCorrector,
+        build_adaptive_system_prompt,
+    )
+    corrector = AdaptiveCorrector()
+    if folder_path:
+        correction = corrector.apply_correction(folder_path)
+        if correction is not None:
+            category, weight = correction
+            return {
+                'name': folder_name,
+                'category': category,
+                'confidence': 100,
+                'method': 'adaptive_correction',
+                'detail': f'adaptive correction (weight {weight})',
+            }
 
     # Collect the prompt context before adding ID-only enrichment hints.
     context_lines = [f"Folder name: \"{folder_name}\""]
@@ -926,7 +942,9 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
     prompt = '\n'.join(context_lines)
 
     try:
-        system = _build_llm_system_prompt()
+        system = build_adaptive_system_prompt(
+            folder_name, _build_llm_system_prompt(), corrector
+        )
         # Use structured format (Ollama >= v0.22.1) for guaranteed valid JSON
         raw = _ollama_generate(prompt, system=system, url=url, model=model, log_cb=log_cb, structured=True)
 
@@ -1072,6 +1090,11 @@ def ollama_classify_batch(folders: list, url: str = None, model: str = None) -> 
         f'{{"results": [{{"name":"...", "category":"...", "confidence":85}}, ...]}}\n'
         f"The 'results' array must have exactly {len(folders)} entries, one per folder, IN ORDER.\n"
         "No other text, no markdown, no explanation."
+    )
+    from fileorganizer.adaptive_corrector import build_adaptive_batch_system_prompt
+    batch_system = build_adaptive_batch_system_prompt(
+        [str(folder.get('folder_name', '')) for folder in folders],
+        batch_system,
     )
 
     think = s.get('think', False)

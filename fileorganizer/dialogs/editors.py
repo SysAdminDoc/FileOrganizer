@@ -724,11 +724,17 @@ class _FileBrowserDialog(QDialog):
     _IGNORED_EXTS  = {'.ds_store', '.db', '.ini', '.lnk', '.url', '.tmp',
                       '.log', '.bak', '.thumbs'}
 
-    def __init__(self, folder_path: str, current_name: str, parent=None):
+    def __init__(self, folder_path: str, current_name: str,
+                 current_category: str = '', original_confidence: int = 0,
+                 parent=None):
         super().__init__(parent)
         self.folder_path = folder_path
+        self.current_name = current_name
+        self.current_category = current_category
+        self.original_confidence = original_confidence
         self.chosen_name = None   # beautified stem the caller reads
         self.chosen_file = None   # raw filename for the detail log
+        self.corrected_category = None
         self.setWindowTitle(f"Pick File to Rename From  —  {os.path.basename(folder_path)}")
         self.setMinimumSize(640, 500)
         self._t = get_active_theme()
@@ -776,6 +782,21 @@ class _FileBrowserDialog(QDialog):
         hdr.setTextFormat(Qt.TextFormat.RichText)
         layout.addWidget(hdr)
 
+        correction_row = QHBoxLayout()
+        correction_row.addWidget(QLabel("Classification:"))
+        self.lbl_category = QLabel(self.current_category or "Unclassified")
+        self.lbl_category.setStyleSheet(
+            f"color:{self._t['sidebar_btn_active_fg']}; font-weight:bold;"
+        )
+        correction_row.addWidget(self.lbl_category, 1)
+        self.btn_correct = QPushButton("Correct Category…")
+        self.btn_correct.setToolTip(
+            "Override the classification and remember it for matching folders"
+        )
+        self.btn_correct.clicked.connect(self._choose_correction)
+        correction_row.addWidget(self.btn_correct)
+        layout.addLayout(correction_row)
+
         # Search bar
         self.txt_search = QLineEdit()
         self.txt_search.setPlaceholderText("🔍  Filter files…")
@@ -810,7 +831,7 @@ class _FileBrowserDialog(QDialog):
         btn_row.addStretch()
         btn_cancel = QPushButton("Cancel")
         btn_cancel.clicked.connect(self.reject)
-        self.btn_ok = QPushButton("Apply Name")
+        self.btn_ok = QPushButton("Apply Changes")
         self.btn_ok.setObjectName("btn_ok")
         self.btn_ok.setEnabled(False)
         self.btn_ok.clicked.connect(self._accept_selected)
@@ -893,10 +914,29 @@ class _FileBrowserDialog(QDialog):
         if sel:
             _, cleaned = sel[0].data(0, Qt.ItemDataRole.UserRole)
             self.lbl_preview.setText(cleaned)
-            self.btn_ok.setEnabled(bool(cleaned))
+            self.btn_ok.setEnabled(bool(cleaned or self.corrected_category))
         else:
             self.lbl_preview.setText("—")
-            self.btn_ok.setEnabled(False)
+            self.btn_ok.setEnabled(bool(self.corrected_category))
+
+    def _choose_correction(self):
+        from fileorganizer.categories import get_all_category_names
+
+        categories = get_all_category_names()
+        current = self.corrected_category or self.current_category
+        current_index = categories.index(current) if current in categories else 0
+        category, accepted = QInputDialog.getItem(
+            self,
+            "Correct Classification",
+            f"Correct category for: {self.current_name}",
+            categories,
+            current_index,
+            False,
+        )
+        if accepted and category:
+            self.corrected_category = category
+            self.lbl_category.setText(f"{category}  (will be learned)")
+            self.btn_ok.setEnabled(True)
 
     def _accept_item(self, item, _col):
         fname, cleaned = item.data(0, Qt.ItemDataRole.UserRole)
@@ -912,7 +952,8 @@ class _FileBrowserDialog(QDialog):
             if cleaned:
                 self.chosen_name = cleaned
                 self.chosen_file = fname
-                self.accept()
+        if self.chosen_name or self.corrected_category:
+            self.accept()
 
 
 class RuleEditorDialog(QDialog):

@@ -50,6 +50,7 @@ from fileorganizer.files import _load_pc_categories, _save_pc_categories, _build
 from fileorganizer.engine import RuleEngine, EventGrouper, ScheduleManager, RenameTemplateEngine
 from fileorganizer.plugins import PluginManager, ProfileManager, CategoryPresetManager, CloudPathResolver
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
+from fileorganizer.adaptive_corrector import AdaptiveCorrector
 from fileorganizer.workers import (
     ScanAepWorker, ScanCategoryWorker, ScanLLMWorker, OllamaSetupWorker,
     ApplyAepWorker, ApplyCatWorker, ApplyFilesWorker,
@@ -1368,8 +1369,21 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             QMessageBox.warning(self, "Not Found", f"Source folder not found:\n{src_path}")
             return
 
-        dlg = _FileBrowserDialog(src_path, it.folder_name, parent=self)
-        if dlg.exec() == QDialog.DialogCode.Accepted and dlg.chosen_name:
+        dlg = _FileBrowserDialog(
+            src_path,
+            it.folder_name,
+            it.category,
+            int(it.confidence),
+            parent=self,
+        )
+        if dlg.exec() == QDialog.DialogCode.Accepted:
+            if dlg.corrected_category:
+                self._apply_category_correction(
+                    row, it, dlg.corrected_category, 'Corrected in rename dialog'
+                )
+            if not dlg.chosen_name:
+                self._stats_cat()
+                return
             new_name = dlg.chosen_name
             dst_dir = self.txt_dst.text()
             it.cleaned_name = new_name
@@ -1382,6 +1396,43 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                 di.setToolTip(f"Manually renamed → \"{new_name}\"")
             it.method = 'Manual'; it.detail = f'Renamed from file: {dlg.chosen_file}'
 
+    def _apply_category_correction(self, row, item, new_category, detail):
+        """Apply and persist one explicit user classification correction."""
+        original_confidence = int(item.confidence)
+        item.category = new_category
+        item.confidence = 100
+        item.method = 'Manual'
+        item.detail = detail
+        item.topic = ''
+        destination_name = item.cleaned_name or item.folder_name
+        item.full_dest_path = os.path.join(
+            self.txt_dst.text(), new_category, destination_name
+        )
+        AdaptiveCorrector().record_correction(
+            item.folder_name,
+            item.full_source_path,
+            new_category,
+            original_confidence,
+        )
+        # Retain name-based compatibility for older scan/cache consumers.
+        save_correction(item.folder_name, new_category)
+
+        _rt = get_active_theme()
+        dest_item = self.tbl.item(row, 3)
+        if dest_item:
+            dest_item.setText(item.full_dest_path)
+            dest_item.setForeground(QColor(_rt['accent_hover']))
+            dest_item.setToolTip(item.full_dest_path)
+        confidence_item = self.tbl.item(row, 4)
+        if confidence_item:
+            confidence_item.setText("100%")
+            confidence_item.setForeground(QColor(self._confidence_text_color(100)))
+        method_item = self.tbl.item(row, 5)
+        if method_item:
+            method_item.setText("Manual")
+            method_item.setForeground(QColor(_rt['accent_hover']))
+            method_item.setToolTip(detail)
+
     def _reassign_category(self, row):
         """Reassign a single cat_item. `row` is visual table row."""
         idx = self._item_idx_from_row(row)
@@ -1393,19 +1444,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         new_cat, ok = QInputDialog.getItem(self, "Change Category",
             f"Select category for: {it.folder_name}", all_cats, current_idx, False)
         if ok and new_cat:
-            it.category = new_cat; it.method = 'Manual'; it.detail = 'User override'; it.topic = ''
-            dst_dir = self.txt_dst.text()
-            it.full_dest_path = os.path.join(dst_dir, new_cat, it.folder_name)
-            # Update dest path column (use visual row)
-            di = self.tbl.item(row, 3)
-            _rt = get_active_theme()
-            if di: di.setText(it.full_dest_path); di.setForeground(QColor(_rt['accent_hover'])); di.setToolTip(it.full_dest_path)
-            cfi = self.tbl.item(row, 4)
-            if cfi: cfi.setText("--"); cfi.setForeground(QColor(_rt['accent_hover']))
-            mi = self.tbl.item(row, 5)
-            if mi: mi.setText("Manual"); mi.setForeground(QColor(_rt['accent_hover']))
+            self._apply_category_correction(row, it, new_cat, 'User override')
             self._log(f"  Reassigned: {it.folder_name}  ->  {new_cat}")
-            save_correction(it.folder_name, new_cat)
             self._stats_cat()
 
     def _batch_reassign(self, rows):
@@ -1414,22 +1454,13 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         new_cat, ok = QInputDialog.getItem(self, "Batch Reassign",
             f"Select category for {len(rows)} folders:", all_cats, 0, False)
         if not ok or not new_cat: return
-        dst_dir = self.txt_dst.text()
         for visual_row in rows:
             idx = self._item_idx_from_row(visual_row)
             if idx >= len(self.cat_items): continue
             it = self.cat_items[idx]
-            it.category = new_cat; it.method = 'Manual'; it.detail = 'Batch user override'; it.topic = ''
-            it.full_dest_path = os.path.join(dst_dir, new_cat, it.folder_name)
-            # Update table cells (use visual row)
-            _rt = get_active_theme()
-            di = self.tbl.item(visual_row, 3)
-            if di: di.setText(it.full_dest_path); di.setForeground(QColor(_rt['accent_hover'])); di.setToolTip(it.full_dest_path)
-            cfi = self.tbl.item(visual_row, 4)
-            if cfi: cfi.setText("--"); cfi.setForeground(QColor(_rt['accent_hover']))
-            mi = self.tbl.item(visual_row, 5)
-            if mi: mi.setText("Manual"); mi.setForeground(QColor(_rt['accent_hover']))
-            save_correction(it.folder_name, new_cat)
+            self._apply_category_correction(
+                visual_row, it, new_cat, 'Batch user override'
+            )
         self._log(f"  Batch reassigned {len(rows)} folders  ->  {new_cat}")
         self._stats_cat()
 

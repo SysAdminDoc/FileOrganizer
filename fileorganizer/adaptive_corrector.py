@@ -137,8 +137,23 @@ class AdaptiveCorrector:
             with open(self.corrections_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             
-            # Expect: {version: "1.0", corrections: [...]}
-            corrections_list = data.get('corrections', []) if isinstance(data, dict) else data
+            # Accept both the structured adaptive format and the legacy
+            # ``{folder-name: category}`` mapping written by cache.py.  Keeping
+            # both readers is important because existing installations may
+            # contain either shape (or a hybrid created during migration).
+            corrections_list = []
+            if isinstance(data, dict):
+                stored_records = data.get('corrections', [])
+                if isinstance(stored_records, list):
+                    corrections_list.extend(stored_records)
+                for folder_name, category in data.items():
+                    if folder_name in {'version', 'corrections'}:
+                        continue
+                    if isinstance(category, str) and category:
+                        legacy = CorrectionRecord(folder_name, '', category)
+                        corrections_list.append(legacy.to_dict())
+            elif isinstance(data, list):
+                corrections_list = data
             
             # Filter by age
             cutoff = datetime.now(timezone.utc) - timedelta(days=_CORRECTION_MAX_AGE_DAYS)
@@ -335,7 +350,11 @@ class AdaptiveCorrector:
             pass
 
 
-def build_adaptive_system_prompt(folder_name: str, base_prompt: str) -> str:
+def build_adaptive_system_prompt(
+    folder_name: str,
+    base_prompt: str,
+    corrector: Optional[AdaptiveCorrector] = None,
+) -> str:
     """Enhance system prompt with few-shot examples from prior corrections.
     
     Args:
@@ -345,7 +364,7 @@ def build_adaptive_system_prompt(folder_name: str, base_prompt: str) -> str:
     Returns:
         Enhanced system prompt with few-shot examples appended
     """
-    corrector = AdaptiveCorrector()
+    corrector = corrector or AdaptiveCorrector()
     examples = corrector.inject_few_shot(folder_name, num_examples=3)
     
     if not examples:
@@ -356,4 +375,37 @@ def build_adaptive_system_prompt(folder_name: str, base_prompt: str) -> str:
     for ex in examples:
         examples_text += f"  • {ex['name']} → {ex['category']}\n"
     
+    return base_prompt + "\n\n" + examples_text
+
+
+def build_adaptive_batch_system_prompt(
+    folder_names: List[str],
+    base_prompt: str,
+    corrector: Optional[AdaptiveCorrector] = None,
+    max_examples: int = 6,
+) -> str:
+    """Append unique correction examples relevant to a classification batch."""
+    corrector = corrector or AdaptiveCorrector()
+    examples = []
+    seen = set()
+    for folder_name in folder_names:
+        for example in corrector.inject_few_shot(folder_name, num_examples=3):
+            identity = (example['name'], example['category'])
+            if identity in seen:
+                continue
+            seen.add(identity)
+            examples.append(example)
+            if len(examples) >= max(0, max_examples):
+                break
+        if len(examples) >= max(0, max_examples):
+            break
+
+    if not examples:
+        return base_prompt
+
+    examples_text = "RECENT EXAMPLES (similar folders from your library):\n"
+    examples_text += '\n'.join(
+        f"  • {example['name']} → {example['category']}"
+        for example in examples
+    )
     return base_prompt + "\n\n" + examples_text
