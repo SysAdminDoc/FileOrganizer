@@ -26,6 +26,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - WinUI AcoustID credentials now migrate to Windows Credential Locker and are
   supplied to the music sidecar through an explicit environment channel rather
   than process arguments.
+- The WinUI build wrapper now discovers compatible MSBuild installations or an
+  explicit `MSBUILD_EXE_PATH`, and reports a missing .NET SDK resolver before
+  attempting a misleading restore/build.
 
 ### Fixed
 
