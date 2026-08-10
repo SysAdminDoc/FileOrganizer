@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- Windows CI now runs the isolated Python suite, compiled sidecar/service
+  contracts, the WinUI release build, and exact-version Ruff/mypy/pyright
+  ratchets, while publishing test, quality, build-log, and shell artifacts.
 - Streamed WinUI result views now retain bounded recent and error rows with
   exact totals and coalesced updates; page and sidecar output buffers retain a
   capped recent tail and clearly report truncation.

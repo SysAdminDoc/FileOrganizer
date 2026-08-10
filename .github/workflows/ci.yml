@@ -1,0 +1,116 @@
+name: Windows CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python-tests-and-quality:
+    name: Python tests and quality ratchets
+    runs-on: windows-2025-vs2026
+    timeout-minutes: 45
+    env:
+      PYTHONUTF8: "1"
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up supported Python baseline
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+          cache: pip
+          cache-dependency-path: |
+            requirements.lock
+            requirements-dev.txt
+
+      - name: Install locked runtime and development tools
+        shell: pwsh
+        run: |
+          python -m pip install --disable-pip-version-check --require-hashes -r requirements.lock
+          python -m pip install --disable-pip-version-check -r requirements-dev.txt
+
+      - name: Run isolated test suite
+        shell: pwsh
+        run: |
+          $baseTemp = Join-Path $env:RUNNER_TEMP "pytest-${{ github.run_id }}-${{ github.run_attempt }}"
+          $report = Join-Path $env:RUNNER_TEMP "fileorganizer-pytest.xml"
+          python -m pytest -q --basetemp $baseTemp --junitxml $report
+
+      - name: Enforce Ruff, mypy, and pyright ratchets
+        shell: pwsh
+        run: python quality_gate.py --output-dir "$env:RUNNER_TEMP\fileorganizer-quality"
+
+      - name: Upload Python reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: fileorganizer-python-reports
+          path: |
+            ${{ runner.temp }}/fileorganizer-pytest.xml
+            ${{ runner.temp }}/fileorganizer-quality/
+          if-no-files-found: warn
+          retention-days: 14
+
+  winui-build:
+    name: WinUI release build and sidecar contracts
+    runs-on: windows-2025-vs2026
+    timeout-minutes: 30
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+      DOTNET_NOLOGO: "1"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up .NET 8 SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Run sidecar and WinUI service contracts
+        shell: pwsh
+        run: |
+          $log = Join-Path $env:RUNNER_TEMP "fileorganizer-sidecar-contracts.log"
+          dotnet run --project tests/SidecarProtocol.ContractTests/SidecarProtocol.ContractTests.csproj --configuration Release *>&1 | Tee-Object $log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Build WinUI release shell
+        shell: pwsh
+        run: |
+          $log = Join-Path $env:RUNNER_TEMP "fileorganizer-winui-build.log"
+          pwsh src/build.ps1 -Configuration Release *>&1 | Tee-Object $log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: fileorganizer-winui-build-logs
+          path: |
+            ${{ runner.temp }}/fileorganizer-sidecar-contracts.log
+            ${{ runner.temp }}/fileorganizer-winui-build.log
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload WinUI shell
+        uses: actions/upload-artifact@v7
+        with:
+          name: fileorganizer-winui-x64-release
+          path: src/FileOrganizer.UI/bin/x64/Release/net8.0-windows10.0.19041.0/
+          if-no-files-found: error
+          retention-days: 14

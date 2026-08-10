@@ -99,6 +99,24 @@ separate invocations to avoid a known MarkupCompilePass2 cascade.
 
 Output: `src/FileOrganizer.UI/bin/x64/Debug/net8.0-windows10.0.19041.0/FileOrganizer.exe`.
 
+### Development checks
+
+Install the pinned development tools, then run the same Python and service
+contracts used by Windows CI:
+
+```pwsh
+python -m pip install -r requirements-dev.txt
+python -m pytest -q
+python quality_gate.py
+dotnet run --project tests/SidecarProtocol.ContractTests/SidecarProtocol.ContractTests.csproj --configuration Release
+```
+
+`quality_gate.py` checks Ruff, mypy, and pyright against
+`quality-baseline.json`. Existing findings are explicit technical debt: any
+increase fails, and any decrease also requires lowering the checked-in
+baseline so improvements cannot be lost. Reports are written under the ignored
+`artifacts/quality/` directory by default.
+
 ## Major workflows
 
 ### Design Asset Organization (the original use case)
