@@ -4,7 +4,7 @@
   "tools": {
     "ruff": {
       "version": "0.15.22",
-      "errors": 1015,
+      "errors": 967,
       "warnings": 0
     },
     "mypy": {
@@ -14,7 +14,7 @@
     },
     "pyright": {
       "version": "1.1.411",
-      "errors": 980,
+      "errors": 979,
       "warnings": 4
     }
   }

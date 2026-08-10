@@ -74,13 +74,14 @@ python verify_dependencies.py --check --validate --audit
 ```bash
 git clone https://github.com/SysAdminDoc/FileOrganizer.git
 cd FileOrganizer
+python -m pip install -r requirements.txt
 python run.py        # opens the PyQt6 GUI; Ollama setup is explicit
 ```
 
-On first launch this path will install missing Python dependencies when the
-legacy bootstrap allows it, then check the local Ollama setup. It will not
-download or execute an Ollama installer, and it will not pull a model
-automatically. Install Ollama from the [official download
+Application startup never installs packages or modifies the active Python
+environment. The app checks the local Ollama setup, but it will not download or
+execute an Ollama installer and will not pull a model automatically. Install
+Ollama from the [official download
 page](https://ollama.com/download), then open **Settings → Ollama LLM** and
 use **Pull Model** or **Model Manager** as an explicit, visible action.
 

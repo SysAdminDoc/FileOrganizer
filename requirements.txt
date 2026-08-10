@@ -10,9 +10,8 @@ Pillow>=12.2.0
 psd-tools
 Unidecode
 
-# Optional feature modules used when available. The app also bootstraps these
-# at runtime, but keeping them installable here makes release builds and fresh
-# developer environments deterministic.
+# Optional feature modules used when available. Install them during setup from
+# this manifest; application startup never modifies the Python environment.
 pillow-heif
 exifread
 mutagen
