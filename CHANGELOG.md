@@ -64,6 +64,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Routed NDJSON sidecars now negotiate a versioned capability handshake and
   emit bounded, sequence-checked records; the WinUI runners isolate malformed
   events and produce deterministic terminal results for completion and cancel.
+- Classification-cache access is serialized across GUI and worker threads,
+  while move-journal and provider-cost schemas now initialize lazily on first
+  database use instead of creating files during module import.
 
 ## [v8.5.19] - 2026-07-01
 

@@ -12,6 +12,7 @@ import os
 import sqlite3
 import time
 import logging
+import threading
 from datetime import datetime, timedelta, timezone
 from typing import Optional, Tuple, Dict
 from pathlib import Path
@@ -23,11 +24,12 @@ log = logging.getLogger(__name__)
 _COST_DB = os.path.join(_APP_DATA_DIR, 'provider_costs.db')
 _COST_BUDGET_PER_DAY = 10.00  # USD, configurable
 _MAX_BACKOFF_SECONDS = 3600   # 60 minutes
+_SCHEMA_LOCK = threading.Lock()
+_INITIALIZED_DB = None
 
 
-def _get_db():
-    """Get or create the cost tracking database."""
-    os.makedirs(_APP_DATA_DIR, exist_ok=True)
+def _open_db():
+    """Open the cost database after lazy schema initialization."""
     conn = sqlite3.connect(_COST_DB, timeout=30.0)
     conn.execute("PRAGMA journal_mode = WAL")
     conn.execute("PRAGMA synchronous = NORMAL")
@@ -35,40 +37,54 @@ def _get_db():
 
 
 def _init_db():
-    """Initialize cost tracking schema."""
-    conn = _get_db()
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS provider_costs (
-            id              INTEGER PRIMARY KEY AUTOINCREMENT,
-            provider        TEXT    NOT NULL,
-            date            TEXT    NOT NULL,
-            cost_usd        REAL    NOT NULL DEFAULT 0.0,
-            request_count   INTEGER NOT NULL DEFAULT 0,
-            ts_updated      TEXT    NOT NULL
-        )
-    """)
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS provider_backoff (
-            provider        TEXT PRIMARY KEY,
-            locked_until    TEXT,
-            retry_count     INTEGER DEFAULT 0,
-            reason          TEXT
-        )
-    """)
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS provider_rate_limits (
-            provider        TEXT PRIMARY KEY,
-            limit_count     INTEGER,
-            remaining_count INTEGER,
-            reset_epoch     REAL,
-            ts_checked      TEXT
-        )
-    """)
-    conn.commit()
-    conn.close()
+    """Create the active cost schema lazily on first database use."""
+    global _INITIALIZED_DB
+    cost_path = os.path.abspath(_COST_DB)
+    if _INITIALIZED_DB == cost_path:
+        return
+    with _SCHEMA_LOCK:
+        if _INITIALIZED_DB == cost_path:
+            return
+        os.makedirs(os.path.dirname(cost_path) or '.', exist_ok=True)
+        conn = _open_db()
+        try:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS provider_costs (
+                    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+                    provider        TEXT    NOT NULL,
+                    date            TEXT    NOT NULL,
+                    cost_usd        REAL    NOT NULL DEFAULT 0.0,
+                    request_count   INTEGER NOT NULL DEFAULT 0,
+                    ts_updated      TEXT    NOT NULL
+                )
+            """)
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS provider_backoff (
+                    provider        TEXT PRIMARY KEY,
+                    locked_until    TEXT,
+                    retry_count     INTEGER DEFAULT 0,
+                    reason          TEXT
+                )
+            """)
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS provider_rate_limits (
+                    provider        TEXT PRIMARY KEY,
+                    limit_count     INTEGER,
+                    remaining_count INTEGER,
+                    reset_epoch     REAL,
+                    ts_checked      TEXT
+                )
+            """)
+            conn.commit()
+            _INITIALIZED_DB = cost_path
+        finally:
+            conn.close()
 
 
-_init_db()
+def _get_db():
+    """Get a connection, initializing the selected database path on demand."""
+    _init_db()
+    return _open_db()
 
 
 def _today() -> str:
