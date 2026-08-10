@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- Every shell workflow now publishes a shared capability-health preflight with
+  dependency/tool versions, scope, online status, and remediation; the shell
+  displays the bounded matrix globally and dependency failures use one schema.
 - Cleanup and duplicate scans now persist to a bounded, migratable SQLite
   review store with scan IDs, import/export, durable keeper decisions, and
   fail-closed path/metadata/hash revalidation before action adapters run.

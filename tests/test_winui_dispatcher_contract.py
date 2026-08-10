@@ -345,3 +345,35 @@ def test_cleanup_and_duplicate_reviews_expose_resume_import_export_controls():
         assert 'case "review_exported":' in code
         assert "validation_status" in code
         assert "cannot be acted on" in code
+
+
+def test_shell_exposes_shared_capability_health_matrix_before_workflows():
+    service = (
+        REPO_ROOT / "src/FileOrganizer.UI/Services/CapabilityHealthService.cs"
+    ).read_text(encoding="utf-8")
+    runner = (REPO_ROOT / "src/FileOrganizer.UI/Services/PythonRunner.cs").read_text(
+        encoding="utf-8"
+    )
+    app = (REPO_ROOT / "src/FileOrganizer.UI/App.xaml.cs").read_text(encoding="utf-8")
+    window_xaml = (REPO_ROOT / "src/FileOrganizer.UI/Views/MainWindow.xaml").read_text(
+        encoding="utf-8"
+    )
+    window_code = (REPO_ROOT / "src/FileOrganizer.UI/Views/MainWindow.xaml.cs").read_text(
+        encoding="utf-8"
+    )
+
+    for field in (
+        "Workflow", "Capability", "Dependency", "DetectedVersion", "Scope",
+        "OnlineRequired", "Status", "Remediation",
+    ):
+        assert field in service
+    assert '"available", "unavailable", "not_checked"' in service
+    assert "MaxRows = 256" in service
+    assert "UpdateFromProtocol(accepted.Payload)" in runner
+    assert "AddSingleton<ICapabilityHealthService, CapabilityHealthService>()" in app
+    assert 'x:Name="CapabilityExpander"' in window_xaml
+    assert 'x:Name="CapabilityRowsList"' in window_xaml
+    assert "Unavailable means the scope will not be checked" in window_xaml
+    assert 'Text="{Binding OnlineText}"' in window_xaml
+    assert '"capabilities_run.py"' in window_code
+    assert "LoadCapabilityHealthAsync" in window_code

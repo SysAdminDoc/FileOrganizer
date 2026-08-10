@@ -32,8 +32,13 @@ def test_main_missing_rawpy_reports_deterministic_error(tmp_path, capsys):
     assert events[0]["event"] == "handshake"
     error = events[-1]
     assert error["event"] == "error"
-    assert error["code"] == "missing_dependency"
-    assert error["message"] == "rawpy is required for RAW validation; install with: pip install rawpy"
+    assert error["code"] == "capability_unavailable"
+    assert error["capability_health"]["capability"] == "raw_validation"
+    assert error["capability_health"]["status"] == "unavailable"
+    assert error["message"] == (
+        "Open and validate RAW camera files is unavailable. "
+        "Install rawpy in the configured Python environment."
+    )
     assert error["terminal"] is True
 
 

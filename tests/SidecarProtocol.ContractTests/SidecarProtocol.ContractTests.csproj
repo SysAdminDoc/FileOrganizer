@@ -10,6 +10,8 @@
   <ItemGroup>
     <Compile Include="..\..\src\FileOrganizer.UI\Services\SidecarProtocol.cs"
              Link="SidecarProtocol.cs" />
+    <Compile Include="..\..\src\FileOrganizer.UI\Services\CapabilityHealthService.cs"
+             Link="CapabilityHealthService.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\RunLifecycleGate.cs"
              Link="RunLifecycleGate.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\CrashLogWriter.cs"

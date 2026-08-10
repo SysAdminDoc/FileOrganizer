@@ -302,7 +302,56 @@ for (var cycle = 0; cycle < 10; cycle++)
     Assert(secondStarted.Task.IsCompleted, "Restart did not begin after cancellation drained.");
 }
 
-var pythonRunner = new PythonRunner();
+var capabilityHealth = new CapabilityHealthService();
+var capabilityPayload = System.Text.Json.JsonSerializer.SerializeToElement(new
+{
+    capability_matrix = new[]
+    {
+        new
+        {
+            schema_version = 1,
+            workflow = "books",
+            capability = "isbn_enrichment",
+            dependency = "isbnlib",
+            detected_version = "isbnlib 3.10.14",
+            scope = "Online ISBN metadata",
+            online_required = true,
+            required = false,
+            status = "not_checked",
+            detail = "Network not checked.",
+            remediation = "Verify network access.",
+        },
+    },
+});
+capabilityHealth.UpdateFromProtocol(capabilityPayload);
+var capabilitySnapshot = capabilityHealth.Snapshot;
+Assert(capabilitySnapshot.Rows.Count == 1, "Capability matrix row was not retained.");
+Assert(capabilitySnapshot.NotChecked == 1 && capabilitySnapshot.Unavailable == 0,
+    "Capability status summary drifted.");
+Assert(capabilitySnapshot.Rows[0].OnlineText == "Online",
+    "Capability online requirement was lost.");
+var capabilityFailure = System.Text.Json.JsonSerializer.SerializeToElement(new
+{
+    capability_health = new
+    {
+        schema_version = 1,
+        workflow = "books",
+        capability = "isbn_enrichment",
+        dependency = "isbnlib",
+        detected_version = "isbnlib 3.10.14",
+        scope = "Online ISBN metadata",
+        online_required = true,
+        required = false,
+        status = "unavailable",
+        detail = "Runtime preflight failed.",
+        remediation = "Verify network access.",
+    },
+});
+capabilityHealth.UpdateFromProtocol(capabilityFailure);
+Assert(capabilityHealth.Snapshot.Unavailable == 1,
+    "Runtime capability failure did not replace the preflight status.");
+
+var pythonRunner = new PythonRunner(capabilityHealth);
 for (var cycle = 0; cycle < 3; cycle++)
 {
     using var cancellation = new CancellationTokenSource();

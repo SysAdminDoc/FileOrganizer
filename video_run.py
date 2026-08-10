@@ -206,8 +206,7 @@ def main() -> int:
     try:
         import guessit  # noqa: F401
     except ImportError:
-        _emit({"event": "error", "code": "missing_dep",
-               "message": "guessit not installed. Run: pip install -r requirements.txt"})
+        _PROTOCOL.emit_capability_error("release_name_parser")
         return 3
 
     files = _walk_video(args.root)

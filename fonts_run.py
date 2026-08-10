@@ -156,8 +156,7 @@ def main() -> int:
     try:
         from fontTools.ttLib import TTFont  # noqa: F401
     except ImportError:
-        _emit({"event": "error", "code": "missing_dep",
-               "message": "fonttools not installed. Run: pip install -r requirements.txt"})
+        _PROTOCOL.emit_capability_error("font_metadata")
         return 3
 
     files = _walk_fonts(args.root)

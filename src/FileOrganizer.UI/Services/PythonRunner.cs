@@ -47,6 +47,12 @@ public interface IPythonRunner
 public sealed class PythonRunner : IPythonRunner
 {
     private readonly RunLifecycleGate _runGate = new();
+    private readonly ICapabilityHealthService _capabilityHealth;
+
+    public PythonRunner(ICapabilityHealthService capabilityHealth)
+    {
+        _capabilityHealth = capabilityHealth;
+    }
 
     public string? LocateRepoRoot()
     {
@@ -335,6 +341,8 @@ public sealed class PythonRunner : IPythonRunner
                 if (line is null) break;
                 if (string.IsNullOrWhiteSpace(line)) continue;
                 var accepted = protocol.AcceptLine(line);
+                if (!accepted.IsDiagnostic)
+                    _capabilityHealth.UpdateFromProtocol(accepted.Payload);
                 await DispatchEventAsync(
                     accepted.Name,
                     accepted.Payload,
