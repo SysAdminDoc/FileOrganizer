@@ -24,6 +24,8 @@ import sys
 import time
 import traceback
 
+from fileorganizer.path_safety import validate_move, validate_tree_pair
+
 
 def _emit(obj: dict) -> None:
     sys.stdout.write(json.dumps(obj, ensure_ascii=False) + "\n")
@@ -67,8 +69,14 @@ def main() -> int:
             _emit({"event": "error", "code": "bad_watch",
                    "message": f"Skipping watch with missing/invalid src: {w}"})
             continue
-        watches.append({"src": os.path.abspath(src),
-                        "dest": os.path.abspath(dst),
+        try:
+            src_real, dst_real = validate_tree_pair(src, dst)
+        except Exception as exc:
+            _emit({"event": "error", "code": "unsafe_watch",
+                   "message": f"Skipping unsafe watch {src!r}: {exc}"})
+            continue
+        watches.append({"src": src_real,
+                        "dest": dst_real,
                         "copy": bool(w.get("copy", False)),
                         "seen": set()})
 
@@ -118,6 +126,12 @@ def main() -> int:
                                    "size": os.path.getsize(path)})
                             cat, target = _plan_one(path, w["dest"])
                             target_unique = _resolve_collision(target)
+                            validate_move(
+                                path,
+                                target_unique,
+                                source_root=w["src"],
+                                dest_root=w["dest"],
+                            )
                             os.makedirs(os.path.dirname(target_unique), exist_ok=True)
                             if w["copy"]:
                                 shutil.copy2(path, target_unique)
@@ -127,6 +141,7 @@ def main() -> int:
                                 status = "moved"
                             moved += 1
                             w["seen"].add(path)
+                            w["seen"].add(target_unique)
                             _emit({"event": "item", "path": path,
                                    "src": w["src"], "dest": w["dest"],
                                    "new_path": target_unique,

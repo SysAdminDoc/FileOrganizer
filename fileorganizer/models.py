@@ -23,6 +23,9 @@ class CategorizeItem:
         self.confidence = 0
         self.full_source_path = ""
         self.full_dest_path = ""
+        self.source_root = ""
+        self.dest_root = ""
+        self.source_signature = {}
         self.status = "Pending"
         self.method = ""        # classification method: extension, keyword, fuzzy, metadata, context
         self.detail = ""        # human-readable detail of how it was classified
@@ -39,6 +42,8 @@ class FileItem:
         self.display_name = ""       # name to use at destination (may differ if renamed)
         self.full_src     = ""       # absolute source path
         self.full_dst     = ""       # computed destination path
+        self.source_root  = ""
+        self.dest_root    = ""
         self.category     = ""
         self.confidence   = 0
         self.method       = ""

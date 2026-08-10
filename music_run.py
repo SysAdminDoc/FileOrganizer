@@ -33,6 +33,8 @@ import re
 import sys
 import time
 import traceback
+
+from fileorganizer.path_safety import validate_move, validate_path
 from typing import Any
 
 AUDIO_EXTS = (".mp3", ".m4a", ".mp4", ".aac", ".flac", ".ogg", ".oga",
@@ -349,6 +351,7 @@ def main() -> int:
                    "stage": os.path.basename(path)[:200]})
 
         try:
+            validate_path(path, root=args.root)
             existing = _read_existing_tags(path)
 
             # Try existing tags as ground truth first if they look complete.
@@ -386,6 +389,13 @@ def main() -> int:
                 dest_root = args.rename_root or args.root
                 new_path = os.path.normpath(os.path.join(dest_root, rel))
                 if args.mode == "tag" and os.path.abspath(new_path) != os.path.abspath(path):
+                    validate_move(
+                        path,
+                        new_path,
+                        source_root=args.root,
+                        dest_root=dest_root,
+                        allow_existing_dest=os.path.exists(new_path),
+                    )
                     os.makedirs(os.path.dirname(new_path), exist_ok=True)
                     if not os.path.exists(new_path):
                         os.rename(path, new_path)

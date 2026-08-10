@@ -38,6 +38,7 @@ from fileorganizer.metadata import (
     extract_folder_metadata, MetadataExtractor,
     _load_envato_api_key, _save_envato_api_key,
 )
+from fileorganizer.path_safety import PathSafetyError, validate_move
 from fileorganizer.ollama import load_ollama_settings, save_ollama_settings
 from fileorganizer.photos import (
     load_photo_settings, save_photo_settings, FaceDB,
@@ -1505,7 +1506,17 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                 src = op.get('src', '')
                 dst = op.get('dst', '')
                 try:
+                    source_root = op.get('dest_root', '')
+                    dest_root = op.get('source_root', '')
+                    if not source_root or not dest_root:
+                        raise PathSafetyError("undo record has no path boundaries")
                     if os.path.exists(src):
+                        validate_move(
+                            src,
+                            dst,
+                            source_root=source_root,
+                            dest_root=dest_root,
+                        )
                         os.makedirs(os.path.dirname(dst), exist_ok=True)
                         shutil.move(src, dst)
                         ok += 1
