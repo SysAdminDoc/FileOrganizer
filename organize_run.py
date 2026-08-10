@@ -69,7 +69,7 @@ JOURNAL_FILE     = os.path.join(os.path.dirname(__file__), 'organize_moves.db')
 RESULTS_DIR      = os.path.join(os.path.dirname(__file__), 'classification_results')
 PLANS_DIR        = os.path.join(os.path.dirname(__file__), 'organize_plans')
 REPORTS_DIR      = os.path.join(os.path.dirname(__file__), 'organize_reports')
-PLAN_SCHEMA_VERSION = 1
+PLAN_SCHEMA_VERSION = 2
 os.makedirs(RESULTS_DIR, exist_ok=True)
 
 def errors_file(source_mode: str) -> str:
@@ -423,7 +423,9 @@ CREATE TABLE IF NOT EXISTS moves (
     duplicate_sha256 TEXT,
     source_root TEXT,
     dest_root TEXT,
-    source_signature TEXT
+    source_signature TEXT,
+    provenance_id TEXT,
+    provenance_json TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_moves_moved_at ON moves(moved_at);
 CREATE INDEX IF NOT EXISTS idx_moves_undone   ON moves(undone_at);
@@ -444,6 +446,8 @@ _JOURNAL_MIGRATIONS = {
     'source_root': "ALTER TABLE moves ADD COLUMN source_root TEXT",
     'dest_root': "ALTER TABLE moves ADD COLUMN dest_root TEXT",
     'source_signature': "ALTER TABLE moves ADD COLUMN source_signature TEXT",
+    'provenance_id': "ALTER TABLE moves ADD COLUMN provenance_id TEXT",
+    'provenance_json': "ALTER TABLE moves ADD COLUMN provenance_json TEXT",
 }
 
 def _utc_now() -> str:
@@ -478,19 +482,23 @@ def journal_record(src: str, dest: str, disk_name: str,
                    duplicate_source_file: str = '',
                    duplicate_existing_file: str = '',
                    duplicate_sha256: str = '', source_root: str = '',
-                   dest_root: str = '', source_signature: dict | None = None) -> int:
+                   dest_root: str = '', source_signature: dict | None = None,
+                   provenance: dict | None = None) -> int:
     """Record a planned/completed move in the SQLite journal and return its row id."""
     now = _utc_now()
     con = _journal_conn()
     cur = con.execute(
         "INSERT INTO moves (src, dest, disk_name, clean_name, category, confidence, moved_at, "
         "plan_id, plan_item_id, run_id, status, error, planned_at, updated_at, partial_dest_exists, "
-        "duplicate_source_file, duplicate_existing_file, duplicate_sha256, source_root, dest_root, source_signature) "
-        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        "duplicate_source_file, duplicate_existing_file, duplicate_sha256, source_root, dest_root, source_signature, "
+        "provenance_id, provenance_json) "
+        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         (src, dest, disk_name, clean_name, category, confidence, now,
          plan_id, plan_item_id, run_id, status, error, now, now, int(partial_dest_exists),
          duplicate_source_file, duplicate_existing_file, duplicate_sha256,
-         source_root, dest_root, json.dumps(source_signature or {}, sort_keys=True))
+         source_root, dest_root, json.dumps(source_signature or {}, sort_keys=True),
+         str((provenance or {}).get('record_id', '') or ''),
+         json.dumps(provenance or {}, sort_keys=True))
     )
     con.commit()
     row_id = cur.lastrowid
@@ -1130,6 +1138,7 @@ class MovePlanItem:
     error: str = ''
     duplicate_matches: list = field(default_factory=list)
     duplicate_policy: str = ''
+    provenance: dict = field(default_factory=dict)
 
 @dataclass
 class MovePlan:
@@ -1143,6 +1152,28 @@ class MovePlan:
     category_counts: dict = field(default_factory=dict)
     skipped: list = field(default_factory=list)
     items: list = field(default_factory=list)
+
+
+_PROVENANCE_DESCRIPTOR_FIELDS = (
+    'record_id',
+    'input_fingerprint',
+    'provider',
+    'model',
+    'prompt_hash',
+    'schema_hash',
+    'taxonomy_hash',
+    'response_hash',
+)
+
+
+def _safe_provenance_descriptor(value) -> dict:
+    if not isinstance(value, dict):
+        return {}
+    return {
+        field_name: str(value[field_name])[:512]
+        for field_name in _PROVENANCE_DESCRIPTOR_FIELDS
+        if isinstance(value.get(field_name), str) and value[field_name]
+    }
 
 def _default_plan_path(plan_id: str) -> str:
     return os.path.join(PLANS_DIR, f"{plan_id}.json")
@@ -1167,7 +1198,13 @@ def read_move_plan(path: str) -> dict:
         data = json.load(f)
     if not isinstance(data, dict):
         raise ValueError("Move plan must be a JSON object")
-    if int(data.get('schema_version', 0)) != PLAN_SCHEMA_VERSION:
+    schema_version = int(data.get('schema_version', 0))
+    if schema_version == 1:
+        for item in data.get('items', []):
+            if isinstance(item, dict):
+                item.setdefault('provenance', {})
+        data['schema_version'] = PLAN_SCHEMA_VERSION
+    elif schema_version != PLAN_SCHEMA_VERSION:
         raise ValueError(f"Unsupported plan schema: {data.get('schema_version')!r}")
     if not isinstance(data.get('items'), list):
         raise ValueError("Move plan missing items list")
@@ -1630,6 +1667,9 @@ def build_move_plan(pairs: list, source_override: str = '',
             reason=item_reason,
             duplicate_matches=duplicate_hits,
             duplicate_policy=duplicate_policy,
+            provenance=_safe_provenance_descriptor(
+                item.get('_provenance') or item.get('provenance')
+            ),
         )))
 
     return MovePlan(
@@ -1724,6 +1764,7 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
                     source_root=item.get('source_root', ''),
                     dest_root=plan_data.get('dest_root', ''),
                     source_signature=item.get('source_signature'),
+                    provenance=item.get('provenance'),
                 )
             skipped += 1
             continue
@@ -1745,6 +1786,7 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
             source_root=item.get('source_root', ''),
             dest_root=plan_data.get('dest_root', ''),
             source_signature=item.get('source_signature'),
+            provenance=item.get('provenance'),
         )
 
         try:
@@ -1780,6 +1822,7 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
                 'source_root': item.get('source_root', ''),
                 'dest_root': plan_data.get('dest_root', ''),
                 'source_signature': item.get('source_signature', {}),
+                'provenance': item.get('provenance', {}),
             })
 
     tag = 'DRY PLAN' if dry_run else 'APPLIED PLAN'
@@ -1903,7 +1946,8 @@ def retry_errors(source_mode: str = 'ae'):
             journal_record(src, dest, e['disk_name'], e.get('clean_name', ''),
                            e.get('category', ''), int(e.get('confidence', 0)),
                            source_root=source_root, dest_root=approved_dest_root,
-                           source_signature=e.get('source_signature'))
+                           source_signature=e.get('source_signature'),
+                           provenance=e.get('provenance'))
             log(f"  FIXED: {e['disk_name']!r}")
             fixed += 1
         except RetryCleanupError as ex:
@@ -1994,6 +2038,10 @@ def generate_report(identifier: str, output: str = '') -> str:
                 'confidence': item.get('confidence', 0),
                 'error': item.get('error', ''),
                 'partial_dest_exists': 0,
+                'provenance_id': (
+                    item.get('provenance', {}).get('record_id', '')
+                    if isinstance(item.get('provenance'), dict) else ''
+                ),
             }
             for item in plan.get('items', [])
         ]
@@ -2066,14 +2114,15 @@ def generate_report(identifier: str, output: str = '') -> str:
         '',
         '## Items',
         '',
-        '| Status | Confidence | Category | Source | Destination |',
-        '|---|---:|---|---|---|',
+        '| Status | Confidence | Category | Provenance | Source | Destination |',
+        '|---|---:|---|---|---|---|',
     ])
     for row in rows:
         lines.append(
             f"| {_md_cell(row.get('status', 'planned'))} "
             f"| {_md_cell(row.get('confidence', 0))} "
             f"| {_md_cell(row.get('category', ''))} "
+            f"| `{_md_cell(row.get('provenance_id', ''))}` "
             f"| `{_md_cell(row.get('src', ''))}` "
             f"| `{_md_cell(row.get('dest', ''))}` |"
         )

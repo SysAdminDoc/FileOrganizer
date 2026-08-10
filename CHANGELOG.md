@@ -4,6 +4,13 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- AI-assisted batch classifications now write bounded, migratable evaluation
+  provenance with input/provider/model/prompt/schema/taxonomy/response hashes,
+  durable correction and final-decision linkage, redacted JSONL export, fixture
+  replay scoring, and provenance IDs in move plans, journals, and reports.
+
 ### Fixed
 
 - Every shell workflow now publishes a shared capability-health preflight with

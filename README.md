@@ -182,6 +182,10 @@ Python process tree.
   exposes package/tool versions, scope, online requirements, availability, and
   remediation. An unavailable extractor is reported as not checked, never as
   a clean scan; run `python capabilities_run.py` for the same matrix as NDJSON.
+- **Replayable AI provenance** — each DeepSeek batch decision carries a stable
+  evaluation ID through the move plan, journal, and report. The durable store
+  retains fingerprints and hashes—not prompts, responses, API keys, file names,
+  or paths—and the Organize page can review counts or export redacted JSONL.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write
@@ -210,6 +214,11 @@ python -m fileorganizer.watch_mode --source design --start --duration 60
 python organize_run.py --source design --preview --plan-out plan.json
 python organize_run.py --apply-plan plan.json
 python organize_run.py --report <RUN_ID> --output report.md
+
+# Inspect, export, or replay privacy-redacted AI evaluation records
+python provenance_run.py --stats
+python provenance_run.py --export
+python provenance_run.py --replay records.jsonl --fixtures decisions.jsonl
 
 # Undo
 python organize_run.py --undo-last 10
@@ -294,6 +303,7 @@ fileorganizer/
 ├── classifier.py             ← 7-level classification engine
 ├── categories.py             ← 384+ canonical category definitions
 ├── providers.py              ← multi-provider AI router (DeepSeek + GH + Ollama)
+├── classification_provenance.py ← hashed AI evaluation store + replay/export
 ├── catalog.py                ← marketplace lookup + fingerprint DB pre-check
 ├── cleanup.py                ← six cleanup scanners
 ├── duplicates.py             ← progressive hash + perceptual image hash
@@ -308,6 +318,7 @@ repo root:
 ├── cleanup_run.py            ← NDJSON sidecar for the Cleanup page
 ├── asset_db.py               ← community SHA-256 fingerprint DB
 ├── classify_design.py        ← DeepSeek batch classifier for design assets
+├── provenance_run.py         ← redacted evaluation export/replay CLI
 └── deepseek_research.py      ← _Review-folder ID resolver
 ```
 

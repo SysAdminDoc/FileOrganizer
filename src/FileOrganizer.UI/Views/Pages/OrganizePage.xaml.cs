@@ -47,13 +47,32 @@ public sealed partial class OrganizePage : Page
         await RunAsync($"Validating sources for source={source}", args);
     }
 
+    private async void ProvenanceStats_Click(object sender, RoutedEventArgs e)
+    {
+        await RunAsync(
+            "Reviewing redacted AI evaluation records",
+            new[] { "--stats" },
+            "provenance_run.py");
+    }
+
+    private async void ExportProvenance_Click(object sender, RoutedEventArgs e)
+    {
+        await RunAsync(
+            "Exporting redacted AI evaluation records",
+            new[] { "--export" },
+            "provenance_run.py");
+    }
+
     private void Cancel_Click(object sender, RoutedEventArgs e)
     {
         _cts?.Cancel();
         StatusText.Text = "Cancelling...";
     }
 
-    private async Task RunAsync(string statusLabel, IEnumerable<string> args)
+    private async Task RunAsync(
+        string statusLabel,
+        IEnumerable<string> args,
+        string script = "organize_run.py")
     {
         if (_cts is not null)
         {
@@ -77,7 +96,7 @@ public sealed partial class OrganizePage : Page
         try
         {
             var result = await _python.RunScriptAsync(
-                "organize_run.py",
+                script,
                 args,
                 lineProgress,
                 _cts.Token);
@@ -144,6 +163,8 @@ public sealed partial class OrganizePage : Page
         StatsButton.IsEnabled = !running;
         PreviewButton.IsEnabled = !running;
         ValidateButton.IsEnabled = !running;
+        ProvenanceStatsButton.IsEnabled = !running;
+        ExportProvenanceButton.IsEnabled = !running;
         SourceCombo.IsEnabled = !running;
         CancelButton.IsEnabled = running;
     }

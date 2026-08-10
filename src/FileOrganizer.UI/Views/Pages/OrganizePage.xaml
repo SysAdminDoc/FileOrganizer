@@ -56,21 +56,30 @@
                               VerticalAlignment="Center"/>
                     <TextBlock Text="Actions" Style="{StaticResource PanelTitleTextStyle}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <Button x:Name="StatsButton" Content="Show batch stats"
-                            Style="{StaticResource PrimaryButtonStyle}"
-                            Click="Stats_Click"/>
-                    <Button x:Name="PreviewButton" Content="Preview (dry run)"
-                            Style="{StaticResource SecondaryButtonStyle}"
-                            Click="Preview_Click"/>
-                    <Button x:Name="ValidateButton" Content="Validate sources"
-                            Style="{StaticResource SecondaryButtonStyle}"
-                            Click="Validate_Click"/>
-                    <Button x:Name="CancelButton" Content="Stop"
-                            Style="{StaticResource DangerButtonStyle}"
-                            IsEnabled="False"
-                            Click="Cancel_Click"/>
-                </StackPanel>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                              HorizontalScrollMode="Enabled">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button x:Name="StatsButton" Content="Show batch stats"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Click="Stats_Click"/>
+                        <Button x:Name="PreviewButton" Content="Preview (dry run)"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="Preview_Click"/>
+                        <Button x:Name="ValidateButton" Content="Validate sources"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="Validate_Click"/>
+                        <Button x:Name="ProvenanceStatsButton" Content="Review AI records"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="ProvenanceStats_Click"/>
+                        <Button x:Name="ExportProvenanceButton" Content="Export AI records"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="ExportProvenance_Click"/>
+                        <Button x:Name="CancelButton" Content="Stop"
+                                Style="{StaticResource DangerButtonStyle}"
+                                IsEnabled="False"
+                                Click="Cancel_Click"/>
+                    </StackPanel>
+                </ScrollViewer>
                 <TextBlock x:Name="StatusText"
                            Text="Idle. Pick a source and run an action."
                            Style="{StaticResource MutedTextStyle}"/>

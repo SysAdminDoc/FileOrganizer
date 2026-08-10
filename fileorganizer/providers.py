@@ -248,6 +248,13 @@ class AIProvider:
     """Abstract base for AI providers."""
     name = 'base'
 
+    def provenance_context(self) -> dict[str, str]:
+        """Return the stable, non-secret identity used by evaluation records."""
+        return {
+            'provider': self.name,
+            'model': str(getattr(self, 'model', '') or ''),
+        }
+
     def is_available(self) -> bool:
         return False
 
@@ -452,6 +459,15 @@ class DeepSeekProvider(_ChatCompletionsProvider):
 class OllamaProvider(AIProvider):
     """Wraps existing Ollama integration as a provider."""
     name = 'ollama'
+
+    def provenance_context(self) -> dict[str, str]:
+        from fileorganizer.ollama import load_ollama_settings
+
+        settings = load_ollama_settings()
+        return {
+            'provider': self.name,
+            'model': str(settings.get('model', '') or ''),
+        }
 
     def is_available(self) -> bool:
         try:
