@@ -7,7 +7,7 @@ restart indicate a crash mid-apply and trigger the resume prompt.
 
 NEXT-37: Retention policy and periodic vacuum to prevent database bloat.
 """
-import os, sqlite3, json
+import os, sqlite3, json, threading
 from datetime import datetime, timezone, timedelta
 
 from fileorganizer.config import _APP_DATA_DIR
@@ -20,10 +20,12 @@ _CONN_TIMEOUT = 30.0
 
 # NEXT-37: Retention policy (days)
 _RETENTION_DAYS = 90  # configurable, default 90 days
+_SCHEMA_LOCK = threading.Lock()
+_INITIALIZED_DB = None
 
 
 
-def _connect():
+def _open_connection():
     con = sqlite3.connect(_JOURNAL_DB, timeout=_CONN_TIMEOUT)
     # WAL: enables concurrent reader (GUI) + writer (worker) without deadlock.
     # NORMAL: durable on power loss except for the last few committed txns —
@@ -34,40 +36,53 @@ def _connect():
 
 
 def _init():
-    os.makedirs(_APP_DATA_DIR, exist_ok=True)
-    con = _connect()
-    con.execute("""
-        CREATE TABLE IF NOT EXISTS moves (
-            id           INTEGER PRIMARY KEY AUTOINCREMENT,
-            run_id       TEXT    NOT NULL,
-            ri           INTEGER NOT NULL,
-            folder_name  TEXT    NOT NULL,
-            src          TEXT    NOT NULL,
-            dst          TEXT    NOT NULL,
-            category     TEXT    NOT NULL,
-            confidence   REAL    NOT NULL DEFAULT 0,
-            cleaned_name TEXT    NOT NULL DEFAULT '',
-            source_root  TEXT    NOT NULL DEFAULT '',
-            dest_root    TEXT    NOT NULL DEFAULT '',
-            source_signature TEXT NOT NULL DEFAULT '{}',
-            status       TEXT    NOT NULL DEFAULT 'pending',
-            ts_planned   TEXT    NOT NULL,
-            ts_done      TEXT
-        )
-    """)
-    existing = {row[1] for row in con.execute("PRAGMA table_info(moves)").fetchall()}
-    for column, definition in {
-        'source_root': "ALTER TABLE moves ADD COLUMN source_root TEXT NOT NULL DEFAULT ''",
-        'dest_root': "ALTER TABLE moves ADD COLUMN dest_root TEXT NOT NULL DEFAULT ''",
-        'source_signature': "ALTER TABLE moves ADD COLUMN source_signature TEXT NOT NULL DEFAULT '{}'",
-    }.items():
-        if column not in existing:
-            con.execute(definition)
-    con.commit()
-    con.close()
+    """Create or migrate the active journal lazily on first use."""
+    global _INITIALIZED_DB
+    journal_path = os.path.abspath(_JOURNAL_DB)
+    if _INITIALIZED_DB == journal_path:
+        return
+    with _SCHEMA_LOCK:
+        if _INITIALIZED_DB == journal_path:
+            return
+        os.makedirs(os.path.dirname(journal_path) or '.', exist_ok=True)
+        con = _open_connection()
+        try:
+            con.execute("""
+                CREATE TABLE IF NOT EXISTS moves (
+                    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id       TEXT    NOT NULL,
+                    ri           INTEGER NOT NULL,
+                    folder_name  TEXT    NOT NULL,
+                    src          TEXT    NOT NULL,
+                    dst          TEXT    NOT NULL,
+                    category     TEXT    NOT NULL,
+                    confidence   REAL    NOT NULL DEFAULT 0,
+                    cleaned_name TEXT    NOT NULL DEFAULT '',
+                    source_root  TEXT    NOT NULL DEFAULT '',
+                    dest_root    TEXT    NOT NULL DEFAULT '',
+                    source_signature TEXT NOT NULL DEFAULT '{}',
+                    status       TEXT    NOT NULL DEFAULT 'pending',
+                    ts_planned   TEXT    NOT NULL,
+                    ts_done      TEXT
+                )
+            """)
+            existing = {row[1] for row in con.execute("PRAGMA table_info(moves)").fetchall()}
+            for column, definition in {
+                'source_root': "ALTER TABLE moves ADD COLUMN source_root TEXT NOT NULL DEFAULT ''",
+                'dest_root': "ALTER TABLE moves ADD COLUMN dest_root TEXT NOT NULL DEFAULT ''",
+                'source_signature': "ALTER TABLE moves ADD COLUMN source_signature TEXT NOT NULL DEFAULT '{}'",
+            }.items():
+                if column not in existing:
+                    con.execute(definition)
+            con.commit()
+            _INITIALIZED_DB = journal_path
+        finally:
+            con.close()
 
 
-_init()
+def _connect():
+    _init()
+    return _open_connection()
 
 
 def _now() -> str:

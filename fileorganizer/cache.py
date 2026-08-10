@@ -81,35 +81,51 @@ def check_corrections(folder_name):
 # ── Classification Cache (SQLite) ─────────────────────────────────────────────
 _CACHE_DB = os.path.join(_APP_DATA_DIR, 'classification_cache.db')
 _cache_conn = None  # Persistent connection for scan performance
+_cache_conn_path = None
+_cache_db_lock = threading.RLock()
 
 def _get_cache_conn():
-    """Get persistent SQLite connection, creating if needed."""
-    global _cache_conn
-    if _cache_conn is None:
-        _cache_conn = sqlite3.connect(_CACHE_DB, timeout=5)
-        _cache_conn.execute('PRAGMA journal_mode=WAL')
-        _cache_conn.execute('CREATE TABLE IF NOT EXISTS cache ('
-            'fingerprint TEXT PRIMARY KEY,'
-            'category TEXT,'
-            'confidence REAL,'
-            'cleaned_name TEXT,'
-            'method TEXT,'
-            'detail TEXT,'
-            'topic TEXT,'
-            'created_at TEXT DEFAULT CURRENT_TIMESTAMP'
-        ')')
-        _cache_conn.commit()
-    return _cache_conn
+    """Get the locked, cross-thread SQLite connection, creating if needed."""
+    global _cache_conn, _cache_conn_path
+    with _cache_db_lock:
+        cache_path = os.path.abspath(_CACHE_DB)
+        if _cache_conn is not None and _cache_conn_path != cache_path:
+            _cache_conn.close()
+            _cache_conn = None
+        if _cache_conn is None:
+            os.makedirs(os.path.dirname(cache_path) or '.', exist_ok=True)
+            _cache_conn = sqlite3.connect(
+                cache_path,
+                timeout=5,
+                check_same_thread=False,
+            )
+            _cache_conn.execute('PRAGMA journal_mode=WAL')
+            _cache_conn.execute('PRAGMA busy_timeout=5000')
+            _cache_conn.execute('CREATE TABLE IF NOT EXISTS cache ('
+                'fingerprint TEXT PRIMARY KEY,'
+                'category TEXT,'
+                'confidence REAL,'
+                'cleaned_name TEXT,'
+                'method TEXT,'
+                'detail TEXT,'
+                'topic TEXT,'
+                'created_at TEXT DEFAULT CURRENT_TIMESTAMP'
+            ')')
+            _cache_conn.commit()
+            _cache_conn_path = cache_path
+        return _cache_conn
 
 def _close_cache_conn():
     """Close persistent connection (call after scan completes)."""
-    global _cache_conn
-    if _cache_conn:
-        try:
-            _cache_conn.close()
-        except Exception:
-            pass
-        _cache_conn = None
+    global _cache_conn, _cache_conn_path
+    with _cache_db_lock:
+        if _cache_conn is not None:
+            try:
+                _cache_conn.close()
+            except Exception:
+                pass
+            _cache_conn = None
+            _cache_conn_path = None
 
 def _init_cache_db():
     """Initialize the cache database. Uses persistent connection."""
@@ -128,8 +144,9 @@ def cache_lookup(folder_name, folder_path):
     """Check the cache for a prior classification. Returns dict or None."""
     try:
         fp = _folder_fingerprint(folder_name, folder_path)
-        conn = _get_cache_conn()
-        row = conn.execute('SELECT category, confidence, cleaned_name, method, detail, topic FROM cache WHERE fingerprint=?', (fp,)).fetchone()
+        with _cache_db_lock:
+            conn = _get_cache_conn()
+            row = conn.execute('SELECT category, confidence, cleaned_name, method, detail, topic FROM cache WHERE fingerprint=?', (fp,)).fetchone()
         if row:
             return {'category': row[0], 'confidence': row[1], 'cleaned_name': row[2],
                     'method': row[3], 'detail': row[4], 'topic': row[5]}
@@ -141,30 +158,33 @@ def cache_store(folder_name, folder_path, result):
     """Store a classification result in the cache."""
     try:
         fp = _folder_fingerprint(folder_name, folder_path)
-        conn = _get_cache_conn()
-        conn.execute('INSERT OR REPLACE INTO cache (fingerprint, category, confidence, cleaned_name, method, detail, topic) VALUES (?,?,?,?,?,?,?)',
-                     (fp, result.get('category'), result.get('confidence', 0),
-                      result.get('cleaned_name', ''), result.get('method', ''),
-                      result.get('detail', ''), result.get('topic', '')))
-        conn.commit()
+        with _cache_db_lock:
+            conn = _get_cache_conn()
+            conn.execute('INSERT OR REPLACE INTO cache (fingerprint, category, confidence, cleaned_name, method, detail, topic) VALUES (?,?,?,?,?,?,?)',
+                         (fp, result.get('category'), result.get('confidence', 0),
+                          result.get('cleaned_name', ''), result.get('method', ''),
+                          result.get('detail', ''), result.get('topic', '')))
+            conn.commit()
     except Exception:
         pass
 
 def cache_clear():
     """Clear the entire classification cache."""
     try:
-        conn = _get_cache_conn()
-        conn.execute('DELETE FROM cache')
-        conn.commit()
+        with _cache_db_lock:
+            conn = _get_cache_conn()
+            conn.execute('DELETE FROM cache')
+            conn.commit()
     except Exception:
         pass
 
 def cache_count():
     """Return the number of cached classifications."""
     try:
-        conn = _get_cache_conn()
-        n = conn.execute('SELECT COUNT(*) FROM cache').fetchone()[0]
-        return n
+        with _cache_db_lock:
+            conn = _get_cache_conn()
+            n = conn.execute('SELECT COUNT(*) FROM cache').fetchone()[0]
+            return n
     except Exception:
         return 0
 
