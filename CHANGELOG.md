@@ -17,6 +17,10 @@ All notable changes to FileOrganizer will be documented in this file.
   checks with source identity validation and no-overwrite defaults.
 - Profile and category-preset names now stay within validated app-data files,
   reject traversal/device names, and use atomic JSON replacement.
+- RAW and Comics WinUI progress handlers now dispatch through the registered
+  application window instead of the nonexistent `MainWindow.Current` member.
+- WinUI NDJSON sidecar events now execute page callbacks on the captured
+  dispatcher queue, preserve event ordering, and propagate callback failures.
 
 ### Fixed
 

@@ -69,8 +69,6 @@ public sealed partial class RAWPage : Page
 
     private void HandleEvent(string ev, JsonElement root)
     {
-        MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
-        {
             if (ev == "file")
             {
                 var filename = root.GetProperty("filename").GetString() ?? "Unknown";
@@ -97,7 +95,6 @@ public sealed partial class RAWPage : Page
                     ? $"Dry-run plan written for {items:N0} RAW files: {path}"
                     : $"Moved {items:N0} RAW files. Plan: {path}";
             }
-        });
     }
 
     private void SetRunning(bool running)

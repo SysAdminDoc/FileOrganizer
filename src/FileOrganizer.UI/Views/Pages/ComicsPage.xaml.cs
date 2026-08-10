@@ -69,8 +69,6 @@ public sealed partial class ComicsPage : Page
 
     private void HandleEvent(string ev, JsonElement root)
     {
-        MainWindow.Current?.DispatcherQueue.TryEnqueue(() =>
-        {
             if (ev == "comic")
             {
                 var filename = root.GetProperty("filename").GetString() ?? "Unknown";
@@ -98,7 +96,6 @@ public sealed partial class ComicsPage : Page
                     ? $"Dry-run plan written for {items:N0} comic archives: {path}"
                     : $"Moved {items:N0} comic archives. Plan: {path}";
             }
-        });
     }
 
     private void SetRunning(bool running)
