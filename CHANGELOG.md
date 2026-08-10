@@ -29,6 +29,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - The WinUI build wrapper now discovers compatible MSBuild installations or an
   explicit `MSBUILD_EXE_PATH`, and reports a missing .NET SDK resolver before
   attempting a misleading restore/build.
+- Python dependencies now have a hash-pinned Windows/Python 3.10 lock with
+  reproducible freshness checks, dry-run hash validation, vulnerability audit,
+  and CI license-report generation.
 
 ### Fixed
 

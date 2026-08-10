@@ -57,7 +57,16 @@ into Python — install Python 3.10+ on PATH (or drop a
 set `%FILEORGANIZER_PYTHON%`), then once:
 
 ```pwsh
-python -m pip install -r requirements.txt
+python -m pip install uv pip-audit
+uv pip install --system --require-hashes -r requirements.lock
+```
+
+`requirements.lock` is the hash-pinned Windows x64/Python 3.10 release
+baseline. When `requirements.txt` changes, regenerate and verify it with:
+
+```pwsh
+uv pip compile --generate-hashes --python-version 3.10 --python-platform x86_64-pc-windows-msvc --output-file requirements.lock requirements.txt
+python verify_dependencies.py --check --validate --audit
 ```
 
 ### Path B — Python core only (legacy PyQt6 GUI + CLI)
@@ -82,8 +91,9 @@ pwsh src/build.ps1                         # Debug build
 pwsh src/build.ps1 -Configuration Release  # Release build
 ```
 
-The script wraps **VS 2026 MSBuild** because bare `dotnet build` against
-the .NET 10 SDK fails on the WindowsAppSDK 1.5 AppX/PRI task path. It
+The script discovers a compatible Visual Studio MSBuild installation (or uses
+`MSBUILD_EXE_PATH`) because bare `dotnet build` against the .NET 10 SDK fails
+on the WindowsAppSDK 1.5 AppX/PRI task path. It
 also cleans `obj/` + `bin/` first and runs `Restore` and `Build` as
 separate invocations to avoid a known MarkupCompilePass2 cascade.
 
