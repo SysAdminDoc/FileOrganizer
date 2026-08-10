@@ -79,7 +79,9 @@ public sealed partial class DuplicatesPage : Page
         try
         {
             var r = await _python.RunScriptNdjsonAsync("dedup_run.py", args, HandleEvent, _cts.Token);
-            StatusText.Text = r.Success ? $"Done. {Groups.Count:N0} groups." : (r.ErrorMessage ?? r.Stderr);
+            StatusText.Text = r.Success
+                ? $"Review complete: {Groups.Count:N0} groups. No files changed; use the Python desktop Duplicate Finder to act."
+                : (r.ErrorMessage ?? r.Stderr);
         }
         catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
         catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }

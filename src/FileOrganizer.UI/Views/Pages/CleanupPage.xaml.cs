@@ -119,7 +119,7 @@ public sealed partial class CleanupPage : Page
 
             if (result.Success)
             {
-                StatusText.Text = $"Done. {Results.Count:N0} item(s) found.";
+                StatusText.Text = $"Review complete: {Results.Count:N0} item(s) found. No files changed; use the Python desktop Cleanup Tools to act.";
             }
             else if (result.ExitCode == -1 && string.IsNullOrEmpty(result.ErrorMessage) is false)
             {

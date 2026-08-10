@@ -21,6 +21,8 @@ All notable changes to FileOrganizer will be documented in this file.
   application window instead of the nonexistent `MainWindow.Current` member.
 - WinUI NDJSON sidecar events now execute page callbacks on the captured
   dispatcher queue, preserve event ordering, and propagate callback failures.
+- WinUI Cleanup and Duplicates now clearly identify their shell scans as
+  read-only and direct users to the Python desktop action flows.
 
 ### Fixed
 

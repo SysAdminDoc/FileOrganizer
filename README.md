@@ -136,18 +136,21 @@ Six progressive scanners, all wired into the **Cleanup** page in the shell
 Results stream live as items are discovered. Cancellation kills the child
 Python process tree.
 
-### Duplicates, Photos, Watch (Python-side, shell pages still placeholders)
+### Duplicates, Photos, Watch
 
 - **Progressive hash dedup** — Size > prefix hash > suffix hash > full
   SHA-256, plus Pillow 12.2-compatible perceptual image hashing for
   near-duplicate photos.
+- **Shell Cleanup and Duplicates pages** — read-only review screens that do
+  not mutate files. Use the Python desktop Cleanup Tools or Duplicate Finder
+  for confirmation, Trash/quarantine, hard-link, move, and undo actions.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write
   dry-run organize plans, and persist state in `watch_state.db`.
 
-These all work today through `python -m fileorganizer` (Path B). Shell
-pages will land in subsequent `ui-v0.X.Y` releases.
+These workflows work today through `python -m fileorganizer` (Path B) and the
+shell sidecars where noted above.
 
 ## CLI Batch Runner
 
