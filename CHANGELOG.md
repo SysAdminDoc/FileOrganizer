@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Fixed
 
+- Settings now report success only after LocalSettings values are written and
+  reread; partial failures roll back the durable batch and clearly distinguish
+  restored settings from edits that remain only in the form.
 - WinUI title-bar buttons now derive their normal, inactive, hover, and pressed
   colors from the active theme and refresh immediately on theme and window
   activation changes.

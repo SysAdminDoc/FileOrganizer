@@ -122,6 +122,86 @@ finally
     Directory.Delete(crashRoot, recursive: true);
 }
 
+var originalSettings = new Dictionary<string, string>(StringComparer.Ordinal)
+{
+    ["music"] = "old-music",
+    ["video"] = "old-video",
+};
+var desiredSettings = new Dictionary<string, string>(StringComparer.Ordinal)
+{
+    ["music"] = "new-music",
+    ["video"] = "new-video",
+};
+var durableStore = new FakeSettingsStore(originalSettings);
+var savedSettings = SettingsPersistence.Save(durableStore, desiredSettings);
+Assert(savedSettings.Success, "A durable settings batch was rejected.");
+var restartedStore = new FakeSettingsStore(originalSettings);
+Assert(restartedStore.Read("music").Value == "new-music"
+    && restartedStore.Read("video").Value == "new-video",
+    "Saved settings did not survive a new store instance.");
+
+var unavailableBacking = new Dictionary<string, string>(StringComparer.Ordinal)
+{
+    ["music"] = "old-music",
+    ["video"] = "old-video",
+};
+var unavailableStore = new FakeSettingsStore(unavailableBacking)
+{
+    FailingWriteKey = "video",
+};
+var unavailableSave = SettingsPersistence.Save(unavailableStore, desiredSettings);
+Assert(!unavailableSave.Success, "An unavailable settings store reported success.");
+Assert(unavailableSave.PreviousValuesRestored,
+    "A partial settings save did not report successful rollback.");
+Assert(unavailableBacking["music"] == "old-music"
+    && unavailableBacking["video"] == "old-video",
+    "A partial settings save did not restore last-known-good values.");
+
+var corruptBacking = new Dictionary<string, string>(StringComparer.Ordinal)
+{
+    ["music"] = "old-music",
+    ["video"] = "old-video",
+};
+var corruptStore = new FakeSettingsStore(corruptBacking)
+{
+    FailingReadKey = "music",
+};
+var corruptSave = SettingsPersistence.Save(corruptStore, desiredSettings);
+Assert(!corruptSave.Success && corruptSave.PreviousValuesRestored,
+    "A corrupt stored value was not rejected before mutation.");
+Assert(corruptBacking["music"] == "old-music",
+    "A corrupt settings read changed the previous value.");
+
+var rollbackBacking = new Dictionary<string, string>(StringComparer.Ordinal)
+{
+    ["music"] = "old-music",
+    ["video"] = "old-video",
+};
+var rollbackStore = new FakeSettingsStore(rollbackBacking)
+{
+    FailingWriteKey = "video",
+    FailingRollbackKey = "music",
+};
+var rollbackSave = SettingsPersistence.Save(rollbackStore, desiredSettings);
+Assert(!rollbackSave.Success && !rollbackSave.PreviousValuesRestored,
+    "A failed rollback did not expose its in-memory-only state.");
+
+var integratedSettings = new UserSettings();
+var integratedSave = integratedSettings.TrySavePreferences(new UserPreferences(
+    "acoustid-fixture",
+    "en,fr",
+    "Music/{title}.{ext}",
+    "Video/{title}.{ext}",
+    "Books/{title}.{ext}"));
+Assert(integratedSave.Success, "The integrated user settings save failed.");
+var restartedSettings = new UserSettings();
+Assert(restartedSettings.AcoustIdApiKey == "acoustid-fixture"
+    && restartedSettings.DefaultSubtitleLanguages == "en,fr"
+    && restartedSettings.DefaultMusicRenamePattern == "Music/{title}.{ext}"
+    && restartedSettings.DefaultVideoRenamePattern == "Video/{title}.{ext}"
+    && restartedSettings.DefaultBookRenamePattern == "Books/{title}.{ext}",
+    "Integrated settings did not survive a service restart.");
+
 var lifecycleGate = new RunLifecycleGate();
 for (var cycle = 0; cycle < 10; cycle++)
 {
@@ -219,4 +299,44 @@ for (var cycle = 0; cycle < 3; cycle++)
     Assert(restartItems == 2, "Restart did not consume exactly its own events.");
 }
 
-Console.WriteLine("Sidecar protocol and lifecycle contract fixtures passed.");
+Console.WriteLine("WinUI service contract fixtures passed.");
+
+sealed class FakeSettingsStore(IDictionary<string, string> values) : IStringSettingsStore
+{
+    private readonly Dictionary<string, int> _writeAttempts = new(StringComparer.Ordinal);
+
+    public string? FailingReadKey { get; init; }
+    public string? FailingWriteKey { get; init; }
+    public string? FailingRollbackKey { get; init; }
+
+    public StoredStringResult Read(string key)
+    {
+        if (key == FailingReadKey)
+            return StoredStringResult.Failed("Injected read failure.");
+        return values.TryGetValue(key, out var value)
+            ? StoredStringResult.Found(value)
+            : StoredStringResult.Missing();
+    }
+
+    public bool TryWrite(string key, string value, out string? error)
+    {
+        var attempt = _writeAttempts.GetValueOrDefault(key) + 1;
+        _writeAttempts[key] = attempt;
+        if (key == FailingWriteKey || (key == FailingRollbackKey && attempt > 1))
+        {
+            error = "Injected write failure.";
+            return false;
+        }
+
+        values[key] = value;
+        error = null;
+        return true;
+    }
+
+    public bool TryRemove(string key, out string? error)
+    {
+        values.Remove(key);
+        error = null;
+        return true;
+    }
+}

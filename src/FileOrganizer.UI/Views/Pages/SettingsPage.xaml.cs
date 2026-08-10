@@ -66,15 +66,20 @@ public sealed partial class SettingsPage : Page
             }
         }
 
-        if (!_settings.TrySetAcoustIdApiKey(ApiKeyBox.Password ?? ""))
+        var saveResult = _settings.TrySavePreferences(new UserPreferences(
+            ApiKeyBox.Password ?? "",
+            string.IsNullOrWhiteSpace(LangsBox.Text) ? "en" : LangsBox.Text,
+            MusicPatternBox.Text ?? "",
+            VideoPatternBox.Text ?? "",
+            BookPatternBox.Text ?? ""));
+        if (!saveResult.Success)
         {
-            SaveStatusText.Text = "AcoustID key could not be saved to Windows Credential Locker.";
+            SaveStatusText.Text = saveResult.PreviousValuesRestored
+                ? "Settings were not saved. Previous settings remain active; choose Save to retry."
+                : "Settings could not be saved. These edits are only shown here; choose Save to retry.";
             return;
         }
-        _settings.DefaultMusicRenamePattern = MusicPatternBox.Text ?? "";
-        _settings.DefaultVideoRenamePattern = VideoPatternBox.Text ?? "";
-        _settings.DefaultBookRenamePattern = BookPatternBox.Text ?? "";
-        _settings.DefaultSubtitleLanguages = string.IsNullOrWhiteSpace(LangsBox.Text) ? "en" : LangsBox.Text;
+
         SaveStatusText.Text = "Saved.";
     }
 
