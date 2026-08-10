@@ -1,5 +1,5 @@
 """FileOrganizer — Background worker threads for scanning, applying, and LLM tasks."""
-import os, re, json, shutil, time, math, hashlib, base64, sys, subprocess
+import os, re, json, shutil, tempfile, time, math, hashlib, base64, sys, subprocess
 from datetime import datetime
 from pathlib import Path
 from collections import Counter
@@ -2735,12 +2735,14 @@ class ArchiveExtractionWorker(QThread):
     progress     = pyqtSignal(int, int)
 
     def __init__(self, source_dir: str, extract_dest: str = '',
-                 delete_after: bool = False, recursive: bool = True):
+                 delete_after: bool = False, recursive: bool = True,
+                 limits=None):
         super().__init__()
         self.source_dir   = source_dir
         self.extract_dest = extract_dest  # Empty = extract beside archive
         self.delete_after = delete_after
         self.recursive    = recursive
+        self.limits       = limits
         self._cancelled   = False
 
     def cancel(self):
@@ -2749,7 +2751,8 @@ class ArchiveExtractionWorker(QThread):
     def run(self):
         try:
             from fileorganizer.archive_extractor import (
-                scan_archives_in_dir, extract_archive, get_archive_display_name
+                ArchiveExtractionCancelled, ArchiveExtractionError,
+                scan_archives_in_dir, extract_archive, get_archive_display_name,
             )
         except ImportError as e:
             self.log.emit(f"ERROR: archive_extractor not available: {e}")
@@ -2777,16 +2780,89 @@ class ArchiveExtractionWorker(QThread):
             display   = get_archive_display_name(arch_path)
             self.log.emit(f"  Extracting [{i+1}/{total}]: {display}")
 
-            # Destination: use explicit dest or create folder beside archive
-            if self.extract_dest:
-                dest = os.path.join(self.extract_dest, display)
-            else:
-                dest = os.path.join(os.path.dirname(arch_path), display)
+            # Destination: use explicit dest or create folder beside archive.
+            # Extract into a sibling staging directory and promote it only after
+            # all quota and cancellation checks have passed.
+            staging_parent = self.extract_dest or os.path.dirname(arch_path)
+            os.makedirs(staging_parent, exist_ok=True)
+            dest = os.path.join(staging_parent, display)
+
+            if os.path.lexists(dest):
+                error = ArchiveExtractionError(
+                    'destination_exists', f"output already exists: {dest}")
+                self.log.emit(f"    Extraction blocked [{error.code}]: {error.message}")
+                self.result_ready.emit({
+                    'archive_path': arch_path,
+                    'dest_dir': dest,
+                    'extracted_files': [],
+                    'display_name': display,
+                    'status': 'blocked',
+                    'error_code': error.code,
+                    'error': error.message,
+                })
+                continue
+
+            staging = tempfile.mkdtemp(prefix='.fo_extract_', dir=staging_parent)
 
             def _log_cb(msg):
                 self.log.emit(msg)
 
-            extracted = extract_archive(arch_path, dest, log_cb=_log_cb)
+            try:
+                extracted = extract_archive(
+                    arch_path,
+                    staging,
+                    log_cb=_log_cb,
+                    limits=self.limits,
+                    cancel_cb=lambda: self._cancelled,
+                )
+                if self._cancelled:
+                    raise ArchiveExtractionCancelled()
+                relative_files = [
+                    os.path.relpath(path, staging) for path in extracted
+                ]
+                os.replace(staging, dest)
+                staging = ''
+                extracted = [os.path.join(dest, rel) for rel in relative_files]
+            except ArchiveExtractionCancelled as e:
+                shutil.rmtree(staging, ignore_errors=True)
+                self.log.emit(f"    Extraction cancelled: {e.message}")
+                self.result_ready.emit({
+                    'archive_path': arch_path,
+                    'dest_dir': dest,
+                    'extracted_files': [],
+                    'display_name': display,
+                    'status': 'cancelled',
+                    'error_code': e.code,
+                    'error': e.message,
+                })
+                break
+            except ArchiveExtractionError as e:
+                shutil.rmtree(staging, ignore_errors=True)
+                self.log.emit(f"    Extraction blocked [{e.code}]: {e.message}")
+                self.result_ready.emit({
+                    'archive_path': arch_path,
+                    'dest_dir': dest,
+                    'extracted_files': [],
+                    'display_name': display,
+                    'status': 'blocked',
+                    'error_code': e.code,
+                    'error': e.message,
+                })
+                continue
+            except Exception as e:
+                shutil.rmtree(staging, ignore_errors=True)
+                self.log.emit(f"    Extraction failed: {e}")
+                self.result_ready.emit({
+                    'archive_path': arch_path,
+                    'dest_dir': dest,
+                    'extracted_files': [],
+                    'display_name': display,
+                    'status': 'failed',
+                    'error_code': 'extraction_failed',
+                    'error': str(e),
+                })
+                continue
+
             self.log.emit(f"    {len(extracted)} file(s) extracted to: {dest}")
 
             if self.delete_after and extracted and os.path.isfile(arch_path):
@@ -2801,6 +2877,9 @@ class ArchiveExtractionWorker(QThread):
                 'dest_dir':       dest,
                 'extracted_files': extracted,
                 'display_name':   display,
+                'status':          'extracted',
+                'error_code':       '',
+                'error':            '',
             })
 
         self.log.emit("  Archive extraction complete.")
