@@ -190,3 +190,29 @@ def test_settings_page_only_reports_saved_after_verified_persistence():
     assert page.index("if (!saveResult.Success)") < page.index(
         'SaveStatusText.Text = "Saved."'
     )
+
+
+def test_every_custom_button_style_uses_system_focus_visuals():
+    resources = (REPO_ROOT / "src/FileOrganizer.UI/App.xaml").read_text(
+        encoding="utf-8"
+    )
+    expected_styles = {
+        "PrimaryButtonStyle",
+        "SecondaryButtonStyle",
+        "GhostButtonStyle",
+        "DangerButtonStyle",
+        "IconButtonStyle",
+    }
+    button_styles = {
+        match.group(1): match.group(0)
+        for match in re.finditer(
+            r'<Style x:Key="([^"]+ButtonStyle)".*?</Style>',
+            resources,
+            flags=re.DOTALL,
+        )
+    }
+
+    assert expected_styles <= button_styles.keys()
+    assert 'UseSystemFocusVisuals" Value="False"' not in resources
+    for style_name in expected_styles:
+        assert 'Property="UseSystemFocusVisuals" Value="True"' in button_styles[style_name]
