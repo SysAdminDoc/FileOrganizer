@@ -33,7 +33,7 @@ from fileorganizer.categories import (
 )
 from fileorganizer.naming import _normalize, _beautify_name, _smart_name
 from fileorganizer.classifier import tiered_classify, _SCAN_FILTERS
-from fileorganizer.workers import _collect_scan_folders
+from fileorganizer.workers import _collect_scan_folders, restore_merge_manifest
 from fileorganizer.metadata import (
     extract_folder_metadata, MetadataExtractor,
     _load_envato_api_key, _save_envato_api_key,
@@ -1502,7 +1502,30 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             batch = stack[idx]
             ops = batch.get('ops', [])
             self._log(f"Undoing batch [{batch.get('timestamp', '?')[:19]}] ({len(ops)} ops)...")
+            remaining_ops = []
+            batch_failed = False
             for op in reversed(ops):
+                merge_manifest = op.get('merge_manifest')
+                if merge_manifest is not None:
+                    try:
+                        restored, merge_errors = restore_merge_manifest(
+                            merge_manifest,
+                            op.get('source_root', ''),
+                            op.get('dest_root', ''),
+                            log_cb=self._log,
+                        )
+                        ok += restored
+                        err += merge_errors
+                        if merge_errors:
+                            batch_failed = True
+                            remaining_ops.append(op)
+                    except Exception as e:
+                        err += 1
+                        batch_failed = True
+                        remaining_ops.append(op)
+                        self._log(f"  Merge undo error: {e}")
+                    continue
+
                 src = op.get('src', '')
                 dst = op.get('dst', '')
                 try:
@@ -1525,9 +1548,15 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                         self._log(f"  Skipped (not found): {src}")
                 except Exception as e:
                     err += 1
+                    batch_failed = True
+                    remaining_ops.append(op)
                     self._log(f"  Error: {e}")
-            # Remove processed batch from stack
-            stack.pop(idx)
+            if batch_failed:
+                batch['ops'] = list(reversed(remaining_ops))
+                self._log("  Batch retained because one or more operations need attention")
+            else:
+                # Remove processed batch from stack
+                stack.pop(idx)
 
         if stack:
             _save_undo_stack(stack)
