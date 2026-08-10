@@ -217,6 +217,10 @@ Python process tree.
   a visual nested IF/AND/OR/THEN editor. Matching skip, move, and rename actions
   are translated into the same editable, boundary-validated move plan used by
   normal organization, so preview, journaling, and undo remain intact.
+- **Plan-first desktop apply** — Preview and all three legacy desktop apply
+  modes open the same preflight operation table. Every rename or move can be
+  toggled independently, and the enabled state is saved as an editable JSON
+  plan before any filesystem operation starts.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write
@@ -249,9 +253,9 @@ python -m fileorganizer.watch_mode --source design --start --duration 60
 # Inspect the per-user background Watch task configured by the shell
 python watch_task_run.py --status
 
-# Plan-first apply
-python organize_run.py --source design --preview --plan-out plan.json
-python organize_run.py --apply-plan plan.json
+# Plan-first apply (older --preview/--plan-out/--apply-plan aliases remain valid)
+python organize_run.py --source design --dry-run --plan-file plan.json
+python organize_run.py --plan-file plan.json --commit
 python organize_run.py --report <RUN_ID> --output report.md
 
 # Inspect, export, or replay privacy-redacted AI evaluation records
@@ -362,6 +366,7 @@ fileorganizer/
 ├── duplicates.py             ← progressive hash + perceptual image hash
 ├── photos.py                 ← EXIF / faces / events / map markers
 ├── files.py                  ← PC file organizer
+├── dry_run_planner.py        ← shared GUI operation plan + atomic JSON codec
 ├── rule_chains.py            ← validated nested automation planning rules
 ├── workers.py                ← QThread workers (legacy GUI)
 ├── main_window.py            ← legacy PyQt6 main window

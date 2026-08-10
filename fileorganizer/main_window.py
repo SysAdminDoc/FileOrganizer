@@ -57,7 +57,7 @@ from fileorganizer.workers import (
     safe_merge_move, format_size
 )
 from fileorganizer.dialogs import (
-    CustomCategoriesDialog, TeachCategoryDialog, DestTreeDialog, OllamaSettingsDialog,
+    CustomCategoriesDialog, TeachCategoryDialog, OllamaSettingsDialog,
     PhotoSettingsDialog, FaceManagerDialog, ModelManagerDialog,
     AIProviderSettingsDialog, DesignWorkflowSettingsDialog,
     TemplateBuilderWidget, PCCategoryEditorDialog, _FileBrowserDialog,
@@ -1482,16 +1482,21 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
     def _show_preview(self):
         op = self.cmb_op.currentIndex()
         if op == self.OP_FILES:
-            self._apply_files(dry_run=True)
+            items = self.file_items
+        elif op == self.OP_AEP:
+            items = self.aep_items
+        elif op in (self.OP_CAT, self.OP_SMART):
+            items = self.cat_items
+        else:
             return
-        if op == self.OP_AEP:
-            self._apply_aep(dry_run=True)
+        work = [
+            (index, item) for index, item in enumerate(items)
+            if item.selected and item.status == "Pending"
+        ]
+        if not work:
+            self._log("No items selected")
             return
-        if op not in (self.OP_CAT, self.OP_SMART): return
-        dst = self.txt_dst.text()
-        if not dst: return
-        dlg = DestTreeDialog(self.cat_items, dst, self)
-        dlg.exec()
+        self._review_operation_plan(work, preview_only=True)
 
     # ═══ UNDO ════════════════════════════════════════════════════════════════
     def _on_undo(self):

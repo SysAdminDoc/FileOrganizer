@@ -17,13 +17,15 @@ import json
 import os
 import shutil
 import tempfile
-from pathlib import Path
 from datetime import datetime, timezone
 from typing import List, Dict, Optional, Callable
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass, field
 import logging
 
+from fileorganizer.config import _APP_DATA_DIR
+
 logger = logging.getLogger(__name__)
+DEFAULT_PLAN_DIR = os.path.join(_APP_DATA_DIR, 'plans')
 
 
 # ── Plan Data Structures ──────────────────────────────────────────────────
@@ -55,11 +57,9 @@ class DryRunPlan:
     timestamp: str = ""
     source: str = ""
     dest_root: str = ""
-    operations: List[FileOperation] = None
+    operations: List[FileOperation] = field(default_factory=list)
 
     def __post_init__(self):
-        if self.operations is None:
-            self.operations = []
         if not self.timestamp:
             self.timestamp = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
 
@@ -101,17 +101,112 @@ class DryRunPlan:
 
 
 # ── Plan I/O ──────────────────────────────────────────────────────────────
+def default_plan_path() -> str:
+    """Return a collision-resistant path for a GUI-generated plan."""
+    stamp = datetime.now().strftime('%Y%m%d-%H%M%S-%f')
+    return os.path.join(DEFAULT_PLAN_DIR, f'preflight-{stamp}.json')
+
+
 def save_plan(plan: DryRunPlan, plan_file: str):
-    """Save plan to JSON file."""
-    os.makedirs(os.path.dirname(plan_file) or '.', exist_ok=True)
-    with open(plan_file, 'w') as f:
-        json.dump(plan.to_dict(), f, indent=2)
+    """Atomically save a plan to UTF-8 JSON."""
+    directory = os.path.dirname(os.path.abspath(plan_file)) or '.'
+    os.makedirs(directory, exist_ok=True)
+    fd, temporary = tempfile.mkstemp(prefix='.plan-', suffix='.tmp', dir=directory)
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as handle:
+            json.dump(plan.to_dict(), handle, indent=2, ensure_ascii=False)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, plan_file)
+    except Exception:
+        try:
+            os.unlink(temporary)
+        except OSError:
+            pass
+        raise
     logger.info(f'Plan saved to {plan_file} ({len(plan.operations)} operations)')
+
+
+def plan_from_items(items) -> DryRunPlan:
+    """Translate GUI rename/categorize/file models into one reviewable plan."""
+    operations = []
+    source_roots = []
+    destination_roots = []
+    for index, item in enumerate(items, start=1):
+        old_name: Optional[str]
+        new_name: Optional[str]
+        if hasattr(item, 'full_current_path'):
+            operation_type = 'rename'
+            source_path = str(getattr(item, 'full_current_path', '') or '')
+            dest_path = str(getattr(item, 'full_new_path', '') or '')
+            old_name = str(getattr(item, 'current_name', '') or '')
+            new_name = str(getattr(item, 'new_name', '') or '')
+            reason = 'Proposed folder rename'
+        elif hasattr(item, 'full_source_path'):
+            operation_type = 'move'
+            source_path = str(getattr(item, 'full_source_path', '') or '')
+            dest_path = str(getattr(item, 'full_dest_path', '') or '')
+            old_name = new_name = None
+            reason = str(
+                getattr(item, 'detail', '')
+                or getattr(item, 'method', '')
+                or 'Category assignment'
+            )
+        else:
+            operation_type = 'move'
+            source_path = str(getattr(item, 'full_src', '') or '')
+            dest_path = str(getattr(item, 'full_dst', '') or '')
+            old_name = new_name = None
+            reason = str(
+                getattr(item, 'detail', '')
+                or getattr(item, 'method', '')
+                or 'File classification'
+            )
+
+        source_root = str(getattr(item, 'source_root', '') or '')
+        dest_root = str(getattr(item, 'dest_root', '') or '')
+        if source_root:
+            source_roots.append(source_root)
+        elif source_path:
+            source_roots.append(os.path.dirname(source_path))
+        if dest_root:
+            destination_roots.append(dest_root)
+        elif dest_path:
+            destination_roots.append(os.path.dirname(dest_path))
+
+        operations.append(FileOperation(
+            id=f'gui-{index:06d}',
+            type=operation_type,
+            source_path=source_path,
+            dest_path=dest_path,
+            old_name=old_name,
+            new_name=new_name,
+            category=str(getattr(item, 'category', '') or '') or None,
+            confidence=getattr(item, 'confidence', None),
+            reason=reason,
+            enabled=bool(getattr(item, 'selected', True)),
+        ))
+
+    return DryRunPlan(
+        source=_common_root(source_roots),
+        dest_root=_common_root(destination_roots),
+        operations=operations,
+    )
+
+
+def _common_root(paths) -> str:
+    values = [os.path.abspath(path) for path in paths if path]
+    if not values:
+        return ''
+    try:
+        return os.path.commonpath(values)
+    except ValueError:
+        return values[0]
 
 
 def load_plan(plan_file: str) -> DryRunPlan:
     """Load plan from JSON file."""
-    with open(plan_file, 'r') as f:
+    with open(plan_file, 'r', encoding='utf-8') as f:
         data = json.load(f)
 
     plan = DryRunPlan(
@@ -160,8 +255,10 @@ def validate_plan(plan: DryRunPlan) -> tuple[bool, List[str]]:
             errors.append(f'Operation {op.id}: invalid type {op.type}')
         if not op.source_path:
             errors.append(f'Operation {op.id}: missing source_path')
-        if op.type in ['move', 'rename'] and not op.dest_path:
-            errors.append(f'Operation {op.id}: {op.type} missing dest_path')
+        if op.type == 'move' and not op.dest_path:
+            errors.append(f'Operation {op.id}: move missing dest_path')
+        if op.type == 'rename' and not op.dest_path and not op.new_name:
+            errors.append(f'Operation {op.id}: rename missing destination name')
 
     return len(errors) == 0, errors
 
@@ -172,9 +269,9 @@ class PlanExecutor:
 
     def __init__(self, plan: DryRunPlan):
         self.plan = plan
-        self.executed_ops = []
-        self.failed_op = None
-        self.temp_dir = None
+        self.executed_ops: List[FileOperation] = []
+        self.failed_op: Optional[FileOperation] = None
+        self.temp_dir: Optional[str] = None
 
     def execute(self, on_progress: Optional[Callable] = None) -> tuple[bool, str]:
         """
@@ -188,6 +285,10 @@ class PlanExecutor:
             (success, summary_message)
         """
         enabled_ops = [op for op in self.plan.operations if op.enabled]
+
+        is_valid, errors = validate_plan(self.plan)
+        if not is_valid:
+            return False, 'Plan validation failed: ' + '; '.join(errors)
 
         if not enabled_ops:
             return True, 'No operations to execute'
@@ -239,10 +340,12 @@ class PlanExecutor:
     def _execute_move(self, op: FileOperation):
         """Move file from source_path to dest_path."""
         dest_path = op.dest_path
+        if not dest_path:
+            raise ValueError(f'Move {op.id} has no destination path')
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
 
         # Save to temp for rollback
-        temp_backup = os.path.join(self.temp_dir, op.id)
+        temp_backup = self._backup_path(op)
         shutil.copy2(op.source_path, temp_backup)
 
         shutil.move(op.source_path, dest_path)
@@ -251,10 +354,12 @@ class PlanExecutor:
     def _execute_rename(self, op: FileOperation):
         """Rename file (in-place)."""
         old_path = op.source_path
+        if not op.new_name:
+            raise ValueError(f'Rename {op.id} has no new name')
         new_path = os.path.join(os.path.dirname(old_path), op.new_name)
 
         # Save to temp for rollback
-        temp_backup = os.path.join(self.temp_dir, op.id)
+        temp_backup = self._backup_path(op)
         shutil.copy2(old_path, temp_backup)
 
         os.rename(old_path, new_path)
@@ -272,7 +377,7 @@ class PlanExecutor:
         # Keep a rollback copy before asking the platform trash provider to
         # remove the source.  There is deliberately no permanent-delete
         # fallback when the optional provider is unavailable or fails.
-        temp_backup = os.path.join(self.temp_dir, op.id)
+        temp_backup = self._backup_path(op)
         shutil.copy2(op.source_path, temp_backup)
         try:
             send2trash.send2trash(op.source_path)
@@ -295,6 +400,11 @@ class PlanExecutor:
 
         logger.info(f'Deleted {op.source_path} to the Recycle Bin')
 
+    def _backup_path(self, op: FileOperation) -> str:
+        if not self.temp_dir:
+            raise RuntimeError('Rollback storage is unavailable')
+        return os.path.join(self.temp_dir, op.id)
+
     def _rollback_all(self):
         """Rollback all executed operations."""
         if not self.temp_dir or not os.path.exists(self.temp_dir):
@@ -305,7 +415,7 @@ class PlanExecutor:
 
         for op in reversed(self.executed_ops):  # Reverse order
             try:
-                temp_backup = os.path.join(self.temp_dir, op.id)
+                temp_backup = self._backup_path(op)
                 if not os.path.exists(temp_backup):
                     logger.warning(f'Rollback {op.id}: backup file missing')
                     continue

@@ -4,6 +4,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -41,6 +42,40 @@ class OrganizeRunPlanTests(unittest.TestCase):
         runner.LOG_FILE = str(root / "run.log")
         runner.get_dest_root = lambda: str(dest_root)
         return src_root, dest_root
+
+    def test_cli_dry_run_and_commit_plan_aliases(self):
+        parser = runner.build_argument_parser()
+
+        preview = parser.parse_args(["--dry-run", "--plan-file", "review.json"])
+        commit = parser.parse_args(["--plan-file", "review.json", "--commit"])
+
+        self.assertTrue(preview.preview)
+        self.assertFalse(preview.apply)
+        self.assertEqual(preview.plan_file, "review.json")
+        self.assertTrue(commit.apply)
+        self.assertEqual(commit.plan_file, "review.json")
+
+    def test_cli_commit_plan_alias_applies_persisted_plan(self):
+        result = {
+            "plan_id": "saved-plan",
+            "run_id": "saved-plan-run",
+            "moved": 1,
+            "skipped": 0,
+            "errors": 0,
+        }
+        with patch.object(sys, "argv", [
+            "organize_run.py", "--plan-file", "review.json", "--commit", "--quiet",
+        ]), patch.object(
+            runner, "read_move_plan", return_value={"plan_id": "saved-plan"}
+        ) as read_plan, patch.object(
+            runner, "apply_move_plan", return_value=result
+        ) as apply_plan:
+            runner.main()
+
+        read_plan.assert_called_once_with("review.json")
+        apply_plan.assert_called_once_with(
+            {"plan_id": "saved-plan"}, dry_run=False, verbose=False,
+        )
 
     def test_build_move_plan_routes_low_confidence_to_review(self):
         with tempfile.TemporaryDirectory() as tmp:

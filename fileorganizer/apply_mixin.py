@@ -26,11 +26,34 @@ class ApplyMixin:
         else:
             self._apply_aep()
 
+    def _review_operation_plan(self, work, preview_only=False):
+        """Run preflight, persist the exact plan, and honor row toggles."""
+        from fileorganizer.dialogs.tools import PreflightDialog
+
+        dialog = PreflightDialog(
+            [item for _, item in work], parent=self, preview_only=preview_only,
+        )
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            if not preview_only:
+                getattr(self, '_log')("Apply cancelled at pre-flight check.")
+            return None
+        if dialog.plan_file:
+            getattr(self, '_log')(f"Editable operation plan saved: {dialog.plan_file}")
+        enabled = set(dialog.enabled_indices())
+        return [entry for index, entry in enumerate(work) if index in enabled]
+
     # ═══ AEP APPLY ═══════════════════════════════════════════════════════════
 
     def _apply_aep(self, dry_run=False):
         work = [(i,it) for i,it in enumerate(self.aep_items) if it.selected and it.status=="Pending"]
         if not work: self._log("No items selected"); return
+        if not dry_run:
+            work = self._review_operation_plan(work)
+            if work is None:
+                return
+            if not work:
+                self._log("No operations enabled in the saved plan.")
+                return
         if not dry_run:
             snap = create_backup_snapshot(self.txt_src.text(), [it for _,it in work])
             if snap: self._log(f"Backup snapshot saved: {snap}")
@@ -108,11 +131,11 @@ class ApplyMixin:
             # Discard: clear all pending records and continue normally
             clear_all()
 
-        # ── Pre-flight check ─────────────────────────────────────────────────
-        from fileorganizer.dialogs.tools import PreflightDialog
-        dlg = PreflightDialog([it for _, it in work], parent=self)
-        if dlg.exec() != QDialog.DialogCode.Accepted:
-            self._log("Apply cancelled at pre-flight check.")
+        work = self._review_operation_plan(work)
+        if work is None:
+            return
+        if not work:
+            self._log("No operations enabled in the saved plan.")
             return
 
         snap = create_backup_snapshot(self.txt_src.text(), [it for _,it in work])
@@ -200,6 +223,13 @@ class ApplyMixin:
                 if it.selected and it.status == "Pending"]
         if not work:
             self._log("No items selected"); return
+        if not dry_run:
+            work = self._review_operation_plan(work)
+            if work is None:
+                return
+            if not work:
+                self._log("No operations enabled in the saved plan.")
+                return
         label = "Dry Run" if dry_run else "Moving"
         self.btn_apply.setEnabled(False); self.cmb_op.setEnabled(False)
         self._set_scan_state(True)
