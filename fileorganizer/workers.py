@@ -64,45 +64,140 @@ from fileorganizer.plugins import PluginManager
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
 
 # ── Safe merge (standalone for use in workers) ─────────────────────────────────
-def safe_merge_move(src, dst, log_cb=None, check_hashes=False):
-    """Move src into dst, merging contents. Only overwrites duplicate files.
-    Preserves all unique files in both src and dst. Never deletes data.
-    If check_hashes=True, skips identical files instead of overwriting."""
+def _collision_destination(path):
+    """Return the first available sibling path that preserves ``path``."""
+    base, ext = os.path.splitext(path)
+    number = 2
+    candidate = f"{base} ({number}){ext}"
+    while os.path.lexists(candidate):
+        number += 1
+        candidate = f"{base} ({number}){ext}"
+    return candidate
+
+
+def safe_merge_move(src, dst, log_cb=None, check_hashes=False, manifest=None):
+    """Move a directory into an existing destination without deleting files.
+
+    Differing destination files are preserved by suffixing the incoming file.
+    When ``check_hashes`` is enabled, identical files are deduplicated by
+    removing only the source copy.  ``manifest`` receives enough per-file and
+    per-directory information for a guarded, selective undo.
+    """
     validate_path(src)
     validate_path(dst, require_exists=False)
-    merged = 0; skipped = 0
+    if manifest is None:
+        manifest = []
+    elif not isinstance(manifest, list):
+        raise TypeError("merge manifest must be a list")
+
+    merged = 0
+    skipped = 0
     for dirpath, dirnames, filenames in os.walk(src):
         dirnames[:] = [name for name in dirnames
                        if not os.path.islink(os.path.join(dirpath, name))]
+        manifest.append({'action': 'directory', 'src': dirpath})
         rel = os.path.relpath(dirpath, src)
         dest_dir = os.path.join(dst, rel) if rel != '.' else dst
         os.makedirs(dest_dir, exist_ok=True)
         for fname in filenames:
             src_file = os.path.join(dirpath, fname)
-            dst_file = os.path.join(dest_dir, fname)
+            requested_dst = os.path.join(dest_dir, fname)
             validate_path(src_file, root=src)
-            validate_path(dst_file, root=dst, require_exists=False)
-            if os.path.exists(dst_file):
+            validate_path(requested_dst, root=dst, require_exists=False)
+            actual_dst = requested_dst
+            if os.path.lexists(requested_dst):
                 if check_hashes:
                     src_hash = hash_file(src_file)
-                    dst_hash = hash_file(dst_file)
+                    dst_hash = hash_file(requested_dst)
                     if src_hash and dst_hash and src_hash == dst_hash:
+                        destination_signature = source_signature(requested_dst)
+                        manifest.append({
+                            'action': 'deduplicated',
+                            'src': src_file,
+                            'dst': requested_dst,
+                            'destination_signature': destination_signature,
+                        })
                         if log_cb:
                             log_cb(f"    Skipped (identical): {os.path.relpath(src_file, src)}")
                         skipped += 1
-                        os.remove(src_file)  # Remove source since dest is identical
+                        os.remove(src_file)
                         continue
-                os.remove(dst_file)
+                actual_dst = _collision_destination(requested_dst)
                 merged += 1
+                if log_cb:
+                    log_cb(
+                        f"    Collision preserved: {os.path.relpath(src_file, src)}"
+                        f" -> {os.path.basename(actual_dst)}"
+                    )
             if log_cb:
                 log_cb(f"    Moving: {os.path.relpath(src_file, src)}")
-            shutil.move(src_file, dst_file)
+            shutil.move(src_file, actual_dst)
+            manifest.append({
+                'action': 'move',
+                'src': src_file,
+                'dst': actual_dst,
+                'destination_signature': source_signature(actual_dst),
+            })
     for dirpath, dirnames, filenames in os.walk(src, topdown=False):
         try:
             os.rmdir(dirpath)
         except OSError:
             pass
     return merged, skipped
+
+
+def restore_merge_manifest(manifest, source_root, dest_root, log_cb=None):
+    """Undo a merge one guarded entry at a time.
+
+    The manifest is mutated to retain only entries that could not be restored,
+    allowing a later undo attempt to retry only the unresolved work. Existing
+    destination files are never overwritten or removed.
+    """
+    if not isinstance(manifest, list) or not source_root or not dest_root:
+        raise ValueError("merge undo requires a manifest and path boundaries")
+
+    restored = 0
+    errors = 0
+    remaining = []
+    for entry in reversed(manifest):
+        try:
+            if not isinstance(entry, dict):
+                raise ValueError("merge manifest entry is not an object")
+            action = entry.get('action')
+            original = entry.get('src', '')
+            if action == 'directory':
+                validate_path(original, root=source_root, require_exists=False)
+                os.makedirs(original, exist_ok=True)
+                restored += 1
+                continue
+
+            current = entry.get('dst', '')
+            if not original or not current:
+                raise ValueError("merge manifest entry has no source/destination")
+            validate_source_signature(current, entry.get('destination_signature', {}))
+            validate_move(
+                current,
+                original,
+                source_root=dest_root,
+                dest_root=source_root,
+            )
+            os.makedirs(os.path.dirname(original), exist_ok=True)
+            if action == 'move':
+                shutil.move(current, original)
+            elif action == 'deduplicated':
+                shutil.copy2(current, original)
+            else:
+                raise ValueError(f"unknown merge manifest action: {action!r}")
+            restored += 1
+            if log_cb:
+                log_cb(f"  Restored merged file: {os.path.basename(original)}")
+        except Exception as exc:
+            errors += 1
+            remaining.append(entry)
+            if log_cb:
+                log_cb(f"  Merge undo error: {exc}")
+    manifest[:] = list(reversed(remaining))
+    return restored, errors
 
 
 
@@ -1089,6 +1184,7 @@ class ApplyAepWorker(QThread):
                 self.item_done.emit(ri, "Protected"); continue
             label = "[DRY RUN] " if self.dry_run else ""
             self.log.emit(f"  {label}[{idx+1}/{total}] {it.current_name}  ->  {it.new_name}")
+            merge_manifest = []
             try:
                 if not self.dry_run:
                     validate_move(
@@ -1096,26 +1192,43 @@ class ApplyAepWorker(QThread):
                         it.full_new_path,
                         source_root=os.path.dirname(it.full_current_path),
                         dest_root=os.path.dirname(it.full_current_path),
+                        allow_existing_dest=os.path.exists(it.full_new_path),
                     )
                     d = it.full_new_path
                     if os.path.exists(d):
-                        merged, skipped = safe_merge_move(it.full_current_path, d,
-                            log_cb=self.log.emit, check_hashes=self.check_hashes)
-                        self.log.emit(f"  Merged ({merged} replaced, {skipped} identical skipped)")
+                        merged, skipped = safe_merge_move(
+                            it.full_current_path, d,
+                            log_cb=self.log.emit, check_hashes=self.check_hashes,
+                            manifest=merge_manifest,
+                        )
+                        self.log.emit(
+                            f"  Merged ({merged} collisions preserved, "
+                            f"{skipped} identical skipped)"
+                        )
                     else:
                         os.rename(it.full_current_path, d)
                 ok += 1
-                undo_ops.append({'type': 'rename', 'src': it.full_new_path, 'dst': it.full_current_path,
+                undo_op = {'type': 'rename', 'src': it.full_new_path, 'dst': it.full_current_path,
                     'timestamp': ts, 'category': '', 'confidence': '', 'status': 'Done',
                     'source_root': os.path.dirname(it.full_current_path),
-                    'dest_root': os.path.dirname(it.full_current_path)})
+                    'dest_root': os.path.dirname(it.full_current_path)}
+                if merge_manifest:
+                    undo_op['merge_manifest'] = merge_manifest
+                undo_ops.append(undo_op)
                 self.log.emit(f"  \u2705 Done")
                 self.item_done.emit(ri, "Done")
             except Exception as e:
                 err += 1
                 self.log.emit(f"  \u274C Error: {e}")
                 # Attempt atomic rollback
-                if not self.dry_run and os.path.exists(it.full_new_path) and not os.path.exists(it.full_current_path):
+                if not self.dry_run and merge_manifest:
+                    restore_merge_manifest(
+                        merge_manifest,
+                        os.path.dirname(it.full_current_path),
+                        os.path.dirname(it.full_new_path),
+                        log_cb=self.log.emit,
+                    )
+                elif not self.dry_run and os.path.exists(it.full_new_path) and not os.path.exists(it.full_current_path):
                     try:
                         os.rename(it.full_new_path, it.full_current_path)
                         self.log.emit(f"  Rolled back to original location")
@@ -1166,6 +1279,7 @@ class ApplyCatWorker(QThread):
                 continue
             label = "[DRY RUN] " if self.dry_run else ""
             self.log.emit(f"  {label}[{idx+1}/{total}] {it.folder_name}  ->  {it.category}/")
+            merge_manifest = []
             try:
                 if not self.dry_run:
                     d = it.full_dest_path
@@ -1178,9 +1292,15 @@ class ApplyCatWorker(QThread):
                     )
                     os.makedirs(os.path.dirname(d), exist_ok=True)
                     if os.path.exists(d):
-                        merged, skipped = safe_merge_move(it.full_source_path, d,
-                            log_cb=self.log.emit, check_hashes=self.check_hashes)
-                        self.log.emit(f"  Merged ({merged} replaced, {skipped} identical skipped)")
+                        merged, skipped = safe_merge_move(
+                            it.full_source_path, d,
+                            log_cb=self.log.emit, check_hashes=self.check_hashes,
+                            manifest=merge_manifest,
+                        )
+                        self.log.emit(
+                            f"  Merged ({merged} collisions preserved, "
+                            f"{skipped} identical skipped)"
+                        )
                     else:
                         shutil.move(it.full_source_path, d)
                 ok += 1
@@ -1190,13 +1310,15 @@ class ApplyCatWorker(QThread):
                         destination_signature = source_signature(it.full_dest_path)
                     except OSError:
                         destination_signature = {}
-                undo_ops.append({'type': 'move', 'src': it.full_dest_path, 'dst': it.full_source_path,
+                undo_op = {'type': 'move', 'src': it.full_dest_path, 'dst': it.full_source_path,
                     'timestamp': ts, 'category': it.category, 'confidence': f'{it.confidence:.0f}',
                     'status': 'Done',
                     'source_root': getattr(it, 'source_root', '') or os.path.dirname(it.full_source_path),
                     'dest_root': getattr(it, 'dest_root', ''),
-                    'destination_signature': destination_signature,
-                })
+                    'destination_signature': destination_signature}
+                if merge_manifest:
+                    undo_op['merge_manifest'] = merge_manifest
+                undo_ops.append(undo_op)
                 self.log.emit(f"  \u2705 Done")
                 self.item_done.emit(ri, "Done")
                 if not self.dry_run:
@@ -1210,7 +1332,14 @@ class ApplyCatWorker(QThread):
                 self.log.emit(f"  \u274C Error: {e}")
                 if not self.dry_run:
                     mark_done(run_id, ri, 'error')
-                    if os.path.exists(it.full_dest_path) and not os.path.exists(it.full_source_path):
+                    if merge_manifest:
+                        restore_merge_manifest(
+                            merge_manifest,
+                            getattr(it, 'source_root', '') or os.path.dirname(it.full_source_path),
+                            getattr(it, 'dest_root', ''),
+                            log_cb=self.log.emit,
+                        )
+                    elif os.path.exists(it.full_dest_path) and not os.path.exists(it.full_source_path):
                         try:
                             shutil.move(it.full_dest_path, it.full_source_path)
                             self.log.emit(f"  Rolled back to original location")
@@ -1267,6 +1396,7 @@ class ResumeApplyWorker(QThread):
             name = mv['folder_name']
             source_root = mv.get('source_root', '')
             dest_root = mv.get('dest_root', '')
+            merge_manifest = []
             self.log.emit(f"  [{idx+1}/{total}] Resume: {name}  ->  {mv['category']}/")
             try:
                 if not os.path.exists(src):
@@ -1296,9 +1426,15 @@ class ResumeApplyWorker(QThread):
                 )
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
                 if os.path.exists(dst):
-                    merged, skipped = safe_merge_move(src, dst,
-                        log_cb=self.log.emit, check_hashes=self._check_hashes)
-                    self.log.emit(f"  Merged ({merged} replaced, {skipped} identical skipped)")
+                    merged, skipped = safe_merge_move(
+                        src, dst,
+                        log_cb=self.log.emit, check_hashes=self._check_hashes,
+                        manifest=merge_manifest,
+                    )
+                    self.log.emit(
+                        f"  Merged ({merged} collisions preserved, "
+                        f"{skipped} identical skipped)"
+                    )
                 else:
                     shutil.move(src, dst)
                 mark_done(self._run_id, mv['ri'], 'done')
@@ -1308,6 +1444,10 @@ class ResumeApplyWorker(QThread):
                 err += 1
                 mark_done(self._run_id, mv['ri'], 'error')
                 self.log.emit(f"  \u274C Error: {e}")
+                if merge_manifest:
+                    restore_merge_manifest(
+                        merge_manifest, source_root, dest_root, log_cb=self.log.emit
+                    )
 
         if not self._cancelled:
             clear_run(self._run_id)
@@ -1676,6 +1816,7 @@ class ApplyFilesWorker(QThread):
             label = "[DRY RUN] " if self.dry_run else ""
             rename_info = f"  (→ {it.display_name})" if it.display_name != it.name else ""
             self.log.emit(f"  {label}[{seq+1}/{total}] {it.name}{rename_info}  →  {it.category}/")
+            merge_manifest = []
             try:
                 if not self.dry_run:
                     dst = it.full_dst
@@ -1691,9 +1832,15 @@ class ApplyFilesWorker(QThread):
                     os.makedirs(os.path.dirname(dst), exist_ok=True)
                     if os.path.exists(dst):
                         if it.is_folder:
-                            merged, skipped = safe_merge_move(it.full_src, dst,
-                                log_cb=self.log.emit, check_hashes=self.check_hashes)
-                            self.log.emit(f"    Merged ({merged} replaced, {skipped} skipped)")
+                            merged, skipped = safe_merge_move(
+                                it.full_src, dst,
+                                log_cb=self.log.emit, check_hashes=self.check_hashes,
+                                manifest=merge_manifest,
+                            )
+                            self.log.emit(
+                                f"    Merged ({merged} collisions preserved, "
+                                f"{skipped} skipped)"
+                            )
                         else:
                             # File collision — keep both by suffixing
                             base, ext2 = os.path.splitext(dst)
@@ -1710,11 +1857,14 @@ class ApplyFilesWorker(QThread):
                     else:
                         shutil.move(it.full_src, dst)
                 ok += 1
-                undo_ops.append({'type': 'move', 'src': dst if not self.dry_run else it.full_dst, 'dst': it.full_src,
+                undo_op = {'type': 'move', 'src': dst if not self.dry_run else it.full_dst, 'dst': it.full_src,
                     'timestamp': ts, 'category': it.category,
                     'confidence': str(it.confidence), 'status': 'Done',
                     'source_root': getattr(it, 'source_root', '') or os.path.dirname(it.full_src),
-                    'dest_root': getattr(it, 'dest_root', '')})
+                    'dest_root': getattr(it, 'dest_root', '')}
+                if merge_manifest:
+                    undo_op['merge_manifest'] = merge_manifest
+                undo_ops.append(undo_op)
                 self.log.emit(f"    ✅ Done")
                 self.item_done.emit(li, "Done")
                 # Plugin post-move hooks
@@ -1725,6 +1875,13 @@ class ApplyFilesWorker(QThread):
             except Exception as e:
                 err += 1
                 self.log.emit(f"    ❌ Error: {e}")
+                if not self.dry_run and merge_manifest:
+                    restore_merge_manifest(
+                        merge_manifest,
+                        getattr(it, 'source_root', '') or os.path.dirname(it.full_src),
+                        getattr(it, 'dest_root', ''),
+                        log_cb=self.log.emit,
+                    )
                 self.item_done.emit(li, "Error")
         self.finished.emit(ok, err, undo_ops)
 

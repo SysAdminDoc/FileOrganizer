@@ -33,6 +33,8 @@ All notable changes to FileOrganizer will be documented in this file.
   controlled, and batch result files are written atomically.
 - LLM cache connections now create or migrate their schema, indexes, and version
   marker transactionally at the canonical database path on first use.
+- Directory merges now preserve differing destination files with collision
+  suffixes and record guarded per-file manifests for selective undo.
 - Ollama batch classification now passes the configured endpoint and model
   explicitly, and optional face-recognition failures no longer terminate GUI
   startup.
