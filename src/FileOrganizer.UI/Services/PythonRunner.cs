@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using Microsoft.UI.Dispatching;
 
 namespace FileOrganizer.UI.Services;
 
@@ -207,6 +208,42 @@ public sealed class PythonRunner : IPythonRunner
 
         using var process = new Process { StartInfo = psi };
         var stderr = new StringBuilder();
+        var dispatcher = DispatcherQueue.GetForCurrentThread();
+
+        async Task DispatchEventAsync(string eventName, JsonElement payload)
+        {
+            if (dispatcher is null)
+            {
+                onEvent(eventName, payload);
+                return;
+            }
+
+            var completion = new TaskCompletionSource<bool>(
+                TaskCreationOptions.RunContinuationsAsynchronously);
+            if (!dispatcher.TryEnqueue(() =>
+            {
+                if (ct.IsCancellationRequested)
+                {
+                    completion.TrySetCanceled(ct);
+                    return;
+                }
+
+                try
+                {
+                    onEvent(eventName, payload);
+                    completion.TrySetResult(true);
+                }
+                catch (Exception ex)
+                {
+                    completion.TrySetException(ex);
+                }
+            }))
+            {
+                throw new InvalidOperationException("The WinUI dispatcher is unavailable.");
+            }
+
+            await completion.Task.WaitAsync(ct).ConfigureAwait(false);
+        }
 
         try
         {
@@ -234,7 +271,7 @@ public sealed class PythonRunner : IPythonRunner
                     var evName = root.TryGetProperty("event", out var ev) && ev.ValueKind == JsonValueKind.String
                         ? ev.GetString() ?? "log"
                         : "log";
-                    onEvent(evName, root.Clone());
+                    await DispatchEventAsync(evName, root.Clone()).ConfigureAwait(false);
                 }
                 catch (JsonException)
                 {
@@ -242,7 +279,7 @@ public sealed class PythonRunner : IPythonRunner
                     // UI can still display it without crashing.
                     using var doc = JsonDocument.Parse(
                         $"{{\"event\":\"log\",\"level\":\"debug\",\"message\":{JsonSerializer.Serialize(line)}}}");
-                    onEvent("log", doc.RootElement.Clone());
+                    await DispatchEventAsync("log", doc.RootElement.Clone()).ConfigureAwait(false);
                 }
             }
         }, ct);
