@@ -79,6 +79,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Retry cleanup now removes only unchanged, identity-recorded partial files or
   directories whose contents match the live source; reparse points, stale
   output, legacy records, and unrelated occupied destinations fail closed.
+- Duplicate move actions now use a shared no-overwrite executor, suffix
+  different-content collisions, preserve identical sources, report per-file
+  outcomes, and retain source-bound journal records for guarded undo.
 
 ## [v8.5.19] - 2026-07-01
 

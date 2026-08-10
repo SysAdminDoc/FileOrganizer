@@ -66,6 +66,27 @@ def _init():
                     ts_done      TEXT
                 )
             """)
+            con.execute("""
+                CREATE TABLE IF NOT EXISTS action_moves (
+                    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+                    action_id    TEXT    NOT NULL,
+                    source       TEXT    NOT NULL,
+                    destination  TEXT    NOT NULL,
+                    source_root  TEXT    NOT NULL,
+                    dest_root    TEXT    NOT NULL,
+                    source_signature TEXT NOT NULL DEFAULT '{}',
+                    destination_signature TEXT NOT NULL DEFAULT '{}',
+                    status       TEXT    NOT NULL DEFAULT 'pending',
+                    error        TEXT    NOT NULL DEFAULT '',
+                    ts_planned   TEXT    NOT NULL,
+                    ts_done      TEXT,
+                    ts_undone    TEXT
+                )
+            """)
+            con.execute(
+                "CREATE INDEX IF NOT EXISTS idx_action_moves_action "
+                "ON action_moves(action_id, id)"
+            )
             existing = {row[1] for row in con.execute("PRAGMA table_info(moves)").fetchall()}
             for column, definition in {
                 'source_root': "ALTER TABLE moves ADD COLUMN source_root TEXT NOT NULL DEFAULT ''",
@@ -219,6 +240,124 @@ def get_pending_moves(run_id: str) -> list:
         con.close()
 
 
+def plan_action_move(
+    action_id: str,
+    source: str,
+    destination: str,
+    source_root: str,
+    dest_root: str,
+    source_signature: dict,
+) -> int:
+    """Persist one standalone move before the filesystem is changed."""
+    con = _connect()
+    try:
+        cursor = con.execute(
+            """
+            INSERT INTO action_moves
+                (action_id, source, destination, source_root, dest_root,
+                 source_signature, status, ts_planned)
+            VALUES (?,?,?,?,?,?,'pending',?)
+            """,
+            (
+                action_id,
+                source,
+                destination,
+                source_root,
+                dest_root,
+                json.dumps(source_signature, sort_keys=True),
+                _now(),
+            ),
+        )
+        con.commit()
+        if cursor.lastrowid is None:
+            raise RuntimeError("action move journal did not return an id")
+        return int(cursor.lastrowid)
+    finally:
+        con.close()
+
+
+def finish_action_move(
+    move_id: int,
+    status: str,
+    *,
+    destination_signature: dict | None = None,
+    error: str = '',
+) -> None:
+    """Finalize a standalone move journal record."""
+    con = _connect()
+    try:
+        con.execute(
+            """
+            UPDATE action_moves
+            SET status=?, destination_signature=?, error=?, ts_done=?
+            WHERE id=?
+            """,
+            (
+                status,
+                json.dumps(destination_signature or {}, sort_keys=True),
+                error,
+                _now(),
+                move_id,
+            ),
+        )
+        con.commit()
+    finally:
+        con.close()
+
+
+def get_action_moves(action_id: str) -> list[dict]:
+    """Return standalone move records in original execution order."""
+    con = _connect()
+    try:
+        rows = con.execute(
+            """
+            SELECT id, action_id, source, destination, source_root, dest_root,
+                   source_signature, destination_signature, status, error
+            FROM action_moves WHERE action_id=? ORDER BY id
+            """,
+            (action_id,),
+        ).fetchall()
+        return [
+            {
+                'id': row[0],
+                'action_id': row[1],
+                'source': row[2],
+                'destination': row[3],
+                'source_root': row[4],
+                'dest_root': row[5],
+                'source_signature': json.loads(row[6] or '{}'),
+                'destination_signature': json.loads(row[7] or '{}'),
+                'status': row[8],
+                'error': row[9],
+            }
+            for row in rows
+        ]
+    finally:
+        con.close()
+
+
+def mark_action_undone(move_id: int, *, error: str = '') -> None:
+    """Mark a standalone move restored, or retain its undo error."""
+    con = _connect()
+    try:
+        if error:
+            con.execute(
+                "UPDATE action_moves SET error=? WHERE id=?",
+                (error, move_id),
+            )
+        else:
+            con.execute(
+                """
+                UPDATE action_moves
+                SET status='undone', error='', ts_undone=? WHERE id=?
+                """,
+                (_now(), move_id),
+            )
+        con.commit()
+    finally:
+        con.close()
+
+
 def cleanup_expired(days: int = _RETENTION_DAYS):
     """NEXT-37: Delete journal records older than retention period."""
     cutoff = datetime.now(timezone.utc) - timedelta(days=days)
@@ -228,6 +367,14 @@ def cleanup_expired(days: int = _RETENTION_DAYS):
         con.execute(
             "DELETE FROM moves WHERE status='done' AND ts_done < ?",
             (cutoff_str,)
+        )
+        con.execute(
+            """
+            DELETE FROM action_moves
+            WHERE status IN ('undone', 'error')
+              AND COALESCE(ts_undone, ts_done, ts_planned) < ?
+            """,
+            (cutoff_str,),
         )
         con.commit()
     finally:
