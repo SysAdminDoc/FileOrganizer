@@ -39,6 +39,8 @@ ALLOWED_EVENTS = frozenset({
     "watching",
     "detected",
     "heartbeat",
+    "review",
+    "review_exported",
 })
 TERMINAL_EVENTS = frozenset({"complete", "error"})
 _ERROR_CODE_RE = re.compile(r"^[a-z][a-z0-9_]{0,63}$")
@@ -128,6 +130,19 @@ def _normalise_event(
         path = bounded.get("path")
         if not isinstance(path, str) or not path:
             raise ProtocolValidationError(f"{event_name} event requires a nonempty path.")
+
+    if event_name == "review":
+        scan_id = bounded.get("scan_id")
+        if not isinstance(scan_id, str) or not scan_id:
+            raise ProtocolValidationError("review event requires a nonempty scan_id.")
+
+    if event_name == "review_exported":
+        scan_id = bounded.get("scan_id")
+        path = bounded.get("path")
+        if not isinstance(scan_id, str) or not scan_id or not isinstance(path, str) or not path:
+            raise ProtocolValidationError(
+                "review_exported event requires nonempty scan_id and path fields."
+            )
 
     if event_name == "log":
         bounded["level"] = str(bounded.get("level") or "info")[:32].lower()

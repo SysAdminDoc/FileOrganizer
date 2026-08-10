@@ -90,6 +90,94 @@ public sealed partial class DuplicatesPage : Page
         finally { Groups.FlushPendingChanges(); _cts?.Dispose(); _cts = null; SetRunning(false); }
     }
 
+    private async void Resume_Click(object sender, RoutedEventArgs e)
+    {
+        var scanId = ScanIdTextBox.Text?.Trim() ?? "";
+        if (string.IsNullOrEmpty(scanId))
+        {
+            StatusText.Text = "Enter a saved review ID first.";
+            return;
+        }
+        await RunSavedReviewAsync(
+            ["--resume-scan", scanId], clearResults: true, busyText: "Revalidating saved review...");
+    }
+
+    private async void Import_Click(object sender, RoutedEventArgs e)
+    {
+        if (_cts is not null) return;
+        var picker = new Windows.Storage.Pickers.FileOpenPicker
+        {
+            SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
+        };
+        picker.FileTypeFilter.Add(".json");
+        WinRT.Interop.InitializeWithWindow.Initialize(picker,
+            WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindowHandle));
+        var file = await picker.PickSingleFileAsync();
+        if (file is not null)
+            await RunSavedReviewAsync(
+                ["--import-review", file.Path], clearResults: true, busyText: "Importing review...");
+    }
+
+    private async void Export_Click(object sender, RoutedEventArgs e)
+    {
+        if (_cts is not null) return;
+        var scanId = ScanIdTextBox.Text?.Trim() ?? "";
+        if (string.IsNullOrEmpty(scanId))
+        {
+            StatusText.Text = "Enter a saved review ID first.";
+            return;
+        }
+        var picker = new Windows.Storage.Pickers.FileSavePicker
+        {
+            SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
+            SuggestedFileName = $"duplicate-review-{scanId}",
+        };
+        picker.FileTypeChoices.Add("JSON review", new List<string> { ".json" });
+        WinRT.Interop.InitializeWithWindow.Initialize(picker,
+            WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindowHandle));
+        var file = await picker.PickSaveFileAsync();
+        if (file is not null)
+            await RunSavedReviewAsync(
+                ["--export-scan", scanId, "--output", file.Path],
+                clearResults: false,
+                busyText: "Exporting review...");
+    }
+
+    private async Task RunSavedReviewAsync(List<string> args, bool clearResults, string busyText)
+    {
+        if (_cts is not null) return;
+        _cts = new CancellationTokenSource();
+        SetRunning(true);
+        if (clearResults)
+        {
+            Groups.Clear();
+            _wastedBytes = 0;
+            _duplicateCount = 0;
+            GroupsText.Text = "0";
+            DupesText.Text = "0";
+            WastedText.Text = "0 B";
+        }
+        StatusText.Text = busyText;
+        try
+        {
+            var result = await _python.RunScriptNdjsonAsync(
+                "dedup_run.py", args, HandleEvent, _cts.Token);
+            if (!result.Success)
+                StatusText.Text = result.ErrorMessage ?? result.Stderr;
+            else if (clearResults)
+                StatusText.Text = $"Saved review loaded: {Groups.TotalAdded:N0} group(s). Stale or missing paths are labeled and cannot be acted on.";
+        }
+        catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
+        catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
+        finally
+        {
+            Groups.FlushPendingChanges();
+            _cts?.Dispose();
+            _cts = null;
+            SetRunning(false);
+        }
+    }
+
     private void HandleEvent(string ev, JsonElement root)
     {
         switch (ev)
@@ -110,9 +198,16 @@ public sealed partial class DuplicatesPage : Page
                         int? distance = null;
                         if (f.TryGetProperty("distance", out var d) && d.ValueKind == JsonValueKind.Number)
                             distance = d.GetInt32();
+                        var validationStatus = f.TryGetProperty("validation_status", out var vs)
+                            ? vs.GetString() ?? "unchecked" : "unchecked";
+                        var validationReason = f.TryGetProperty("validation_reason", out var vr)
+                            ? vr.GetString() ?? "" : "";
+                        var isReference = f.TryGetProperty("is_reference", out var ir)
+                            ? ir.ValueKind == JsonValueKind.True : totalFiles == 0;
                         biggest = Math.Max(biggest, size);
                         if (files.Count < UiStreamLimits.MaxFilesPerGroup)
-                            files.Add(new DupeFile(path, size, distance, isKeeper: totalFiles == 0));
+                            files.Add(new DupeFile(
+                                path, size, distance, isReference, validationStatus, validationReason));
                         totalFiles++;
                     }
                 }
@@ -125,6 +220,17 @@ public sealed partial class DuplicatesPage : Page
                     DupesText.Text = _duplicateCount.ToString("N0", CultureInfo.CurrentCulture);
                     WastedText.Text = FormatSize(_wastedBytes);
                 }
+                break;
+            case "review":
+                if (root.TryGetProperty("scan_id", out var id))
+                    ScanIdTextBox.Text = id.GetString() ?? "";
+                if (root.TryGetProperty("root", out var reviewRoot))
+                    FolderTextBox.Text = reviewRoot.GetString() ?? FolderTextBox.Text;
+                break;
+            case "review_exported":
+                StatusText.Text = root.TryGetProperty("path", out var exportedPath)
+                    ? $"Review exported to {exportedPath.GetString()}"
+                    : "Review exported.";
                 break;
             case "progress":
                 if (root.TryGetProperty("stage", out var st) && root.TryGetProperty("scanned", out var sc))
@@ -150,6 +256,8 @@ public sealed partial class DuplicatesPage : Page
         ScanButton.IsEnabled = !running; BrowseButton.IsEnabled = !running;
         ModeCombo.IsEnabled = !running; FolderTextBox.IsEnabled = !running;
         MinSizeBox.IsEnabled = !running; ThresholdBox.IsEnabled = !running;
+        ScanIdTextBox.IsEnabled = !running; ResumeButton.IsEnabled = !running;
+        ImportButton.IsEnabled = !running; ExportButton.IsEnabled = !running;
         CancelButton.IsEnabled = running;
     }
 
@@ -206,12 +314,21 @@ public sealed class DupeFile
     public string DistanceText { get; }
     public Brush KeeperBrush { get; }
 
-    public DupeFile(string path, long size, int? distance, bool isKeeper)
+    public DupeFile(
+        string path,
+        long size,
+        int? distance,
+        bool isKeeper,
+        string validationStatus = "unchecked",
+        string validationReason = "")
     {
         Path = path;
         Size = size;
         SizeText = FormatSize(size);
-        DistanceText = distance is null ? (isKeeper ? "★ keeper" : "") : $"d={distance}";
+        var distanceText = distance is null ? (isKeeper ? "★ keeper" : "") : $"d={distance}";
+        DistanceText = validationStatus is "fresh" or "unchecked"
+            ? distanceText
+            : $"{validationStatus}: {validationReason}";
         KeeperBrush = isKeeper
             ? (Brush)Application.Current.Resources["AccentGreenBrush"]
             : (Brush)Application.Current.Resources["TextPrimaryBrush"];
