@@ -13,14 +13,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 - [ ] **Pre-flight validation prevents >90% of errors**: `--validate` before `--apply` surfaces
   trailing-space and long-path issues in advance.
 
-- [ ] P2 — **cache.py thread safety** — module-level `_cache_conn` created with default
-  `check_same_thread=True` but accessed from both GUI and worker threads.
-  Where: `fileorganizer/cache.py:83-112`
-
-- [ ] P2 — **_init() at import time** — `move_journal.py:59` and
-  `provider_cost_manager.py:71` create DB files on import. Lazy-init on first use
-  would improve testability and avoid side effects.
-
 - [ ] P3 — **bootstrap.py runtime pip install** — auto-installs packages at startup
   including with `--break-system-packages`. Consider removing or gating behind
   explicit user opt-in.
@@ -1005,46 +997,6 @@ UI + SQLite queries (~1 week).
 
 ---
 
-- [ ] P2 — Malformed watch configuration JSON raises uncaught exceptions
-  Category: reliability
-  Where: `watch_run.py:55-73`
-  Problem: The watch loader catches JSON decoding errors but assumes the decoded value is a list of dictionaries with string paths. A scalar, object, or non-dictionary entry reaches `w.get(...)` and raises a traceback; negative, NaN, or infinite timing values can also make the long-running loop fail or behave unpredictably.
-  Evidence: `load_watches()` validates only the `json.load()` call. It immediately iterates entries and reads `src`, `dest`, `interval`, and `settle` without type, finite-number, or bounds checks. The CLI accepts the file path and has no outer schema/error result.
-  Fix: Validate the root array, each entry's object type, nonempty string source/destination, finite nonnegative interval/settle values, and bounded heartbeat/timeout values. Emit one structured configuration error and exit with a documented nonzero code instead of a traceback or partially started watcher.
-  Acceptance: `--watches {}`, `--watches '[1]'`, missing fields, nonnumeric values, negative values, and NaN/Infinity fixtures all terminate quickly with an actionable error and no watcher; a valid file starts normally.
-  Confidence: Verified
-  Effort: S
-
-- [ ] P2 — Long-running watch processes retain every historical path in an unbounded set
-  Category: perf
-  Where: `watch_run.py:70-73,80-84,105-129`; `src/FileOrganizer.UI/Views/Pages/WatchPage.xaml.cs:146-149`
-  Problem: Each watch keeps every seen path in a Python set for the lifetime of the process, with no eviction, identity/mtime policy, persistence, or bound. UI event trimming only limits displayed events and does not release sidecar memory.
-  Evidence: `seen` is initialized once per watch, prepopulated once, and only grows when a file is processed. A long-lived folder ingesting millions of distinct files therefore grows memory linearly even after the files are gone.
-  Fix: Replace the unbounded set with bounded state keyed by canonical path plus file identity/mtime, persist only the minimum deduplication window if needed, and prune entries by age/size while preserving the no-repeat guarantee for unchanged files.
-  Acceptance: A synthetic watch run processes more than the configured retention threshold and reports bounded state/memory; an unchanged file is not reprocessed within the retention window, while a changed/new file is processed once.
-  Confidence: Verified
-  Effort: M
-
-- [ ] P2 — Catalog synchronization reads a remote response with no byte limit
-  Category: security
-  Where: `fileorganizer/workers.py:2796-2832`
-  Problem: The catalog worker downloads a GitHub release asset with `resp.read()` before validating JSON or size. A compromised/misconfigured endpoint or unexpectedly large response can allocate unbounded memory and block the worker; the URL and content type are also not constrained before the read.
-  Evidence: The reachable catalog worker opens the release URL, reads the entire body into memory, then parses/validates it. There is no maximum `Content-Length`, streaming counter, timeout/cancellation quota, host allowlist, or content-type check before allocation.
-  Fix: Restrict the URL to the approved release host/path, enforce a maximum from both headers and streamed byte count, set connect/read timeouts and cancellation, validate content type/schema, and reject/clean up oversized responses before parsing.
-  Acceptance: A mocked oversized, chunked, wrong-host, wrong-content-type, and invalid-JSON response aborts before exceeding the configured byte budget and reports a controlled error; a normal catalog still imports.
-  Confidence: Verified
-  Effort: M
-
-- [ ] P2 — Loose files skip the trailing-space pre-sanitization required for Windows moves
-  Category: correctness
-  Where: `organize_run.py:18-20,1144-1149,1201-1216`
-  Problem: The direct file-item branch calls `os.rename`/`shutil.move` without `strip_trailing_spaces()`, while the directory branch does sanitize. Files with trailing spaces in their filename can therefore fail to move on Windows even though the organizer documents pre-sanitization and the retry path attempts it.
-  Evidence: `build_move_plan()` marks loose files with `is_file_item`; `_move_plan_item()` only calls `strip_trailing_spaces(src)` in the `else` directory branch. The file branch goes directly to `os.rename` and fallback `shutil.move`, with no source-path update after sanitization.
-  Fix: Sanitize file-item source components before hashing/planning and before the file move, update the plan/journal to the renamed source, and apply the documented collision policy to the sanitized name. Preserve the existing directory behavior.
-  Acceptance: Windows tests create loose files and nested files with trailing-space components; generated plans point to the sanitized source and apply successfully, with no duplicate/orphan record. Ordinary files remain unchanged.
-  Confidence: Verified
-  Effort: M
-
 - [ ] P2 — Retry cleanup silently leaves partial file destinations in place
   Category: reliability
   Where: `organize_run.py:1342-1402`
@@ -1214,13 +1166,6 @@ UI + SQLite queries (~1 week).
   Acceptance: A fresh reader can follow README to the current route names/themes and receives no “placeholder” or “six themes/no picker” claim that contradicts the source; CI or a documentation check flags route/theme drift.
   Confidence: Verified
   Effort: S
-
-- [ ] P1 — Establish a versioned, schema-validated WinUI-to-Python sidecar protocol
-  Why: Multiple root runners emit ad hoc NDJSON while the WinUI shell parses generic JSON; a malformed event, missing field, or changed terminal state can crash or strand a page even when the Python work is recoverable.
-  Evidence: src/FileOrganizer.UI/Services/PythonRunner.cs and SidecarRunner.cs forward parsed JsonDocument values without a shared event schema; each *_run.py defines its own payload shape. tests/test_sidecar_contracts.py checks event names and fatal/cancel behavior but does not define versioned field constraints. Ollama’s structured-output guidance and PyPA/pluggy contract patterns support schema-first boundaries.
-  Touches: all root *_run.py sidecars; src/FileOrganizer.UI/Services/PythonRunner.cs; src/FileOrganizer.UI/Services/SidecarRunner.cs; tests/test_sidecar_contracts.py; a shared Python schema and C# DTO/validation layer.
-  Acceptance: Every sidecar begins with a protocol version/capability handshake and emits validated progress/item/log/error/terminal records with required fields, bounded strings, totals, and stable error codes; unknown events are isolated, malformed records cannot terminate the run, cancellation has one deterministic terminal state, and fixture tests cover every routed sidecar plus the C# parser.
-  Complexity: L
 
 - [ ] P2 — Make community catalog updates authenticated, bounded, atomic, and offline-first
   Why: A startup catalog update should never be able to consume unbounded resources, import tampered classification data, or make a local-only workflow depend on network availability.
