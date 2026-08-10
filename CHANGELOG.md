@@ -22,6 +22,9 @@ All notable changes to FileOrganizer will be documented in this file.
   face-detection, Ollama, rule, plugin, worker, and secondary PyQt paths.
 - Watch folders now reject equal, nested, ancestor, junction, and symbolic-link
   source/destination roots before persistence or startup.
+- Watch auto-apply now propagates through the PyQt and standalone paths, remains
+  preview-only by default, and blocks malformed or overlapping roots before a
+  real move can start.
 - Ollama batch classification now passes the configured endpoint and model
   explicitly, and optional face-recognition failures no longer terminate GUI
   startup.
