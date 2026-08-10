@@ -166,15 +166,32 @@ class FolderCache:
 
     def invalidate(self, folder_path: str):
         """Remove cache entry for folder."""
+        self.invalidate_many([folder_path])
+
+    def invalidate_many(self, folder_paths: List[str]):
+        """Invalidate changed roots and their descendants in one transaction."""
+        if not folder_paths:
+            return
         try:
             db = sqlite3.connect(self.db_path)
             try:
-                db.execute('DELETE FROM folder_cache WHERE folder_path = ?', (folder_path,))
+                for folder_path in sorted(set(folder_paths)):
+                    escaped = (
+                        folder_path.replace('\\', '\\\\')
+                        .replace('%', '\\%')
+                        .replace('_', '\\_')
+                    )
+                    escaped_separator = os.sep.replace('\\', '\\\\')
+                    db.execute(
+                        "DELETE FROM folder_cache WHERE folder_path = ? "
+                        "OR folder_path LIKE ? ESCAPE '\\'",
+                        (folder_path, f'{escaped}{escaped_separator}%')
+                    )
                 db.commit()
             finally:
                 db.close()
         except sqlite3.Error as e:
-            logger.error(f'Failed to invalidate cache for {folder_path}: {e}')
+            logger.error(f'Failed to invalidate folder cache paths: {e}')
 
     def invalidate_all(self):
         """Clear entire cache."""

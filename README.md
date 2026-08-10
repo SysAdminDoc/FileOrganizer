@@ -189,7 +189,8 @@ Python process tree.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write
-  dry-run organize plans, and persist state in `watch_state.db`.
+  dry-run organize plans, persist state in `watch_state.db`, and recover
+  supported NTFS changes that occurred while the watcher was stopped.
 
 These workflows work today through `python -m fileorganizer` (Path B) and the
 shell sidecars where noted above.
@@ -232,6 +233,8 @@ python organize_run.py --validate
 
 ```bash
 python asset_db.py --build G:\Organized          # Hash every file → SQLite DB
+python asset_db.py --build G:\Organized --incremental  # Resume NTFS USN cursor
+python asset_db.py --usn-status G:\Organized     # Check cursor, lag, and map size
 python asset_db.py --stats                       # DB summary
 python asset_db.py --export                      # asset_fingerprints.json
 python asset_db.py --lookup "path/to/folder"     # Look up a folder
@@ -240,6 +243,13 @@ python asset_db.py --lookup "path/to/folder"     # Look up a folder
 Match locally-downloaded templates against a community-curated catalog of
 already-classified assets by SHA-256 — get clean names and categories
 instantly without an AI API call.
+
+The first incremental catalog run performs a full scan and saves the journal
+identity and cursor. Later runs process only changed, created, renamed, or
+deleted asset roots. Journal wrap, volume replacement, unavailable journal
+access, network paths, and non-NTFS filesystems automatically rebuild or use
+the existing full-scan path; the checkpoint advances only after a clean index
+update.
 
 Startup catalog checks are offline-first: network failures keep the last local
 catalog available. Updates are accepted only from this repository's GitHub
@@ -304,6 +314,7 @@ fileorganizer/
 ├── categories.py             ← 384+ canonical category definitions
 ├── providers.py              ← multi-provider AI router (DeepSeek + GH + Ollama)
 ├── classification_provenance.py ← hashed AI evaluation store + replay/export
+├── usn_index.py              ← restartable NTFS journal + full-scan fallback
 ├── catalog.py                ← marketplace lookup + fingerprint DB pre-check
 ├── cleanup.py                ← six cleanup scanners
 ├── duplicates.py             ← progressive hash + perceptual image hash

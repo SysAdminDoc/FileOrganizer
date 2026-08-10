@@ -4,7 +4,7 @@
   "tools": {
     "ruff": {
       "version": "0.15.22",
-      "errors": 1016,
+      "errors": 1015,
       "warnings": 0
     },
     "mypy": {
