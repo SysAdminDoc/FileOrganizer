@@ -27,7 +27,13 @@ import sys
 import time
 import traceback
 
-from fileorganizer.path_safety import validate_move
+from fileorganizer.path_safety import (
+    PathSafetyError,
+    resolve_rename_destination,
+    unique_rename_destination,
+    validate_move,
+    validate_rename_template,
+)
 from datetime import datetime
 
 PHOTO_EXTS = (".jpg", ".jpeg", ".png", ".tif", ".tiff", ".heic", ".heif",
@@ -139,6 +145,15 @@ def main() -> int:
                "message": f"Root not found: {args.root}"})
         return 2
 
+    try:
+        validate_rename_template(
+            args.rename_pattern, {"year", "month", "day", "name", "ext"}
+        )
+    except PathSafetyError as exc:
+        _emit({"event": "error", "code": "invalid_rename_pattern",
+               "message": str(exc)})
+        return 2
+
     files = _walk(args.root)
     _emit({"event": "start", "root": args.root, "files_found": len(files)})
 
@@ -167,20 +182,19 @@ def main() -> int:
                     year=dt.year, month=dt.month, day=dt.day,
                     name=_safe_name(stem), ext=ext)
                 dest_root = args.rename_root or args.root
-                new_path = os.path.normpath(os.path.join(dest_root, rel))
+                new_path = resolve_rename_destination(dest_root, rel)
                 if os.path.abspath(new_path) != os.path.abspath(path):
+                    new_path = unique_rename_destination(new_path, path)
                     validate_move(
                         path,
                         new_path,
                         source_root=args.root,
                         dest_root=dest_root,
-                        allow_existing_dest=os.path.exists(new_path),
                     )
                     os.makedirs(os.path.dirname(new_path), exist_ok=True)
-                    if not os.path.exists(new_path):
-                        os.rename(path, new_path)
-                        state["renamed"] += 1
-                        info["new_path"] = new_path
+                    os.rename(path, new_path)
+                    state["renamed"] += 1
+                    info["new_path"] = new_path
 
             info["status"] = "matched"
             _emit({"event": "item", **info})
