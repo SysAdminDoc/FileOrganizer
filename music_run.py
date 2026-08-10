@@ -344,8 +344,7 @@ def main() -> int:
     try:
         import musicbrainzngs as mb
     except ImportError:
-        _emit({"event": "error", "code": "missing_dep",
-               "message": "musicbrainzngs not installed. Run: pip install -r requirements.txt"})
+        _PROTOCOL.emit_capability_error("musicbrainz_lookup")
         return 3
 
     mb.set_useragent(*USER_AGENT)

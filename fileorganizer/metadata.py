@@ -512,6 +512,12 @@ class MetadataExtractor:
         }
 
     @staticmethod
+    def capability_health() -> list[dict]:
+        """Return detailed versions, scopes, and remediation for each extractor."""
+        from fileorganizer.capabilities import capability_matrix
+        return capability_matrix('metadata')
+
+    @staticmethod
     def extract(filepath: str, log_cb=None) -> dict:
         """Extract metadata from a file. Returns dict (may be empty)."""
         meta = {}

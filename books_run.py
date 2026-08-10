@@ -315,8 +315,7 @@ def main() -> int:
     try:
         import ebooklib  # noqa: F401
     except ImportError:
-        _emit({"event": "error", "code": "missing_dep",
-               "message": "ebooklib not installed. Run: pip install -r requirements.txt"})
+        _PROTOCOL.emit_capability_error("ebook_metadata")
         return 3
 
     files = _walk_books(args.root)

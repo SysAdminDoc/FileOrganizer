@@ -74,8 +74,9 @@ def main() -> int:
         from subliminal import (Video, region, download_best_subtitles,
                                 save_subtitles, scan_video)
     except ImportError as exc:
-        _emit({"event": "error", "code": "missing_dep",
-               "message": f"subliminal/babelfish not installed: {exc}"})
+        _PROTOCOL.emit_capability_error(
+            "subtitle_download", f"Subtitle dependencies are unavailable: {exc}"
+        )
         return 3
 
     # Subliminal needs a cache region. Use an in-memory dogpile backend so we

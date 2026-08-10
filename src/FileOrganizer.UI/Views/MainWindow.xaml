@@ -156,8 +156,97 @@
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
-
-            <Frame x:Name="ContentFrame" Background="{StaticResource BackgroundBrush}"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Expander Grid.Row="0" x:Name="CapabilityExpander"
+                          Visibility="Collapsed"
+                          Margin="24,12,24,0"
+                          Background="{StaticResource SurfaceBrush}"
+                          BorderBrush="{StaticResource BorderBrush}"
+                          BorderThickness="1"
+                          CornerRadius="12">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <FontIcon Glyph="&#xE9D9;" FontSize="14"
+                                      Foreground="{StaticResource AccentPrimaryBrush}"/>
+                            <TextBlock x:Name="CapabilityStatusText"
+                                       Text="Checking workflow capabilities..."
+                                       Style="{StaticResource LabelTextStyle}"/>
+                        </StackPanel>
+                    </Expander.Header>
+                    <Grid Padding="12,4,12,12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Text="Unavailable means the scope will not be checked; it never means no findings. Online rows remain not checked until a workflow contacts its provider."
+                                   Style="{StaticResource MutedTextStyle}"
+                                   TextWrapping="Wrap" Margin="0,0,0,8"/>
+                        <Grid Grid.Row="1" ColumnSpacing="10" Padding="8,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/><ColumnDefinition Width="135"/>
+                                <ColumnDefinition Width="95"/><ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="145"/><ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="WORKFLOW" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="1" Text="CAPABILITY" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="2" Text="STATUS" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="3" Text="DEPENDENCY" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="4" Text="VERSION" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="5" Text="SCOPE" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="6" Text="ACCESS" Style="{StaticResource MetricLabelTextStyle}"/>
+                            <TextBlock Grid.Column="7" Text="REMEDIATION" Style="{StaticResource MetricLabelTextStyle}"/>
+                        </Grid>
+                        <ListView Grid.Row="2" x:Name="CapabilityRowsList"
+                                  SelectionMode="None" MaxHeight="260">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Padding" Value="8,6"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80"/><ColumnDefinition Width="135"/>
+                                            <ColumnDefinition Width="95"/><ColumnDefinition Width="130"/>
+                                            <ColumnDefinition Width="145"/><ColumnDefinition Width="180"/>
+                                            <ColumnDefinition Width="90"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Workflow}" Style="{StaticResource CodeTextStyle}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Capability}" Style="{StaticResource CodeTextStyle}"
+                                                   TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Capability}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding DisplayStatus}" Style="{StaticResource CodeTextStyle}"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding Dependency}" Style="{StaticResource CodeTextStyle}"
+                                                   TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Dependency}"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding DetectedVersion}" Style="{StaticResource CodeTextStyle}"
+                                                   TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding DetectedVersion}"/>
+                                        <TextBlock Grid.Column="5" Text="{Binding Scope}" Style="{StaticResource CodeTextStyle}"
+                                                   TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Scope}"/>
+                                        <StackPanel Grid.Column="6" Spacing="1">
+                                            <TextBlock Text="{Binding OnlineText}" Style="{StaticResource CodeTextStyle}"/>
+                                            <TextBlock Text="{Binding RequiredText}" Style="{StaticResource SubtleTextStyle}"/>
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="7" Text="{Binding Remediation}" Style="{StaticResource CodeTextStyle}"
+                                                   TextTrimming="CharacterEllipsis" ToolTipService.ToolTip="{Binding Remediation}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Expander>
+                <Frame Grid.Row="1" x:Name="ContentFrame"
+                       Background="{StaticResource BackgroundBrush}"/>
+            </Grid>
         </NavigationView>
     </Grid>
 </Window>

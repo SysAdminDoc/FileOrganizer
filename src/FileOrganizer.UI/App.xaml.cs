@@ -33,6 +33,7 @@ public partial class App : Application
         var services = new ServiceCollection();
 
         services.AddSingleton<IPythonRunner, PythonRunner>();
+        services.AddSingleton<ICapabilityHealthService, CapabilityHealthService>();
         services.AddSingleton<ISidecarRunner, SidecarRunner>();
         services.AddSingleton<IThemeService, ThemeService>();
         services.AddSingleton<IUserSettings, UserSettings>();

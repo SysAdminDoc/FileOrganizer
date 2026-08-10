@@ -178,6 +178,10 @@ Python process tree.
   a review ID and can be reopened, exported, or imported. Reopened paths are
   checked for existence, size, modification time, and exact-duplicate hash;
   changed or missing entries are labeled stale and excluded from actions.
+- **Capability preflight** — the shell checks every workflow at startup and
+  exposes package/tool versions, scope, online requirements, availability, and
+  remediation. An unavailable extractor is reported as not checked, never as
+  a clean scan; run `python capabilities_run.py` for the same matrix as NDJSON.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write

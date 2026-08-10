@@ -492,6 +492,15 @@ class ScanMixin:
                          'xlsx': 'openpyxl'}
             hints = [f"{k} ({libs_hint.get(k, '?')})" for k in missing]
             self._log(f"  Missing: {', '.join(hints)} — install for richer metadata")
+        for health in MetadataExtractor.capability_health():
+            status = health['status'].replace('_', ' ')
+            capability_log = getattr(self, '_log', None)
+            if callable(capability_log):
+                capability_log(
+                    f"  Capability [{status}]: {health['capability']} — "
+                    f"{health['dependency']} ({health['detected_version']}); "
+                    f"scope: {health['scope']}; remediation: {health['remediation']}"
+                )
         if not HAS_MAGIC:
             self._log("  Tip: pip install python-magic-bin — enables content-based MIME detection")
         # Log active rename templates

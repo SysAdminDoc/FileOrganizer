@@ -33,6 +33,7 @@ from collections import defaultdict
 
 from fileorganizer.sidecar_protocol import SidecarEmitter
 from fileorganizer.review_store import ReviewStore
+from fileorganizer.capabilities import get_capability
 
 IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".tiff", ".tif")
 _PROTOCOL = SidecarEmitter("dedup")
@@ -294,6 +295,12 @@ def main() -> int:
                "message": f"Root not found: {args.root}"})
         return 2
 
+    if args.mode == "images" and get_capability(
+        "duplicates", "similar_images"
+    )["status"] == "unavailable":
+        _PROTOCOL.emit_capability_error("similar_images")
+        return 3
+
     try:
         store = ReviewStore(args.review_db)
     except (OSError, ValueError, RuntimeError, sqlite3.Error) as exc:
@@ -325,6 +332,10 @@ def main() -> int:
         store.finish_scan(scan_id, "cancelled")
         _emit({"event": "error", "code": "cancelled", "message": "Cancelled."})
         return 130
+    except RuntimeError as exc:
+        store.finish_scan(scan_id, "failed")
+        _PROTOCOL.emit_capability_error("similar_images", str(exc))
+        return 3
     except Exception as exc:
         store.finish_scan(scan_id, "failed")
         _emit({"event": "error", "code": "crashed",

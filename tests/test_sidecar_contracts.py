@@ -69,6 +69,12 @@ def test_live_sidecars_emit_valid_ndjson_errors_for_fatal_inputs(tmp_path):
         assert rows[0]["event"] == "handshake", script
         assert rows[0]["protocol_version"] == PROTOCOL_VERSION, script
         assert isinstance(rows[0].get("capabilities"), dict), script
+        matrix = rows[0]["capabilities"].get("capability_matrix")
+        assert isinstance(matrix, list) and matrix, script
+        expected_workflow = {
+            "dedup_run.py": "duplicates",
+        }.get(script, script.removesuffix("_run.py"))
+        assert {row["workflow"] for row in matrix} == {expected_workflow}, script
         assert [row["sequence"] for row in rows] == list(range(len(rows))), script
         assert all(row.get("protocol_version") == PROTOCOL_VERSION for row in rows), script
         assert all(len(json.dumps(row).encode("utf-8")) <= MAX_RECORD_BYTES for row in rows), script
@@ -79,6 +85,19 @@ def test_live_sidecars_emit_valid_ndjson_errors_for_fatal_inputs(tmp_path):
         terminal = [row for row in rows if row.get("terminal") is True]
         assert len(terminal) == 1, script
         assert terminal[0] is rows[-1], script
+
+
+def test_capability_sidecar_exposes_full_preflight_before_terminal_event():
+    completed = _run_sidecar("capabilities_run.py", ["--workflow", "all"])
+    rows = _json_lines(completed.stdout)
+    assert completed.returncode == 0
+    assert [row["event"] for row in rows] == ["handshake", "summary", "complete"]
+    matrix = rows[0]["capabilities"]["capability_matrix"]
+    assert matrix == rows[1]["capability_matrix"]
+    assert {row["status"] for row in matrix} <= {
+        "available", "unavailable", "not_checked",
+    }
+    assert rows[-1]["terminal"] is True
 
 
 def test_live_sidecars_do_not_runtime_install_dependencies():

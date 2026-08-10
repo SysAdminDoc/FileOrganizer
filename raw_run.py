@@ -330,10 +330,7 @@ def main(argv: list[str] | None = None, rawpy_module_marker: Any = Ellipsis) -> 
 
     rawpy_module = _load_rawpy() if rawpy_module_marker is Ellipsis else rawpy_module_marker
     if rawpy_module is None:
-        emit("error", {
-            "code": "missing_dependency",
-            "message": "rawpy is required for RAW validation; install with: pip install rawpy",
-        })
+        _PROTOCOL.emit_capability_error("raw_validation")
         return 2
 
     return scan_folder(

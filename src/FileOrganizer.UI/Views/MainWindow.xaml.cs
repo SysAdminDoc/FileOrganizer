@@ -14,6 +14,8 @@ public sealed partial class MainWindow : Window
     private bool _initialNavigationCompleted;
     private readonly AppWindow _appWindow;
     private readonly IThemeService _themeService;
+    private readonly IPythonRunner _pythonRunner;
+    private readonly ICapabilityHealthService _capabilityHealth;
 
     private readonly List<NavSearchSuggestion> _searchSuggestions =
     [
@@ -46,6 +48,9 @@ public sealed partial class MainWindow : Window
         var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
         _appWindow = appWindow;
         _themeService = App.Services.GetRequiredService<IThemeService>();
+        _pythonRunner = App.Services.GetRequiredService<IPythonRunner>();
+        _capabilityHealth = App.Services.GetRequiredService<ICapabilityHealthService>();
+        _capabilityHealth.Changed += CapabilityHealth_Changed;
         appWindow.Resize(new Windows.Graphics.SizeInt32(1280, 820));
 
         var displayArea = Microsoft.UI.Windowing.DisplayArea.GetFromWindowId(windowId,
@@ -65,7 +70,11 @@ public sealed partial class MainWindow : Window
         _themeService.ThemeChanged += ThemeService_ThemeChanged;
         App.Register(this);
         Activated += MainWindow_Activated;
-        Closed += (_, _) => _themeService.ThemeChanged -= ThemeService_ThemeChanged;
+        Closed += (_, _) =>
+        {
+            _themeService.ThemeChanged -= ThemeService_ThemeChanged;
+            _capabilityHealth.Changed -= CapabilityHealth_Changed;
+        };
     }
 
     private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
@@ -76,6 +85,37 @@ public sealed partial class MainWindow : Window
 
         _initialNavigationCompleted = true;
         RequestNavigation("home");
+        _ = LoadCapabilityHealthAsync();
+    }
+
+    private async Task LoadCapabilityHealthAsync()
+    {
+        CapabilityExpander.Visibility = Visibility.Visible;
+        var result = await _pythonRunner.RunScriptNdjsonAsync(
+            "capabilities_run.py",
+            ["--workflow", "all"],
+            (_, _) => { });
+        if (!result.Success)
+            CapabilityStatusText.Text = $"Capability check unavailable — {result.ErrorMessage ?? result.Stderr}";
+    }
+
+    private void CapabilityHealth_Changed(object? sender, CapabilityHealthSnapshot snapshot)
+    {
+        if (!DispatcherQueue.HasThreadAccess)
+        {
+            DispatcherQueue.TryEnqueue(() => RenderCapabilityHealth(snapshot));
+            return;
+        }
+        RenderCapabilityHealth(snapshot);
+    }
+
+    private void RenderCapabilityHealth(CapabilityHealthSnapshot snapshot)
+    {
+        CapabilityRowsList.ItemsSource = snapshot.Rows;
+        CapabilityStatusText.Text =
+            $"Workflow capabilities — {snapshot.Available} available · "
+            + $"{snapshot.Unavailable} unavailable · {snapshot.NotChecked} online not checked";
+        CapabilityExpander.Visibility = Visibility.Visible;
     }
 
     private void ThemeService_ThemeChanged(object? sender, AppTheme theme) =>

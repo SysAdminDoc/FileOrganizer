@@ -16,6 +16,8 @@ import time
 from collections.abc import Mapping, Sequence
 from typing import Any, TextIO
 
+from fileorganizer.capabilities import capability_error, capability_matrix
+
 
 PROTOCOL_VERSION = "1.0"
 MAX_RECORD_BYTES = 1_048_576
@@ -219,6 +221,8 @@ class SidecarEmitter:
                 "cancellation": "terminal_error",
                 "bounded_records": True,
                 "max_record_bytes": MAX_RECORD_BYTES,
+                "health_schema_version": 1,
+                "capability_matrix": capability_matrix(self.sidecar),
             },
         })
         self._handshake_emitted = True
@@ -272,6 +276,14 @@ class SidecarEmitter:
                     self._terminal_emitted = True
             except ProtocolValidationError as exc:
                 self._diagnostic("invalid_event", str(exc))
+
+    def emit_capability_error(
+        self,
+        capability: str,
+        message: str | None = None,
+    ) -> None:
+        """Emit the shared terminal schema for a missing workflow capability."""
+        self.emit(capability_error(self.sidecar, capability, message))
 
 
 def emit_named(emitter: SidecarEmitter, event: str, data: Mapping[str, Any]) -> None:

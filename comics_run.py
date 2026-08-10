@@ -300,7 +300,7 @@ def scan_folder(
 
     image_module = image_module or _load_pillow_image()
     if image_module is None:
-        emit("error", {"code": "missing_dependency", "message": "Pillow is required for comic page validation; install with: pip install pillow"})
+        _PROTOCOL.emit_capability_error("comic_page_validation")
         return 2
 
     destination_root = Path(dest_root) if dest_root else root_path
