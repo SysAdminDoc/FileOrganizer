@@ -66,7 +66,11 @@ public sealed partial class SettingsPage : Page
             }
         }
 
-        _settings.AcoustIdApiKey = ApiKeyBox.Password ?? "";
+        if (!_settings.TrySetAcoustIdApiKey(ApiKeyBox.Password ?? ""))
+        {
+            SaveStatusText.Text = "AcoustID key could not be saved to Windows Credential Locker.";
+            return;
+        }
         _settings.DefaultMusicRenamePattern = MusicPatternBox.Text ?? "";
         _settings.DefaultVideoRenamePattern = VideoPatternBox.Text ?? "";
         _settings.DefaultBookRenamePattern = BookPatternBox.Text ?? "";
@@ -82,7 +86,8 @@ public sealed partial class SettingsPage : Page
         BookPatternBox.Text = "Books/{author}/{title}.{ext}";
         LangsBox.Text = "en";
         Save_Click(sender, e);
-        SaveStatusText.Text = "Defaults restored.";
+        if (SaveStatusText.Text == "Saved.")
+            SaveStatusText.Text = "Defaults restored.";
     }
 }
 

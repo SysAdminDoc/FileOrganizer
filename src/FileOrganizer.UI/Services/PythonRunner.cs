@@ -41,7 +41,8 @@ public interface IPythonRunner
         string scriptName,
         IEnumerable<string> args,
         Action<string, JsonElement> onEvent,
-        CancellationToken ct = default);
+        CancellationToken ct = default,
+        IReadOnlyDictionary<string, string>? environmentVariables = null);
 }
 
 public sealed class PythonRunner : IPythonRunner
@@ -172,7 +173,8 @@ public sealed class PythonRunner : IPythonRunner
         string scriptName,
         IEnumerable<string> args,
         Action<string, JsonElement> onEvent,
-        CancellationToken ct = default)
+        CancellationToken ct = default,
+        IReadOnlyDictionary<string, string>? environmentVariables = null)
     {
         var repoRoot = LocateRepoRoot();
         if (repoRoot is null)
@@ -203,6 +205,11 @@ public sealed class PythonRunner : IPythonRunner
         psi.ArgumentList.Add("-u");
         psi.ArgumentList.Add(scriptPath);
         foreach (var a in args) psi.ArgumentList.Add(a);
+        if (environmentVariables is not null)
+        {
+            foreach (var pair in environmentVariables)
+                psi.EnvironmentVariables[pair.Key] = pair.Value;
+        }
         psi.EnvironmentVariables["PYTHONIOENCODING"] = "utf-8";
         psi.EnvironmentVariables["PYTHONUTF8"] = "1";
 
