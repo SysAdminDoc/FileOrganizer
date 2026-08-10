@@ -12,8 +12,9 @@ Design file extensions that trigger extraction:
   .wav .mp3 .aiff .flac .ogg .mid .ttf .otf .lut .cube
 """
 import os, re, shutil, tempfile, zipfile, tarfile, logging
+from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
-from typing import Optional
+from typing import Callable, Optional
 
 from fileorganizer.safe_archive import UnsafeArchiveEntryError, safe_extract_path
 
@@ -114,6 +115,167 @@ def is_design_file(path: str) -> bool:
 
 def is_core_design_file(path: str) -> bool:
     return Path(path).suffix.lower() in CORE_DESIGN_EXTENSIONS
+
+
+# ── Extraction safety limits ─────────────────────────────────────────────────
+
+@dataclass(frozen=True)
+class ArchiveLimits:
+    """Resource ceilings applied before and during archive extraction."""
+
+    max_entries: Optional[int] = 100_000
+    max_total_bytes: Optional[int] = 20 * 1024 * 1024 * 1024
+    max_entry_bytes: Optional[int] = 4 * 1024 * 1024 * 1024
+    max_compression_ratio: Optional[float] = 1_000.0
+    min_free_bytes: Optional[int] = 256 * 1024 * 1024
+
+
+DEFAULT_ARCHIVE_LIMITS = ArchiveLimits()
+
+
+class ArchiveExtractionError(RuntimeError):
+    """Structured failure raised when extraction cannot safely continue."""
+
+    def __init__(self, code: str, message: str):
+        self.code = code
+        self.message = message
+        super().__init__(f"{code}: {message}")
+
+
+class ArchiveLimitError(ArchiveExtractionError):
+    """Raised when an archive exceeds a configured extraction ceiling."""
+
+
+class ArchiveExtractionCancelled(ArchiveExtractionError):
+    """Raised when the caller cancels an extraction in progress."""
+
+    def __init__(self):
+        super().__init__('cancelled', 'archive extraction was cancelled')
+
+
+_COPY_CHUNK_SIZE = 1024 * 1024
+
+
+def _check_cancelled(cancel_cb: Optional[Callable[[], bool]]) -> None:
+    if cancel_cb and cancel_cb():
+        raise ArchiveExtractionCancelled()
+
+
+def _top_level_folder(member_names: list[str]) -> Optional[str]:
+    roots = set()
+    for member_name in member_names:
+        parts = PurePosixPath(_normalize_member_name(member_name)).parts
+        if parts:
+            roots.add(parts[0])
+    return next(iter(roots)) if len(roots) == 1 else None
+
+
+def _existing_disk_path(path: str) -> str:
+    candidate = Path(os.path.abspath(path))
+    while not candidate.exists() and candidate.parent != candidate:
+        candidate = candidate.parent
+    return str(candidate)
+
+
+def _preflight_archive_limits(
+    archive_path: str,
+    dest_dir: str,
+    entries: list[tuple[str, Optional[int], Optional[int]]],
+    limits: ArchiveLimits,
+) -> None:
+    """Reject oversized archives before opening any output file."""
+    if limits.max_entries is not None and len(entries) > limits.max_entries:
+        raise ArchiveLimitError(
+            'entry_count',
+            f"{len(entries)} entries exceeds the limit of {limits.max_entries}",
+        )
+
+    total_bytes = 0
+    known_total = True
+    for name, raw_size, compressed_size in entries:
+        size = None if raw_size is None else int(raw_size)
+        if size is None:
+            known_total = False
+            continue
+        if size < 0:
+            raise ArchiveLimitError('entry_size', f"negative size for {name!r}")
+        if limits.max_entry_bytes is not None and size > limits.max_entry_bytes:
+            raise ArchiveLimitError(
+                'entry_size',
+                f"{name!r} is {size} bytes; limit is {limits.max_entry_bytes}",
+            )
+        total_bytes += size
+        if limits.max_total_bytes is not None and total_bytes > limits.max_total_bytes:
+            raise ArchiveLimitError(
+                'total_size',
+                f"declared size exceeds the limit of {limits.max_total_bytes} bytes",
+            )
+        if limits.max_compression_ratio is not None and compressed_size is not None:
+            compressed = int(compressed_size)
+            if compressed < 0:
+                raise ArchiveLimitError('compressed_size', f"negative size for {name!r}")
+            ratio = float('inf') if size and not compressed else (
+                size / compressed if compressed else 1.0
+            )
+            if ratio > limits.max_compression_ratio:
+                raise ArchiveLimitError(
+                    'compression_ratio',
+                    f"{name!r} expands at {ratio:.1f}:1; limit is "
+                    f"{limits.max_compression_ratio:.1f}:1",
+                )
+
+    archive_size = os.path.getsize(archive_path)
+    if (known_total and total_bytes and archive_size
+            and limits.max_compression_ratio is not None
+            and total_bytes / archive_size > limits.max_compression_ratio):
+        ratio = total_bytes / archive_size
+        raise ArchiveLimitError(
+            'compression_ratio',
+            f"archive expands at {ratio:.1f}:1; limit is "
+            f"{limits.max_compression_ratio:.1f}:1",
+        )
+
+    required_free = (total_bytes if known_total else 0) + (limits.min_free_bytes or 0)
+    if limits.min_free_bytes is not None:
+        free_bytes = shutil.disk_usage(_existing_disk_path(dest_dir)).free
+        if free_bytes < required_free:
+            raise ArchiveLimitError(
+                'free_space',
+                f"{free_bytes} bytes free; need at least {required_free}",
+            )
+
+
+def _copy_stream_bounded(
+    source,
+    target,
+    *,
+    name: str,
+    limits: ArchiveLimits,
+    total_written: int,
+    cancel_cb: Optional[Callable[[], bool]],
+) -> int:
+    """Copy an archive member while enforcing actual byte ceilings."""
+    entry_written = 0
+    while True:
+        _check_cancelled(cancel_cb)
+        chunk = source.read(_COPY_CHUNK_SIZE)
+        if not chunk:
+            break
+        entry_written += len(chunk)
+        if (limits.max_entry_bytes is not None
+                and entry_written > limits.max_entry_bytes):
+            raise ArchiveLimitError(
+                'entry_size',
+                f"{name!r} exceeded {limits.max_entry_bytes} bytes while streaming",
+            )
+        if (limits.max_total_bytes is not None
+                and total_written + entry_written > limits.max_total_bytes):
+            raise ArchiveLimitError(
+                'total_size',
+                f"extraction exceeded {limits.max_total_bytes} bytes while streaming",
+            )
+        target.write(chunk)
+    return entry_written
 
 
 # ── Archive inspection ─────────────────────────────────────────────────────────
@@ -259,7 +421,9 @@ def is_design_archive(path: str) -> bool:
 def extract_archive(path: str, dest_dir: str, *,
                     flatten: bool = False,
                     strip_top_folder: bool = True,
-                    log_cb=None) -> list:
+                    log_cb=None,
+                    limits: Optional[ArchiveLimits] = None,
+                    cancel_cb: Optional[Callable[[], bool]] = None) -> list:
     """
     Extract archive to dest_dir.
 
@@ -270,12 +434,17 @@ def extract_archive(path: str, dest_dir: str, *,
       strip_top_folder: If archive has one root folder, extract its contents directly
                         into dest_dir instead of creating dest_dir/<root>/<files>
       log_cb:           Optional callback(message: str) for progress logging
+      limits:           Resource ceilings; defaults to DEFAULT_ARCHIVE_LIMITS
+      cancel_cb:        Optional callback returning True to cancel extraction
 
     Returns:
       List of absolute paths of extracted files (files only, not dirs)
     """
+    limits = limits or DEFAULT_ARCHIVE_LIMITS
+    dest_was_absent = not os.path.lexists(dest_dir)
     os.makedirs(dest_dir, exist_ok=True)
     extracted = []
+    created_files = []
     name_lower = Path(path).name.lower()
 
     def _log(msg):
@@ -287,9 +456,18 @@ def extract_archive(path: str, dest_dir: str, *,
     try:
         if zipfile.is_zipfile(path):
             with zipfile.ZipFile(path, 'r') as zf:
-                info = inspect_archive(path, max_entries=10)
-                top = info.get('top_level_folder') if strip_top_folder else None
-                for member in zf.infolist():
+                members = zf.infolist()
+                _preflight_archive_limits(
+                    path,
+                    dest_dir,
+                    [(m.filename, m.file_size, m.compress_size) for m in members],
+                    limits,
+                )
+                top = (_top_level_folder([m.filename for m in members])
+                       if strip_top_folder else None)
+                total_written = 0
+                for member in members:
+                    _check_cancelled(cancel_cb)
                     if member.is_dir():
                         continue
                     try:
@@ -301,17 +479,37 @@ def extract_archive(path: str, dest_dir: str, *,
                     except UnsafeArchiveEntryError:
                         _log(f"  Skipped (path traversal): {member.filename}")
                         continue
+                    if os.path.lexists(dst):
+                        raise ArchiveExtractionError(
+                            'destination_exists', f"output already exists: {dst}")
                     os.makedirs(os.path.dirname(dst), exist_ok=True)
-                    with zf.open(member) as src, open(dst, 'wb') as out:
-                        shutil.copyfileobj(src, out)
+                    created_files.append(dst)
+                    with zf.open(member) as src, open(dst, 'xb') as out:
+                        total_written += _copy_stream_bounded(
+                            src,
+                            out,
+                            name=member.filename,
+                            limits=limits,
+                            total_written=total_written,
+                            cancel_cb=cancel_cb,
+                        )
                     extracted.append(dst)
                     _log(f"  Extracted: {os.path.relpath(dst, dest_dir)}")
 
         elif name_lower.endswith(('.tar', '.tar.gz', '.tgz', '.tar.bz2', '.tar.xz')):
             with tarfile.open(path, 'r:*') as tf:
-                info = inspect_archive(path, max_entries=10)
-                top = info.get('top_level_folder') if strip_top_folder else None
-                for member in tf.getmembers():
+                members = tf.getmembers()
+                _preflight_archive_limits(
+                    path,
+                    dest_dir,
+                    [(m.name, m.size, None) for m in members],
+                    limits,
+                )
+                top = (_top_level_folder([m.name for m in members])
+                       if strip_top_folder else None)
+                total_written = 0
+                for member in members:
+                    _check_cancelled(cancel_cb)
                     if not member.isfile():
                         continue
                     try:
@@ -323,21 +521,52 @@ def extract_archive(path: str, dest_dir: str, *,
                     except UnsafeArchiveEntryError:
                         _log(f"  Skipped (path traversal): {member.name}")
                         continue
+                    if os.path.lexists(dst):
+                        raise ArchiveExtractionError(
+                            'destination_exists', f"output already exists: {dst}")
                     os.makedirs(os.path.dirname(dst), exist_ok=True)
                     f = tf.extractfile(member)
                     if f:
-                        with open(dst, 'wb') as out:
-                            shutil.copyfileobj(f, out)
+                        created_files.append(dst)
+                        with f, open(dst, 'xb') as out:
+                            total_written += _copy_stream_bounded(
+                                f,
+                                out,
+                                name=member.name,
+                                limits=limits,
+                                total_written=total_written,
+                                cancel_cb=cancel_cb,
+                            )
                         extracted.append(dst)
                         _log(f"  Extracted: {os.path.relpath(dst, dest_dir)}")
 
         elif name_lower.endswith('.7z'):
             import py7zr
             with py7zr.SevenZipFile(path, 'r') as sz:
-                info = inspect_archive(path, max_entries=10)
-                top = info.get('top_level_folder') if strip_top_folder else None
+                names = sz.getnames()
+                metadata = {}
+                try:
+                    metadata = {
+                        getattr(item, 'filename', ''): item
+                        for item in sz.list()
+                        if getattr(item, 'filename', '')
+                    }
+                except (AttributeError, OSError, RuntimeError):
+                    metadata = {}
+                entries = []
+                for member_name in names:
+                    item = metadata.get(member_name)
+                    entries.append((
+                        member_name,
+                        getattr(item, 'uncompressed', None) if item else None,
+                        getattr(item, 'compressed', None) if item else None,
+                    ))
+                _preflight_archive_limits(path, dest_dir, entries, limits)
+                top = (_top_level_folder(names) if strip_top_folder else None)
+                total_written = 0
                 with tempfile.TemporaryDirectory() as tmp:
-                    for member_name in sz.getnames():
+                    for member_name in names:
+                        _check_cancelled(cancel_cb)
                         try:
                             src_file = _safe_member_destination(
                                 tmp, member_name,
@@ -354,19 +583,51 @@ def extract_archive(path: str, dest_dir: str, *,
                             _log(f"  Skipped (path traversal): {member_name}")
                             continue
                         sz.extract(path=tmp, targets=[member_name])
+                        _check_cancelled(cancel_cb)
                         if not os.path.isfile(src_file):
                             continue
+                        actual_size = os.path.getsize(src_file)
+                        if (limits.max_entry_bytes is not None
+                                and actual_size > limits.max_entry_bytes):
+                            raise ArchiveLimitError(
+                                'entry_size',
+                                f"{member_name!r} exceeded {limits.max_entry_bytes} bytes",
+                            )
+                        if (limits.max_total_bytes is not None
+                                and total_written + actual_size > limits.max_total_bytes):
+                            raise ArchiveLimitError(
+                                'total_size',
+                                f"extraction exceeded {limits.max_total_bytes} bytes",
+                            )
+                        if os.path.lexists(dst):
+                            raise ArchiveExtractionError(
+                                'destination_exists', f"output already exists: {dst}")
                         os.makedirs(os.path.dirname(dst), exist_ok=True)
+                        created_files.append(dst)
                         shutil.move(src_file, dst)
+                        total_written += actual_size
                         extracted.append(dst)
                         _log(f"  Extracted: {os.path.relpath(dst, dest_dir)}")
 
         elif name_lower.endswith('.rar'):
             import rarfile
             with rarfile.RarFile(path) as rf:
-                info = inspect_archive(path, max_entries=10)
-                top = info.get('top_level_folder') if strip_top_folder else None
-                for member in rf.infolist():
+                members = rf.infolist()
+                _preflight_archive_limits(
+                    path,
+                    dest_dir,
+                    [(
+                        m.filename,
+                        getattr(m, 'file_size', None),
+                        getattr(m, 'compress_size', None),
+                    ) for m in members],
+                    limits,
+                )
+                top = (_top_level_folder([m.filename for m in members])
+                       if strip_top_folder else None)
+                total_written = 0
+                for member in members:
+                    _check_cancelled(cancel_cb)
                     if member.is_dir():
                         continue
                     try:
@@ -378,20 +639,54 @@ def extract_archive(path: str, dest_dir: str, *,
                     except UnsafeArchiveEntryError:
                         _log(f"  Skipped (path traversal): {member.filename}")
                         continue
+                    if os.path.lexists(dst):
+                        raise ArchiveExtractionError(
+                            'destination_exists', f"output already exists: {dst}")
                     os.makedirs(os.path.dirname(dst), exist_ok=True)
-                    with rf.open(member) as src, open(dst, 'wb') as out:
-                        shutil.copyfileobj(src, out)
+                    created_files.append(dst)
+                    with rf.open(member) as src, open(dst, 'xb') as out:
+                        total_written += _copy_stream_bounded(
+                            src,
+                            out,
+                            name=member.filename,
+                            limits=limits,
+                            total_written=total_written,
+                            cancel_cb=cancel_cb,
+                        )
                     extracted.append(dst)
                     _log(f"  Extracted: {os.path.relpath(dst, dest_dir)}")
 
+    except ArchiveExtractionError as e:
+        for created in reversed(created_files):
+            try:
+                os.remove(created)
+            except OSError:
+                pass
+        if dest_was_absent:
+            shutil.rmtree(dest_dir, ignore_errors=True)
+        _log(f"  Extraction blocked [{e.code}]: {e.message}")
+        raise
     except Exception as e:
+        for created in reversed(created_files):
+            try:
+                os.remove(created)
+            except OSError:
+                pass
+        if dest_was_absent:
+            shutil.rmtree(dest_dir, ignore_errors=True)
         _log(f"  Extraction error: {e}")
         log.error("extract_archive failed on %s: %s", path, e)
 
     return extracted
 
 
-def extract_to_temp(path: str, log_cb=None) -> tuple:
+def extract_to_temp(
+    path: str,
+    log_cb=None,
+    *,
+    limits: Optional[ArchiveLimits] = None,
+    cancel_cb: Optional[Callable[[], bool]] = None,
+) -> tuple:
     """
     Extract archive to a temporary directory.
 
@@ -399,7 +694,17 @@ def extract_to_temp(path: str, log_cb=None) -> tuple:
     Caller is responsible for cleanup: shutil.rmtree(temp_dir)
     """
     tmp = tempfile.mkdtemp(prefix='fo_extract_')
-    files = extract_archive(path, tmp, log_cb=log_cb)
+    try:
+        files = extract_archive(
+            path,
+            tmp,
+            log_cb=log_cb,
+            limits=limits,
+            cancel_cb=cancel_cb,
+        )
+    except Exception:
+        shutil.rmtree(tmp, ignore_errors=True)
+        raise
     return tmp, files
 
 

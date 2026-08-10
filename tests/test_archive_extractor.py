@@ -139,3 +139,82 @@ def test_7z_extraction_validates_before_extracting_each_member(tmp_path: Path, m
 def test_safe_member_destination_rejects_unsafe_even_when_flattening(tmp_path: Path):
     with pytest.raises(ae.UnsafeArchiveEntryError):
         ae._safe_member_destination(str(tmp_path), "../evil.psd", flatten=True)
+
+
+def test_extraction_rejects_entry_count_before_writing(tmp_path: Path):
+    archive = tmp_path / "many.zip"
+    dest = tmp_path / "dest"
+    with zipfile.ZipFile(archive, "w") as zf:
+        zf.writestr("one.psd", b"1")
+        zf.writestr("two.psd", b"2")
+
+    with pytest.raises(ae.ArchiveLimitError) as exc_info:
+        ae.extract_archive(
+            str(archive),
+            str(dest),
+            limits=ae.ArchiveLimits(max_entries=1, min_free_bytes=0),
+        )
+
+    assert exc_info.value.code == "entry_count"
+    assert not dest.exists()
+
+
+def test_extraction_rejects_high_compression_ratio(tmp_path: Path):
+    archive = tmp_path / "bomb.zip"
+    dest = tmp_path / "dest"
+    with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+        zf.writestr("repeated.psd", b"A" * 100_000)
+
+    with pytest.raises(ae.ArchiveLimitError) as exc_info:
+        ae.extract_archive(
+            str(archive),
+            str(dest),
+            limits=ae.ArchiveLimits(
+                max_compression_ratio=2,
+                min_free_bytes=0,
+            ),
+        )
+
+    assert exc_info.value.code == "compression_ratio"
+    assert not dest.exists()
+
+
+def test_extract_to_temp_removes_staging_on_cancellation(tmp_path: Path, monkeypatch):
+    archive = tmp_path / "cancel.zip"
+    staging = tmp_path / "staging"
+    with zipfile.ZipFile(archive, "w") as zf:
+        zf.writestr("project.psd", b"data")
+    monkeypatch.setattr(ae.tempfile, "mkdtemp", lambda **_kwargs: str(staging))
+
+    with pytest.raises(ae.ArchiveExtractionCancelled):
+        ae.extract_to_temp(
+            str(archive),
+            limits=ae.ArchiveLimits(min_free_bytes=0),
+            cancel_cb=lambda: True,
+        )
+
+    assert not staging.exists()
+
+
+def test_archive_worker_promotes_only_after_success(tmp_path: Path):
+    from fileorganizer.workers import ArchiveExtractionWorker
+
+    source = tmp_path / "source"
+    dest_root = tmp_path / "organized"
+    source.mkdir()
+    archive = source / "pack.zip"
+    with zipfile.ZipFile(archive, "w") as zf:
+        zf.writestr("pack/project.psd", b"data")
+
+    results = []
+    worker = ArchiveExtractionWorker(
+        str(source),
+        extract_dest=str(dest_root),
+        limits=ae.ArchiveLimits(min_free_bytes=0),
+    )
+    worker.result_ready.connect(results.append)
+    worker.run()
+
+    assert results[0]["status"] == "extracted"
+    assert Path(results[0]["extracted_files"][0]).read_bytes() == b"data"
+    assert not list(dest_root.glob(".fo_extract_*"))

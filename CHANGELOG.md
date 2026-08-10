@@ -25,6 +25,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Watch auto-apply now propagates through the PyQt and standalone paths, remains
   preview-only by default, and blocks malformed or overlapping roots before a
   real move can start.
+- Archive extraction now enforces entry, byte, compression-ratio, and free-space
+  quotas, checks cancellation during streaming, and promotes only clean staging
+  output with structured limit and cancellation results.
 - Ollama batch classification now passes the configured endpoint and model
   explicitly, and optional face-recognition failures no longer terminate GUI
   startup.
