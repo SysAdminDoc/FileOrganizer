@@ -46,6 +46,8 @@ public interface IPythonRunner
 
 public sealed class PythonRunner : IPythonRunner
 {
+    private readonly RunLifecycleGate _runGate = new();
+
     public string? LocateRepoRoot()
     {
         var dir = new DirectoryInfo(AppContext.BaseDirectory);
@@ -59,6 +61,29 @@ public sealed class PythonRunner : IPythonRunner
     }
 
     public async Task<PythonResult> RunScriptAsync(
+        string scriptName,
+        IEnumerable<string> args,
+        IProgress<string>? lineProgress = null,
+        CancellationToken ct = default)
+    {
+        IDisposable lease;
+        try
+        {
+            lease = await _runGate.EnterAsync(scriptName, ct).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            return new PythonResult(false, "", "", -1, "Cancelled by user.");
+        }
+
+        using (lease)
+        {
+            return await RunScriptCoreAsync(
+                scriptName, args, lineProgress, ct).ConfigureAwait(false);
+        }
+    }
+
+    private async Task<PythonResult> RunScriptCoreAsync(
         string scriptName,
         IEnumerable<string> args,
         IProgress<string>? lineProgress = null,
@@ -131,6 +156,7 @@ public sealed class PythonRunner : IPythonRunner
                 ct.ThrowIfCancellationRequested();
                 var line = await process.StandardOutput.ReadLineAsync(ct).ConfigureAwait(false);
                 if (line is null) break;
+                ct.ThrowIfCancellationRequested();
                 stdout.AppendLine(line);
                 lineProgress?.Report(line);
             }
@@ -150,6 +176,7 @@ public sealed class PythonRunner : IPythonRunner
         try
         {
             await process.WaitForExitAsync(ct).ConfigureAwait(false);
+            await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
         }
         catch (OperationCanceledException)
         {
@@ -159,8 +186,6 @@ public sealed class PythonRunner : IPythonRunner
             await ObserveReaderTasksAsync(stdoutTask, stderrTask).ConfigureAwait(false);
             return new PythonResult(false, stdout.ToString(), stderr.ToString(), -1, "Cancelled by user.");
         }
-
-        await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
 
         var success = process.ExitCode == 0;
         return new PythonResult(
@@ -172,6 +197,38 @@ public sealed class PythonRunner : IPythonRunner
     }
 
     public async Task<PythonResult> RunScriptNdjsonAsync(
+        string scriptName,
+        IEnumerable<string> args,
+        Action<string, JsonElement> onEvent,
+        CancellationToken ct = default,
+        IReadOnlyDictionary<string, string>? environmentVariables = null)
+    {
+        IDisposable lease;
+        try
+        {
+            lease = await _runGate.EnterAsync(scriptName, ct).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            var cancelled = SidecarProtocolSession.CreateTerminalError(
+                "cancelled",
+                "Cancelled by user.");
+            onEvent(cancelled.Name, cancelled.Payload);
+            return new PythonResult(false, "", "", -1, "Cancelled by user.");
+        }
+
+        using (lease)
+        {
+            return await RunScriptNdjsonCoreAsync(
+                scriptName,
+                args,
+                onEvent,
+                ct,
+                environmentVariables).ConfigureAwait(false);
+        }
+    }
+
+    private async Task<PythonResult> RunScriptNdjsonCoreAsync(
         string scriptName,
         IEnumerable<string> args,
         Action<string, JsonElement> onEvent,
@@ -299,6 +356,7 @@ public sealed class PythonRunner : IPythonRunner
         try
         {
             await process.WaitForExitAsync(ct).ConfigureAwait(false);
+            await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
         }
         catch (OperationCanceledException)
         {
@@ -315,8 +373,6 @@ public sealed class PythonRunner : IPythonRunner
                 CancellationToken.None).ConfigureAwait(false);
             return new PythonResult(false, "", stderr.ToString(), -1, "Cancelled by user.");
         }
-
-        await Task.WhenAll(stdoutTask, stderrTask).ConfigureAwait(false);
 
         var success = process.ExitCode == 0 && protocol.IsComplete;
         string? errorMessage = null;

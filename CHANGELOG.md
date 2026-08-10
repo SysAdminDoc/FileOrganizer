@@ -82,6 +82,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Duplicate move actions now use a shared no-overwrite executor, suffix
   different-content collisions, preserve identical sources, report per-file
   outcomes, and retain source-bound journal records for guarded undo.
+- Python and native sidecar runners now drain redirected streams before
+  returning from cancellation and serialize same-sidecar restart leases;
+  repeated cancel/restart contract runs reject stale callbacks.
 
 ## [v8.5.19] - 2026-07-01
 
