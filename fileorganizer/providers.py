@@ -8,13 +8,25 @@ Provider routing:
 import os, re, json, time, logging, warnings
 from pathlib import Path
 from typing import Optional
+from urllib.parse import urlsplit, urlunsplit
 
 log = logging.getLogger(__name__)
 
 # ── Provider settings ──────────────────────────────────────────────────────────
 from fileorganizer.config import _APP_DATA_DIR
+from fileorganizer.secret_store import SecretStoreError, get_secret, set_secret
 
 _PROVIDER_SETTINGS_FILE = os.path.join(_APP_DATA_DIR, 'provider_settings.json')
+
+_SECRET_SETTINGS = {
+    'github_token': 'github_models_token',
+    'deepseek_api_key': 'deepseek_api_key',
+}
+
+_PROVIDER_ENDPOINT_HOSTS = {
+    'github': frozenset({'models.github.ai'}),
+    'deepseek': frozenset({'api.deepseek.com'}),
+}
 
 _PROVIDER_DEFAULTS = {
     # GitHub Models
@@ -113,19 +125,119 @@ _DEPRECATED_MODELS = {
 }
 
 
-def load_provider_settings() -> dict:
+def validate_provider_endpoint(endpoint: str, provider: str) -> str | None:
+    """Return a canonical approved endpoint, or ``None`` for unsafe input."""
+    if not isinstance(endpoint, str):
+        return None
+    endpoint = endpoint.strip()
+    if not endpoint or any(char.isspace() for char in endpoint):
+        return None
+    try:
+        parsed = urlsplit(endpoint)
+        port = parsed.port
+    except ValueError:
+        return None
+    host = (parsed.hostname or '').lower().rstrip('.')
+    if (
+        parsed.scheme.lower() != 'https'
+        or parsed.username is not None
+        or parsed.password is not None
+        or parsed.query
+        or parsed.fragment
+        or port not in (None, 443)
+        or host not in _PROVIDER_ENDPOINT_HOSTS.get(provider, frozenset())
+    ):
+        return None
+    path = parsed.path.rstrip('/')
+    return urlunsplit(('https', host, path, '', ''))
+
+
+def _safe_endpoint(settings: dict, key: str, provider: str) -> str:
+    default = _PROVIDER_DEFAULTS[key]
+    value = validate_provider_endpoint(settings.get(key, default), provider)
+    if value is None:
+        log.warning(
+            "Ignoring unsafe %s endpoint; using the built-in HTTPS endpoint",
+            provider,
+        )
+        return default
+    return value
+
+
+def _read_provider_file() -> dict:
     try:
         with open(_PROVIDER_SETTINGS_FILE, 'r', encoding='utf-8') as f:
             stored = json.load(f)
-        return {**_PROVIDER_DEFAULTS, **stored}
     except (FileNotFoundError, OSError, json.JSONDecodeError):
-        return dict(_PROVIDER_DEFAULTS)
+        return {}
+    return stored if isinstance(stored, dict) else {}
+
+
+def _write_provider_file(settings: dict) -> None:
+    directory = os.path.dirname(_PROVIDER_SETTINGS_FILE) or '.'
+    os.makedirs(directory, exist_ok=True)
+    temporary = f'{_PROVIDER_SETTINGS_FILE}.tmp'
+    try:
+        with open(temporary, 'w', encoding='utf-8') as f:
+            json.dump(settings, f, indent=2)
+            f.write('\n')
+        os.replace(temporary, _PROVIDER_SETTINGS_FILE)
+    finally:
+        try:
+            os.unlink(temporary)
+        except FileNotFoundError:
+            pass
+
+
+def load_provider_settings() -> dict:
+    stored = _read_provider_file()
+    settings = {**_PROVIDER_DEFAULTS, **stored}
+    migrated_fields = set()
+
+    for field, secret_name in _SECRET_SETTINGS.items():
+        decrypted = get_secret(secret_name)
+        legacy = stored.get(field, '')
+        if decrypted:
+            settings[field] = decrypted
+            if legacy:
+                migrated_fields.add(field)
+        elif isinstance(legacy, str) and legacy:
+            # Migrate old plaintext JSON only after DPAPI has accepted it.
+            try:
+                set_secret(secret_name, legacy)
+            except (SecretStoreError, OSError) as exc:
+                log.warning("Could not migrate %s to protected storage: %s", field, exc)
+            else:
+                migrated_fields.add(field)
+            settings[field] = legacy
+        else:
+            settings[field] = ''
+
+    settings['github_endpoint'] = _safe_endpoint(settings, 'github_endpoint', 'github')
+    settings['deepseek_endpoint'] = _safe_endpoint(settings, 'deepseek_endpoint', 'deepseek')
+
+    if migrated_fields:
+        sanitized = {key: value for key, value in stored.items() if key not in migrated_fields}
+        _write_provider_file(sanitized)
+    return settings
 
 
 def save_provider_settings(settings: dict):
+    payload = dict(settings)
+    for field, secret_name in _SECRET_SETTINGS.items():
+        value = payload.pop(field, '')
+        if not isinstance(value, str):
+            value = str(value or '')
+        try:
+            set_secret(secret_name, value.strip())
+        except (SecretStoreError, OSError) as exc:
+            if value.strip():
+                log.warning("Could not save %s in protected storage: %s", field, exc)
+
+    payload['github_endpoint'] = _safe_endpoint(payload, 'github_endpoint', 'github')
+    payload['deepseek_endpoint'] = _safe_endpoint(payload, 'deepseek_endpoint', 'deepseek')
     try:
-        with open(_PROVIDER_SETTINGS_FILE, 'w', encoding='utf-8') as f:
-            json.dump(settings, f, indent=2)
+        _write_provider_file(payload)
     except OSError as e:
         log.warning("Could not save provider settings: %s", e)
 
@@ -287,7 +399,7 @@ class GitHubModelsProvider(_ChatCompletionsProvider):
                 log.warning(f"Deprecated GitHub Models alias: {deprecated_alias} → {recommended} (deadline: {deadline})")
         
         super().__init__(
-            base_url=settings.get('github_endpoint', _PROVIDER_DEFAULTS['github_endpoint']),
+            base_url=_safe_endpoint(settings, 'github_endpoint', 'github'),
             api_key=token,
             model=model,
             timeout=settings.get('github_timeout', 60),
@@ -295,7 +407,7 @@ class GitHubModelsProvider(_ChatCompletionsProvider):
 
     def is_available(self) -> bool:
         # Also accept legacy Azure inference endpoint
-        return bool(self.api_key) and bool(self.model)
+        return bool(self.api_key) and bool(self.base_url) and bool(self.model)
 
 
 # ── DeepSeek provider ──────────────────────────────────────────────────────────
@@ -328,7 +440,7 @@ class DeepSeekProvider(_ChatCompletionsProvider):
             log.warning("DeepSeek model 'deepseek-reasoner' is deprecated; migrate to 'deepseek-v4-pro'")
         
         super().__init__(
-            base_url=settings.get('deepseek_endpoint', _PROVIDER_DEFAULTS['deepseek_endpoint']),
+            base_url=_safe_endpoint(settings, 'deepseek_endpoint', 'deepseek'),
             api_key=key,
             model=model,
             timeout=settings.get('deepseek_timeout', 120),
