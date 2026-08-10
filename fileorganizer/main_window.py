@@ -67,6 +67,7 @@ from fileorganizer.dialogs import (
     DuplicateFinderDialog, CleanupPanel, DuplicatePanel,
     ProtectedPathsDialog, ThemePickerDialog, WatchHistoryDialog,
     LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel, ReviewPanel,
+    RuleChainEditorDialog,
 )
 from fileorganizer.widgets import (
     CategoryBarChart, FlowLayout, ThumbnailLoader, ThumbnailCard,
@@ -448,6 +449,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             menu_tools.addAction("Unregister Shell Extension", self._unregister_shell_extension)
         menu_tools.addSeparator()
         menu_tools.addAction("Classification Rules...", self._open_rule_editor)
+        menu_tools.addAction("Automation Rule Chains...", self._open_rule_chain_editor)
         if sys.platform == 'win32':
             menu_tools.addAction("Scheduled Scans...", self._open_schedule_dialog)
         menu_tools.addAction("Plugins...", self._open_plugin_manager)
@@ -3232,6 +3234,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         """Open the classification rule editor dialog."""
         dlg = RuleEditorDialog(self._pc_categories, self)
         dlg.exec()
+
+    def _open_rule_chain_editor(self):
+        """Open the nested condition/action automation rule editor."""
+        RuleChainEditorDialog(self).exec()
 
     def _create_rule_from_file(self, row: int):
         """Pre-fill a rule from the selected file's metadata. `row` is visual table row."""

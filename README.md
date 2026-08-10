@@ -213,6 +213,10 @@ Python process tree.
   evaluation ID through the move plan, journal, and report. The durable store
   retains fingerprints and hashes—not prompts, responses, API keys, file names,
   or paths—and the Organize page can review counts or export redacted JSONL.
+- **Hazel-style automation rules** — the legacy desktop Settings menu includes
+  a visual nested IF/AND/OR/THEN editor. Matching skip, move, and rename actions
+  are translated into the same editable, boundary-validated move plan used by
+  normal organization, so preview, journaling, and undo remain intact.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write
@@ -236,6 +240,8 @@ python organize_run.py --retry-errors             # Retry failed items
 # Design pipeline (G:\Design Unorganized → G:\Organized)
 python organize_run.py --source design --preview --quiet
 python organize_run.py --source design --apply --quiet
+python organize_run.py --source design --preview --rules-file rules.json
+python organize_run.py --source design --preview --no-rules
 
 # Watch configured source and emit dry-run plans for arriving files
 python -m fileorganizer.watch_mode --source design --start --duration 60
@@ -356,6 +362,7 @@ fileorganizer/
 ├── duplicates.py             ← progressive hash + perceptual image hash
 ├── photos.py                 ← EXIF / faces / events / map markers
 ├── files.py                  ← PC file organizer
+├── rule_chains.py            ← validated nested automation planning rules
 ├── workers.py                ← QThread workers (legacy GUI)
 ├── main_window.py            ← legacy PyQt6 main window
 ├── watch_task.py             ← validated logon task config + bounded logging

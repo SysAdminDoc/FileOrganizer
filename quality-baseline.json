@@ -4,12 +4,12 @@
   "tools": {
     "ruff": {
       "version": "0.15.22",
-      "errors": 967,
+      "errors": 965,
       "warnings": 0
     },
     "mypy": {
       "version": "2.1.0",
-      "errors": 391,
+      "errors": 390,
       "warnings": 0
     },
     "pyright": {

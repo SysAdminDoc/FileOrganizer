@@ -9,6 +9,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import organize_run as runner
 import fileorganizer.config as config
+from fileorganizer.rule_chains import (
+    RuleAction,
+    RuleChain,
+    RuleChainManager,
+    RuleCondition,
+)
 
 
 class OrganizeRunPlanTests(unittest.TestCase):
@@ -89,6 +95,113 @@ class OrganizeRunPlanTests(unittest.TestCase):
             self.assertEqual(plan.item_count, 2)
             self.assertNotEqual(plan.items[0]["dest"], plan.items[1]["dest"])
             self.assertTrue(plan.items[1]["dest"].endswith("Same Name (1)"))
+
+    def test_rule_chain_skip_runs_before_category_validation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src_root, _ = self._configure_temp_runner(tmp)
+            source = src_root / "Ignore Me"
+            source.mkdir()
+            manager = RuleChainManager(str(Path(tmp) / "rules.json"))
+            manager.replace_chains([
+                RuleChain(
+                    name="ignore-staging",
+                    conditions=[RuleCondition(
+                        "filename_pattern", "ignore", "contains")],
+                    actions=[RuleAction("skip")],
+                )
+            ])
+
+            plan = runner.build_move_plan(
+                [(
+                    {
+                        "name": "Ignore Me",
+                        "clean_name": "Ignore Me",
+                        "category": "not-a-real-category",
+                        "confidence": 0,
+                    },
+                    {"folder": str(src_root), "name": "Ignore Me"},
+                )],
+                source_mode="design",
+                rule_manager=manager,
+            )
+
+            self.assertEqual(plan.item_count, 0)
+            self.assertEqual(plan.skipped[0]["reason"], "rule_skip")
+            self.assertEqual(plan.skipped[0]["rule_matches"], ["ignore-staging"])
+            self.assertTrue(source.exists())
+
+    def test_rule_chain_move_and_rename_feed_safe_move_plan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src_root, dest_root = self._configure_temp_runner(tmp)
+            source = src_root / "Incoming"
+            source.mkdir()
+            manager = RuleChainManager(str(Path(tmp) / "rules.json"))
+            manager.replace_chains([
+                RuleChain(
+                    name="curate-low-confidence",
+                    conditions=[RuleCondition("llm_confidence", 70, "<")],
+                    actions=[
+                        RuleAction("move", destination="Rules/$CATEGORY"),
+                        RuleAction("rename", template="Curated-$NAME"),
+                    ],
+                )
+            ])
+
+            plan = runner.build_move_plan(
+                [(
+                    {
+                        "name": "Incoming",
+                        "clean_name": "Incoming",
+                        "category": "Mockups - Branding",
+                        "confidence": 40,
+                    },
+                    {"folder": str(src_root), "name": "Incoming"},
+                )],
+                source_mode="design",
+                rule_manager=manager,
+            )
+
+            self.assertEqual(plan.item_count, 1)
+            item = plan.items[0]
+            self.assertEqual(item["rule_matches"], ["curate-low-confidence"])
+            self.assertTrue(item["low_confidence"])
+            self.assertNotIn("_Review", item["dest"])
+            self.assertEqual(
+                Path(item["dest"]),
+                dest_root / "Rules" / "Mockups - Branding & Stationery" / "Curated-Incoming",
+            )
+            self.assertTrue(source.exists(), "planning must not execute rule actions")
+
+    def test_rule_chain_destination_escape_fails_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src_root, _ = self._configure_temp_runner(tmp)
+            source = src_root / "Incoming"
+            source.mkdir()
+            manager = RuleChainManager(str(Path(tmp) / "rules.json"))
+            manager.replace_chains([
+                RuleChain(
+                    name="escape",
+                    actions=[RuleAction("move", destination="..\\outside")],
+                )
+            ])
+
+            plan = runner.build_move_plan(
+                [(
+                    {
+                        "name": "Incoming",
+                        "clean_name": "Incoming",
+                        "category": "Mockups - Branding",
+                        "confidence": 95,
+                    },
+                    {"folder": str(src_root), "name": "Incoming"},
+                )],
+                source_mode="design",
+                rule_manager=manager,
+            )
+
+            self.assertEqual(plan.item_count, 0)
+            self.assertEqual(plan.skipped[0]["reason"], "invalid_rule_destination")
+            self.assertTrue(source.exists())
 
     def test_build_move_plan_flags_destination_duplicate_hash(self):
         with tempfile.TemporaryDirectory() as tmp:

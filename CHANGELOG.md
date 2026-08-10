@@ -6,6 +6,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Hazel-style nested rule chains now have a visual IF/AND/OR/THEN editor and
+  participate in organize planning before category routing; skip, destination,
+  and rename decisions flow through dry-run plans, path validation, collision
+  handling, journaling, and undo instead of mutating files out of band.
 - WinUI Settings now configures opt-in Watch Mode startup at user logon with a
   2–120 second quiet window, hidden least-privilege Task Scheduler execution,
   validated atomic configuration, enable/disable/removal controls, and a
