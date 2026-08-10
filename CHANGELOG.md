@@ -4,6 +4,12 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ## [Unreleased]
 
+### Fixed
+
+- WinUI title-bar buttons now derive their normal, inactive, hover, and pressed
+  colors from the active theme and refresh immediately on theme and window
+  activation changes.
+
 ### Security
 
 - Provider and Envato credentials now use Windows-user DPAPI storage instead of

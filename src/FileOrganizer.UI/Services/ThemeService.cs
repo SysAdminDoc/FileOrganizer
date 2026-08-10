@@ -12,10 +12,24 @@ public sealed record AppTheme(
     bool IsLight,
     Dictionary<string, Color> Colors);
 
+public sealed record TitleBarPalette(
+    Color Background,
+    Color InactiveBackground,
+    Color ButtonBackground,
+    Color ButtonInactiveBackground,
+    Color ButtonForeground,
+    Color ButtonInactiveForeground,
+    Color ButtonHoverBackground,
+    Color ButtonHoverForeground,
+    Color ButtonPressedBackground,
+    Color ButtonPressedForeground);
+
 public interface IThemeService
 {
     IReadOnlyList<AppTheme> AvailableThemes { get; }
     AppTheme CurrentTheme { get; }
+    TitleBarPalette TitleBarPalette { get; }
+    event EventHandler<AppTheme>? ThemeChanged;
     void Apply(string themeId);
     string GetSavedThemeId();
 }
@@ -26,6 +40,8 @@ public sealed class ThemeService : IThemeService
 
     public IReadOnlyList<AppTheme> AvailableThemes { get; }
     public AppTheme CurrentTheme { get; private set; }
+    public TitleBarPalette TitleBarPalette => BuildTitleBarPalette(CurrentTheme);
+    public event EventHandler<AppTheme>? ThemeChanged;
 
     public ThemeService()
     {
@@ -118,11 +134,31 @@ public sealed class ThemeService : IThemeService
         if (App.MainWindowHandleSafe?.Content is FrameworkElement root)
             root.RequestedTheme = theme.IsLight ? ElementTheme.Light : ElementTheme.Dark;
 
+        ThemeChanged?.Invoke(this, theme);
+
         try
         {
             ApplicationData.Current.LocalSettings.Values[SettingsKey] = themeId;
         }
         catch { }
+    }
+
+    private static TitleBarPalette BuildTitleBarPalette(AppTheme theme)
+    {
+        var transparent = Color.FromArgb(0, 0, 0, 0);
+        var textPrimary = theme.Colors["BrandTextPrimary"];
+
+        return new TitleBarPalette(
+            Background: transparent,
+            InactiveBackground: transparent,
+            ButtonBackground: transparent,
+            ButtonInactiveBackground: transparent,
+            ButtonForeground: textPrimary,
+            ButtonInactiveForeground: theme.Colors["BrandTextMuted"],
+            ButtonHoverBackground: theme.Colors["BrandSurfaceLight"],
+            ButtonHoverForeground: textPrimary,
+            ButtonPressedBackground: theme.Colors["BrandBorderStrong"],
+            ButtonPressedForeground: textPrimary);
     }
 
     private static Color Lighten(Color c, double f)

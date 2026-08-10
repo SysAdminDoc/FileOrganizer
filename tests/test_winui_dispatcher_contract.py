@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 
@@ -85,3 +86,72 @@ def test_build_wrapper_does_not_pin_an_unavailable_visual_studio_installation():
     assert "MSBUILD_EXE_PATH" in source
     assert "vswhere.exe" in source
     assert "Microsoft.DotNet.MSBuildSdkResolver.dll" in source
+
+
+def test_title_bar_palette_tracks_live_theme_and_activation_changes():
+    service = (REPO_ROOT / "src/FileOrganizer.UI/Services/ThemeService.cs").read_text(
+        encoding="utf-8"
+    )
+    window = (REPO_ROOT / "src/FileOrganizer.UI/Views/MainWindow.xaml.cs").read_text(
+        encoding="utf-8"
+    )
+
+    assert "event EventHandler<AppTheme>? ThemeChanged" in service
+    assert "ThemeChanged?.Invoke(this, theme)" in service
+    for semantic_token in (
+        'theme.Colors["BrandTextPrimary"]',
+        'theme.Colors["BrandTextMuted"]',
+        'theme.Colors["BrandSurfaceLight"]',
+        'theme.Colors["BrandBorderStrong"]',
+    ):
+        assert semantic_token in service
+
+    assert "_themeService.ThemeChanged += ThemeService_ThemeChanged" in window
+    assert "ApplyTitleBarPalette(_themeService.TitleBarPalette)" in window
+    assert "Activated -= MainWindow_Activated" not in window
+    for title_bar_state in (
+        "ButtonForegroundColor",
+        "ButtonInactiveForegroundColor",
+        "ButtonHoverBackgroundColor",
+        "ButtonHoverForegroundColor",
+        "ButtonPressedBackgroundColor",
+        "ButtonPressedForegroundColor",
+    ):
+        assert f"titleBar.{title_bar_state} = palette." in window
+
+
+def test_every_title_bar_palette_has_readable_icon_contrast():
+    source = (REPO_ROOT / "src/FileOrganizer.UI/Services/ThemeService.cs").read_text(
+        encoding="utf-8"
+    )
+
+    def luminance(hex_color: str) -> float:
+        channels = [int(hex_color[index : index + 2], 16) / 255 for index in (1, 3, 5)]
+        linear = [
+            value / 12.92
+            if value <= 0.04045
+            else ((value + 0.055) / 1.055) ** 2.4
+            for value in channels
+        ]
+        return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+    def contrast(first: str, second: str) -> float:
+        light, dark = sorted((luminance(first), luminance(second)), reverse=True)
+        return (light + 0.05) / (dark + 0.05)
+
+    theme_blocks = source.split('new AppTheme("')[1:]
+    assert len(theme_blocks) == 7
+    for block in theme_blocks:
+        theme_id = block.split('"', 1)[0]
+        colors = dict(re.findall(r'\["([^"]+)"\] = C\("(#[0-9a-fA-F]{6})"\)', block))
+        for foreground, background in (
+            ("BrandTextPrimary", "BrandBackground"),
+            ("BrandTextPrimary", "BrandSurfaceLight"),
+            ("BrandTextPrimary", "BrandBorderStrong"),
+            ("BrandTextMuted", "BrandBackground"),
+        ):
+            assert contrast(colors[foreground], colors[background]) >= 3.0, (
+                theme_id,
+                foreground,
+                background,
+            )

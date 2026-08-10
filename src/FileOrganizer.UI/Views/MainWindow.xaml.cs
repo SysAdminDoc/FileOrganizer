@@ -1,6 +1,9 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using FileOrganizer.UI.Services;
 using FileOrganizer.UI.Views.Pages;
 
 namespace FileOrganizer.UI.Views;
@@ -8,6 +11,9 @@ namespace FileOrganizer.UI.Views;
 public sealed partial class MainWindow : Window
 {
     private bool _isSelectingNavigationItem;
+    private bool _initialNavigationCompleted;
+    private readonly AppWindow _appWindow;
+    private readonly IThemeService _themeService;
 
     private readonly List<NavSearchSuggestion> _searchSuggestions =
     [
@@ -38,6 +44,8 @@ public sealed partial class MainWindow : Window
         var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
         var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hwnd);
         var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+        _appWindow = appWindow;
+        _themeService = App.Services.GetRequiredService<IThemeService>();
         appWindow.Resize(new Windows.Graphics.SizeInt32(1280, 820));
 
         var displayArea = Microsoft.UI.Windowing.DisplayArea.GetFromWindowId(windowId,
@@ -51,27 +59,43 @@ public sealed partial class MainWindow : Window
             var titleBar = appWindow.TitleBar;
             titleBar.ExtendsContentIntoTitleBar = true;
             titleBar.PreferredHeightOption = Microsoft.UI.Windowing.TitleBarHeightOption.Tall;
-
-            titleBar.BackgroundColor = Microsoft.UI.Colors.Transparent;
-            titleBar.InactiveBackgroundColor = Microsoft.UI.Colors.Transparent;
-            titleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
-            titleBar.ButtonInactiveBackgroundColor = Microsoft.UI.Colors.Transparent;
-            titleBar.ButtonForegroundColor = Windows.UI.Color.FromArgb(0xff, 0xe8, 0xec, 0xf3);
-            titleBar.ButtonInactiveForegroundColor = Windows.UI.Color.FromArgb(0xff, 0x6d, 0x7d, 0x96);
-            titleBar.ButtonHoverBackgroundColor = Windows.UI.Color.FromArgb(0xff, 0x1f, 0x23, 0x38);
-            titleBar.ButtonHoverForegroundColor = Windows.UI.Color.FromArgb(0xff, 0xe8, 0xec, 0xf3);
-            titleBar.ButtonPressedBackgroundColor = Windows.UI.Color.FromArgb(0xff, 0x25, 0x2a, 0x38);
-            titleBar.ButtonPressedForegroundColor = Windows.UI.Color.FromArgb(0xff, 0xe8, 0xec, 0xf3);
         }
 
+        ApplyTitleBarPalette(_themeService.TitleBarPalette);
+        _themeService.ThemeChanged += ThemeService_ThemeChanged;
         App.Register(this);
         Activated += MainWindow_Activated;
+        Closed += (_, _) => _themeService.ThemeChanged -= ThemeService_ThemeChanged;
     }
 
     private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
     {
-        Activated -= MainWindow_Activated;
+        ApplyTitleBarPalette(_themeService.TitleBarPalette);
+        if (_initialNavigationCompleted)
+            return;
+
+        _initialNavigationCompleted = true;
         RequestNavigation("home");
+    }
+
+    private void ThemeService_ThemeChanged(object? sender, AppTheme theme) =>
+        ApplyTitleBarPalette(_themeService.TitleBarPalette);
+
+    private void ApplyTitleBarPalette(TitleBarPalette palette)
+    {
+        if (_appWindow.TitleBar is not { } titleBar)
+            return;
+
+        titleBar.BackgroundColor = palette.Background;
+        titleBar.InactiveBackgroundColor = palette.InactiveBackground;
+        titleBar.ButtonBackgroundColor = palette.ButtonBackground;
+        titleBar.ButtonInactiveBackgroundColor = palette.ButtonInactiveBackground;
+        titleBar.ButtonForegroundColor = palette.ButtonForeground;
+        titleBar.ButtonInactiveForegroundColor = palette.ButtonInactiveForeground;
+        titleBar.ButtonHoverBackgroundColor = palette.ButtonHoverBackground;
+        titleBar.ButtonHoverForegroundColor = palette.ButtonHoverForeground;
+        titleBar.ButtonPressedBackgroundColor = palette.ButtonPressedBackground;
+        titleBar.ButtonPressedForegroundColor = palette.ButtonPressedForeground;
     }
 
     public void RequestNavigation(string routeKey)
