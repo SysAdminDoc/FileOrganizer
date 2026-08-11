@@ -404,6 +404,28 @@ class ClipEmbedder:
         flush()
         return encoded, failures
 
+    def encode_texts(self, texts: Sequence[str]) -> list[tuple[float, ...]]:
+        """Encode text with the same CLIP space used by image vectors."""
+        self.load()
+        values = [str(text).strip() for text in texts]
+        if not values or any(not value for value in values):
+            raise ValueError("texts must be a nonempty sequence of nonempty strings")
+        try:
+            import open_clip
+
+            tokenizer = open_clip.get_tokenizer(self.model_name)
+            tokens = tokenizer(values).to(self.device)
+            with self._torch.inference_mode():
+                features = self._model.encode_text(tokens, normalize=True)
+            return [
+                normalize_embedding(vector)
+                for vector in features.detach().float().cpu().tolist()
+            ]
+        except ClipIndexUnavailable:
+            raise
+        except Exception as exc:
+            raise ClipIndexUnavailable(f"could not encode CLIP text: {exc}") from exc
+
 
 def stable_model_id(model_name: str, pretrained: str) -> str:
     """Return a short deterministic model identifier for index metadata."""

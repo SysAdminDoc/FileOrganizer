@@ -64,6 +64,8 @@ Current shell boundaries:
 - The optional CLIP visual index is local-only and fail-closed. Install the
   heavyweight ML stack separately, then use `clip_index_run.py` to build a
   ViT-L-14 / sqlite-vec image index or query nearest visual matches.
+- `chroma_run.py` provides the same opt-in CLIP vectors through a persistent
+  local Chroma collection, including image-to-image and text-to-image search.
 
 ## Get FileOrganizer
 
@@ -302,6 +304,10 @@ python watch_task_run.py --status
 # Optional CLIP image index (install open_clip_torch, torch, and sqlite-vec first)
 python clip_index_run.py --root Pictures --db .fileorganizer-clip.db
 python clip_index_run.py --query Pictures/example.jpg --db .fileorganizer-clip.db
+
+# Optional Chroma cross-modal index (also install chromadb)
+python chroma_run.py --root Pictures --db .fileorganizer-chroma
+python chroma_run.py --query-text "sunset over mountains" --db .fileorganizer-chroma
 
 # Register and inspect a saved scan profile (preview-only by default)
 python -m fileorganizer --schedule "Daily Inbox" --schedule-time 07:30

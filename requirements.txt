@@ -56,6 +56,7 @@ winrt-Windows.Storage>=3.2.1; sys_platform == "win32"
 # open_clip_torch
 # torch
 # sqlite-vec==0.1.9
+# chromadb
 
 # Optional few-shot category trainer (NEXT-54). Install this stack to enable
 # Settings -> Teach Category SetFit model training; without it, taught
