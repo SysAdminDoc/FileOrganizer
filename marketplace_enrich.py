@@ -24,16 +24,19 @@ Usage:
 API / scraping:
     Videohive:     https://videohive.net/item/x/{id}          (scrape og:title / og:url / breadcrumbs)
     MotionElements: https://api.motionelements.com/v1/elements/{id}   (free JSON API)
-    CreativeMarket: https://creativemarket.com/api/2/products/{id}    (may require token)
+    CreativeMarket: https://creativemarket.com/product/{id}            (page metadata)
+    Freepik:        https://api.freepik.com/v1/resources/{id}           (FREEPIK_API_KEY)
+    Motion Array / FilterGrade / Shutterstock / Adobe Stock             (page metadata)
     Fallback:      DeepSeek AI lookup (reads deepseek_key.txt or DEEPSEEK_API_KEY env var)
 
 Cache:
     marketplace_cache.json — keyed by "{platform}:{item_id}", persistent across runs
 """
 
-import argparse, json, os, re, sys, time
+import argparse, html as html_lib, json, os, re, sys, time
 from pathlib import Path
 from typing import Optional
+from urllib.parse import quote
 
 # ── Bootstrap deps ────────────────────────────────────────────────────────────
 def _bootstrap():
@@ -142,6 +145,20 @@ CATEGORY_MAP: list[tuple[str, str]] = [
     ('final cut',                                  'After Effects - Other'),
     ('animation',                                  'After Effects - Motion Graphics Pack'),
     ('lower thirds',                               'After Effects - Titles & Text'),
+    # Expanded provider labels
+    ('after effects',                              'After Effects - Other'),
+    ('premiere pro',                               'Premiere Pro - Other'),
+    ('photoshop',                                  'Photoshop - Other'),
+    ('lightroom',                                  'Lightroom Presets'),
+    ('illustration',                               'Illustrator - Vector Graphics'),
+    ('vector',                                     'Illustrator - Vector Graphics'),
+    ('graphic resources',                          'UI Resources'),
+    ('video',                                      'Stock Footage - General'),
+    ('footage',                                    'Stock Footage - General'),
+    ('sound effect',                               'Sound Effects & SFX'),
+    ('audio',                                      'Stock Music & Audio'),
+    ('filter',                                     'Lightroom Presets'),
+    ('preset',                                     'After Effects - Preset Pack'),
 ]
 
 def map_category(raw: str, title: str = '', tags: list[str] | None = None) -> Optional[str]:
@@ -172,6 +189,19 @@ def map_category(raw: str, title: str = '', tags: list[str] | None = None) -> Op
 # Each tuple: (compiled_regex, platform, group_index_for_id)
 # Patterns ordered from most specific to least specific.
 _ID_PATTERNS: list[tuple[re.Pattern, str]] = [
+    # Direct provider URLs are accepted by --lookup and retained as the ID
+    # payload so the page fetchers can request the exact slugged page.
+    (re.compile(r'https?://(?:www\.)?freepik\.com/(.+?)(?:[?#]|$)', re.IGNORECASE), 'freepik'),
+    (re.compile(r'https?://(?:www\.)?motionarray\.com/(.+?)(?:[?#]|$)', re.IGNORECASE), 'motionarray'),
+    (re.compile(r'https?://(?:www\.)?filtergrade\.com/(product/.+?)(?:[?#]|$)', re.IGNORECASE), 'filtergrade'),
+    (re.compile(r'https?://(?:www\.)?shutterstock\.com/(.+?)(?:[?#]|$)', re.IGNORECASE), 'shutterstock'),
+    (re.compile(r'https?://stock\.adobe\.com/(.+?)(?:[?#]|$)', re.IGNORECASE), 'adobe_stock'),
+    (re.compile(r'https?://(?:www\.)?creativemarket\.com/(.+?)(?:[?#]|$)', re.IGNORECASE), 'creativemarket'),
+    # Explicit provider prefixes used by exported/downloaded folder names.
+    (re.compile(r'^(?:freepik|fp)[-_](\d{5,12})(?:\D|$)', re.IGNORECASE), 'freepik'),
+    (re.compile(r'^(?:filtergrade|fg)[-_](\d{5,12})(?:\D|$)', re.IGNORECASE), 'filtergrade'),
+    (re.compile(r'^(?:shutterstock|ss)[-_](\d{6,12})(?:\D|$)', re.IGNORECASE), 'shutterstock'),
+    (re.compile(r'^(?:adobe[-_ ]?stock|stock[-_ ]?adobe|as)[-_](\d{6,12})(?:\D|$)', re.IGNORECASE), 'adobe_stock'),
     # MotionElements: 10003729_MotionElements_epic-slideshow
     (re.compile(r'^(\d{7,9})_MotionElements_', re.IGNORECASE), 'motionelements'),
     # Explicit VH- prefix: VH-28331308, VH_6808513
@@ -229,14 +259,21 @@ def _cache_key(platform: str, item_id: str) -> str:
 # ── HTTP helpers ──────────────────────────────────────────────────────────────
 _last_request_at: dict[str, float] = {}
 
-def _throttled_get(url: str, domain: str) -> Optional[requests.Response]:
+def _throttled_get(
+    url: str,
+    domain: str,
+    extra_headers: dict[str, str] | None = None,
+) -> Optional[requests.Response]:
     """GET with per-domain rate limiting and retry on 429/5xx."""
     wait = RATE_LIMIT_WAIT - (time.time() - _last_request_at.get(domain, 0))
     if wait > 0:
         time.sleep(wait)
+    headers = dict(REQUEST_HEADERS)
+    if extra_headers:
+        headers.update(extra_headers)
     for attempt in range(FETCH_RETRY + 1):
         try:
-            resp = requests.get(url, headers=REQUEST_HEADERS, timeout=FETCH_TIMEOUT,
+            resp = requests.get(url, headers=headers, timeout=FETCH_TIMEOUT,
                                 allow_redirects=True)
             _last_request_at[domain] = time.time()
             if resp.status_code == 429 or resp.status_code >= 500:
@@ -259,7 +296,213 @@ def _og(html: str, prop: str) -> str:
     return m.group(1).strip() if m else ''
 
 
+def _meta(html: str, key: str) -> list[str]:
+    """Extract HTML meta values regardless of property/name attribute order."""
+    values = []
+    pattern = re.compile(
+        rf'<meta[^>]+(?:property|name)=["\']{re.escape(key)}["\'][^>]+content=["\']([^"\']*)["\']'
+        rf'|<meta[^>]+content=["\']([^"\']*)["\'][^>]+(?:property|name)=["\']{re.escape(key)}["\']',
+        re.IGNORECASE,
+    )
+    for match in pattern.finditer(html):
+        value = next((group for group in match.groups() if group is not None), '').strip()
+        if value:
+            values.append(html_lib.unescape(value))
+    return values
+
+
+def _json_ld_objects(html: str) -> list[dict]:
+    """Return product/article JSON-LD objects embedded in a marketplace page."""
+    objects = []
+    for raw in re.findall(
+        r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+        html,
+        re.IGNORECASE | re.DOTALL,
+    ):
+        try:
+            payload = json.loads(html_lib.unescape(raw).strip())
+        except (TypeError, ValueError):
+            continue
+        values = payload if isinstance(payload, list) else [payload]
+        for value in values:
+            if not isinstance(value, dict):
+                continue
+            graph = value.get('@graph')
+            if isinstance(graph, list):
+                values.extend(graph)
+            else:
+                objects.append(value)
+    return objects
+
+
+def _as_tags(value) -> list[str]:
+    if isinstance(value, str):
+        return [part.strip() for part in re.split(r'[,;|]', value) if part.strip()]
+    if isinstance(value, list):
+        tags = []
+        for item in value:
+            if isinstance(item, dict):
+                item = item.get('name') or item.get('label') or ''
+            if item:
+                tags.append(str(item).strip())
+        return [tag for tag in tags if tag]
+    return []
+
+
+def _page_fields(page_html: str) -> tuple[str, str, list[str]]:
+    """Extract title, raw category, and tags from common page metadata."""
+    objects = _json_ld_objects(page_html)
+    title = _og(page_html, 'title') or ''
+    category_raw = ''
+    tags = []
+    for meta_key in ('keywords', 'article:tag'):
+        for value in _meta(page_html, meta_key):
+            tags.extend(_as_tags(value))
+    for obj in objects:
+        title = title or str(obj.get('name') or obj.get('headline') or '').strip()
+        category_raw = category_raw or str(
+            obj.get('category') or obj.get('genre') or ''
+        ).strip()
+        tags.extend(_as_tags(obj.get('keywords')))
+    title = html_lib.unescape(title).strip()
+    if not category_raw:
+        category_raw = (_meta(page_html, 'article:section') or [''])[0]
+    if not tags:
+        tags = _as_tags(_meta(page_html, 'description'))
+    return title, category_raw, list(dict.fromkeys(tags))[:40]
+
+
+def _page_result(
+    platform: str,
+    item_id: str,
+    response: requests.Response,
+    fallback_url: str,
+) -> Optional[dict]:
+    title, category_raw, tags = _page_fields(response.text)
+    title = re.sub(r'\s*[-|–]\s*(?:Freepik|Motion Array|FilterGrade|Shutterstock|Adobe Stock).*$', '', title, flags=re.IGNORECASE).strip()
+    if not title:
+        return None
+    category = map_category(category_raw, title, tags)
+    return {
+        'platform': platform,
+        'item_id': item_id,
+        'title': title,
+        'category_raw': category_raw,
+        'category': category,
+        'tags': tags,
+        'url': getattr(response, 'url', '') or fallback_url,
+        'confidence': CONFIDENCE if category else 70,
+        'source': 'marketplace_page',
+    }
+
+
+def _api_result(
+    platform: str,
+    item_id: str,
+    data: dict,
+    fallback_url: str,
+) -> Optional[dict]:
+    payload = data.get('data', data) if isinstance(data, dict) else {}
+    if isinstance(payload, list):
+        payload = payload[0] if payload else {}
+    if not isinstance(payload, dict):
+        return None
+    title = str(payload.get('title') or payload.get('name') or '').strip()
+    category_raw = str(
+        payload.get('category') or payload.get('type') or payload.get('content_type') or ''
+    ).strip()
+    if isinstance(payload.get('category'), dict):
+        category_raw = str(payload['category'].get('name') or category_raw)
+    tags = _as_tags(payload.get('tags') or payload.get('keywords'))
+    if not title:
+        return None
+    category = map_category(category_raw, title, tags)
+    return {
+        'platform': platform,
+        'item_id': item_id,
+        'title': title,
+        'category_raw': category_raw,
+        'category': category,
+        'tags': tags,
+        'url': str(payload.get('url') or fallback_url),
+        'confidence': CONFIDENCE if category else 70,
+        'source': 'marketplace_api',
+    }
+
+
 # ── Marketplace fetchers ──────────────────────────────────────────────────────
+def _provider_page_url(item_id: str, domain: str, default_path: str) -> str:
+    """Build a provider page URL from either a captured URL path or an ID."""
+    if item_id.startswith(('http://', 'https://')):
+        return item_id
+    if '/' in item_id:
+        return f'https://{domain}/{item_id.lstrip("/")}'
+    return f'https://{domain}/{default_path.format(item_id=quote(item_id, safe="-_."))}'
+
+
+def fetch_freepik(item_id: str) -> Optional[dict]:
+    """Use Freepik's authenticated resource endpoint, then its public page."""
+    api_key = os.environ.get('FREEPIK_API_KEY', '').strip()
+    if api_key and item_id.isdigit():
+        api_url = f'https://api.freepik.com/v1/resources/{item_id}'
+        response = _throttled_get(
+            api_url,
+            'api.freepik.com',
+            {'x-freepik-api-key': api_key, 'Accept': 'application/json'},
+        )
+        if response and response.status_code == 200:
+            try:
+                result = _api_result('freepik', item_id, response.json(), api_url)
+            except (TypeError, ValueError):
+                result = None
+            if result:
+                return result
+
+    if '/' not in item_id:
+        return None
+    url = _provider_page_url(item_id, 'www.freepik.com', '{item_id}')
+    response = _throttled_get(url, 'www.freepik.com')
+    if not response or response.status_code != 200:
+        return None
+    return _page_result('freepik', item_id, response, url)
+
+
+def fetch_motionarray(item_id: str) -> Optional[dict]:
+    """Scrape a Motion Array product page when a slug or direct URL is known."""
+    url = _provider_page_url(item_id, 'motionarray.com', 'browse/{item_id}')
+    response = _throttled_get(url, 'motionarray.com')
+    if not response or response.status_code != 200:
+        return None
+    return _page_result('motionarray', item_id, response, url)
+
+
+def fetch_filtergrade(item_id: str) -> Optional[dict]:
+    """Scrape a FilterGrade product page; no public API key is required."""
+    url = _provider_page_url(item_id, 'filtergrade.com', 'product/{item_id}')
+    response = _throttled_get(url, 'filtergrade.com')
+    if not response or response.status_code != 200:
+        return None
+    return _page_result('filtergrade', item_id, response, url)
+
+
+def fetch_shutterstock(item_id: str) -> Optional[dict]:
+    """Scrape a Shutterstock asset page; the optional API is not required."""
+    url = _provider_page_url(item_id, 'www.shutterstock.com', 'image-photo/{item_id}')
+    response = _throttled_get(url, 'www.shutterstock.com')
+    if not response or response.status_code != 200:
+        return None
+    return _page_result('shutterstock', item_id, response, url)
+
+
+def fetch_adobe_stock(item_id: str) -> Optional[dict]:
+    """Scrape a public Adobe Stock asset page without attempting licensing."""
+    url = _provider_page_url(item_id, 'stock.adobe.com', 'images/{item_id}')
+    response = _throttled_get(url, 'stock.adobe.com')
+    if not response or response.status_code != 200:
+        return None
+    return _page_result('adobe_stock', item_id, response, url)
+
+
 def fetch_videohive(item_id: str) -> Optional[dict]:
     """Scrape videohive.net for item title and category."""
     url = f'https://videohive.net/item/x/{item_id}'
@@ -362,7 +605,7 @@ def fetch_motionelements(item_id: str) -> Optional[dict]:
 
 def fetch_creativemarket(item_id: str) -> Optional[dict]:
     """Scrape creativemarket.com for item title and category."""
-    url = f'https://creativemarket.com/product/{item_id}'
+    url = _provider_page_url(item_id, 'creativemarket.com', 'product/{item_id}')
     resp = _throttled_get(url, 'creativemarket.com')
     if not resp or resp.status_code not in (200,):
         return None
@@ -480,10 +723,14 @@ _FETCHERS = {
     'videohive':     fetch_videohive,
     'motionelements': fetch_motionelements,
     'creativemarket': fetch_creativemarket,
+    'freepik':       fetch_freepik,
+    'motionarray':   fetch_motionarray,
+    'filtergrade':   fetch_filtergrade,
+    'shutterstock':  fetch_shutterstock,
+    'adobe_stock':   fetch_adobe_stock,
     'envato':        fetch_envato,
     'graphicriver':  fetch_envato,   # same endpoint
     'designbundles': None,           # no public API; DeepSeek only
-    'motionarray':   None,           # no public API; DeepSeek only
 }
 
 def enrich(folder_name: str) -> Optional[dict]:

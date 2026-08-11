@@ -332,6 +332,10 @@ successful catalog release and sync status.
 | Ollama | Local / offline fallback | Any local model |
 
 Set `DEEPSEEK_API_KEY` to enable DeepSeek routing.
+Marketplace enrichment can use the optional `FREEPIK_API_KEY` for authenticated
+Freepik resource metadata; Motion Array, FilterGrade, Shutterstock, Adobe Stock,
+and Creative Market page lookups remain credential-free and fail closed when a
+provider page is unavailable.
 GitHub Models and DeepSeek use the shared `httpx` chat-completions transport.
 The AI Provider settings dialog stores bounded parallel defaults (1–8 requests,
 1–60 folders per request). Use `classify_design.py --run --parallel` directly,
