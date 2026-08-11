@@ -4,22 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-70: Chroma local embeddings service for cross-modal deduplication**
-Deploy `chromadb` (v0.5.6+, May 2026) as the persistent embeddings backend. Store (file_path, CLIP
-embedding, perceptual_hash, size) tuples in a local SQLite-backed Chroma collection. Enable "Find
-Duplicates" feature via cosine similarity queries: user selects a file; app returns top 10 matches
-(cosine sim > 0.90) in <200 ms. Index both visual embeddings (from NEXT-69) and text descriptions
-(from NEXT-5) to enable cross-modal matching (e.g., find images that match the phrase "sunset over
-mountains"). Chroma's built-in BM25 + vector fusion provides hybrid search. This pairs directly with
-the consolidation phase: dedup + move = cleanup automation. **Depends on**: NEXT-69 (CLIP embeddings).
-
-- [ ] **Impact**: 4 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-69 | **Unblocks**: L-1
-
-- [ ] Source: [S138] Chroma v0.5.6 https://github.com/chroma-core/chroma (persistent SQLite backend;
-   hybrid search; Python SDK; <100 ms query latency documented);
-   [S139] Bookmark-Organizer-Pro hybrid_search.py ported pattern https://github.com/SysAdminDoc/Bookmark-Organizer-Pro/blob/main/services/hybrid_search.py
-   (BM25 + cosine fusion via Reciprocal Rank Fusion; production-tested)
-
 **NEXT-71: Qwen2.5-VL-7B + llama.cpp local VLM inference**
 Integrate Qwen2.5-VL-7B (Alibaba, April 2024, 7B parameters) as a heavyweight document/diagram
 classifier. Use `llama.cpp` (v0.3.0+, May 2026) with Q4_K_M quantization (3.5 GB VRAM, 70% accuracy

@@ -10,6 +10,9 @@ All notable changes to FileOrganizer will be documented in this file.
   loading, explicit device/batch bounds, model-bound sqlite-vec storage, and
   cosine-similarity queries. Missing ML dependencies fail closed through the
   shared capability matrix.
+- Added an optional persistent Chroma cross-modal index for CLIP image/text
+  queries, with stable local IDs, metadata filters, bounded top-k results, and
+  stale-path cleanup.
 - Added a WinAppSDK 2.0.1 shell `SystemBackdropElement` with Mica rendering
   behind the transparent navigation/content host.
 - Smart Sort now accepts multiple source folders from one WinAppSDK folder

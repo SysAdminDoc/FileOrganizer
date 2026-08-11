@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import subprocess
 import sys
@@ -31,18 +32,25 @@ LIVE_NDJSON_SIDECARS = {
     "subtitles_run.py": lambda missing, dest: ["--root", str(missing)],
     "video_run.py": lambda missing, dest: ["--root", str(missing)],
     "watch_run.py": lambda missing, dest: ["--watches", "not-json"],
+    "clip_index_run.py": lambda missing, dest: ["--root", str(missing), "--db", str(dest / "clip.db")],
+    "chroma_run.py": lambda missing, dest: ["--root", str(missing), "--db", str(dest / "chroma")],
 }
 
 ALLOWED_EVENTS = set(PROTOCOL_EVENTS)
 
 
 def _run_sidecar(script: str, args: list[str]) -> subprocess.CompletedProcess[str]:
+    kwargs = {
+        "cwd": REPO_ROOT,
+        "text": True,
+        "capture_output": True,
+        "timeout": 20,
+    }
+    if os.name == "nt":
+        kwargs["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0)
     return subprocess.run(
         [sys.executable, str(REPO_ROOT / script), *args],
-        cwd=REPO_ROOT,
-        text=True,
-        capture_output=True,
-        timeout=20,
+        **kwargs,
     )
 
 
@@ -73,6 +81,8 @@ def test_live_sidecars_emit_valid_ndjson_errors_for_fatal_inputs(tmp_path):
         assert isinstance(matrix, list) and matrix, script
         expected_workflow = {
             "dedup_run.py": "duplicates",
+            "clip_index_run.py": "clip_index",
+            "chroma_run.py": "chroma_index",
         }.get(script, script.removesuffix("_run.py"))
         assert {row["workflow"] for row in matrix} == {expected_workflow}, script
         assert [row["sequence"] for row in rows] == list(range(len(rows))), script
