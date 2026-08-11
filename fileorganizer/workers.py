@@ -3323,6 +3323,43 @@ class MarketplaceUpdateWorker(QThread):
             })
 
 
+class CrossLibraryScanWorker(QThread):
+    """Hash independent library roots without blocking the Qt event loop."""
+
+    progress = pyqtSignal(str)
+    finished = pyqtSignal(object)  # list[CrossLibraryDuplicateGroup] or error dict
+
+    def __init__(self, roots, *, depth: int = 1, parent=None):
+        super().__init__(parent)
+        self._roots = list(roots or [])
+        self._depth = depth
+        self._cancelled = False
+
+    def cancel(self):
+        self._cancelled = True
+
+    def run(self):
+        try:
+            from fileorganizer.cross_library_dedup import (
+                CrossLibraryScanCancelled,
+                scan_cross_library,
+            )
+
+            groups = scan_cross_library(
+                self._roots,
+                depth=self._depth,
+                progress_cb=self.progress.emit,
+                cancel_cb=lambda: self._cancelled,
+            )
+            self.finished.emit(groups)
+        except CrossLibraryScanCancelled:
+            self.progress.emit("Cross-library scan cancelled")
+            self.finished.emit([])
+        except Exception as exc:
+            self.progress.emit(f"Cross-library scan failed: {type(exc).__name__}")
+            self.finished.emit({'error': str(exc)})
+
+
 class CatalogSyncWorker(QThread):
     """
     Background worker that checks GitHub Releases for a newer community

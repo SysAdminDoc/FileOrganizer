@@ -12,7 +12,8 @@ from fileorganizer.dialogs.cleanup import (
     _CleanupScanWorker, CleanupToolsDialog, CleanupPanel
 )
 from fileorganizer.dialogs.duplicates import (
-    _DupScanWorker, DuplicateFinderDialog, DuplicatePanel, DuplicateCompareDialog
+    _DupScanWorker, DuplicateFinderDialog, DuplicatePanel, DuplicateCompareDialog,
+    CrossLibraryDedupDialog, CrossLibraryReviewDialog,
 )
 from fileorganizer.dialogs.tools import (
     BeforeAfterDialog, EventGroupDialog, ScheduleDialog,
@@ -35,6 +36,7 @@ __all__ = [
     'TemplateBuilderWidget', '_FileBrowserDialog', 'RuleEditorDialog',
     '_CleanupScanWorker', 'CleanupToolsDialog', 'CleanupPanel',
     '_DupScanWorker', 'DuplicateFinderDialog', 'DuplicatePanel', 'DuplicateCompareDialog',
+    'CrossLibraryDedupDialog', 'CrossLibraryReviewDialog',
     'BeforeAfterDialog', 'EventGroupDialog', 'ScheduleDialog',
     'UndoTimelineDialog', 'UndoBatchDialog', 'PluginManagerDialog',
     'RelationshipGraphWidget', 'WatchHistoryDialog',

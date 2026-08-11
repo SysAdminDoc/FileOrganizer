@@ -4,14 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-20: Cross-library fingerprint dedup**
-Compare G:\ + I:\ (and external drives) by `folder_fingerprint` SHA-256 across roots. Show a
-merge/keep/archive dialog per duplicate group.
-
-- [ ] **Impact**: 4 | **Effort**: 3
-
-- [ ] Source: [S11] fclones cross-library pattern https://github.com/pkolaczk/fclones
-
 **NEXT-21: Version-aware dedup**
 If two items share a marketplace ID but have different file counts or fingerprints, one is likely
 a newer version. Keep the one with more files; archive the other with a reason note.

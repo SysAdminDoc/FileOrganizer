@@ -198,6 +198,11 @@ Python process tree.
 - **Progressive hash dedup** — Size > prefix hash > suffix hash > full
   SHA-256, plus Pillow 12.2-compatible perceptual image hashing for
   near-duplicate photos.
+- **Cross-library folder dedup** — The legacy desktop **Tools → Cross-Library
+  Dedup** dialog compares independent roots (for example, `G:\Organized` and
+  `I:\Organized`) using complete folder SHA-256 fingerprints. Each group lets
+  you choose a keeper and explicitly leave, merge, or archive other copies;
+  unreadable folders and changed scan results fail closed.
 - **Shell Cleanup and Duplicates pages** — read-only review screens that do
   not mutate files. Use the Python desktop Cleanup Tools or Duplicate Finder
   for confirmation, Trash/quarantine, hard-link, move, and undo actions.

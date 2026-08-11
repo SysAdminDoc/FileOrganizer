@@ -1,5 +1,6 @@
 """FileOrganizer — Duplicate finder dialogs and panels."""
 import os
+import re
 from datetime import datetime
 
 from PyQt6.QtWidgets import (
@@ -7,7 +8,7 @@ from PyQt6.QtWidgets import (
     QLabel, QLineEdit, QPushButton, QComboBox, QTableWidget, QTableWidgetItem,
     QCheckBox, QHeaderView, QFileDialog, QAbstractItemView,
     QTreeWidget, QTreeWidgetItem, QDialog, QMessageBox,
-    QProgressBar, QScrollArea
+    QProgressBar, QScrollArea, QRadioButton, QButtonGroup, QSpinBox
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QColor, QPixmap
@@ -991,3 +992,401 @@ class DuplicatePanel(QWidget):
             f"Done: {success} succeeded" + (f", {failed} failed" if failed else "")))
         if success > 0:
             self._start_scan()
+
+
+class CrossLibraryReviewDialog(QDialog):
+    """Review one exact folder-fingerprint group at a time."""
+
+    _ACTIONS = (
+        ("keep", "Leave in place"),
+        ("merge", "Merge into keeper"),
+        ("archive", "Archive"),
+    )
+
+    def __init__(self, groups, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Cross-Library Duplicate Review")
+        self.resize(980, 600)
+        self.setStyleSheet(get_active_stylesheet())
+        self._groups = list(groups or [])
+        self._current_idx = 0
+        self._states = {}
+        self._keeper_group = None
+        self._keeper_radios = []
+        self._action_boxes = []
+        self._build_ui()
+        self._populate_group()
+
+    def _build_ui(self):
+        _t = get_active_theme()
+        lay = QVBoxLayout(self)
+        lay.setSpacing(8)
+
+        nav = QHBoxLayout()
+        self.btn_prev = QPushButton("< Previous Group")
+        self.btn_prev.clicked.connect(self._previous_group)
+        nav.addWidget(self.btn_prev)
+        self.lbl_group = QLabel("")
+        self.lbl_group.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.lbl_group.setProperty("class", "subheading")
+        nav.addWidget(self.lbl_group, 1)
+        self.btn_next = QPushButton("Next Group >")
+        self.btn_next.clicked.connect(self._next_group)
+        nav.addWidget(self.btn_next)
+        lay.addLayout(nav)
+
+        note = QLabel(
+            "Choose one keeper. Merge removes only files proven identical; "
+            "Archive moves the duplicate into a new, collision-safe folder."
+        )
+        note.setWordWrap(True)
+        note.setProperty("class", "meta")
+        lay.addWidget(note)
+
+        archive_row = QHBoxLayout()
+        archive_row.addWidget(QLabel("Archive root:"))
+        self.txt_archive = QLineEdit()
+        self.txt_archive.setPlaceholderText("Existing folder required for Archive actions")
+        archive_row.addWidget(self.txt_archive, 1)
+        btn_archive = QPushButton("Browse")
+        btn_archive.clicked.connect(self._browse_archive)
+        archive_row.addWidget(btn_archive)
+        lay.addLayout(archive_row)
+
+        self.table = QTableWidget(0, 6)
+        self.table.setHorizontalHeaderLabels(
+            ["Keep", "Folder", "Library root", "Files", "Size", "Decision"]
+        )
+        self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.table.setSelectionMode(QAbstractItemView.SelectionMode.NoSelection)
+        self.table.setAlternatingRowColors(True)
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(5, QHeaderView.ResizeMode.ResizeToContents)
+        lay.addWidget(self.table, 1)
+
+        action_row = QHBoxLayout()
+        self.lbl_status = QLabel("")
+        self.lbl_status.setProperty("class", "meta")
+        action_row.addWidget(self.lbl_status, 1)
+        self.btn_apply = QPushButton("Apply Group Decisions")
+        self.btn_apply.setStyleSheet(
+            f"QPushButton {{ background: {_t['green']}; color: white; "
+            "font-weight: bold; padding: 6px 14px; border-radius: 4px; }}"
+        )
+        self.btn_apply.clicked.connect(self._apply_group)
+        action_row.addWidget(self.btn_apply)
+        btn_close = QPushButton("Close")
+        btn_close.clicked.connect(self.accept)
+        action_row.addWidget(btn_close)
+        lay.addLayout(action_row)
+
+    def _browse_archive(self):
+        folder = QFileDialog.getExistingDirectory(self, "Select Archive Root")
+        if folder:
+            self.txt_archive.setText(folder)
+
+    def _current_group(self):
+        if not self._groups:
+            return None
+        return self._groups[self._current_idx]
+
+    def _capture_state(self):
+        group = self._current_group()
+        if group is None:
+            return
+        keeper = self._selected_keeper()
+        actions = {}
+        for row, member in enumerate(group.members):
+            box = self._action_boxes[row]
+            actions[member.path] = box.currentData() if box.isEnabled() else "keep"
+        self._states[group.fingerprint] = {
+            "keeper": keeper,
+            "actions": actions,
+        }
+
+    def _selected_keeper(self):
+        for radio, member in zip(self._keeper_radios, self._current_group().members):
+            if radio.isChecked():
+                return member.path
+        return self._current_group().members[0].path
+
+    def _populate_group(self):
+        group = self._current_group()
+        self.table.setRowCount(0)
+        self._keeper_radios = []
+        self._action_boxes = []
+        self._keeper_group = QButtonGroup(self)
+        if group is None:
+            self.lbl_group.setText("No duplicate groups found")
+            self.btn_prev.setEnabled(False)
+            self.btn_next.setEnabled(False)
+            self.btn_apply.setEnabled(False)
+            return
+
+        self.lbl_group.setText(
+            f"Fingerprint group {self._current_idx + 1}/{len(self._groups)} "
+            f"— {len(group.members)} folders"
+        )
+        self.btn_prev.setEnabled(self._current_idx > 0)
+        self.btn_next.setEnabled(self._current_idx < len(self._groups) - 1)
+        state = self._states.get(group.fingerprint, {})
+        keeper_path = state.get("keeper") or group.members[0].path
+        old_actions = state.get("actions", {})
+
+        for row, member in enumerate(group.members):
+            self.table.insertRow(row)
+            radio = QRadioButton()
+            radio.setToolTip("Keep this folder as the group keeper")
+            radio.setChecked(member.path == keeper_path)
+            self._keeper_group.addButton(radio, row)
+            radio.toggled.connect(self._update_keeper_controls)
+            keeper_cell = QWidget()
+            keeper_lay = QHBoxLayout(keeper_cell)
+            keeper_lay.setContentsMargins(0, 0, 0, 0)
+            keeper_lay.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            keeper_lay.addWidget(radio)
+            self.table.setCellWidget(row, 0, keeper_cell)
+            self._keeper_radios.append(radio)
+
+            self.table.setItem(row, 1, QTableWidgetItem(member.name))
+            self.table.setItem(row, 2, QTableWidgetItem(member.library_root))
+            self.table.setItem(row, 3, QTableWidgetItem(str(member.file_count)))
+            self.table.setItem(row, 4, QTableWidgetItem(format_size(member.total_bytes)))
+
+            box = QComboBox()
+            for value, label in self._ACTIONS:
+                box.addItem(label, value)
+            box.setCurrentIndex(max(0, box.findData(old_actions.get(member.path, "keep"))))
+            self.table.setCellWidget(row, 5, box)
+            self._action_boxes.append(box)
+
+            self.table.item(row, 1).setToolTip(member.path)
+            self.table.item(row, 2).setToolTip(member.library_root)
+        self._update_keeper_controls()
+
+    def _update_keeper_controls(self):
+        group = self._current_group()
+        if group is None:
+            return
+        keeper = self._selected_keeper()
+        for row, (box, member) in enumerate(zip(self._action_boxes, group.members)):
+            is_keeper = member.path == keeper
+            box.setEnabled(not is_keeper)
+            if is_keeper:
+                box.setCurrentIndex(0)
+            elif box.count() == 0:
+                for value, label in self._ACTIONS:
+                    box.addItem(label, value)
+
+    def _apply_group(self):
+        group = self._current_group()
+        if group is None:
+            return
+        self._capture_state()
+        keeper = self._selected_keeper()
+        archive_root = self.txt_archive.text().strip() or None
+        outcomes = []
+        errors = []
+        for row, member in enumerate(group.members):
+            if member.path == keeper:
+                continue
+            action = self._action_boxes[row].currentData() or "keep"
+            if action == "keep":
+                continue
+            try:
+                from fileorganizer.cross_library_dedup import apply_cross_library_action
+
+                outcomes.append(apply_cross_library_action(
+                    group,
+                    member.path,
+                    action=action,
+                    keep_path=keeper,
+                    archive_root=archive_root,
+                ))
+            except Exception as exc:
+                errors.append(f"{member.name}: {exc}")
+        if errors:
+            self.lbl_status.setText("; ".join(errors[:2]))
+        elif outcomes:
+            self.lbl_status.setText(
+                "Applied " + ", ".join(f"{result.action} ({result.source})" for result in outcomes)
+            )
+        else:
+            self.lbl_status.setText("No merge or archive actions selected.")
+
+    def _previous_group(self):
+        if self._current_idx > 0:
+            self._capture_state()
+            self._current_idx -= 1
+            self._populate_group()
+
+    def _next_group(self):
+        if self._current_idx < len(self._groups) - 1:
+            self._capture_state()
+            self._current_idx += 1
+            self._populate_group()
+
+
+class CrossLibraryDedupDialog(QDialog):
+    """Root selector and result browser for exact cross-library dedup."""
+
+    def __init__(self, parent=None, roots=None):
+        super().__init__(parent)
+        self.setWindowTitle("Cross-Library Deduplication")
+        self.resize(1050, 680)
+        self.setStyleSheet(get_active_stylesheet())
+        self._groups = []
+        self._worker = None
+        self._build_ui(roots)
+
+    def _build_ui(self, roots):
+        _t = get_active_theme()
+        lay = QVBoxLayout(self)
+        lay.setSpacing(8)
+
+        intro = QLabel(
+            "Find exact folder duplicates across independent libraries using complete "
+            "SHA-256 fingerprints. Folders with unreadable files are omitted."
+        )
+        intro.setWordWrap(True)
+        intro.setProperty("class", "stats")
+        lay.addWidget(intro)
+
+        roots_row = QHBoxLayout()
+        roots_row.addWidget(QLabel("Library roots:"))
+        self.txt_roots = QLineEdit()
+        self.txt_roots.setPlaceholderText(r"G:\Organized;I:\Organized")
+        self.txt_roots.setText(";".join(roots or [r"G:\Organized", r"I:\Organized"]))
+        roots_row.addWidget(self.txt_roots, 1)
+        btn_browse = QPushButton("Add Folder")
+        btn_browse.clicked.connect(self._browse_root)
+        roots_row.addWidget(btn_browse)
+        lay.addLayout(roots_row)
+
+        options = QHBoxLayout()
+        options.addWidget(QLabel("Child depth:"))
+        self.spn_depth = QSpinBox()
+        self.spn_depth.setRange(1, 8)
+        self.spn_depth.setValue(1)
+        self.spn_depth.setToolTip("How many folder levels below each library root to hash")
+        options.addWidget(self.spn_depth)
+        options.addStretch()
+        lay.addLayout(options)
+
+        scan_row = QHBoxLayout()
+        self.btn_scan_cross = QPushButton("Scan Libraries")
+        self.btn_scan_cross.setStyleSheet(
+            f"QPushButton {{ background: {_t['green']}; color: white; font-weight: bold; "
+            "padding: 6px 14px; border-radius: 4px; }}"
+        )
+        self.btn_scan_cross.clicked.connect(self._start_scan)
+        scan_row.addWidget(self.btn_scan_cross)
+        self.progress_cross = QProgressBar()
+        self.progress_cross.setRange(0, 0)
+        self.progress_cross.setVisible(False)
+        scan_row.addWidget(self.progress_cross, 1)
+        self.lbl_status_cross = QLabel("")
+        self.lbl_status_cross.setProperty("class", "meta")
+        scan_row.addWidget(self.lbl_status_cross)
+        lay.addLayout(scan_row)
+
+        self.tree_cross = QTreeWidget()
+        self.tree_cross.setHeaderLabels(["Folder", "Library root", "Files", "Size", "Fingerprint"])
+        self.tree_cross.setAlternatingRowColors(True)
+        self.tree_cross.setRootIsDecorated(True)
+        self.tree_cross.header().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        self.tree_cross.header().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
+        self.tree_cross.header().setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        self.tree_cross.header().setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
+        self.tree_cross.header().setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+        lay.addWidget(self.tree_cross, 1)
+
+        bottom = QHBoxLayout()
+        self.lbl_summary_cross = QLabel("")
+        self.lbl_summary_cross.setProperty("class", "summary")
+        bottom.addWidget(self.lbl_summary_cross, 1)
+        self.btn_review_cross = QPushButton("Review Duplicate Groups")
+        self.btn_review_cross.setEnabled(False)
+        self.btn_review_cross.clicked.connect(self._review_groups)
+        bottom.addWidget(self.btn_review_cross)
+        btn_close = QPushButton("Close")
+        btn_close.clicked.connect(self.accept)
+        bottom.addWidget(btn_close)
+        lay.addLayout(bottom)
+
+    def _browse_root(self):
+        folder = QFileDialog.getExistingDirectory(self, "Select Library Root")
+        if not folder:
+            return
+        roots = self._roots()
+        if folder not in roots:
+            roots.append(folder)
+        self.txt_roots.setText(";".join(roots))
+
+    def _roots(self):
+        return [value.strip() for value in re.split(r"[;\r\n]+", self.txt_roots.text()) if value.strip()]
+
+    def _start_scan(self):
+        roots = self._roots()
+        if len(roots) < 2:
+            self.lbl_status_cross.setText("Enter at least two library roots.")
+            return
+        self.btn_scan_cross.setEnabled(False)
+        self.btn_review_cross.setEnabled(False)
+        self.tree_cross.clear()
+        self.progress_cross.setVisible(True)
+        self.lbl_status_cross.setText("Starting scan…")
+        from fileorganizer.workers import CrossLibraryScanWorker
+
+        self._worker = CrossLibraryScanWorker(roots, depth=self.spn_depth.value(), parent=self)
+        self._worker.progress.connect(self.lbl_status_cross.setText)
+        self._worker.finished.connect(self._on_scan_done)
+        self._worker.finished.connect(self._worker.deleteLater)
+        self._worker.start()
+
+    def _on_scan_done(self, result):
+        self._worker = None
+        self.btn_scan_cross.setEnabled(True)
+        self.progress_cross.setVisible(False)
+        if isinstance(result, dict):
+            self.lbl_status_cross.setText(result.get("error", "Scan failed."))
+            return
+        self._groups = list(result or [])
+        self.tree_cross.clear()
+        for index, group in enumerate(self._groups, 1):
+            header = QTreeWidgetItem([
+                f"Group {index} ({len(group.members)} folders)",
+                ", ".join(group.library_roots), "", format_size(group.total_bytes),
+                group.fingerprint[:16] + "…",
+            ])
+            header.setForeground(0, QColor("#4fc3f7"))
+            self.tree_cross.addTopLevelItem(header)
+            for member in group.members:
+                child = QTreeWidgetItem([
+                    member.name, member.library_root, str(member.file_count),
+                    format_size(member.total_bytes), member.fingerprint[:16] + "…",
+                ])
+                child.setToolTip(0, member.path)
+                child.setToolTip(1, member.library_root)
+                header.addChild(child)
+            header.setExpanded(True)
+        self.lbl_summary_cross.setText(
+            f"{len(self._groups)} exact duplicate group(s) found"
+            if self._groups else "No cross-library duplicates found"
+        )
+        self.btn_review_cross.setEnabled(bool(self._groups))
+
+    def _review_groups(self):
+        if self._groups:
+            CrossLibraryReviewDialog(self._groups, self).exec()
+
+    def closeEvent(self, event):
+        if self._worker and self._worker.isRunning():
+            self._worker.cancel()
+            self._worker.wait(1000)
+        super().closeEvent(event)

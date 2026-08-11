@@ -9,6 +9,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Completed folder scans now launch a throttled background marketplace refresh;
   explicit provider version/date changes are grouped into non-flashing update
   alerts by category.
+- Added a Tools → Cross-Library Dedup reviewer that compares independent roots
+  with complete folder SHA-256 fingerprints and offers revalidated per-group
+  keep, merge, or archive decisions.
 - Marketplace enrichment now recognizes Creative Market, Freepik, Motion Array,
   FilterGrade, Shutterstock, and Adobe Stock IDs/URLs, with shared HTML/JSON-LD
   parsing and an optional keyed Freepik resource lookup.
