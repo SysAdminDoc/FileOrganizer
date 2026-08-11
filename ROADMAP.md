@@ -4,23 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-73: Structured audit logging with loguru + JSON sink**
-Replace stdlib `logging` with `loguru` (v0.7.2+, March 2026). Implement dual-sink strategy:
-(1) **Console sink** — colorized, human-readable (dev mode); (2) **JSON file sink** — structured logs
-written to `%APPDATA%\FileOrganizer\logs\audit.jsonl` (newline-delimited JSON). Each log entry includes
-`timestamp`, `trace_id` (correlation across multi-step operations), `level`, `operation` (move, classify,
-dedup), `user`, `source_path`, `dest_path`, `classification`, `confidence`, `exception` (if error). Enable
-trace propagation: when a user initiates an organize run, generate a UUID trace_id; pass it through all
-workers (scanning, classification, moving). This enables forensic analysis of errors and compliance audits
-(GDPR: "which files were touched?"). Non-breaking change: silent upgrade; JSON logs start writing on app
-restart. **Pairs with NEXT-74 (metrics) and NEXT-75 (crash reporting) for full observability tier**.
-
-- [ ] **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Unblocks**: NEXT-74, NEXT-75
-
-- [ ] Source: [S144] loguru v0.7.2 https://github.com/Delgan/loguru (JSON sink via custom formatter;
-   trace ID propagation pattern in docs; ~2.5 MB on disk per 100K logs);
-   [S145] FileOrganizer telemetry design (NEXT-73 anchor for observability tier)
-
 **NEXT-74: Prometheus metrics export for performance monitoring**
 Emit Prometheus-format metrics to a local HTTP endpoint (`http://localhost:9999/metrics`). Track:
 

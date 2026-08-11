@@ -66,6 +66,50 @@ from fileorganizer.engine import RuleEngine, RenameTemplateEngine
 from fileorganizer.plugins import PluginManager
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
 from fileorganizer.xmp_sidecar import write_classification_sidecar
+from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
+
+
+def _worker_audit_start(
+    operation: str,
+    message: str,
+    *,
+    source_path: object = "",
+    count: int | None = None,
+    mode: str = "gui_worker",
+) -> str:
+    """Start a GUI worker trace without allowing telemetry to affect work."""
+    trace_id = new_trace_id()
+    configure_audit(console=False)
+    details: dict[str, object] = {"mode": mode, "status": "running"}
+    if count is not None:
+        details["count"] = count
+    audit_event(
+        operation,
+        message,
+        trace_id=trace_id,
+        source_path=source_path,
+        **details,
+    )
+    return trace_id
+
+
+def _worker_audit_finish(
+    operation: str,
+    message: str,
+    trace_id: str,
+    *,
+    source_path: object = "",
+    status: str = "complete",
+    **details: object,
+) -> None:
+    audit_event(
+        operation,
+        message,
+        trace_id=trace_id,
+        source_path=source_path,
+        status=status,
+        **details,
+    )
 
 # ── Safe merge (standalone for use in workers) ─────────────────────────────────
 def _collision_destination(path):
@@ -381,9 +425,19 @@ class ScanAepWorker(QThread):
         self._cancelled = True
 
     def run(self):
+        trace_id = _worker_audit_start(
+            "classify",
+            "AEP folder scan started",
+            source_path=self.root_dir,
+            mode="aep_scan",
+        )
         root = Path(self.root_dir)
         folders = _collect_scan_folders(root, self.scan_depth)
         if not folders:
+            _worker_audit_finish(
+                "classify", "AEP folder scan found no folders", trace_id,
+                source_path=self.root_dir, status="empty",
+            )
             self.log.emit("ERROR: No folders found or permission denied")
             self.finished.emit(); return
 
@@ -425,6 +479,11 @@ class ScanAepWorker(QThread):
                 'aep_rel_path': str(best_aep.relative_to(folder)) if best_aep else None,
                 'aep_size': best_size,
             })
+        _worker_audit_finish(
+            "classify", "AEP folder scan finished", trace_id,
+            source_path=self.root_dir, count=total,
+            status="cancelled" if self._cancelled else "complete",
+        )
         self.finished.emit()
 
 
@@ -565,9 +624,19 @@ class ScanCategoryWorker(QThread):
         return (None, 0, folder.name, folder.name, 0, '', '', None)
 
     def run(self):
+        trace_id = _worker_audit_start(
+            "classify",
+            "Category scan started",
+            source_path=self.root_dir,
+            mode="category_scan",
+        )
         root = Path(self.root_dir)
         folders = _collect_scan_folders(root, self.scan_depth)
         if not folders:
+            _worker_audit_finish(
+                "classify", "Category scan found no folders", trace_id,
+                source_path=self.root_dir, status="empty",
+            )
             self.log.emit("ERROR: No folders found or permission denied")
             self.finished.emit(); return
 
@@ -708,6 +777,11 @@ class ScanCategoryWorker(QThread):
         if correction_hits: self.log.emit(f"  Learned corrections applied: {correction_hits}")
         if elapsed > 1: self.log.emit(f"  Scan time: {elapsed:.1f}s ({elapsed/max(total,1)*1000:.0f}ms/folder)")
         _close_cache_conn()  # Release persistent DB connection
+        _worker_audit_finish(
+            "classify", "Category scan finished", trace_id,
+            source_path=self.root_dir, count=total,
+            status="cancelled" if self._cancelled else "complete",
+        )
         self.finished.emit()
 
 
@@ -734,11 +808,20 @@ class ScanLLMWorker(QThread):
         self._cancelled = True
 
     def run(self):
+        trace_id = _worker_audit_start(
+            "classify",
+            "LLM category scan started",
+            source_path=self.root_dir,
+            mode="llm_scan",
+        )
         root = Path(self.root_dir)
         settings = load_ollama_settings()
-
         folders = _collect_scan_folders(root, self.scan_depth)
         if not folders:
+            _worker_audit_finish(
+                "classify", "LLM category scan found no folders", trace_id,
+                source_path=self.root_dir, status="empty",
+            )
             self.log.emit("ERROR: No folders found or permission denied")
             self.finished.emit(); return
 
@@ -754,6 +837,10 @@ class ScanLLMWorker(QThread):
             self.log.emit("Falling back to rule-based classification...")
             # Fall back to rule-based scanning
             self._fallback_scan(folders)
+            _worker_audit_finish(
+                "classify", "LLM category scan finished with rule fallback", trace_id,
+                source_path=self.root_dir, status="fallback", count=len(folders),
+            )
             return
 
         self.log.emit(f"  Engine: LLM via Ollama [{settings['model']}]")
@@ -973,6 +1060,11 @@ class ScanLLMWorker(QThread):
         if correction_hits: self.log.emit(f"  Learned corrections: {correction_hits}")
         if elapsed > 1: self.log.emit(f"  Scan time: {elapsed:.1f}s")
         _close_cache_conn()
+        _worker_audit_finish(
+            "classify", "LLM category scan finished", trace_id,
+            source_path=self.root_dir, count=total,
+            status="cancelled" if self._cancelled else "complete",
+        )
         self.finished.emit()
 
     def _fallback_scan(self, folders):
@@ -1119,6 +1211,9 @@ class ApplyAepWorker(QThread):
     def run(self):
         ok = err = 0; undo_ops = []
         total = len(self.work_items)
+        trace_id = _worker_audit_start(
+            "move", "AEP apply started", mode="aep_apply", count=total,
+        )
         ts = datetime.now().isoformat()
         for idx, (ri, it) in enumerate(self.work_items):
             if self._cancelled:
@@ -1180,6 +1275,11 @@ class ApplyAepWorker(QThread):
                     except Exception:
                         pass
                 self.item_done.emit(ri, "Error")
+        _worker_audit_finish(
+            "move", "AEP apply finished", trace_id,
+            status="cancelled" if self._cancelled else "complete",
+            moved=ok, errors=err,
+        )
         self.finished.emit(ok, err, undo_ops)
 
 
@@ -1204,6 +1304,9 @@ class ApplyCatWorker(QThread):
 
         ok = err = 0; undo_ops = []
         total = len(self.work_items)
+        trace_id = _worker_audit_start(
+            "move", "Category apply started", mode="category_apply", count=total,
+        )
         ts = datetime.now().isoformat()
 
         # Phase 1: write plan to journal before touching disk
@@ -1312,6 +1415,11 @@ class ApplyCatWorker(QThread):
             except Exception:
                 pass
 
+        _worker_audit_finish(
+            "move", "Category apply finished", trace_id,
+            status="cancelled" if self._cancelled else "complete",
+            moved=ok, errors=err,
+        )
         self.finished.emit(ok, err, undo_ops)
 
 
@@ -1337,6 +1445,10 @@ class ResumeApplyWorker(QThread):
         from fileorganizer.move_journal import mark_done, clear_run
         ok = err = 0
         total = len(self._moves)
+        trace_id = _worker_audit_start(
+            "move", "Resume apply started", source_path=self._run_id,
+            mode="resume_apply", count=total,
+        )
         for idx, mv in enumerate(self._moves):
             if self._cancelled:
                 self.log.emit(f"  Resume cancelled at {idx}/{total}")
@@ -1414,6 +1526,12 @@ class ResumeApplyWorker(QThread):
 
         if not self._cancelled:
             clear_run(self._run_id)
+        _worker_audit_finish(
+            "move", "Resume apply finished", trace_id,
+            source_path=self._run_id,
+            status="cancelled" if self._cancelled else "complete",
+            moved=ok, errors=err,
+        )
         self.finished.emit(ok, err)
 
 
@@ -1499,11 +1617,21 @@ class ScanFilesWorker(QThread):
     def cancel(self): self._cancelled = True
 
     def run(self):
+        trace_id = _worker_audit_start(
+            "classify",
+            "File scan started",
+            source_path=self.src_dir,
+            mode="file_scan",
+        )
         self.phase.emit("Scanning", "Collecting files and folders…")
         src = Path(self.src_dir)
         ext_map = _build_ext_map(self.categories)
         items = self._collect(src)
         if not items:
+            _worker_audit_finish(
+                "classify", "File scan found no items", trace_id,
+                source_path=self.src_dir, status="empty",
+            )
             self.log.emit("No files/folders found.")
             self.finished.emit(); return
 
@@ -1695,6 +1823,11 @@ class ScanFilesWorker(QThread):
             self.log.emit(f"  [CACHE] {cache_hits} items loaded from scan cache (unchanged files)")
         cache.close()
 
+        _worker_audit_finish(
+            "classify", "File scan finished", trace_id,
+            source_path=self.src_dir, count=total,
+            status="cancelled" if self._cancelled else "complete",
+        )
         self.finished.emit()
 
     def _collect(self, src: Path) -> list:
@@ -1769,6 +1902,9 @@ class ApplyFilesWorker(QThread):
     def run(self):
         ok = err = 0; undo_ops = []
         total = len(self.work_items)
+        trace_id = _worker_audit_start(
+            "move", "File apply started", mode="file_apply", count=total,
+        )
         ts = datetime.now().isoformat()
         for seq, (li, it) in enumerate(self.work_items):
             if self._cancelled:
@@ -1868,6 +2004,14 @@ class ApplyFilesWorker(QThread):
                         log_cb=self.log.emit,
                     )
                 self.item_done.emit(li, "Error")
+        _worker_audit_finish(
+            "move", "File apply finished", trace_id,
+            status=(
+                "cancelled" if self._cancelled
+                else ("dry_run" if self.dry_run else "complete")
+            ),
+            moved=ok, errors=err,
+        )
         self.finished.emit(ok, err, undo_ops)
 
 
@@ -2070,6 +2214,12 @@ class ScanFilesLLMWorker(QThread):
         return True
 
     def run(self):
+        trace_id = _worker_audit_start(
+            "classify",
+            "LLM file scan started",
+            source_path=self.src_dir,
+            mode="file_llm_scan",
+        )
         settings = load_ollama_settings()
 
         # Check the user-installed Ollama server and selected model.
@@ -2093,6 +2243,10 @@ class ScanFilesLLMWorker(QThread):
             ext_filter=self.ext_filter)
         items = rule_worker._collect(src)
         if not items:
+            _worker_audit_finish(
+                "classify", "LLM file scan found no items", trace_id,
+                source_path=self.src_dir, status="empty",
+            )
             self.log.emit("No items found."); self.finished.emit(); return
 
         cat_names = [c['name'] for c in self.categories]
@@ -2759,6 +2913,11 @@ class ScanFilesLLMWorker(QThread):
             except Exception:
                 pass
             del _extract_and_emit._face_db
+        _worker_audit_finish(
+            "classify", "LLM file scan finished", trace_id,
+            source_path=self.src_dir, count=total,
+            status="cancelled" if self._cancelled else "complete",
+        )
         self.finished.emit()
 
 

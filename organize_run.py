@@ -37,6 +37,7 @@ from fileorganizer.path_safety import (
 from fileorganizer.folder_cache import FolderCache, should_skip_folder
 from fileorganizer.rule_chains import RuleChainManager
 from fileorganizer.batch_rename import CANONICAL_TEMPLATE, render_name
+from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
 from fileorganizer.xmp_sidecar import write_classification_sidecar
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -1937,6 +1938,8 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
     source_mode = plan_data.get('source_mode', 'ae')
     plan_id = plan_data.get('plan_id') or f"plan-{_compact_timestamp()}"
     run_id = f"{plan_id}-run-{_compact_timestamp()}"
+    trace_id = new_trace_id()
+    configure_audit(console=False)
     moved = skipped = errors = 0
     low_conf = sum(1 for item in plan_data.get('items', []) if item.get('low_confidence'))
     category_counts = defaultdict(int)
@@ -1946,7 +1949,30 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
 
     # A persisted plan is untrusted input.  Validate every item, including
     # source identity and both roots, before the first item can mutate disk.
-    _preflight_move_plan(plan_data, already_moved)
+    audit_event(
+        'move',
+        'Move plan started',
+        trace_id=trace_id,
+        source_mode=source_mode,
+        plan_id=plan_id,
+        run_id=run_id,
+        count=len(plan_data.get('items', [])),
+    )
+    try:
+        _preflight_move_plan(plan_data, already_moved)
+    except Exception as exc:
+        audit_event(
+            'move',
+            'Move plan preflight failed',
+            level='ERROR',
+            trace_id=trace_id,
+            source_mode=source_mode,
+            plan_id=plan_id,
+            run_id=run_id,
+            exception=exc,
+            status='preflight_failed',
+        )
+        raise
 
     for item in plan_data.get('items', []):
         src = item['src']
@@ -1957,6 +1983,18 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
 
         if src in already_moved:
             skipped += 1
+            audit_event(
+                'move',
+                'Move skipped because the source was already journaled',
+                trace_id=trace_id,
+                source_path=src,
+                dest_path=dest,
+                classification=category,
+                confidence=int(item.get('confidence', 0)),
+                plan_id=plan_id,
+                run_id=run_id,
+                status='already_moved',
+            )
             continue
 
         duplicate_hits = item.get('duplicate_matches') or []
@@ -1983,6 +2021,19 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
                     provenance=item.get('provenance'),
                 )
             skipped += 1
+            audit_event(
+                'move',
+                'Duplicate move skipped',
+                trace_id=trace_id,
+                source_path=src,
+                dest_path=dest,
+                classification=category,
+                confidence=int(item.get('confidence', 0)),
+                plan_id=plan_id,
+                run_id=run_id,
+                exception=err_msg,
+                status='skipped_duplicate',
+            )
             continue
 
         if verbose:
@@ -2033,6 +2084,19 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
             journal_update(move_id, 'done')
             already_moved.add(src)
             moved += 1
+            audit_event(
+                'move',
+                'Move completed',
+                trace_id=trace_id,
+                source_path=src,
+                dest_path=dest,
+                classification=category,
+                confidence=int(item.get('confidence', 0)),
+                plan_id=plan_id,
+                plan_item_id=item.get('id', ''),
+                run_id=run_id,
+                status='moved',
+            )
         except Exception as e:
             err_msg = str(e)
             partial = os.path.lexists(dest)
@@ -2061,10 +2125,37 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
                 'source_signature': item.get('source_signature', {}),
                 'provenance': item.get('provenance', {}),
             })
+            audit_event(
+                'move',
+                'Move failed',
+                level='ERROR',
+                trace_id=trace_id,
+                source_path=src,
+                dest_path=dest,
+                classification=category,
+                confidence=int(item.get('confidence', 0)),
+                plan_id=plan_id,
+                plan_item_id=item.get('id', ''),
+                run_id=run_id,
+                exception=e,
+                status='failed',
+            )
 
     tag = 'DRY PLAN' if dry_run else 'APPLIED PLAN'
     log(f"\n{tag}: {moved} moved, {skipped} skipped, {errors} errors, "
         f"{low_conf} low-conf routed to {REVIEW_SUBDIR}/")
+    audit_event(
+        'move',
+        'Move plan finished',
+        trace_id=trace_id,
+        plan_id=plan_id,
+        run_id=run_id,
+        source_mode=source_mode,
+        moved=moved,
+        skipped=skipped,
+        errors=errors,
+        status='dry_run' if dry_run else 'complete',
+    )
     if plan_data.get('skipped'):
         by_reason = defaultdict(int)
         for item in plan_data['skipped']:
@@ -2086,6 +2177,7 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
         'errors': errors,
         'low_confidence': low_conf,
         'category_counts': dict(category_counts),
+        'trace_id': trace_id,
     }
 
 def apply_moves(pairs: list, source_override: str,

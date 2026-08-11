@@ -6,6 +6,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Added structured local audit logging with rotating JSONL output, bounded and
+  redacted fields, trace propagation through scan/classify/move workers, and
+  operation events for move, classify, and dedup flows. Loguru is used when
+  installed with a stdlib-compatible fallback.
 - Added an opt-in loopback llama-server batch transport with prompt-prefix
   `cache_prompt` reuse, stable slots, context-revision invalidation, and safe
   fallback to the existing Ollama endpoint.

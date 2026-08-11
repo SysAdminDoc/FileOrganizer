@@ -27,6 +27,7 @@ from fileorganizer.adaptive_corrector import (
     build_adaptive_batch_system_prompt,
 )
 from fileorganizer.classification_provenance import record_classification
+from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
 
 # Stage 0: fingerprint DB lookup (for NEXT-15)
 try:
@@ -1484,9 +1485,11 @@ def cmd_run(index: list[dict], only_batch: int = 0,
       4. embeddings_classifier — local cosine match vs category anchors
                                   (zero AI cost when top1 ≥ 0.65 AND margin ≥ 0.15)
       5. DeepSeek file-type stage — broad application/media family, no taxonomy context
-      6. DeepSeek category stage  — constrained subcategory using the type result
+    6. DeepSeek category stage  — constrained subcategory using the type result
                                     (both skipped when embeddings_only=True)
     """
+    trace_id = new_trace_id()
+    configure_audit(console=False)
     # Clean up expired cache entries (NEXT-44)
     expired_count = cleanup_expired(max_age_days=30)
     if expired_count > 0:
@@ -1494,6 +1497,14 @@ def cmd_run(index: list[dict], only_batch: int = 0,
 
     total = len(index)
     num_batches = (total + BATCH_SIZE - 1) // BATCH_SIZE
+    audit_event(
+        'classify',
+        'Classification run started',
+        trace_id=trace_id,
+        source_path=SOURCE_DIR,
+        count=total,
+        mode='embeddings_only' if embeddings_only else 'full',
+    )
 
     batches_to_run = [only_batch] if only_batch else range(1, num_batches + 1)
     corrector = AdaptiveCorrector()
@@ -1575,6 +1586,15 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         if ai_items and not embeddings_only:
             if not DEEPSEEK_API_KEY:
                 print("ERROR: DEEPSEEK_API_KEY not set in environment.")
+                audit_event(
+                    'classify',
+                    'Classification stopped because the provider key is missing',
+                    level='ERROR',
+                    trace_id=trace_id,
+                    source_path=SOURCE_DIR,
+                    exception='DEEPSEEK_API_KEY is not configured',
+                    status='missing_credentials',
+                )
                 sys.exit(1)
             ai_only_batch = [it for _, it in ai_items]
             try:
@@ -1637,6 +1657,16 @@ def cmd_run(index: list[dict], only_batch: int = 0,
             except Exception as e:
                 print(f"  ERROR calling DeepSeek: {e}")
                 print("  Saving partial error marker and continuing...")
+                audit_event(
+                    'classify',
+                    'Classification batch failed',
+                    level='ERROR',
+                    trace_id=trace_id,
+                    source_path=SOURCE_DIR,
+                    exception=e,
+                    status='batch_failed',
+                    count=len(ai_only_batch),
+                )
                 _atomic_write_json(
                     batch_file(n),
                     [{
@@ -1680,6 +1710,17 @@ def cmd_run(index: list[dict], only_batch: int = 0,
             results.append(res)
 
         _atomic_write_json(batch_file(n), results)
+        for item, result in zip(batch_items, results):
+            audit_event(
+                'classify',
+                'Classification completed',
+                trace_id=trace_id,
+                source_path=item.get('path', ''),
+                classification=result.get('category', ''),
+                confidence=result.get('confidence'),
+                model=result.get('_classifier', result.get('method', '')),
+                status='resolved' if result.get('category') else 'unresolved',
+            )
         print(f"  Saved {batch_file(n).name}")
 
         # Quick sample
@@ -1692,6 +1733,14 @@ def cmd_run(index: list[dict], only_batch: int = 0,
             badge = ' [MKT]' if src else (f' [{tag.upper()}]' if tag else '')
             print(f"    [{conf}%] {nm}  ->  {cat}{badge}")
 
+    audit_event(
+        'classify',
+        'Classification run finished',
+        trace_id=trace_id,
+        source_path=SOURCE_DIR,
+        count=total,
+        status='complete',
+    )
     print("\nAll done.")
     cmd_stats(index)
 
