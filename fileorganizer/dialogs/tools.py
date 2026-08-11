@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (
     QLabel, QLineEdit, QPushButton, QComboBox, QTableWidget, QTableWidgetItem,
     QCheckBox, QHeaderView, QAbstractItemView,
     QTreeWidget, QTreeWidgetItem, QDialog,
-    QListWidget, QSplitter
+    QListWidget, QSplitter, QMessageBox
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QThread
 from PyQt6.QtGui import QColor
@@ -632,6 +632,212 @@ class UndoTimelineDialog(QDialog):
 
     def _undo_all(self):
         self.selected_indices = list(range(len(self.stack)))
+        self.accept()
+
+
+class MoveHistoryDialog(QDialog):
+    """Journal-backed move history with guarded item and run undo."""
+
+    _COLUMNS = ('Timestamp', 'Scope', 'Source', 'Destination', 'Confidence', 'Status', 'Action')
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Move History")
+        self.setMinimumSize(1050, 540)
+        self.setStyleSheet(get_active_stylesheet())
+        self._history = []
+        self.legacy_requested = False
+
+        lay = QVBoxLayout(self)
+        heading = QLabel(
+            "Completed moves are retained in the local journal. Undo checks the "
+            "destination fingerprint and path boundaries before changing disk."
+        )
+        heading.setWordWrap(True)
+        lay.addWidget(heading)
+
+        self.tbl_history = QTableWidget(0, len(self._COLUMNS))
+        self.tbl_history.setHorizontalHeaderLabels(self._COLUMNS)
+        self.tbl_history.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.tbl_history.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
+        self.tbl_history.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        self.tbl_history.currentCellChanged.connect(
+            lambda _current_row, _current_column, _previous_row, _previous_column:
+            self._update_action_buttons()
+        )
+        self.tbl_history.setAlternatingRowColors(True)
+        header = self.tbl_history.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(5, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(6, QHeaderView.ResizeMode.ResizeToContents)
+        lay.addWidget(self.tbl_history, 1)
+
+        self.lbl_status = QLabel("")
+        self.lbl_status.setWordWrap(True)
+        lay.addWidget(self.lbl_status)
+
+        buttons = QHBoxLayout()
+        self.btn_undo_selected = QPushButton("Undo Selected Item")
+        self.btn_undo_selected.clicked.connect(self._undo_selected)
+        buttons.addWidget(self.btn_undo_selected)
+        self.btn_undo_run = QPushButton("Undo Run")
+        self.btn_undo_run.clicked.connect(self._undo_run)
+        buttons.addWidget(self.btn_undo_run)
+        buttons.addStretch()
+        self.btn_legacy = QPushButton("Legacy Undo Batches…")
+        self.btn_legacy.setToolTip(
+            "Open older rename/move batches that predate the move journal history."
+        )
+        self.btn_legacy.clicked.connect(self._open_legacy)
+        buttons.addWidget(self.btn_legacy)
+        btn_refresh = QPushButton("Refresh")
+        btn_refresh.clicked.connect(self._refresh)
+        buttons.addWidget(btn_refresh)
+        btn_close = QPushButton("Close")
+        btn_close.clicked.connect(self.accept)
+        buttons.addWidget(btn_close)
+        lay.addLayout(buttons)
+
+        self._refresh()
+
+    @staticmethod
+    def _short_path(path: str) -> str:
+        return _short_detail_name(path, 92)
+
+    @staticmethod
+    def _timestamp(entry: dict) -> str:
+        return str(entry.get('timestamp', '?'))[:19].replace('T', ' ')
+
+    def _refresh(self):
+        try:
+            from fileorganizer import move_journal
+            self._history = move_journal.get_move_history()
+            error = ''
+        except Exception as exc:
+            self._history = []
+            error = f"Could not load move history: {exc}"
+
+        self.tbl_history.setRowCount(0)
+        for row, entry in enumerate(self._history):
+            self.tbl_history.insertRow(row)
+            scope = (
+                f"Run {entry.get('run_id', '')}"
+                if entry.get('kind') == 'run'
+                else f"Action {entry.get('action_id', '')}"
+            )
+            confidence = (
+                f"{float(entry.get('confidence', 0)):.0f}%"
+                if entry.get('kind') == 'run' else '—'
+            )
+            status = 'Undo available' if entry.get('can_undo') else 'Undone'
+            values = (
+                self._timestamp(entry),
+                self._short_path(scope),
+                self._short_path(entry.get('source', '')),
+                self._short_path(entry.get('destination', '')),
+                confidence,
+                status,
+            )
+            for column, value in enumerate(values):
+                item = QTableWidgetItem(value)
+                if column in (2, 3):
+                    item.setToolTip(str(
+                        entry.get('source' if column == 2 else 'destination', '')
+                    ))
+                self.tbl_history.setItem(row, column, item)
+
+            btn = QPushButton("Undo" if entry.get('can_undo') else "Undone")
+            btn.setEnabled(bool(entry.get('can_undo')))
+            btn.clicked.connect(lambda checked=False, index=row: self._undo_row(index))
+            self.tbl_history.setCellWidget(row, 6, btn)
+
+        if error:
+            self.lbl_status.setText(error)
+        elif not self._history:
+            self.lbl_status.setText("No journaled move history is available.")
+        else:
+            self.lbl_status.setText(f"{len(self._history)} journaled move(s)")
+        self.btn_legacy.setVisible(bool(_load_undo_stack()))
+        self._update_action_buttons()
+
+    def _update_action_buttons(self):
+        row = self.tbl_history.currentRow()
+        entry = self._history[row] if 0 <= row < len(self._history) else None
+        can_undo = bool(entry and entry.get('can_undo'))
+        self.btn_undo_selected.setEnabled(can_undo)
+        self.btn_undo_run.setEnabled(bool(can_undo and entry.get('kind') == 'run'))
+
+    def _selected_entry(self):
+        row = self.tbl_history.currentRow()
+        if 0 <= row < len(self._history):
+            return row, self._history[row]
+        self.lbl_status.setText("Select a history row first.")
+        return None, None
+
+    def _confirm(self, message: str) -> bool:
+        return QMessageBox.question(
+            self,
+            "Confirm Undo",
+            message,
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        ) == QMessageBox.StandardButton.Yes
+
+    def _undo_row(self, row: int):
+        if not 0 <= row < len(self._history):
+            return
+        self.tbl_history.selectRow(row)
+        entry = self._history[row]
+        if not entry.get('can_undo'):
+            return
+        label = os.path.basename(entry.get('source', '')) or entry.get('source', '')
+        if not self._confirm(f"Restore {label} to its original location?"):
+            return
+        try:
+            from fileorganizer import move_journal
+            if entry.get('kind') == 'run':
+                move_journal.undo_move_entry(entry['id'])
+            else:
+                move_journal.undo_action_move(entry['id'])
+            self.lbl_status.setText(f"Restored {label}.")
+            self._refresh()
+            self.tbl_history.clearSelection()
+        except Exception as exc:
+            self.lbl_status.setText(f"Undo refused: {exc}")
+            QMessageBox.warning(self, "Undo Refused", str(exc))
+
+    def _undo_selected(self):
+        row, _entry = self._selected_entry()
+        if row is not None:
+            self._undo_row(row)
+
+    def _undo_run(self):
+        _row, entry = self._selected_entry()
+        if not entry or entry.get('kind') != 'run' or not entry.get('can_undo'):
+            self.lbl_status.setText("Select a completed organize-run item first.")
+            return
+        run_id = entry.get('run_id', '')
+        if not self._confirm(f"Restore every completed item in run {run_id}?"):
+            return
+        try:
+            from fileorganizer import move_journal
+            result = move_journal.undo_run(run_id)
+            restored = len(result.get('restored', []))
+            errors = len(result.get('errors', []))
+            self.lbl_status.setText(
+                f"Run undo finished: {restored} restored, {errors} refused."
+            )
+            self._refresh()
+        except Exception as exc:
+            self.lbl_status.setText(f"Run undo refused: {exc}")
+            QMessageBox.warning(self, "Undo Refused", str(exc))
+
+    def _open_legacy(self):
+        self.legacy_requested = True
         self.accept()
 
 

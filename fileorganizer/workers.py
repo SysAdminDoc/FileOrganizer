@@ -1266,7 +1266,13 @@ class ApplyCatWorker(QThread):
                 self.log.emit(f"  \u2705 Done")
                 self.item_done.emit(ri, "Done")
                 if not self.dry_run:
-                    mark_done(run_id, ri, 'done')
+                    mark_done(
+                        run_id,
+                        ri,
+                        'done',
+                        destination_signature=destination_signature,
+                        merge_manifest=merge_manifest,
+                    )
                     cache_store(it.folder_name, it.full_source_path,
                         {'category': it.category, 'confidence': it.confidence,
                          'cleaned_name': it.cleaned_name, 'method': it.method,
@@ -1291,8 +1297,8 @@ class ApplyCatWorker(QThread):
                             pass
                 self.item_done.emit(ri, "Error")
 
-        # Clear journal: on clean exit or user cancellation, remove all rows.
-        # Only a crash (no clear_run reached) should leave pending rows for resume.
+        # Remove incomplete rows on clean exit while retaining completed rows
+        # for the history visualizer and guarded undo.
         if not self.dry_run:
             clear_run(run_id)
 
@@ -1354,7 +1360,13 @@ class ResumeApplyWorker(QThread):
                             allow_existing_dest=True,
                             require_source=False,
                         )
-                        mark_done(self._run_id, mv['ri'], 'done')
+                        mark_done(
+                            self._run_id,
+                            mv['ri'],
+                            'done',
+                            destination_signature=source_signature(dst),
+                            merge_manifest=merge_manifest,
+                        )
                         ok += 1
                         self.log.emit(f"  Already at destination — marked done")
                         continue
@@ -1381,7 +1393,13 @@ class ResumeApplyWorker(QThread):
                     )
                 else:
                     shutil.move(src, dst)
-                mark_done(self._run_id, mv['ri'], 'done')
+                mark_done(
+                    self._run_id,
+                    mv['ri'],
+                    'done',
+                    destination_signature=source_signature(dst),
+                    merge_manifest=merge_manifest,
+                )
                 ok += 1
                 self.log.emit(f"  \u2705 Done")
             except Exception as e:
