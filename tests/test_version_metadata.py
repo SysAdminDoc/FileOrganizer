@@ -4,8 +4,8 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CORE_VERSION = "8.5.17"
-SHELL_VERSION = "0.6.0"
+CORE_VERSION = "8.5.20"
+SHELL_VERSION = "0.6.1"
 
 
 def _read(path: str) -> str:
