@@ -15,6 +15,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added a Tools → Version-Aware Dedup reviewer that groups differing complete
   folder fingerprints by marketplace ID, prioritizes the fullest version, and
   archives selected older candidates only after keeper/source revalidation.
+- Added an organized-library Browse tree with guarded category drag/drop;
+  successful moves are journaled, persist exact-fingerprint adaptive
+  corrections, and increment the durable `user_corrections` statistic.
 - Marketplace enrichment now recognizes Creative Market, Freepik, Motion Array,
   FilterGrade, Shutterstock, and Adobe Stock IDs/URLs, with shared HTML/JSON-LD
   parsing and an optional keyed Freepik resource lookup.

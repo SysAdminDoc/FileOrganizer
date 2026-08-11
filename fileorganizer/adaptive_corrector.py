@@ -196,7 +196,8 @@ class AdaptiveCorrector:
     
     def record_correction(self, folder_name: str, folder_path: str,
                           corrected_category: str, original_confidence: int = 0,
-                          provenance_record_id: str = ''):
+                          provenance_record_id: str = '',
+                          fingerprint_override: Optional[str] = None):
         """Record a user correction.
         
         Args:
@@ -207,6 +208,8 @@ class AdaptiveCorrector:
         """
         # Deduplicate: if we already have a correction for this fingerprint, update it
         new_rec = CorrectionRecord(folder_name, folder_path, corrected_category, original_confidence)
+        if isinstance(fingerprint_override, str) and fingerprint_override:
+            new_rec.fingerprint = fingerprint_override
         
         # Remove any existing correction with same fingerprint
         if new_rec.fingerprint:
