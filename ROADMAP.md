@@ -4,21 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-68: Task Scheduler-based watch mode MVP**
-Implement watch-mode daemon registration via Windows Task Scheduler (not a Windows Service).
-Register `FileOrganizer_WatchMode` task with logon trigger + indefinite duration using 
-`win32com.client.Dispatch('Schedule.Service')` (Task Scheduler 2.0 COM API) or `schtasks.exe`.
-This runs the watch daemon at user logon without requiring admin elevation. Use `watchfiles` v1.1.1
-(NEXT-60) for filesystem monitoring; async loop with 60-second "deep-quiet protocol" (wait for
-stability before applying moves). Task runs as the logged-in user, with standard `%APPDATA%\FileOrganizer`
-settings access. **Upgrade path**: provide `--as-windows-service` flag for future v9.x to install
-as `LocalService`; this MVP is user-only. **Depends on**: NEXT-60 (watchfiles foundation).
-
-- [ ] **Impact**: 4 | **Effort**: 3 | **Tier**: NEXT | **Unblocks**: NEXT-1 (partial) | **Depends on**: NEXT-60
-
-- [ ] Source: [S126] Task Scheduler 2.0 API https://learn.microsoft.com/en-us/windows/win32/taskschd/task-scheduler-start-page;
-   [S127] Downganizer 60s deep-quiet protocol pattern https://github.com/k3sra/Downganizer
-
 **NEXT-69: CLIP ViT-L-14 visual feature extraction & indexing**
 Integrate `open_clip` library (`timm` + `openclip` package, v0.7.6+, April 2024) for zero-shot image
 classification via CLIP vision transformer ViT-L-14 (DataComp-1B pre-trained). Use cosine similarity
