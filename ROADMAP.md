@@ -4,18 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-17: Marketplace enrichment expansion**
-Extend `marketplace_enrich.py` beyond Envato to: Creative Market (API available), Freepik (API
-key), Motion Array, FilterGrade, Shutterstock, Adobe Stock. Each needs a URL pattern + parser.
-mnamer [S58] models exactly this pattern in `mnamer/providers.py` (Provider ABC) +
-`mnamer/endpoints.py` (low-level wrappers for OMDb/TMDb/TVDb/TvMaze with ID caching, error
-handling, and retry logic) — port the Provider ABC verbatim and add one subclass per
-marketplace.
-
-- [ ] **Impact**: 4 | **Effort**: 3
-
-- [ ] Source: [S34] `docs/archive/research/RESEARCH_IDEAS.md`, [S33] `docs/archive/research/RESEARCH.md`, [S58] mnamer Provider ABC pattern
-
 **NEXT-18: Marketplace update alerts**
 For items with a known marketplace ID, periodically check if a newer version has been published.
 Flag in UI: "Update available for 3 items in After Effects - Slideshow".

@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Marketplace enrichment now recognizes Creative Market, Freepik, Motion Array,
+  FilterGrade, Shutterstock, and Adobe Stock IDs/URLs, with shared HTML/JSON-LD
+  parsing and an optional keyed Freepik resource lookup.
 - DeepSeek design batches now use a cached two-stage prompt: a context-light
   file-family pass constrains the destination-category pass, with a safe
   unknown-type fallback when the first provider response is unusable.
