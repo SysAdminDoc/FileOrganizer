@@ -468,6 +468,12 @@ class ScanMixin:
         if matched > 0:
             self._show_scan_toast(f"Scan complete: {matched} folders categorized")
             self._update_dashboard()
+            update_check = getattr(self, '_start_marketplace_update_check', None)
+            if callable(update_check):
+                update_check([
+                    it.folder_name for it in self.cat_items
+                    if getattr(it, 'category', '') != '[Uncategorized]'
+                ])
         if matched == 0: self.lbl_empty.setText("No folders could be categorized"); self.lbl_empty.show()
 
     # ═══ PC FILE SCAN ════════════════════════════════════════════════════════

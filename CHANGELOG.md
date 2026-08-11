@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Completed folder scans now launch a throttled background marketplace refresh;
+  explicit provider version/date changes are grouped into non-flashing update
+  alerts by category.
 - Marketplace enrichment now recognizes Creative Market, Freepik, Motion Array,
   FilterGrade, Shutterstock, and Adobe Stock IDs/URLs, with shared HTML/JSON-LD
   parsing and an optional keyed Freepik resource lookup.

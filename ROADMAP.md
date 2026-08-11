@@ -4,12 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-18: Marketplace update alerts**
-For items with a known marketplace ID, periodically check if a newer version has been published.
-Flag in UI: "Update available for 3 items in After Effects - Slideshow".
-
-- [ ] **Impact**: 3 | **Effort**: 3
-
 **NEXT-20: Cross-library fingerprint dedup**
 Compare G:\ + I:\ (and external drives) by `folder_fingerprint` SHA-256 across roots. Show a
 merge/keep/archive dialog per duplicate group.
