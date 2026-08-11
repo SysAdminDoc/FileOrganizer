@@ -4,25 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-69: CLIP ViT-L-14 visual feature extraction & indexing**
-Integrate `open_clip` library (`timm` + `openclip` package, v0.7.6+, April 2024) for zero-shot image
-classification via CLIP vision transformer ViT-L-14 (DataComp-1B pre-trained). Use cosine similarity
-matching on 768-dimensional embeddings to cluster images into semantic groups (e.g., "landscapes",
-"architecture", "portraits") without training. Store embeddings in `sqlite-vec` (v0.1.9) for <100 ms
-k-NN queries on 100K+ images. Enable deduplication via perceptual distance threshold (cosine sim > 0.95
-= likely duplicate). This is the **Phase 1 ML foundation** for FileOrganizer v9.x: CLIP + Chroma
-(NEXT-70) replaces the current heuristic-only dedup. GPU optional; CPU inference runs at 1-2 images/sec
-(acceptable for batch mode overnight runs). **Depends on**: NEXT-39 (WinAppSDK runtime for PyTorch ONNX
-DirectML fallback); pairs with NEXT-70.
-
-- [ ] **Impact**: 5 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-39 | **Unblocks**: NEXT-71, NEXT-72
-
-- [ ] Source: [S135] open_clip library https://github.com/mlfoundations/open_clip (ViT-L-14 zero-shot 79.2%
-   ImageNet accuracy; 768-dim embeddings; ~400 MB model on disk);
-   [S136] CLIP paper https://arxiv.org/abs/2103.14030 (contrastive vision-language learning foundational);
-   [S137] sqlite-vec v0.1.9 https://github.com/asg017/sqlite-vec (persistent vector storage; <100 ms
-   k-NN on SSD)
-
 **NEXT-70: Chroma local embeddings service for cross-modal deduplication**
 Deploy `chromadb` (v0.5.6+, May 2026) as the persistent embeddings backend. Store (file_path, CLIP
 embedding, perceptual_hash, size) tuples in a local SQLite-backed Chroma collection. Enable "Find

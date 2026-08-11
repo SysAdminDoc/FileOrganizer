@@ -61,6 +61,9 @@ Current shell boundaries:
   registers a hidden, least-privilege per-user Task Scheduler entry and keeps
   one bounded rollover log; removing or disabling the task is available from
   the same panel.
+- The optional CLIP visual index is local-only and fail-closed. Install the
+  heavyweight ML stack separately, then use `clip_index_run.py` to build a
+  ViT-L-14 / sqlite-vec image index or query nearest visual matches.
 
 ## Get FileOrganizer
 
@@ -295,6 +298,10 @@ python -m fileorganizer.watch_mode --source design --start --duration 60
 
 # Inspect the per-user background Watch task configured by the shell
 python watch_task_run.py --status
+
+# Optional CLIP image index (install open_clip_torch, torch, and sqlite-vec first)
+python clip_index_run.py --root Pictures --db .fileorganizer-clip.db
+python clip_index_run.py --query Pictures/example.jpg --db .fileorganizer-clip.db
 
 # Register and inspect a saved scan profile (preview-only by default)
 python -m fileorganizer --schedule "Daily Inbox" --schedule-time 07:30
