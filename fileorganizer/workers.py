@@ -67,6 +67,7 @@ from fileorganizer.plugins import PluginManager
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
 from fileorganizer.xmp_sidecar import write_classification_sidecar
 from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
+from fileorganizer.metrics import ensure_metrics_exporter, record_files_moved
 
 
 def _worker_audit_start(
@@ -80,6 +81,7 @@ def _worker_audit_start(
     """Start a GUI worker trace without allowing telemetry to affect work."""
     trace_id = new_trace_id()
     configure_audit(console=False)
+    ensure_metrics_exporter()
     details: dict[str, object] = {"mode": mode, "status": "running"}
     if count is not None:
         details["count"] = count
@@ -102,6 +104,8 @@ def _worker_audit_finish(
     status: str = "complete",
     **details: object,
 ) -> None:
+    if operation == "move":
+        record_files_moved(details.get("moved", 0))
     audit_event(
         operation,
         message,

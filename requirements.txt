@@ -6,6 +6,7 @@ pydantic>=2.13.3
 requests
 httpx[http2]>=0.28.1
 loguru==0.7.3
+prometheus-client==0.25.0
 rapidfuzz
 Pillow>=12.2.0
 psd-tools

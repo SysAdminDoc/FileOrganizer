@@ -38,6 +38,7 @@ from fileorganizer.folder_cache import FolderCache, should_skip_folder
 from fileorganizer.rule_chains import RuleChainManager
 from fileorganizer.batch_rename import CANONICAL_TEMPLATE, render_name
 from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
+from fileorganizer.metrics import ensure_metrics_exporter, record_files_moved
 from fileorganizer.xmp_sidecar import write_classification_sidecar
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -1940,6 +1941,7 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
     run_id = f"{plan_id}-run-{_compact_timestamp()}"
     trace_id = new_trace_id()
     configure_audit(console=False)
+    ensure_metrics_exporter()
     moved = skipped = errors = 0
     low_conf = sum(1 for item in plan_data.get('items', []) if item.get('low_confidence'))
     category_counts = defaultdict(int)
@@ -2156,6 +2158,7 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
         errors=errors,
         status='dry_run' if dry_run else 'complete',
     )
+    record_files_moved(moved)
     if plan_data.get('skipped'):
         by_reason = defaultdict(int)
         for item in plan_data['skipped']:

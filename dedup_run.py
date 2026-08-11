@@ -35,6 +35,7 @@ from fileorganizer.sidecar_protocol import SidecarEmitter
 from fileorganizer.review_store import ReviewStore
 from fileorganizer.capabilities import get_capability
 from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
+from fileorganizer.metrics import ensure_metrics_exporter
 
 IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".tiff", ".tif")
 _PROTOCOL = SidecarEmitter("dedup")
@@ -268,6 +269,7 @@ def main() -> int:
     args = parser.parse_args()
     trace_id = new_trace_id()
     configure_audit(console=False)
+    ensure_metrics_exporter()
 
     if args.export_scan or args.import_review or args.resume_scan:
         try:

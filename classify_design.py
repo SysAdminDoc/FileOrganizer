@@ -20,6 +20,7 @@ Results saved to classification_results/<prefix>NNN.json
 import os, sys, json, re, argparse, tempfile
 from pathlib import Path
 from datetime import datetime
+from time import monotonic
 from typing import Callable
 
 from fileorganizer.adaptive_corrector import (
@@ -28,6 +29,7 @@ from fileorganizer.adaptive_corrector import (
 )
 from fileorganizer.classification_provenance import record_classification
 from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
+from fileorganizer.metrics import ensure_metrics_exporter, record_classification as record_metrics
 
 # Stage 0: fingerprint DB lookup (for NEXT-15)
 try:
@@ -1490,6 +1492,8 @@ def cmd_run(index: list[dict], only_batch: int = 0,
     """
     trace_id = new_trace_id()
     configure_audit(console=False)
+    ensure_metrics_exporter()
+    run_started = monotonic()
     # Clean up expired cache entries (NEXT-44)
     expired_count = cleanup_expired(max_age_days=30)
     if expired_count > 0:
@@ -1508,6 +1512,7 @@ def cmd_run(index: list[dict], only_batch: int = 0,
 
     batches_to_run = [only_batch] if only_batch else range(1, num_batches + 1)
     corrector = AdaptiveCorrector()
+    all_results = []
 
     for n in batches_to_run:
         if already_done(n) and not only_batch:
@@ -1710,6 +1715,7 @@ def cmd_run(index: list[dict], only_batch: int = 0,
             results.append(res)
 
         _atomic_write_json(batch_file(n), results)
+        all_results.extend(results)
         for item, result in zip(batch_items, results):
             audit_event(
                 'classify',
@@ -1740,6 +1746,15 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         source_path=SOURCE_DIR,
         count=total,
         status='complete',
+    )
+    confidences = [
+        float(result.get('confidence'))
+        for result in all_results
+        if isinstance(result.get('confidence'), (int, float))
+    ]
+    record_metrics(
+        monotonic() - run_started,
+        confidence=(sum(confidences) / len(confidences)) if confidences else None,
     )
     print("\nAll done.")
     cmd_stats(index)
