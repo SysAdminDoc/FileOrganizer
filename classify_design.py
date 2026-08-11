@@ -102,6 +102,31 @@ DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
 DEEPSEEK_BASE    = 'https://api.deepseek.com'
 DEEPSEEK_MODEL   = 'deepseek-v4-flash'
 
+# Stage 1 deliberately uses a small, stable vocabulary.  It is an evidence
+# gate for the category prompt, not a second copy of the destination taxonomy.
+FILE_TYPE_LABELS = (
+    'After Effects',
+    'Premiere Pro',
+    'Photoshop',
+    'Illustrator',
+    'Procreate',
+    'Lightroom',
+    'Print / Document',
+    'Motion Graphics / Video',
+    'Audio / Sound',
+    '3D',
+    'Fonts / Typography',
+    'Web / UI',
+    'Plugin / Extension',
+    'Stock Media',
+    'Tutorial / Education',
+    'Multi-tool Bundle',
+    'Other',
+    'Unknown',
+)
+FILE_TYPE_SET = frozenset(FILE_TYPE_LABELS)
+FILE_TYPE_CACHE_MODEL_SUFFIX = ':file-type-v1'
+
 # ── Full category taxonomy for G:\Organized ───────────────────────────────────
 # These match the categories already in G:\Organized plus expansions needed
 # for the broader content types in G:\Design Unorganized.
@@ -531,6 +556,42 @@ def looks_generic(name: str) -> bool:
         _PIRACY_DOMAIN_RE.search(name)                 # piracy/distribution site domains in name
     )
 
+
+def _build_file_type_evidence(item: dict) -> list[str]:
+    """Collect only raw naming and extension evidence for stage 1."""
+    name = item.get('name', '')
+    full_path = item.get('path') or os.path.join(item.get('folder', ''), name)
+    file_ext = item.get('file_ext')
+    is_file = item.get('is_file', False)
+    hints = []
+
+    if is_file:
+        if file_ext:
+            hints.append(f"file type: {file_ext}")
+        if file_ext in ('.zip', '.rar', '.7z'):
+            try:
+                inner, zip_exts = peek_inside_zip(full_path)
+                if zip_exts:
+                    hints.append(f"files: {', '.join(zip_exts)}")
+                if inner and len(inner) > 4:
+                    hints.append(f"contains: {inner}")
+            except Exception:
+                pass
+        return hints
+
+    exts = item.get('extensions') or item.get('exts')
+    filenames = item.get('filenames')
+    if exts is None:
+        if full_path and os.path.isdir(full_path):
+            exts, filenames = peek_extensions(full_path)
+        else:
+            exts, filenames = [], []
+    if exts:
+        hints.append(f"files: {', '.join(exts)}")
+    if filenames:
+        hints.append(f"contains: {' | '.join(filenames[:3])}")
+    return hints
+
 def build_prompt(
     batch_items: list[dict],
     corrector: AdaptiveCorrector | None = None,
@@ -590,6 +651,13 @@ def build_prompt(
             )
             hints.append(metadata_text)
 
+        file_type = item.get('_file_type')
+        if file_type:
+            hints.append(
+                f"stage 1 file type: {file_type} "
+                f"({int(item.get('_file_type_confidence', 0) or 0)}% confidence)"
+            )
+
         hint_str = f"  [{'; '.join(hints)}]" if hints else ''
 
         entry_lines = [f"{i}. {name}{hint_str}"]
@@ -644,6 +712,35 @@ No markdown, no explanation outside the JSON array."""
         prompt,
         corrector,
     )
+
+
+def build_file_type_prompt(batch_items: list[dict]) -> str:
+    """Build the context-light stage 1 prompt that identifies asset families."""
+    entry_lines = []
+    for index, item in enumerate(batch_items, 1):
+        evidence = _build_file_type_evidence(item)
+        suffix = f"  [{'; '.join(evidence)}]" if evidence else ''
+        entry_lines.append(f"{index}. {item.get('name', '')}{suffix}")
+    items_block = '\n'.join(entry_lines)
+    labels = '\n'.join(f'  {label}' for label in FILE_TYPE_LABELS)
+    return f"""You are the file-type analyst in a two-stage design asset classifier.
+Identify the broad application or media family for each item from its name and raw file evidence.
+This stage must not choose a destination category or infer a subcategory. Do not use a legacy
+category, marketplace taxonomy, or any context that is not shown in the item itself.
+
+ALLOWED FILE TYPE LABELS:
+{labels}
+
+ITEMS:
+{items_block}
+
+Return ONLY a JSON array with one object per item, in the same order:
+[
+  {{"name": "exact item name", "file_type": "After Effects", "confidence": 85, "notes": "brief evidence"}},
+  ...
+]
+The file_type must exactly match one allowed label. Use Unknown when the evidence is insufficient.
+No markdown, no explanation outside the JSON array."""
 
 # ── DeepSeek caller ───────────────────────────────────────────────────────────
 
@@ -914,6 +1011,123 @@ def call_deepseek(
             if isinstance(item, dict):
                 item['_response_id'] = response_id
     return validated
+
+
+def _file_type_unresolved(item: dict, index: int, reason: str) -> dict:
+    name = str(item.get('name', '') or '').strip() or f'item-{index + 1}'
+    return {
+        'name': name,
+        'file_type': 'Unknown',
+        'confidence': 0,
+        'notes': f'file-type schema validation failed: {reason}',
+        '_retry_required': True,
+        '_schema_error': reason,
+    }
+
+
+def _normalize_file_type_result(raw, item: dict, index: int) -> dict:
+    """Validate one context-light stage 1 result before using it as a hint."""
+    if not isinstance(raw, dict):
+        return _file_type_unresolved(item, index, 'result is not an object')
+    if raw.get('_retry_required'):
+        return _file_type_unresolved(item, index, 'cached result is marked for retry')
+
+    name = raw.get('name')
+    if not isinstance(name, str) or not name.strip():
+        return _file_type_unresolved(item, index, 'name must be a non-empty string')
+    file_type = raw.get('file_type')
+    if not isinstance(file_type, str) or file_type not in FILE_TYPE_SET:
+        return _file_type_unresolved(
+            item, index, f'file_type {file_type!r} is not in the stage 1 vocabulary'
+        )
+    confidence = raw.get('confidence')
+    if type(confidence) is not int or not 0 <= confidence <= 100:
+        return _file_type_unresolved(
+            item, index, 'confidence must be an integer from 0 through 100'
+        )
+    if 'notes' in raw and not isinstance(raw['notes'], str):
+        return _file_type_unresolved(item, index, 'notes must be a string when present')
+    return dict(raw)
+
+
+def call_deepseek_file_type(
+    prompt: str,
+    items: list[dict],
+) -> list[dict]:
+    """Run and validate one stage 1 file-type request."""
+    raw_results = call_deepseek(prompt, expected_count=len(items))
+    return [
+        _normalize_file_type_result(raw, item, index)
+        for index, (raw, item) in enumerate(zip(raw_results, items))
+    ]
+
+
+def call_deepseek_file_type_cached(
+    prompt: str,
+    items: list[dict],
+    model: str = DEEPSEEK_MODEL,
+) -> list[dict]:
+    """Cache stage 1 independently from destination-category responses."""
+    cache_model = f'{model}{FILE_TYPE_CACHE_MODEL_SUFFIX}'
+    cached_results = {}
+    uncached_indices = []
+
+    for index, item in enumerate(items):
+        path = str(item.get('path', '') or '').strip()
+        if not path:
+            uncached_indices.append(index)
+            continue
+        cached = lookup_cached(path, cache_model, prompt)
+        if cached is None:
+            uncached_indices.append(index)
+            continue
+        normalized = _normalize_file_type_result(cached, item, index)
+        if normalized.get('_retry_required'):
+            uncached_indices.append(index)
+        else:
+            cached_results[index] = normalized
+
+    if not uncached_indices:
+        return [cached_results[index] for index in range(len(items))]
+
+    uncached_items = [items[index] for index in uncached_indices]
+    uncached_prompt = build_file_type_prompt(uncached_items)
+    raw_results = call_deepseek_file_type(uncached_prompt, uncached_items)
+    fresh_results = {}
+    for local_index, source_index in enumerate(uncached_indices):
+        result = raw_results[local_index]
+        fresh_results[source_index] = result
+        path = str(items[source_index].get('path', '') or '').strip()
+        if path and not result.get('_retry_required'):
+            # Cache under the original request prompt so a later full-batch run
+            # can hit the same entry instead of depending on subset ordering.
+            store_cached(path, cache_model, prompt, result)
+
+    return [
+        cached_results.get(index, fresh_results[index])
+        for index in range(len(items))
+    ]
+
+
+def _attach_file_type_context(
+    items: list[dict],
+    type_results: list[dict],
+) -> list[dict]:
+    """Copy stage 1 results into bounded stage 2 prompt context."""
+    enriched = []
+    for index, item in enumerate(items):
+        enriched_item = dict(item)
+        result = type_results[index] if index < len(type_results) else {}
+        if not result.get('_retry_required') and result.get('file_type') in FILE_TYPE_SET:
+            enriched_item['_file_type'] = result['file_type']
+            enriched_item['_file_type_confidence'] = int(result.get('confidence', 0) or 0)
+            enriched_item['_file_type_notes'] = str(result.get('notes', '') or '')[:240]
+        else:
+            enriched_item['_file_type'] = 'Unknown'
+            enriched_item['_file_type_confidence'] = 0
+            enriched_item['_file_type_notes'] = ''
+        enriched.append(enriched_item)
+    return enriched
 
 # ── Commands ──────────────────────────────────────────────────────────────────
 def cmd_stats(index: list[dict]):
@@ -1231,7 +1445,9 @@ def cmd_run(index: list[dict], only_batch: int = 0,
       3. marketplace_enrich    — known marketplace IDs → confidence 95+
       4. embeddings_classifier — local cosine match vs category anchors
                                   (zero AI cost when top1 ≥ 0.65 AND margin ≥ 0.15)
-      5. DeepSeek AI           — everything else (skipped when embeddings_only=True)
+      5. DeepSeek file-type stage — broad application/media family, no taxonomy context
+      6. DeepSeek category stage  — constrained subcategory using the type result
+                                    (both skipped when embeddings_only=True)
     """
     # Clean up expired cache entries (NEXT-44)
     expired_count = cleanup_expired(max_age_days=30)
@@ -1324,6 +1540,39 @@ def cmd_run(index: list[dict], only_batch: int = 0,
                 sys.exit(1)
             ai_only_batch = [it for _, it in ai_items]
             try:
+                # Stage 1 identifies the broad file family before the category
+                # prompt sees the destination taxonomy.  A failed type hint is
+                # non-fatal: stage 2 can still use the existing evidence rules.
+                type_prompt = build_file_type_prompt(ai_only_batch)
+                try:
+                    type_results = call_deepseek_file_type_cached(
+                        type_prompt,
+                        ai_only_batch,
+                        DEEPSEEK_MODEL,
+                    )
+                except Exception as type_error:
+                    print(
+                        f"  File-type stage unavailable ({type(type_error).__name__}); "
+                        "continuing with category evidence"
+                    )
+                    type_results = [
+                        _file_type_unresolved(item, index, str(type_error))
+                        for index, item in enumerate(ai_only_batch)
+                    ]
+                ai_only_batch = _attach_file_type_context(ai_only_batch, type_results)
+                for (source_index, _), typed_item in zip(ai_items, ai_only_batch):
+                    for key in (
+                        '_file_type',
+                        '_file_type_confidence',
+                        '_file_type_notes',
+                    ):
+                        batch_items[source_index][key] = typed_item[key]
+                typed_count = sum(
+                    1 for result in type_results
+                    if not result.get('_retry_required')
+                )
+                print(f"  File-type stage: {typed_count}/{len(ai_only_batch)} usable hint(s)")
+
                 # Use cached wrapper (NEXT-44) to eliminate >90% of API calls on re-runs
                 if parallel:
                     print(
@@ -1382,6 +1631,12 @@ def cmd_run(index: list[dict], only_batch: int = 0,
             else:
                 res = ai_results[ai_cursor] if ai_cursor < len(ai_results) else {}
                 ai_cursor += 1
+            file_type = item.get('_file_type')
+            if file_type:
+                res['_file_type'] = file_type
+                res['_file_type_confidence'] = int(
+                    item.get('_file_type_confidence', 0) or 0
+                )
             res['_source_name'] = item['name']
             res['_batch_index'] = start + idx
             results.append(res)

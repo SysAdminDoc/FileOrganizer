@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- DeepSeek design batches now use a cached two-stage prompt: a context-light
+  file-family pass constrains the destination-category pass, with a safe
+  unknown-type fallback when the first provider response is unusable.
 - AI category previews now show the current confidence and bounded runner-up
   probabilities; selecting a runner-up applies and remembers the correction.
 - MOGRT manifests now route through canonical Premiere categories using editable
