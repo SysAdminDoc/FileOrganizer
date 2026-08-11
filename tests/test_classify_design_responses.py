@@ -307,6 +307,35 @@ def test_low_confidence_metadata_is_retained_for_provider_prompt(tmp_path, monke
     assert "is_vertical" in prompt
 
 
+def test_vision_stage_routes_visual_candidates_before_remote_provider(tmp_path, monkeypatch):
+    from fileorganizer import ollama
+
+    preview = tmp_path / "poster.png"
+    preview.write_bytes(b"fixture")
+    item = {"name": "poster", "path": str(tmp_path)}
+    monkeypatch.setattr(
+        classify_design,
+        "get_runtime_categories",
+        lambda: ["Print - Flyers & Posters"],
+    )
+    monkeypatch.setattr(
+        ollama,
+        "ollama_classify_visual",
+        lambda name, path, category_list: {
+            "name": name,
+            "category": category_list[0],
+            "clean_name": name,
+            "confidence": 82,
+            "notes": "vision:test",
+        },
+    )
+
+    result = classify_design._try_vision_classify([item])
+
+    assert result[0]["category"] == "Print - Flyers & Posters"
+    assert result[0]["confidence"] == 82
+
+
 def test_cmd_run_applies_exact_correction_without_provider_key(tmp_path, monkeypatch):
     class FakeCorrector(classify_design.AdaptiveCorrector):
         def __init__(self):

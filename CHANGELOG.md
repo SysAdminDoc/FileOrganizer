@@ -11,6 +11,10 @@ All notable changes to FileOrganizer will be documented in this file.
   the same metadata is retained by the legacy folder classifier. Video metadata
   now also carries deep FFmpeg routing flags such as vertical format, broadcast
   codec/frame rate, looping clips, and 4K/60fps signals into provider prompts.
+- Ambiguous image and PDF assets can now use an installed local multimodal model
+  through the modern batch pipeline, with ranked vision-model selection, preview
+  resolution, and the shared structured classification schema; missing models,
+  previews, or invalid responses safely fall through to later stages.
 - Saved scan profiles can now be registered from WinUI Settings or the
   `--schedule` CLI with daily, weekly, monthly, and logon cadences. One
   cross-platform scheduler writes atomic state, launches a hidden/offscreen

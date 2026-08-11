@@ -151,3 +151,85 @@ def test_ollama_classify_folder_applies_exact_correction_before_llm(monkeypatch)
         'method': 'adaptive_correction',
         'detail': 'adaptive correction (weight 88)',
     }
+
+
+def test_ollama_classify_visual_uses_preview_and_structured_schema(tmp_path, monkeypatch):
+    preview = tmp_path / "poster.png"
+    preview.write_bytes(b"png fixture")
+    captured = {}
+
+    monkeypatch.setattr(ollama, "load_ollama_settings", lambda: {
+        "vision_enabled": True,
+        "vision_max_file_mb": 20,
+        "vision_max_pixels": 768,
+        "timeout": 45,
+    })
+    monkeypatch.setattr(ollama, "_find_vision_model", lambda _url=None: "gemma3:4b")
+    monkeypatch.setattr(
+        ollama,
+        "_prepare_image_base64",
+        lambda path, max_pixels: captured.update(
+            image_path=path, max_pixels=max_pixels
+        ) or "encoded-image",
+    )
+
+    def fake_generate(**kwargs):
+        captured.update(kwargs)
+        return json.dumps({
+            "kind": "classification",
+            "name": "Summer Poster",
+            "category": "Print - Flyers & Posters",
+            "confidence": 84,
+        })
+
+    monkeypatch.setattr(ollama, "_ollama_generate", fake_generate)
+
+    result = ollama.ollama_classify_visual(
+        "poster",
+        preview,
+        category_list=["Print - Flyers & Posters"],
+    )
+
+    assert result["category"] == "Print - Flyers & Posters"
+    assert result["confidence"] == 84
+    assert result["_classifier"] == "vision"
+    assert captured["images"] == ["encoded-image"]
+    assert captured["structured"] is True
+    assert "Print - Flyers & Posters" in captured["prompt"]
+
+
+def test_ollama_classify_visual_uses_pdf_sibling_preview(tmp_path, monkeypatch):
+    pdf = tmp_path / "report.pdf"
+    preview = tmp_path / "report.png"
+    pdf.write_bytes(b"%PDF fixture")
+    preview.write_bytes(b"png fixture")
+
+    monkeypatch.setattr(ollama, "load_ollama_settings", lambda: {
+        "vision_enabled": True,
+        "vision_max_file_mb": 20,
+        "vision_max_pixels": 1024,
+        "timeout": 30,
+    })
+    monkeypatch.setattr(ollama, "_find_vision_model", lambda _url=None: "llava:7b")
+    monkeypatch.setattr(
+        ollama, "_prepare_image_base64", lambda _path, max_pixels: "encoded-pdf"
+    )
+    monkeypatch.setattr(
+        ollama,
+        "_ollama_generate",
+        lambda **_kwargs: json.dumps({
+            "kind": "classification",
+            "name": "Report",
+            "category": "Print - Flyers & Posters",
+            "confidence": 76,
+        }),
+    )
+
+    result = ollama.ollama_classify_visual(
+        "report.pdf",
+        pdf,
+        category_list=["Print - Flyers & Posters"],
+    )
+
+    assert result is not None
+    assert result["metadata"]["preview"] == preview.name

@@ -431,6 +431,9 @@ taxonomy; Settings -> Teach Category can train an optional SetFit model or
 fall back to derived keyword hints when the ML stack is not installed.
 On Windows, PyWinRT FileProperties can supply common image/audio/video metadata
 before the extractor falls back to Pillow, mutagen, or ffprobe.
+Ambiguous image and PDF previews can optionally use an already-installed local
+Ollama vision model before marketplace, embeddings, or remote-provider routing;
+model downloads remain an explicit Settings action.
 
 ## Project Planning
 

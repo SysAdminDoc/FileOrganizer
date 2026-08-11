@@ -4,17 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-12: LLaVA visual classification**
-Route image and PDF mimes to a local multimodal model (`gemma3:4b` or `qwen3.5:4b` — both
-support Ollama structured outputs via `format=schema` as of v0.22.1 [S77]) when extension-only
-confidence is low. The preview image path is already known from `asset_db.find_preview_image()`.
-Pass `format=ClassifyResult.model_json_schema()` to `ollama.chat()` to guarantee schema-valid JSON
-without the current regex extraction fallback.
-
-- [ ] **Impact**: 4 | **Effort**: 4
-
-- [ ] Source: [S2] QiuYannnn Local-File-Organizer, [S6] thebearwithabite, [S77] Ollama structured outputs
-
 **NEXT-13: Confidence calibration display**
 Show per-category probability bars in the preview panel. Let user click a runner-up label to
 override AI suggestion. Record overrides as corrections (feeds NEXT-7).

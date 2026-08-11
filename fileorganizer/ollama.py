@@ -580,6 +580,175 @@ def _prepare_image_base64(file_path: str, max_pixels: int = 1024) -> str:
         return ''
 
 
+_VISUAL_IMAGE_EXTS = frozenset({
+    '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp',
+})
+_VISUAL_DOCUMENT_EXTS = frozenset({'.pdf'})
+
+
+def _find_visual_preview(asset_path: str | os.PathLike[str]) -> Path | None:
+    """Resolve an image preview for a file or asset folder.
+
+    Folders use the same preview ranking as the fingerprint database. PDFs do
+    not acquire a new rendering dependency here: a sibling/asset preview is
+    used when present, and the caller safely falls through otherwise.
+    """
+    path = Path(asset_path)
+    try:
+        if path.is_file():
+            if path.suffix.lower() in _VISUAL_IMAGE_EXTS:
+                return path
+            if path.suffix.lower() not in _VISUAL_DOCUMENT_EXTS:
+                return None
+            candidates = sorted(
+                candidate for candidate in path.parent.iterdir()
+                if candidate.is_file()
+                and candidate.suffix.lower() in _VISUAL_IMAGE_EXTS
+                and candidate.stem.casefold() == path.stem.casefold()
+            )
+            if candidates:
+                return candidates[0]
+            folder = path.parent
+        elif path.is_dir():
+            folder = path
+        else:
+            return None
+
+        from asset_db import find_preview_image
+
+        relative = find_preview_image(str(folder))
+        if not relative:
+            return None
+        preview = (folder / relative).resolve()
+        root = folder.resolve()
+        if preview != root and root not in preview.parents:
+            return None
+        return preview if preview.is_file() else None
+    except (OSError, ValueError, ImportError):
+        return None
+
+
+def _parse_visual_result(raw: str, folder_name: str,
+                        category_list: list[str], model: str,
+                        preview: Path) -> dict | None:
+    """Validate one structured vision response against the active taxonomy."""
+    text = re.sub(r'<think>.*?</think>', '', str(raw or ''), flags=re.DOTALL)
+    text = re.sub(r'<think>.*$', '', text, flags=re.DOTALL).strip()
+    if not text:
+        return None
+    try:
+        parsed = json.loads(text)
+    except json.JSONDecodeError:
+        match = re.search(r'\{.*\}', text, re.DOTALL)
+        if not match:
+            return None
+        try:
+            parsed = json.loads(match.group(0))
+        except json.JSONDecodeError:
+            return None
+
+    if not isinstance(parsed, dict):
+        return None
+    if HAS_PYDANTIC and _CLASSIFY_RESULT_ADAPTER and parsed.get('kind'):
+        try:
+            parsed = _CLASSIFY_RESULT_ADAPTER.validate_python(parsed).model_dump()
+        except Exception:
+            return None
+    if parsed.get('kind') == 'review' or parsed.get('category') == '_Review':
+        return None
+
+    category = parsed.get('category')
+    confidence = parsed.get('confidence')
+    if not isinstance(category, str) or category not in category_list:
+        return None
+    if type(confidence) is not int or not 0 <= confidence <= 100:
+        return None
+    name = str(parsed.get('name') or folder_name).strip() or folder_name
+    return {
+        'name': name,
+        'category': category,
+        'clean_name': name,
+        'confidence': confidence,
+        'notes': f'vision:{model} (preview:{preview.name})',
+        '_source_name': folder_name,
+        '_classifier': 'vision',
+        'metadata': {
+            'model': model,
+            'preview': preview.name,
+            'confidence_source': 'structured_multimodal',
+        },
+    }
+
+
+def ollama_classify_visual(
+    folder_name: str,
+    asset_path: str | os.PathLike[str] | None = None,
+    *,
+    url: str | None = None,
+    model: str | None = None,
+    category_list: list[str] | None = None,
+    log_cb=None,
+) -> dict | None:
+    """Classify an image/PDF preview with an installed local vision model.
+
+    This is an opt-in fallback for low-confidence routing. It never pulls a
+    model or treats a malformed/unknown-category response as a classification.
+    The shared ``structured=True`` path sends the discriminated
+    ``ClassifyResult`` schema to Ollama when Pydantic is available.
+    """
+    settings = load_ollama_settings()
+    if not settings.get('vision_enabled', True) or not asset_path:
+        return None
+    preview = _find_visual_preview(asset_path)
+    if preview is None:
+        return None
+    try:
+        max_bytes = max(1, int(settings.get('vision_max_file_mb', 20))) * 1024 * 1024
+        if preview.stat().st_size > max_bytes:
+            return None
+    except OSError:
+        return None
+
+    selected_model = model or _find_vision_model(url)
+    if not selected_model or not _is_vision_model(selected_model):
+        return None
+    image = _prepare_image_base64(
+        str(preview), max_pixels=max(256, int(settings.get('vision_max_pixels', 1024)))
+    )
+    if not image:
+        return None
+
+    categories = category_list or get_all_category_names()
+    prompt = (
+        'Classify this visual design asset into exactly one category from the '
+        'provided taxonomy. Use the image as primary evidence, including visible '
+        'text, layout, subject, and design style. Preserve a concise descriptive '
+        f'name for the asset. Asset name: {folder_name}\n\n'
+        'TAXONOMY:\n' + '\n'.join(f'  {category}' for category in categories)
+    )
+    system = (
+        'You are a visual asset librarian. Choose only an exact taxonomy label. '
+        'Return the structured classification schema; use review when the image '
+        'does not provide enough evidence.'
+    )
+    try:
+        raw = _ollama_generate(
+            prompt=prompt,
+            system=system,
+            url=url,
+            model=selected_model,
+            timeout=max(30, int(settings.get('timeout', 120))),
+            log_cb=log_cb,
+            images=[image],
+            structured=True,
+        )
+    except Exception as exc:
+        if log_cb:
+            log_cb(f'    [Vision] unavailable: {exc}')
+        return None
+    return _parse_visual_result(raw, folder_name, categories, selected_model, preview)
+
+
 
 # ── Evidence gathering for low-confidence escalation ─────────────────────────
 _EVIDENCE_IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp'}
