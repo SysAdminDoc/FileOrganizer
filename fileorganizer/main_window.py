@@ -23,7 +23,7 @@ from fileorganizer.config import (
 from fileorganizer.cache import (
     cache_lookup, cache_store, cache_clear, cache_count,
     save_correction, check_corrections, load_corrections,
-    save_undo_log, load_undo_log, clear_undo_log, _load_undo_stack, _save_undo_stack,
+    save_undo_log, clear_undo_log, _load_undo_stack, _save_undo_stack,
     append_csv_log, create_backup_snapshot,
     export_rules_bundle, import_rules_bundle
 )
@@ -65,7 +65,7 @@ from fileorganizer.dialogs import (
     TemplateBuilderWidget, PCCategoryEditorDialog, _FileBrowserDialog,
     UndoBatchDialog, BeforeAfterDialog, DuplicateCompareDialog,
     EventGroupDialog, RuleEditorDialog, ScheduleDialog,
-    UndoTimelineDialog, PluginManagerDialog, CleanupToolsDialog,
+    MoveHistoryDialog, PluginManagerDialog, CleanupToolsDialog,
     DuplicateFinderDialog, CleanupPanel, DuplicatePanel,
     CrossLibraryDedupDialog,
     VersionDedupDialog,
@@ -518,6 +518,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                                lambda: self._open_cleanup_tab(mode='duplicates'))
         menu_cleanup.addAction("Cross-Library Dedup...", self._open_cross_library_dedup)
         menu_cleanup.addAction("Version-Aware Dedup...", self._open_version_dedup)
+        menu_cleanup.addAction("Move History...", self._show_undo_timeline)
         menu_cleanup.addAction("Browse Library...", self._open_browse)
         menu_cleanup.addAction("Cleanup Tools...", self._open_cleanup_tools)
         menu_cleanup.addSeparator()
@@ -563,8 +564,9 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         self.btn_undo = QPushButton("Undo")
         self.btn_undo.setFixedHeight(34)
+        self.btn_undo.setToolTip("Open move history and guarded undo")
         self.btn_undo.clicked.connect(self._show_undo_timeline)
-        self.btn_undo.setEnabled(bool(load_undo_log()))
+        self.btn_undo.setEnabled(self._has_undo_history())
         ab_lay.addWidget(self.btn_undo)
 
         sep_ab = QFrame(); sep_ab.setFrameShape(QFrame.Shape.NoFrame)
@@ -3558,14 +3560,25 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self._on_sidebar_tool('cleanup', tab_index or 0)
 
     # ═══ UNDO TIMELINE ═══════════════════════════════════════════════════════
+    def _has_undo_history(self) -> bool:
+        """Return whether either the legacy stack or journal has undo rows."""
+        if _load_undo_stack():
+            return True
+        try:
+            from fileorganizer import move_journal
+            return bool(move_journal.get_move_history(limit=1))
+        except Exception:
+            return False
+
     def _show_undo_timeline(self):
-        """Show the visual undo timeline dialog."""
-        stack = _load_undo_stack()
-        if not stack:
+        """Show journal-backed move history, with a legacy-stack escape hatch."""
+        if not self._has_undo_history():
             self._log("No undo history available"); return
-        dlg = UndoTimelineDialog(self)
+        dlg = MoveHistoryDialog(self)
         dlg.exec()
-        self.btn_undo.setEnabled(bool(_load_undo_stack()))
+        if dlg.legacy_requested:
+            self._on_undo()
+        self.btn_undo.setEnabled(self._has_undo_history())
 
     def closeEvent(self, event):
         """Override close event to minimize to tray when watch mode is active. NEXT-37: cleanup DB on exit."""

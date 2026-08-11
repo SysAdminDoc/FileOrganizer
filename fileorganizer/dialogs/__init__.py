@@ -19,7 +19,7 @@ from fileorganizer.dialogs.version_dedup import VersionDedupDialog
 from fileorganizer.dialogs.browse import BrowsePanel, BrowseTreeWidget
 from fileorganizer.dialogs.tools import (
     BeforeAfterDialog, EventGroupDialog, ScheduleDialog,
-    UndoTimelineDialog, UndoBatchDialog, PluginManagerDialog,
+    UndoTimelineDialog, MoveHistoryDialog, UndoBatchDialog, PluginManagerDialog,
     RelationshipGraphWidget, WatchHistoryDialog,
     PreflightWorker, PreflightDialog,
 )
@@ -42,7 +42,7 @@ __all__ = [
     'VersionDedupDialog',
     'BrowsePanel', 'BrowseTreeWidget',
     'BeforeAfterDialog', 'EventGroupDialog', 'ScheduleDialog',
-    'UndoTimelineDialog', 'UndoBatchDialog', 'PluginManagerDialog',
+    'UndoTimelineDialog', 'MoveHistoryDialog', 'UndoBatchDialog', 'PluginManagerDialog',
     'RelationshipGraphWidget', 'WatchHistoryDialog',
     'PreflightWorker', 'PreflightDialog',
     'ThemePickerDialog', 'ProtectedPathsDialog',

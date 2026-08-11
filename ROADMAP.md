@@ -4,14 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-24: Undo history visualizer**
-"History" tab: timeline of all moves from `organize_moves.db` with per-item or per-run undo.
-Show: timestamp, source, destination, confidence score, undo button. Completes N-6.
-
-- [ ] **Impact**: 5 | **Effort**: 3
-
-- [ ] Source: [S3] hyperfield/ai-file-sorter undo-after-close
-
 **NEXT-26: Batch rename with preview**
 GUI dialog showing old name -> proposed canonical name (`{CAT_CODE}_{ID}_{CLEAN_NAME}`) for all
 items in a category, with inline edit before committing. CLI: opt-in `--rename` flag. mnamer

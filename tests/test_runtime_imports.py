@@ -144,6 +144,43 @@ def test_secondary_pyqt_dialogs_and_main_window_import(tmp_path, monkeypatch):
     app.processEvents()
 
 
+def test_move_history_dialog_renders_journal_rows(monkeypatch):
+    from PyQt6.QtWidgets import QApplication
+    from fileorganizer.dialogs import MoveHistoryDialog
+    import fileorganizer.dialogs.tools as tools
+
+    app = QApplication.instance() or QApplication([])
+    monkeypatch.setattr(tools, "_load_undo_stack", lambda: [])
+    monkeypatch.setattr(
+        "fileorganizer.move_journal.get_move_history",
+        lambda limit=1000: [{
+            "kind": "run",
+            "id": 7,
+            "run_id": "run-demo",
+            "action_id": "",
+            "source": r"C:\source\asset",
+            "destination": r"C:\destination\asset",
+            "confidence": 91,
+            "status": "done",
+            "timestamp": "2026-08-10T12:00:00Z",
+            "can_undo": True,
+        }],
+    )
+
+    dialog = MoveHistoryDialog()
+    try:
+        assert dialog.windowTitle() == "Move History"
+        assert dialog.tbl_history.rowCount() == 1
+        assert dialog.tbl_history.item(0, 4).text() == "91%"
+        dialog.tbl_history.selectRow(0)
+        app.processEvents()
+        assert dialog.btn_undo_selected.isEnabled()
+        assert dialog.btn_undo_run.isEnabled()
+    finally:
+        dialog.close()
+        app.processEvents()
+
+
 def test_full_face_recognition_builds_person_thumbnail(monkeypatch, tmp_path):
     numpy = pytest.importorskip("numpy")
     from fileorganizer import photos
