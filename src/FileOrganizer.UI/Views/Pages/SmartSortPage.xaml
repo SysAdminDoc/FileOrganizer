@@ -27,12 +27,12 @@
                                        Foreground="{StaticResource AccentPrimaryBrush}"/>
                         </StackPanel>
                     </Border>
-                    <TextBlock Text="Smart Sort — drop a folder, get an organized library."
+                    <TextBlock Text="Smart Sort — choose folders, get an organized library."
                                Style="{StaticResource HeroTextStyle}"
                                TextWrapping="Wrap" MaxWidth="980"/>
                     <TextBlock Style="{StaticResource SubtitleTextStyle}"
                                TextWrapping="Wrap" MaxWidth="980"
-                               Text="Walks every file under a source folder, classifies it by extension into one of ten buckets, and routes each one to the right pipeline: music files get Picard tagging, videos get GuessIt episode parsing, books get EPUB/PDF metadata, fonts get the OS/2 + name table, code projects get a marker-file walk, everything else goes to a typed bucket. Preview shows the planned destination tree before any file moves."/>
+                               Text="Walks every file under one or more source folders, classifies it by extension into one of ten buckets, and routes each one to the right pipeline: music files get Picard tagging, videos get GuessIt episode parsing, books get EPUB/PDF metadata, fonts get the OS/2 + name table, code projects get a marker-file walk, everything else goes to a typed bucket. Preview shows the planned destination tree before any file moves."/>
                 </StackPanel>
             </Border>
 
@@ -44,7 +44,8 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Source" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
                         <TextBox Grid.Column="1" x:Name="SourceTextBox" Style="{StaticResource PremiumTextBoxStyle}"
-                                 PlaceholderText="C:\Users\You\Downloads (the messy folder you want sorted)"/>
+                                 AcceptsReturn="True" TextWrapping="Wrap" MinHeight="44"
+                                 PlaceholderText="Choose one or more source folders (one path per line)"/>
                         <Button Grid.Column="2" x:Name="SourceBrowseButton" Content="Browse"
                                 Style="{StaticResource SecondaryButtonStyle}" Click="BrowseSource_Click"/>
                     </Grid>
