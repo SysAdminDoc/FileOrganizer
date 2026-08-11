@@ -12,6 +12,8 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added a category-filtered Batch Rename preview with inline edits for pending
   desktop plans and an opt-in CLI `--rename` mode sharing the canonical
   `{CAT_CODE}_{ID}_{CLEAN_NAME}` renderer.
+- Perceptual duplicate results now use complete-linkage grouping, so a chain of
+  pairwise-similar images cannot be presented as one over-broad duplicate group.
 - Completed folder scans now launch a throttled background marketplace refresh;
   explicit provider version/date changes are grouped into non-flashing update
   alerts by category.

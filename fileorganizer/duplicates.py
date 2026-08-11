@@ -136,6 +136,51 @@ def _hamming_distance(hash1: str, hash2: str) -> int:
         return 999
     return sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
 
+
+def _complete_linkage_clusters(
+    paths: list[str], phashes: dict[str, str], threshold: int,
+    neighbor_sets: dict[str, set[str]] | None = None,
+) -> list[list[str]]:
+    """Group perceptual neighbors without allowing chain over-merging.
+
+    A new item joins a cluster only when it is within the threshold of every
+    existing member. This is the complete-linkage invariant: a cluster never
+    contains a pair that exceeds the configured Hamming distance.
+    """
+    if threshold < 0:
+        raise ValueError('perceptual hash threshold must be non-negative')
+
+    clusters: list[list[str]] = []
+    if neighbor_sets is None:
+        neighbor_sets = {
+            path: {
+                neighbor for neighbor in paths
+                if _hamming_distance(phashes[path], phashes[neighbor]) <= threshold
+            }
+            for path in paths
+        }
+    for path in sorted(paths):
+        compatible = [
+            cluster for cluster in clusters
+            if all(member in neighbor_sets[path] for member in cluster)
+        ]
+        if not compatible:
+            clusters.append([path])
+            continue
+
+        # Choose the tightest compatible cluster; size then lexical order make
+        # results deterministic when several clusters are equally suitable.
+        target = min(
+            compatible,
+            key=lambda cluster: (
+                max(_hamming_distance(phashes[path], phashes[member]) for member in cluster),
+                -len(cluster),
+                tuple(cluster),
+            ),
+        )
+        target.append(path)
+    return [cluster for cluster in clusters if len(cluster) > 1]
+
 class _BKTree:
     """BK-tree for efficient nearest-neighbor search under Hamming distance.
     Reduces O(n²) all-pairs comparison to ~O(n log n) for sparse matches."""
@@ -386,17 +431,23 @@ class ProgressiveDuplicateDetector:
         for p in paths:
             tree.insert(p)
 
-        perceptual_groups = {}   # group of paths that are near-duplicates
-        assigned = set()
-
-        for p in paths:
-            if p in assigned:
-                continue
-            neighbors = tree.query(p, self.phash_threshold)
-            group = [item for item, dist in neighbors if item not in assigned or item == p]
-            if len(group) > 1:
-                assigned.update(group)
-                perceptual_groups[p] = group
+        # Prime the BK-tree query for each image so the complete-linkage
+        # builder only considers threshold-neighbor candidates. The builder
+        # still checks every member before joining a cluster.
+        neighbor_sets = {
+            path: {
+                neighbor for neighbor, _distance in tree.query(
+                    path, self.phash_threshold
+                )
+            }
+            for path in paths
+        }
+        perceptual_groups = _complete_linkage_clusters(
+            paths,
+            phashes,
+            self.phash_threshold,
+            neighbor_sets=neighbor_sets,
+        )
 
         # Assign perceptual duplicate groups
         n_perceptual = 0

@@ -43,3 +43,18 @@ def test_compute_phash_reads_real_image(tmp_path):
 
     assert len(phash) == 64
     assert set(phash) <= {"0", "1"}
+
+
+def test_complete_linkage_does_not_merge_a_similarity_chain():
+    phashes = {
+        "a": "00000000",
+        "b": "00001111",
+        "c": "00111111",
+    }
+
+    groups = duplicates._complete_linkage_clusters(
+        ["c", "b", "a"], phashes, threshold=4,
+    )
+
+    assert groups == [["a", "b"]]
+    assert duplicates._hamming_distance(phashes["a"], phashes["c"]) == 6
