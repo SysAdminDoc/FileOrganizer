@@ -10,6 +10,7 @@
                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Spacing="6">
@@ -193,8 +194,61 @@
                 </StackPanel>
             </Border>
 
+            <!-- Scheduled profiles -->
+            <Border Grid.Row="5" Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="14">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE823;" FontSize="16"
+                                  Foreground="{StaticResource AccentOrangeBrush}"
+                                  VerticalAlignment="Center"/>
+                        <TextBlock Text="Schedules" Style="{StaticResource PanelTitleTextStyle}"/>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="Run a saved scan profile through Windows Task Scheduler. Schedules are preview-only unless Auto-apply is explicitly enabled; tasks run hidden as the current user."/>
+
+                    <Grid ColumnSpacing="12" RowSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/><ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" x:Name="ScheduleProfileBox"
+                                  Header="Saved profile" PlaceholderText="Choose a profile"/>
+                        <ComboBox Grid.Column="1" x:Name="ScheduleFrequencyBox"
+                                  Header="Frequency" SelectedIndex="0">
+                            <ComboBoxItem Content="Daily" Tag="daily"/>
+                            <ComboBoxItem Content="Weekly (Monday)" Tag="weekly"/>
+                            <ComboBoxItem Content="Monthly (day 1)" Tag="monthly"/>
+                            <ComboBoxItem Content="At logon" Tag="on_logon"/>
+                        </ComboBox>
+                        <TimePicker Grid.Column="2" x:Name="ScheduleTimePicker" Header="Local time"/>
+                        <ToggleSwitch Grid.Column="3" x:Name="ScheduleAutoApplyToggle"
+                                      Header="Apply mode" OffContent="Preview only" OnContent="Auto-apply"
+                                      VerticalAlignment="Bottom"/>
+                    </Grid>
+
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button Content="Register schedule" Style="{StaticResource PrimaryButtonStyle}"
+                                Click="ScheduleCreate_Click"/>
+                        <ComboBox x:Name="ScheduleExistingBox" Width="260"
+                                  PlaceholderText="Existing schedule"/>
+                        <Button Content="Remove selected" Style="{StaticResource GhostButtonStyle}"
+                                Click="ScheduleDelete_Click"/>
+                        <Button Content="Refresh log" Style="{StaticResource SecondaryButtonStyle}"
+                                Click="ScheduleLog_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="ScheduleStatusText" Text="Checking scheduled profiles…"
+                               Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"/>
+                    <ListView x:Name="ScheduleList" MaxHeight="170" SelectionMode="None"/>
+                    <TextBox x:Name="ScheduleLogBox" Header="Recent scheduled-run events"
+                             IsReadOnly="True" AcceptsReturn="True" TextWrapping="NoWrap"
+                             Height="140" FontFamily="Cascadia Mono" FontSize="12"
+                             PlaceholderText="No scheduled runs recorded yet."
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                </StackPanel>
+            </Border>
+
             <!-- Buttons -->
-            <StackPanel Grid.Row="5" Orientation="Horizontal" Spacing="12">
+            <StackPanel Grid.Row="6" Orientation="Horizontal" Spacing="12">
                 <Button Content="Save defaults" Style="{StaticResource PrimaryButtonStyle}"
                         Click="Save_Click"/>
                 <Button Content="Restore defaults" Style="{StaticResource GhostButtonStyle}"

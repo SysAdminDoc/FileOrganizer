@@ -47,7 +47,7 @@ from fileorganizer.photos import (
 )
 from fileorganizer.duplicates import ProgressiveDuplicateDetector, ConflictResolver
 from fileorganizer.files import _load_pc_categories, _save_pc_categories, _build_ext_map
-from fileorganizer.engine import RuleEngine, EventGrouper, ScheduleManager, RenameTemplateEngine
+from fileorganizer.engine import RuleEngine, EventGrouper, RenameTemplateEngine
 from fileorganizer.plugins import PluginManager, ProfileManager, CategoryPresetManager, CloudPathResolver
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
 from fileorganizer.adaptive_corrector import AdaptiveCorrector
@@ -125,8 +125,9 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         f = (t - 0.5) / 0.5
         return f"#{int(245 + (74 - 245) * f):02x}{int(158 + (222 - 158) * f):02x}{int(11 + (128 - 11) * f):02x}"
 
-    def __init__(self):
+    def __init__(self, *, background_automation: bool = False):
         super().__init__()
+        self._background_automation = background_automation
         self.setWindowTitle("FileOrganizer v8.3.0")
         self.setMinimumSize(1050, 700)
         self.aep_items  = []
@@ -147,10 +148,12 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         # Check the user-installed Ollama setup in the background; installation
         # and model acquisition remain explicit settings actions.
-        self._start_ollama_setup()
+        if not background_automation:
+            self._start_ollama_setup()
 
         # Check for community catalog update in background
-        self._start_catalog_sync()
+        if not background_automation:
+            self._start_catalog_sync()
 
     # ═══ DRAG & DROP ═══════════════════════════════════════════════════════════
     def dragEnterEvent(self, event: QDragEnterEvent):
@@ -3033,7 +3036,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         """Exit the application from tray."""
         if self._watch_manager and self._watch_manager.is_active:
             self._watch_manager.stop()
-        self._save_settings()
+        if not self._background_automation:
+            self._save_settings()
         QApplication.instance().quit()
 
     def _watch_pause(self):

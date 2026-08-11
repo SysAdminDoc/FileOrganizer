@@ -32,7 +32,12 @@ public sealed partial class SettingsPage : Page
         VideoPatternBox.Text = _settings.DefaultVideoRenamePattern;
         BookPatternBox.Text = _settings.DefaultBookRenamePattern;
         LangsBox.Text = _settings.DefaultSubtitleLanguages;
-        Loaded += async (_, _) => await RefreshWatchTaskAsync(includeLog: false);
+        ScheduleTimePicker.Time = new TimeSpan(9, 0, 0);
+        Loaded += async (_, _) =>
+        {
+            await RefreshWatchTaskAsync(includeLog: false);
+            await RefreshSchedulesAsync(includeLog: false);
+        };
     }
 
     private void LoadThemes()
@@ -190,6 +195,97 @@ public sealed partial class SettingsPage : Page
             : "Task Scheduler startup is available only on Windows.";
         if (state.Log is not null)
             WatchLogBox.Text = state.Log;
+        return true;
+    }
+
+    private async void ScheduleCreate_Click(object sender, RoutedEventArgs e)
+    {
+        if (ScheduleProfileBox.SelectedItem is not string profile
+            || string.IsNullOrWhiteSpace(profile))
+        {
+            ScheduleStatusText.Text = "Choose a saved profile first.";
+            return;
+        }
+        var frequency = (ScheduleFrequencyBox.SelectedItem as ComboBoxItem)?.Tag as string
+            ?? "daily";
+        var localTime = ScheduleTimePicker.Time;
+        var arguments = new List<string>
+        {
+            "--schedule", profile,
+            "--frequency", frequency,
+            "--time", $"{localTime.Hours:00}:{localTime.Minutes:00}",
+        };
+        if (ScheduleAutoApplyToggle.IsOn)
+            arguments.Add("--auto-apply");
+        await RunScheduleCommandAsync(arguments.ToArray());
+    }
+
+    private async void ScheduleDelete_Click(object sender, RoutedEventArgs e)
+    {
+        if (ScheduleExistingBox.SelectedItem is not string name
+            || string.IsNullOrWhiteSpace(name))
+        {
+            ScheduleStatusText.Text = "Choose an existing schedule to remove.";
+            return;
+        }
+        await RunScheduleCommandAsync(["--delete", name]);
+    }
+
+    private async void ScheduleLog_Click(object sender, RoutedEventArgs e)
+    {
+        if (ScheduleExistingBox.SelectedItem is not string name
+            || string.IsNullOrWhiteSpace(name))
+        {
+            await RefreshSchedulesAsync(includeLog: false);
+            return;
+        }
+        await RunScheduleCommandAsync(["--logs", name]);
+    }
+
+    private async Task RefreshSchedulesAsync(bool includeLog)
+    {
+        await RunScheduleCommandAsync(["--status"]);
+    }
+
+    private async Task<bool> RunScheduleCommandAsync(string[] arguments)
+    {
+        ScheduleStatusText.Text = "Updating schedules…";
+        var result = await _python.RunScriptAsync("schedule_task_run.py", arguments);
+        if (!ScheduleTaskProtocol.TryParseState(result.Stdout, out var state, out var parseError)
+            || state is null)
+        {
+            ScheduleStatusText.Text = result.Success
+                ? parseError
+                : $"Schedule update failed: {parseError} {result.Stderr}".Trim();
+            return false;
+        }
+        if (!result.Success || !string.IsNullOrWhiteSpace(state.Error))
+        {
+            ScheduleStatusText.Text = state.Error ?? result.ErrorMessage ?? "Schedule update failed.";
+            return false;
+        }
+
+        var selectedProfile = ScheduleProfileBox.SelectedItem as string;
+        ScheduleProfileBox.ItemsSource = state.Profiles;
+        if (selectedProfile is not null && state.Profiles.Contains(selectedProfile))
+            ScheduleProfileBox.SelectedItem = selectedProfile;
+        else if (state.Profiles.Count > 0)
+            ScheduleProfileBox.SelectedIndex = 0;
+
+        var selectedSchedule = ScheduleExistingBox.SelectedItem as string;
+        var scheduleNames = state.Schedules.Select(item => item.Name).ToList();
+        ScheduleExistingBox.ItemsSource = scheduleNames;
+        if (selectedSchedule is not null && scheduleNames.Contains(selectedSchedule))
+            ScheduleExistingBox.SelectedItem = selectedSchedule;
+        else if (scheduleNames.Count > 0)
+            ScheduleExistingBox.SelectedIndex = 0;
+        ScheduleList.ItemsSource = state.Schedules.Select(ScheduleTaskProtocol.Describe).ToList();
+        ScheduleStatusText.Text = state.Supported
+            ? $"{state.Schedules.Count} schedule(s) · {state.Profiles.Count} saved profile(s)"
+              + (string.IsNullOrWhiteSpace(state.Message) ? "" : $" · {state.Message}")
+            : "Scheduled profiles are unavailable on this platform.";
+        if (state.Log is not null)
+            ScheduleLogBox.Text = state.Log;
         return true;
     }
 }

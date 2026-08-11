@@ -3,7 +3,7 @@
 import pytest
 import tempfile
 import json
-import os
+import subprocess
 from pathlib import Path
 from fileorganizer.scheduler import ScheduledProfile, SchedulerManager
 
@@ -86,9 +86,15 @@ class TestSchedulerManager:
             yield tmpdir
     
     @pytest.fixture
-    def scheduler(self, temp_config_dir):
+    def scheduler(self, temp_config_dir, monkeypatch):
         """Create a scheduler with temporary config."""
-        return SchedulerManager(config_dir=temp_config_dir)
+        scheduler = SchedulerManager(config_dir=temp_config_dir)
+        monkeypatch.setattr(scheduler, "_register_os_task", lambda _profile: True)
+        monkeypatch.setattr(scheduler, "_unregister_os_task", lambda _profile: True)
+        monkeypatch.setattr(
+            scheduler, "_set_os_task_enabled", lambda _profile, _enabled: True
+        )
+        return scheduler
     
     def test_init_creates_config_dir(self, temp_config_dir):
         """Test that SchedulerManager creates config directory."""
@@ -132,8 +138,7 @@ class TestSchedulerManager:
             time='18:00'
         )
         
-        # Should succeed (we can't actually register OS tasks in tests)
-        assert result in (True, False)  # Depends on OS capabilities
+        assert result is True
     
     def test_list_schedules(self, scheduler):
         """Test listing all schedules."""
@@ -187,11 +192,7 @@ class TestSchedulerManager:
         
         assert 'ToDelete' in scheduler.schedules
         
-        # Delete (will fail OS registration in test, but should still remove from dict)
-        # We'll manually bypass the OS registration
-        del scheduler.schedules['ToDelete']
-        scheduler._save_schedules()
-        
+        assert scheduler.delete_schedule('ToDelete') is True
         assert 'ToDelete' not in scheduler.schedules
     
     def test_enable_disable_schedule(self, scheduler):
@@ -332,7 +333,9 @@ class TestCronEntry:
             entry = scheduler._get_cron_entry(profile)
             
             # Should contain the time and command
-            assert '18 30' in entry or '30 18' in entry  # Cron uses minute hour
+            assert entry.startswith('30 18 * * * ')
+            assert 'schedule_task_run.py' in entry
+            assert '--run Daily' in entry
 
 
 class TestSystemdTimer:
@@ -355,3 +358,61 @@ class TestSystemdTimer:
             assert '[Timer]' in content
             assert '[Install]' in content
             assert 'OnCalendar' in content
+
+
+class TestSchedulerSafety:
+    def test_rejects_invalid_schedule_fields(self, tmp_path, monkeypatch):
+        scheduler = SchedulerManager(config_dir=str(tmp_path))
+        monkeypatch.setattr(scheduler, '_register_os_task', lambda _profile: True)
+
+        assert scheduler.create_schedule('Bad/Name', '', 'daily', '09:00') is False
+        assert scheduler.create_schedule('BadTime', '', 'daily', '25:00') is False
+        assert scheduler.create_schedule('BadFrequency', '', 'hourly', '09:00') is False
+        assert scheduler.schedules == {}
+
+    def test_windows_registration_uses_hidden_profile_runner(self, tmp_path, monkeypatch):
+        runner = tmp_path / 'schedule_task_run.py'
+        runner.write_text('', encoding='utf-8')
+        python = tmp_path / 'python.exe'
+        python.write_text('', encoding='utf-8')
+        pythonw = tmp_path / 'pythonw.exe'
+        pythonw.write_text('', encoding='utf-8')
+        scheduler = SchedulerManager(
+            config_dir=str(tmp_path / 'config'),
+            runner_path=runner,
+            python_executable=str(python),
+        )
+        scheduler.platform = 'Windows'
+        captured = {}
+
+        def fake_run(command, **_kwargs):
+            captured['command'] = command
+            return subprocess.CompletedProcess(command, 0, '', '')
+
+        monkeypatch.setattr(scheduler, '_run', fake_run)
+        profile = ScheduledProfile('Morning Scan', 'C:\\Inbox', 'weekly', '07:15', 2)
+
+        assert scheduler._register_windows_task(profile) is True
+        command = captured['command']
+        assert command[:2] == ['schtasks.exe', '/Create']
+        action = command[command.index('/TR') + 1]
+        assert str(pythonw) in action
+        assert str(runner) in action
+        assert '--run' in action and 'Morning Scan' in action
+        assert '-m fileorganizer.cli' not in action
+        assert command[command.index('/D') + 1] == 'WED'
+
+    def test_run_status_is_persisted(self, tmp_path):
+        scheduler = SchedulerManager(config_dir=str(tmp_path))
+        scheduler.schedules['Daily'] = ScheduledProfile(
+            'Daily', '/path', 'daily', '12:00'
+        )
+        scheduler.note_run_started('Daily')
+        assert scheduler.get_schedule('Daily').last_status == 'running'
+        scheduler.note_run_finished('Daily', succeeded=False, error='boom')
+
+        reloaded = SchedulerManager(config_dir=str(scheduler.config_dir))
+        task = reloaded.get_schedule('Daily')
+        assert task.last_status == 'failed'
+        assert task.last_error == 'boom'
+        assert task.last_finished is not None

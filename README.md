@@ -232,6 +232,12 @@ Python process tree.
   supported NTFS changes that occurred while the watcher was stopped. The
   shell can also start its configured source/destination pairs at user logon,
   tune the 2–120 second quiet window, and inspect the bounded background log.
+- **Scheduled profiles** — register saved scan profiles from **Settings →
+  Schedules** or the CLI. Per-user tasks run offscreen through Windows Task
+  Scheduler (with launchd/systemd support in the Python core), retain run
+  status and bounded logs, and remain preview-only unless auto-apply is
+  explicitly enabled. Auto-apply saves and validates an operation plan before
+  moving or renaming anything.
 
 These workflows work today through `python -m fileorganizer` (Path B) and the
 shell sidecars where noted above.
@@ -259,6 +265,14 @@ python -m fileorganizer.watch_mode --source design --start --duration 60
 
 # Inspect the per-user background Watch task configured by the shell
 python watch_task_run.py --status
+
+# Register and inspect a saved scan profile (preview-only by default)
+python -m fileorganizer --schedule "Daily Inbox" --schedule-time 07:30
+python schedule_task_run.py --status
+python schedule_task_run.py --logs "Daily Inbox"
+
+# Explicit unattended apply; use only after reviewing the profile's routes
+python -m fileorganizer --schedule "Daily Inbox" --schedule-time 07:30 --auto-apply
 
 # Plan-first apply (older --preview/--plan-out/--apply-plan aliases remain valid)
 python organize_run.py --source design --dry-run --plan-file plan.json

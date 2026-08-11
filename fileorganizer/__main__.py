@@ -82,7 +82,33 @@ def main():
                         help="Automatically apply after scan (for scheduled tasks)")
     parser.add_argument("--dry-run", action="store_true",
                         help="Simulate apply without moving/renaming files")
+    parser.add_argument("--schedule", type=str, default=None, metavar="PROFILE",
+                        help="Register a saved profile with the operating-system scheduler")
+    parser.add_argument("--schedule-name", type=str, default=None,
+                        help="Optional task name for --schedule")
+    parser.add_argument("--schedule-frequency", choices=("daily", "weekly", "monthly", "on_logon"),
+                        default="daily")
+    parser.add_argument("--schedule-time", default="09:00", metavar="HH:MM")
+    parser.add_argument("--schedule-day", type=int, default=None,
+                        help="Weekday 0-6 or day of month 1-31, depending on frequency")
     args, qt_args = parser.parse_known_args()
+
+    if args.schedule:
+        from schedule_task_run import main as schedule_main
+
+        schedule_args = [
+            "--schedule", args.schedule,
+            "--frequency", args.schedule_frequency,
+            "--time", args.schedule_time,
+        ]
+        if args.schedule_name:
+            schedule_args += ["--name", args.schedule_name]
+        if args.schedule_day is not None:
+            option = "--day-of-month" if args.schedule_frequency == "monthly" else "--day-of-week"
+            schedule_args += [option, str(args.schedule_day)]
+        if args.auto_apply:
+            schedule_args.append("--auto-apply")
+        raise SystemExit(schedule_main(schedule_args))
 
     from PyQt6.QtWidgets import QApplication
     from PyQt6.QtCore import QTimer
@@ -104,7 +130,7 @@ def main():
         try:
             profile = ProfileManager.load(args.profile)
             if profile:
-                window._apply_profile(profile)
+                window._apply_profile_config(profile)
                 window._log(f"Loaded profile: {args.profile}")
         except Exception as e:
             window._log(f"Failed to load profile '{args.profile}': {e}")

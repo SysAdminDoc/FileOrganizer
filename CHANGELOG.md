@@ -6,6 +6,11 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Saved scan profiles can now be registered from WinUI Settings or the
+  `--schedule` CLI with daily, weekly, monthly, and logon cadences. One
+  cross-platform scheduler writes atomic state, launches a hidden/offscreen
+  profile runner, retains bounded logs and last-run results, defaults to
+  preview-only scans, and saves a validated plan before explicit auto-apply.
 - Category overrides now feed one adaptive correction store shared by the
   rename dialog, review queue, rule/LLM workers, and design classifier: exact
   folder fingerprints bypass providers and related keyword examples are

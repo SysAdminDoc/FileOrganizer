@@ -22,8 +22,9 @@ from fileorganizer.cache import _load_undo_stack
 from fileorganizer.dry_run_planner import (
     default_plan_path, plan_from_items, save_plan, validate_plan,
 )
-from fileorganizer.engine import ScheduleManager, EventGrouper
+from fileorganizer.engine import EventGrouper
 from fileorganizer.plugins import PluginManager, ProfileManager, _PLUGINS_DIR
+from fileorganizer.scheduler import SchedulerManager
 
 
 def _format_similar_name_group(group) -> str:
@@ -450,7 +451,7 @@ class ScheduleDialog(QDialog):
 
         lay = QVBoxLayout(self)
 
-        lbl_h = QLabel("Scheduled Scans (Windows Task Scheduler)")
+        lbl_h = QLabel("Scheduled Scans")
         _t = get_active_theme()
         lbl_h.setProperty("class", "section-title")
         lay.addWidget(lbl_h)
@@ -514,8 +515,10 @@ class ScheduleDialog(QDialog):
 
     def _refresh_tasks(self):
         self.lst_tasks.clear()
-        for t in ScheduleManager.list_tasks():
-            self.lst_tasks.addItem(f"{t['name']}  |  Next: {t.get('next_run', '?')}  |  {t.get('status', '?')}")
+        for task in SchedulerManager().list_schedules():
+            cadence = "At logon" if task.frequency == "on_logon" else f"{task.frequency.title()} {task.time}"
+            status = task.last_status or ("Enabled" if task.enabled else "Disabled")
+            self.lst_tasks.addItem(f"{task.name}  |  {cadence}  |  {status}")
 
     def _create(self):
         profile = self.cmb_profile.currentText()
@@ -523,8 +526,16 @@ class ScheduleDialog(QDialog):
             return
         stype = ['daily', 'weekly', 'on_logon'][self.cmb_type.currentIndex()]
         name = f"{profile}_{stype}"
-        ScheduleManager.create_task(name, profile, stype,
-                                     self.txt_time.text(), auto_apply=self.chk_auto.isChecked())
+        cfg = ProfileManager.load(profile)
+        SchedulerManager().create_schedule(
+            name,
+            cfg.get('src', ''),
+            stype,
+            self.txt_time.text(),
+            profile_name=profile,
+            auto_apply=self.chk_auto.isChecked(),
+            replace=True,
+        )
         self._refresh_tasks()
 
     def _delete(self):
@@ -532,7 +543,7 @@ class ScheduleDialog(QDialog):
         if row >= 0:
             text = self.lst_tasks.item(row).text()
             name = text.split('|')[0].strip()
-            ScheduleManager.delete_task(name)
+            SchedulerManager().delete_schedule(name)
             self._refresh_tasks()
 
 
