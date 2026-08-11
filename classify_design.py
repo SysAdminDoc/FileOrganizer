@@ -1007,6 +1007,57 @@ def _try_metadata_classify(batch_items: list[dict]) -> dict[int, dict]:
     return out
 
 
+_VISION_IMAGE_EXTS = frozenset({
+    '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp',
+})
+_VISION_EXTS = _VISION_IMAGE_EXTS | {'.pdf'}
+
+
+def _is_visual_candidate(item: dict) -> bool:
+    """Return whether an item can provide an image/PDF preview to a vision model."""
+    if item.get('is_file'):
+        return str(item.get('file_ext') or Path(item.get('name', '')).suffix).lower() in _VISION_EXTS
+    extensions = item.get('extensions') or item.get('exts')
+    if extensions is None:
+        path = item.get('path') or os.path.join(item.get('folder', ''), item.get('name', ''))
+        if path and os.path.isdir(path):
+            extensions, _ = peek_extensions(path)
+    return any(str(ext).lower() in _VISION_EXTS for ext in (extensions or []))
+
+
+def _try_vision_classify(batch_items: list[dict]) -> dict[int, dict]:
+    """Use an installed local multimodal model for ambiguous visual assets."""
+    try:
+        from fileorganizer.ollama import ollama_classify_visual
+    except Exception:
+        return {}
+
+    categories = get_runtime_categories()
+    out: dict[int, dict] = {}
+    for idx, item in enumerate(batch_items):
+        if not _is_visual_candidate(item):
+            continue
+        path = item.get('path') or os.path.join(item.get('folder', ''), item.get('name', ''))
+        if not path:
+            continue
+        try:
+            result = ollama_classify_visual(
+                item.get('name', ''),
+                path,
+                category_list=categories,
+            )
+        except Exception:
+            result = None
+        if not result:
+            continue
+        if result.get('category') not in categories:
+            continue
+        if type(result.get('confidence')) is not int or result['confidence'] < 70:
+            continue
+        out[idx] = result
+    return out
+
+
 def _try_marketplace_enrich(batch_items: list[dict]) -> dict[int, dict]:
     """Pre-classify items that have a known marketplace ID.
 
@@ -1173,13 +1224,14 @@ def cmd_run(index: list[dict], only_batch: int = 0,
      -1. adaptive correction — exact user-corrected folder fingerprint
       0. fingerprint_db     — exact folder fingerprint match vs community DB
                               (zero AI cost; ~60-70% skip rate for common templates)
-      1. metadata_extractors   — file-content metadata (PSD canvas, font name
+     1. metadata_extractors   — file-content metadata (PSD canvas, font name
                                   table, audio duration, video aspect/codec).
                                   Hardroute at confidence >= 90.
-      2. marketplace_enrich    — known marketplace IDs → confidence 95+
-      3. embeddings_classifier — local cosine match vs category anchors
+      2. vision_classifier     — local multimodal preview for ambiguous images/PDFs
+      3. marketplace_enrich    — known marketplace IDs → confidence 95+
+      4. embeddings_classifier — local cosine match vs category anchors
                                   (zero AI cost when top1 ≥ 0.65 AND margin ≥ 0.15)
-      4. DeepSeek AI           — everything else (skipped when embeddings_only=True)
+      5. DeepSeek AI           — everything else (skipped when embeddings_only=True)
     """
     # Clean up expired cache entries (NEXT-44)
     expired_count = cleanup_expired(max_age_days=30)
@@ -1226,15 +1278,25 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         if meta_resolved:
             print(f"  Metadata pre-classified {len(meta_resolved)} item(s) — skipping downstream for those")
 
-        # Stage 2: marketplace ID pre-classification (zero AI cost for known items)
+        # Stage 2: local multimodal fallback for ambiguous visual assets.
         prior = {**prior, **meta_resolved}
+        vision_resolved = {}
+        if not embeddings_only:
+            vision_resolved = _run_unresolved_stage(
+                batch_items, prior, _try_vision_classify
+            )
+        if vision_resolved:
+            print(f"  Vision pre-classified {len(vision_resolved)} item(s) — skipping downstream for those")
+
+        # Stage 3: marketplace ID pre-classification (zero AI cost for known items)
+        prior = {**prior, **vision_resolved}
         pre_enriched = _run_unresolved_stage(
             batch_items, prior, _try_marketplace_enrich
         )
         if pre_enriched:
             print(f"  Marketplace pre-classified {len(pre_enriched)} item(s) — skipping AI for those")
 
-        # Stage 3: local embeddings classifier
+        # Stage 4: local embeddings classifier
         prior = {**prior, **pre_enriched}
         embed_resolved = _run_unresolved_stage(
             batch_items,
@@ -1247,6 +1309,7 @@ def cmd_run(index: list[dict], only_batch: int = 0,
         resolved = {
             **fp_resolved,
             **meta_resolved,
+            **vision_resolved,
             **pre_enriched,
             **embed_resolved,
             **adaptive_resolved,
