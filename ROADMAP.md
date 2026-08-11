@@ -16,16 +16,6 @@ and a `--test` dry-run path — both directly portable to the GUI preview dialog
 - [ ] Source: [S22] Adobe Bridge batch rename, [S15] digiKam rename templates, [S58] mnamer
   `MetadataMovie.__format__()` + `--test` dry-run
 
-**NEXT-32: Dedup similarity grouping improvements**
-When running perceptual hash dedup (NEXT-19), group near-identical items into clusters before
-presenting the merge/keep dialog. Use complete-linkage clustering: two items in the same cluster
-only if every pair is within Hamming distance threshold. Prevents over-merging when a cluster
-contains both a genuine duplicate and a similar-but-different item.
-
-- [ ] **Impact**: 3 | **Effort**: 2 | **Depends on**: NEXT-19
-
-- [ ] Source: [S44] Czkawka v11.0.0 similarity grouping overhaul, [S47] imagehash clustering patterns
-
 **NEXT-61: IPTC 2025.1 AI metadata XMP sidecar writing**
 Write IPTC 2025.1 AI metadata fields to `.xmp` sidecars using PyExifTool 0.5.6 (the only viable
 Windows XMP writer). New fields: `Iptc4xmpExt:AISystemUsed` (store "FileOrganizer v8.x"), 
