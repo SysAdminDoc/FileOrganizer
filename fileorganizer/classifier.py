@@ -13,6 +13,7 @@ from fileorganizer.metadata import (
     detect_envato_item_code, extract_prproj_metadata, extract_psd_metadata,
     _envato_api_classify,
 )
+from fileorganizer.mogrt_parser import mogrt_to_category_hints, parse_mogrt
 from fileorganizer.ollama import (
     DESIGN_TEMPLATE_EXTS, VIDEO_TEMPLATE_EXTS, FILENAME_ASSET_MAP,
     _GENERIC_DESIGN_CATEGORIES,
@@ -795,13 +796,107 @@ def _asset_clues_from_scan(scan: dict, folder_path: str) -> dict:
     return result
 
 
-def _extract_metadata_from_scan(scan: dict, folder_name: str, log_cb=None) -> dict:
+_MOGRT_TEXT_PARAM_RE = re.compile(
+    r"\b(?:title|subtitle|text|headline|caption|lower\s*third|name|date|"
+    r"location|company|font|description|message)\b",
+    re.IGNORECASE,
+)
+
+
+def _first_mogrt_metadata(scan: dict) -> dict | None:
+    """Parse the first valid MOGRT discovered by the single-pass folder scan."""
+    for filepath, ext in scan.get('project_files', []):
+        if ext != '.mogrt':
+            continue
+        try:
+            metadata = parse_mogrt(filepath)
+        except Exception:
+            metadata = None
+        if metadata:
+            return metadata
+    return None
+
+
+def _route_mogrt_metadata(metadata: dict) -> tuple[str, int, str]:
+    """Map manifest signals to the legacy classifier's Premiere taxonomy."""
+    name = str(metadata.get('name') or '').strip()
+    parameters = [
+        str(value).strip()
+        for value in metadata.get('parameters', [])
+        if str(value).strip()
+    ] if isinstance(metadata.get('parameters'), (list, tuple, set)) else []
+    fonts = [
+        str(value).strip()
+        for value in metadata.get('required_fonts', [])
+        if str(value).strip()
+    ] if isinstance(metadata.get('required_fonts'), (list, tuple, set)) else []
+    try:
+        parameter_count = max(0, int(metadata.get('parameter_count', len(parameters))))
+    except (TypeError, ValueError):
+        parameter_count = len(parameters)
+    try:
+        font_count = max(0, int(metadata.get('font_count', len(fonts))))
+    except (TypeError, ValueError):
+        font_count = len(fonts)
+
+    name_lower = name.casefold()
+    combined = f"{name_lower} {' | '.join(parameters).casefold()}"
+    parser_signals = set(mogrt_to_category_hints(metadata).get('category_signals', []))
+
+    if (
+        'Transition' in parser_signals
+        or 'Effect' in parser_signals
+        or re.search(r'\b(?:transition|wipe|dissolve|fade|glitch|effect|filter)\b', combined)
+    ):
+        category = 'Premiere Pro - Transitions'
+        signal = 'transition/effect manifest signal'
+        confidence = 96
+    elif (
+        'Title / Lower Third' in parser_signals
+        or _MOGRT_TEXT_PARAM_RE.search(combined)
+        or (font_count > 0 and parameter_count > 0)
+    ):
+        category = 'Premiere Pro - Titles & Text'
+        signal = 'font requirements + editable text signals'
+        confidence = 96
+    elif re.search(r'\b(?:social|reel|reels|story|stories|instagram|tiktok|shorts)\b', combined):
+        category = 'Premiere Pro - Templates'
+        signal = 'social-format manifest signal'
+        confidence = 94
+    elif parameter_count >= 3:
+        category = 'Premiere Pro - Templates'
+        signal = f'{parameter_count} editable parameters'
+        confidence = 94
+    elif font_count > 0:
+        category = 'Premiere Pro - Templates'
+        signal = f'{font_count} required font(s)'
+        confidence = 93
+    else:
+        category = 'Premiere Pro - Templates'
+        signal = 'valid MOGRT manifest'
+        confidence = 92
+
+    detail = (
+        f"manifest:{name or 'unnamed template'}; "
+        f"{parameter_count} parameter(s); {font_count} required font(s); {signal}"
+    )
+    return category, confidence, detail
+
+
+def _extract_metadata_from_scan(
+    scan: dict,
+    folder_name: str,
+    log_cb=None,
+    mogrt_metadata: dict | None = None,
+) -> dict:
     """Metadata extraction using pre-scanned project file list (no rglob)."""
+    parsed_mogrt = mogrt_metadata or _first_mogrt_metadata(scan)
     metadata = {
         'keywords': [], 'project_names': [],
         'envato_id': detect_envato_item_code(folder_name),
         'primary_app': '',
         'has_aep': False, 'has_prproj': False, 'has_psd': False, 'has_mogrt': False,
+        'mogrt_metadata': parsed_mogrt or {},
     }
     scanned = 0
     max_scan = 10
@@ -826,9 +921,11 @@ def _extract_metadata_from_scan(scan: dict, folder_name: str, log_cb=None) -> di
                 scanned += 1
         elif ext == '.mogrt':
             metadata['has_mogrt'] = True
-            metadata['primary_app'] = metadata['primary_app'] or 'After Effects'
+            metadata['primary_app'] = 'Premiere Pro'
         if scanned >= max_scan:
             break
+    if parsed_mogrt and parsed_mogrt.get('name'):
+        metadata['project_names'].append(str(parsed_mogrt['name']))
     return metadata
 
 
@@ -991,6 +1088,26 @@ def tiered_classify(folder_name: str, folder_path: str = None, log_cb=None) -> d
                       detail=user_hit.get('detail', 'user_category'))
         if log_cb:
             log_cb(f"    User category: {result['category']} ({result['confidence']:.0f}%)")
+        return result
+
+    # A valid MOGRT manifest is more specific than the generic extension rule.
+    # Route it before Level 1 so editable parameter and font requirements are
+    # retained as durable metadata instead of being discarded after the 92%
+    # extension shortcut.
+    mogrt_metadata = _first_mogrt_metadata(scan) if scan else None
+    if mogrt_metadata:
+        result['metadata'] = _extract_metadata_from_scan(
+            scan, folder_name, log_cb, mogrt_metadata=mogrt_metadata
+        )
+        mogrt_cat, mogrt_conf, mogrt_detail = _route_mogrt_metadata(mogrt_metadata)
+        result.update(
+            category=mogrt_cat,
+            confidence=mogrt_conf,
+            method='mogrt_metadata',
+            detail=mogrt_detail,
+        )
+        if log_cb:
+            log_cb(f"    MOGRT manifest: {mogrt_cat} ({mogrt_conf:.0f}%) [{mogrt_detail}]")
         return result
 
     # ── Level 1: Extension-based classification ──

@@ -21,6 +21,11 @@ from pathlib import Path
 from typing import Optional
 
 from fileorganizer import winrt_metadata
+from fileorganizer.video_routing import (
+    VideoRoutingMetadata,
+    analyze_video_metadata,
+    video_to_routing_hints,
+)
 
 from ._types import MetadataHint
 
@@ -56,16 +61,30 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
     except Exception:
         winrt_raw = {}
     if winrt_raw and winrt_raw.get("kind") == "video":
+        width = int(winrt_raw.get("width") or 0)
+        height = int(winrt_raw.get("height") or 0)
+        duration = float(winrt_raw.get("duration") or 0.0)
+        routing = _analyze_routing(
+            path,
+            width=width,
+            height=height,
+            codec=str(winrt_raw.get("codec") or winrt_raw.get("video_codec") or ""),
+            duration=duration,
+            fps=float(winrt_raw.get("fps") or winrt_raw.get("frame_rate") or 0.0),
+            audio_codec=str(winrt_raw.get("audio_codec") or ""),
+            bitrate=winrt_raw.get("video_bitrate") or winrt_raw.get("bitrate"),
+        )
         return _hint_from_values(
-            width=int(winrt_raw.get("width") or 0),
-            height=int(winrt_raw.get("height") or 0),
-            codec="",
-            duration=float(winrt_raw.get("duration") or 0.0),
-            fps=0.0,
+            width=width,
+            height=height,
+            codec=str(winrt_raw.get("codec") or winrt_raw.get("video_codec") or ""),
+            duration=duration,
+            fps=float(winrt_raw.get("fps") or winrt_raw.get("frame_rate") or 0.0),
             ext=ext,
             original_ext=path.suffix.lower(),
             source="winrt",
             extra_raw=winrt_raw,
+            routing=routing,
         )
 
     if _FFPROBE is None:
@@ -104,8 +123,29 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
     width = int(video_stream.get("width") or 0)
     height = int(video_stream.get("height") or 0)
     codec = str(video_stream.get("codec_name") or "").lower()
-    duration = float((data.get("format") or {}).get("duration") or 0.0)
-    fps = float(video_stream.get("r_frame_rate", "0").split("/")[0] if "/" in str(video_stream.get("r_frame_rate", "0")) else video_stream.get("avg_frame_rate", 0) or 0.0)
+    format_data = data.get("format") or {}
+    duration = _to_float(format_data.get("duration"), 0.0)
+    fps = _parse_frame_rate(
+        video_stream.get("r_frame_rate") or video_stream.get("avg_frame_rate")
+    )
+    audio_stream = next(
+        (stream for stream in streams if stream.get("codec_type") == "audio"),
+        None,
+    )
+    audio_codec = str((audio_stream or {}).get("codec_name") or "")
+    bitrate = _to_int(format_data.get("bit_rate"))
+    if bitrate is None:
+        bitrate = _to_int(video_stream.get("bit_rate"))
+    routing = _analyze_routing(
+        path,
+        width=width,
+        height=height,
+        codec=codec,
+        duration=duration,
+        fps=fps,
+        audio_codec=audio_codec,
+        bitrate=bitrate,
+    )
 
     return _hint_from_values(
         width=width,
@@ -116,6 +156,7 @@ def extract(path: Path, detected_ext: str | None = None) -> Optional[MetadataHin
         ext=ext,
         original_ext=path.suffix.lower(),
         source="ffprobe",
+        routing=routing,
     )
 
 
@@ -130,6 +171,7 @@ def _hint_from_values(
     original_ext: str,
     source: str,
     extra_raw: dict | None = None,
+    routing: VideoRoutingMetadata | None = None,
 ) -> Optional[MetadataHint]:
     codec = (codec or "").lower()
 
@@ -146,6 +188,9 @@ def _hint_from_values(
     if extra_raw:
         for key, value in extra_raw.items():
             raw.setdefault(key, value)
+    if routing is not None:
+        raw["routing"] = _routing_payload(routing)
+        raw["routing_hints"] = video_to_routing_hints(routing)
 
     if width <= 0 or height <= 0:
         return None
@@ -216,3 +261,73 @@ def _hint_from_values(
         reason=f"{width}x{height} {codec} {duration:.0f}s",
         raw=raw,
     )
+
+
+def _analyze_routing(
+    path: Path,
+    *,
+    width: int,
+    height: int,
+    codec: str,
+    duration: float,
+    fps: float,
+    audio_codec: str = "",
+    bitrate: int | None = None,
+) -> VideoRoutingMetadata | None:
+    """Run the richer routing pass using already-parsed probe values."""
+    resolution = f"{width}x{height}" if width > 0 and height > 0 else None
+    codec_info = {
+        "video_codec": codec or None,
+        "audio_codec": audio_codec or None,
+        "resolution": resolution,
+        "frame_rate": fps or None,
+        "duration": duration or None,
+        "bitrate": bitrate,
+    }
+    try:
+        return analyze_video_metadata(str(path), codec_info)
+    except Exception:
+        return None
+
+
+def _routing_payload(metadata: VideoRoutingMetadata) -> dict:
+    """Keep technical routing context JSON-safe and bounded for the LLM."""
+    return {
+        "suggested_category": metadata.suggested_category,
+        "confidence": round(float(metadata.confidence), 3),
+        "codec_family": metadata.codec_family,
+        "is_vertical": bool(metadata.is_vertical),
+        "is_looping_clip": bool(metadata.is_looping_clip),
+        "is_broadcast_codec": bool(metadata.is_broadcast_codec),
+        "is_broadcast_fps": bool(metadata.is_broadcast_fps),
+        "is_high_performance": bool(metadata.is_high_performance),
+        "has_hdr": bool(metadata.has_hdr),
+        "has_audio": bool(metadata.has_audio),
+    }
+
+
+def _parse_frame_rate(value) -> float:
+    text = str(value or "").strip()
+    if not text or text in {"0", "0/0", "N/A"}:
+        return 0.0
+    try:
+        if "/" in text:
+            numerator, denominator = (float(part) for part in text.split("/", 1))
+            return numerator / denominator if denominator else 0.0
+        return float(text)
+    except (TypeError, ValueError, ZeroDivisionError):
+        return 0.0
+
+
+def _to_float(value, default: float = 0.0) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _to_int(value) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None

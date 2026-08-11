@@ -4,22 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
----
-- [ ] **Remaining**: Integration into asset classifier (use font requirements and parameter count as routing signals).
-
-- [ ] **Impact**: 4 | **Effort**: 2 (core 2 + integration 0)
-
-**NEXT-11: Video metadata deep routing (FFmpeg expansion)** ✓ Core shipped
-Extend `video_extractor.py` with intelligent routing: 9:16 vertical → `Social Media`, 
-looping ≤15s + ProRes/DNXHD → `Motion Graphic`, broadcast codec → `Broadcast / Cinema Stock`,
-duration > 5min → `Tutorial Video`, 60fps 4K+ → `High-Performance`, etc.
-
-- [ ] **Remaining**: Integration into classify pipeline (call analyze_video_metadata on .mp4/.mov/.mxf files before LLM).
-
-- [ ] **Impact**: 4 | **Effort**: 2 (core 2 + integration 0) | Depends on: N-9 (ffprobe integration)
-
-- [ ] Source: [S15] digiKam FFmpeg pipeline, [S44] Czkawka v11.0.0, [S34] `docs/archive/research/RESEARCH_IDEAS.md`
-
 **NEXT-12: LLaVA visual classification**
 Route image and PDF mimes to a local multimodal model (`gemma3:4b` or `qwen3.5:4b` — both
 support Ollama structured outputs via `format=schema` as of v0.22.1 [S77]) when extension-only

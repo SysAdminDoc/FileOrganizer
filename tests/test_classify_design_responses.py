@@ -274,6 +274,39 @@ def test_build_prompt_injects_relevant_user_corrections():
     assert 'Summer Flyer → Print - Flyers & Posters' in prompt
 
 
+def test_low_confidence_metadata_is_retained_for_provider_prompt(tmp_path, monkeypatch):
+    from fileorganizer import metadata_extractors
+    from fileorganizer.metadata_extractors import MetadataHint
+
+    video = tmp_path / "vertical.mp4"
+    video.write_bytes(b"fixture")
+    item = {
+        "name": video.name,
+        "path": str(video),
+        "is_file": True,
+        "file_ext": ".mp4",
+    }
+    monkeypatch.setattr(classify_design, "SOURCE_DIR", str(tmp_path))
+    monkeypatch.setattr(
+        metadata_extractors,
+        "extract_hint",
+        lambda _item, source_dir=None: MetadataHint(
+            category="After Effects - Social Media",
+            confidence=85,
+            extractor="video",
+            reason="9:16 vertical",
+            raw={"routing": {"is_vertical": True}},
+        ),
+    )
+
+    assert classify_design._try_metadata_classify([item]) == {}
+    assert item["_metadata_hint"]["confidence"] == 85
+    prompt = classify_design.build_prompt([item])
+
+    assert "metadata: After Effects - Social Media (85%)" in prompt
+    assert "is_vertical" in prompt
+
+
 def test_cmd_run_applies_exact_correction_without_provider_key(tmp_path, monkeypatch):
     class FakeCorrector(classify_design.AdaptiveCorrector):
         def __init__(self):

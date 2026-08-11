@@ -414,11 +414,13 @@ repo root:
 └── deepseek_research.py      ← _Review-folder ID resolver
 ```
 
-Stage-1 metadata extractors cover PSD, font, audio, video, and AEP RIFX
-content. The content-type pre-router uses Magika first, then python-magic,
-to flag extension mismatches and send renamed PSD/font/audio/video/AEP files
-through the right extractor. High-confidence metadata hints carry raw metadata
-into batch results before marketplace lookup, embeddings, or LLM routing run.
+Stage-1 metadata extractors cover PSD, font, audio, video, MOGRT manifests, and
+AEP RIFX content. The content-type pre-router uses Magika first, then
+python-magic, to flag extension mismatches and send renamed
+PSD/font/audio/video/AEP files through the right extractor. High-confidence
+metadata hints carry raw metadata into batch results before marketplace lookup,
+embeddings, or LLM routing run; lower-confidence video routing signals remain
+available to the provider prompt.
 Image metadata also records dominant palette swatches for asset DB color
 filtering.
 Font metadata also records variable-axis ranges and COLRv1 color-font flags.

@@ -25,7 +25,6 @@ import json
 import zipfile
 import os
 from typing import Dict, Any, Optional, List
-from pathlib import Path
 
 
 def parse_mogrt(mogrt_path: str) -> Optional[Dict[str, Any]]:
@@ -45,7 +44,9 @@ def parse_mogrt(mogrt_path: str) -> Optional[Dict[str, Any]]:
         'type': 'mogrt',
         'name': None,
         'parameters': [],
+        'parameter_count': 0,
         'required_fonts': [],
+        'font_count': 0,
         'min_premiere_version': None,
         'duration': None,
         'has_preview': False,
@@ -78,17 +79,13 @@ def parse_mogrt(mogrt_path: str) -> Optional[Dict[str, Any]]:
             
             # Extract parameters (editable fields)
             parameters = manifest.get('parameters', [])
-            if isinstance(parameters, list):
-                metadata['parameters'] = [p.get('name') or p for p in parameters if p]
-            elif isinstance(parameters, dict):
-                metadata['parameters'] = list(parameters.keys())
+            metadata['parameters'] = _normalise_manifest_names(parameters)
+            metadata['parameter_count'] = len(metadata['parameters'])
             
             # Extract required fonts
             required_fonts = manifest.get('requiredFonts', [])
-            if isinstance(required_fonts, list):
-                metadata['required_fonts'] = required_fonts
-            elif isinstance(required_fonts, dict):
-                metadata['required_fonts'] = list(required_fonts.keys())
+            metadata['required_fonts'] = _normalise_manifest_names(required_fonts)
+            metadata['font_count'] = len(metadata['required_fonts'])
             
             # Extract minimum Premiere version
             metadata['min_premiere_version'] = manifest.get('minPremierePro') or manifest.get('minVersion')
@@ -129,6 +126,31 @@ def parse_mogrt(mogrt_path: str) -> Optional[Dict[str, Any]]:
     except Exception:
         # Any other error
         return None
+
+
+def _normalise_manifest_names(value: Any) -> List[str]:
+    """Return stable display names from list- or map-shaped manifest fields."""
+    if isinstance(value, dict):
+        candidates = list(value.keys())
+    elif isinstance(value, list):
+        candidates = value
+    else:
+        return []
+
+    names: List[str] = []
+    for candidate in candidates:
+        if isinstance(candidate, dict):
+            candidate = (
+                candidate.get('name')
+                or candidate.get('displayName')
+                or candidate.get('id')
+            )
+        if candidate is None:
+            continue
+        text = str(candidate).strip()
+        if text:
+            names.append(text)
+    return names
 
 
 def batch_parse_mogrt(mogrt_paths: List[str]) -> Dict[str, Optional[Dict[str, Any]]]:
