@@ -168,6 +168,12 @@ SPECS: tuple[CapabilitySpec, ...] = (
     CapabilitySpec("toolbox", "local_cli_tools", (PYTHON,),
                    "Run local audit, validation, database, and undo utilities",
                    "No action required.", True),
+    CapabilitySpec(
+        "observability", "prometheus_metrics",
+        (Requirement("prometheus-client", "prometheus_client", "prometheus-client"),),
+        "Opt-in loopback Prometheus metrics for local performance monitoring",
+        "Install the pinned requirements file, then enable local metrics in Settings.",
+    ),
     CapabilitySpec("metadata", "image_metadata", (Requirement("Pillow", "PIL", "Pillow"),),
                    "Generic image dimensions and EXIF", "Install the pinned requirements file."),
     CapabilitySpec("metadata", "audio_metadata", (Requirement("mutagen", "mutagen", "mutagen"),),

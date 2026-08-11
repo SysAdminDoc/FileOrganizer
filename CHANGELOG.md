@@ -6,6 +6,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Added an opt-in loopback-only Prometheus exporter with bounded classification
+  duration/confidence histograms, moved-file counters, cache-hit ratio, and
+  optional GPU VRAM gauges. Metrics stay disabled until enabled in Settings
+  and fail closed when `prometheus-client` is unavailable.
 - Added structured local audit logging with rotating JSONL output, bounded and
   redacted fields, trace propagation through scan/classify/move workers, and
   operation events for move, classify, and dedup flows. Loguru is used when

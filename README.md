@@ -80,6 +80,10 @@ Current shell boundaries:
   used when installed and a stdlib-compatible fallback preserves the same
   JSONL contract. Prompts, credentials, and classification payloads are not
   recorded.
+- Optional Prometheus metrics are disabled by default. Enable **Settings →
+  Enable local metrics export** to expose performance counters and histograms
+  only at `http://127.0.0.1:9999/metrics`; the exporter never binds a public
+  interface or sends telemetry remotely.
 
 ## Get FileOrganizer
 

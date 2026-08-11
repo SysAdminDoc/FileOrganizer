@@ -4,29 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-74: Prometheus metrics export for performance monitoring**
-Emit Prometheus-format metrics to a local HTTP endpoint (`http://localhost:9999/metrics`). Track:
-
-- [ ] `fileorganizer_classify_duration_seconds` (histogram; 0.1 ms — 10 s buckets)
-
-- [ ] `fileorganizer_files_moved_total` (counter; cumulative)
-
-- [ ] `fileorganizer_classification_confidence` (histogram; 0.5–1.0 quantiles)
-
-- [ ] `fileorganizer_cache_hit_ratio` (gauge; thumbnail cache)
-
-- [ ] `fileorganizer_gpu_vram_used_bytes` (gauge; if CUDA/ROCm active)
-Use `prometheus-client` (PyPI, v0.20.0+, April 2026). Metrics accessible to external monitoring tools
-(Grafana, Prometheus server) via scrape endpoint. This is **optional telemetry**: user can opt-in via
-Settings checkbox "Enable metrics export". Metrics are **not sent anywhere**; they're only available to
-local consumers on the machine. Enables power users to create custom dashboards for their organize runs
-(e.g., "batch performance over time").
-
-- [ ] **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-73 | **Unblocks**: observability tier
-
-- [ ] Source: [S146] prometheus-client PyPI https://pypi.org/project/prometheus-client/ (v0.20.0 supports
-   histogram quantiles; ASGI integration via starlette)
-
 **NEXT-75: Sentry SDK crash reporting (opt-in)**
 Integrate `sentry-sdk` (v1.54+, May 2026) for crash reporting **only on explicit user consent**. When
 FileOrganizer encounters an unhandled exception, present a dialog: "Error: [msg]. Send crash report to help

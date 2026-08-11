@@ -20,6 +20,10 @@ from fileorganizer.config import (
     CONF_HIGH, CONF_MEDIUM,
     THEMES, get_active_theme, get_active_stylesheet, load_theme_name, _build_theme_qss
 )
+from fileorganizer.metrics import (
+    load_metrics_settings, save_metrics_settings,
+    start_metrics_server, stop_metrics_server,
+)
 from fileorganizer.cache import (
     cache_lookup, cache_store, cache_clear, cache_count,
     save_correction, check_corrections, load_corrections,
@@ -145,12 +149,14 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.settings = QSettings("FileOrganizer", "FileOrganizer")
         self._ollama_ready = False
         self._marketplace_update_worker = None
+        self._metrics_startup_checked = False
 
         # Enable drag & drop
         self.setAcceptDrops(True)
 
         self._build_ui()
         self._load_settings()
+        self._configure_metrics_from_settings()
 
         # Check the user-installed Ollama setup in the background; installation
         # and model acquisition remain explicit settings actions.
@@ -208,6 +214,48 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.settings.setValue("use_llm", self.chk_llm.isChecked())
         self.settings.setValue("scan_depth", self.spn_depth.value())
         self.settings.setValue("type_filter", self.cmb_type_filter.currentText())
+
+    def _configure_metrics_from_settings(self):
+        """Start only the explicitly enabled loopback metrics exporter."""
+        if self._metrics_startup_checked:
+            return
+        self._metrics_startup_checked = True
+        settings = load_metrics_settings()
+        if not settings.get("enabled", False):
+            return
+        ok, detail = start_metrics_server(
+            enabled=True,
+            port=settings.get("port"),
+        )
+        if ok:
+            self._log(f"Metrics export enabled: {detail}")
+            return
+        save_metrics_settings({**settings, "enabled": False})
+        self.action_metrics.blockSignals(True)
+        self.action_metrics.setChecked(False)
+        self.action_metrics.blockSignals(False)
+        self._log(f"Metrics export unavailable: {detail}")
+
+    def _toggle_metrics_export(self, enabled: bool):
+        settings = load_metrics_settings()
+        if enabled:
+            ok, detail = start_metrics_server(
+                enabled=True,
+                port=settings.get("port"),
+            )
+            if not ok:
+                self.action_metrics.blockSignals(True)
+                self.action_metrics.setChecked(False)
+                self.action_metrics.blockSignals(False)
+                save_metrics_settings({**settings, "enabled": False})
+                self._log(f"Metrics export unavailable: {detail}")
+                return
+            save_metrics_settings({**settings, "enabled": True})
+            self._log(f"Metrics export enabled: {detail}")
+            return
+        stop_metrics_server()
+        save_metrics_settings({**settings, "enabled": False})
+        self._log("Metrics export disabled")
 
     # ═══ OLLAMA AUTO-SETUP ════════════════════════════════════════════════════
     def _start_ollama_setup(self):
@@ -487,6 +535,14 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         menu_tools.addAction("Ollama LLM", self._open_ollama_settings)
         menu_tools.addAction("AI Providers...", self._open_ai_provider_settings)
         menu_tools.addAction("Design Workflow...", self._open_design_workflow_settings)
+        self.action_metrics = QAction("Enable local metrics export", self)
+        self.action_metrics.setCheckable(True)
+        self.action_metrics.setToolTip(
+            "Expose opt-in Prometheus metrics on http://127.0.0.1:9999/metrics only"
+        )
+        self.action_metrics.setChecked(bool(load_metrics_settings().get("enabled", False)))
+        self.action_metrics.toggled.connect(self._toggle_metrics_export)
+        menu_tools.addAction(self.action_metrics)
         menu_tools.addSeparator()
         menu_tools.addAction("Import Rules", self._import_rules)
         menu_tools.addAction("Export Rules", self._export_rules)
@@ -3166,6 +3222,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         """Exit the application from tray."""
         if self._watch_manager and self._watch_manager.is_active:
             self._watch_manager.stop()
+        stop_metrics_server()
         if not self._background_automation:
             self._save_settings()
         QApplication.instance().quit()
@@ -3660,6 +3717,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                 event.ignore()
                 return
         self._save_settings()
+        stop_metrics_server()
         if self._watch_manager and self._watch_manager.is_active:
             self._watch_manager.stop()
         # NEXT-37: Cleanup expired journal records and vacuum database
