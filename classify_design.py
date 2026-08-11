@@ -1242,7 +1242,7 @@ def _is_visual_candidate(item: dict) -> bool:
 def _try_vision_classify(batch_items: list[dict]) -> dict[int, dict]:
     """Use an installed local multimodal model for ambiguous visual assets."""
     try:
-        from fileorganizer.ollama import ollama_classify_visual
+        from fileorganizer.ollama import _find_visual_preview, ollama_classify_visual
     except Exception:
         return {}
 
@@ -1262,6 +1262,44 @@ def _try_vision_classify(batch_items: list[dict]) -> dict[int, dict]:
             )
         except Exception:
             result = None
+        if not result:
+            model_path = os.environ.get('FILEORGANIZER_QWEN_MODEL', '').strip()
+            mmproj_path = os.environ.get('FILEORGANIZER_QWEN_MMPROJ', '').strip()
+            if model_path and mmproj_path:
+                try:
+                    from fileorganizer.vlm import classify_qwen
+
+                    preview = _find_visual_preview(path)
+                    if preview is not None:
+                        qwen = classify_qwen(
+                            preview,
+                            model_path=model_path,
+                            mmproj_path=mmproj_path,
+                            model_label=os.environ.get(
+                                'FILEORGANIZER_QWEN_MODEL_LABEL',
+                                'Qwen2.5-VL-7B',
+                            ),
+                            categories=categories,
+                        )
+                        result = {
+                            'name': item.get('name', ''),
+                            'category': qwen.category,
+                            'clean_name': item.get('name', ''),
+                            'confidence': qwen.confidence,
+                            'notes': f'vlm:{qwen.model}',
+                            '_source_name': item.get('name', ''),
+                            '_classifier': 'vlm',
+                            'metadata': {
+                                'model': qwen.model,
+                                'ocr_text': qwen.ocr_text,
+                                'description': qwen.description,
+                                'requires_ocr': qwen.requires_ocr,
+                                'has_text_overlay': qwen.has_text_overlay,
+                                'confidence_source': 'llama_cpp_qwen2vl',
+                            },
+                        }
+                except Exception:
+                    result = None
         if not result:
             continue
         if result.get('category') not in categories:

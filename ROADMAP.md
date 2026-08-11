@@ -4,23 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-71: Qwen2.5-VL-7B + llama.cpp local VLM inference**
-Integrate Qwen2.5-VL-7B (Alibaba, April 2024, 7B parameters) as a heavyweight document/diagram
-classifier. Use `llama.cpp` (v0.3.0+, May 2026) with Q4_K_M quantization (3.5 GB VRAM, 70% accuracy
-vs 99% full precision; 4–5 tokens/sec). Trigger on files tagged as "requires_ocr" or "has_text_overlay"
-(detected by CLIP confidence <0.7 on visual-only classification). Qwen2.5-VL outperforms LLaVA on
-document understanding (+2-3% OCR accuracy) and uses 75% fewer tokens for multi-page PDFs. Async
-invocation: queue documents, process in batches of 3–5 during idle time. Store OCR'd text + classification
-in FileOrganizer asset record (new `ocr_text` column, `vmodel_used` audit field). **Depends on**: NEXT-69
-(CLIP fallback for low-confidence files); pairs with NEXT-68 (watch mode to re-classify on idle).
-
-- [ ] **Impact**: 4 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-69 | **Unblocks**: L-3, NEXT-73
-
-- [ ] Source: [S140] Qwen2.5-VL-7B model card https://huggingface.co/Qwen/Qwen2.5-VL-7B (0.5 TB param
-   accuracy on MMVP/POPE/LLaVA-WT benchmarks; 75% token reduction vs LLaVA on PDFs);
-   [S141] llama.cpp v0.3.0 https://github.com/ggerganov/llama.cpp (Q4_K_M quantization; 256K context;
-   CUDA/ROCm/Metal backend selection)
-
 **NEXT-72: KV-cache optimization for batch LLM inference**
 Implement KV-cache reuse and streaming decoding for the Ollama/llama.cpp classify loop. When
 classifying 50+ files in a batch, KV-cache (key-value pairs computed during forward pass) is discarded
