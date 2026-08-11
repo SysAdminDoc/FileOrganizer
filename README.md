@@ -74,6 +74,12 @@ Current shell boundaries:
   to enable prompt-prefix KV-cache reuse for Ollama-compatible batch
   classification. The cache is invalidated when the model, system prompt, or
   `FILEORGANIZER_LLM_CONTEXT_REVISION` changes; Ollama remains the fallback.
+- Structured audit events are written locally to
+  `%APPDATA%\FileOrganizer\logs\audit.jsonl`. Move, classify, and dedup
+  operations carry bounded trace IDs with redacted error fields; Loguru is
+  used when installed and a stdlib-compatible fallback preserves the same
+  JSONL contract. Prompts, credentials, and classification payloads are not
+  recorded.
 
 ## Get FileOrganizer
 

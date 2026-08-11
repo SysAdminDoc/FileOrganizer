@@ -36,6 +36,9 @@ def main():
     """Launch the FileOrganizer application."""
     # Crash handler
     from fileorganizer.config import _APP_DATA_DIR
+    from fileorganizer.audit_log import configure_audit
+
+    configure_audit(console=False)
 
     _CRASH_LOG = os.path.join(_APP_DATA_DIR, 'crash.log')
     _CRASH_LOG_MAX = 512 * 1024  # 500 KB

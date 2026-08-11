@@ -5,6 +5,7 @@ anthropic>=0.44.0
 pydantic>=2.13.3
 requests
 httpx[http2]>=0.28.1
+loguru==0.7.3
 rapidfuzz
 Pillow>=12.2.0
 psd-tools

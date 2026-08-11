@@ -34,6 +34,7 @@ from collections import defaultdict
 from fileorganizer.sidecar_protocol import SidecarEmitter
 from fileorganizer.review_store import ReviewStore
 from fileorganizer.capabilities import get_capability
+from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
 
 IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".tiff", ".tif")
 _PROTOCOL = SidecarEmitter("dedup")
@@ -265,6 +266,8 @@ def main() -> int:
     parser.add_argument("--threshold", type=int, default=8,
                         help="Hamming distance threshold for image mode (0=exact, 8=very similar, 16=loose).")
     args = parser.parse_args()
+    trace_id = new_trace_id()
+    configure_audit(console=False)
 
     if args.export_scan or args.import_review or args.resume_scan:
         try:
@@ -291,6 +294,15 @@ def main() -> int:
         parser.error("--root is required for a new scan")
 
     if not os.path.isdir(args.root):
+        audit_event(
+            'dedup',
+            'Duplicate scan root was not found',
+            level='ERROR',
+            trace_id=trace_id,
+            source_path=args.root,
+            exception='root_not_found',
+            status='failed',
+        )
         _emit({"event": "error", "code": "root_not_found",
                "message": f"Root not found: {args.root}"})
         return 2
@@ -298,6 +310,15 @@ def main() -> int:
     if args.mode == "images" and get_capability(
         "duplicates", "similar_images"
     )["status"] == "unavailable":
+        audit_event(
+            'dedup',
+            'Perceptual duplicate capability is unavailable',
+            level='ERROR',
+            trace_id=trace_id,
+            source_path=args.root,
+            exception='similar_images capability unavailable',
+            status='capability_unavailable',
+        )
         _PROTOCOL.emit_capability_error("similar_images")
         return 3
 
@@ -321,6 +342,15 @@ def main() -> int:
     _emit({"event": "review", "scan_id": scan_id, "status": "running",
            "root": os.path.abspath(args.root), "mode": args.mode, "truncated": False})
     _emit({"event": "start", "mode": args.mode, "root": args.root})
+    audit_event(
+        'dedup',
+        'Duplicate scan started',
+        trace_id=trace_id,
+        source_path=args.root,
+        scan_id=scan_id,
+        mode=args.mode,
+        status='running',
+    )
 
     try:
         if args.mode == "files":
@@ -330,14 +360,44 @@ def main() -> int:
             wasted = sum(f["size"] for g in groups for f in g["files"][1:])
     except KeyboardInterrupt:
         store.finish_scan(scan_id, "cancelled")
+        audit_event(
+            'dedup',
+            'Duplicate scan cancelled',
+            level='WARNING',
+            trace_id=trace_id,
+            source_path=args.root,
+            scan_id=scan_id,
+            exception='cancelled',
+            status='cancelled',
+        )
         _emit({"event": "error", "code": "cancelled", "message": "Cancelled."})
         return 130
     except RuntimeError as exc:
         store.finish_scan(scan_id, "failed")
+        audit_event(
+            'dedup',
+            'Duplicate scan capability failed',
+            level='ERROR',
+            trace_id=trace_id,
+            source_path=args.root,
+            scan_id=scan_id,
+            exception=exc,
+            status='failed',
+        )
         _PROTOCOL.emit_capability_error("similar_images", str(exc))
         return 3
     except Exception as exc:
         store.finish_scan(scan_id, "failed")
+        audit_event(
+            'dedup',
+            'Duplicate scan crashed',
+            level='ERROR',
+            trace_id=trace_id,
+            source_path=args.root,
+            scan_id=scan_id,
+            exception=exc,
+            status='failed',
+        )
         _emit({"event": "error", "code": "crashed",
                "message": f"{type(exc).__name__}: {exc}"})
         return 1
@@ -355,8 +415,26 @@ def main() -> int:
             for index, file in enumerate(g["files"])
         ])
         _emit({"event": "group", "mode": args.mode, **g})
+        audit_event(
+            'dedup',
+            'Duplicate group recorded',
+            trace_id=trace_id,
+            source_path=args.root,
+            scan_id=scan_id,
+            count=len(g.get('files', [])),
+            status='group',
+        )
 
     store.finish_scan(scan_id, "complete", total_size=wasted)
+    audit_event(
+        'dedup',
+        'Duplicate scan finished',
+        trace_id=trace_id,
+        source_path=args.root,
+        scan_id=scan_id,
+        count=total,
+        status='complete',
+    )
     _emit({"event": "complete",
            "total_files": total,
            "groups": group_count,
