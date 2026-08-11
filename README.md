@@ -239,6 +239,10 @@ Python process tree.
   modes open the same preflight operation table. Every rename or move can be
   toggled independently, and the enabled state is saved as an editable JSON
   plan before any filesystem operation starts.
+- **Batch rename preview** — the desktop organizer exposes a category-filtered
+  inline preview with editable canonical names (`{CAT_CODE}_{ID}_{CLEAN_NAME}`)
+  for pending folder/file plans. The CLI keeps renaming opt-in with
+  `organize_run.py --rename` and supports `--rename-template`.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
 - **Watch mode** — monitor configured sources, debounce new files, write
@@ -273,6 +277,7 @@ python organize_run.py --invalidate-cache             # Clear re-scan fingerprin
 python organize_run.py --source design --parallel --dry-run
 python organize_run.py --source design --preview --rules-file rules.json
 python organize_run.py --source design --preview --no-rules
+python organize_run.py --source design --preview --rename --quiet
 
 # Watch configured source and emit dry-run plans for arriving files
 python -m fileorganizer.watch_mode --source design --start --duration 60

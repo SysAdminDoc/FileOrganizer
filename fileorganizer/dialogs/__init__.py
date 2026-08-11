@@ -17,6 +17,7 @@ from fileorganizer.dialogs.duplicates import (
 )
 from fileorganizer.dialogs.version_dedup import VersionDedupDialog
 from fileorganizer.dialogs.browse import BrowsePanel, BrowseTreeWidget
+from fileorganizer.dialogs.batch_rename import BatchRenameDialog
 from fileorganizer.dialogs.tools import (
     BeforeAfterDialog, EventGroupDialog, ScheduleDialog,
     UndoTimelineDialog, MoveHistoryDialog, UndoBatchDialog, PluginManagerDialog,
@@ -41,6 +42,7 @@ __all__ = [
     'CrossLibraryDedupDialog', 'CrossLibraryReviewDialog',
     'VersionDedupDialog',
     'BrowsePanel', 'BrowseTreeWidget',
+    'BatchRenameDialog',
     'BeforeAfterDialog', 'EventGroupDialog', 'ScheduleDialog',
     'UndoTimelineDialog', 'MoveHistoryDialog', 'UndoBatchDialog', 'PluginManagerDialog',
     'RelationshipGraphWidget', 'WatchHistoryDialog',

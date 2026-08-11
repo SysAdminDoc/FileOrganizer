@@ -66,6 +66,7 @@ from fileorganizer.dialogs import (
     UndoBatchDialog, BeforeAfterDialog, DuplicateCompareDialog,
     EventGroupDialog, RuleEditorDialog, ScheduleDialog,
     MoveHistoryDialog, PluginManagerDialog, CleanupToolsDialog,
+    BatchRenameDialog,
     DuplicateFinderDialog, CleanupPanel, DuplicatePanel,
     CrossLibraryDedupDialog,
     VersionDedupDialog,
@@ -869,6 +870,16 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_before_after.clicked.connect(self._show_before_after)
         toolbar.addWidget(self.btn_before_after)
 
+        self.btn_batch_rename = QPushButton("Batch Rename")
+        self.btn_batch_rename.setFixedHeight(28)
+        self.btn_batch_rename.setToolTip(
+            "Preview and edit canonical names for pending category/file items"
+        )
+        self.btn_batch_rename.setProperty("class", "secondary-accent")
+        self.btn_batch_rename.setVisible(False)
+        self.btn_batch_rename.clicked.connect(self._open_batch_rename)
+        toolbar.addWidget(self.btn_batch_rename)
+
         self.btn_events = QPushButton("Events")
         self.btn_events.setFixedHeight(28)
         self.btn_events.setToolTip("AI Event Grouping - cluster photos by event")
@@ -1527,6 +1538,62 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self._log(f"  Batch reassigned {len(rows)} folders  ->  {new_cat}")
         self._stats_cat()
 
+    def _open_batch_rename(self):
+        """Preview and apply canonical names to the current pending plan."""
+        op = self.cmb_op.currentIndex()
+        if op in (self.OP_CAT, self.OP_SMART):
+            items = self.cat_items
+        elif op == self.OP_FILES:
+            items = self.file_items
+        else:
+            self._log("Batch rename is available for category and file plans.")
+            return
+        pending = [
+            item for item in items
+            if item.selected and item.status == "Pending"
+        ]
+        if not pending:
+            self._log("Select at least one pending item for batch rename.")
+            return
+
+        dialog = BatchRenameDialog(pending, parent=self)
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return
+
+        changes = dialog.renamed_items
+        for item, new_name in changes:
+            try:
+                index = items.index(item)
+            except ValueError:
+                continue
+            if op in (self.OP_CAT, self.OP_SMART):
+                item.cleaned_name = new_name
+                parent = os.path.dirname(item.full_dest_path)
+                item.full_dest_path = os.path.join(
+                    parent or os.path.join(self.txt_dst.text(), item.category),
+                    new_name,
+                )
+                row = self._visual_row_for_idx(index)
+                dest_cell = self.tbl.item(row, 3) if row >= 0 else None
+                if dest_cell:
+                    dest_cell.setText(item.full_dest_path)
+                    dest_cell.setToolTip(item.full_dest_path)
+                    dest_cell.setForeground(QColor(get_active_theme()['accent_hover']))
+            else:
+                item.display_name = new_name
+                item.full_dst = os.path.join(
+                    os.path.dirname(item.full_dst), new_name,
+                )
+                row = self._visual_row_for_idx(index)
+                rename_cell = self.tbl.item(row, 6) if row >= 0 else None
+                if rename_cell:
+                    rename_cell.setText(new_name)
+                    rename_cell.setToolTip(f"Batch renamed: {item.name} → {new_name}")
+                    rename_cell.setForeground(QColor(get_active_theme()['accent_hover']))
+        if changes:
+            self._log(f"  Batch rename preview applied to {len(changes)} item(s)")
+        self._upd_stats()
+
     # ═══ CUSTOM CATEGORIES DIALOG ════════════════════════════════════════════
     def _open_custom_cats(self):
         dlg = CustomCategoriesDialog(self)
@@ -1826,6 +1893,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.btn_preview_toggle.setChecked(False)
         self.btn_before_after.setVisible(False)
         self.btn_events.setVisible(False)
+        self.btn_batch_rename.setVisible(is_cat_like or is_files)
         self.tbl.show()
         self.tbl.setRowCount(0)
         self.aep_items.clear(); self.cat_items.clear(); self.file_items.clear()

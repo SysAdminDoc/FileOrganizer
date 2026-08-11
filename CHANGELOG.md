@@ -9,6 +9,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added a journal-backed Move History view with timestamped organize/action
   rows, confidence, source/destination details, per-item undo, and guarded
   per-run undo that refuses changed destinations.
+- Added a category-filtered Batch Rename preview with inline edits for pending
+  desktop plans and an opt-in CLI `--rename` mode sharing the canonical
+  `{CAT_CODE}_{ID}_{CLEAN_NAME}` renderer.
 - Completed folder scans now launch a throttled background marketplace refresh;
   explicit provider version/date changes are grouped into non-flashing update
   alerts by category.
