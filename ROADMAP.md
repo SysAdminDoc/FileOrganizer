@@ -4,19 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-62: PyMuPDF license audit**
-PyMuPDF 1.27.2.3 is **AGPL-3.0 licensed**. If FileOrganizer is distributed as closed-source or
-commercially, AGPL requires that the entire application also be open-sourced (or a commercial
-license from Artifex be purchased). Decision point: (1) accept AGPL and clarify in LICENSE/docs, 
-or (2) switch to alternative PDF thumbnail library (e.g., `ghostscript-python` + GS binary, or
-accept PDF-only support without thumbnails). This is a **pre-release blocker** — resolve before v9.0
-shipping. Document the decision in SECURITY.md + LICENSE file. No code change required yet; this is
-a policy + dependency-management task.
-
-- [ ] **Impact**: 1 | **Effort**: 1 | **Tier**: NEXT | **Blocks**: v9.0 release
-
-- [ ] Source: [S117] PyMuPDF 1.27.2.3 license (AGPL-3.0) https://pypi.org/pypi/pymupdf/json
-
 **NEXT-65: WinAppSDK 2.0.1 SystemBackdropElement**
 Use `SystemBackdropElement` (placed FrameworkElement, not full-window) to apply Mica/Acrylic
 backdrop to specific panels in WinUI shell. This allows in-content Mica effect on Browse tab,
