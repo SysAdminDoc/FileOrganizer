@@ -4,18 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-66: FolderPicker.PickMultipleFoldersAsync**
-WinAppSDK 2.0.1 adds `FolderPicker.PickMultipleFoldersAsync()` on the standard `FolderPicker` type
-(new in 2.0.1; was preview-only in 1.x). Integrate into SourcePanel to allow multi-folder source
-selection in a single picker dialog. Users can now drag multiple folders into FileOrganizer in one
-interaction, reducing friction for multi-project workflows. Saves a separate PickFolderAsync call
-for each folder. Low-effort UX improvement; high convenience value.
-**Depends on**: NEXT-39 (WindowsAppSDK 2.0.1).
-
-- [ ] **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Depends on**: NEXT-39
-
-- [ ] Source: [S123] WinAppSDK 2.0.1 FolderPicker API docs
-
 **NEXT-68: Task Scheduler-based watch mode MVP**
 Implement watch-mode daemon registration via Windows Task Scheduler (not a Windows Service).
 Register `FileOrganizer_WatchMode` task with logon trigger + indefinite duration using 

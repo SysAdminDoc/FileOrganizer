@@ -8,6 +8,8 @@ All notable changes to FileOrganizer will be documented in this file.
 
 - Added a WinAppSDK 2.0.1 shell `SystemBackdropElement` with Mica rendering
   behind the transparent navigation/content host.
+- Smart Sort now accepts multiple source folders from one WinAppSDK folder
+  picker and reserves preview destinations across roots before apply.
 - Added optional IPTC 2025.1 AI provenance XMP sidecars for successful file
   applies and CLI move plans. The ExifTool/PyExifTool capability is reported
   before use, never rewrites the source asset, and fails closed when tooling is

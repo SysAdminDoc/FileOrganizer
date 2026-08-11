@@ -20,7 +20,7 @@ public sealed partial class MainWindow : Window
     private readonly List<NavSearchSuggestion> _searchSuggestions =
     [
         new("Home", "Workspace overview and quick actions", "home"),
-        new("Smart Sort", "Drop a folder, route every file to the right pipeline", "smart"),
+        new("Smart Sort", "Choose folders, route every file to the right pipeline", "smart"),
         new("Organize", "Apply AI batch classifications to disk and undo moves", "organize"),
         new("Files", "PC file organizer — sort by extension and type", "files"),
         new("Cleanup", "Find empty, junk, broken, big, and old files", "cleanup"),

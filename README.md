@@ -32,7 +32,7 @@ keeps working in parallel until the shell reaches feature parity.
 | Shell page | Current role | Integration |
 |---|---|---|
 | Home | Dashboard and workflow navigation | Native shell |
-| Smart Sort | Preview or apply type-aware routing | `smart_run.py` |
+| Smart Sort | Preview or apply type-aware routing from one or more source folders | `smart_run.py` |
 | Organize | Preview, plan, apply, undo, and provenance | `organize_run.py`, `provenance_run.py` |
 | Files | Preview or apply extension-based routing | `files_run.py` |
 | Cleanup | Read-only streamed scan and persisted review | `cleanup_run.py` |

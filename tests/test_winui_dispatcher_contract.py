@@ -162,6 +162,27 @@ def test_main_window_uses_winappsdk_mica_backdrop_as_a_shell_element():
     assert 'Background="Transparent"' in window
 
 
+def test_smart_sort_uses_the_winappsdk_multi_folder_picker():
+    service = (
+        REPO_ROOT / "src/FileOrganizer.UI/Services/FolderPickerService.cs"
+    ).read_text(encoding="utf-8")
+    page = (
+        REPO_ROOT / "src/FileOrganizer.UI/Views/Pages/SmartSortPage.xaml.cs"
+    ).read_text(encoding="utf-8")
+    xaml = (
+        REPO_ROOT / "src/FileOrganizer.UI/Views/Pages/SmartSortPage.xaml"
+    ).read_text(encoding="utf-8")
+
+    assert "Microsoft.Windows.Storage.Pickers" in service
+    assert "new FolderPicker(MainWindowId())" in service
+    assert "PickMultipleFoldersAsync()" in service
+    assert "Distinct(StringComparer.OrdinalIgnoreCase)" in service
+    assert "FolderPickerService.PickMultipleAsync" in page
+    assert 'Environment.NewLine' in page
+    assert 'AcceptsReturn="True"' in xaml
+    assert 'TextWrapping="Wrap"' in xaml
+
+
 def test_every_title_bar_palette_has_readable_icon_contrast():
     source = (REPO_ROOT / "src/FileOrganizer.UI/Services/ThemeService.cs").read_text(
         encoding="utf-8"

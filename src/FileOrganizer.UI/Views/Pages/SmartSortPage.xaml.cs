@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Windows.Storage.Pickers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -43,32 +44,48 @@ public sealed partial class SmartSortPage : Page
     private string SelectedMode() =>
         ModeCombo.SelectedItem is ComboBoxItem c && c.Tag is string t ? t : "preview";
 
-    private async void BrowseSource_Click(object sender, RoutedEventArgs e) =>
-        SourceTextBox.Text = await PickFolderAsync(Windows.Storage.Pickers.PickerLocationId.Downloads) ?? SourceTextBox.Text;
-
-    private async void BrowseDest_Click(object sender, RoutedEventArgs e) =>
-        DestTextBox.Text = await PickFolderAsync(Windows.Storage.Pickers.PickerLocationId.Desktop) ?? DestTextBox.Text;
-
-    private async Task<string?> PickFolderAsync(Windows.Storage.Pickers.PickerLocationId start)
+    private async void BrowseSource_Click(object sender, RoutedEventArgs e)
     {
-        var picker = new Windows.Storage.Pickers.FolderPicker { SuggestedStartLocation = start };
-        picker.FileTypeFilter.Add("*");
-        WinRT.Interop.InitializeWithWindow.Initialize(picker,
-            WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindowHandle));
-        var folder = await picker.PickSingleFolderAsync();
-        return folder?.Path;
+        var folders = await FolderPickerService.PickMultipleAsync(
+            PickerLocationId.Downloads,
+            "Select source folders");
+        if (folders.Count > 0)
+            SourceTextBox.Text = string.Join(Environment.NewLine, folders);
     }
+
+    private async void BrowseDest_Click(object sender, RoutedEventArgs e)
+    {
+        var folder = await FolderPickerService.PickSingleAsync(
+            PickerLocationId.Desktop,
+            "Select destination folder");
+        if (folder is not null)
+            DestTextBox.Text = folder;
+    }
+
+    private static string[] ParseSourceFolders(string? text) =>
+        (text ?? string.Empty)
+            .Split(new[] { '\r', '\n' },
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
 
     private async void Run_Click(object sender, RoutedEventArgs e)
     {
         if (_cts is not null) return;
-        var src = SourceTextBox.Text?.Trim() ?? "";
+        var sources = ParseSourceFolders(SourceTextBox.Text);
         var dst = DestTextBox.Text?.Trim() ?? "";
-        if (!Directory.Exists(src)) { StatusText.Text = "Source folder does not exist."; return; }
+        if (sources.Length == 0 || sources.Any(src => !Directory.Exists(src)))
+        {
+            StatusText.Text = "Choose one or more existing source folders.";
+            return;
+        }
         if (string.IsNullOrEmpty(dst)) { StatusText.Text = "Pick a destination folder."; return; }
 
         var mode = SelectedMode();
-        var args = new List<string> { "--root", src, "--dest", dst, "--mode", mode };
+        var args = new List<string>();
+        foreach (var source in sources)
+            args.AddRange(new[] { "--root", source });
+        args.AddRange(new[] { "--dest", dst, "--mode", mode });
         if (CopyCheck.IsChecked == true) args.Add("--copy");
 
         _cts = new CancellationTokenSource();

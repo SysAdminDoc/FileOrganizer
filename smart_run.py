@@ -47,7 +47,7 @@ import time
 import traceback
 from collections import Counter
 
-from fileorganizer.path_safety import validate_move, validate_tree_pair
+from fileorganizer.path_safety import is_within, validate_move, validate_tree_pair
 from fileorganizer.sidecar_protocol import SidecarEmitter
 
 
@@ -120,15 +120,23 @@ def _walk_files(root: str) -> list[str]:
     return out
 
 
-def _resolve_collision(dest: str) -> str:
+def _resolve_collision(dest: str, reserved: set[str] | None = None) -> str:
     """If dest exists, append (1)/(2)/... until it doesn't."""
-    if not os.path.exists(dest):
+    reserved = reserved or set()
+
+    def is_available(candidate: str) -> bool:
+        return (
+            not os.path.exists(candidate)
+            and os.path.normcase(os.path.abspath(candidate)) not in reserved
+        )
+
+    if is_available(dest):
         return dest
     base, ext = os.path.splitext(dest)
     i = 1
     while True:
         cand = f"{base} ({i}){ext}"
-        if not os.path.exists(cand):
+        if is_available(cand):
             return cand
         i += 1
 
@@ -240,9 +248,29 @@ def _plan_one(path: str, dest_root: str) -> tuple[str, str]:
     return cat, os.path.normpath(target)
 
 
+def _normalise_roots(values: list[str]) -> list[str]:
+    roots: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        root = os.path.abspath(os.path.normpath(value))
+        key = os.path.normcase(root)
+        if key not in seen:
+            roots.append(root)
+            seen.add(key)
+    return roots
+
+
+def _source_root_for(path: str, roots: list[str]) -> str:
+    for root in roots:
+        if is_within(path, root):
+            return root
+    raise ValueError(f"path is outside every source root: {path}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="NDJSON Smart Sort dispatcher")
-    parser.add_argument("--root", required=True, help="Source folder to scan")
+    parser.add_argument("--root", action="append", required=True,
+                        help="Source folder to scan; repeat for multiple folders")
     parser.add_argument("--dest", required=True, help="Destination root for organized output")
     parser.add_argument("--mode", choices=["preview", "apply"], default="preview")
     parser.add_argument("--copy", action="store_true",
@@ -251,9 +279,11 @@ def main() -> int:
                         help="Stop after N files (0 = unlimited)")
     args = parser.parse_args()
 
-    if not os.path.isdir(args.root):
+    source_roots = _normalise_roots(args.root)
+    missing_root = next((root for root in source_roots if not os.path.isdir(root)), None)
+    if missing_root is not None:
         _emit({"event": "error", "code": "root_not_found",
-               "message": f"Root not found: {args.root}"})
+               "message": f"Root not found: {missing_root}"})
         return 2
 
     if args.mode == "apply" and not args.dest:
@@ -261,26 +291,40 @@ def main() -> int:
                "message": "--dest is required for apply mode."})
         return 4
 
-    dest_root = os.path.abspath(args.dest) if args.dest else os.path.abspath(args.root)
-    src_root = os.path.abspath(args.root)
+    dest_root = os.path.abspath(args.dest)
     if args.mode == "apply":
         try:
-            validate_tree_pair(src_root, dest_root)
+            for source_root in source_roots:
+                validate_tree_pair(source_root, dest_root)
+            for index, source_root in enumerate(source_roots):
+                for other_root in source_roots[index + 1:]:
+                    validate_tree_pair(source_root, other_root)
         except Exception as exc:
             _emit({"event": "error", "code": "unsafe_roots",
                    "message": f"Source and destination trees must not overlap: {exc}"})
             return 5
 
-    files = _walk_files(args.root)
+    files: list[str] = []
+    seen_files: set[str] = set()
+    for source_root in source_roots:
+        for path in _walk_files(source_root):
+            key = os.path.normcase(os.path.abspath(path))
+            if key not in seen_files:
+                files.append(path)
+                seen_files.add(key)
     if args.max_files > 0:
         files = files[:args.max_files]
-    _emit({"event": "start", "root": args.root, "dest": dest_root,
+    root_value: str | list[str] = (
+        source_roots[0] if len(source_roots) == 1 else source_roots
+    )
+    _emit({"event": "start", "root": root_value, "dest": dest_root,
            "mode": args.mode, "plan_only": args.mode == "preview",
            "files_found": len(files)})
 
     state = {"scanned": 0, "planned": 0, "moved": 0, "skipped": 0,
              "errors": 0, "last": 0.0}
     by_cat: Counter = Counter()
+    reserved_targets: set[str] = set()
 
     for path in files:
         state["scanned"] += 1
@@ -305,17 +349,21 @@ def main() -> int:
                 continue
 
             if args.mode == "preview":
+                target_unique = _resolve_collision(target, reserved_targets)
+                reserved_targets.add(os.path.normcase(os.path.abspath(target_unique)))
                 state["planned"] += 1
                 _emit({"event": "item", "path": path, "category": category,
-                       "status": "planned", "new_path": target})
+                       "status": "planned", "new_path": target_unique})
                 continue
 
             # Apply: ensure unique dest, then move/copy.
-            target_unique = _resolve_collision(target)
+            target_unique = _resolve_collision(target, reserved_targets)
+            reserved_targets.add(os.path.normcase(os.path.abspath(target_unique)))
+            source_root = _source_root_for(path, source_roots)
             validate_move(
                 path,
                 target_unique,
-                source_root=src_root,
+                source_root=source_root,
                 dest_root=dest_root,
             )
             os.makedirs(os.path.dirname(target_unique), exist_ok=True)
