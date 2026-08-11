@@ -423,6 +423,7 @@ class ScanMixin:
 
         it.method = r.get('method', ''); it.detail = r.get('detail', '')
         it.topic = r.get('topic', '') or ''
+        it.alternatives = r.get('alternatives', []) or []
         it.status = "Pending"
         it.selected = it.confidence >= thresh
 
@@ -453,7 +454,7 @@ class ScanMixin:
         self.btn_export_html.setEnabled(len(self.cat_items) > 0)
         # Hide v7 buttons not applicable to Cat mode
         self.btn_graph_toggle.setVisible(False)
-        self.btn_preview_toggle.setVisible(False)
+        self.btn_preview_toggle.setVisible(matched > 0)
         self.btn_events.setVisible(False)
         self._stats_cat()
         methods_str = ', '.join(f"{k}:{v}" for k, v in self._cat_method_counts.most_common())

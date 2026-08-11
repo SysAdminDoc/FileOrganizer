@@ -6,6 +6,8 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- AI category previews now show the current confidence and bounded runner-up
+  probabilities; selecting a runner-up applies and remembers the correction.
 - MOGRT manifests now route through canonical Premiere categories using editable
   parameter counts, required-font evidence, and title/transition/social signals;
   the same metadata is retained by the legacy folder classifier. Video metadata

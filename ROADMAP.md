@@ -4,12 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-13: Confidence calibration display**
-Show per-category probability bars in the preview panel. Let user click a runner-up label to
-override AI suggestion. Record overrides as corrections (feeds NEXT-7).
-
-- [ ] **Impact**: 4 | **Effort**: 2
-
 **NEXT-14: Two-stage AI prompt (file type then subcategory)**
 Stage 1 asks "what file type is this template?" (AE/Premiere/PSD/AI/etc.) with zero context
 needed. Stage 2 uses the confirmed file type as context for a tighter subcategory prompt.
