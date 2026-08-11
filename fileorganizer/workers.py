@@ -3292,6 +3292,37 @@ def _validate_catalog_payload(payload: dict) -> None:
                 raise CatalogSyncError('invalid_schema', 'catalog project-file flag is invalid')
 
 
+class MarketplaceUpdateWorker(QThread):
+    """Bounded, throttled marketplace update check for completed folder scans."""
+
+    log = pyqtSignal(str)
+    finished = pyqtSignal(object)  # {checked, skipped, updates, error?}
+
+    def __init__(self, folder_names, *, force: bool = False, parent=None):
+        super().__init__(parent)
+        self._folder_names = list(folder_names or [])
+        self._force = force
+
+    def run(self):
+        try:
+            from marketplace_enrich import check_for_updates
+
+            summary = check_for_updates(self._folder_names, force=self._force)
+            self.log.emit(
+                f"Marketplace update check: {summary.get('checked', 0)} checked, "
+                f"{len(summary.get('updates', []))} update(s) found"
+            )
+            self.finished.emit(summary)
+        except Exception as exc:
+            self.log.emit(f"Marketplace update check skipped: {type(exc).__name__}")
+            self.finished.emit({
+                'checked': 0,
+                'skipped': 0,
+                'updates': [],
+                'error': str(exc),
+            })
+
+
 class CatalogSyncWorker(QThread):
     """
     Background worker that checks GitHub Releases for a newer community

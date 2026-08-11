@@ -53,6 +53,7 @@ from fileorganizer.models import RenameItem, CategorizeItem, FileItem
 from fileorganizer.adaptive_corrector import AdaptiveCorrector
 from fileorganizer.workers import (
     ScanAepWorker, ScanCategoryWorker, ScanLLMWorker, OllamaSetupWorker,
+    MarketplaceUpdateWorker,
     ApplyAepWorker, ApplyCatWorker, ApplyFilesWorker,
     ScanFilesWorker, ScanFilesLLMWorker,
     safe_merge_move, format_size
@@ -139,6 +140,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.undo_ops = []
         self.settings = QSettings("FileOrganizer", "FileOrganizer")
         self._ollama_ready = False
+        self._marketplace_update_worker = None
 
         # Enable drag & drop
         self.setAcceptDrops(True)
@@ -240,6 +242,44 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             self._log("Ollama LLM: not available (rule-based engine will be used)")
 
     # ═══ COMMUNITY CATALOG SYNC ═══════════════════════════════════════════════
+
+    def _start_marketplace_update_check(self, folder_names):
+        """Start a throttled marketplace refresh without delaying scan results."""
+        if self._background_automation or self._marketplace_update_worker is not None:
+            return
+        names = [str(name) for name in (folder_names or []) if str(name).strip()]
+        if not names:
+            return
+        self._marketplace_update_worker = MarketplaceUpdateWorker(names, parent=self)
+        self._marketplace_update_worker.log.connect(self._log)
+        self._marketplace_update_worker.finished.connect(self._on_marketplace_updates_done)
+        self._marketplace_update_worker.finished.connect(
+            self._marketplace_update_worker.deleteLater
+        )
+        self._marketplace_update_worker.start()
+
+    def _on_marketplace_updates_done(self, summary):
+        """Surface grouped marketplace update alerts in the existing toast/status UI."""
+        self._marketplace_update_worker = None
+        if not isinstance(summary, dict):
+            return
+        updates = summary.get('updates') or []
+        if not updates:
+            return
+        grouped = Counter(
+            str(update.get('category') or 'Marketplace')
+            for update in updates
+            if isinstance(update, dict)
+        )
+        parts = []
+        for category, count in grouped.most_common():
+            noun = 'item' if count == 1 else 'items'
+            parts.append(f"{count} {noun} in {category}")
+        message = "Marketplace updates: " + '; '.join(parts)
+        self._log(message)
+        self.lbl_statusbar.setText(message[:180])
+        # Do not flash the taskbar for a background informational check.
+        self._show_scan_toast(message, duration_ms=12000, alert=False)
 
     def _start_catalog_sync(self):
         """Check for a newer community asset_fingerprints.json on startup."""
@@ -1932,7 +1972,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         """Set search filter to show only a specific category."""
         self.txt_search.setText(name)
 
-    def _show_scan_toast(self, text, duration_ms=6000):
+    def _show_scan_toast(self, text, duration_ms=6000, alert=True):
         """Show a toast banner overlaid on the table and flash the taskbar."""
         self.lbl_toast.setText(text)
         self.lbl_toast.adjustSize()
@@ -1944,7 +1984,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.lbl_toast.show()
         # Flash taskbar if the window isn't focused
         from PyQt6.QtWidgets import QApplication
-        if not self.isActiveWindow():
+        if alert and not self.isActiveWindow():
             QApplication.alert(self, 0)
         self._toast_timer.start(duration_ms)
 

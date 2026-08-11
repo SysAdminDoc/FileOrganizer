@@ -34,6 +34,7 @@ Cache:
 """
 
 import argparse, html as html_lib, json, os, re, sys, time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 from urllib.parse import quote
@@ -55,6 +56,8 @@ from openai import OpenAI
 CACHE_FILE   = Path(__file__).parent / 'marketplace_cache.json'
 ORGANIZED    = Path(r'G:\Organized')
 CONFIDENCE   = 95   # confidence score assigned to marketplace-ID results
+UPDATE_CHECK_INTERVAL = 7 * 24 * 60 * 60
+UPDATE_CHECK_MAX_ITEMS = 40
 
 REQUEST_HEADERS = {
     'User-Agent': (
@@ -248,6 +251,8 @@ def _load_cache():
             _cache = json.loads(CACHE_FILE.read_text('utf-8'))
         except Exception:
             _cache = {}
+    else:
+        _cache = {}
 
 def _save_cache():
     CACHE_FILE.write_text(json.dumps(_cache, ensure_ascii=False, indent=2), 'utf-8')
@@ -349,11 +354,13 @@ def _as_tags(value) -> list[str]:
     return []
 
 
-def _page_fields(page_html: str) -> tuple[str, str, list[str]]:
-    """Extract title, raw category, and tags from common page metadata."""
+def _page_fields(page_html: str) -> tuple[str, str, list[str], str, str]:
+    """Extract title, category, tags, and update markers from page metadata."""
     objects = _json_ld_objects(page_html)
     title = _og(page_html, 'title') or ''
     category_raw = ''
+    updated_at = ''
+    version = ''
     tags = []
     for meta_key in ('keywords', 'article:tag'):
         for value in _meta(page_html, meta_key):
@@ -363,13 +370,23 @@ def _page_fields(page_html: str) -> tuple[str, str, list[str]]:
         category_raw = category_raw or str(
             obj.get('category') or obj.get('genre') or ''
         ).strip()
+        updated_at = updated_at or str(
+            obj.get('dateModified') or obj.get('datePublished') or ''
+        ).strip()
+        version = version or str(obj.get('version') or '').strip()
         tags.extend(_as_tags(obj.get('keywords')))
     title = html_lib.unescape(title).strip()
     if not category_raw:
         category_raw = (_meta(page_html, 'article:section') or [''])[0]
+    updated_at = updated_at or (
+        _meta(page_html, 'article:modified_time')
+        or _meta(page_html, 'og:updated_time')
+        or ['']
+    )[0]
+    version = version or (_meta(page_html, 'version') or [''])[0]
     if not tags:
         tags = _as_tags(_meta(page_html, 'description'))
-    return title, category_raw, list(dict.fromkeys(tags))[:40]
+    return title, category_raw, list(dict.fromkeys(tags))[:40], updated_at, version
 
 
 def _page_result(
@@ -378,12 +395,12 @@ def _page_result(
     response: requests.Response,
     fallback_url: str,
 ) -> Optional[dict]:
-    title, category_raw, tags = _page_fields(response.text)
+    title, category_raw, tags, updated_at, version = _page_fields(response.text)
     title = re.sub(r'\s*[-|–]\s*(?:Freepik|Motion Array|FilterGrade|Shutterstock|Adobe Stock).*$', '', title, flags=re.IGNORECASE).strip()
     if not title:
         return None
     category = map_category(category_raw, title, tags)
-    return {
+    result = {
         'platform': platform,
         'item_id': item_id,
         'title': title,
@@ -394,6 +411,11 @@ def _page_result(
         'confidence': CONFIDENCE if category else 70,
         'source': 'marketplace_page',
     }
+    if updated_at:
+        result['updated_at'] = updated_at
+    if version:
+        result['version'] = version
+    return result
 
 
 def _api_result(
@@ -414,10 +436,15 @@ def _api_result(
     if isinstance(payload.get('category'), dict):
         category_raw = str(payload['category'].get('name') or category_raw)
     tags = _as_tags(payload.get('tags') or payload.get('keywords'))
+    updated_at = str(
+        payload.get('updated_at') or payload.get('date_modified')
+        or payload.get('dateModified') or payload.get('published_at') or ''
+    ).strip()
+    version = str(payload.get('version') or '').strip()
     if not title:
         return None
     category = map_category(category_raw, title, tags)
-    return {
+    result = {
         'platform': platform,
         'item_id': item_id,
         'title': title,
@@ -428,6 +455,11 @@ def _api_result(
         'confidence': CONFIDENCE if category else 70,
         'source': 'marketplace_api',
     }
+    if updated_at:
+        result['updated_at'] = updated_at
+    if version:
+        result['version'] = version
+    return result
 
 
 # ── Marketplace fetchers ──────────────────────────────────────────────────────
@@ -732,6 +764,140 @@ _FETCHERS = {
     'graphicriver':  fetch_envato,   # same endpoint
     'designbundles': None,           # no public API; DeepSeek only
 }
+
+
+def _marker_timestamp(value) -> float | None:
+    """Convert a provider date marker or epoch value into UTC seconds."""
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return float(value)
+    text = str(value or '').strip()
+    if not text:
+        return None
+    if re.fullmatch(r'\d+(?:\.\d+)?', text):
+        return float(text)
+    try:
+        parsed = datetime.fromisoformat(text.replace('Z', '+00:00'))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.timestamp()
+
+
+def _version_tuple(value) -> tuple[int, ...] | None:
+    parts = re.findall(r'\d+', str(value or ''))
+    return tuple(int(part) for part in parts) if parts else None
+
+
+def _is_newer_marketplace_result(previous: dict, current: dict) -> bool:
+    """Compare only explicit provider version/date markers; never guess from titles."""
+    previous_version = _version_tuple(previous.get('version'))
+    current_version = _version_tuple(current.get('version'))
+    if previous_version and current_version and previous_version != current_version:
+        return current_version > previous_version
+
+    previous_date = _marker_timestamp(previous.get('updated_at'))
+    current_date = _marker_timestamp(current.get('updated_at'))
+    return bool(
+        previous_date is not None
+        and current_date is not None
+        and current_date > previous_date
+    )
+
+
+def _update_record(name: str, previous: dict, current: dict) -> dict:
+    return {
+        'name': name,
+        'platform': current.get('platform') or previous.get('platform', ''),
+        'item_id': current.get('item_id') or previous.get('item_id', ''),
+        'title': current.get('title') or previous.get('title', ''),
+        'category': current.get('category') or previous.get('category') or 'Marketplace',
+        'previous_version': previous.get('previous_version') or previous.get('version', ''),
+        'current_version': current.get('version') or current.get('current_version', ''),
+        'previous_updated_at': previous.get('previous_updated_at') or previous.get('updated_at', ''),
+        'current_updated_at': current.get('updated_at') or current.get('current_updated_at', ''),
+    }
+
+
+def check_for_updates(
+    folder_names,
+    *,
+    force: bool = False,
+    now: float | None = None,
+    max_items: int = UPDATE_CHECK_MAX_ITEMS,
+) -> dict:
+    """Refresh a bounded set of known marketplace IDs and return update alerts.
+
+    A first lookup establishes a baseline.  Alerts require an explicit provider
+    version or modification date that is newer than the cached marker.  Checks
+    are throttled per cache entry so a scan does not repeatedly hit marketplace
+    pages.
+    """
+    _load_cache()
+    current_time = float(time.time() if now is None else now)
+    summary = {'checked': 0, 'skipped': 0, 'updates': []}
+    seen = set()
+    changed = False
+
+    for name in folder_names or []:
+        raw_name = str(name or '').strip()
+        platform, item_id = extract_id(raw_name)
+        if not platform or not item_id:
+            continue
+        key = _cache_key(platform, item_id)
+        if key in seen:
+            continue
+        seen.add(key)
+        fetcher = _FETCHERS.get(platform)
+        if not fetcher or len(seen) > max(1, int(max_items)):
+            continue
+
+        previous = _cache.get(key)
+        last_checked = _marker_timestamp(
+            previous.get('last_update_check_at') if previous else None
+        )
+        if (
+            not force
+            and last_checked is not None
+            and current_time - last_checked < UPDATE_CHECK_INTERVAL
+        ):
+            summary['skipped'] += 1
+            if previous and previous.get('update_available'):
+                summary['updates'].append(_update_record(raw_name, previous, previous))
+            continue
+
+        summary['checked'] += 1
+        try:
+            fresh = fetcher(item_id)
+        except Exception:
+            fresh = None
+        if fresh:
+            fresh = dict(fresh)
+            fresh['last_update_check_at'] = int(current_time)
+            if previous and _is_newer_marketplace_result(previous, fresh):
+                fresh['update_available'] = True
+                fresh['previous_version'] = previous.get('version', '')
+                fresh['previous_updated_at'] = previous.get('updated_at', '')
+                summary['updates'].append(_update_record(raw_name, previous, fresh))
+            elif previous and previous.get('update_available'):
+                # Keep an alert visible until a later UI action acknowledges it.
+                fresh['update_available'] = True
+                fresh['previous_version'] = previous.get('previous_version', '')
+                fresh['previous_updated_at'] = previous.get('previous_updated_at', '')
+                summary['updates'].append(_update_record(raw_name, previous, fresh))
+            _cache[key] = fresh
+            changed = True
+        elif previous:
+            previous = dict(previous)
+            previous['last_update_check_at'] = int(current_time)
+            _cache[key] = previous
+            changed = True
+            if previous.get('update_available'):
+                summary['updates'].append(_update_record(raw_name, previous, previous))
+
+    if changed:
+        _save_cache()
+    return summary
 
 def enrich(folder_name: str) -> Optional[dict]:
     """Top-level: extract ID → cache check → fetch → cache save → return result.

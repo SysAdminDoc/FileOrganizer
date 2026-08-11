@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 import pytest
 
 import marketplace_enrich as marketplace
@@ -115,3 +117,75 @@ def test_page_parser_handles_json_ld_and_meta_tags(monkeypatch):
 def test_expanded_fetchers_are_registered():
     for platform in ("freepik", "motionarray", "filtergrade", "shutterstock", "adobe_stock"):
         assert callable(marketplace._FETCHERS[platform])
+
+
+def test_update_check_establishes_baseline_without_alert(tmp_path, monkeypatch):
+    cache_file = tmp_path / "marketplace-cache.json"
+    monkeypatch.setattr(marketplace, "CACHE_FILE", cache_file)
+    monkeypatch.setitem(
+        marketplace._FETCHERS,
+        "shutterstock",
+        lambda item_id: {
+            "platform": "shutterstock",
+            "item_id": item_id,
+            "title": "Photo",
+            "category": "Stock Photos - General",
+            "version": "1",
+            "updated_at": "2026-01-01T00:00:00Z",
+        },
+    )
+
+    summary = marketplace.check_for_updates(
+        ["ss-1213219402"], force=True, now=1_800_000_000,
+    )
+
+    assert summary["checked"] == 1
+    assert summary["updates"] == []
+    saved = json.loads(cache_file.read_text(encoding="utf-8"))
+    assert saved["shutterstock:1213219402"]["last_update_check_at"] == 1_800_000_000
+
+
+def test_update_check_reports_new_provider_version_and_throttles(tmp_path, monkeypatch):
+    cache_file = tmp_path / "marketplace-cache.json"
+    cache_file.write_text(json.dumps({
+        "shutterstock:1213219402": {
+            "platform": "shutterstock",
+            "item_id": "1213219402",
+            "title": "Photo",
+            "category": "Stock Photos - General",
+            "version": "1",
+            "updated_at": "2026-01-01T00:00:00Z",
+            "last_update_check_at": 0,
+        },
+    }), encoding="utf-8")
+    monkeypatch.setattr(marketplace, "CACHE_FILE", cache_file)
+    calls = []
+
+    def fresh(item_id):
+        calls.append(item_id)
+        return {
+            "platform": "shutterstock",
+            "item_id": item_id,
+            "title": "Photo",
+            "category": "Stock Photos - General",
+            "version": "2",
+            "updated_at": "2026-02-01T00:00:00Z",
+        }
+
+    monkeypatch.setitem(marketplace._FETCHERS, "shutterstock", fresh)
+    summary = marketplace.check_for_updates(
+        ["ss-1213219402", "ss-1213219402"], force=True, now=1_800_000_000,
+    )
+
+    assert calls == ["1213219402"]
+    assert summary["updates"][0]["previous_version"] == "1"
+    assert summary["updates"][0]["current_version"] == "2"
+    assert summary["updates"][0]["category"] == "Stock Photos - General"
+
+    calls.clear()
+    throttled = marketplace.check_for_updates(
+        ["ss-1213219402"], now=1_800_000_100,
+    )
+    assert calls == []
+    assert throttled["skipped"] == 1
+    assert throttled["updates"][0]["current_version"] == "2"
