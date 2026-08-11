@@ -4,21 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-61: IPTC 2025.1 AI metadata XMP sidecar writing**
-Write IPTC 2025.1 AI metadata fields to `.xmp` sidecars using PyExifTool 0.5.6 (the only viable
-Windows XMP writer). New fields: `Iptc4xmpExt:AISystemUsed` (store "FileOrganizer v8.x"), 
-`Iptc4xmpExt:AIPromptInformation` (store classification prompt + category result), 
-`Iptc4xmpExt:AIPromptWriterName` (store "FileOrganizer" or logged-in user). Also write standard
-`XMP-dc:Subject` (keyword array), `XMP-xmp:Rating` (confidence as 1–5 stars), and 
-`photoshop:Category` (for Adobe CC compatibility). **Requires**: ExifTool ≥12.15 on PATH.
-Sidecars survive NTFS copy-with-robocopy-/COPYALL; add to documentation.
-
-- [ ] **Impact**: 3 | **Effort**: 2 | **Tier**: NEXT
-
-- [ ] Source: [S114] IPTC 2025.1 AI fields spec (Nov 2025);
-   [S115] PyExifTool 0.5.6 https://pypi.org/project/PyExifTool/;
-   [S116] XMP namespace reference https://exiftool.org/TagNames/XMP.html
-
 **NEXT-62: PyMuPDF license audit**
 PyMuPDF 1.27.2.3 is **AGPL-3.0 licensed**. If FileOrganizer is distributed as closed-source or
 commercially, AGPL requires that the entire application also be open-sourced (or a commercial

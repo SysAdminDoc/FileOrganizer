@@ -65,6 +65,7 @@ from fileorganizer.files import (
 from fileorganizer.engine import RuleEngine, RenameTemplateEngine
 from fileorganizer.plugins import PluginManager
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
+from fileorganizer.xmp_sidecar import write_classification_sidecar
 
 # ── Safe merge (standalone for use in workers) ─────────────────────────────────
 def _collision_destination(path):
@@ -1761,6 +1762,7 @@ class ApplyFilesWorker(QThread):
         self.check_hashes = check_hashes
         self.dry_run     = dry_run
         self._cancelled  = False
+        self._xmp_unavailable_logged = False
 
     def cancel(self): self._cancelled = True
 
@@ -1834,6 +1836,27 @@ class ApplyFilesWorker(QThread):
                     PluginManager.run_post_move(it.full_src, dst if not self.dry_run else it.full_dst, it.category)
                 except Exception:
                     pass
+                if not self.dry_run and not it.is_folder:
+                    try:
+                        sidecar = write_classification_sidecar(
+                            dst,
+                            category=it.category,
+                            confidence=it.confidence,
+                            method=it.method,
+                            detail=it.detail,
+                            metadata=it.metadata,
+                        )
+                        if sidecar.status == "written":
+                            self.log.emit(f"    [XMP] Wrote {os.path.basename(sidecar.sidecar_path)}")
+                        elif sidecar.status == "failed":
+                            self.log.emit(f"    [XMP] Skipped: {sidecar.detail}")
+                        elif sidecar.status == "unavailable" and not self._xmp_unavailable_logged:
+                            self.log.emit(f"    [XMP] Sidecars unavailable: {sidecar.detail}")
+                            self._xmp_unavailable_logged = True
+                    except Exception as exc:
+                        # Sidecar provenance is optional and must never turn a
+                        # completed filesystem move into a failed move.
+                        self.log.emit(f"    [XMP] Skipped: {exc}")
             except Exception as e:
                 err += 1
                 self.log.emit(f"    ❌ Error: {e}")

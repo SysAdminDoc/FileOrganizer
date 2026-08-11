@@ -87,6 +87,13 @@ python -m pip install uv pip-audit
 uv pip install --system --require-hashes -r requirements.lock
 ```
 
+AI classification provenance is written to same-basename `.xmp` sidecars when
+ExifTool 12.15+ is installed on `PATH`. The pinned `PyExifTool==0.5.6`
+wrapper is included in the lock. Sidecar writing is optional and fail-closed:
+missing or failed tooling never blocks a move. Keep the `.xmp` companion beside
+its asset when copying a library; `robocopy /COPYALL` preserves NTFS metadata
+for both files, but does not discover a sidecar that was omitted from the copy.
+
 `requirements.lock` is the hash-pinned Windows x64/Python 3.10 release
 baseline. When `requirements.txt` changes, regenerate and verify it with:
 
@@ -227,6 +234,10 @@ Python process tree.
   evaluation ID through the move plan, journal, and report. The durable store
   retains fingerprints and hashes—not prompts, responses, API keys, file names,
   or paths—and the Organize page can review counts or export redacted JSONL.
+- **IPTC 2025.1 AI sidecars** — successful file applies write the AI system,
+  classification evidence, writer, subject keywords, confidence rating, and
+  Adobe-compatible category to a same-basename `.xmp` sidecar when ExifTool is
+  available. The original asset is never rewritten.
 - **Adaptive corrections** — category overrides in the legacy rename/review
   workflow are remembered by exact folder fingerprint. Exact matches bypass AI
   on later scans, while keyword-related corrections become bounded few-shot
