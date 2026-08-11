@@ -11,6 +11,7 @@ Usage:
     python organize_run.py --validate           # pre-flight: find trailing spaces + long paths
     python organize_run.py --stats              # show batch progress
     python organize_run.py --summary            # category breakdown
+    python organize_run.py --preview --rename   # opt-in canonical batch names
     python organize_run.py --retry-errors       # retry only previously errored items
     python organize_run.py --undo-last N        # reverse the last N moves (from journal)
     python organize_run.py --undo-all           # reverse all moves in journal
@@ -35,6 +36,7 @@ from fileorganizer.path_safety import (
 )
 from fileorganizer.folder_cache import FolderCache, should_skip_folder
 from fileorganizer.rule_chains import RuleChainManager
+from fileorganizer.batch_rename import CANONICAL_TEMPLATE, render_name
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DEST_PRIMARY     = r'G:\Organized'
@@ -1617,7 +1619,9 @@ def _preflight_move_plan(plan_data: dict, already_moved: set[str]) -> None:
 def build_move_plan(pairs: list, source_override: str = '',
                     source_mode: str = 'ae', plan_id: str = '',
                     rule_manager: RuleChainManager | None = None,
-                    folder_cache: FolderCache | None = None) -> MovePlan:
+                    folder_cache: FolderCache | None = None, *,
+                    rename: bool = False,
+                    rename_template: str = CANONICAL_TEMPLATE) -> MovePlan:
     """Convert classified/index pairs into an editable, collision-safe move plan."""
     plan_id = plan_id or f"plan-{_compact_timestamp()}"
     created_at = _utc_now()
@@ -1728,6 +1732,28 @@ def build_move_plan(pairs: list, source_override: str = '',
                         'rule_matches': list(rule_decision.matched_rules),
                     })
                     continue
+
+        if rename:
+            try:
+                clean = render_name(
+                    {
+                        **item,
+                        'name': disk_name,
+                        'category': category,
+                        'clean_name': clean,
+                        'is_file_item': is_file_item,
+                    },
+                    index=len(planned) + 1,
+                    template=rename_template,
+                )
+            except (TypeError, ValueError, PathSafetyError) as exc:
+                skipped.append({
+                    'name': disk_name,
+                    'src': src,
+                    'reason': 'invalid_rename_template',
+                    'error': str(exc),
+                })
+                continue
 
         try:
             _safe_name_component(clean, 'clean_name')
@@ -2358,6 +2384,10 @@ def build_argument_parser() -> argparse.ArgumentParser:
                     help='Concurrent classifier requests for --parallel (1-8)')
     ap.add_argument('--request-batch-size', type=int, choices=range(1, 61), metavar='N',
                     help='Folders in each parallel classifier request (1-60)')
+    ap.add_argument('--rename', action='store_true',
+                    help='Opt in to canonical batch names in the generated plan')
+    ap.add_argument('--rename-template', type=str, default=CANONICAL_TEMPLATE,
+                    help=f'Canonical rename template (default: {CANONICAL_TEMPLATE})')
     return ap
 
 
@@ -2520,6 +2550,8 @@ def main():
         source_mode,
         rule_manager=rule_manager,
         folder_cache=folder_cache,
+        rename=args.rename,
+        rename_template=args.rename_template,
     )
     plan_path = write_move_plan(plan, args.plan_out or args.plan_file or '')
     log(f"Move plan written: {plan_path}")

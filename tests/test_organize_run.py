@@ -67,6 +67,36 @@ class OrganizeRunPlanTests(unittest.TestCase):
         self.assertEqual(parallel.concurrency, 3)
         self.assertEqual(parallel.request_batch_size, 10)
 
+        rename = parser.parse_args(["--rename"])
+        self.assertTrue(rename.rename)
+        self.assertEqual(rename.rename_template, runner.CANONICAL_TEMPLATE)
+
+    def test_opt_in_rename_changes_generated_plan_name(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            src_root, _ = self._configure_temp_runner(tmp)
+            source = src_root / "Original Folder"
+            source.mkdir()
+            (source / "project.aep").write_text("fixture", encoding="utf-8")
+            pair = (
+                {
+                    "name": source.name,
+                    "clean_name": "Human Name",
+                    "category": "After Effects - Other",
+                    "confidence": 90,
+                    "_marketplace_id": "videohive:12345678",
+                },
+                {"folder": str(src_root), "name": source.name},
+            )
+
+            plan = runner.build_move_plan(
+                [pair], source_mode="ae", plan_id="rename-plan", rename=True,
+            )
+
+            self.assertEqual(plan.item_count, 1)
+            self.assertTrue(plan.items[0]["dest"].endswith(
+                "AEO_12345678_Human Name"
+            ))
+
     def test_cli_commit_plan_alias_applies_persisted_plan(self):
         result = {
             "plan_id": "saved-plan",

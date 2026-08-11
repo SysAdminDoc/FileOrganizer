@@ -181,6 +181,40 @@ def test_move_history_dialog_renders_journal_rows(monkeypatch):
         app.processEvents()
 
 
+def test_batch_rename_dialog_supports_category_filter_and_inline_edit(tmp_path):
+    from types import SimpleNamespace
+    from PyQt6.QtWidgets import QApplication
+    from fileorganizer.dialogs import BatchRenameDialog
+
+    app = QApplication.instance() or QApplication([])
+    source_root = tmp_path / "source"
+    destination_root = tmp_path / "organized" / "After Effects - Other"
+    source = source_root / "Original Folder"
+    source.mkdir(parents=True)
+    destination_root.mkdir(parents=True)
+    item = SimpleNamespace(
+        category="After Effects - Other",
+        folder_name="Original Folder",
+        cleaned_name="Human Name",
+        full_source_path=str(source),
+        full_dest_path=str(destination_root / "Original Folder"),
+        selected=True,
+        status="Pending",
+    )
+
+    dialog = BatchRenameDialog([item])
+    try:
+        assert dialog.tbl_preview.rowCount() == 1
+        dialog.tbl_preview.item(0, 2).setText("Edited Name")
+        app.processEvents()
+        dialog._accept()
+        assert dialog.result() == dialog.DialogCode.Accepted
+        assert dialog.renamed_items == [(item, "Edited Name")]
+    finally:
+        dialog.close()
+        app.processEvents()
+
+
 def test_full_face_recognition_builds_person_thumbnail(monkeypatch, tmp_path):
     numpy = pytest.importorskip("numpy")
     from fileorganizer import photos
