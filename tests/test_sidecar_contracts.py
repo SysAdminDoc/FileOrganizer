@@ -34,6 +34,10 @@ LIVE_NDJSON_SIDECARS = {
     "watch_run.py": lambda missing, dest: ["--watches", "not-json"],
     "clip_index_run.py": lambda missing, dest: ["--root", str(missing), "--db", str(dest / "clip.db")],
     "chroma_run.py": lambda missing, dest: ["--root", str(missing), "--db", str(dest / "chroma")],
+    "vlm_run.py": lambda missing, dest: [
+        "--root", str(missing), "--model", str(dest / "model.gguf"),
+        "--mmproj", str(dest / "mmproj.gguf"),
+    ],
 }
 
 ALLOWED_EVENTS = set(PROTOCOL_EVENTS)
@@ -83,6 +87,7 @@ def test_live_sidecars_emit_valid_ndjson_errors_for_fatal_inputs(tmp_path):
             "dedup_run.py": "duplicates",
             "clip_index_run.py": "clip_index",
             "chroma_run.py": "chroma_index",
+            "vlm_run.py": "vlm",
         }.get(script, script.removesuffix("_run.py"))
         assert {row["workflow"] for row in matrix} == {expected_workflow}, script
         assert [row["sequence"] for row in rows] == list(range(len(rows))), script

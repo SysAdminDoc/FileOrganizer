@@ -72,7 +72,7 @@ PROJECT_EXTS = frozenset({
     '.fla', '.flp', '.sketch',
 })
 
-DB_VERSION = 3
+DB_VERSION = 4
 
 # Image extensions used when scanning for preview thumbnails
 _PREVIEW_EXTS = frozenset({'.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp'})
@@ -104,6 +104,8 @@ CREATE TABLE IF NOT EXISTS assets (
     skipped_bytes      INTEGER DEFAULT 0,
     folder_fingerprint TEXT UNIQUE,
     preview_image      TEXT,
+    ocr_text           TEXT,
+    vmodel_used        TEXT,
     added_at           TEXT NOT NULL,
     updated_at         TEXT NOT NULL
 );
@@ -183,12 +185,65 @@ def _migrate_files_palette(con: sqlite3.Connection) -> None:
         con.execute("ALTER TABLE asset_files ADD COLUMN palette_rgb BLOB")
     if "palette_hex" not in have:
         con.execute("ALTER TABLE asset_files ADD COLUMN palette_hex TEXT")
+    _migrate_assets_vlm(con)
+
+
+def _migrate_assets_vlm(con: sqlite3.Connection) -> None:
+    """Idempotent Qwen/llama.cpp OCR and model-audit columns."""
+    have = {row[1] for row in con.execute("PRAGMA table_info(assets)").fetchall()}
+    if "ocr_text" not in have:
+        con.execute("ALTER TABLE assets ADD COLUMN ocr_text TEXT")
+    if "vmodel_used" not in have:
+        con.execute("ALTER TABLE assets ADD COLUMN vmodel_used TEXT")
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 def _now() -> str:
     return datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def update_vlm_record(
+    asset_id: int,
+    *,
+    ocr_text: str,
+    vmodel_used: str,
+    category: str | None = None,
+    confidence: int | None = None,
+    db_path: str = DB_FILE,
+) -> None:
+    """Persist bounded VLM evidence on one existing asset record."""
+    if type(asset_id) is not int or asset_id < 1:
+        raise ValueError("asset_id must be a positive integer")
+    if not isinstance(ocr_text, str) or len(ocr_text) > 16_000:
+        raise ValueError("ocr_text must be a bounded string")
+    if not isinstance(vmodel_used, str) or not vmodel_used.strip() or len(vmodel_used) > 256:
+        raise ValueError("vmodel_used must be a bounded nonempty string")
+    if category is not None and (not isinstance(category, str) or len(category) > 256):
+        raise ValueError("category must be a bounded string")
+    if confidence is not None and (type(confidence) is not int or not 0 <= confidence <= 100):
+        raise ValueError("confidence must be an integer from 0 to 100")
+
+    con = init_db(db_path)
+    try:
+        fields = ["ocr_text = ?", "vmodel_used = ?", "updated_at = ?"]
+        values: list[object] = [ocr_text, vmodel_used.strip(), _now()]
+        if category is not None:
+            fields.append("category = ?")
+            values.append(category)
+        if confidence is not None:
+            fields.append("confidence = ?")
+            values.append(confidence)
+        values.append(asset_id)
+        cursor = con.execute(
+            f"UPDATE assets SET {', '.join(fields)} WHERE id = ?",
+            values,
+        )
+        if cursor.rowcount != 1:
+            raise KeyError(f"asset record {asset_id} was not found")
+        con.commit()
+    finally:
+        con.close()
 
 
 def find_preview_image(folder_path: str) -> str | None:

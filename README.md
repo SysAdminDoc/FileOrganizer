@@ -66,6 +66,10 @@ Current shell boundaries:
   ViT-L-14 / sqlite-vec image index or query nearest visual matches.
 - `chroma_run.py` provides the same opt-in CLIP vectors through a persistent
   local Chroma collection, including image-to-image and text-to-image search.
+- `vlm_run.py` provides an opt-in local Qwen2.5-VL path through an installed
+  llama.cpp Qwen multimodal CLI. It accepts user-supplied GGUF/mmproj files,
+  emits OCR/classification evidence over NDJSON, and fails closed when the
+  binary is unavailable; it never downloads models or sends files remotely.
 
 ## Get FileOrganizer
 
@@ -309,6 +313,9 @@ python clip_index_run.py --query Pictures/example.jpg --db .fileorganizer-clip.d
 python chroma_run.py --root Pictures --db .fileorganizer-chroma
 python chroma_run.py --query-text "sunset over mountains" --db .fileorganizer-chroma
 
+# Optional local Qwen2.5-VL/llama.cpp OCR and classification
+python vlm_run.py --root Pictures --model models\qwen2.5-vl-7b-q4_k_m.gguf --mmproj models\mmproj.gguf
+
 # Register and inspect a saved scan profile (preview-only by default)
 python -m fileorganizer --schedule "Daily Inbox" --schedule-time 07:30
 python schedule_task_run.py --status
@@ -373,6 +380,7 @@ successful catalog release and sync status.
 | DeepSeek | Heavy classification batches | `deepseek-v4-flash` |
 | GitHub Models | Fast lightweight checks | `Anthropic/claude-3-5-haiku-20241022` |
 | Ollama | Local / offline fallback | Any local model |
+| llama.cpp Qwen2.5-VL | Explicit local OCR/diagram fallback | User-supplied Qwen2.5-VL GGUF + mmproj |
 
 Set `DEEPSEEK_API_KEY` to enable DeepSeek routing.
 Marketplace enrichment can use the optional `FREEPIK_API_KEY` for authenticated
@@ -481,6 +489,13 @@ before the extractor falls back to Pillow, mutagen, or ffprobe.
 Ambiguous image and PDF previews can optionally use an already-installed local
 Ollama vision model before marketplace, embeddings, or remote-provider routing;
 model downloads remain an explicit Settings action.
+
+The Qwen2.5-VL fallback is separately opt-in: set
+`FILEORGANIZER_QWEN_MODEL` and `FILEORGANIZER_QWEN_MMPROJ` to local GGUF paths
+and configure `FILEORGANIZER_LLAMA_CLI` when the llama.cpp executable is not on
+`PATH`. The classifier only accepts bounded, taxonomy-constrained JSON and
+stores OCR/model evidence in the asset fingerprint database when a record ID
+is supplied to `vlm_run.py`.
 
 ## Project Planning
 

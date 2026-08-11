@@ -83,6 +83,12 @@ SPECS: tuple[CapabilitySpec, ...] = (
         "Persistent local image embeddings with CLIP image/text similarity search",
         "Install the optional cross-modal stack: chromadb, open_clip_torch, and torch.",
     ),
+    CapabilitySpec(
+        "vlm", "qwen2vl_cli",
+        (Requirement("llama.cpp Qwen2-VL CLI", binary="llama-qwen2vl-cli"),),
+        "Optional low-confidence image/document classification with OCR evidence",
+        "Build or install llama.cpp's Qwen2-VL multimodal CLI and configure its path.",
+    ),
     CapabilitySpec("music", "musicbrainz_lookup",
                    (Requirement("musicbrainzngs", "musicbrainzngs", "musicbrainzngs"),),
                    "Look up canonical album and track metadata",
@@ -207,6 +213,10 @@ def _package_version(distribution: str) -> str:
 def _binary_path(binary: str) -> str | None:
     if binary == "fpcalc":
         override = os.environ.get("FPCALC", "").strip()
+        if override and Path(override).is_file():
+            return override
+    if binary == "llama-qwen2vl-cli":
+        override = os.environ.get("FILEORGANIZER_LLAMA_CLI", "").strip()
         if override and Path(override).is_file():
             return override
     for candidate in binary.split("|"):

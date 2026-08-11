@@ -6,6 +6,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Added an opt-in local Qwen2.5-VL/llama.cpp sidecar for low-confidence image
+  and diagram classification, bounded OCR evidence, and optional persistence
+  of the model output in asset records. Missing binaries and malformed model
+  responses fail closed without blocking normal organization.
 - Added an optional, local-only CLIP ViT-L-14 image index with lazy model
   loading, explicit device/batch bounds, model-bound sqlite-vec storage, and
   cosine-similarity queries. Missing ML dependencies fail closed through the
