@@ -6,6 +6,8 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Added a WinAppSDK 2.0.1 shell `SystemBackdropElement` with Mica rendering
+  behind the transparent navigation/content host.
 - Added optional IPTC 2025.1 AI provenance XMP sidecars for successful file
   applies and CLI move plans. The ExifTool/PyExifTool capability is reported
   before use, never rewrites the source asset, and fails closed when tooling is

@@ -4,19 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-65: WinAppSDK 2.0.1 SystemBackdropElement**
-Use `SystemBackdropElement` (placed FrameworkElement, not full-window) to apply Mica/Acrylic
-backdrop to specific panels in WinUI shell. This allows in-content Mica effect on Browse tab,
-Settings panel, or Apply Review dialogs — matching modern Windows 11 UI patterns without
-full-window backdrop blur performance hit. Replaces the current backdrop-on-window pattern with
-more granular control. This is a UX polish task with low effort; high visual impact.
-**Depends on**: NEXT-39 (WindowsAppSDK 2.0.1).
-
-- [ ] **Impact**: 2 | **Effort**: 1 | **Tier**: NEXT | **Depends on**: NEXT-39
-
-- [ ] Source: [S121] WinAppSDK 2.0.1 release notes (April 29, 2026);
-   [S122] SystemBackdropElement docs https://learn.microsoft.com/en-us/windows/winui/api/microsoft.ui.xaml.media.systembackdropelement
-
 **NEXT-66: FolderPicker.PickMultipleFoldersAsync**
 WinAppSDK 2.0.1 adds `FolderPicker.PickMultipleFoldersAsync()` on the standard `FolderPicker` type
 (new in 2.0.1; was preview-only in 1.x). Integrate into SourcePanel to allow multi-folder source

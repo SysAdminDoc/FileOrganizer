@@ -4,12 +4,21 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:media="using:Microsoft.UI.Xaml.Media"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="FileOrganizer">
 
-    <Grid Background="{StaticResource BackgroundBrush}">
+    <Grid Background="Transparent">
+        <controls:SystemBackdropElement x:Name="ShellBackdrop"
+                                        IsHitTestVisible="False"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch">
+            <controls:SystemBackdropElement.SystemBackdrop>
+                <media:MicaBackdrop/>
+            </controls:SystemBackdropElement.SystemBackdrop>
+        </controls:SystemBackdropElement>
         <NavigationView x:Name="MainNav"
                         IsBackButtonVisible="Collapsed"
                         IsSettingsVisible="True"
@@ -17,7 +26,7 @@
                         OpenPaneLength="232"
                         IsTitleBarAutoPaddingEnabled="False"
                         SelectionChanged="MainNav_SelectionChanged"
-                        Background="{StaticResource BackgroundBrush}">
+                        Background="Transparent">
 
             <NavigationView.PaneHeader>
                 <StackPanel Orientation="Horizontal" Spacing="10" Margin="12,14,0,14">
@@ -245,7 +254,7 @@
                     </Grid>
                 </Expander>
                 <Frame Grid.Row="1" x:Name="ContentFrame"
-                       Background="{StaticResource BackgroundBrush}"/>
+                       Background="Transparent"/>
             </Grid>
         </NavigationView>
     </Grid>
