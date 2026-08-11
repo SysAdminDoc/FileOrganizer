@@ -1326,16 +1326,42 @@ def ollama_classify_batch(folders: list, url: str = None, model: str = None) -> 
              for _ in folders]
 
     try:
-        data = json.dumps(payload).encode('utf-8')
-        req = urllib.request.Request(
-            f"{url}/api/chat",
-            data=data,
-            headers={'Content-Type': 'application/json'},
-            method='POST'
-        )
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            result = json.loads(resp.read().decode())
-        raw = result.get('message', {}).get('content', '').strip()
+        raw = None
+        llama_server_url = os.environ.get('FILEORGANIZER_LLAMA_SERVER_URL', '').strip()
+        if llama_server_url:
+            try:
+                from fileorganizer.llama_cache import complete, get_prompt_cache
+
+                raw, _cache_state = complete(
+                    llama_server_url,
+                    model=model,
+                    messages=messages,
+                    cache=get_prompt_cache(llama_server_url, model),
+                    context_revision=os.environ.get(
+                        'FILEORGANIZER_LLM_CONTEXT_REVISION', ''
+                    ),
+                    temperature=float(s.get('temperature', 0.1)),
+                    max_tokens=int(s.get('num_predict', 4096)) * len(folders),
+                    timeout=timeout,
+                )
+            except Exception:
+                # The llama-server path is an opt-in accelerator. A stopped or
+                # incompatible local server must not prevent the normal Ollama
+                # fallback from classifying the batch.
+                raw = None
+
+        if raw is None:
+            data = json.dumps(payload).encode('utf-8')
+            req = urllib.request.Request(
+                f"{url}/api/chat",
+                data=data,
+                headers={'Content-Type': 'application/json'},
+                method='POST'
+            )
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                result = json.loads(resp.read().decode())
+            raw = result.get('message', {}).get('content', '')
+        raw = str(raw or '').strip()
         raw = re.sub(r'<think>.*?</think>', '', raw, flags=re.DOTALL)
         raw = re.sub(r'<think>.*$', '', raw, flags=re.DOTALL)
         raw = raw.strip()
