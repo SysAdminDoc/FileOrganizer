@@ -4,20 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-75: Sentry SDK crash reporting (opt-in)**
-Integrate `sentry-sdk` (v1.54+, May 2026) for crash reporting **only on explicit user consent**. When
-FileOrganizer encounters an unhandled exception, present a dialog: "Error: [msg]. Send crash report to help
-us improve? Yes/No/Always". If "Yes", attach the traceback + FileOrganizer version + OS info + Qwen model
-version (if active) to a Sentry event; post to a private Sentry project. **No file paths or classification
-results are sent**; errors only. Rate-limit: max 1 error report per hour per user. This **must be opt-in**
-and clearly labeled. Enables rapid identification of VLM model compatibility issues (e.g., "Qwen2.5-VL
-crashes on ARM64 Macs") without phoning home constantly.
-
-- [ ] **Impact**: 2 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-73 | **Unblocks**: reliability tier
-
-- [ ] Source: [S147] sentry-sdk v1.54 https://github.com/getsentry/sentry-sdk-python (PII stripping via
-   `before_send` hooks; rate-limiting via `sample_rate` + `traces_sample_rate`)
-
 **NEXT-77: 3D asset format support — glTF 2.0 + Draco + USDZ**
 Add classification and metadata extraction for 3D asset formats: **glTF 2.0** (JSON + binary geometry),
 **Draco** (google/draco mesh compression), **USDZ** (Pixar USD wrapped in ZIP). Implement:
