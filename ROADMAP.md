@@ -4,18 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-26: Batch rename with preview**
-GUI dialog showing old name -> proposed canonical name (`{CAT_CODE}_{ID}_{CLEAN_NAME}`) for all
-items in a category, with inline edit before committing. CLI: opt-in `--rename` flag. mnamer
-[S58] already has the template formatter (`MetadataMovie.__format__()` with regex-based
-placeholder substitution + `{name}`, `{year}`, `{season:02d}` style padding/case converters)
-and a `--test` dry-run path — both directly portable to the GUI preview dialog.
-
-- [ ] **Impact**: 3 | **Effort**: 2
-
-- [ ] Source: [S22] Adobe Bridge batch rename, [S15] digiKam rename templates, [S58] mnamer
-  `MetadataMovie.__format__()` + `--test` dry-run
-
 **NEXT-61: IPTC 2025.1 AI metadata XMP sidecar writing**
 Write IPTC 2025.1 AI metadata fields to `.xmp` sidecars using PyExifTool 0.5.6 (the only viable
 Windows XMP writer). New fields: `Iptc4xmpExt:AISystemUsed` (store "FileOrganizer v8.x"), 
