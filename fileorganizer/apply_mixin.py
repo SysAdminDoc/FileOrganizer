@@ -28,6 +28,24 @@ class ApplyMixin:
 
     def _review_operation_plan(self, work, preview_only=False):
         """Run preflight, persist the exact plan, and honor row toggles."""
+        if getattr(self, '_background_automation', False):
+            from fileorganizer.dry_run_planner import (
+                default_plan_path, plan_from_items, save_plan, validate_plan,
+            )
+
+            plan = plan_from_items([item for _, item in work])
+            valid, errors = validate_plan(plan)
+            if not valid:
+                self._background_apply_blocked = True
+                getattr(self, '_log')(
+                    "Background apply blocked by preflight: " + "; ".join(errors)
+                )
+                return None
+            plan_file = default_plan_path()
+            save_plan(plan, plan_file)
+            self._background_apply_blocked = False
+            getattr(self, '_log')(f"Background operation plan saved: {plan_file}")
+            return work
         from fileorganizer.dialogs.tools import PreflightDialog
 
         dialog = PreflightDialog(

@@ -22,6 +22,8 @@
              Link="WatchPathValidator.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\WatchTaskProtocol.cs"
              Link="WatchTaskProtocol.cs" />
+    <Compile Include="..\..\src\FileOrganizer.UI\Services\ScheduleTaskProtocol.cs"
+             Link="ScheduleTaskProtocol.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\UserSettings.cs"
              Link="UserSettings.cs" />
     <Compile Include="..\..\src\FileOrganizer.UI\Services\UiStreamBuffer.cs"

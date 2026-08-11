@@ -247,6 +247,25 @@ finally
     Directory.Delete(watchContractRoot, recursive: true);
 }
 
+Assert(ScheduleTaskProtocol.TryParseState(
+        "{\"supported\":true,\"profiles\":[\"Daily Inbox\"],\"schedules\":[{"
+        + "\"name\":\"Daily Inbox\",\"profile_name\":\"Daily Inbox\","
+        + "\"frequency\":\"daily\",\"time\":\"07:30\",\"enabled\":true,"
+        + "\"auto_apply\":false,\"last_status\":\"completed\","
+        + "\"last_error\":null,\"last_run\":\"2026-08-10T07:30:00\","
+        + "\"log_path\":\"schedule.log\"}],\"message\":null,"
+        + "\"log\":null,\"error\":null}",
+        out var scheduleState,
+        out var scheduleStateError)
+    && scheduleState is { Supported: true }
+    && scheduleState.Profiles.Count == 1
+    && scheduleState.Schedules is [{ AutoApply: false }],
+    $"Schedule task status parsing failed: {scheduleStateError}");
+var parsedScheduleEntry = scheduleState?.Schedules.FirstOrDefault();
+Assert(parsedScheduleEntry is not null
+       && ScheduleTaskProtocol.Describe(parsedScheduleEntry).Contains("preview only"),
+    "Schedule task description lost its safe apply mode.");
+
 var collectionNotifications = 0;
 var streamedRows = new BoundedObservableCollection<StreamFixture>(
     UiStreamLimits.MaxResultRows,

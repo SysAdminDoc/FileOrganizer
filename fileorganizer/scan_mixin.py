@@ -32,6 +32,8 @@ class ScanMixin:
 
     def _save_last_config(self):
         """Save current scan config for Repeat Last."""
+        if getattr(self, '_background_automation', False):
+            return
         op = self.cmb_op.currentIndex()
         cfg = {
             'mode': op,
