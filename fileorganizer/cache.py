@@ -132,6 +132,11 @@ def _get_cache_conn():
                 'topic TEXT,'
                 'created_at TEXT DEFAULT CURRENT_TIMESTAMP'
             ')')
+            _cache_conn.execute(
+                'CREATE TABLE IF NOT EXISTS app_stats ('
+                'key TEXT PRIMARY KEY,'
+                'value INTEGER NOT NULL DEFAULT 0)'
+            )
             _cache_conn.commit()
             _cache_conn_path = cache_path
         return _cache_conn
@@ -207,6 +212,42 @@ def cache_count():
             n = conn.execute('SELECT COUNT(*) FROM cache').fetchone()[0]
             return n
     except Exception:
+        return 0
+
+
+def increment_user_corrections(amount: int = 1) -> int:
+    """Increment and return the durable manual category correction count."""
+    if isinstance(amount, bool) or not isinstance(amount, int) or amount < 1:
+        raise ValueError('correction increment must be a positive integer')
+    try:
+        with _cache_db_lock:
+            conn = _get_cache_conn()
+            conn.execute(
+                "INSERT OR IGNORE INTO app_stats(key, value) VALUES('user_corrections', 0)"
+            )
+            conn.execute(
+                "UPDATE app_stats SET value = value + ? WHERE key='user_corrections'",
+                (amount,),
+            )
+            conn.commit()
+            row = conn.execute(
+                "SELECT value FROM app_stats WHERE key='user_corrections'"
+            ).fetchone()
+            return int(row[0]) if row else 0
+    except (OSError, sqlite3.Error):
+        return 0
+
+
+def user_corrections_count() -> int:
+    """Return the durable manual category correction count."""
+    try:
+        with _cache_db_lock:
+            conn = _get_cache_conn()
+            row = conn.execute(
+                "SELECT value FROM app_stats WHERE key='user_corrections'"
+            ).fetchone()
+            return int(row[0]) if row else 0
+    except (OSError, sqlite3.Error):
         return 0
 
 

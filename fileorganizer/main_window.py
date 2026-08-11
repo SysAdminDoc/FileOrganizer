@@ -69,6 +69,7 @@ from fileorganizer.dialogs import (
     DuplicateFinderDialog, CleanupPanel, DuplicatePanel,
     CrossLibraryDedupDialog,
     VersionDedupDialog,
+    BrowsePanel,
     ProtectedPathsDialog, ThemePickerDialog, WatchHistoryDialog,
     LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel, ReviewPanel,
     RuleChainEditorDialog,
@@ -381,6 +382,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
         _nav_items_tools = [
             ("Duplicate Finder",  'duplicates', None),
+            ("Browse Library",    'browse', None),
             ("Empty Folders",     'cleanup', 0),
             ("Empty Files",       'cleanup', 1),
             ("Temp / Junk Files", 'cleanup', 2),
@@ -516,6 +518,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                                lambda: self._open_cleanup_tab(mode='duplicates'))
         menu_cleanup.addAction("Cross-Library Dedup...", self._open_cross_library_dedup)
         menu_cleanup.addAction("Version-Aware Dedup...", self._open_version_dedup)
+        menu_cleanup.addAction("Browse Library...", self._open_browse)
         menu_cleanup.addAction("Cleanup Tools...", self._open_cleanup_tools)
         menu_cleanup.addSeparator()
         menu_cleanup.addAction("Find Empty Folders", lambda: self._open_cleanup_tab(0))
@@ -1120,6 +1123,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # ── Page 6: Review Queue ──────────────────────────────────────────
         self._review_panel = ReviewPanel()
         self._content_stack.addWidget(self._review_panel)    # index 6
+
+        # ── Page 7: Organized Library Browse ──────────────────────────────
+        self._browse_panel = BrowsePanel()
+        self._content_stack.addWidget(self._browse_panel)    # index 7
 
         self._content_stack.setCurrentIndex(0)
         right_col.addWidget(self._content_stack, 1)
@@ -1766,6 +1773,8 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         # Switch stack to the right panel
         if tool_type == 'duplicates':
             self._content_stack.setCurrentIndex(2)
+        elif tool_type == 'browse':
+            self._content_stack.setCurrentIndex(7)
         elif tool_type == 'auditor':
             self._content_stack.setCurrentIndex(3)
         elif tool_type == 'normalizer':
@@ -3536,6 +3545,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
     def _open_version_dedup(self):
         """Open the marketplace-ID version archive reviewer."""
         VersionDedupDialog(self).exec()
+
+    def _open_browse(self):
+        """Navigate to the organized-library Browse tree."""
+        self._on_sidebar_tool('browse')
 
     def _open_cleanup_tab(self, tab_index: int = None, *, mode: str = None):
         """Navigate to inline cleanup or duplicate panel."""

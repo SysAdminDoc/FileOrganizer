@@ -4,13 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-23: Drag-and-drop reclassification**
-Drag any item from one category to another in the Browse tab tree. Records the correction in
-`corrections.json` and increments a `user_corrections` counter in the DB. Same-fingerprint items
-in future runs auto-apply the correction without AI.
-
-- [ ] **Impact**: 4 | **Effort**: 3
-
 **NEXT-24: Undo history visualizer**
 "History" tab: timeline of all moves from `organize_moves.db` with per-item or per-run undo.
 Show: timestamp, source, destination, confidence score, undo button. Completes N-6.
