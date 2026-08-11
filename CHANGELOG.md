@@ -12,6 +12,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added a Tools → Cross-Library Dedup reviewer that compares independent roots
   with complete folder SHA-256 fingerprints and offers revalidated per-group
   keep, merge, or archive decisions.
+- Added a Tools → Version-Aware Dedup reviewer that groups differing complete
+  folder fingerprints by marketplace ID, prioritizes the fullest version, and
+  archives selected older candidates only after keeper/source revalidation.
 - Marketplace enrichment now recognizes Creative Market, Freepik, Motion Array,
   FilterGrade, Shutterstock, and Adobe Stock IDs/URLs, with shared HTML/JSON-LD
   parsing and an optional keyed Freepik resource lookup.

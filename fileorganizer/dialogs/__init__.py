@@ -15,6 +15,7 @@ from fileorganizer.dialogs.duplicates import (
     _DupScanWorker, DuplicateFinderDialog, DuplicatePanel, DuplicateCompareDialog,
     CrossLibraryDedupDialog, CrossLibraryReviewDialog,
 )
+from fileorganizer.dialogs.version_dedup import VersionDedupDialog
 from fileorganizer.dialogs.tools import (
     BeforeAfterDialog, EventGroupDialog, ScheduleDialog,
     UndoTimelineDialog, UndoBatchDialog, PluginManagerDialog,
@@ -37,6 +38,7 @@ __all__ = [
     '_CleanupScanWorker', 'CleanupToolsDialog', 'CleanupPanel',
     '_DupScanWorker', 'DuplicateFinderDialog', 'DuplicatePanel', 'DuplicateCompareDialog',
     'CrossLibraryDedupDialog', 'CrossLibraryReviewDialog',
+    'VersionDedupDialog',
     'BeforeAfterDialog', 'EventGroupDialog', 'ScheduleDialog',
     'UndoTimelineDialog', 'UndoBatchDialog', 'PluginManagerDialog',
     'RelationshipGraphWidget', 'WatchHistoryDialog',

@@ -68,6 +68,7 @@ from fileorganizer.dialogs import (
     UndoTimelineDialog, PluginManagerDialog, CleanupToolsDialog,
     DuplicateFinderDialog, CleanupPanel, DuplicatePanel,
     CrossLibraryDedupDialog,
+    VersionDedupDialog,
     ProtectedPathsDialog, ThemePickerDialog, WatchHistoryDialog,
     LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel, ReviewPanel,
     RuleChainEditorDialog,
@@ -514,6 +515,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         menu_cleanup.addAction("Duplicate Finder...",
                                lambda: self._open_cleanup_tab(mode='duplicates'))
         menu_cleanup.addAction("Cross-Library Dedup...", self._open_cross_library_dedup)
+        menu_cleanup.addAction("Version-Aware Dedup...", self._open_version_dedup)
         menu_cleanup.addAction("Cleanup Tools...", self._open_cleanup_tools)
         menu_cleanup.addSeparator()
         menu_cleanup.addAction("Find Empty Folders", lambda: self._open_cleanup_tab(0))
@@ -3530,6 +3532,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
     def _open_cross_library_dedup(self):
         """Open the exact cross-library folder duplicate reviewer."""
         CrossLibraryDedupDialog(self).exec()
+
+    def _open_version_dedup(self):
+        """Open the marketplace-ID version archive reviewer."""
+        VersionDedupDialog(self).exec()
 
     def _open_cleanup_tab(self, tab_index: int = None, *, mode: str = None):
         """Navigate to inline cleanup or duplicate panel."""

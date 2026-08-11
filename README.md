@@ -203,6 +203,10 @@ Python process tree.
   `I:\Organized`) using complete folder SHA-256 fingerprints. Each group lets
   you choose a keeper and explicitly leave, merge, or archive other copies;
   unreadable folders and changed scan results fail closed.
+- **Version-aware dedup** — **Tools → Version-Aware Dedup** groups differing
+  folder fingerprints that share a marketplace ID, proposes the fullest folder
+  as keeper, and shows the file-count/version reason before archiving selected
+  older versions. Both the keeper and archive candidate are revalidated first.
 - **Shell Cleanup and Duplicates pages** — read-only review screens that do
   not mutate files. Use the Python desktop Cleanup Tools or Duplicate Finder
   for confirmation, Trash/quarantine, hard-link, move, and undo actions.
