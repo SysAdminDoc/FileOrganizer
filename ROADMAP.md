@@ -4,12 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-21: Version-aware dedup**
-If two items share a marketplace ID but have different file counts or fingerprints, one is likely
-a newer version. Keep the one with more files; archive the other with a reason note.
-
-- [ ] **Impact**: 3 | **Effort**: 2
-
 **NEXT-23: Drag-and-drop reclassification**
 Drag any item from one category to another in the Browse tab tree. Records the correction in
 `corrections.json` and increments a `user_corrections` counter in the DB. Same-fingerprint items

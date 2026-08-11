@@ -1,10 +1,14 @@
 """Tests for fileorganizer.version_dedup — NEXT-21 version-aware dedup."""
 import unittest
+from pathlib import Path
+
+import pytest
 
 from fileorganizer.version_dedup import (
     extract_marketplace_id, extract_version_hint,
     find_version_groups, pick_best_version, generate_archive_plan,
     VersionCandidate,
+    archive_version_candidate, scan_version_groups,
 )
 
 
@@ -75,6 +79,14 @@ class TestPickBestVersion(unittest.TestCase):
         best, _ = pick_best_version(candidates)
         self.assertEqual(best.path, "/b")
 
+    def test_file_count_beats_higher_version_hint(self):
+        candidates = [
+            VersionCandidate(path="/complete", marketplace_id="1", file_count=10, version_hint="1.0"),
+            VersionCandidate(path="/partial", marketplace_id="1", file_count=5, version_hint="2.0"),
+        ]
+        best, _ = pick_best_version(candidates)
+        self.assertEqual(best.path, "/complete")
+
 
 class TestGenerateArchivePlan(unittest.TestCase):
     def test_generates_plan(self):
@@ -89,6 +101,68 @@ class TestGenerateArchivePlan(unittest.TestCase):
 
     def test_empty_items(self):
         self.assertEqual(generate_archive_plan([]), [])
+
+    def test_identical_same_id_items_are_not_version_plan(self):
+        items = [
+            {"path": "/a", "folder_name": "22197897-copy-a", "file_count": 5, "fingerprint": "same"},
+            {"path": "/b", "folder_name": "22197897-copy-b", "file_count": 5, "fingerprint": "same"},
+        ]
+        self.assertEqual(generate_archive_plan(items), [])
+
+
+def _write_version(folder: Path, name: str, files: dict[str, str]) -> Path:
+    target = folder / name
+    target.mkdir(parents=True)
+    for relative, content in files.items():
+        path = target / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+    return target
+
+
+def test_scan_version_groups_hashes_and_filters_exact_copies(tmp_path):
+    library = tmp_path / "library"
+    _write_version(library, "22197897-v1", {"project.aep": "old"})
+    _write_version(library, "22197897-v2", {"project.aep": "new", "readme.txt": "new"})
+    _write_version(library, "99999999-copy-a", {"file.txt": "same"})
+    _write_version(library, "99999999-copy-b", {"file.txt": "same"})
+
+    groups = scan_version_groups([library])
+
+    assert set(groups) == {"22197897"}
+    assert {candidate.file_count for candidate in groups["22197897"]} == {1, 2}
+
+
+def test_archive_version_candidate_revalidates_keeper_and_source(tmp_path):
+    library = tmp_path / "library"
+    archive = tmp_path / "archive"
+    archive.mkdir()
+    keeper_path = _write_version(library, "22197897-v2", {"project.aep": "new", "readme.txt": "new"})
+    obsolete_path = _write_version(library, "22197897-v1", {"project.aep": "old"})
+    groups = scan_version_groups([library])
+    keeper, obsolete_candidates = pick_best_version(groups["22197897"])
+    obsolete = obsolete_candidates[0]
+
+    result = archive_version_candidate(keeper, obsolete, archive_root=archive, reason="fewer files")
+
+    assert result.status == "completed"
+    assert not obsolete_path.exists()
+    assert Path(result.destination, "project.aep").read_text(encoding="utf-8") == "old"
+    assert keeper_path.exists()
+
+
+def test_archive_version_candidate_rejects_stale_source(tmp_path):
+    library = tmp_path / "library"
+    archive = tmp_path / "archive"
+    archive.mkdir()
+    _write_version(library, "22197897-v2", {"project.aep": "new", "readme.txt": "new"})
+    obsolete_path = _write_version(library, "22197897-v1", {"project.aep": "old"})
+    keeper, obsolete_candidates = pick_best_version(scan_version_groups([library])["22197897"])
+    obsolete = obsolete_candidates[0]
+    (obsolete_path / "project.aep").write_text("changed", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="changed since it was scanned"):
+        archive_version_candidate(keeper, obsolete, archive_root=archive)
 
 
 if __name__ == "__main__":

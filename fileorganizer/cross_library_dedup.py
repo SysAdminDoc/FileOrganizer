@@ -248,13 +248,48 @@ def scan_cross_library(
     cancel_cb: Callable[[], bool] | None = None,
 ) -> list[CrossLibraryDuplicateGroup]:
     """Find exact folder duplicates whose members belong to distinct roots."""
+    records = scan_library_folders(
+        roots,
+        depth=depth,
+        max_folders=max_folders,
+        progress_cb=progress_cb,
+        cancel_cb=cancel_cb,
+    )
+    by_fingerprint: dict[str, list[FolderFingerprint]] = defaultdict(list)
+    for record in records:
+        by_fingerprint[record.fingerprint].append(record)
+
+    groups: list[CrossLibraryDuplicateGroup] = []
+    for fingerprint, members in by_fingerprint.items():
+        roots_for_group = {member.library_root for member in members}
+        if len(roots_for_group) < 2:
+            continue
+        groups.append(CrossLibraryDuplicateGroup(
+            fingerprint=fingerprint,
+            members=tuple(sorted(members, key=lambda item: (item.library_root, item.path))),
+        ))
+    groups.sort(key=lambda group: (group.members[0].path, group.fingerprint))
+    if progress_cb:
+        progress_cb(f"Cross-library scan complete: {len(records)} folders, {len(groups)} duplicate groups")
+    return groups
+
+
+def scan_library_folders(
+    roots: Iterable[str | os.PathLike[str]],
+    *,
+    depth: int = DEFAULT_SCAN_DEPTH,
+    max_folders: int = DEFAULT_MAX_FOLDERS,
+    progress_cb: Callable[[str], None] | None = None,
+    cancel_cb: Callable[[], bool] | None = None,
+) -> list[FolderFingerprint]:
+    """Return complete folder fingerprints from one or more library roots."""
     if isinstance(depth, bool) or not isinstance(depth, int) or depth < 1:
         raise ValueError("scan depth must be a positive integer")
     if isinstance(max_folders, bool) or not isinstance(max_folders, int) or max_folders < 1:
         raise ValueError("max_folders must be a positive integer")
 
     library_roots = _normalise_roots(roots)
-    by_fingerprint: dict[str, list[FolderFingerprint]] = defaultdict(list)
+    records: list[FolderFingerprint] = []
     scanned = 0
     for library_root in library_roots:
         for folder in _iter_candidate_folders(library_root, depth):
@@ -270,21 +305,8 @@ def scan_cross_library(
                 cancel_cb=cancel_cb,
             )
             if record:
-                by_fingerprint[record.fingerprint].append(record)
-
-    groups: list[CrossLibraryDuplicateGroup] = []
-    for fingerprint, members in by_fingerprint.items():
-        roots_for_group = {member.library_root for member in members}
-        if len(roots_for_group) < 2:
-            continue
-        groups.append(CrossLibraryDuplicateGroup(
-            fingerprint=fingerprint,
-            members=tuple(sorted(members, key=lambda item: (item.library_root, item.path))),
-        ))
-    groups.sort(key=lambda group: (group.members[0].path, group.fingerprint))
-    if progress_cb:
-        progress_cb(f"Cross-library scan complete: {scanned} folders, {len(groups)} duplicate groups")
-    return groups
+                records.append(record)
+    return sorted(records, key=lambda record: (record.library_root, record.path))
 
 
 def _unique_destination(path: str) -> str:
@@ -394,5 +416,6 @@ __all__ = [
     "apply_cross_library_action",
     "compute_folder_fingerprint",
     "folder_fingerprint",
+    "scan_library_folders",
     "scan_cross_library",
 ]
