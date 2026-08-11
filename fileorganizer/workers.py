@@ -807,6 +807,7 @@ class ScanLLMWorker(QThread):
                         'cleaned_name': cached.get('cleaned_name', folder.name), 'source_depth': 0,
                         'method': f"cached:{cached.get('method', '')}", 'detail': cached.get('detail', ''),
                         'topic': cached.get('topic'), 'llm_name': cached.get('cleaned_name'),
+                        'alternatives': cached.get('alternatives', []),
                     })
                     continue
 
@@ -822,6 +823,7 @@ class ScanLLMWorker(QThread):
                     'cleaned_name': clean_name, 'source_depth': 0,
                     'method': 'llm_name_cache', 'detail': name_cached.get('detail', ''),
                     'topic': None, 'llm_name': clean_name,
+                    'alternatives': name_cached.get('alternatives', []),
                 })
                 continue
 
@@ -845,6 +847,7 @@ class ScanLLMWorker(QThread):
                     'method': llm_result.get('method', 'llm'),
                     'detail': llm_result.get('detail', ''),
                     'topic': None, 'llm_name': clean_name,
+                    'alternatives': llm_result.get('alternatives', []),
                 })
             else:
                 llm_fail += 1

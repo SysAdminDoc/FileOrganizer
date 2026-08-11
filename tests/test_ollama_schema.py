@@ -233,3 +233,27 @@ def test_ollama_classify_visual_uses_pdf_sibling_preview(tmp_path, monkeypatch):
 
     assert result is not None
     assert result["metadata"]["preview"] == preview.name
+
+
+def test_ollama_folder_preserves_taxonomy_valid_runner_ups(monkeypatch):
+    monkeypatch.setattr(
+        ollama,
+        "_ollama_generate",
+        lambda *_args, **_kwargs: json.dumps({
+            "kind": "classification",
+            "name": "Summer Flyer",
+            "category": "Flyers & Print",
+            "confidence": 84,
+            "alternatives": [
+                {"category": "After Effects - Templates", "confidence": 42},
+                {"category": "not-a-category", "confidence": 90},
+            ],
+        }),
+    )
+
+    result = ollama.ollama_classify_folder("Summer Flyer")
+
+    assert result["category"] == "Flyers & Print"
+    assert result["alternatives"] == [
+        {"category": "After Effects - Templates", "confidence": 42}
+    ]

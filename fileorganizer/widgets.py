@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (
     QLabel, QLineEdit, QPushButton, QComboBox, QCheckBox, QTextEdit,
     QHeaderView, QFileDialog, QFrame, QScrollArea, QLayout, QLayoutItem,
     QDialog, QDialogButtonBox, QSpinBox, QListWidget, QListWidgetItem,
-    QSplitter, QWidgetItem
+    QSplitter, QWidgetItem, QProgressBar
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QTimer, QSize, QRunnable, QThreadPool, QObject, QRect, QFileSystemWatcher
 from PyQt6.QtGui import QColor, QPixmap, QImage, QIcon
@@ -574,6 +574,7 @@ class FilePreviewPanel(QWidget):
     """Split-view side panel showing image preview, text excerpt, metadata."""
 
     open_requested = pyqtSignal(str)  # filepath
+    override_requested = pyqtSignal(str)  # runner-up category
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -601,6 +602,13 @@ class FilePreviewPanel(QWidget):
         self.lbl_preview_meta.setWordWrap(True)
         self.lbl_preview_meta.setProperty("class", "meta")
         lay.addWidget(self.lbl_preview_meta)
+
+        self.classification_frame = QWidget()
+        self.classification_layout = QVBoxLayout(self.classification_frame)
+        self.classification_layout.setContentsMargins(0, 4, 0, 0)
+        self.classification_layout.setSpacing(4)
+        lay.addWidget(self.classification_frame)
+        self.classification_frame.hide()
 
         self.txt_preview_text = QTextEdit()
         self.txt_preview_text.setReadOnly(True)
@@ -633,12 +641,96 @@ class FilePreviewPanel(QWidget):
         lay.addStretch()
         self._current_path = ""
 
-    def show_file(self, filepath: str, metadata: dict = None):
+    def _set_classification(self, classification: dict | None):
+        while self.classification_layout.count():
+            entry = self.classification_layout.takeAt(0)
+            widget = entry.widget()
+            if widget is not None:
+                widget.deleteLater()
+        if not isinstance(classification, dict) or not classification.get('category'):
+            self.classification_frame.hide()
+            return
+
+        _t = self._t
+        heading = QLabel("Prediction confidence")
+        heading.setProperty("class", "subheading")
+        self.classification_layout.addWidget(heading)
+        records = [{
+            'category': str(classification.get('category', '')),
+            'confidence': classification.get('confidence', 0),
+            'current': True,
+        }]
+        seen = {records[0]['category']}
+        for alternative in classification.get('alternatives', []) or []:
+            if not isinstance(alternative, dict):
+                continue
+            category = str(alternative.get('category', '')).strip()
+            confidence = alternative.get('confidence')
+            if not category or category in seen or type(confidence) is not int:
+                continue
+            seen.add(category)
+            records.append({
+                'category': category,
+                'confidence': max(0, min(100, confidence)),
+                'current': False,
+            })
+
+        for record in records:
+            row = QHBoxLayout()
+            row.setContentsMargins(0, 0, 0, 0)
+            if record['current']:
+                label = QLabel(record['category'])
+                label.setToolTip("Current prediction")
+            else:
+                label = QPushButton(record['category'])
+                label.setToolTip("Click to override and remember this category")
+                label.setCursor(Qt.CursorShape.PointingHandCursor)
+                label.setStyleSheet(
+                    f"QPushButton {{ text-align:left; padding:0; border:none; "
+                    f"color:{_t['accent']}; background:transparent; }}"
+                    f"QPushButton:hover {{ color:{_t['accent_hover']}; }}"
+                )
+                label.clicked.connect(
+                    lambda _checked=False, category=record['category']:
+                    self.override_requested.emit(category)
+                )
+            label.setMinimumWidth(140)
+            label.setMaximumWidth(180)
+            row.addWidget(label)
+
+            bar = QProgressBar()
+            bar.setRange(0, 100)
+            bar.setValue(max(0, min(100, int(record['confidence'] or 0))))
+            bar.setFormat("%p%")
+            bar.setTextVisible(True)
+            bar.setFixedHeight(18)
+            chunk = _t['accent'] if record['current'] else _t['muted']
+            bar.setStyleSheet(
+                f"QProgressBar {{ background:{_t['input_bg']}; border:1px solid "
+                f"{_t['border']}; border-radius:3px; color:{_t['fg']}; "
+                f"text-align:center; font-size:10px; }}"
+                f"QProgressBar::chunk {{ background:{chunk}; border-radius:2px; }}"
+            )
+            row.addWidget(bar, 1)
+            self.classification_layout.addLayout(row)
+
+        if len(records) == 1:
+            hint = QLabel("No runner-up candidates returned")
+        else:
+            hint = QLabel("Click a runner-up to override and teach this correction")
+        hint.setWordWrap(True)
+        hint.setStyleSheet(f"color:{_t['muted']}; font-size:10px;")
+        self.classification_layout.addWidget(hint)
+        self.classification_frame.show()
+
+    def show_file(self, filepath: str, metadata: dict = None,
+                  classification: dict = None):
         """Display preview for a file."""
         self._current_path = filepath
         if not filepath or not os.path.exists(filepath):
             self.clear()
             return
+        self._set_classification(classification)
         name = os.path.basename(filepath)
         self.lbl_preview_name.setText(name)
         ext = os.path.splitext(name)[1].lower()
@@ -729,6 +821,7 @@ class FilePreviewPanel(QWidget):
         self.lbl_preview_img.setText("")
         self.lbl_preview_name.setText("")
         self.lbl_preview_meta.setText("")
+        self._set_classification(None)
         self.txt_preview_text.hide()
         self.txt_archive.hide()
 

@@ -28,6 +28,11 @@ from fileorganizer.naming import (
 # Pydantic model for structured JSON output (Ollama format parameter)
 try:
     from pydantic import BaseModel, Field, TypeAdapter
+
+    class ClassificationAlternative(BaseModel):
+        """One runner-up category shown in the review confidence panel."""
+        category: str = Field(..., description="Category from the provided list")
+        confidence: int = Field(..., ge=0, le=100, description="Estimated probability 0–100")
     
     class ClassificationResult(BaseModel):
         """Structured successful classification result."""
@@ -35,6 +40,10 @@ try:
         name: str = Field(..., description="Clean, English-translated project name")
         category: str = Field(..., description="Category from the provided list")
         confidence: int = Field(..., ge=0, le=100, description="Confidence 0–100")
+        alternatives: list[ClassificationAlternative] = Field(
+            default_factory=list,
+            description="Up to three runner-up categories and estimated probabilities",
+        )
     
     class ReviewResult(BaseModel):
         """Structured fallback when no category can be selected safely."""
@@ -62,6 +71,7 @@ try:
 except ImportError:
     HAS_PYDANTIC = False
     ClassifyResult = None
+    ClassificationAlternative = None
     _CLASSIFY_RESULT_ADAPTER = None
 
     def classify_result_json_schema() -> dict:
@@ -558,6 +568,31 @@ def _find_vision_model(url: str = None, auto_upgrade: bool = False) -> str:
     return best_installed
 
 
+def _normalise_alternatives(raw, current_category: str,
+                            category_list: list[str]) -> list[dict]:
+    """Keep only bounded, taxonomy-valid runner-up probability entries."""
+    if isinstance(raw, dict):
+        raw = [raw]
+    if not isinstance(raw, list):
+        return []
+    valid = set(category_list)
+    out = []
+    seen = {current_category}
+    for entry in raw:
+        if not isinstance(entry, dict):
+            continue
+        category = entry.get('category')
+        confidence = entry.get('confidence')
+        if category in seen or category not in valid or type(confidence) is not int:
+            continue
+        if not 0 <= confidence <= 100:
+            continue
+        seen.add(category)
+        out.append({'category': category, 'confidence': confidence})
+    out.sort(key=lambda value: (-value['confidence'], value['category'].casefold()))
+    return out[:3]
+
+
 def _prepare_image_base64(file_path: str, max_pixels: int = 1024) -> str:
     """Open an image, resize if needed, JPEG-encode, and return base64 string.
     Returns empty string on failure."""
@@ -1003,7 +1038,7 @@ def _build_llm_system_prompt() -> str:
         "'business-card' it's a business card. If there are .aep files, it's an After Effects template. "
         "If there are .psd files with topic names like 'Night Club', it's likely a flyer.\n\n"
         "Respond ONLY with valid JSON, no other text:\n"
-        '{"kind": "classification", "name": "Clean Project Name", "category": "Exact Category Name", "confidence": 85}\n'
+        '{"kind": "classification", "name": "Clean Project Name", "category": "Exact Category Name", "confidence": 85, "alternatives": [{"category": "Runner-up Category", "confidence": 45}]}\n'
         'If no category is safe, return {"kind": "review", "name": "Clean Project Name", "category": "_Review", "confidence": 0, "reason": "short reason"}.\n\n'
         "VALID CATEGORIES (pick exactly one):\n"
         f"{cat_list}"
@@ -1016,7 +1051,7 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
     """Use Ollama LLM to classify and rename a folder.
     Returns dict: {name, category, confidence, method, detail} or empty on failure."""
     result = {'name': None, 'category': None, 'confidence': 0,
-              'method': 'llm', 'detail': ''}
+              'method': 'llm', 'detail': '', 'alternatives': []}
     from fileorganizer.adaptive_corrector import (
         AdaptiveCorrector,
         build_adaptive_system_prompt,
@@ -1186,6 +1221,9 @@ def ollama_classify_folder(folder_name: str, folder_path: str = None,
                 category = None
 
         if category:
+            result['alternatives'] = _normalise_alternatives(
+                parsed.get('alternatives'), category, valid_cats
+            )
             result['name'] = clean_name or folder_name
             result['category'] = category
             result['confidence'] = min(max(confidence, 30), 95)
@@ -1256,7 +1294,7 @@ def ollama_classify_batch(folders: list, url: str = None, model: str = None) -> 
         _build_llm_system_prompt().rstrip() +
         f"\n\nYou are processing {len(folders)} folders in a batch. "
         "Respond ONLY with a JSON object in this exact format:\n"
-        f'{{"results": [{{"name":"...", "category":"...", "confidence":85}}, ...]}}\n'
+        f'{{"results": [{{"name":"...", "category":"...", "confidence":85, "alternatives":[{{"category":"...", "confidence":45}}]}}, ...]}}\n'
         f"The 'results' array must have exactly {len(folders)} entries, one per folder, IN ORDER.\n"
         "No other text, no markdown, no explanation."
     )
@@ -1284,7 +1322,8 @@ def ollama_classify_batch(folders: list, url: str = None, model: str = None) -> 
     }
 
     empty = [{'name': None, 'category': None, 'confidence': 0,
-               'method': 'llm', 'detail': 'batch:not_run'} for _ in folders]
+               'method': 'llm', 'detail': 'batch:not_run', 'alternatives': []}
+             for _ in folders]
 
     try:
         data = json.dumps(payload).encode('utf-8')
@@ -1316,7 +1355,8 @@ def ollama_classify_batch(folders: list, url: str = None, model: str = None) -> 
         for i, f in enumerate(folders):
             if i >= len(parsed):
                 out.append({'name': None, 'category': None, 'confidence': 0,
-                             'method': 'llm', 'detail': 'batch:missing_result'})
+                             'method': 'llm', 'detail': 'batch:missing_result',
+                             'alternatives': []})
                 continue
             p = parsed[i]
             clean_name = str(p.get('name', '') or '').strip()
@@ -1345,6 +1385,9 @@ def ollama_classify_batch(folders: list, url: str = None, model: str = None) -> 
                     'confidence': min(max(confidence, 30), 95),
                     'method': 'llm_batch',
                     'detail': f"llm_batch:{model}→{category}",
+                    'alternatives': _normalise_alternatives(
+                        p.get('alternatives'), category, valid_cats
+                    ),
                 }
                 # Reject over-stripped names (same logic as single classify)
                 if clean_name and _is_generic_name(clean_name, category):
@@ -1354,7 +1397,9 @@ def ollama_classify_batch(folders: list, url: str = None, model: str = None) -> 
                 out.append(res)
             else:
                 out.append({'name': None, 'category': None, 'confidence': 0,
-                             'method': 'llm_batch', 'detail': f"batch:invalid_category:{p.get('category','')}"})
+                             'method': 'llm_batch',
+                             'detail': f"batch:invalid_category:{p.get('category','')}",
+                             'alternatives': []})
 
         return out
 

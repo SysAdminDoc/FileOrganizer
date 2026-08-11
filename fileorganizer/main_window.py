@@ -937,6 +937,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self._content_splitter.addWidget(left_content)
 
         self.preview_panel = FilePreviewPanel()
+        self.preview_panel.override_requested.connect(self._on_preview_override)
         self.preview_panel.hide()
         self._content_splitter.addWidget(self.preview_panel)
         self._content_splitter.setSizes([800, 300])
@@ -1312,6 +1313,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                     it.confidence = r.get('confidence', 0)
                     it.method = r.get('method', 'llm')
                     it.detail = r.get('detail', '')
+                    it.alternatives = r.get('alternatives', []) or []
                     it.cleaned_name = r.get('cleaned_name', it.cleaned_name)
                     # Update table cells using visual row
                     di = self.tbl.item(visual_row, 3)
@@ -1335,6 +1337,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                     it.confidence = r.get('confidence', 0)
                     it.method = r.get('method', 'llm')
                     it.detail = r.get('detail', '')
+                    it.alternatives = r.get('alternatives', []) or []
                     ci = self.tbl.item(visual_row, 5)
                     cat_color = next((c.get('color', '#4ade80') for c in self._pc_categories
                                       if c['name'] == it.category), '#4ade80')
@@ -1407,6 +1410,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         item.method = 'Manual'
         item.detail = detail
         item.topic = ''
+        item.alternatives = []
         destination_name = item.cleaned_name or item.folder_name
         item.full_dest_path = os.path.join(
             self.txt_dst.text(), new_category, destination_name
@@ -1435,6 +1439,9 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             method_item.setText("Manual")
             method_item.setForeground(QColor(_rt['accent_hover']))
             method_item.setToolTip(detail)
+
+        if self.btn_preview_toggle.isChecked() and self.tbl.currentRow() == row:
+            self._on_row_selected(row, 0, -1, -1)
 
     def _reassign_category(self, row):
         """Reassign a single cat_item. `row` is visual table row."""
@@ -3098,6 +3105,25 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
                 self._tray.hide()
 
     # ═══ FILE PREVIEW PANEL ═════════════════════════════════════════════════
+    def _on_preview_override(self, new_category: str):
+        """Apply a clicked runner-up category and persist it as a correction."""
+        if self.cmb_op.currentIndex() not in (self.OP_CAT, self.OP_SMART):
+            return
+        row = self.tbl.currentRow()
+        if row < 0:
+            return
+        idx = self._item_idx_from_row(row)
+        if idx < 0 or idx >= len(self.cat_items):
+            return
+        item = self.cat_items[idx]
+        if not new_category or new_category == item.category:
+            return
+        self._apply_category_correction(
+            row, item, new_category, 'Preview runner-up override'
+        )
+        self._log(f"  Preview override: {item.folder_name}  ->  {new_category}")
+        self._stats_cat()
+
     def _on_row_selected(self, row, col, prev_row, prev_col):
         """Called when the user clicks a table row — update preview panel."""
         if not self.btn_preview_toggle.isChecked():
@@ -3110,7 +3136,16 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             it = self.file_items[idx]
             self.preview_panel.show_file(it.full_src, it.metadata if it.metadata else {})
         elif op in (self.OP_CAT, self.OP_SMART) and 0 <= idx < len(self.cat_items):
-            self.preview_panel.show_file(self.cat_items[idx].full_source_path, {})
+            it = self.cat_items[idx]
+            self.preview_panel.show_file(
+                it.full_source_path,
+                {},
+                {
+                    'category': it.category,
+                    'confidence': it.confidence,
+                    'alternatives': it.alternatives,
+                },
+            )
         else:
             self.preview_panel.clear()
 

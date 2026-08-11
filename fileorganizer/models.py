@@ -30,6 +30,7 @@ class CategorizeItem:
         self.method = ""        # classification method: extension, keyword, fuzzy, metadata, context
         self.detail = ""        # human-readable detail of how it was classified
         self.topic = ""         # original topic if context engine overrode it
+        self.alternatives = []  # runner-up categories with model probabilities
         self.tbl_row = -1      # actual QTableWidget row index
 
 
@@ -48,6 +49,7 @@ class FileItem:
         self.confidence   = 0
         self.method       = ""
         self.detail       = ""
+        self.alternatives = []
         self.size         = 0        # bytes (0 for folders)
         self.is_folder    = False
         self.is_duplicate = False
