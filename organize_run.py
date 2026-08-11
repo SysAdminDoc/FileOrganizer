@@ -37,6 +37,7 @@ from fileorganizer.path_safety import (
 from fileorganizer.folder_cache import FolderCache, should_skip_folder
 from fileorganizer.rule_chains import RuleChainManager
 from fileorganizer.batch_rename import CANONICAL_TEMPLATE, render_name
+from fileorganizer.xmp_sidecar import write_classification_sidecar
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DEST_PRIMARY     = r'G:\Organized'
@@ -1941,6 +1942,7 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
     category_counts = defaultdict(int)
     error_log = []
     already_moved = journal_src_set()
+    xmp_unavailable_logged = False
 
     # A persisted plan is untrusted input.  Validate every item, including
     # source identity and both roots, before the first item can mutate disk.
@@ -2007,6 +2009,27 @@ def apply_move_plan(plan: MovePlan | dict, dry_run: bool = False,
             if not os.path.exists(src):
                 raise FileNotFoundError(f"Source missing: {src}")
             _move_plan_item(item, plan_data)
+            if item.get('is_file_item'):
+                try:
+                    sidecar = write_classification_sidecar(
+                        dest,
+                        category=category,
+                        confidence=item.get('confidence', 0),
+                        method=item.get('method', ''),
+                        detail=item.get('detail', ''),
+                        metadata=item.get('metadata'),
+                    )
+                    if sidecar.status == 'written':
+                        log(f"    [XMP] Wrote {os.path.basename(sidecar.sidecar_path)}")
+                    elif sidecar.status == 'failed':
+                        log(f"    [XMP] Skipped: {sidecar.detail}")
+                    elif sidecar.status == 'unavailable' and not xmp_unavailable_logged:
+                        log(f"    [XMP] Sidecars unavailable: {sidecar.detail}")
+                        xmp_unavailable_logged = True
+                except Exception as exc:
+                    # Provenance is optional; a tool failure must not turn a
+                    # completed move into a failed journal entry.
+                    log(f"    [XMP] Skipped: {exc}")
             journal_update(move_id, 'done')
             already_moved.add(src)
             moved += 1

@@ -4,6 +4,7 @@ from __future__ import annotations
 import importlib.util
 import os
 import shutil
+import subprocess
 import sys
 from dataclasses import dataclass
 from importlib.metadata import PackageNotFoundError, version as distribution_version
@@ -151,6 +152,13 @@ SPECS: tuple[CapabilitySpec, ...] = (
                    "Generic audio tags", "Install the pinned requirements file."),
     CapabilitySpec("metadata", "video_metadata", (Requirement("ffprobe", binary="ffprobe"),),
                    "Generic video stream and container metadata", "Install FFmpeg and put ffprobe on PATH."),
+    CapabilitySpec(
+        "metadata", "xmp_sidecar_write",
+        (Requirement("PyExifTool", "exiftool", "PyExifTool"),
+         Requirement("ExifTool >=12.15", binary="exiftool")),
+        "Write IPTC 2025.1 AI provenance and standard XMP fields to sidecars",
+        "Install PyExifTool==0.5.6 and ExifTool 12.15 or newer on PATH.",
+    ),
     CapabilitySpec("metadata", "pdf_metadata", (Requirement("pypdf", "pypdf", "pypdf"),),
                    "Generic PDF metadata", "Install the pinned requirements file."),
     CapabilitySpec("metadata", "docx_metadata", (Requirement("python-docx", "docx", "python-docx"),),
@@ -193,7 +201,44 @@ def _binary_path(binary: str) -> str | None:
 
 
 def _binary_version(path: str) -> str:
+    if Path(path).stem.casefold() == "exiftool":
+        available, detail = _probe_exiftool_binary(path)
+        return detail if available else f"not usable ({detail})"
     return f"detected ({Path(path).name}; version query not run)"
+
+
+def _probe_exiftool_binary(path: str) -> tuple[bool, str]:
+    """Check the minimum ExifTool version without opening a console window."""
+    try:
+        kwargs: dict[str, Any] = {
+            "capture_output": True,
+            "text": True,
+            "encoding": "utf-8",
+            "errors": "replace",
+            "timeout": 3,
+            "check": False,
+        }
+        if os.name == "nt":
+            kwargs["creationflags"] = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+        completed = subprocess.run([path, "-ver"], **kwargs)
+    except (OSError, subprocess.SubprocessError) as exc:
+        return False, f"query failed: {exc}"
+    raw = (completed.stdout or completed.stderr or "").strip()
+    version_text = raw.splitlines()[0].strip() if raw else "unknown"
+    try:
+        from fileorganizer.xmp_sidecar import MIN_EXIFTOOL_VERSION, parse_exiftool_version
+        parsed = parse_exiftool_version(version_text)
+        minimum = MIN_EXIFTOOL_VERSION
+        width = max(len(parsed or ()), len(minimum))
+        meets_minimum = parsed is not None and (
+            tuple(parsed) + (0,) * (width - len(parsed))
+            >= tuple(minimum) + (0,) * (width - len(minimum))
+        )
+    except (ImportError, TypeError, ValueError):
+        meets_minimum = False
+    if completed.returncode != 0:
+        return False, f"{version_text} (version query exited {completed.returncode})"
+    return meets_minimum, f"{version_text} (minimum 12.15)"
 
 
 def _probe_requirement(requirement: Requirement) -> tuple[bool, str]:
@@ -201,7 +246,12 @@ def _probe_requirement(requirement: Requirement) -> tuple[bool, str]:
         return True, f"Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     if requirement.binary:
         path = _binary_path(requirement.binary)
-        return (True, _binary_version(path)) if path else (False, "not detected")
+        if not path:
+            return False, "not detected"
+        if requirement.binary == "exiftool":
+            available, detail = _probe_exiftool_binary(path)
+            return available, detail
+        return True, _binary_version(path)
     if requirement.module and _module_available(requirement.module):
         return True, _package_version(requirement.distribution or requirement.module)
     return False, "not installed"

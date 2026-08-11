@@ -36,6 +36,7 @@ magika
 python-magic-bin
 # NEXT-43: ExifTool integration — 800+ format support via Python wrapper.
 # Supplements N-9 extractors on formats with <50% confidence.
+PyExifTool==0.5.6
 piexif
 # NEXT-55: Windows Runtime FileProperties metadata for image/audio/video.
 # Pulls the PyWinRT runtime and namespace projections on Windows only.

@@ -6,6 +6,10 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Added optional IPTC 2025.1 AI provenance XMP sidecars for successful file
+  applies and CLI move plans. The ExifTool/PyExifTool capability is reported
+  before use, never rewrites the source asset, and fails closed when tooling is
+  missing or cannot create the companion file.
 - Added a journal-backed Move History view with timestamped organize/action
   rows, confidence, source/destination details, per-item undo, and guarded
   per-run undo that refuses changed destinations.
