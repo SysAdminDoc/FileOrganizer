@@ -146,6 +146,22 @@ def test_title_bar_palette_tracks_live_theme_and_activation_changes():
         assert f"titleBar.{title_bar_state} = palette." in window
 
 
+def test_main_window_uses_winappsdk_mica_backdrop_as_a_shell_element():
+    window = (REPO_ROOT / "src/FileOrganizer.UI/Views/MainWindow.xaml").read_text(
+        encoding="utf-8"
+    )
+    project = (REPO_ROOT / "src/FileOrganizer.UI/FileOrganizer.UI.csproj").read_text(
+        encoding="utf-8"
+    )
+
+    assert 'PackageReference Include="Microsoft.WindowsAppSDK" Version="2.0.1"' in project
+    assert 'xmlns:media="using:Microsoft.UI.Xaml.Media"' in window
+    assert '<controls:SystemBackdropElement x:Name="ShellBackdrop"' in window
+    assert '<controls:SystemBackdropElement.SystemBackdrop>' in window
+    assert '<media:MicaBackdrop/>' in window
+    assert 'Background="Transparent"' in window
+
+
 def test_every_title_bar_palette_has_readable_icon_contrast():
     source = (REPO_ROOT / "src/FileOrganizer.UI/Services/ThemeService.cs").read_text(
         encoding="utf-8"
