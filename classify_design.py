@@ -573,6 +573,23 @@ def build_prompt(
             if use_filenames:
                 hints.append(f"contains: {' | '.join(filenames[:3])}")
 
+        metadata_hint = item.get("_metadata_hint")
+        if isinstance(metadata_hint, dict):
+            raw = metadata_hint.get("raw") or {}
+            try:
+                raw_text = json.dumps(raw, sort_keys=True, default=str)
+            except (TypeError, ValueError):
+                raw_text = str(raw)
+            # Keep technical metadata useful to the provider without allowing
+            # an unusually large manifest or probe response to dominate a batch.
+            raw_text = raw_text[:1200]
+            metadata_text = (
+                f"metadata: {metadata_hint.get('category', 'unknown')} "
+                f"({metadata_hint.get('confidence', 0)}%); "
+                f"{metadata_hint.get('reason', '')}; raw={raw_text}"
+            )
+            hints.append(metadata_text)
+
         hint_str = f"  [{'; '.join(hints)}]" if hints else ''
 
         entry_lines = [f"{i}. {name}{hint_str}"]
@@ -946,11 +963,12 @@ def cmd_show_cats():
 def _try_metadata_classify(batch_items: list[dict]) -> dict[int, dict]:
     """Stage 1: zero-AI metadata-driven classification.
 
-    Reads file content (PSD canvas, font name table, audio duration, video
-    aspect/codec) via the fileorganizer.metadata_extractors package. Only
+    Reads file content (PSD canvas, font name table, audio duration, MOGRT
+    manifests, and video aspect/codec/routing) via the
+    fileorganizer.metadata_extractors package. Only
     items resolved at confidence >= _METADATA_HARDROUTE_THRESHOLD (90) skip
-    downstream stages. Lower-confidence hints are dropped silently so
-    marketplace + embeddings + AI keep their say.
+    downstream stages. Lower-confidence hints are retained as bounded context
+    for the prompt so marketplace + embeddings + AI can use their signals.
 
     Categories are validated against the runtime category set — a phantom hint is
     rejected before it can land in the batch JSON.
@@ -972,6 +990,13 @@ def _try_metadata_classify(batch_items: list[dict]) -> dict[int, dict]:
             hint = None
         if hint is None:
             continue
+        item["_metadata_hint"] = {
+            "category": hint.category,
+            "confidence": int(hint.confidence),
+            "extractor": hint.extractor,
+            "reason": hint.reason,
+            "raw": dict(hint.raw or {}),
+        }
         if hint.confidence < _METADATA_HARDROUTE_THRESHOLD:
             continue
         if hint.category not in category_set:

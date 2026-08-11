@@ -21,7 +21,14 @@ from pathlib import Path
 from typing import Optional
 
 from ._types import MetadataHint
-from . import aep_extractor, psd_extractor, font_extractor, audio_extractor, video_extractor
+from . import (
+    aep_extractor,
+    psd_extractor,
+    font_extractor,
+    audio_extractor,
+    video_extractor,
+    mogrt_extractor,
+)
 
 __all__ = [
     "MetadataHint",
@@ -32,6 +39,7 @@ __all__ = [
     "font_extractor",
     "audio_extractor",
     "video_extractor",
+    "mogrt_extractor",
 ]
 
 
@@ -39,6 +47,8 @@ __all__ = [
 _EXT_DISPATCH = {
     # After Effects
     ".aep": aep_extractor,
+    # Premiere Motion Graphics Templates
+    ".mogrt": mogrt_extractor,
     # PSD / Photoshop
     ".psd": psd_extractor,
     ".psb": psd_extractor,
@@ -124,10 +134,11 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
 
     Priority:
       1. If any .aep — return the best-scored project file.
-      2. Else if any .ttf/.otf — return the first (font folder).
-      3. Else if any .psd/.psb — return the largest (PSD bundle).
-      4. Else if any video — return the largest.
-      5. Else if any audio — return the largest.
+      2. Else if any .mogrt — return the first manifest-bearing template.
+      3. Else if any .ttf/.otf — return the first (font folder).
+      4. Else if any .psd/.psb — return the largest (PSD bundle).
+      5. Else if any video — return the largest.
+      6. Else if any audio — return the largest.
     """
     try:
         files = [p for p in folder.iterdir() if p.is_file()]
@@ -154,6 +165,9 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
     aep = _best_aep_file(folder, files, ext_hint)
     if aep is not None:
         return aep
+    mogrt = first_with_ext({".mogrt"})
+    if mogrt is not None:
+        return mogrt
     font = first_with_ext({".ttf", ".otf", ".ttc", ".woff", ".woff2"})
     if font is not None:
         return font

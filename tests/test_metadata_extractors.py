@@ -10,10 +10,10 @@ These tests cover:
 """
 from __future__ import annotations
 
-import os
+import json
 import sys
-import tempfile
 import types
+import zipfile
 from pathlib import Path
 from unittest import mock
 
@@ -77,6 +77,49 @@ def test_extract_for_path_rejects_unknown_extension(tmp_path):
     f = tmp_path / "data.xyz"
     f.write_bytes(b"\x00")
     assert extract_for_path(f) is None
+
+
+def _write_mogrt(path: Path, manifest: dict) -> None:
+    with zipfile.ZipFile(path, "w") as archive:
+        archive.writestr("Manifest.json", json.dumps(manifest))
+
+
+def test_mogrt_extractor_routes_manifest_signals(tmp_path):
+    path = tmp_path / "lower-third.mogrt"
+    _write_mogrt(
+        path,
+        {
+            "templateName": "Modern Lower Third",
+            "parameters": [
+                {"name": "Title"},
+                {"name": "Subtitle"},
+                {"name": "Accent Color"},
+            ],
+            "requiredFonts": ["Montserrat", "Roboto"],
+        },
+    )
+
+    hint = extract_for_path(path)
+
+    assert hint is not None
+    assert hint.category == "Premiere Pro - Title & Typography"
+    assert hint.confidence >= 90
+    assert hint.extractor == "mogrt"
+    assert hint.raw["parameter_count"] == 3
+    assert hint.raw["font_count"] == 2
+    assert extract_for_path(path) == hint
+
+
+def test_select_primary_file_prefers_mogrt_over_font(tmp_path):
+    from fileorganizer.metadata_extractors import _select_primary_file
+
+    folder = tmp_path / "template"
+    folder.mkdir()
+    mogrt = folder / "template.mogrt"
+    _write_mogrt(mogrt, {"templateName": "Editable Pack"})
+    (folder / "Montserrat.ttf").write_bytes(b"font")
+
+    assert _select_primary_file(folder, []) == mogrt
 
 
 def _write_minimal_aep(path: Path, payload: bytes) -> None:
@@ -623,3 +666,44 @@ def test_video_extractor_vertical_routes_below_threshold(tmp_path, monkeypatch):
     hint = video_extractor.extract(f)
     assert hint is not None
     assert hint.confidence < 90  # informational only — downstream stages run
+
+
+def test_video_extractor_attaches_deep_routing_signals(tmp_path, monkeypatch):
+    from fileorganizer.video_routing import VideoRoutingMetadata
+
+    monkeypatch.setattr(video_extractor, "_FFPROBE", "ffprobe")
+    monkeypatch.setattr(video_extractor.winrt_metadata, "extract", lambda *_a, **_k: {})
+    called = {}
+
+    def fake_analyze(file_path, codec_info):
+        called.update(file_path=file_path, codec_info=codec_info)
+        return VideoRoutingMetadata(
+            suggested_category="High-Performance Clips",
+            confidence=0.8,
+            codec_family="hevc",
+            is_high_performance=True,
+            is_broadcast_fps=True,
+            has_audio=True,
+        )
+
+    monkeypatch.setattr(video_extractor, "analyze_video_metadata", fake_analyze)
+    completed = mock.MagicMock()
+    completed.returncode = 0
+    completed.stdout = (
+        '{"streams":[{"codec_type":"video","codec_name":"hevc",'
+        '"width":3840,"height":2160,"r_frame_rate":"60000/1001"},'
+        '{"codec_type":"audio","codec_name":"aac"}],'
+        '"format":{"duration":"30.0","bit_rate":"12000000"}}'
+    )
+    monkeypatch.setattr(video_extractor.subprocess, "run", lambda *a, **k: completed)
+
+    path = tmp_path / "4k60.mp4"
+    path.write_bytes(b"placeholder")
+    hint = video_extractor.extract(path)
+
+    assert hint is not None
+    assert called["file_path"] == str(path)
+    assert called["codec_info"]["frame_rate"] == pytest.approx(60000 / 1001)
+    assert hint.raw["routing"]["is_high_performance"] is True
+    assert hint.raw["routing"]["is_broadcast_fps"] is True
+    assert hint.raw["routing_hints"]["category_signals"] == ["High-Performance Clips"]

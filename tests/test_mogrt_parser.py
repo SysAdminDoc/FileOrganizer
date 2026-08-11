@@ -5,7 +5,6 @@ import json
 import os
 import tempfile
 import zipfile
-from pathlib import Path
 
 from fileorganizer.mogrt_parser import (
     parse_mogrt, batch_parse_mogrt, is_mogrt_file, extract_mogrt_fonts,
@@ -91,7 +90,9 @@ def test_parse_mogrt_valid(sample_mogrt_file):
     assert metadata is not None
     assert metadata['name'] == 'Cool Title Template'
     assert 'Title' in metadata['parameters']
+    assert metadata['parameter_count'] == 3
     assert 'Montserrat' in metadata['required_fonts']
+    assert metadata['font_count'] == 2
     assert metadata['min_premiere_version'] == '2024.0'
     assert metadata['duration'] == 3.0
     assert metadata['has_preview'] is True
@@ -104,7 +105,9 @@ def test_parse_mogrt_minimal(sample_mogrt_minimal):
     assert metadata is not None
     assert metadata['name'] == 'Simple Title'
     assert metadata['parameters'] == []
+    assert metadata['parameter_count'] == 0
     assert metadata['required_fonts'] == []
+    assert metadata['font_count'] == 0
 
 
 def test_parse_mogrt_invalid(invalid_mogrt_file):

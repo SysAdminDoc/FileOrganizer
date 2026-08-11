@@ -6,6 +6,11 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- MOGRT manifests now route through canonical Premiere categories using editable
+  parameter counts, required-font evidence, and title/transition/social signals;
+  the same metadata is retained by the legacy folder classifier. Video metadata
+  now also carries deep FFmpeg routing flags such as vertical format, broadcast
+  codec/frame rate, looping clips, and 4K/60fps signals into provider prompts.
 - Saved scan profiles can now be registered from WinUI Settings or the
   `--schedule` CLI with daily, weekly, monthly, and logon cadences. One
   cross-platform scheduler writes atomic state, launches a hidden/offscreen
