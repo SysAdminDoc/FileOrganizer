@@ -4,22 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-72: KV-cache optimization for batch LLM inference**
-Implement KV-cache reuse and streaming decoding for the Ollama/llama.cpp classify loop. When
-classifying 50+ files in a batch, KV-cache (key-value pairs computed during forward pass) is discarded
-between files — wasteful for similar-context sequences. Use `llama.cpp` native KV-cache persistence
-(via `cache_tokens` API) across sequential documents with similar metadata structure. Expected **30–40%
-throughput gain** on typical 100-file batches (e.g., 50 sec → 35 sec). Implement "cache invalidation"
-trigger on user-input context change (e.g., user overrides a category mid-batch). This is a **low-effort,
-high-impact** optimization; llama.cpp exposes the API directly. Pairs with NEXT-68 watch mode for
-overnight batch re-classification.
-
-- [ ] **Impact**: 4 | **Effort**: 2 | **Tier**: NEXT | **Depends on**: NEXT-71 | **Unblocks**: NEXT-73
-
-- [ ] Source: [S142] llama.cpp KV-cache persistence docs https://github.com/ggerganov/llama.cpp#kv-cache-reuse-strategy
-   (40% speedup on sequential document classification documented);
-   [S143] FileOrganizer ollama.py batch loop (lines 973–1100) currently discards cache between invocations
-
 **NEXT-73: Structured audit logging with loguru + JSON sink**
 Replace stdlib `logging` with `loguru` (v0.7.2+, March 2026). Implement dual-sink strategy:
 (1) **Console sink** — colorized, human-readable (dev mode); (2) **JSON file sink** — structured logs

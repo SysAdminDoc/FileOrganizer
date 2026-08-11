@@ -70,6 +70,10 @@ Current shell boundaries:
   llama.cpp Qwen multimodal CLI. It accepts user-supplied GGUF/mmproj files,
   emits OCR/classification evidence over NDJSON, and fails closed when the
   binary is unavailable; it never downloads models or sends files remotely.
+- Set `FILEORGANIZER_LLAMA_SERVER_URL` to a loopback `llama-server` endpoint
+  to enable prompt-prefix KV-cache reuse for Ollama-compatible batch
+  classification. The cache is invalidated when the model, system prompt, or
+  `FILEORGANIZER_LLM_CONTEXT_REVISION` changes; Ollama remains the fallback.
 
 ## Get FileOrganizer
 
@@ -496,6 +500,12 @@ and configure `FILEORGANIZER_LLAMA_CLI` when the llama.cpp executable is not on
 `PATH`. The classifier only accepts bounded, taxonomy-constrained JSON and
 stores OCR/model evidence in the asset fingerprint database when a record ID
 is supplied to `vlm_run.py`.
+
+For text batch prompt caching, run a local `llama-server` with its
+OpenAI-compatible endpoint and set `FILEORGANIZER_LLAMA_SERVER_URL` (for
+example, `http://127.0.0.1:8080`). This path sends `cache_prompt` requests only
+to loopback and can be explicitly invalidated by changing
+`FILEORGANIZER_LLM_CONTEXT_REVISION` after a category or user-context change.
 
 ## Project Planning
 

@@ -6,6 +6,9 @@ All notable changes to FileOrganizer will be documented in this file.
 
 ### Added
 
+- Added an opt-in loopback llama-server batch transport with prompt-prefix
+  `cache_prompt` reuse, stable slots, context-revision invalidation, and safe
+  fallback to the existing Ollama endpoint.
 - Added an opt-in local Qwen2.5-VL/llama.cpp sidecar for low-confidence image
   and diagram classification, bounded OCR evidence, and optional persistence
   of the model output in asset records. Missing binaries and malformed model
