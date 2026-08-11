@@ -21,6 +21,15 @@ def _valid(name="Demo Pack"):
     }
 
 
+def _valid_file_type(name="Demo Pack"):
+    return {
+        "name": name,
+        "file_type": "After Effects",
+        "confidence": 91,
+        "notes": "aep evidence",
+    }
+
+
 @pytest.mark.parametrize(
     "raw",
     [
@@ -69,6 +78,57 @@ def test_deepseek_item_schema_accepts_valid_result():
     )
 
     assert result == raw
+
+
+def test_file_type_prompt_is_context_light():
+    prompt = classify_design.build_file_type_prompt([
+        {"name": "Poster.psd", "path": "", "is_file": True, "file_ext": ".psd"},
+    ])
+
+    assert "file type: .psd" in prompt
+    assert "ALLOWED FILE TYPE LABELS" in prompt
+    assert "After Effects - Other" not in prompt
+
+
+def test_file_type_schema_guard_accepts_only_known_labels():
+    valid = classify_design._normalize_file_type_result(
+        _valid_file_type(), _item(), 0,
+    )
+    invalid = classify_design._normalize_file_type_result(
+        {**_valid_file_type(), "file_type": "not-a-type"}, _item(), 0,
+    )
+
+    assert valid["file_type"] == "After Effects"
+    assert invalid["file_type"] == "Unknown"
+    assert invalid["_retry_required"] is True
+
+
+def test_file_type_cache_uses_separate_model_key(monkeypatch, tmp_path):
+    folder = tmp_path / "asset"
+    folder.mkdir()
+    (folder / "project.aep").write_text("fixture", encoding="utf-8")
+    item = {"name": folder.name, "path": str(folder)}
+    stored = []
+
+    monkeypatch.setattr(classify_design, "lookup_cached", lambda *_args: None)
+    monkeypatch.setattr(
+        classify_design,
+        "call_deepseek_file_type",
+        lambda _prompt, items: [_valid_file_type(items[0]["name"])],
+    )
+    monkeypatch.setattr(
+        classify_design,
+        "store_cached",
+        lambda *args: stored.append(args) or True,
+    )
+
+    result = classify_design.call_deepseek_file_type_cached(
+        "full type prompt", [item], model="test-model",
+    )
+
+    assert result[0]["file_type"] == "After Effects"
+    assert stored[0][1] == "test-model:file-type-v1"
+    assert stored[0][2] == "full type prompt"
 
 
 class _FakeOpenAI:
@@ -177,6 +237,11 @@ def test_cmd_run_uses_parallel_cached_path(tmp_path, monkeypatch):
         "_try_embeddings_classify",
     ):
         monkeypatch.setattr(classify_design, name, lambda *args, **kwargs: {})
+    monkeypatch.setattr(
+        classify_design,
+        "call_deepseek_file_type_cached",
+        lambda _prompt, items, _model: [_valid_file_type(item["name"]) for item in items],
+    )
     calls = []
 
     def classify(items, **kwargs):
@@ -196,6 +261,45 @@ def test_cmd_run_uses_parallel_cached_path(tmp_path, monkeypatch):
     assert calls[0][1]['request_batch_size'] == 1
     payload = json.loads(classify_design.batch_file(1).read_text(encoding="utf-8"))
     assert [item['name'] for item in payload] == ["one", "two"]
+
+
+def test_cmd_run_passes_file_type_context_to_category_stage(tmp_path, monkeypatch):
+    monkeypatch.setattr(classify_design, "RESULTS_DIR", tmp_path)
+    monkeypatch.setattr(classify_design, "BATCH_PREFIX", "batch_")
+    monkeypatch.setattr(classify_design, "BATCH_SIZE", 1)
+    monkeypatch.setattr(classify_design, "DEEPSEEK_API_KEY", "test-key")
+    monkeypatch.setattr(classify_design, "cleanup_expired", lambda **_kwargs: 0)
+    for name in (
+        "_try_fingerprint_db_lookup",
+        "_try_metadata_classify",
+        "_try_marketplace_enrich",
+        "_try_embeddings_classify",
+    ):
+        monkeypatch.setattr(classify_design, name, lambda *args, **kwargs: {})
+    monkeypatch.setattr(
+        classify_design,
+        "call_deepseek_file_type_cached",
+        lambda _prompt, items, _model: [
+            {**_valid_file_type(item["name"]), "file_type": "Photoshop", "confidence": 88}
+            for item in items
+        ],
+    )
+    captured = {}
+
+    def classify(prompt, items, _model, _corrector=None):
+        captured["prompt"] = prompt
+        captured["items"] = items
+        return [_valid(item["name"]) for item in items]
+
+    monkeypatch.setattr(classify_design, "call_deepseek_cached", classify)
+
+    classify_design.cmd_run([_item("Poster")])
+
+    assert captured["items"][0]["_file_type"] == "Photoshop"
+    assert "stage 1 file type: Photoshop (88% confidence)" in captured["prompt"]
+    payload = json.loads(classify_design.batch_file(1).read_text(encoding="utf-8"))
+    assert payload[0]["_file_type"] == "Photoshop"
+    assert payload[0]["_file_type_confidence"] == 88
 
 
 def test_already_done_does_not_skip_retry_markers(tmp_path, monkeypatch):
@@ -238,6 +342,11 @@ def test_cmd_run_writes_retry_marker_instead_of_invalid_partial_batch(tmp_path, 
             name,
             lambda *args, **kwargs: {},
         )
+    monkeypatch.setattr(
+        classify_design,
+        "call_deepseek_file_type_cached",
+        lambda _prompt, items, _model: [_valid_file_type(item["name"]) for item in items],
+    )
     monkeypatch.setattr(
         classify_design,
         "call_deepseek_cached",

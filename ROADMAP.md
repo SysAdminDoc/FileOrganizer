@@ -4,16 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-14: Two-stage AI prompt (file type then subcategory)**
-Stage 1 asks "what file type is this template?" (AE/Premiere/PSD/AI/etc.) with zero context
-needed. Stage 2 uses the confirmed file type as context for a tighter subcategory prompt.
-Current single-stage approach conflates file-type detection with subcategory selection, causing
-cross-type misclassifications (e.g., a PSD classified as an After Effects template).
-
-- [ ] **Impact**: 4 | **Effort**: 2
-
-- [ ] Source: [S36] CLAUDE.md, existing `classify_design.py` analysis
-
 **NEXT-17: Marketplace enrichment expansion**
 Extend `marketplace_enrich.py` beyond Envato to: Creative Market (API available), Freepik (API
 key), Motion Array, FilterGrade, Shutterstock, Adobe Stock. Each needs a URL pattern + parser.
