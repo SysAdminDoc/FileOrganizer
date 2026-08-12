@@ -28,6 +28,9 @@ from fileorganizer.photos import (
 from fileorganizer.bootstrap import (
     HAS_REVERSE_GEOCODER, HAS_FACE_RECOGNITION, HAS_CV2
 )
+from fileorganizer.ocr import (
+    load_ocr_settings, save_ocr_settings, tesseract_available,
+)
 from fileorganizer.workers import (
     ModelListWorker, ModelPullWorker, ModelDeleteWorker, format_size,
     load_catalog_sync_state,
@@ -121,6 +124,7 @@ class OllamaSettingsDialog(QDialog):
         self.setMinimumSize(560, 520)
         self.setStyleSheet(get_active_stylesheet())
         self.settings = load_ollama_settings()
+        self.ocr_settings = load_ocr_settings()
         self._build_ui()
 
     def _build_ui(self):
@@ -288,6 +292,36 @@ class OllamaSettingsDialog(QDialog):
         self.chk_convert_webp.setChecked(self.settings.get('convert_webp_to_jpg', True))
         self.chk_convert_webp.setToolTip("Auto-convert .webp files to .jpg (quality 95) before classification")
         col4.addWidget(self.chk_convert_webp)
+
+        col4.addWidget(QLabel("Local OCR:"))
+        self.chk_ocr = QCheckBox("OCR screenshots and scanned PDFs")
+        self.chk_ocr.setChecked(self.ocr_settings.get('enabled', True))
+        if not tesseract_available():
+            self.chk_ocr.setToolTip(
+                "Tesseract OCR is not installed; OCR will be skipped until it is available."
+            )
+        else:
+            self.chk_ocr.setToolTip(
+                "Use local Tesseract OCR. Scanned PDFs also require Poppler's pdftoppm."
+            )
+        col4.addWidget(self.chk_ocr)
+        self.cmb_ocr_mode = QComboBox()
+        self.cmb_ocr_mode.addItem("Screenshots/scans only", "smart")
+        self.cmb_ocr_mode.addItem("All supported images", "always")
+        current_ocr_mode = self.ocr_settings.get('image_mode', 'smart')
+        mode_idx = self.cmb_ocr_mode.findData(current_ocr_mode)
+        self.cmb_ocr_mode.setCurrentIndex(mode_idx if mode_idx >= 0 else 0)
+        self.cmb_ocr_mode.setToolTip(
+            "Smart mode recognizes filenames such as Screenshot, Scan, Receipt, and Invoice."
+        )
+        col4.addWidget(self.cmb_ocr_mode)
+        ocr_lang_row = QHBoxLayout()
+        ocr_lang_row.addWidget(QLabel("Language:"))
+        self.txt_ocr_language = QLineEdit(self.ocr_settings.get('language', 'eng'))
+        self.txt_ocr_language.setPlaceholderText("eng or eng+spa")
+        self.txt_ocr_language.setToolTip("Tesseract language codes, for example eng or eng+spa")
+        ocr_lang_row.addWidget(self.txt_ocr_language)
+        col4.addLayout(ocr_lang_row)
         grid.addLayout(col4)
 
         layout.addLayout(grid)
@@ -451,6 +485,10 @@ class OllamaSettingsDialog(QDialog):
         self.settings['convert_heic_to_jpg'] = self.chk_convert_heic.isChecked()
         self.settings['convert_webp_to_jpg'] = self.chk_convert_webp.isChecked()
         save_ollama_settings(self.settings)
+        self.ocr_settings['enabled'] = self.chk_ocr.isChecked()
+        self.ocr_settings['image_mode'] = self.cmb_ocr_mode.currentData()
+        self.ocr_settings['language'] = self.txt_ocr_language.text().strip()
+        save_ocr_settings(self.ocr_settings)
         self.accept()
 
 

@@ -428,6 +428,17 @@ or `organize_run.py --source design --parallel` to classify pending batches
 before building the move plan; both accept `--concurrency` and
 `--request-batch-size` overrides.
 
+### Local OCR
+
+The legacy desktop **Settings → Ollama LLM → Local OCR** controls optionally
+run Tesseract on screenshot/scan images and scanned PDFs during import. OCR is
+local-only, bounded, and treated as untrusted file data before it is sent to a
+local LLM. Install [Tesseract OCR](https://github.com/tesseract-ocr/tesseract)
+for image OCR; scanned-PDF OCR additionally needs Poppler's `pdftoppm`.
+Use `FILEORGANIZER_TESSERACT` or `FILEORGANIZER_PDF_RENDERER` when the binaries
+are not on `PATH`. Missing optional tools fail closed and do not affect normal
+metadata extraction.
+
 Manual category changes and the rename dialog's **Correct Category** action are
 saved as adaptive corrections. An unchanged folder is classified from its
 fingerprint before cache, metadata, marketplace, embeddings, or provider work;

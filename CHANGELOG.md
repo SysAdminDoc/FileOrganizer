@@ -16,6 +16,9 @@ All notable changes to FileOrganizer will be documented in this file.
   panel for customizing core scan, apply, preview, undo, and navigation actions.
 - Added portable-mode data-root resolution: an empty `portable.flag` beside the
   app keeps settings, caches, databases, and logs in `FileOrganizerData`.
+- Added optional local Tesseract OCR during import for screenshot images and
+  scanned PDFs, with bounded Poppler rendering, persisted OCR settings, and
+  sanitized OCR context passed to local LLM classification.
 
 ## [v8.5.20] - 2026-08-11
 
