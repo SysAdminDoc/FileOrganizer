@@ -502,6 +502,7 @@ class MetadataExtractor:
     def capabilities() -> dict:
         """Return which extractors are available based on installed libraries."""
         has_winrt, _ = winrt_metadata.available()
+        from fileorganizer.ocr import pdf_ocr_available, tesseract_available
         return {
             'images':  HAS_PILLOW or HAS_EXIFREAD or has_winrt,
             'audio':   HAS_MUTAGEN or has_winrt,
@@ -509,6 +510,8 @@ class MetadataExtractor:
             'pdf':     HAS_PYPDF,
             'docx':    HAS_PYTHON_DOCX,
             'xlsx':    HAS_OPENPYXL,
+            'ocr':     tesseract_available(),
+            'ocr_pdf': pdf_ocr_available(),
         }
 
     @staticmethod
@@ -626,6 +629,7 @@ class MetadataExtractor:
             'created': 'Created', 'revision': 'Revision', 'keywords': 'Keywords',
             'sheet_count': 'Sheets', 'slide_count': 'Slides',
             '_palette_hex': 'Dominant Colors',
+            'ocr_text': 'OCR Text',
         }
         for k, v in meta.items():
             if k in skip or v is None or v == '':
@@ -636,6 +640,10 @@ class MetadataExtractor:
                 m, s = divmod(dur, 60)
                 h, m2 = divmod(m, 60)
                 v = f"{h}:{m2:02d}:{s:02d}" if h else f"{m}:{s:02d}"
+            elif k == 'ocr_text':
+                v = str(v)[:500]
+                if len(str(meta.get(k, ''))) > 500:
+                    v += '…'
             elif k == 'bitrate' and isinstance(v, (int, float)):
                 v = f"{int(v)} kbps"
             elif k == 'sample_rate' and isinstance(v, (int, float)):
@@ -722,6 +730,13 @@ class MetadataExtractor:
                 meta['_palette_hex'] = palette.hex
                 meta['_palette_rgb'] = [list(rgb) for rgb in palette.rgb]
                 meta['_palette_rgb_bytes'] = palette_to_bytes(palette.rgb).hex()
+        except Exception:
+            pass
+        try:
+            from fileorganizer.ocr import extract_ocr
+            ocr_text = extract_ocr(filepath)
+            if ocr_text:
+                meta['ocr_text'] = ocr_text
         except Exception:
             pass
         return meta
@@ -897,26 +912,40 @@ class MetadataExtractor:
     @staticmethod
     def _extract_pdf(filepath: str) -> dict:
         meta = {'_type': 'pdf'}
-        if not HAS_PYPDF:
-            return meta
-        try:
-            reader = _PdfReader(filepath)
-            meta['pages'] = len(reader.pages)
-            info = reader.metadata
-            if info:
-                if info.title:
-                    meta['title'] = str(info.title).strip()
-                if info.author:
-                    meta['author'] = str(info.author).strip()
-                if info.subject:
-                    meta['subject'] = str(info.subject).strip()
-                if info.creator:
-                    meta['creator'] = str(info.creator).strip()
-                if info.creation_date:
+        searchable_parts = []
+        if HAS_PYPDF:
+            try:
+                reader = _PdfReader(filepath)
+                meta['pages'] = len(reader.pages)
+                for page in reader.pages[:3]:
                     try:
-                        meta['creation_date'] = info.creation_date.isoformat()
+                        text = page.extract_text() or ''
                     except Exception:
-                        meta['creation_date'] = str(info.creation_date)
+                        text = ''
+                    if text.strip():
+                        searchable_parts.append(text.strip())
+                info = reader.metadata
+                if info:
+                    if info.title:
+                        meta['title'] = str(info.title).strip()
+                    if info.author:
+                        meta['author'] = str(info.author).strip()
+                    if info.subject:
+                        meta['subject'] = str(info.subject).strip()
+                    if info.creator:
+                        meta['creator'] = str(info.creator).strip()
+                    if info.creation_date:
+                        try:
+                            meta['creation_date'] = info.creation_date.isoformat()
+                        except Exception:
+                            meta['creation_date'] = str(info.creation_date)
+            except Exception:
+                pass
+        try:
+            from fileorganizer.ocr import extract_ocr
+            ocr_text = extract_ocr(filepath, searchable_text='\n'.join(searchable_parts))
+            if ocr_text:
+                meta['ocr_text'] = ocr_text
         except Exception:
             pass
         return meta

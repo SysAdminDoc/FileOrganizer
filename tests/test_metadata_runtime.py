@@ -11,7 +11,9 @@ from fileorganizer import metadata
 def test_metadata_capabilities_does_not_raise():
     capabilities = metadata.MetadataExtractor.capabilities()
 
-    assert set(capabilities) == {"images", "audio", "video", "pdf", "docx", "xlsx"}
+    assert set(capabilities) == {
+        "images", "audio", "video", "pdf", "docx", "xlsx", "ocr", "ocr_pdf",
+    }
 
 
 def test_archive_peeker_reads_zip_contents(tmp_path):
@@ -57,4 +59,3 @@ def test_video_extractor_reads_ffprobe_output(monkeypatch):
     assert result["width"] == 1920
     assert result["height"] == 1080
     assert result["codec"] == "h264"
-

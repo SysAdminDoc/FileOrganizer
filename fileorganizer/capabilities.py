@@ -191,6 +191,15 @@ SPECS: tuple[CapabilitySpec, ...] = (
     CapabilitySpec("metadata", "three_d_asset_metadata", (PYTHON,),
                    "Read glTF 2.0, GLB, Draco, USD, and USDZ model metadata",
                    "No action required; parsing uses bounded Python standard-library readers."),
+    CapabilitySpec("metadata", "ocr_tesseract",
+                   (Requirement("Tesseract OCR", binary="tesseract"),),
+                   "Read text from screenshot and scan images during import",
+                   "Install Tesseract OCR and set FILEORGANIZER_TESSERACT or put tesseract on PATH."),
+    CapabilitySpec("metadata", "ocr_scanned_pdf",
+                   (Requirement("Tesseract OCR", binary="tesseract"),
+                    Requirement("Poppler pdftoppm", binary="pdftoppm")),
+                   "Render and OCR scanned PDF pages during import",
+                   "Install Tesseract OCR and Poppler, then set the optional binary overrides or put both on PATH."),
     CapabilitySpec("metadata", "usdcat_layer_inspection",
                    (Requirement("Pixar USD usdcat", binary="usdcat"),),
                    "Inspect extracted USDZ/USD layers with the optional Pixar USD CLI",
@@ -242,6 +251,14 @@ def _binary_path(binary: str) -> str | None:
             return override
     if binary in {"magick", "magick.exe"}:
         override = os.environ.get("FILEORGANIZER_IMAGE_MAGICK", "").strip()
+        if override and Path(override).is_file():
+            return override
+    if binary == "tesseract":
+        override = os.environ.get("FILEORGANIZER_TESSERACT", "").strip()
+        if override and Path(override).is_file():
+            return override
+    if binary == "pdftoppm":
+        override = os.environ.get("FILEORGANIZER_PDF_RENDERER", "").strip()
         if override and Path(override).is_file():
             return override
     for candidate in binary.split("|"):
