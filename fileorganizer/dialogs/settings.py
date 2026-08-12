@@ -6,10 +6,11 @@ from PyQt6.QtWidgets import (
     QLabel, QLineEdit, QPushButton, QComboBox,
     QCheckBox, QDialog, QDialogButtonBox, QSpinBox,
     QListWidget, QListWidgetItem, QInputDialog, QSlider, QFrame,
-    QTreeWidget, QTreeWidgetItem, QHeaderView, QProgressBar
+    QTreeWidget, QTreeWidgetItem, QHeaderView, QProgressBar, QGridLayout,
+    QKeySequenceEdit, QMessageBox
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSize
-from PyQt6.QtGui import QColor, QPixmap, QIcon
+from PyQt6.QtGui import QColor, QPixmap, QIcon, QKeySequence
 
 from fileorganizer.config import (
     get_active_theme, get_active_stylesheet
@@ -31,6 +32,85 @@ from fileorganizer.workers import (
     ModelListWorker, ModelPullWorker, ModelDeleteWorker, format_size,
     load_catalog_sync_state,
 )
+from fileorganizer.keyboard_shortcuts import (
+    DEFAULT_SHORTCUTS, load_shortcuts, save_shortcuts,
+)
+
+
+class KeyboardShortcutsDialog(QDialog):
+    """Edit the legacy desktop action shortcuts and persist them safely."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Keyboard Shortcuts")
+        self.setMinimumWidth(540)
+        self.setStyleSheet(get_active_stylesheet())
+        self._edits: dict[str, QKeySequenceEdit] = {}
+        self.shortcuts = load_shortcuts()
+        self._build_ui()
+
+    def _build_ui(self):
+        layout = QVBoxLayout(self)
+        layout.setSpacing(10)
+        intro = QLabel(
+            "Customize the shortcuts for the main organizer actions. "
+            "Leave a field empty to disable that action's shortcut."
+        )
+        intro.setWordWrap(True)
+        layout.addWidget(intro)
+
+        grid = QGridLayout()
+        grid.setHorizontalSpacing(14)
+        grid.setVerticalSpacing(8)
+        grid.addWidget(QLabel("Action"), 0, 0)
+        grid.addWidget(QLabel("Shortcut"), 0, 1)
+        grid.addWidget(QLabel("Default"), 0, 2)
+        for row, (key, spec) in enumerate(DEFAULT_SHORTCUTS.items(), start=1):
+            grid.addWidget(QLabel(spec["label"]), row, 0)
+            edit = QKeySequenceEdit(self)
+            edit.setKeySequence(QKeySequence(self.shortcuts.get(key, spec["default"])))
+            edit.setToolTip(f"Default: {spec['default']}")
+            self._edits[key] = edit
+            grid.addWidget(edit, row, 1)
+            reset = QPushButton(spec["default"])
+            reset.setToolTip("Restore this action's default shortcut")
+            reset.clicked.connect(
+                lambda _checked=False, target=edit, default=spec["default"]:
+                target.setKeySequence(QKeySequence(default))
+            )
+            grid.addWidget(reset, row, 2)
+        layout.addLayout(grid)
+
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Save
+            | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(self._save)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+    def _save(self):
+        values = {
+            key: edit.keySequence().toString(QKeySequence.SequenceFormat.PortableText)
+            for key, edit in self._edits.items()
+        }
+        conflicts: dict[str, list[str]] = {}
+        for key, value in values.items():
+            if value:
+                conflicts.setdefault(value, []).append(DEFAULT_SHORTCUTS[key]["label"])
+        duplicate_labels = [
+            f"{shortcut}: {', '.join(labels)}"
+            for shortcut, labels in conflicts.items() if len(labels) > 1
+        ]
+        if duplicate_labels:
+            QMessageBox.warning(
+                self,
+                "Duplicate shortcuts",
+                "Each action needs a unique shortcut:\n" + "\n".join(duplicate_labels),
+            )
+            return
+        self.shortcuts = save_shortcuts(values)
+        self.accept()
 
 
 class OllamaSettingsDialog(QDialog):
