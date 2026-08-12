@@ -39,6 +39,9 @@ All notable changes to FileOrganizer will be documented in this file.
   ComfyUI image metadata for prompts, checkpoint hashes, sampler settings,
   seeds, steps, CFG, and dimensions, routing only marked generations into
   Landscape, Portrait, Square, or Other categories.
+- Added progressive dedup checkpoints for prefix, suffix, full-content,
+  perceptual, and audio stages. Interrupted scans now resume from bounded
+  SQLite state, while completed scans clear their checkpoint records.
 
 ## [v8.5.20] - 2026-08-11
 

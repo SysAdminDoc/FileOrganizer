@@ -249,9 +249,10 @@ class _DupScanWorker(QThread):
                 for fname in filenames:
                     fpath = os.path.join(dirpath, fname)
                     try:
-                        sz = os.path.getsize(fpath)
+                        stat_result = os.stat(fpath)
+                        sz = stat_result.st_size
                         if sz >= self.opts.get('min_size', 1):
-                            entries.append((fpath, sz))
+                            entries.append((fpath, sz, stat_result.st_mtime_ns))
                     except OSError:
                         continue
 
@@ -259,6 +260,7 @@ class _DupScanWorker(QThread):
             det = ProgressiveDuplicateDetector(
                 enable_perceptual=self.opts.get('perceptual', True),
                 enable_audio=self.opts.get('audio', True),
+                cancel_cb=lambda: self._cancelled,
             )
 
             def _prog(cur, total):

@@ -1688,14 +1688,16 @@ class ScanFilesWorker(QThread):
             for item_path, is_folder in items:
                 if not is_folder:
                     try:
-                        fsize = item_path.stat().st_size
+                        stat_result = item_path.stat()
+                        fsize = stat_result.st_size
                         if fsize > 0:
-                            file_entries.append((str(item_path), fsize))
+                            file_entries.append((str(item_path), fsize, stat_result.st_mtime_ns))
                     except OSError:
                         pass
             if len(file_entries) >= 2:
                 detector = ProgressiveDuplicateDetector(
-                    enable_perceptual=True, phash_threshold=4)
+                    enable_perceptual=True, phash_threshold=4,
+                    cancel_cb=lambda: self._cancelled)
                 dup_map = detector.detect(
                     file_entries, log_cb=self.log.emit,
                     progress_cb=lambda c, t: self.progress.emit(c, t))
@@ -2321,14 +2323,16 @@ class ScanFilesLLMWorker(QThread):
             for item_path, is_folder in items:
                 if not is_folder:
                     try:
-                        fsize = item_path.stat().st_size
+                        stat_result = item_path.stat()
+                        fsize = stat_result.st_size
                         if fsize > 0:
-                            file_entries.append((str(item_path), fsize))
+                            file_entries.append((str(item_path), fsize, stat_result.st_mtime_ns))
                     except OSError:
                         pass
             if len(file_entries) >= 2:
                 detector = ProgressiveDuplicateDetector(
-                    enable_perceptual=True, phash_threshold=4)
+                    enable_perceptual=True, phash_threshold=4,
+                    cancel_cb=lambda: self._cancelled)
                 dup_map = detector.detect(
                     file_entries, log_cb=self.log.emit,
                     progress_cb=lambda c, t: self.progress.emit(c, t))
