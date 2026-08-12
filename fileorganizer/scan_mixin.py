@@ -611,7 +611,9 @@ class ScanMixin:
         # Photo folder structure override for image files
         _photo_s_dst = load_photo_settings()
         _img_exts_photo = {'.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif',
-                           '.tiff', '.tif', '.bmp', '.raw', '.cr2', '.nef', '.arw', '.dng'}
+                           '.tiff', '.tif', '.bmp', '.raw', '.cr2', '.cr3', '.crw', '.nef', '.nrw',
+                           '.arw', '.dng', '.orf', '.rw2', '.raf', '.pef', '.rwl', '.x3f', '.3fr',
+                           '.dcr', '.kdc', '.mrw', '.iiq', '.fff', '.mef', '.mos', '.cap'}
         if (_photo_s_dst.get('enabled') and not it.is_folder
                 and os.path.splitext(it.name)[1].lower() in _img_exts_photo):
             preset_key = _photo_s_dst.get('folder_preset', 'flat')

@@ -13,10 +13,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from fileorganizer.raw_conversion import (
+    RAW_EXTENSIONS as SUPPORTED_RAW_EXTENSIONS,
+    archive_as_dng,
+    convert_to_dng,
+)
 from fileorganizer.sidecar_protocol import SidecarEmitter, emit_named
 
 
-RAW_EXTENSIONS = {'.dng', '.cr2', '.nef', '.arw', '.orf', '.rw2', '.crw', '.raf', '.pef', '.x3f'}
+RAW_EXTENSIONS = set(SUPPORTED_RAW_EXTENSIONS)
 PLAN_SCHEMA_VERSION = 1
 _PROTOCOL = SidecarEmitter("raw")
 
@@ -143,6 +148,9 @@ def _metadata_from_exiftool(raw_path: str) -> dict[str, str]:
     return {
         "make": str(data.get("Make") or "").strip(),
         "model": str(data.get("Model") or "").strip(),
+        "raw_format": str(
+            data.get("FileTypeExtension") or data.get("FileType") or ""
+        ).strip(),
         "date_taken": str(data.get("DateTimeOriginal") or data.get("CreateDate") or data.get("ModifyDate") or "").strip(),
         "iso": _normalize_iso(data.get("ISO") or data.get("PhotographicSensitivity") or ""),
         "focal_length": _format_focal(data.get("FocalLength") or "") if data.get("FocalLength") else "",
@@ -187,6 +195,7 @@ def extract_exif(raw_path: str, rawpy_module=None) -> dict[str, str]:
         "camera": camera,
         "make": make,
         "model": model,
+        "raw_format": meta.get("raw_format", "") or Path(raw_path).suffix.lstrip(".").upper(),
         "date_taken": _display_date(meta.get("date_taken", "")),
         "iso": meta.get("iso", "") or "Unknown",
         "focal_length": meta.get("focal_length", "") or "Unknown",
@@ -224,6 +233,43 @@ def _move_file(src: Path, dest: Path) -> str:
     except OSError:
         shutil.move(str(src), str(dest))
     return "moved"
+
+
+def convert_dng_file(
+    source: str,
+    output: str = "",
+    archive_root: str = "",
+) -> Any:
+    """Convert one RAW file or archive it under the canonical RAW tree."""
+    source_path = Path(source)
+    if archive_root:
+        exif = extract_exif(str(source_path), rawpy_module=None)
+        return archive_as_dng(source_path, archive_root, exif=exif)
+    destination = Path(output) if output else source_path.with_suffix(".dng")
+    return convert_to_dng(source_path, destination)
+
+
+def _run_conversion(source: str, output: str = "", archive_root: str = "") -> int:
+    result = convert_dng_file(source, output, archive_root)
+    sidecar = result.sidecar
+    emit("file", {
+        "filename": Path(source).name,
+        "path": str(Path(source)),
+        "destination": result.destination,
+        "status": result.status,
+        "backend": result.backend,
+        "raw_format": result.detected_format,
+        "detection_source": result.detection_source,
+        "detail": result.detail,
+        "sidecar_status": sidecar.status if sidecar else "not_requested",
+        "sidecar_path": sidecar.sidecar_path if sidecar else "",
+    })
+    emit("complete", {
+        "total": 1,
+        "converted": 1 if result.ok else 0,
+        "status": result.status,
+    })
+    return 0 if result.ok else 2
 
 
 def scan_folder(
@@ -276,6 +322,7 @@ def scan_folder(
             plan_items.append({
                 "source": str(raw_file),
                 "destination": str(dest),
+                "raw_format": exif.get("raw_format", raw_file.suffix.lstrip(".").upper()),
                 "camera": exif.get("camera", "Unknown"),
                 "date_taken": exif.get("date_taken", "Unknown"),
                 "iso": exif.get("iso", "Unknown"),
@@ -291,6 +338,7 @@ def scan_folder(
             "iso": exif.get("iso", "Unknown"),
             "focal_length": exif.get("focal_length", "Unknown"),
             "destination": str(dest) if mode == "organize" else "",
+            "raw_format": exif.get("raw_format", raw_file.suffix.lstrip(".").upper()),
             "status": item_status,
         })
 
@@ -320,13 +368,21 @@ def scan_folder(
 def main(argv: list[str] | None = None, rawpy_module_marker: Any = Ellipsis) -> int:
     _PROTOCOL.reset()
     parser = argparse.ArgumentParser(description="RAW photo metadata extractor")
-    parser.add_argument("--root", required=True, help="Root folder to scan")
+    parser.add_argument("--root", help="Root folder to scan")
     parser.add_argument("--mode", default="preview", choices=["preview", "organize"],
                         help="Mode: preview (read only) or organize (write a plan)")
     parser.add_argument("--dest-root", help="Destination root for organize plans")
     parser.add_argument("--plan-out", help="Write organize plan to this JSON path")
     parser.add_argument("--apply", action="store_true", help="Apply the generated organize plan")
+    parser.add_argument("--convert-dng", metavar="FILE", help="Copy or convert one RAW file to DNG")
+    parser.add_argument("--output", help="DNG output path for --convert-dng")
+    parser.add_argument("--archive-root", help="Archive converted DNG under raw_originals/")
     args = parser.parse_args(argv)
+
+    if args.convert_dng:
+        return _run_conversion(args.convert_dng, args.output or "", args.archive_root or "")
+    if not args.root:
+        parser.error("--root is required unless --convert-dng is used")
 
     rawpy_module = _load_rawpy() if rawpy_module_marker is Ellipsis else rawpy_module_marker
     if rawpy_module is None:

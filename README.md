@@ -44,7 +44,7 @@ keeps working in parallel until the shell reaches feature parity.
 | Source Code | Preview or apply project-aware routing | `code_run.py` |
 | Subtitles | Preview or apply subtitle matching | `subtitles_run.py` |
 | Photos | Preview or apply EXIF-aware organization | `photos_run.py` |
-| Raw Photos | Preview or apply RAW metadata organization | `raw_run.py` |
+| Raw Photos | Preview/apply RAW metadata organization or save a non-destructive DNG copy | `raw_run.py` |
 | Comics | Preview or apply comic metadata organization | `comics_run.py` |
 | Watch | Configure watches and stream live or logon-started events | `watch_run.py`, `watch_task_run.py` |
 | Toolbox | Run explicit maintenance and reporting commands | Python CLI tools |
@@ -279,6 +279,12 @@ Python process tree.
   `organize_run.py --rename` and supports `--rename-template`.
 - **Photos** — EXIF metadata, Leaflet geotag map, AI event clustering,
   optional face detection, thumbnail grid.
+- **RAW/DNG workflow** — `raw_run.py` identifies supported camera RAW files
+  with ExifTool when available and falls back to a bounded extension allowlist.
+  `--convert-dng` writes a new DNG through ImageMagick without deleting or
+  overwriting the source; `--archive-root` places collision-safe copies under
+  `raw_originals/YYYY/YYYY-MM-DD/Camera/` and attempts an optional XMP
+  classification sidecar.
 - **Watch mode** — monitor configured sources, debounce new files, write
   dry-run organize plans, persist state in `watch_state.db`, and recover
   supported NTFS changes that occurred while the watcher was stopped. The
@@ -354,6 +360,12 @@ python organize_run.py --undo-all
 
 # Validate sources
 python organize_run.py --validate
+
+# Save one camera RAW as a DNG without changing the source
+python raw_run.py --convert-dng Pictures\RAW\frame.cr3 --output Pictures\DNG\frame.dng
+
+# Archive a DNG copy with optional metadata/XMP sidecar
+python raw_run.py --convert-dng Pictures\RAW\frame.cr3 --archive-root Archives
 ```
 
 ## Community Fingerprint Database

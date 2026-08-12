@@ -33,7 +33,9 @@ _PROTOCOL = SidecarEmitter("files")
 # Finer-grained categories than Smart Sort. Keeps power-users happy who
 # want Pictures/RAW separate from Pictures/JPEGs.
 RULES: list[tuple[str, tuple[str, ...]]] = [
-    ("Pictures/RAW",     (".cr2", ".cr3", ".nef", ".arw", ".dng", ".orf", ".rw2", ".raf", ".srw")),
+    ("Pictures/RAW",     (".dng", ".cr2", ".cr3", ".crw", ".nef", ".nrw", ".arw", ".srw",
+                          ".orf", ".rw2", ".raf", ".pef", ".rwl", ".x3f", ".3fr", ".dcr",
+                          ".kdc", ".mrw", ".raw", ".iiq", ".fff", ".mef", ".mos", ".cap")),
     ("Pictures/JPEGs",   (".jpg", ".jpeg", ".jpe")),
     ("Pictures/PNGs",    (".png",)),
     ("Pictures/HEIC",    (".heic", ".heif")),

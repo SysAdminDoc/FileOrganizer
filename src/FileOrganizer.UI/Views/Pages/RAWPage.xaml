@@ -13,19 +13,21 @@
         <StackPanel Grid.Row="0" Spacing="6">
             <TextBlock Text="Raw Photos" Style="{StaticResource TitleTextStyle}"/>
             <TextBlock Style="{StaticResource SubtitleTextStyle}"
-                       Text="Read EXIF metadata from DNG, CR2, NEF, ARW, ORF, RW2 files. Extract camera info, date taken, ISO, focal length, GPS coordinates. Optional rename or organize into folders."/>
+                       Text="Read EXIF metadata from camera RAW files. Extract camera info, date taken, ISO, focal length, GPS coordinates. Preview or organize by camera and date, or save one source as a non-destructive DNG copy."/>
         </StackPanel>
         <Border Grid.Row="1" Style="{StaticResource CardStyle}">
             <StackPanel Spacing="14">
                 <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Folder" Style="{StaticResource LabelTextStyle}" VerticalAlignment="Center"/>
                     <TextBox Grid.Column="1" x:Name="FolderTextBox" Style="{StaticResource PremiumTextBoxStyle}"
                              PlaceholderText="C:\Users\You\Pictures\RAW"/>
                     <Button Grid.Column="2" x:Name="BrowseButton" Content="Browse"
                             Style="{StaticResource SecondaryButtonStyle}" Click="Browse_Click"/>
+                    <Button Grid.Column="3" x:Name="ConvertButton" Content="Save as DNG"
+                            Style="{StaticResource SecondaryButtonStyle}" Click="Convert_Click"/>
                 </Grid>
                 <Grid ColumnSpacing="12">
                     <Grid.ColumnDefinitions>

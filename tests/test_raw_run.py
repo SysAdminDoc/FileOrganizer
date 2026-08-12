@@ -1,7 +1,10 @@
 import json
+from types import SimpleNamespace
 from pathlib import Path
 
 import raw_run
+from fileorganizer import exiftool_extractor, raw_conversion
+from fileorganizer.xmp_sidecar import XmpSidecarResult
 
 
 class FakeRaw:
@@ -182,3 +185,149 @@ def test_organize_blocks_files_that_rawpy_cannot_validate(monkeypatch, tmp_path,
     assert plan["items"][0]["status"] == "blocked: Error: LibRawFileUnsupportedError"
     final_progress = [e for e in events if e["event"] == "progress"][-1]
     assert final_progress["organized"] == 0
+
+
+def test_detect_raw_format_prefers_exiftool_identity(monkeypatch, tmp_path):
+    source = tmp_path / "camera-export.bin"
+    source.write_bytes(b"raw")
+    monkeypatch.setattr(
+        exiftool_extractor,
+        "extract_metadata",
+        lambda _path: {"FileTypeExtension": "CR3"},
+    )
+
+    info = raw_conversion.detect_raw_format(source)
+
+    assert info is not None
+    assert info.format_name == "CR3"
+    assert info.extension == ".cr3"
+    assert info.source == "exiftool"
+
+
+def test_convert_dng_uses_bounded_imagemagick_runner_and_preserves_source(
+    monkeypatch, tmp_path
+):
+    source = tmp_path / "frame.cr3"
+    destination = tmp_path / "frame.dng"
+    source.write_bytes(b"camera raw")
+    calls = []
+
+    monkeypatch.setattr(raw_conversion, "find_dng_converter", lambda: "magick")
+    monkeypatch.setattr(
+        raw_conversion,
+        "detect_raw_format",
+        lambda _path: raw_conversion.RawFormatInfo("CR3", ".cr3", "extension_fallback"),
+    )
+
+    def runner(command, **kwargs):
+        calls.append((command, kwargs))
+        Path(command[-1]).write_bytes(b"DNG")
+        return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+    result = raw_conversion.convert_to_dng(source, destination, runner=runner)
+
+    assert result.status == "converted"
+    assert result.backend == "imagemagick"
+    assert destination.read_bytes() == b"DNG"
+    assert source.read_bytes() == b"camera raw"
+    assert calls[0][0] == ["magick", str(source.resolve()), str(destination.resolve())]
+    assert calls[0][1]["timeout"] == 300
+    assert calls[0][1]["check"] is False
+
+
+def test_convert_dng_removes_partial_output_after_backend_failure(monkeypatch, tmp_path):
+    source = tmp_path / "frame.nef"
+    destination = tmp_path / "frame.dng"
+    source.write_bytes(b"camera raw")
+
+    monkeypatch.setattr(raw_conversion, "find_dng_converter", lambda: "magick")
+    monkeypatch.setattr(
+        raw_conversion,
+        "detect_raw_format",
+        lambda _path: raw_conversion.RawFormatInfo("NEF", ".nef", "extension_fallback"),
+    )
+
+    def runner(command, **_kwargs):
+        Path(command[-1]).write_bytes(b"partial")
+        return SimpleNamespace(returncode=1, stdout="", stderr="delegate failed")
+
+    result = raw_conversion.convert_to_dng(source, destination, runner=runner)
+
+    assert result.status == "failed"
+    assert "delegate failed" in result.detail
+    assert not destination.exists()
+    assert source.exists()
+
+
+def test_archive_as_dng_uses_collision_safe_raw_originals_tree_and_optional_sidecar(
+    monkeypatch, tmp_path
+):
+    source = tmp_path / "frame.arw"
+    source.write_bytes(b"camera raw")
+    monkeypatch.setattr(raw_conversion, "find_dng_converter", lambda: "magick")
+    monkeypatch.setattr(
+        raw_conversion,
+        "detect_raw_format",
+        lambda _path: raw_conversion.RawFormatInfo("ARW", ".arw", "extension_fallback"),
+    )
+
+    def runner(command, **_kwargs):
+        Path(command[-1]).write_bytes(b"DNG")
+        return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+    monkeypatch.setattr(
+        raw_conversion,
+        "write_classification_sidecar",
+        lambda asset_path, **_kwargs: XmpSidecarResult("written", str(Path(asset_path).with_suffix(".xmp"))),
+    )
+
+    first = raw_conversion.archive_as_dng(
+        source,
+        tmp_path / "archive",
+        exif={"camera": "Sony A7R V", "date_taken": "2024-06-15 12:30:00"},
+        runner=runner,
+    )
+    second = raw_conversion.archive_as_dng(
+        source,
+        tmp_path / "archive",
+        exif={"camera": "Sony A7R V", "date_taken": "2024-06-15 12:30:00"},
+        runner=runner,
+    )
+
+    expected = (
+        tmp_path / "archive" / "raw_originals" / "2024" / "2024-06-15"
+        / "Sony_A7R_V" / "frame.dng"
+    )
+    assert first.status == "converted"
+    assert first.destination == str(expected.resolve())
+    assert first.sidecar is not None and first.sidecar.status == "written"
+    assert second.destination.endswith("frame (1).dng")
+    assert Path(second.destination).is_file()
+    assert source.is_file()
+
+
+def test_conversion_cli_runs_before_rawpy_capability_gate(monkeypatch, tmp_path, capsys):
+    source = tmp_path / "frame.cr2"
+    destination = tmp_path / "frame.dng"
+    source.write_bytes(b"raw")
+    monkeypatch.setattr(
+        raw_run,
+        "convert_dng_file",
+        lambda *_args: raw_conversion.DngConversionResult(
+            "converted", str(source), str(destination), "imagemagick", "CR2", "exiftool",
+            "RAW converted to DNG.",
+        ),
+    )
+
+    rc = raw_run.main(
+        ["--convert-dng", str(source), "--output", str(destination)],
+        rawpy_module_marker=None,
+    )
+
+    events = _events(capsys)
+    assert rc == 0
+    file_event = next(event for event in events if event["event"] == "file")
+    assert file_event["destination"] == str(destination)
+    assert file_event["raw_format"] == "CR2"
+    assert events[-1]["event"] == "complete"
+    assert events[-1]["converted"] == 1

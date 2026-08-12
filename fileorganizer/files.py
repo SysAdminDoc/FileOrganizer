@@ -29,7 +29,8 @@ _DEFAULT_PC_CATEGORIES = [
                     "tex","bib","fodt","fods","fodp","epub","mobi"]},
     {"name": "Images",       "color": "#34d399", "rename_template": "{year}-{month}-{day}_{name}",
      "extensions": ["jpg","jpeg","png","gif","bmp","tiff","tif","webp","heic","heif",
-                    "raw","cr2","cr3","nef","arw","dng","orf","rw2","pef","srw",
+                    "raw","cr2","cr3","crw","nef","nrw","arw","dng","orf","rw2","pef","srw",
+                    "raf","rwl","x3f","3fr","dcr","kdc","mrw","iiq","fff","mef","mos","cap",
                     "ico","icns","svg","avif","jxl","jp2","j2k"]},
     {"name": "Videos",       "color": "#f472b6", "rename_template": "{year}-{month}-{day}_{name}",
      "extensions": ["mp4","mkv","avi","mov","wmv","flv","webm","m4v","mpg","mpeg",
@@ -484,8 +485,9 @@ class _ScanCache:
 
 # Extension sets used by MetadataExtractor for type dispatch
 _META_IMAGE_EXTS = {'.jpg', '.jpeg', '.png', '.tiff', '.tif', '.heic', '.heif',
-                    '.webp', '.bmp', '.gif', '.cr2', '.cr3', '.nef', '.arw',
-                    '.dng', '.orf', '.rw2', '.pef', '.srw', '.raw', '.avif', '.jxl'}
+                    '.webp', '.bmp', '.gif', '.dng', '.cr2', '.cr3', '.crw', '.nef', '.nrw', '.arw',
+                    '.orf', '.rw2', '.pef', '.srw', '.raf', '.rwl', '.x3f', '.3fr', '.dcr', '.kdc',
+                    '.mrw', '.raw', '.iiq', '.fff', '.mef', '.mos', '.cap', '.avif', '.jxl'}
 _META_AUDIO_EXTS = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.wma', '.m4a',
                     '.opus', '.aiff', '.aif', '.ape', '.mka', '.wv', '.tta',
                     '.dsf', '.dff', '.caf', '.mid', '.midi'}

@@ -312,8 +312,9 @@ def _classify_by_composition(comp: dict) -> tuple:
 _FILTER_IMAGE_EXTS = {
     '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tif', '.tiff', '.webp',
     '.heic', '.heif', '.avif', '.jxl', '.svg', '.ico', '.jfif', '.jpe',
-    '.raw', '.cr2', '.cr3', '.nef', '.arw', '.dng', '.orf', '.rw2',
-    '.pef', '.srw', '.raf', '.3fr', '.dcr', '.kdc', '.mrw', '.nrw',
+    '.raw', '.cr2', '.cr3', '.crw', '.nef', '.nrw', '.arw', '.dng', '.orf', '.rw2',
+    '.pef', '.srw', '.raf', '.rwl', '.x3f', '.3fr', '.dcr', '.kdc', '.mrw',
+    '.iiq', '.fff', '.mef', '.mos', '.cap',
     '.psd', '.psb', '.xcf', '.ai', '.eps',
 }
 _FILTER_VIDEO_EXTS = {
