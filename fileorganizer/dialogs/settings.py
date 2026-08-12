@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (
     QCheckBox, QDialog, QDialogButtonBox, QSpinBox,
     QListWidget, QListWidgetItem, QInputDialog, QSlider, QFrame, QFileDialog,
     QTreeWidget, QTreeWidgetItem, QHeaderView, QProgressBar, QGridLayout,
-    QKeySequenceEdit, QMessageBox
+    QKeySequenceEdit, QMessageBox, QScrollArea
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSize
 from PyQt6.QtGui import QColor, QPixmap, QIcon, QKeySequence
@@ -17,6 +17,7 @@ from fileorganizer.config import (
 )
 from fileorganizer.ollama import (
     load_ollama_settings, save_ollama_settings, ollama_test_connection,
+    benchmark_ollama_speed, normalized_ollama_quantization,
     _MODEL_CATALOG, _MODEL_CATALOG_MAP,
     _OLLAMA_DEFAULTS, _ollama_list_models, _ollama_pull_model,
     _is_ollama_server_running
@@ -285,7 +286,7 @@ class OllamaSettingsDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Ollama LLM Settings")
-        self.setMinimumSize(560, 520)
+        self.setMinimumSize(760, 720)
         self.setStyleSheet(get_active_stylesheet())
         self.settings = load_ollama_settings()
         self.ocr_settings = load_ocr_settings()
@@ -361,7 +362,9 @@ class OllamaSettingsDialog(QDialog):
         adv_header.addWidget(self.lbl_custom_model)
         layout.addLayout(adv_header)
 
-        grid = QHBoxLayout()
+        grid = QGridLayout()
+        grid.setHorizontalSpacing(18)
+        grid.setVerticalSpacing(14)
 
         # Custom model name (manual override / locally installed not in catalog)
         col1 = QVBoxLayout()
@@ -378,9 +381,7 @@ class OllamaSettingsDialog(QDialog):
         btn_gguf.setToolTip("Inspect a local GGUF and create it as an Ollama model")
         btn_gguf.clicked.connect(self._open_gguf_registration)
         col1.addWidget(btn_gguf)
-        grid.addLayout(col1)
-
-        grid.addSpacing(12)
+        grid.addLayout(col1, 0, 0)
 
         # Numeric options
         col2 = QVBoxLayout()
@@ -398,9 +399,7 @@ class OllamaSettingsDialog(QDialog):
         self.spn_tokens.setRange(256, 8192); self.spn_tokens.setSingleStep(512)
         self.spn_tokens.setValue(self.settings.get('num_predict', 4096))
         col2.addWidget(self.spn_tokens)
-        grid.addLayout(col2)
-
-        grid.addSpacing(12)
+        grid.addLayout(col2, 0, 1)
 
         col3 = QVBoxLayout()
         col3.addWidget(QLabel("Batch size:"))
@@ -414,9 +413,43 @@ class OllamaSettingsDialog(QDialog):
         self.chk_think.setChecked(self.settings.get('think', False))
         self.chk_think.setToolTip("Enable Qwen3.x chain-of-thought reasoning (slower but may improve accuracy)")
         col3.addWidget(self.chk_think)
-        grid.addLayout(col3)
 
-        grid.addSpacing(12)
+        col3.addWidget(QLabel("GPU layers (-1 = auto):"))
+        self.spn_gpu = QSpinBox()
+        self.spn_gpu.setRange(-1, 256)
+        self.spn_gpu.setValue(int(self.settings.get('num_gpu', -1)))
+        self.spn_gpu.setToolTip(
+            "Ollama GPU layers to offload. -1 leaves the platform default unchanged."
+        )
+        col3.addWidget(self.spn_gpu)
+
+        col3.addWidget(QLabel("CPU threads (0 = auto):"))
+        self.spn_threads = QSpinBox()
+        self.spn_threads.setRange(0, 256)
+        self.spn_threads.setValue(int(self.settings.get('num_thread', 0)))
+        self.spn_threads.setToolTip(
+            "Ollama CPU threads. 0 leaves the platform default unchanged."
+        )
+        col3.addWidget(self.spn_threads)
+
+        col3.addWidget(QLabel("Quantization hint:"))
+        self.cmb_quantization = QComboBox()
+        self.cmb_quantization.addItem("Auto", "auto")
+        self.cmb_quantization.addItem("Q4", "Q4")
+        self.cmb_quantization.addItem("Q5", "Q5")
+        self.cmb_quantization.addItem("Q8", "Q8")
+        quantization = normalized_ollama_quantization(
+            self.settings.get('quantization', 'auto')
+        )
+        quant_idx = self.cmb_quantization.findData(
+            quantization.lower() if quantization != 'AUTO' else 'auto'
+        )
+        self.cmb_quantization.setCurrentIndex(max(0, quant_idx))
+        self.cmb_quantization.setToolTip(
+            "Advisory GGUF/model hint. Ollama quantization is fixed when the model is built."
+        )
+        col3.addWidget(self.cmb_quantization)
+        grid.addLayout(col3, 1, 0)
 
         col4 = QVBoxLayout()
         col4.addWidget(QLabel("Vision:"))
@@ -490,9 +523,16 @@ class OllamaSettingsDialog(QDialog):
         self.txt_ocr_language.setToolTip("Tesseract language codes, for example eng or eng+spa")
         ocr_lang_row.addWidget(self.txt_ocr_language)
         col4.addLayout(ocr_lang_row)
-        grid.addLayout(col4)
+        grid.addLayout(col4, 1, 1)
 
-        layout.addLayout(grid)
+        advanced_panel = QWidget()
+        advanced_panel.setLayout(grid)
+        advanced_scroll = QScrollArea()
+        advanced_scroll.setWidgetResizable(True)
+        advanced_scroll.setFrameShape(QFrame.Shape.NoFrame)
+        advanced_scroll.setWidget(advanced_panel)
+        advanced_scroll.setMinimumHeight(260)
+        layout.addWidget(advanced_scroll, 1)
 
         # Select the current model in the list (or populate the combobox)
         self._populate_models(self.settings['model'])
@@ -506,6 +546,13 @@ class OllamaSettingsDialog(QDialog):
         btn_test = QPushButton("Test Connection")
         btn_test.clicked.connect(self._test)
         row_test.addWidget(btn_test)
+        btn_benchmark = QPushButton("Benchmark Speed")
+        btn_benchmark.setToolTip(
+            "Run one local prompt with the current model and report generated tokens per second."
+        )
+        btn_benchmark.clicked.connect(self._benchmark)
+        self.btn_benchmark = btn_benchmark
+        row_test.addWidget(btn_benchmark)
         self.btn_pull = QPushButton("Pull Model")
         self.btn_pull.setVisible(False)
         self.btn_pull.clicked.connect(self._pull_model)
@@ -658,6 +705,9 @@ class OllamaSettingsDialog(QDialog):
         self.settings['num_predict'] = self.spn_tokens.value()
         self.settings['batch_size'] = self.spn_batch.value()
         self.settings['think'] = self.chk_think.isChecked()
+        self.settings['num_gpu'] = self.spn_gpu.value()
+        self.settings['num_thread'] = self.spn_threads.value()
+        self.settings['quantization'] = self.cmb_quantization.currentData()
         self.settings['vision_enabled'] = self.chk_vision.isChecked()
         self.settings['vision_max_file_mb'] = self.spn_vision_mb.value()
         self.settings['vision_max_pixels'] = self.spn_vision_px.value()
@@ -671,6 +721,41 @@ class OllamaSettingsDialog(QDialog):
         self.ocr_settings['language'] = self.txt_ocr_language.text().strip()
         save_ocr_settings(self.ocr_settings)
         self.accept()
+
+    def _benchmark(self):
+        """Run the local benchmark without blocking the settings dialog."""
+        model = self.cmb_model.currentText().strip() or self.settings['model']
+        url = self.txt_url.text().strip() or self.settings['url']
+        self.btn_benchmark.setEnabled(False)
+        self.lbl_status.setText(f"Benchmarking {model}…")
+
+        class _BenchmarkWorker(QThread):
+            done = pyqtSignal(object)
+
+            def __init__(self, endpoint, selected_model):
+                super().__init__()
+                self.endpoint = endpoint
+                self.selected_model = selected_model
+
+            def run(self):
+                self.done.emit(benchmark_ollama_speed(self.endpoint, self.selected_model))
+
+        self._benchmark_worker = _BenchmarkWorker(url, model)
+        self._benchmark_worker.done.connect(self._on_benchmark_done)
+        self._benchmark_worker.start()
+
+    def _on_benchmark_done(self, result):
+        self.btn_benchmark.setEnabled(True)
+        if result.get('ok'):
+            self.lbl_status.setText(
+                f"Benchmark: {result['tokens_per_second']:.2f} tokens/s · "
+                f"{result['eval_count']} tokens · {result['elapsed_seconds']:.2f}s "
+                f"({result['quantization']})"
+            )
+            self.lbl_status.setStyleSheet(f"color: {get_active_theme()['green']};")
+        else:
+            self.lbl_status.setText(f"Benchmark failed: {result.get('error', 'unknown error')}")
+            self.lbl_status.setStyleSheet("color: #ef4444;")
 
 
 class PhotoSettingsDialog(QDialog):
