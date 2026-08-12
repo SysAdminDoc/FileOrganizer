@@ -50,6 +50,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added non-destructive Browse virtual bundles backed by `asset_bundles.db`;
   named bundles group stable asset fingerprints across categories with create,
   add, remove, and delete controls without changing the filesystem.
+- Added bounded cached waveform PNG previews to Browse asset details, with
+  standard-library WAV/AIFF decoding and optional `soundfile`/`ffmpeg` fallbacks
+  for compressed audio formats.
 
 ## [v8.5.20] - 2026-08-11
 

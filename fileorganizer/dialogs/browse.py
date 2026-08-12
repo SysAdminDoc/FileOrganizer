@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 
 from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtGui import QColor
+from PyQt6.QtGui import QColor, QPixmap
 from PyQt6.QtWidgets import (
     QAbstractItemView,
     QFileDialog,
@@ -27,6 +27,7 @@ from fileorganizer.asset_bundles import (
 from fileorganizer.library_search import index_library, search_library
 from fileorganizer.reclassification import reclassify_folder
 from fileorganizer.workers import format_size
+from fileorganizer.waveform import AUDIO_EXTENSIONS, render_waveform
 
 
 BUNDLE_ID_ROLE = Qt.ItemDataRole.UserRole + 20
@@ -164,6 +165,9 @@ class BrowsePanel(QWidget):
         self.tree.setColumnWidth(2, 90)
         self.tree.setColumnWidth(3, 120)
         self.tree.reclassify_requested.connect(self._on_reclassify)
+        self.tree.itemSelectionChanged.connect(
+            lambda: self._show_item_details(self.tree)
+        )
         lay.addWidget(self.tree, 1)
 
         self.search_tree = QTreeWidget()
@@ -172,7 +176,27 @@ class BrowsePanel(QWidget):
         self.search_tree.setRootIsDecorated(False)
         self.search_tree.setMinimumHeight(130)
         self.search_tree.setVisible(False)
+        self.search_tree.itemSelectionChanged.connect(
+            lambda: self._show_item_details(self.search_tree)
+        )
         lay.addWidget(self.search_tree)
+
+        self.detail_panel = QWidget()
+        self.detail_panel.setMaximumHeight(220)
+        detail_layout = QVBoxLayout(self.detail_panel)
+        detail_layout.setContentsMargins(0, 4, 0, 0)
+        self.lbl_detail_name = QLabel("Select an asset to inspect")
+        self.lbl_detail_name.setProperty("class", "subheading-sm")
+        detail_layout.addWidget(self.lbl_detail_name)
+        self.lbl_detail_meta = QLabel("")
+        self.lbl_detail_meta.setProperty("class", "meta")
+        detail_layout.addWidget(self.lbl_detail_meta)
+        self.lbl_waveform = QLabel("No audio waveform selected")
+        self.lbl_waveform.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.lbl_waveform.setMinimumHeight(140)
+        self.lbl_waveform.setProperty("class", "preview-surface")
+        detail_layout.addWidget(self.lbl_waveform)
+        lay.addWidget(self.detail_panel)
 
         self.lbl_status = QLabel("Choose an organized root to browse.")
         self.lbl_status.setProperty("class", "meta")
@@ -483,6 +507,72 @@ class BrowsePanel(QWidget):
         self.lbl_status.setText(
             f"{result.message} User corrections: {result.user_corrections}."
         )
+
+    @staticmethod
+    def _find_audio_preview(path: str) -> str | None:
+        if os.path.isfile(path) and os.path.splitext(path)[1].casefold() in AUDIO_EXTENSIONS:
+            return path
+        if not os.path.isdir(path):
+            return None
+        try:
+            for dirpath, dirnames, filenames in os.walk(path, followlinks=False):
+                dirnames[:] = sorted(
+                    name for name in dirnames
+                    if not os.path.islink(os.path.join(dirpath, name))
+                )
+                for filename in sorted(filenames):
+                    if os.path.splitext(filename)[1].casefold() in AUDIO_EXTENSIONS:
+                        return os.path.join(dirpath, filename)
+        except OSError:
+            return None
+        return None
+
+    def _show_item_details(self, tree):
+        selected = tree.selectedItems()
+        if not selected:
+            return
+        path = selected[0].data(0, Qt.ItemDataRole.UserRole)
+        if not isinstance(path, str) or not path:
+            self.lbl_detail_name.setText(selected[0].text(0))
+            self.lbl_detail_meta.setText("Virtual folder")
+            self.lbl_waveform.clear()
+            self.lbl_waveform.setText("Select an asset to inspect")
+            return
+        self.lbl_detail_name.setText(os.path.basename(path) or path)
+        if os.path.isdir(path):
+            _folders, files, total = self._folder_stats(path)
+            self.lbl_detail_meta.setText(f"{files} files · {format_size(total)} · {path}")
+        else:
+            try:
+                self.lbl_detail_meta.setText(
+                    f"{format_size(os.path.getsize(path))} · {path}"
+                )
+            except OSError:
+                self.lbl_detail_meta.setText(path)
+        audio_path = self._find_audio_preview(path)
+        if not audio_path:
+            self.lbl_waveform.clear()
+            self.lbl_waveform.setText("No audio waveform selected")
+            return
+        waveform = render_waveform(
+            audio_path,
+            width=max(320, self.lbl_waveform.width()),
+            height=140,
+        )
+        if waveform:
+            pixmap = QPixmap(waveform)
+            if not pixmap.isNull():
+                self.lbl_waveform.setPixmap(
+                    pixmap.scaled(
+                        max(320, self.lbl_waveform.width()),
+                        140,
+                        Qt.AspectRatioMode.KeepAspectRatio,
+                        Qt.TransformationMode.SmoothTransformation,
+                    )
+                )
+                return
+        self.lbl_waveform.clear()
+        self.lbl_waveform.setText("Waveform unavailable for this audio format")
 
 
 __all__ = ["BrowsePanel", "BrowseTreeWidget"]
