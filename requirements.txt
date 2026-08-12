@@ -50,7 +50,7 @@ winrt-Windows.Storage>=3.2.1; sys_platform == "win32"
 # fastembed is the preferred backend (ONNX runtime, ~80 MB on disk).
 # fastembed
 # model2vec
-# sentence-transformers
+# sentence-transformers>=5.4.1
 
 # Optional CLIP visual index (NEXT-69). These packages are intentionally not
 # installed by the base setup because PyTorch/model weights are large. The

@@ -60,6 +60,12 @@ All notable changes to FileOrganizer will be documented in this file.
   duplicate-review rates, correction-free model trends, confusion pairs, and
   archive storage totals derived from existing SQLite stores.
 
+### Security
+
+- Raised the optional `sentence-transformers` dependency floor to `>=5.4.1`,
+  avoiding the known Hub-model activation-function injection issue in older
+  releases.
+
 ## [v8.5.20] - 2026-08-11
 
 ### Added
