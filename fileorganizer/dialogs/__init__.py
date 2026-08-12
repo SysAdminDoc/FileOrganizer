@@ -3,6 +3,7 @@
 from fileorganizer.dialogs.settings import (
     OllamaSettingsDialog, PhotoSettingsDialog, FaceManagerDialog, ModelManagerDialog,
     AIProviderSettingsDialog, DesignWorkflowSettingsDialog, KeyboardShortcutsDialog,
+    GGUFRegistrationDialog,
 )
 from fileorganizer.dialogs.editors import (
     CustomCategoriesDialog, TeachCategoryDialog, DestTreeDialog, PCCategoryEditorDialog,
@@ -35,6 +36,7 @@ from fileorganizer.dialogs.rule_chain_editor import RuleChainEditorDialog
 __all__ = [
     'OllamaSettingsDialog', 'PhotoSettingsDialog', 'FaceManagerDialog', 'ModelManagerDialog',
     'AIProviderSettingsDialog', 'DesignWorkflowSettingsDialog', 'KeyboardShortcutsDialog',
+    'GGUFRegistrationDialog',
     'CustomCategoriesDialog', 'TeachCategoryDialog', 'DestTreeDialog', 'PCCategoryEditorDialog',
     'TemplateBuilderWidget', '_FileBrowserDialog', 'RuleEditorDialog',
     '_CleanupScanWorker', 'CleanupToolsDialog', 'CleanupPanel',

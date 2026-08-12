@@ -19,6 +19,10 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added a local SQLite FTS5 library index with BM25 natural-language search,
   category/type filters, citation-ready results, and Browse search controls;
   successful moves preserve their AI descriptions in the index.
+- Added local GGUF registration in Ollama settings with bounded metadata
+  detection for context windows, quantization, and chat templates, plus an
+  explicit shell-free `ollama create` path for routing classification to the
+  registered model.
 - Added optional local Tesseract OCR during import for screenshot images and
   scanned PDFs, with bounded Poppler rendering, persisted OCR settings, and
   sanitized OCR context passed to local LLM classification.
