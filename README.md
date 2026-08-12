@@ -460,6 +460,13 @@ the index never leaves the local app-data directory.
 | `llama3.2:3b` | 2.0 GB | Fastest | Good | `ollama pull llama3.2:3b` |
 | `gemma3:4b` | 3.3 GB | Fast | Good | `ollama pull gemma3:4b` |
 
+The legacy desktop **Settings → Ollama LLM → Register GGUF…** dialog can
+inspect any local GGUF, detect its context window, quantization, and chat
+template, and create it as an Ollama model. The create action is explicit and
+uses an argument-list subprocess; once created, the registered Ollama name is
+available in the normal model selector. Vision GGUF files may also record an
+optional `.gguf` projector for local tooling.
+
 ### Themes
 
 The WinUI Settings page has a live, persisted seven-theme picker:

@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QLineEdit, QPushButton, QComboBox,
     QCheckBox, QDialog, QDialogButtonBox, QSpinBox,
-    QListWidget, QListWidgetItem, QInputDialog, QSlider, QFrame,
+    QListWidget, QListWidgetItem, QInputDialog, QSlider, QFrame, QFileDialog,
     QTreeWidget, QTreeWidgetItem, QHeaderView, QProgressBar, QGridLayout,
     QKeySequenceEdit, QMessageBox
 )
@@ -30,6 +30,10 @@ from fileorganizer.bootstrap import (
 )
 from fileorganizer.ocr import (
     load_ocr_settings, save_ocr_settings, tesseract_available,
+)
+from fileorganizer.gguf import (
+    GgufError, create_ollama_model, default_ollama_name,
+    inspect_gguf, load_registered_models, register_gguf,
 )
 from fileorganizer.workers import (
     ModelListWorker, ModelPullWorker, ModelDeleteWorker, format_size,
@@ -113,6 +117,166 @@ class KeyboardShortcutsDialog(QDialog):
             )
             return
         self.shortcuts = save_shortcuts(values)
+        self.accept()
+
+
+class GGUFRegistrationDialog(QDialog):
+    """Inspect a local GGUF and register it as an explicit Ollama model."""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Register GGUF Model")
+        self.setMinimumWidth(620)
+        self.setStyleSheet(get_active_stylesheet())
+        self.record = None
+        self._info = None
+        self._create_worker = None
+        self._build_ui()
+
+    def _build_ui(self):
+        layout = QVBoxLayout(self)
+        layout.setSpacing(8)
+        intro = QLabel(
+            "Register a local .gguf file with Ollama. GGUF metadata supplies the "
+            "context window, quantization, and chat template; the source file is "
+            "never uploaded."
+        )
+        intro.setWordWrap(True)
+        layout.addWidget(intro)
+
+        model_row = QHBoxLayout()
+        model_row.addWidget(QLabel("GGUF model:"))
+        self.txt_model_path = QLineEdit()
+        self.txt_model_path.textChanged.connect(self._inspect)
+        model_row.addWidget(self.txt_model_path, 1)
+        browse_model = QPushButton("Browse…")
+        browse_model.clicked.connect(self._browse_model)
+        model_row.addWidget(browse_model)
+        layout.addLayout(model_row)
+
+        name_row = QHBoxLayout()
+        name_row.addWidget(QLabel("Ollama name:"))
+        self.txt_ollama_name = QLineEdit()
+        self.txt_ollama_name.setPlaceholderText("fileorganizer/my-model:latest")
+        name_row.addWidget(self.txt_ollama_name, 1)
+        layout.addLayout(name_row)
+
+        projector_row = QHBoxLayout()
+        projector_row.addWidget(QLabel("Vision projector (optional):"))
+        self.txt_mmproj_path = QLineEdit()
+        projector_row.addWidget(self.txt_mmproj_path, 1)
+        browse_projector = QPushButton("Browse…")
+        browse_projector.clicked.connect(self._browse_projector)
+        projector_row.addWidget(browse_projector)
+        layout.addLayout(projector_row)
+
+        self.lbl_details = QLabel("Choose a GGUF file to inspect its metadata.")
+        self.lbl_details.setWordWrap(True)
+        self.lbl_details.setProperty("class", "meta")
+        layout.addWidget(self.lbl_details)
+
+        self.lbl_status = QLabel("")
+        self.lbl_status.setWordWrap(True)
+        layout.addWidget(self.lbl_status)
+
+        buttons = QHBoxLayout()
+        buttons.addStretch()
+        self.btn_register = QPushButton("Register")
+        self.btn_register.clicked.connect(lambda: self._save(False))
+        buttons.addWidget(self.btn_register)
+        self.btn_create = QPushButton("Register + Create in Ollama")
+        self.btn_create.setProperty("class", "primary")
+        self.btn_create.clicked.connect(lambda: self._save(True))
+        buttons.addWidget(self.btn_create)
+        cancel = QPushButton("Cancel")
+        cancel.clicked.connect(self.reject)
+        buttons.addWidget(cancel)
+        layout.addLayout(buttons)
+
+    def _browse_model(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select GGUF Model", "", "GGUF models (*.gguf);;All files (*)"
+        )
+        if path:
+            self.txt_model_path.setText(path)
+
+    def _browse_projector(self):
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Select Multimodal Projector", "", "GGUF models (*.gguf);;All files (*)"
+        )
+        if path:
+            self.txt_mmproj_path.setText(path)
+
+    def _inspect(self):
+        path = self.txt_model_path.text().strip()
+        if not path:
+            self._info = None
+            self.lbl_details.setText("Choose a GGUF file to inspect its metadata.")
+            return
+        try:
+            self._info = inspect_gguf(path)
+        except (GgufError, OSError, ValueError) as exc:
+            self._info = None
+            self.lbl_details.setText(f"Metadata unavailable: {exc}")
+            return
+        if not self.txt_ollama_name.text().strip():
+            self.txt_ollama_name.setText(default_ollama_name(path))
+        template = "yes" if self._info.get("chat_template") else "no"
+        self.lbl_details.setText(
+            f"Architecture: {self._info['architecture'] or 'unknown'}  ·  "
+            f"Context: {self._info['context_length']:,}  ·  "
+            f"Quantization: {self._info['quantization']}  ·  "
+            f"Chat template: {template}"
+        )
+
+    def _save(self, create: bool):
+        if not self._info:
+            self._inspect()
+        if not self._info:
+            self.lbl_status.setText("Select a valid GGUF model first.")
+            return
+        try:
+            self.record = register_gguf(
+                self.txt_model_path.text().strip(),
+                ollama_name=self.txt_ollama_name.text().strip(),
+                mmproj_path=self.txt_mmproj_path.text().strip() or None,
+            )
+        except (GgufError, OSError, ValueError) as exc:
+            self.lbl_status.setText(f"Registration failed: {exc}")
+            return
+        if not create:
+            self.accept()
+            return
+        self.btn_register.setEnabled(False)
+        self.btn_create.setEnabled(False)
+        self.lbl_status.setText(f"Creating {self.record['ollama_name']} in Ollama…")
+
+        class _CreateWorker(QThread):
+            done = pyqtSignal(object, object)
+
+            def __init__(self, record):
+                super().__init__()
+                self.record = record
+
+            def run(self):
+                try:
+                    self.done.emit(create_ollama_model(self.record), None)
+                except Exception as exc:  # surfaced in the dialog, never crashes the UI
+                    self.done.emit(None, exc)
+
+        self._create_worker = _CreateWorker(self.record)
+        self._create_worker.done.connect(self._on_create_done)
+        self._create_worker.start()
+
+    def _on_create_done(self, result, error):
+        self.btn_register.setEnabled(True)
+        self.btn_create.setEnabled(True)
+        if error is not None:
+            self.lbl_status.setText(
+                f"Registered locally, but Ollama creation failed: {error}"
+            )
+            return
+        self.lbl_status.setText(f"Created {result['ollama_name']} in Ollama.")
         self.accept()
 
 
@@ -210,6 +374,10 @@ class OllamaSettingsDialog(QDialog):
         btn_refresh = QPushButton("↻ Refresh Installed")
         btn_refresh.clicked.connect(self._refresh_models)
         col1.addWidget(btn_refresh)
+        btn_gguf = QPushButton("Register GGUF…")
+        btn_gguf.setToolTip("Inspect a local GGUF and create it as an Ollama model")
+        btn_gguf.clicked.connect(self._open_gguf_registration)
+        col1.addWidget(btn_gguf)
         grid.addLayout(col1)
 
         grid.addSpacing(12)
@@ -404,6 +572,8 @@ class OllamaSettingsDialog(QDialog):
         """Fetch installed models from Ollama and fill the combobox."""
         self.cmb_model.clear()
         models = _ollama_list_models(self.txt_url.text().strip() or None)
+        registered = [item['ollama_name'] for item in load_registered_models()]
+        models = list(dict.fromkeys([*models, *registered]))
         if models:
             self.cmb_model.addItems(models)
         if current_model and current_model not in models:
@@ -469,6 +639,17 @@ class OllamaSettingsDialog(QDialog):
         dlg.exec()
         # Refresh combobox -- models may have been added/removed
         self._populate_models(self.cmb_model.currentText().strip())
+
+    def _open_gguf_registration(self):
+        dialog = GGUFRegistrationDialog(self)
+        if dialog.exec() != QDialog.DialogCode.Accepted or not dialog.record:
+            return
+        model_name = dialog.record['ollama_name']
+        self._populate_models(model_name)
+        self.cmb_model.setCurrentText(model_name)
+        self.lbl_status.setText(
+            f"Registered {model_name}. Save settings to use it for Ollama classification."
+        )
 
     def _save(self):
         self.settings['url'] = self.txt_url.text().strip() or _OLLAMA_DEFAULTS['url']
