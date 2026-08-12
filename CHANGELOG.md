@@ -45,6 +45,8 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added Qt localization infrastructure with bounded JSON catalogs, compiled
   `.qm` catalogs, system-locale detection, `FILEORGANIZER_LOCALE` override,
   and Simplified Chinese translations for the core desktop navigation surface.
+- Added application-wide Qt accessibility metadata for interactive controls,
+  deterministic visible tab order, and Enter activation for focused buttons.
 
 ## [v8.5.20] - 2026-08-11
 

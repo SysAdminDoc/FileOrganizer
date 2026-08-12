@@ -418,6 +418,10 @@ session, set `FILEORGANIZER_LOCALE`, for example
 JSON under `locale/`; release builds load the matching Qt `.qm` catalog and
 fall back to the JSON catalog when a compiled catalog is unavailable.
 
+Interactive controls receive accessible names and descriptions from their
+visible labels/tooltips, visible panels get a deterministic Tab order, and
+focused buttons can be activated with Enter.
+
 ### AI Providers
 
 | Provider | Use | Model |
