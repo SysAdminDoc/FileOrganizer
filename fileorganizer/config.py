@@ -5,10 +5,28 @@ from pathlib import Path
 
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) if '__file__' in dir() else os.getcwd()
 
+
+def resolve_app_data_dir(
+    script_dir: str | os.PathLike[str] | None = None,
+    appdata: str | os.PathLike[str] | None = None,
+) -> str:
+    """Resolve the settings root, honoring a portable.flag beside the app.
+
+    Portable data is kept in a named subdirectory beside the executable so a
+    portable install never pollutes its code directory with databases, logs,
+    or caches.  The marker is deliberately presence-only; it contains no
+    settings or executable instructions.
+    """
+    script_root = Path(script_dir or _SCRIPT_DIR).resolve()
+    if (script_root / "portable.flag").is_file():
+        return str(script_root / "FileOrganizerData")
+    base = Path(appdata or os.environ.get("APPDATA") or os.path.expanduser("~"))
+    return str(base / "FileOrganizer")
+
+
 # ── App Data Directory ────────────────────────────────────────────────────────
 # All settings, caches, logs stored in %APPDATA%/FileOrganizer (never beside script)
-_APP_DATA_DIR = os.path.join(os.environ.get('APPDATA', os.path.expanduser('~')),
-                              'FileOrganizer')
+_APP_DATA_DIR = resolve_app_data_dir()
 os.makedirs(_APP_DATA_DIR, exist_ok=True)
 
 # One-time migration: move legacy files from script dir into _APP_DATA_DIR

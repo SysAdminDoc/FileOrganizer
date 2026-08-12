@@ -61,6 +61,10 @@ Current shell boundaries:
   registers a hidden, least-privilege per-user Task Scheduler entry and keeps
   one bounded rollover log; removing or disabling the task is available from
   the same panel.
+- Portable deployments can place an empty `portable.flag` beside the Python
+  entry point or packaged executable. Settings, databases, caches, and logs
+  then live under the neighboring `FileOrganizerData` directory instead of
+  `%APPDATA%\FileOrganizer`.
 - The optional CLIP visual index is local-only and fail-closed. Install the
   heavyweight ML stack separately, then use `clip_index_run.py` to build a
   ViT-L-14 / sqlite-vec image index or query nearest visual matches.

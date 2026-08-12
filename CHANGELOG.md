@@ -14,6 +14,8 @@ All notable changes to FileOrganizer will be documented in this file.
   XMP classification sidecars, a CLI mode, and a WinUI **Save as DNG** action.
 - Added a validated keyboard-shortcut registry and legacy desktop Settings
   panel for customizing core scan, apply, preview, undo, and navigation actions.
+- Added portable-mode data-root resolution: an empty `portable.flag` beside the
+  app keeps settings, caches, databases, and logs in `FileOrganizerData`.
 
 ## [v8.5.20] - 2026-08-11
 
