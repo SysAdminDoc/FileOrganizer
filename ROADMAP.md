@@ -6,14 +6,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ---
 
-**L-2: Few-shot teaching panel**
-Drag a handful of files into a category to generate 3-5 in-context examples prepended to future
-LLM prompts for that category. Stored in `few_shot_examples.json`. Depends on NEXT-21.
-
-- [ ] **Impact**: 4 | **Effort**: 3
-
-- [ ] Source: [S6] thebearwithabite adaptive learning
-
 **L-3: OCR pipeline**
 Tesseract OCR on import for screenshots and scanned PDFs. Pass extracted text to LLM for
 content-based classification. Optional dependency -- skip gracefully if Tesseract not installed.
@@ -51,26 +43,6 @@ source folder, or triggers headless classify+apply via COM shell extension.
 
 - [ ] **Impact**: 3 | **Effort**: 3
 
-**L-7: Archive content inspection**
-Complete `archive_extractor.py`: list top-level items inside ZIP/RAR/7z/tar, extract preview
-image if present, feed filelist to keyword classifier. No extraction required for classification.
-Add path-traversal guard (validate extracted paths against target dir) as part of this work.
-EXTRACTORX [S59] has a clean `ExtractionService` threading + queue model and magic-byte archive
-detection in `extractorx/archive.py` worth porting; note that EXTRACTORX itself does NOT ship
-a path-traversal guard, so N-13 still owns that guarantee.
-
-- [ ] **Impact**: 3 | **Effort**: 3
-
-- [ ] Source: [S59] EXTRACTORX `extractorx/extractor.py` ExtractionService + `extractorx/archive.py`
-
-**L-8: Bi-directional sync (symlink mode)**
-Optional "keep original in place, symlink into organized tree" mode for users who cannot move
-files. Useful for DJs and photographers whose DAM tools track original paths.
-
-- [ ] **Impact**: 3 | **Effort**: 3
-
-- [ ] Source: [S9] TagStudio non-destructive philosophy
-
 **L-9: GPU quantization controls (Ollama)**
 Expose `num_gpu`, `num_thread`, and model quantization (Q4/Q5/Q8) in Ollama settings panel.
 Add a "Benchmark Ollama speed" helper reporting tokens/sec for current settings.
@@ -91,14 +63,6 @@ already-hashed files. Essential for multi-TB dedup interrupted runs.
 - [ ] **Impact**: 3 | **Effort**: 3
 
 - [ ] Source: [S11] fclones checkpointing pattern
-
-**L-13: macOS / Linux parity**
-Abstract watch mode behind a `WatchBackend` protocol so macOS (`FSEvents`) and Linux (`inotify`)
-backends can be swapped in. Address symlinks vs junction points and `shutil` fallback differences.
-
-- [ ] **Impact**: 3 | **Effort**: 4
-
-- [ ] Source: [S8] organize-cli, [S1] LlamaFS, [S2] Local-File-Organizer
 
 **L-14: i18n / localization**
 Externalize all UI strings to `locale/en_US.json`. Add Chinese (Simplified) as first non-English
