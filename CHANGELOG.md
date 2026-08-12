@@ -42,6 +42,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added progressive dedup checkpoints for prefix, suffix, full-content,
   perceptual, and audio stages. Interrupted scans now resume from bounded
   SQLite state, while completed scans clear their checkpoint records.
+- Added Qt localization infrastructure with bounded JSON catalogs, compiled
+  `.qm` catalogs, system-locale detection, `FILEORGANIZER_LOCALE` override,
+  and Simplified Chinese translations for the core desktop navigation surface.
 
 ## [v8.5.20] - 2026-08-11
 

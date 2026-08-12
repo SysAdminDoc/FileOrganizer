@@ -409,6 +409,15 @@ successful catalog release and sync status.
 
 ## Configuration
 
+### Interface language
+
+The legacy PyQt desktop interface follows the system locale and ships English
+and Simplified Chinese catalogs. To override the detected locale for a
+session, set `FILEORGANIZER_LOCALE`, for example
+`FILEORGANIZER_LOCALE=zh_CN python -m fileorganizer`. Catalogs are editable
+JSON under `locale/`; release builds load the matching Qt `.qm` catalog and
+fall back to the JSON catalog when a compiled catalog is unavailable.
+
 ### AI Providers
 
 | Provider | Use | Model |
