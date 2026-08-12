@@ -4,6 +4,7 @@
 Run this file to start FileOrganizer:
     python run.py
     python run.py --source "C:/Users/You/Downloads"
+    python run.py --source "C:/Users/You/Downloads" --headless --auto-apply
     python run.py --profile MyProfile --auto-apply
     python run.py --dry-run --profile MyProfile --auto-apply
 """

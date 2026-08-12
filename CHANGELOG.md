@@ -26,6 +26,10 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added optional local Tesseract OCR during import for screenshot images and
   scanned PDFs, with bounded Poppler rendering, persisted OCR settings, and
   sanitized OCR context passed to local LLM classification.
+- Added Windows Explorer folder verbs for opening a selected folder in the GUI
+  or running the configured scan and guarded apply pipeline offscreen. The
+  registration now targets the real `run.py` entrypoint, uses `%1`/`%V` for
+  selected folders/background views, and removes both verbs cleanly.
 
 ## [v8.5.20] - 2026-08-11
 

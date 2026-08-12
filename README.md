@@ -439,6 +439,17 @@ Use `FILEORGANIZER_TESSERACT` or `FILEORGANIZER_PDF_RENDERER` when the binaries
 are not on `PATH`. Missing optional tools fail closed and do not affect normal
 metadata extraction.
 
+### Windows Explorer context menu
+
+On Windows, use **Settings → Register Shell Extension** to add both GUI and
+headless actions to Explorer folder menus. **Organize with FileOrganizer** opens
+the normal review window for the selected folder. **Organize and Apply with
+FileOrganizer** runs the configured rule-based/LLM scan offscreen, writes the
+same guarded operation plan used by scheduled runs, and applies it. The
+headless action honors `--dry-run` when launched from the command line; both
+actions use the saved category destinations and never require a system-wide
+registry change.
+
 Manual category changes and the rename dialog's **Correct Category** action are
 saved as adaptive corrections. An unchanged folder is classified from its
 fingerprint before cache, metadata, marketplace, embeddings, or provider work;

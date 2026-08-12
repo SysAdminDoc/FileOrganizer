@@ -554,6 +554,9 @@ class ScanMixin:
         self.worker.phase.connect(self._update_phase)
         self.worker.result_ready.connect(self._on_files_result)
         self.worker.finished.connect(self._on_files_scan_done)
+        before_start = getattr(self, '_before_scan_worker_start', None)
+        if callable(before_start):
+            before_start(self.worker)
         self.worker.start()
 
     def _on_files_result(self, r: dict):
