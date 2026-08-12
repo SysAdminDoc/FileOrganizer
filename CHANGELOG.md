@@ -53,6 +53,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added bounded cached waveform PNG previews to Browse asset details, with
   standard-library WAV/AIFF decoding and optional `soundfile`/`ffmpeg` fallbacks
   for compressed audio formats.
+- Added bounded archive payload quarantine: design-looking archives containing
+  executable or script members are routed to `_Quarantine/<archive-stem>/`
+  without extracting or executing untrusted content.
 
 ## [v8.5.20] - 2026-08-11
 

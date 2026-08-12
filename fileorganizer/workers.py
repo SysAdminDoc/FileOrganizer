@@ -36,6 +36,8 @@ from fileorganizer.classifier import (
 from fileorganizer.metadata import (
     extract_folder_metadata, MetadataExtractor, ArchivePeeker, _extract_file_content,
 )
+from fileorganizer.archive_extractor import DESIGN_EXTENSIONS, is_archive
+from fileorganizer.quarantine import quarantine_source_name
 from fileorganizer.ocr import extract_ocr
 from fileorganizer.ollama import (
     ollama_classify_folder, ollama_classify_batch, load_ollama_settings, save_ollama_settings,
@@ -69,6 +71,79 @@ from fileorganizer.models import RenameItem, CategorizeItem, FileItem
 from fileorganizer.xmp_sidecar import write_classification_sidecar
 from fileorganizer.audit_log import audit_event, configure_audit, new_trace_id
 from fileorganizer.metrics import ensure_metrics_exporter, record_files_moved
+
+
+def _safe_archive_peek(peek: dict) -> dict:
+    """Make archive metadata JSON-safe without changing the UI-facing peek API."""
+    safe = dict(peek or {})
+    extensions = safe.get('extensions', {})
+    safe['extensions'] = dict(extensions)
+    safe['names'] = list(safe.get('names', []))[:20]
+    safe['quarantine_files'] = list(safe.get('quarantine_files', []))[:50]
+    safe['quarantine_count'] = int(safe.get('quarantine_count', 0) or 0)
+    return safe
+
+
+def _archive_peek_looks_like_design_bundle(peek: dict) -> bool:
+    """Return whether bounded archive metadata contains a design asset."""
+    extensions = peek.get('extensions', {}) if isinstance(peek, dict) else {}
+    return any(
+        count and extension in DESIGN_EXTENSIONS
+        for extension, count in extensions.items()
+    )
+
+
+def _mark_archive_quarantine(
+    path: str,
+    metadata: dict,
+    log_cb=None,
+    *,
+    peek: dict | None = None,
+) -> bool:
+    """Annotate a design archive containing executable payloads for quarantine.
+
+    This only reads archive headers/member lists. It never extracts or executes a
+    member, and the bounded ``ArchivePeeker`` keeps the scan predictable.
+    """
+    if not is_archive(path):
+        return False
+    try:
+        archive_peek = peek if peek is not None else ArchivePeeker.peek(path)
+        if not _archive_peek_looks_like_design_bundle(archive_peek):
+            return False
+        quarantine_files = list(archive_peek.get('quarantine_files', []))
+        quarantine_count = int(
+            archive_peek.get('quarantine_count', len(quarantine_files)) or 0
+        )
+        if not quarantine_count or not quarantine_files:
+            return False
+        metadata['archive_contents'] = _safe_archive_peek(archive_peek)
+        metadata['quarantine_files'] = quarantine_files[:50]
+        metadata['quarantine_count'] = quarantine_count
+        metadata['quarantine_source_name'] = quarantine_source_name(
+            os.path.basename(path)
+        )
+        metadata['quarantine_reason'] = 'executable payload found in design archive'
+        if log_cb:
+            log_cb(
+                f"    [QUARANTINE] {os.path.basename(path)} contains "
+                f"{quarantine_count} executable payload(s)"
+            )
+        return True
+    except Exception:
+        return False
+
+
+def _archive_quarantine_detail(metadata: dict) -> str:
+    """Return a compact human-readable reason for the scan table."""
+    count = int(metadata.get('quarantine_count', 0) or 0)
+    files = metadata.get('quarantine_files') or []
+    preview = ', '.join(str(name) for name in files[:3])
+    if len(files) > 3:
+        preview += ', …'
+    return f"Archive quarantined: {count} executable payload(s)" + (
+        f" ({preview})" if preview else ''
+    )
 
 
 def _worker_audit_start(
@@ -1757,12 +1832,22 @@ class ScanFilesWorker(QThread):
             if not is_folder and fsize > 0:
                 cached = cache.lookup(fpath_str, fmtime, fsize)
 
+            archive_quarantined = False
             if cached:
                 cat      = cached['category']
                 conf     = cached['confidence']
                 method   = cached['method']
                 item_meta = cached.get('metadata', {})
                 cache_hits += 1
+                if not is_folder:
+                    archive_quarantined = bool(item_meta.get('quarantine_files'))
+                    if not archive_quarantined:
+                        archive_quarantined = _mark_archive_quarantine(
+                            fpath_str, item_meta, self.log.emit
+                        )
+                    if archive_quarantined:
+                        item_meta.setdefault('quarantine_category', cat)
+                        cat, conf, method = '_Quarantine', 100, 'archive_quarantine'
             else:
                 # Classify with multi-signal engine
                 cat, conf, method = _classify_pc_item(
@@ -1787,21 +1872,32 @@ class ScanFilesWorker(QThread):
 
                 # Archive peek — inspect archive contents for smarter classification
                 if not is_folder:
-                    ext_lower = os.path.splitext(name)[1].lower()
-                    if ext_lower in {'.zip', '.rar', '.7z', '.tar.gz', '.tar.bz2', '.tgz'}:
+                    archive_peek = None
+                    if is_archive(fpath_str):
                         try:
-                            peek = ArchivePeeker.peek(fpath_str)
-                            if peek:
-                                item_meta['archive_contents'] = peek
-                                arc_cat, arc_conf = ArchivePeeker.classify_contents(peek)
+                            archive_peek = ArchivePeeker.peek(fpath_str)
+                            if archive_peek:
+                                item_meta['archive_contents'] = _safe_archive_peek(
+                                    archive_peek
+                                )
+                                arc_cat, arc_conf = ArchivePeeker.classify_contents(
+                                    archive_peek
+                                )
                                 if arc_conf > conf:
                                     cat, conf, method = arc_cat, arc_conf, 'archive_peek'
                                     self.log.emit(f"    [ARCHIVE] Reclassified via contents → {cat} ({conf}%)")
                         except Exception:
                             pass
 
+                    archive_quarantined = _mark_archive_quarantine(
+                        fpath_str, item_meta, self.log.emit, peek=archive_peek
+                    ) if archive_peek is not None else False
+                    if archive_quarantined:
+                        item_meta['quarantine_category'] = cat
+                        cat, conf, method = '_Quarantine', 100, 'archive_quarantine'
+
                 # Rule Engine — evaluate user-defined rules
-                if not is_folder:
+                if not is_folder and not archive_quarantined:
                     try:
                         rules = RuleEngine.load_rules()
                         if rules:
@@ -1821,7 +1917,7 @@ class ScanFilesWorker(QThread):
                         pass
 
                 # Plugin classifiers
-                if not is_folder:
+                if not is_folder and not archive_quarantined:
                     try:
                         plug_result = PluginManager.run_classifiers(fpath_str, item_meta)
                         if plug_result:
@@ -1835,7 +1931,7 @@ class ScanFilesWorker(QThread):
                 # A previously cached generic image may gain AI-art metadata
                 # routing after an app upgrade; re-check only cached items so
                 # the normal fast path remains unchanged for fresh scans.
-                if cached and not is_folder:
+                if cached and not is_folder and not archive_quarantined:
                     try:
                         cached_plugin = PluginManager.run_classifiers(fpath_str, item_meta)
                         if cached_plugin and cached_plugin[1] > conf:
@@ -1851,7 +1947,11 @@ class ScanFilesWorker(QThread):
                 if not is_folder and fsize > 0:
                     cache.store(fpath_str, fmtime, fsize, cat, conf, method, item_meta)
 
-            detail = f"{'Folder' if is_folder else 'File'}: {os.path.splitext(name)[1] or '(no ext)'}"
+            detail = (
+                _archive_quarantine_detail(item_meta)
+                if archive_quarantined else
+                f"{'Folder' if is_folder else 'File'}: {os.path.splitext(name)[1] or '(no ext)'}"
+            )
             self.log.emit(f"  {name}  →  {cat}  ({conf}%) [{method}]")
 
             self.result_ready.emit({
@@ -2510,16 +2610,27 @@ class ScanFilesLLMWorker(QThread):
             cached_category = cached['category']
             cached_confidence = cached['confidence']
             cached_method = cached['method']
-            try:
-                cached_plugin = PluginManager.run_classifiers(
-                    str(bd['item_path']), item_meta
+            archive_quarantined = bool(item_meta.get('quarantine_files'))
+            if not archive_quarantined and not bd['is_folder']:
+                archive_quarantined = _mark_archive_quarantine(
+                    str(bd['item_path']), item_meta, self.log.emit
                 )
-                if cached_plugin and cached_plugin[1] > cached_confidence:
-                    cached_category, cached_confidence = cached_plugin
-                    cached_method = 'plugin'
-                    detail = 'ai_art_generation_metadata'
-            except Exception:
-                pass
+            if archive_quarantined:
+                item_meta.setdefault('quarantine_category', cached_category)
+                cached_category, cached_confidence = '_Quarantine', 100
+                cached_method = 'archive_quarantine'
+                detail = _archive_quarantine_detail(item_meta)
+            else:
+                try:
+                    cached_plugin = PluginManager.run_classifiers(
+                        str(bd['item_path']), item_meta
+                    )
+                    if cached_plugin and cached_plugin[1] > cached_confidence:
+                        cached_category, cached_confidence = cached_plugin
+                        cached_method = 'plugin'
+                        detail = 'ai_art_generation_metadata'
+                except Exception:
+                    pass
             result = {
                 'name': bd['name'], 'full_src': str(bd['item_path']),
                 'category': cached_category, 'confidence': cached_confidence,
@@ -2554,10 +2665,20 @@ class ScanFilesLLMWorker(QThread):
                     if summary:
                         self.log.emit(f"    [META] {summary}")
 
+            archive_quarantined = False
+            if not bd['is_folder']:
+                archive_quarantined = _mark_archive_quarantine(
+                    str(bd['item_path']), item_meta, self.log.emit
+                )
+                if archive_quarantined:
+                    item_meta['quarantine_category'] = cat
+                    cat, conf, method = '_Quarantine', 100, 'archive_quarantine'
+                    reason = _archive_quarantine_detail(item_meta)
+
             # Built-in ComfyUI/A1111 routing is metadata-only and only matches
             # images carrying generation evidence, so ordinary photographs
             # continue through the configured LLM/rule path unchanged.
-            if not bd['is_folder']:
+            if not bd['is_folder'] and not archive_quarantined:
                 try:
                     ai_art_result = PluginManager.run_classifiers(
                         str(bd['item_path']), item_meta

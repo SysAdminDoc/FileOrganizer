@@ -1,5 +1,5 @@
 """FileOrganizer — Metadata extraction from files (EXIF, audio, documents, archives)."""
-import os, re, json, hashlib, base64, io, zipfile, gzip, logging, shutil, subprocess
+import os, re, json, hashlib, base64, io, zipfile, gzip, logging, shutil, subprocess, tarfile
 from collections import Counter
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -11,6 +11,7 @@ from fileorganizer.bootstrap import (
 )
 from fileorganizer.config import _APP_DATA_DIR
 from fileorganizer import winrt_metadata
+from fileorganizer.quarantine import is_quarantine_member
 
 log = logging.getLogger(__name__)
 try:
@@ -1073,44 +1074,50 @@ class ArchivePeeker:
 
     @staticmethod
     def peek(filepath) -> dict:
-        """Returns {'file_count': N, 'total_size': N, 'extensions': Counter, 'names': list[:20]}"""
-        result = {'file_count': 0, 'total_size': 0, 'extensions': Counter(), 'names': []}
+        """Return bounded member counts, extensions, names, and quarantine evidence."""
+        result = {
+            'file_count': 0, 'total_size': 0, 'extensions': Counter(), 'names': [],
+            'quarantine_files': [], 'quarantine_count': 0,
+        }
         ext = os.path.splitext(filepath)[1].lower()
+        filename_lower = os.path.basename(filepath).lower()
+
+        def add_member(name, size=0):
+            result['file_count'] += 1
+            result['total_size'] += max(0, int(size or 0))
+            fext = os.path.splitext(str(name))[1].lower()
+            if fext:
+                result['extensions'][fext] += 1
+            if len(result['names']) < 20:
+                result['names'].append(str(name))
+            if is_quarantine_member(str(name)):
+                result['quarantine_count'] += 1
+                if len(result['quarantine_files']) < 50:
+                    result['quarantine_files'].append(str(name))
+
         try:
             if ext == '.zip':
                 with zipfile.ZipFile(filepath, 'r') as zf:
-                    for info in zf.infolist():
+                    for info in zf.infolist()[:5000]:
                         if info.is_dir():
                             continue
-                        result['file_count'] += 1
-                        result['total_size'] += info.file_size
-                        fext = os.path.splitext(info.filename)[1].lower()
-                        if fext:
-                            result['extensions'][fext] += 1
-                        if len(result['names']) < 20:
-                            result['names'].append(info.filename)
+                        add_member(info.filename, info.file_size)
             elif ext == '.rar' and HAS_RARFILE:
                 with _rarfile.RarFile(filepath, 'r') as rf:
-                    for info in rf.infolist():
+                    for info in rf.infolist()[:5000]:
                         if info.is_dir():
                             continue
-                        result['file_count'] += 1
-                        result['total_size'] += info.file_size
-                        fext = os.path.splitext(info.filename)[1].lower()
-                        if fext:
-                            result['extensions'][fext] += 1
-                        if len(result['names']) < 20:
-                            result['names'].append(info.filename)
+                        add_member(info.filename, info.file_size)
             elif ext == '.7z' and HAS_PY7ZR:
                 with _py7zr.SevenZipFile(filepath, 'r') as sz:
-                    for name, bio in sz.read().items():
-                        result['file_count'] += 1
-                        result['total_size'] += bio.getbuffer().nbytes if hasattr(bio, 'getbuffer') else 0
-                        fext = os.path.splitext(name)[1].lower()
-                        if fext:
-                            result['extensions'][fext] += 1
-                        if len(result['names']) < 20:
-                            result['names'].append(name)
+                    for name in sz.getnames()[:5000]:
+                        add_member(name)
+            elif filename_lower.endswith(('.tar', '.tar.gz', '.tgz', '.tar.bz2', '.tar.xz')):
+                with tarfile.open(filepath, 'r:*') as tf:
+                    for tar_member in tf.getmembers()[:5000]:
+                        if not tar_member.isfile():
+                            continue
+                        add_member(tar_member.name, tar_member.size)
         except Exception:
             pass
         return result
