@@ -255,6 +255,10 @@ Python process tree.
 - **Audio waveform preview** — selecting an asset folder in Browse shows a
   bounded cached waveform for its first audio file. WAV/AIFF decode through the
   standard library; `soundfile` or `ffmpeg` extends support to compressed formats.
+- **Archive payload quarantine** — archives that look like design bundles are
+  inspected without extraction; embedded `.exe`, `.bat`, `.ps1`, `.scr`, `.cmd`,
+  `.msi`, `.lnk`, or `.vbs` payloads route the archive to a collision-safe
+  `_Quarantine/<archive-stem>/` destination instead of the asset library.
 - **Shell Cleanup and Duplicates pages** — read-only review screens that do
   not mutate files. Use the Python desktop Cleanup Tools or Duplicate Finder
   for confirmation, Trash/quarantine, hard-link, move, and undo actions.

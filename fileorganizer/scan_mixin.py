@@ -18,6 +18,7 @@ from fileorganizer.duplicates import ConflictResolver
 from fileorganizer.plugins import PluginManager
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
 from fileorganizer.path_safety import PathSafetyError, validate_tree_pair
+from fileorganizer.quarantine import quarantine_destination
 from fileorganizer.workers import (
     ScanAepWorker, ScanCategoryWorker, ScanLLMWorker,
     ScanFilesWorker, ScanFilesLLMWorker, format_size
@@ -576,6 +577,16 @@ class ScanMixin:
         it.dup_detail   = r.get('dup_detail', '')
         it.dup_is_original = r.get('dup_is_original', False)
         it.metadata    = r.get('metadata', {})
+        _planned_category = it.category
+        _quarantine_files = it.metadata.get('quarantine_files') or []
+        if _quarantine_files:
+            it.metadata.setdefault('quarantine_category', _planned_category)
+            it.category = '_Quarantine'
+            it.confidence = 100
+            it.method = 'archive_quarantine'
+            it.detail = r.get('detail') or (
+                f"Archive quarantined: {len(_quarantine_files)} executable payload(s)"
+            )
         it.vision_description = r.get('vision_description', '')
         it.vision_ocr  = r.get('vision_ocr', '')
         it.selected    = not it.is_duplicate   # auto-deselect dupes
@@ -617,7 +628,14 @@ class ScanMixin:
                            '.tiff', '.tif', '.bmp', '.raw', '.cr2', '.cr3', '.crw', '.nef', '.nrw',
                            '.arw', '.dng', '.orf', '.rw2', '.raf', '.pef', '.rwl', '.x3f', '.3fr',
                            '.dcr', '.kdc', '.mrw', '.iiq', '.fff', '.mef', '.mos', '.cap'}
-        if (_photo_s_dst.get('enabled') and not it.is_folder
+        if _quarantine_files:
+            quarantine_base = self._pc_dst_for(
+                it.metadata.get('quarantine_category', 'Archives')
+            )
+            it.dest_root, raw_dst = quarantine_destination(
+                quarantine_base, it.name, it.display_name
+            )
+        elif (_photo_s_dst.get('enabled') and not it.is_folder
                 and os.path.splitext(it.name)[1].lower() in _img_exts_photo):
             preset_key = _photo_s_dst.get('folder_preset', 'flat')
             preset = _PHOTO_FOLDER_PRESETS.get(preset_key, {})
@@ -634,7 +652,8 @@ class ScanMixin:
         else:
             raw_dst = os.path.join(self._pc_dst_for(it.category), it.display_name)
         it.full_dst = self._dedup_file_dst(raw_dst)
-        it.dest_root = self._pc_dst_for(it.category)
+        if not _quarantine_files:
+            it.dest_root = self._pc_dst_for(it.category)
 
         self.file_items.append(it)
         self._add_files_row(it, len(self.file_items) - 1)
