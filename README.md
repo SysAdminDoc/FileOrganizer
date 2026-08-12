@@ -248,6 +248,10 @@ Python process tree.
   journaled move and store an exact-fingerprint correction in `corrections.json`;
   future scans can apply that correction before AI, and the SQLite cache tracks
   the `user_corrections` count.
+- **Virtual bundles** — Browse can create named, non-destructive virtual folders
+  that group asset fingerprints across categories. Add or remove selected assets
+  without moving them; memberships live in `asset_bundles.db` and resolve again
+  after an asset is moved within the library.
 - **Shell Cleanup and Duplicates pages** — read-only review screens that do
   not mutate files. Use the Python desktop Cleanup Tools or Duplicate Finder
   for confirmation, Trash/quarantine, hard-link, move, and undo actions.

@@ -47,6 +47,9 @@ All notable changes to FileOrganizer will be documented in this file.
   and Simplified Chinese translations for the core desktop navigation surface.
 - Added application-wide Qt accessibility metadata for interactive controls,
   deterministic visible tab order, and Enter activation for focused buttons.
+- Added non-destructive Browse virtual bundles backed by `asset_bundles.db`;
+  named bundles group stable asset fingerprints across categories with create,
+  add, remove, and delete controls without changing the filesystem.
 
 ## [v8.5.20] - 2026-08-11
 

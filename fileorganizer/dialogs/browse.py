@@ -12,7 +12,7 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
-    QPushButton,
+    QPushButton, QInputDialog, QMessageBox,
     QTreeWidget,
     QTreeWidgetItem,
     QVBoxLayout,
@@ -20,9 +20,17 @@ from PyQt6.QtWidgets import (
 )
 
 from fileorganizer.config import get_active_stylesheet, get_active_theme
+from fileorganizer.asset_bundles import (
+    add_assets, asset_fingerprint, bundle_members, create_bundle, delete_bundle,
+    list_bundles, remove_members,
+)
 from fileorganizer.library_search import index_library, search_library
 from fileorganizer.reclassification import reclassify_folder
 from fileorganizer.workers import format_size
+
+
+BUNDLE_ID_ROLE = Qt.ItemDataRole.UserRole + 20
+BUNDLE_FINGERPRINT_ROLE = Qt.ItemDataRole.UserRole + 21
 
 
 class BrowseTreeWidget(QTreeWidget):
@@ -77,10 +85,11 @@ class BrowseTreeWidget(QTreeWidget):
 class BrowsePanel(QWidget):
     """Browse immediate category children and drag them between categories."""
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, bundle_db_path=None):
         super().__init__(parent)
         self.setStyleSheet(get_active_stylesheet())
         self._indexed_search_root = ""
+        self._bundle_db_path = bundle_db_path
         self._build_ui()
 
     def _build_ui(self):
@@ -123,6 +132,27 @@ class BrowsePanel(QWidget):
         reindex.clicked.connect(self._reindex_search)
         search_row.addWidget(reindex)
         lay.addLayout(search_row)
+
+        bundle_row = QHBoxLayout()
+        bundle_row.addWidget(QLabel("Virtual bundles:"))
+        new_bundle = QPushButton("New Bundle")
+        new_bundle.setToolTip("Create a named, non-destructive virtual folder")
+        new_bundle.clicked.connect(self._new_bundle)
+        bundle_row.addWidget(new_bundle)
+        add_bundle = QPushButton("Add Selected")
+        add_bundle.setToolTip("Add selected asset folders to a virtual bundle")
+        add_bundle.clicked.connect(self._add_selected_to_bundle)
+        bundle_row.addWidget(add_bundle)
+        remove_bundle = QPushButton("Remove Selected")
+        remove_bundle.setToolTip("Remove selected assets from their virtual bundle")
+        remove_bundle.clicked.connect(self._remove_selected_from_bundle)
+        bundle_row.addWidget(remove_bundle)
+        delete_bundle_button = QPushButton("Delete Bundle")
+        delete_bundle_button.setToolTip("Delete a virtual bundle without deleting assets")
+        delete_bundle_button.clicked.connect(self._delete_selected_bundle)
+        bundle_row.addWidget(delete_bundle_button)
+        bundle_row.addStretch()
+        lay.addLayout(bundle_row)
 
         self.tree = BrowseTreeWidget()
         self.tree.setHeaderLabels(["Asset / Category", "Items", "Files", "Size"])
@@ -275,6 +305,7 @@ class BrowsePanel(QWidget):
                 ])
                 item.setToolTip(0, asset_entry.path)
                 item.setData(0, Qt.ItemDataRole.UserRole, asset_entry.path)
+                item.setData(0, BUNDLE_FINGERPRINT_ROLE, asset_fingerprint(asset_entry.path))
                 item.setFlags(
                     Qt.ItemFlag.ItemIsEnabled
                     | Qt.ItemFlag.ItemIsSelectable
@@ -288,6 +319,158 @@ class BrowsePanel(QWidget):
             f"{category_count} categories · {asset_count} assets · "
             "drag an asset onto a category to reclassify"
         )
+
+        # Virtual bundles are rendered as a separate, non-filesystem tree after
+        # categories are scanned so a bundle can resolve members that moved.
+        bundles = list_bundles(db_path=self._bundle_db_path) if self._bundle_db_path else list_bundles()
+        if bundles:
+            virtual_root = QTreeWidgetItem(["Virtual Bundles", "", "", ""])
+            virtual_root.setToolTip(0, "Non-destructive groupings; files stay in their categories")
+            virtual_root.setFlags(Qt.ItemFlag.ItemIsEnabled)
+            self.tree.addTopLevelItem(virtual_root)
+            records_by_fingerprint = {}
+            for category_item_index in range(self.tree.topLevelItemCount() - 1):
+                category_item = self.tree.topLevelItem(category_item_index)
+                for member_index in range(category_item.childCount()):
+                    member = category_item.child(member_index)
+                    fingerprint = member.data(0, BUNDLE_FINGERPRINT_ROLE)
+                    if fingerprint:
+                        records_by_fingerprint.setdefault(fingerprint, []).append(member)
+            for bundle in bundles:
+                bundle_item = QTreeWidgetItem([
+                    bundle["name"],
+                    f"{bundle['member_count']} assets",
+                    "",
+                    "",
+                ])
+                bundle_item.setData(0, BUNDLE_ID_ROLE, int(bundle["id"]))
+                bundle_item.setToolTip(0, "Virtual bundle — no files are moved")
+                bundle_item.setFlags(
+                    Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
+                )
+                virtual_root.addChild(bundle_item)
+                resolved_count = 0
+                for member in bundle_members(int(bundle["id"]), db_path=self._bundle_db_path) if self._bundle_db_path else bundle_members(int(bundle["id"])):
+                    fingerprint = member["fingerprint"]
+                    matches = records_by_fingerprint.get(fingerprint, [])
+                    if not matches:
+                        missing = QTreeWidgetItem([
+                            f"[Missing] {member['asset_name'] or member['path_hint'] or fingerprint[:12]}",
+                            "",
+                            "",
+                            "",
+                        ])
+                        missing.setData(0, BUNDLE_ID_ROLE, int(bundle["id"]))
+                        missing.setData(0, BUNDLE_FINGERPRINT_ROLE, fingerprint)
+                        missing.setToolTip(0, member["path_hint"] or "Asset is not in the current Browse root")
+                        missing.setFlags(
+                            Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
+                        )
+                        bundle_item.addChild(missing)
+                        continue
+                    for source_item in matches:
+                        child = QTreeWidgetItem([
+                            source_item.text(0),
+                            source_item.text(1),
+                            source_item.text(2),
+                            source_item.text(3),
+                        ])
+                        child.setData(0, Qt.ItemDataRole.UserRole, source_item.data(0, Qt.ItemDataRole.UserRole))
+                        child.setData(0, BUNDLE_ID_ROLE, int(bundle["id"]))
+                        child.setData(0, BUNDLE_FINGERPRINT_ROLE, fingerprint)
+                        child.setToolTip(0, source_item.toolTip(0))
+                        child.setFlags(
+                            Qt.ItemFlag.ItemIsEnabled
+                            | Qt.ItemFlag.ItemIsSelectable
+                            | Qt.ItemFlag.ItemIsDragEnabled
+                        )
+                        bundle_item.addChild(child)
+                        resolved_count += 1
+                bundle_item.setText(2, str(resolved_count))
+                bundle_item.setExpanded(True)
+            virtual_root.setText(1, f"{len(bundles)} bundles")
+            virtual_root.setExpanded(True)
+
+    def _new_bundle(self):
+        name, accepted = QInputDialog.getText(self, "New Virtual Bundle", "Bundle name:")
+        if not accepted:
+            return
+        try:
+            create_bundle(name, **({"db_path": self._bundle_db_path} if self._bundle_db_path else {}))
+        except (OSError, ValueError) as exc:
+            QMessageBox.warning(self, "Bundle not created", str(exc))
+            return
+        self.lbl_status.setText(f"Created virtual bundle: {name.strip()}")
+        self.refresh()
+
+    def _selected_asset_paths(self) -> list[str]:
+        paths = []
+        for item in self.tree.selectedItems():
+            value = item.data(0, Qt.ItemDataRole.UserRole)
+            if isinstance(value, str) and value and os.path.exists(value):
+                paths.append(value)
+        return list(dict.fromkeys(paths))
+
+    def _add_selected_to_bundle(self):
+        paths = self._selected_asset_paths()
+        if not paths:
+            self.lbl_status.setText("Select one or more asset folders first.")
+            return
+        bundles = list_bundles(db_path=self._bundle_db_path) if self._bundle_db_path else list_bundles()
+        if not bundles:
+            self.lbl_status.setText("Create a virtual bundle first.")
+            return
+        names = [bundle["name"] for bundle in bundles]
+        name, accepted = QInputDialog.getItem(self, "Add to Virtual Bundle", "Bundle:", names, 0, False)
+        if not accepted:
+            return
+        bundle = next(bundle for bundle in bundles if bundle["name"] == name)
+        kwargs = {"db_path": self._bundle_db_path} if self._bundle_db_path else {}
+        added = add_assets(int(bundle["id"]), paths, **kwargs)
+        self.lbl_status.setText(f"Added {added} asset(s) to {name}.")
+        self.refresh()
+
+    def _remove_selected_from_bundle(self):
+        removals = []
+        for item in self.tree.selectedItems():
+            fingerprint = item.data(0, BUNDLE_FINGERPRINT_ROLE)
+            bundle_id = item.data(0, BUNDLE_ID_ROLE)
+            if fingerprint and bundle_id:
+                removals.append((int(bundle_id), str(fingerprint)))
+        if not removals:
+            self.lbl_status.setText("Select virtual-bundle members to remove.")
+            return
+        kwargs = {"db_path": self._bundle_db_path} if self._bundle_db_path else {}
+        removed = sum(
+            remove_members(bundle_id, [fingerprint], **kwargs)
+            for bundle_id, fingerprint in removals
+        )
+        self.lbl_status.setText(f"Removed {removed} asset(s) from virtual bundles.")
+        self.refresh()
+
+    def _delete_selected_bundle(self):
+        selected = self.tree.selectedItems()
+        if not selected:
+            self.lbl_status.setText("Select a virtual bundle first.")
+            return
+        item = selected[0]
+        bundle_id = item.data(0, BUNDLE_ID_ROLE)
+        if not bundle_id and item.parent():
+            bundle_id = item.parent().data(0, BUNDLE_ID_ROLE)
+        if not bundle_id:
+            self.lbl_status.setText("Select a virtual bundle first.")
+            return
+        answer = QMessageBox.question(
+            self,
+            "Delete Virtual Bundle",
+            "Delete this virtual bundle? The underlying files will not be changed.",
+        )
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+        kwargs = {"db_path": self._bundle_db_path} if self._bundle_db_path else {}
+        delete_bundle(int(bundle_id), **kwargs)
+        self.lbl_status.setText("Virtual bundle deleted; files were not changed.")
+        self.refresh()
 
     def _on_reclassify(self, source_path: str, root: str, target_category: str):
         try:
