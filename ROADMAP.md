@@ -77,12 +77,6 @@ Add a "Benchmark Ollama speed" helper reporting tokens/sec for current settings.
 
 - [ ] **Impact**: 3 | **Effort**: 2
 
-**L-10: Portable mode**
-`portable.flag` file next to the executable switches config, DB, and cache to the same directory
-instead of `%APPDATA%\FileOrganizer\`. Enables USB-drive deployment.
-
-- [ ] **Impact**: 2 | **Effort**: 2
-
 **L-11: ComfyUI / A1111 output sorter preset**
 Plugin (NEXT-25 SDK) that classifies Stable Diffusion / Flux outputs by prompt keywords,
 checkpoint hash, sampler settings, image dimensions. Routes to `AI Art - Landscape` vs
