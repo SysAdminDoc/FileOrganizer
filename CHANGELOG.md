@@ -2,7 +2,7 @@
 
 All notable changes to FileOrganizer will be documented in this file.
 
-## Unreleased
+## [v8.5.21] - 2026-08-12
 
 ### Added
 

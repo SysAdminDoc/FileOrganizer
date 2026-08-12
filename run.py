@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FileOrganizer v8.5.20 — Launch Script
+"""FileOrganizer v8.5.21 — Launch Script
 
 Run this file to start FileOrganizer:
     python run.py
