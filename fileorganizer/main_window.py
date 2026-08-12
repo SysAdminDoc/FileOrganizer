@@ -2529,6 +2529,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             "Fonts":       os.path.join(h, 'Documents', 'Fonts'),
             "Data":        os.path.join(h, 'Documents', 'Data'),
             "Design":      os.path.join(h, 'Documents', 'Design'),
+            "AI Art - Landscape": os.path.join(h, 'Pictures', 'AI Art', 'Landscape'),
+            "AI Art - Portrait": os.path.join(h, 'Pictures', 'AI Art', 'Portrait'),
+            "AI Art - Square": os.path.join(h, 'Pictures', 'AI Art', 'Square'),
+            "AI Art - Other": os.path.join(h, 'Pictures', 'AI Art', 'Other'),
             "Shortcuts":   os.path.join(h, 'Desktop'),
             "Other":       os.path.join(h, 'Downloads', 'Other'),
         }

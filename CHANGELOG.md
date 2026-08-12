@@ -34,6 +34,11 @@ All notable changes to FileOrganizer will be documented in this file.
   advisory Q4/Q5/Q8 quantization hint, and an asynchronous local speed
   benchmark reporting generated tokens per second. All chat, batch, and
   parallel request payloads now share the same bounded runtime options.
+- Added the built-in **AI Art — ComfyUI / A1111** category preset and a
+  metadata-only Stable Diffusion/Flux plugin hook. It parses bounded A1111 and
+  ComfyUI image metadata for prompts, checkpoint hashes, sampler settings,
+  seeds, steps, CFG, and dimensions, routing only marked generations into
+  Landscape, Portrait, Square, or Other categories.
 
 ## [v8.5.20] - 2026-08-11
 

@@ -553,6 +553,13 @@ class MetadataExtractor:
         parts = []
         mt = meta.get('_type', '')
         if mt == 'image':
+            if meta.get('ai_art'):
+                source = meta.get('ai_art_source', 'generation metadata')
+                parts.append(f"AI art ({source})")
+                if meta.get('ai_sampler'):
+                    parts.append(str(meta['ai_sampler']))
+                if meta.get('ai_checkpoint_hash'):
+                    parts.append(f"hash:{meta['ai_checkpoint_hash']}")
             if meta.get('width') and meta.get('height'):
                 parts.append(f"{meta['width']}×{meta['height']}")
             if meta.get('_palette_hex'):
@@ -630,6 +637,12 @@ class MetadataExtractor:
             'sheet_count': 'Sheets', 'slide_count': 'Slides',
             '_palette_hex': 'Dominant Colors',
             'ocr_text': 'OCR Text',
+            'ai_art_source': 'AI Art Source', 'ai_prompt': 'Prompt',
+            'ai_negative_prompt': 'Negative Prompt', 'ai_checkpoint': 'Checkpoint',
+            'ai_checkpoint_hash': 'Checkpoint Hash', 'ai_sampler': 'Sampler',
+            'ai_scheduler': 'Scheduler', 'ai_steps': 'Steps',
+            'ai_cfg_scale': 'CFG Scale', 'ai_seed': 'Seed',
+            'ai_dimensions': 'Generation Size', 'ai_workflow_nodes': 'Workflow Nodes',
         }
         for k, v in meta.items():
             if k in skip or v is None or v == '':
@@ -721,6 +734,11 @@ class MetadataExtractor:
                 pass
         try:
             _merge_missing_metadata(meta, winrt_metadata.extract(filepath))
+        except Exception:
+            pass
+        try:
+            from fileorganizer.ai_art import extract_ai_art_metadata
+            meta.update(extract_ai_art_metadata(filepath))
         except Exception:
             pass
         try:
