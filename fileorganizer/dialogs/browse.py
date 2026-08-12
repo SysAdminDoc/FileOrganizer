@@ -20,6 +20,7 @@ from PyQt6.QtWidgets import (
 )
 
 from fileorganizer.config import get_active_stylesheet, get_active_theme
+from fileorganizer.library_search import index_library, search_library
 from fileorganizer.reclassification import reclassify_folder
 from fileorganizer.workers import format_size
 
@@ -79,6 +80,7 @@ class BrowsePanel(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setStyleSheet(get_active_stylesheet())
+        self._indexed_search_root = ""
         self._build_ui()
 
     def _build_ui(self):
@@ -107,6 +109,21 @@ class BrowsePanel(QWidget):
         root_row.addWidget(refresh)
         lay.addLayout(root_row)
 
+        search_row = QHBoxLayout()
+        search_row.addWidget(QLabel("Natural-language search:"))
+        self.txt_query = QLineEdit()
+        self.txt_query.setPlaceholderText("e.g. show invoice scans or mountain landscape")
+        self.txt_query.returnPressed.connect(self._search)
+        search_row.addWidget(self.txt_query, 1)
+        search = QPushButton("Search")
+        search.clicked.connect(self._search)
+        search_row.addWidget(search)
+        reindex = QPushButton("Reindex")
+        reindex.setToolTip("Refresh the local FTS5 index from the organized root")
+        reindex.clicked.connect(self._reindex_search)
+        search_row.addWidget(reindex)
+        lay.addLayout(search_row)
+
         self.tree = BrowseTreeWidget()
         self.tree.setHeaderLabels(["Asset / Category", "Items", "Files", "Size"])
         self.tree.setAlternatingRowColors(True)
@@ -119,6 +136,14 @@ class BrowsePanel(QWidget):
         self.tree.reclassify_requested.connect(self._on_reclassify)
         lay.addWidget(self.tree, 1)
 
+        self.search_tree = QTreeWidget()
+        self.search_tree.setHeaderLabels(["Match", "Category", "Description", "Score"])
+        self.search_tree.setAlternatingRowColors(True)
+        self.search_tree.setRootIsDecorated(False)
+        self.search_tree.setMinimumHeight(130)
+        self.search_tree.setVisible(False)
+        lay.addWidget(self.search_tree)
+
         self.lbl_status = QLabel("Choose an organized root to browse.")
         self.lbl_status.setProperty("class", "meta")
         lay.addWidget(self.lbl_status)
@@ -130,6 +155,51 @@ class BrowsePanel(QWidget):
         if folder:
             self.txt_root.setText(folder)
             self.refresh()
+
+    def _reindex_search(self):
+        root = self.txt_root.text().strip()
+        if not root or not os.path.isdir(root):
+            self.lbl_status.setText("Choose an existing organized root before indexing.")
+            return
+        count = index_library(root)
+        self._indexed_search_root = os.path.normcase(os.path.abspath(root))
+        self.lbl_status.setText(f"Search index refreshed: {count} folders/files.")
+        if self.txt_query.text().strip():
+            self._run_search(root)
+
+    def _search(self):
+        root = self.txt_root.text().strip()
+        if not root or not os.path.isdir(root):
+            self.lbl_status.setText("Choose an existing organized root before searching.")
+            return
+        query = self.txt_query.text().strip()
+        if not query:
+            self.search_tree.clear()
+            self.search_tree.setVisible(False)
+            self.lbl_status.setText("Enter a search phrase.")
+            return
+        normalized = os.path.normcase(os.path.abspath(root))
+        if normalized != self._indexed_search_root:
+            self._reindex_search()
+        self._run_search(root)
+
+    def _run_search(self, root: str):
+        results = search_library(self.txt_query.text().strip(), library_root=root)
+        self.search_tree.clear()
+        for result in results:
+            item = QTreeWidgetItem([
+                result["name"],
+                result["category"],
+                result["description"],
+                f"{result['score']:.3f}",
+            ])
+            item.setData(0, Qt.ItemDataRole.UserRole, result["path"])
+            item.setToolTip(0, result["citation"])
+            self.search_tree.addTopLevelItem(item)
+        self.search_tree.setVisible(True)
+        self.lbl_status.setText(
+            f"Search: {len(results)} result(s). Results include local path citations."
+        )
 
     @staticmethod
     def _folder_stats(path: str) -> tuple[int, int, int]:
@@ -226,6 +296,7 @@ class BrowsePanel(QWidget):
             self.lbl_status.setText(f"Reclassification blocked: {exc}")
             return
         self.refresh()
+        self._indexed_search_root = ""
         self.lbl_status.setText(
             f"{result.message} User corrections: {result.user_corrections}."
         )

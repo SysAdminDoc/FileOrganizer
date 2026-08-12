@@ -52,3 +52,35 @@ def test_browse_panel_builds_category_drop_targets(tmp_path, monkeypatch):
         assert calls == [(str(source), str(root), "New Category")]
     finally:
         panel.close()
+
+
+def test_browse_panel_search_renders_citations(tmp_path, monkeypatch):
+    root = tmp_path / "organized"
+    (root / "Documents").mkdir(parents=True)
+    indexed = []
+    monkeypatch.setattr(browse, "index_library", lambda path: indexed.append(path) or 2)
+    monkeypatch.setattr(
+        browse,
+        "search_library",
+        lambda query, **kwargs: [{
+            "name": "invoice.pdf",
+            "category": "Documents",
+            "description": "August vendor invoice",
+            "score": 0.75,
+            "path": str(root / "Documents" / "invoice.pdf"),
+            "citation": "[1] invoice.pdf — August vendor invoice",
+        }],
+    )
+    panel = BrowsePanel()
+    try:
+        panel.txt_root.setText(str(root))
+        panel.txt_query.setText("show invoices")
+        panel._search()
+        assert indexed == [str(root)]
+        assert panel.search_tree.topLevelItemCount() == 1
+        result = panel.search_tree.topLevelItem(0)
+        assert result.text(0) == "invoice.pdf"
+        assert result.data(0, Qt.ItemDataRole.UserRole).endswith("invoice.pdf")
+        assert "August vendor invoice" in result.toolTip(0)
+    finally:
+        panel.close()

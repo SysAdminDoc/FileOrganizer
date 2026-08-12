@@ -16,6 +16,9 @@ All notable changes to FileOrganizer will be documented in this file.
   panel for customizing core scan, apply, preview, undo, and navigation actions.
 - Added portable-mode data-root resolution: an empty `portable.flag` beside the
   app keeps settings, caches, databases, and logs in `FileOrganizerData`.
+- Added a local SQLite FTS5 library index with BM25 natural-language search,
+  category/type filters, citation-ready results, and Browse search controls;
+  successful moves preserve their AI descriptions in the index.
 - Added optional local Tesseract OCR during import for screenshot images and
   scanned PDFs, with bounded Poppler rendering, persisted OCR settings, and
   sanitized OCR context passed to local LLM classification.

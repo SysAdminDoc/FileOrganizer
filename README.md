@@ -444,6 +444,14 @@ saved as adaptive corrections. An unchanged folder is classified from its
 fingerprint before cache, metadata, marketplace, embeddings, or provider work;
 similar names contribute deduplicated examples to subsequent AI prompts.
 
+### Browse search
+
+Browse includes a local SQLite FTS5 index over organized folders and files.
+Search accepts ordinary phrases plus `category:...` and `type:file|folder`
+filters, ranks matches with BM25, and displays citation-ready local paths and
+move-time AI descriptions. Use **Reindex** after changes made outside the app;
+the index never leaves the local app-data directory.
+
 ### Ollama models
 
 | Model | Size | Speed | Accuracy | Install |
