@@ -116,6 +116,36 @@ def _worker_audit_finish(
         **details,
     )
 
+
+def _index_applied_item(item, destination: str) -> None:
+    """Persist a moved item for Browse FTS without affecting the move result."""
+    try:
+        from fileorganizer.library_search import index_entry
+
+        dest_root = getattr(item, 'dest_root', '') or ''
+        if dest_root:
+            library_root = os.path.dirname(os.path.abspath(dest_root))
+        else:
+            library_root = os.path.dirname(os.path.dirname(os.path.abspath(destination)))
+        metadata = getattr(item, 'metadata', {}) or {}
+        description = (
+            getattr(item, 'vision_description', '')
+            or metadata.get('_vision_description', '')
+            or getattr(item, 'detail', '')
+        )
+        index_entry(
+            destination,
+            library_root=library_root,
+            category=getattr(item, 'category', '') or '',
+            description=description,
+            kind='folder' if getattr(item, 'is_folder', os.path.isdir(destination)) else 'file',
+        )
+    except Exception:
+        # Search is an enhancement; a locked or unavailable local DB must not
+        # turn a completed filesystem operation into a failed move.
+        pass
+
+
 # ── Safe merge (standalone for use in workers) ─────────────────────────────────
 def _collision_destination(path):
     """Return the first available sibling path that preserves ``path``."""
@@ -1386,6 +1416,7 @@ class ApplyCatWorker(QThread):
                         {'category': it.category, 'confidence': it.confidence,
                          'cleaned_name': it.cleaned_name, 'method': it.method,
                          'detail': it.detail, 'topic': it.topic})
+                    _index_applied_item(it, it.full_dest_path)
             except Exception as e:
                 err += 1
                 self.log.emit(f"  \u274C Error: {e}")
@@ -1998,6 +2029,8 @@ class ApplyFilesWorker(QThread):
                         # Sidecar provenance is optional and must never turn a
                         # completed filesystem move into a failed move.
                         self.log.emit(f"    [XMP] Skipped: {exc}")
+                if not self.dry_run:
+                    _index_applied_item(it, dst)
             except Exception as e:
                 err += 1
                 self.log.emit(f"    ❌ Error: {e}")
