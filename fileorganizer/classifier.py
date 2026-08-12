@@ -128,6 +128,8 @@ EXTENSION_CATEGORY_MAP = [
     ({'.jsx', '.jsxbin'},                        "After Effects - Presets & Scripts",  85),
     ({'.c4d'},                                   "3D",                                88),
     ({'.blend'},                                 "3D",                                88),
+    ({'.gltf', '.glb', '.usdz', '.usd', '.usda', '.usdc', '.drc'},
+                                                    "3D - Models & Objects",             95),
     ({'.obj', '.fbx', '.stl', '.3ds', '.dae'},  "3D - Models & Objects",             82),
     ({'.aep', '.aet'},                           "After Effects - Templates",         65),
     ({'.prproj'},                                "Premiere Pro - Templates",          65),

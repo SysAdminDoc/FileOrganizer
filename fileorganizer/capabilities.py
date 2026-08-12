@@ -180,6 +180,13 @@ SPECS: tuple[CapabilitySpec, ...] = (
                    "Generic audio tags", "Install the pinned requirements file."),
     CapabilitySpec("metadata", "video_metadata", (Requirement("ffprobe", binary="ffprobe"),),
                    "Generic video stream and container metadata", "Install FFmpeg and put ffprobe on PATH."),
+    CapabilitySpec("metadata", "three_d_asset_metadata", (PYTHON,),
+                   "Read glTF 2.0, GLB, Draco, USD, and USDZ model metadata",
+                   "No action required; parsing uses bounded Python standard-library readers."),
+    CapabilitySpec("metadata", "usdcat_layer_inspection",
+                   (Requirement("Pixar USD usdcat", binary="usdcat"),),
+                   "Inspect extracted USDZ/USD layers with the optional Pixar USD CLI",
+                   "Install Pixar USD and set FILEORGANIZER_USDCAT or put usdcat on PATH."),
     CapabilitySpec(
         "metadata", "xmp_sidecar_write",
         (Requirement("PyExifTool", "exiftool", "PyExifTool"),

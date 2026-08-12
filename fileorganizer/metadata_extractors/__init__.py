@@ -28,6 +28,7 @@ from . import (
     audio_extractor,
     video_extractor,
     mogrt_extractor,
+    three_d_extractor,
 )
 
 __all__ = [
@@ -40,6 +41,7 @@ __all__ = [
     "audio_extractor",
     "video_extractor",
     "mogrt_extractor",
+    "three_d_extractor",
 ]
 
 
@@ -75,6 +77,14 @@ _EXT_DISPATCH = {
     ".m4v": video_extractor,
     ".mxf": video_extractor,
     ".prores": video_extractor,
+    # 3D model and scene formats
+    ".gltf": three_d_extractor,
+    ".glb": three_d_extractor,
+    ".drc": three_d_extractor,
+    ".usdz": three_d_extractor,
+    ".usd": three_d_extractor,
+    ".usda": three_d_extractor,
+    ".usdc": three_d_extractor,
 }
 
 
@@ -139,6 +149,7 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
       4. Else if any .psd/.psb — return the largest (PSD bundle).
       5. Else if any video — return the largest.
       6. Else if any audio — return the largest.
+      7. Else if any glTF/GLB/USD/USDZ/Draco asset — return the first.
     """
     try:
         files = [p for p in folder.iterdir() if p.is_file()]
@@ -171,6 +182,11 @@ def _select_primary_file(folder: Path, ext_hint: list[str]) -> Optional[Path]:
     font = first_with_ext({".ttf", ".otf", ".ttc", ".woff", ".woff2"})
     if font is not None:
         return font
+    three_d = first_with_ext({
+        ".gltf", ".glb", ".usdz", ".usd", ".usda", ".usdc", ".drc",
+    })
+    if three_d is not None:
+        return three_d
     psd = largest_with_ext({".psd", ".psb"})
     if psd is not None:
         return psd
@@ -280,14 +296,16 @@ def _select_content_detected_file(files: list[Path]) -> Optional[Path]:
 def _content_ext_priority(ext: str) -> int:
     if ext == ".aep":
         return 0
-    if ext in {".ttf", ".otf", ".ttc", ".woff", ".woff2"}:
+    if ext in {".gltf", ".glb", ".usdz", ".usd", ".usda", ".usdc", ".drc"}:
         return 1
-    if ext in {".psd", ".psb"}:
+    if ext in {".ttf", ".otf", ".ttc", ".woff", ".woff2"}:
         return 2
-    if ext in {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v", ".mxf"}:
+    if ext in {".psd", ".psb"}:
         return 3
-    if ext in {".mp3", ".flac", ".wav", ".ogg", ".m4a", ".aac", ".aiff"}:
+    if ext in {".mp4", ".mov", ".mkv", ".avi", ".webm", ".m4v", ".mxf"}:
         return 4
+    if ext in {".mp3", ".flac", ".wav", ".ogg", ".m4a", ".aac", ".aiff"}:
+        return 5
     return 50
 
 
