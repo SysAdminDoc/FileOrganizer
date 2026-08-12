@@ -12,6 +12,8 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added a non-destructive RAW-to-DNG workflow with ExifTool format detection,
   ImageMagick conversion, collision-safe `raw_originals` archival, optional
   XMP classification sidecars, a CLI mode, and a WinUI **Save as DNG** action.
+- Added a validated keyboard-shortcut registry and legacy desktop Settings
+  panel for customizing core scan, apply, preview, undo, and navigation actions.
 
 ## [v8.5.20] - 2026-08-11
 

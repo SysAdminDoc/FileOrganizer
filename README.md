@@ -265,6 +265,10 @@ Python process tree.
   workflow are remembered by exact folder fingerprint. Exact matches bypass AI
   on later scans, while keyword-related corrections become bounded few-shot
   examples for DeepSeek and Ollama without exposing paths in prompts.
+- **Custom keyboard shortcuts** — the legacy desktop Settings menu exposes
+  validated shortcuts for source selection, scanning, applying, previewing,
+  undo history, and opening the destination. Overrides are stored in
+  `%APPDATA%\FileOrganizer\keyboard_shortcuts.json` and can be reset per action.
 - **Hazel-style automation rules** — the legacy desktop Settings menu includes
   a visual nested IF/AND/OR/THEN editor. Matching skip, move, and rename actions
   are translated into the same editable, boundary-validated move plan used by

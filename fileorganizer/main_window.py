@@ -13,7 +13,7 @@ from PyQt6.QtWidgets import (
     QProgressBar, QScrollArea, QSystemTrayIcon, QStackedWidget
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal, QSettings, QMimeData, QUrl, QTimer, QSize, QThreadPool
-from PyQt6.QtGui import QColor, QDragEnterEvent, QDropEvent, QAction, QPixmap, QImage, QTextCursor, QIcon
+from PyQt6.QtGui import QColor, QDragEnterEvent, QDropEvent, QAction, QPixmap, QImage, QTextCursor, QIcon, QKeySequence
 
 from fileorganizer.config import (
     _APP_DATA_DIR, _CUSTOM_CATS_FILE, _LAST_CONFIG_FILE,
@@ -43,6 +43,7 @@ from fileorganizer.metadata import (
     _load_envato_api_key, _save_envato_api_key,
 )
 from fileorganizer.path_safety import PathSafetyError, validate_move
+from fileorganizer.keyboard_shortcuts import load_shortcuts
 from fileorganizer.ollama import load_ollama_settings, save_ollama_settings
 from fileorganizer.photos import (
     load_photo_settings, save_photo_settings, FaceDB,
@@ -65,7 +66,7 @@ from fileorganizer.workers import (
 from fileorganizer.dialogs import (
     CustomCategoriesDialog, TeachCategoryDialog, OllamaSettingsDialog,
     PhotoSettingsDialog, FaceManagerDialog, ModelManagerDialog,
-    AIProviderSettingsDialog, DesignWorkflowSettingsDialog,
+    AIProviderSettingsDialog, DesignWorkflowSettingsDialog, KeyboardShortcutsDialog,
     TemplateBuilderWidget, PCCategoryEditorDialog, _FileBrowserDialog,
     UndoBatchDialog, BeforeAfterDialog, DuplicateCompareDialog,
     EventGroupDialog, RuleEditorDialog, ScheduleDialog,
@@ -155,6 +156,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.setAcceptDrops(True)
 
         self._build_ui()
+        self._configure_shortcuts()
         self._load_settings()
         self._configure_metrics_from_settings()
 
@@ -214,6 +216,31 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         self.settings.setValue("use_llm", self.chk_llm.isChecked())
         self.settings.setValue("scan_depth", self.spn_depth.value())
         self.settings.setValue("type_filter", self.cmb_type_filter.currentText())
+
+    def _configure_shortcuts(self):
+        """Attach the persisted action shortcuts to the active window."""
+        for action in getattr(self, "_shortcut_actions", {}).values():
+            self.removeAction(action)
+            action.deleteLater()
+        shortcuts = load_shortcuts()
+        targets = {
+            "open_source": ("Choose source folder", self._browse_src),
+            "scan": ("Scan", self._on_scan),
+            "apply": ("Apply selected plan", self._on_apply),
+            "preview": ("Preview selected plan", self._show_preview),
+            "undo": ("Open move history / undo", self._show_undo_timeline),
+            "open_destination": ("Open destination", self._open_destination),
+        }
+        self._shortcut_actions = {}
+        for key, (label, callback) in targets.items():
+            action = QAction(label, self)
+            shortcut = shortcuts.get(key, "")
+            if shortcut:
+                action.setShortcut(QKeySequence(shortcut))
+            action.setShortcutContext(Qt.ShortcutContext.WindowShortcut)
+            action.triggered.connect(callback)
+            self.addAction(action)
+            self._shortcut_actions[key] = action
 
     def _configure_metrics_from_settings(self):
         """Start only the explicitly enabled loopback metrics exporter."""
@@ -535,6 +562,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         menu_tools.addAction("Ollama LLM", self._open_ollama_settings)
         menu_tools.addAction("AI Providers...", self._open_ai_provider_settings)
         menu_tools.addAction("Design Workflow...", self._open_design_workflow_settings)
+        menu_tools.addAction("Keyboard Shortcuts...", self._open_keyboard_shortcuts)
         self.action_metrics = QAction("Enable local metrics export", self)
         self.action_metrics.setCheckable(True)
         self.action_metrics.setToolTip(
@@ -1694,6 +1722,12 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         dlg = DesignWorkflowSettingsDialog(self)
         if dlg.exec():
             self._log("Design workflow settings saved.")
+
+    def _open_keyboard_shortcuts(self):
+        dlg = KeyboardShortcutsDialog(self)
+        if dlg.exec():
+            self._configure_shortcuts()
+            self._log("Keyboard shortcuts saved and applied.")
 
     # ═══ DESTINATION TREE PREVIEW ════════════════════════════════════════════
     def _show_preview(self):

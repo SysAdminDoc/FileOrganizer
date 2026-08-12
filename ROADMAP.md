@@ -4,16 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-89: Keyboard shortcuts customization panel**
-Add Settings panel enabling users to customize all keyboard shortcuts (e.g., Ctrl+O to open, Ctrl+Shift+O
-to organize, F5 to refresh). Store in `keyboard_shortcuts.json`. Reload on Settings change (no restart required).
-Enable power users (and accessibility users who prefer keyboard navigation over mouse) to match their muscle
-memory. This pairs with LATER-5 (full accessibility audit) as a low-hanging accessibility win.
-
-- [ ] **Impact**: 2 | **Effort**: 2 | **Tier**: NEXT
-
-- [ ] Source: [S184] PyQt6 keyboard event handling (QKeySequence, QShortcut)
-
 ---
 
 **L-2: Few-shot teaching panel**
