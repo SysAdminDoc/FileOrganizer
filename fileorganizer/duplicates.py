@@ -2,7 +2,8 @@
 audio fingerprinting, and similar-content detection.
 
 Inspired by Czkawka, Duplicate Cleaner Pro, dupeGuru, and pHash."""
-import os, hashlib, math, subprocess, struct
+import json
+import os, hashlib, math, subprocess, struct, sqlite3
 from pathlib import Path
 from collections import Counter, defaultdict
 
@@ -17,6 +18,10 @@ except ImportError:
     pass
 
 from fileorganizer.cache import hash_file
+from fileorganizer.dedup_checkpoint import (
+    DEFAULT_CHECKPOINT_PATH, DedupCheckpointStore, checkpoint_key,
+)
+
 
 # ── Audio fingerprint support (optional: chromaprint/fpcalc) ─────────────────
 _HAS_FPCALC = None  # lazy-detected
@@ -249,12 +254,58 @@ class ProgressiveDuplicateDetector:
 
     AUDIO_SIM_THRESHOLD = 0.85  # 85% fingerprint similarity = duplicate audio
 
-    def __init__(self, enable_perceptual=True, enable_audio=True, phash_threshold=4):
+    def __init__(self, enable_perceptual=True, enable_audio=True, phash_threshold=4,
+                 checkpoint_path=DEFAULT_CHECKPOINT_PATH, checkpoint_every=25,
+                 cancel_cb=None):
         self.enable_perceptual = enable_perceptual and HAS_PILLOW
         self.enable_audio = enable_audio
         self.phash_threshold = phash_threshold
+        self.checkpoint_path = checkpoint_path
+        self.checkpoint_every = max(1, min(int(checkpoint_every), 1000))
+        self.cancel_cb = cancel_cb
         self.dup_map = {}        # filepath → DupInfo
         self._group_counter = 0
+        self._checkpoint = None
+        self._run_key = ''
+
+    def _check_cancelled(self):
+        return bool(self.cancel_cb and self.cancel_cb())
+
+    def _flush_hashes(self, stage: str, pending: dict[str, str]) -> None:
+        if self._checkpoint and pending:
+            self._checkpoint.put_many(self._run_key, stage, pending)
+            pending.clear()
+
+    def _finish_checkpoint(self, complete: bool) -> None:
+        if not self._checkpoint:
+            return
+        if complete and self._run_key:
+            self._checkpoint.clear(self._run_key)
+        self._checkpoint.close()
+        self._checkpoint = None
+
+    def _hash_stage(self, stage: str, paths: list[str], hash_fn,
+                    progress_cb=None, progress_total: int | None = None) -> dict[str, str]:
+        """Hash paths while reusing saved stage values and checkpointing batches."""
+        result = {}
+        pending = {}
+        total = progress_total or len(paths)
+        for index, path in enumerate(paths, start=1):
+            if self._check_cancelled():
+                self._cancelled_seen = True
+                break
+            cached = self._checkpoint.get(self._run_key, stage, path) if self._checkpoint else None
+            value = cached if cached is not None else hash_fn(path)
+            if value:
+                result[path] = value
+                if cached is None:
+                    pending[path] = value
+            if progress_cb:
+                progress_cb(index, total)
+            if len(pending) >= self.checkpoint_every:
+                self._flush_hashes(stage, pending)
+        self._flush_hashes(stage, pending)
+        return result
 
     def _next_group(self) -> int:
         self._group_counter += 1
@@ -274,15 +325,40 @@ class ProgressiveDuplicateDetector:
         """
         self.dup_map.clear()
         self._group_counter = 0
+        self._cancelled_seen = False
 
         if len(file_entries) < 2:
             return self.dup_map
+
+        normalized_entries = []
+        for entry in file_entries:
+            path = str(entry[0])
+            size = int(entry[1]) if len(entry) > 1 else 0
+            if len(entry) > 2:
+                mtime_ns = int(entry[2])
+            else:
+                try:
+                    mtime_ns = os.stat(path).st_mtime_ns
+                except OSError:
+                    mtime_ns = 0
+            normalized_entries.append((path, size, mtime_ns))
+        file_entries = normalized_entries
+        if self.checkpoint_path:
+            try:
+                self._checkpoint = DedupCheckpointStore(self.checkpoint_path)
+                self._checkpoint.open()
+                self._checkpoint.prune()
+                self._run_key = checkpoint_key(file_entries)
+            except (OSError, sqlite3.Error):
+                self._checkpoint = None
+                self._run_key = ''
 
         # ── Stage 1: Group by size ───────────────────────────────────────────
         if log_cb:
             log_cb(f"  [DEDUP] Stage 1: Grouping {len(file_entries)} files by size…")
         size_groups = {}
-        for fpath, fsize in file_entries:
+        for entry in file_entries:
+            fpath, fsize = entry[0], entry[1]
             if fsize > 0:
                 size_groups.setdefault(fsize, []).append(fpath)
 
@@ -296,20 +372,34 @@ class ProgressiveDuplicateDetector:
         if not candidates:
             self._run_perceptual(file_entries, log_cb)
             self._run_audio_fingerprint(file_entries, log_cb)
+            self._finish_checkpoint(complete=not self._cancelled_seen)
             return self.dup_map
-
         # ── Stage 2: Prefix hash (first 64KB) ───────────────────────────────
         if log_cb:
             log_cb(f"  [DEDUP] Stage 2: Prefix hash ({n_candidates} files)…")
         prefix_groups = {}
-        step = 0
+        size_by_path = {
+            fpath: sz for sz, paths in candidates.items() for fpath in paths
+        }
+        candidate_paths = list(size_by_path)
+        prefix_hashes = self._hash_stage(
+            'prefix',
+            candidate_paths,
+            lambda path: self._hash_partial(
+                path, offset=0, size=min(self.PARTIAL_SIZE, size_by_path[path])
+            ),
+            progress_cb=progress_cb,
+            progress_total=n_candidates,
+        )
+        if self._cancelled_seen:
+            if log_cb:
+                log_cb("  [DEDUP] Checkpoint saved; scan cancelled during prefix hashing")
+            self._finish_checkpoint(complete=False)
+            return self.dup_map
         for sz, paths in candidates.items():
             bucket = {}
             for fpath in paths:
-                step += 1
-                if progress_cb:
-                    progress_cb(step, n_candidates)
-                h = self._hash_partial(fpath, offset=0, size=min(self.PARTIAL_SIZE, sz))
+                h = prefix_hashes.get(fpath)
                 if h:
                     bucket.setdefault(h, []).append(fpath)
             for h, group_paths in bucket.items():
@@ -322,21 +412,43 @@ class ProgressiveDuplicateDetector:
         if not prefix_groups:
             self._run_perceptual(file_entries, log_cb)
             self._run_audio_fingerprint(file_entries, log_cb)
+            self._finish_checkpoint(complete=not self._cancelled_seen)
             return self.dup_map
 
         # ── Stage 3: Suffix hash (last 64KB) ────────────────────────────────
         if log_cb:
             log_cb(f"  [DEDUP] Stage 3: Suffix hash ({n_prefix} files)…")
         suffix_groups = {}
+        suffix_paths = []
         for (sz, ph), paths in prefix_groups.items():
             if sz <= self.PARTIAL_SIZE:
                 # File is small enough that prefix covered entire file — already confirmed
                 suffix_groups[(sz, ph, 'full')] = paths
                 continue
+            suffix_paths.extend(paths)
+
+        suffix_hashes = self._hash_stage(
+            'suffix',
+            suffix_paths,
+            lambda path: self._hash_partial(
+                path,
+                offset=max(0, size_by_path[path] - self.PARTIAL_SIZE),
+                size=self.PARTIAL_SIZE,
+            ),
+            progress_cb=progress_cb,
+            progress_total=len(suffix_paths),
+        )
+        if self._cancelled_seen:
+            if log_cb:
+                log_cb("  [DEDUP] Checkpoint saved; scan cancelled during suffix hashing")
+            self._finish_checkpoint(complete=False)
+            return self.dup_map
+        for (sz, ph), paths in prefix_groups.items():
+            if sz <= self.PARTIAL_SIZE:
+                continue
             bucket = {}
             for fpath in paths:
-                h = self._hash_partial(fpath, offset=max(0, sz - self.PARTIAL_SIZE),
-                                       size=self.PARTIAL_SIZE)
+                h = suffix_hashes.get(fpath)
                 if h:
                     bucket.setdefault(h, []).append(fpath)
             for sh, group_paths in bucket.items():
@@ -349,26 +461,45 @@ class ProgressiveDuplicateDetector:
         if not suffix_groups:
             self._run_perceptual(file_entries, log_cb)
             self._run_audio_fingerprint(file_entries, log_cb)
+            self._finish_checkpoint(complete=not self._cancelled_seen)
             return self.dup_map
 
         # ── Stage 4: Full content hash ───────────────────────────────────────
         if log_cb:
             log_cb(f"  [DEDUP] Stage 4: Full SHA-256 ({n_suffix} files)…")
         full_groups = {}
+        full_hash_paths = []
         for key, paths in suffix_groups.items():
             sz = key[0]
             if sz <= self.PARTIAL_SIZE:
                 # Prefix hash already covered entire file — no need to re-hash
                 full_groups[key] = paths
                 continue
+            full_hash_paths.extend(paths)
+
+        full_hashes = self._hash_stage(
+            'full',
+            full_hash_paths,
+            self._hash_full,
+            progress_cb=progress_cb,
+            progress_total=len(full_hash_paths),
+        )
+        if self._cancelled_seen:
+            if log_cb:
+                log_cb("  [DEDUP] Checkpoint saved; scan cancelled during full hashing")
+            self._finish_checkpoint(complete=False)
+            return self.dup_map
+        for key, paths in suffix_groups.items():
+            if key[0] <= self.PARTIAL_SIZE:
+                continue
             bucket = {}
             for fpath in paths:
-                h = self._hash_full(fpath)
+                h = full_hashes.get(fpath)
                 if h:
                     bucket.setdefault(h, []).append(fpath)
             for fh, group_paths in bucket.items():
                 if len(group_paths) > 1:
-                    full_groups[fh] = group_paths
+                    full_groups.setdefault(fh, []).extend(group_paths)
 
         # ── Assign groups ────────────────────────────────────────────────────
         total_dup_files = 0
@@ -397,32 +528,44 @@ class ProgressiveDuplicateDetector:
         # ── Stage 5: Perceptual image hashing ────────────────────────────────
         self._run_perceptual(file_entries, log_cb)
 
+        if self._cancelled_seen:
+            if log_cb:
+                log_cb("  [DEDUP] Checkpoint saved; scan cancelled during perceptual hashing")
+            self._finish_checkpoint(complete=False)
+            return self.dup_map
+
         # ── Stage 6: Audio fingerprinting (Chromaprint) ──────────────────────
         self._run_audio_fingerprint(file_entries, log_cb)
 
+        if self._cancelled_seen:
+            if log_cb:
+                log_cb("  [DEDUP] Checkpoint saved; scan cancelled during audio fingerprinting")
+            self._finish_checkpoint(complete=False)
+            return self.dup_map
+
+        self._finish_checkpoint(complete=True)
         return self.dup_map
 
     def _run_perceptual(self, file_entries: list, log_cb=None):
         """Stage 5: Find near-duplicate images via perceptual hashing."""
-        if not self.enable_perceptual:
+        if not self.enable_perceptual or self._cancelled_seen:
+            return
+        if self._check_cancelled():
+            self._cancelled_seen = True
             return
         # Collect image files not already flagged as exact duplicates
-        images = [(fp, sz) for fp, sz in file_entries
-                  if os.path.splitext(fp)[1].lower() in _PHASH_IMAGE_EXTS
-                  and fp not in self.dup_map]
+        images = [entry[0] for entry in file_entries
+                  if os.path.splitext(entry[0])[1].lower() in _PHASH_IMAGE_EXTS
+                  and entry[0] not in self.dup_map]
         if len(images) < 2:
             return
         if log_cb:
             log_cb(f"  [DEDUP] Stage 5: Perceptual hashing {len(images)} images…")
 
         # Compute dHash for each image
-        phashes = {}
-        for fpath, _ in images:
-            ph = _compute_phash(fpath)
-            if ph:
-                phashes[fpath] = ph
+        phashes = self._hash_stage('phash', images, _compute_phash)
 
-        if len(phashes) < 2:
+        if self._cancelled_seen or len(phashes) < 2:
             return
 
         # BK-tree for efficient nearest-neighbor search — O(n log n) vs O(n²)
@@ -451,7 +594,7 @@ class ProgressiveDuplicateDetector:
 
         # Assign perceptual duplicate groups
         n_perceptual = 0
-        for anchor, group in perceptual_groups.items():
+        for group in perceptual_groups:
             gid = self._next_group()
             # Keep the largest file as original
             try:
@@ -474,7 +617,10 @@ class ProgressiveDuplicateDetector:
 
     def _run_audio_fingerprint(self, file_entries: list, log_cb=None):
         """Stage 6: Find similar audio files via Chromaprint acoustic fingerprinting."""
-        if not self.enable_audio:
+        if not self.enable_audio or self._cancelled_seen:
+            return
+        if self._check_cancelled():
+            self._cancelled_seen = True
             return
         if not _find_fpcalc():
             if log_cb:
@@ -482,18 +628,30 @@ class ProgressiveDuplicateDetector:
             return
 
         # Collect audio files not already flagged as exact duplicates
-        audio_files = [(fp, sz) for fp, sz in file_entries
-                       if os.path.splitext(fp)[1].lower() in AUDIO_EXTS
-                       and fp not in self.dup_map]
+        audio_files = [entry[0] for entry in file_entries
+                       if os.path.splitext(entry[0])[1].lower() in AUDIO_EXTS
+                       and entry[0] not in self.dup_map]
         if len(audio_files) < 2:
             return
         if log_cb:
             log_cb(f"  [DEDUP] Stage 6: Audio fingerprinting {len(audio_files)} files…")
 
         # Compute fingerprints
+        encoded = self._hash_stage(
+            'audio',
+            audio_files,
+            lambda path: json.dumps(_audio_fingerprint(path), separators=(',', ':')),
+        )
+        if self._cancelled_seen:
+            return
         fingerprints = {}
-        for fpath, _ in audio_files:
-            dur, fp = _audio_fingerprint(fpath)
+        for fpath, raw in encoded.items():
+            try:
+                dur, fp = json.loads(raw)
+                dur = int(dur)
+                fp = [int(value) for value in fp]
+            except (TypeError, ValueError, json.JSONDecodeError):
+                continue
             if fp and dur > 5:  # skip very short clips
                 fingerprints[fpath] = (dur, fp)
 

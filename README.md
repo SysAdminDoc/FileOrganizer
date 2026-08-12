@@ -231,7 +231,9 @@ Python process tree.
 
 - **Progressive hash dedup** — Size > prefix hash > suffix hash > full
   SHA-256, plus Pillow 12.2-compatible perceptual image hashing for
-  near-duplicate photos.
+  near-duplicate photos. Interrupted scans save bounded stage hashes in
+  `dedup_checkpoints.db` under the app-data directory and reuse them when the
+  same files (including size and modification time) are scanned again.
 - **Cross-library folder dedup** — The legacy desktop **Tools → Cross-Library
   Dedup** dialog compares independent roots (for example, `G:\Organized` and
   `I:\Organized`) using complete folder SHA-256 fingerprints. Each group lets
