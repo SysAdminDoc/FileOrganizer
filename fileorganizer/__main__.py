@@ -124,6 +124,7 @@ def main():
 
     from PyQt6.QtWidgets import QApplication
     from PyQt6.QtCore import QTimer
+    from fileorganizer.accessibility import install_accessibility
     from fileorganizer.config import get_active_stylesheet
     from fileorganizer.i18n import install_locale
     from fileorganizer.main_window import FileOrganizer
@@ -131,6 +132,7 @@ def main():
 
     app = QApplication(qt_args)
     locale_manager = install_locale(app)
+    accessibility_manager = install_accessibility(app)
 
     branding_icon = QIcon(str(_branding_icon_path()))
 
@@ -139,6 +141,7 @@ def main():
     app.setStyleSheet(get_active_stylesheet())
     window = FileOrganizer()
     locale_manager.apply(window)
+    accessibility_manager.apply(window)
     window._cli_dry_run = args.dry_run
 
     if args.profile:
