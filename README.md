@@ -259,6 +259,10 @@ Python process tree.
   inspected without extraction; embedded `.exe`, `.bat`, `.ps1`, `.scr`, `.cmd`,
   `.msi`, `.lnk`, or `.vbs` payloads route the archive to a collision-safe
   `_Quarantine/<archive-stem>/` destination instead of the asset library.
+- **Local analytics dashboard** — Tools → Analytics Dashboard summarizes
+  organized categories, file types, duplicate-review rates, correction-free
+  classification trends, confusion pairs, and bytes moved to Archives without
+  leaving the local app-data stores.
 - **Shell Cleanup and Duplicates pages** — read-only review screens that do
   not mutate files. Use the Python desktop Cleanup Tools or Duplicate Finder
   for confirmation, Trash/quarantine, hard-link, move, and undo actions.
