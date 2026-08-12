@@ -79,6 +79,8 @@ def main():
     parser = argparse.ArgumentParser(description="FileOrganizer — Context-Aware File Organizer")
     parser.add_argument("--source", type=str, default=None,
                         help="Source folder to auto-scan (used by shell integration)")
+    parser.add_argument("--headless", action="store_true",
+                        help="Scan offscreen for Explorer integration; pair with --auto-apply")
     parser.add_argument("--profile", type=str, default=None,
                         help="Load a named profile for scheduled/automated scans")
     parser.add_argument("--auto-apply", action="store_true",
@@ -113,6 +115,13 @@ def main():
             schedule_args.append("--auto-apply")
         raise SystemExit(schedule_main(schedule_args))
 
+    if args.headless:
+        from fileorganizer.context_menu import run_headless
+
+        raise SystemExit(
+            run_headless(args.source, auto_apply=args.auto_apply, dry_run=args.dry_run)
+        )
+
     from PyQt6.QtWidgets import QApplication
     from PyQt6.QtCore import QTimer
     from fileorganizer.config import get_active_stylesheet
@@ -141,7 +150,19 @@ def main():
 
     if args.source and os.path.isdir(args.source):
         window.cmb_op.setCurrentIndex(FileOrganizer.OP_FILES)
-        window.cmb_pc_src.setCurrentText(args.source)
+        # The preset combo is intentionally not editable; a shell path must
+        # select its Custom entry before assigning the requested source.
+        window.cmb_pc_src.blockSignals(True)
+        custom_index = next(
+            (i for i, (label, _path) in enumerate(window._pc_src_presets)
+             if label == "Custom…"),
+            -1,
+        )
+        if custom_index >= 0:
+            window.cmb_pc_src.setCurrentIndex(custom_index)
+        window.cmb_pc_src.blockSignals(False)
+        window.txt_pc_src.setReadOnly(False)
+        window.txt_pc_src.setText(args.source)
         if hasattr(window, 'txt_pc_src'):
             window.txt_pc_src.setText(args.source)
         QTimer.singleShot(200, window._on_scan)

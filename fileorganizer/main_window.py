@@ -52,6 +52,7 @@ from fileorganizer.photos import (
 )
 from fileorganizer.duplicates import ProgressiveDuplicateDetector, ConflictResolver
 from fileorganizer.files import _load_pc_categories, _save_pc_categories, _build_ext_map
+from fileorganizer.context_menu import build_shell_command
 from fileorganizer.engine import RuleEngine, EventGrouper, RenameTemplateEngine
 from fileorganizer.plugins import PluginManager, ProfileManager, CategoryPresetManager, CloudPathResolver
 from fileorganizer.models import RenameItem, CategorizeItem, FileItem
@@ -3089,31 +3090,60 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
 
     # ═══ WINDOWS SHELL INTEGRATION ═══════════════════════════════════════════
     def _register_shell_extension(self):
-        """Register 'Organize with FileOrganizer' context menu for folders (Windows only)."""
+        """Register GUI and headless organize commands for folders on Windows."""
         if sys.platform != 'win32':
             self._log("Shell integration is Windows-only"); return
         import winreg
-        script_path = os.path.abspath(__file__) if '__file__' in dir() else ''
-        if not script_path:
-            self._log("Cannot determine script path"); return
-        cmd = f'"{sys.executable}" "{script_path}" --source "%V"'
+        entrypoint = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, "run.py"))
+        frozen = bool(getattr(sys, "frozen", False))
+        directory_gui_cmd = build_shell_command(
+            sys.executable,
+            entrypoint,
+            frozen=frozen,
+            source_token="%1",
+        )
+        directory_apply_cmd = build_shell_command(
+            sys.executable,
+            entrypoint,
+            frozen=frozen,
+            source_token="%1",
+            headless=True,
+            auto_apply=True,
+        )
+        background_gui_cmd = build_shell_command(
+            sys.executable,
+            entrypoint,
+            frozen=frozen,
+            source_token="%V",
+        )
+        background_apply_cmd = build_shell_command(
+            sys.executable,
+            entrypoint,
+            frozen=frozen,
+            source_token="%V",
+            headless=True,
+            auto_apply=True,
+        )
+        entries = (
+            (r"Software\Classes\Directory\shell\FileOrganizer",
+             "Organize with FileOrganizer", directory_gui_cmd),
+            (r"Software\Classes\Directory\shell\FileOrganizerApply",
+             "Organize and Apply with FileOrganizer", directory_apply_cmd),
+            (r"Software\Classes\Directory\Background\shell\FileOrganizer",
+             "Organize with FileOrganizer", background_gui_cmd),
+            (r"Software\Classes\Directory\Background\shell\FileOrganizerApply",
+             "Organize and Apply with FileOrganizer", background_apply_cmd),
+        )
         try:
-            key_path = r"Software\Classes\Directory\shell\FileOrganizer"
-            with winreg.CreateKey(winreg.HKEY_CURRENT_USER, key_path) as key:
-                winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "Organize with FileOrganizer")
-                winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, sys.executable)
-            cmd_path = key_path + r"\command"
-            with winreg.CreateKey(winreg.HKEY_CURRENT_USER, cmd_path) as key:
-                winreg.SetValueEx(key, "", 0, winreg.REG_SZ, cmd)
-            # Also for directory background
-            bg_path = r"Software\Classes\Directory\Background\shell\FileOrganizer"
-            with winreg.CreateKey(winreg.HKEY_CURRENT_USER, bg_path) as key:
-                winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "Organize with FileOrganizer")
-                winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, sys.executable)
-            bg_cmd_path = bg_path + r"\command"
-            with winreg.CreateKey(winreg.HKEY_CURRENT_USER, bg_cmd_path) as key:
-                winreg.SetValueEx(key, "", 0, winreg.REG_SZ, cmd)
-            self._log("Shell extension registered (right-click folders to organize)")
+            for key_path, label, command in entries:
+                with winreg.CreateKey(winreg.HKEY_CURRENT_USER, key_path) as key:
+                    winreg.SetValueEx(key, "", 0, winreg.REG_SZ, label)
+                    winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, sys.executable)
+                with winreg.CreateKey(
+                    winreg.HKEY_CURRENT_USER, key_path + r"\command"
+                ) as key:
+                    winreg.SetValueEx(key, "", 0, winreg.REG_SZ, command)
+            self._log("Shell extensions registered (GUI and headless apply commands)")
         except Exception as e:
             self._log(f"Failed to register shell extension: {e}")
 
@@ -3123,7 +3153,9 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
             return
         import winreg
         for base in [r"Software\Classes\Directory\shell\FileOrganizer",
-                     r"Software\Classes\Directory\Background\shell\FileOrganizer"]:
+                     r"Software\Classes\Directory\shell\FileOrganizerApply",
+                     r"Software\Classes\Directory\Background\shell\FileOrganizer",
+                     r"Software\Classes\Directory\Background\shell\FileOrganizerApply"]:
             try:
                 winreg.DeleteKey(winreg.HKEY_CURRENT_USER, base + r"\command")
                 winreg.DeleteKey(winreg.HKEY_CURRENT_USER, base)
