@@ -89,6 +89,13 @@ _OLLAMA_DEFAULTS = {
     'timeout': 120,
     'temperature': 0.1,
     'num_predict': 4096,
+    # -1/0 mean let Ollama choose the GPU layer and CPU thread defaults.  A
+    # non-negative GPU value or positive thread count is sent explicitly.
+    'num_gpu': -1,
+    'num_thread': 0,
+    # Quantization is a model/GGUF property, not a valid Ollama runtime option.
+    # The setting is retained as an operator hint and shown in benchmark output.
+    'quantization': 'auto',
     'think': False,
     'batch_size': 3,
     'vision_enabled': True,
@@ -99,6 +106,8 @@ _OLLAMA_DEFAULTS = {
     'convert_heic_to_jpg': True,
     'convert_webp_to_jpg': True,
 }
+
+_OLLAMA_QUANTIZATIONS = ('auto', 'Q4', 'Q5', 'Q8')
 
 def load_ollama_settings() -> dict:
     try:
@@ -114,6 +123,102 @@ def save_ollama_settings(settings: dict):
             json.dump(settings, f, indent=2)
     except OSError:
         pass
+
+
+def _bounded_int(value, default: int, minimum: int, maximum: int) -> int:
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        parsed = default
+    return max(minimum, min(maximum, parsed))
+
+
+def build_ollama_options(settings: dict | None = None, *, num_predict: int | None = None) -> dict:
+    """Build the shared Ollama ``options`` payload for every request path.
+
+    Auto GPU/thread values are omitted so Ollama keeps its platform-specific
+    defaults.  Quantization is intentionally not serialized: Ollama cannot
+    switch a model's baked Q4/Q5/Q8 format per request.
+    """
+    s = settings if isinstance(settings, dict) else load_ollama_settings()
+    try:
+        temperature = float(s.get('temperature', 0.1))
+    except (TypeError, ValueError):
+        temperature = 0.1
+    temperature = max(0.0, min(2.0, temperature))
+    predict = num_predict if num_predict is not None else s.get('num_predict', 4096)
+    predict = _bounded_int(predict, 4096, 1, 131072)
+    options = {
+        'temperature': temperature,
+        'num_predict': predict,
+    }
+    gpu_layers = _bounded_int(s.get('num_gpu', -1), -1, -1, 256)
+    cpu_threads = _bounded_int(s.get('num_thread', 0), 0, 0, 256)
+    if gpu_layers >= 0:
+        options['num_gpu'] = gpu_layers
+    if cpu_threads > 0:
+        options['num_thread'] = cpu_threads
+    return options
+
+
+def normalized_ollama_quantization(value: object) -> str:
+    """Return a stable UI/benchmark quantization hint."""
+    text = str(value or 'auto').strip().upper()
+    return text if text in {'Q4', 'Q5', 'Q8'} else 'AUTO'
+
+
+def benchmark_ollama_speed(url: str | None = None, model: str | None = None) -> dict:
+    """Run one bounded local prompt and report Ollama generation throughput."""
+    import time
+    import urllib.request
+
+    settings = load_ollama_settings()
+    url = url or settings['url']
+    model = model or settings['model']
+    timeout = max(_bounded_int(settings.get('timeout', 120), 120, 5, 600), 30)
+    payload = {
+        'model': model,
+        'messages': [{
+            'role': 'user',
+            'content': 'Reply with exactly: FileOrganizer benchmark ready.',
+        }],
+        'stream': False,
+        'think': bool(settings.get('think', False)),
+        'options': build_ollama_options(settings),
+    }
+    started = time.perf_counter()
+    try:
+        request = urllib.request.Request(
+            f"{url}/api/chat",
+            data=json.dumps(payload).encode('utf-8'),
+            headers={'Content-Type': 'application/json'},
+            method='POST',
+        )
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            result = json.loads(response.read().decode('utf-8'))
+        elapsed = max(time.perf_counter() - started, 1e-9)
+        eval_count = _bounded_int(result.get('eval_count', 0), 0, 0, 131072)
+        eval_duration = result.get('eval_duration', 0)
+        try:
+            eval_seconds = float(eval_duration) / 1_000_000_000
+        except (TypeError, ValueError):
+            eval_seconds = 0.0
+        rate = eval_count / (eval_seconds or elapsed)
+        return {
+            'ok': True,
+            'model': model,
+            'quantization': normalized_ollama_quantization(settings.get('quantization')),
+            'elapsed_seconds': round(elapsed, 3),
+            'eval_count': eval_count,
+            'tokens_per_second': round(rate, 2),
+        }
+    except Exception as exc:
+        return {
+            'ok': False,
+            'model': model,
+            'quantization': normalized_ollama_quantization(settings.get('quantization')),
+            'error': str(exc),
+        }
 
 _MODEL_CATALOG = [
     # ── Qwen3.5 (latest, recommended) ─────────────────────────────────────────
@@ -458,10 +563,7 @@ def _ollama_generate(prompt: str, system: str = '', url: str = None,
         'messages': messages,
         'stream': False,
         'think': think,   # top-level for /api/chat — actually suppresses Qwen3.x CoT
-        'options': {
-            'temperature': s.get('temperature', 0.1),
-            'num_predict': s.get('num_predict', 4096),
-        },
+        'options': build_ollama_options(s),
     }
     
     # Add Pydantic structured format if requested and available (Ollama >= v0.22.1)
@@ -1315,10 +1417,9 @@ def ollama_classify_batch(folders: list, url: str = None, model: str = None) -> 
         'messages': messages,
         'stream': False,
         'think': think,   # top-level /api/chat flag — suppresses Qwen3.x CoT
-        'options': {
-            'temperature': s.get('temperature', 0.1),
-            'num_predict': s.get('num_predict', 4096) * len(folders),
-        },
+        'options': build_ollama_options(
+            s, num_predict=int(s.get('num_predict', 4096)) * len(folders)
+        ),
     }
 
     empty = [{'name': None, 'category': None, 'confidence': 0,

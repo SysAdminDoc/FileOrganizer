@@ -29,7 +29,7 @@ from fileorganizer.categories import get_all_category_names
 from fileorganizer.naming import _is_generic_name, _smart_name
 from fileorganizer.ollama import (
     load_ollama_settings, _build_llm_system_prompt, _is_id_only_folder,
-    _extract_name_hints
+    _extract_name_hints, build_ollama_options
 )
 from fileorganizer.bootstrap import HAS_RAPIDFUZZ
 
@@ -111,10 +111,10 @@ class AsyncClassifier:
             'messages': messages,
             'stream': False,
             'think': think,
-            'options': {
-                'temperature': self.settings.get('temperature', 0.1),
-                'num_predict': self.settings.get('num_predict', 4096) * len(folders_batch),
-            },
+            'options': build_ollama_options(
+                self.settings,
+                num_predict=int(self.settings.get('num_predict', 4096)) * len(folders_batch),
+            ),
         }
         
         # Default empty result for all folders in this batch

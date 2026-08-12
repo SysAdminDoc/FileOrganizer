@@ -30,6 +30,10 @@ All notable changes to FileOrganizer will be documented in this file.
   or running the configured scan and guarded apply pipeline offscreen. The
   registration now targets the real `run.py` entrypoint, uses `%1`/`%V` for
   selected folders/background views, and removes both verbs cleanly.
+- Added Ollama runtime controls for explicit GPU layers and CPU threads, an
+  advisory Q4/Q5/Q8 quantization hint, and an asynchronous local speed
+  benchmark reporting generated tokens per second. All chat, batch, and
+  parallel request payloads now share the same bounded runtime options.
 
 ## [v8.5.20] - 2026-08-11
 

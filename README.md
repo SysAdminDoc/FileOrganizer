@@ -478,6 +478,13 @@ uses an argument-list subprocess; once created, the registered Ollama name is
 available in the normal model selector. Vision GGUF files may also record an
 optional `.gguf` projector for local tooling.
 
+The same dialog exposes Ollama GPU layers (`num_gpu`), CPU threads
+(`num_thread`), and an advisory Q4/Q5/Q8 quantization hint. Auto values leave
+Ollama's platform defaults unchanged; quantization is fixed in the model or
+GGUF and is therefore not sent as a per-request option. **Benchmark Speed**
+runs one bounded local prompt with the current settings and reports generated
+tokens per second.
+
 ### Themes
 
 The WinUI Settings page has a live, persisted seven-theme picker:
