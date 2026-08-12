@@ -92,7 +92,7 @@ class CategoryPresetManager:
             {"name": "Dependencies", "color": "#a78bfa", "rename_template": "", "extensions": ["whl","tar.gz","gem","jar","nupkg"]},
         ],
         "Photographer": [
-            {"name": "RAW", "color": "#34d399", "rename_template": "{year}-{month}-{day}_{name}", "extensions": ["cr2","cr3","nef","arw","dng","orf","rw2","raw"]},
+            {"name": "RAW", "color": "#34d399", "rename_template": "{year}-{month}-{day}_{name}", "extensions": ["cr2","cr3","crw","nef","nrw","arw","dng","orf","rw2","raf","pef","rwl","x3f","3fr","dcr","kdc","mrw","raw","iiq","fff","mef","mos","cap"]},
             {"name": "JPEG", "color": "#60a5fa", "rename_template": "{year}-{month}-{day}_{name}", "extensions": ["jpg","jpeg"]},
             {"name": "Edited", "color": "#f472b6", "rename_template": "", "extensions": ["psd","psb","tiff","tif","png"]},
             {"name": "Panoramas", "color": "#fbbf24", "rename_template": "", "extensions": ["jpg","jpeg","tiff"]},

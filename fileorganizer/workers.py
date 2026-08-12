@@ -2488,7 +2488,9 @@ class ScanFilesLLMWorker(QThread):
             _photo_s_ext = load_photo_settings()
             if _photo_s_ext.get('enabled') and not bd['is_folder']:
                 _img_exts = {'.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif',
-                             '.tiff', '.tif', '.bmp', '.raw', '.cr2', '.nef', '.arw', '.dng'}
+                             '.tiff', '.tif', '.bmp', '.raw', '.cr2', '.cr3', '.crw', '.nef', '.nrw',
+                             '.arw', '.dng', '.orf', '.rw2', '.raf', '.pef', '.rwl', '.x3f', '.3fr',
+                             '.dcr', '.kdc', '.mrw', '.iiq', '.fff', '.mef', '.mos', '.cap'}
                 if Path(bd['name']).suffix.lower() in _img_exts:
                     # Reverse geocoding from EXIF GPS
                     if _photo_s_ext.get('geocoding_enabled'):

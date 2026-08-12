@@ -46,6 +46,67 @@ public sealed partial class RAWPage : Page
         if (f is not null) FolderTextBox.Text = f.Path;
     }
 
+    private async void Convert_Click(object sender, RoutedEventArgs e)
+    {
+        if (_cts is not null) return;
+
+        var sourcePicker = new Windows.Storage.Pickers.FileOpenPicker
+        {
+            SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary,
+        };
+        foreach (var extension in new[]
+        {
+            ".dng", ".cr2", ".cr3", ".crw", ".nef", ".nrw", ".arw", ".srw", ".orf",
+            ".rw2", ".raf", ".pef", ".rwl", ".x3f", ".3fr", ".dcr", ".kdc", ".mrw",
+            ".raw", ".iiq", ".fff", ".mef", ".mos", ".cap",
+        }) sourcePicker.FileTypeFilter.Add(extension);
+        WinRT.Interop.InitializeWithWindow.Initialize(sourcePicker,
+            WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindowHandle));
+        var source = await sourcePicker.PickSingleFileAsync();
+        if (source is null) return;
+
+        var destinationPicker = new Windows.Storage.Pickers.FolderPicker
+        {
+            SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary,
+        };
+        destinationPicker.FileTypeFilter.Add("*");
+        WinRT.Interop.InitializeWithWindow.Initialize(destinationPicker,
+            WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindowHandle));
+        var destinationFolder = await destinationPicker.PickSingleFolderAsync();
+        if (destinationFolder is null) return;
+
+        var destination = Path.Combine(
+            destinationFolder.Path, Path.GetFileNameWithoutExtension(source.Name) + ".dng");
+        if (File.Exists(destination) && !string.Equals(source.Path, destination, StringComparison.OrdinalIgnoreCase))
+        {
+            StatusText.Text = $"A DNG already exists at {destination}; no file was overwritten.";
+            return;
+        }
+
+        _cts = new CancellationTokenSource();
+        SetRunning(true);
+        StatusText.Text = "Saving a DNG copy...";
+        try
+        {
+            var result = await _python.RunScriptNdjsonAsync(
+                "raw_run.py",
+                ["--convert-dng", source.Path, "--output", destination],
+                HandleEvent,
+                _cts.Token);
+            if (!result.Success)
+                StatusText.Text = result.ErrorMessage ?? result.Stderr;
+        }
+        catch (OperationCanceledException) { StatusText.Text = "Cancelled."; }
+        catch (Exception ex) { StatusText.Text = $"Error: {ex.Message}"; }
+        finally
+        {
+            Results.FlushPendingChanges();
+            _cts?.Dispose();
+            _cts = null;
+            SetRunning(false);
+        }
+    }
+
     private async void Run_Click(object sender, RoutedEventArgs e)
     {
         if (_cts is not null) return;
@@ -72,38 +133,59 @@ public sealed partial class RAWPage : Page
 
     private void HandleEvent(string ev, JsonElement root)
     {
-            if (ev == "file")
+        if (ev == "file")
+        {
+            var filename = GetText(root, "filename", "Unknown");
+            var camera = GetText(root, "camera", "Unknown");
+            var dateTaken = GetText(root, "date_taken", "Unknown");
+            var iso = GetText(root, "iso", "Unknown");
+            var focalLength = GetText(root, "focal_length", "Unknown");
+            var status = GetText(root, "status", "OK");
+            var destination = GetText(root, "destination");
+            var backend = GetText(root, "backend");
+            if (!string.IsNullOrWhiteSpace(destination))
             {
-                var filename = root.GetProperty("filename").GetString() ?? "Unknown";
-                var camera = root.GetProperty("camera").GetString() ?? "Unknown";
-                var dateTaken = root.GetProperty("date_taken").GetString() ?? "Unknown";
-                var iso = root.GetProperty("iso").GetString() ?? "Unknown";
-                var focalLength = root.TryGetProperty("focal_length", out var focal) ? focal.GetString() ?? "Unknown" : "Unknown";
-                var status = root.GetProperty("status").GetString() ?? "OK";
-                Results.Add(new RawImageRow { Filename = filename, Camera = camera, DateTaken = dateTaken, Iso = iso, FocalLength = focalLength, Status = status });
+                var format = GetText(root, "raw_format", "RAW");
+                StatusText.Text = $"{status}: {format} via {backend}; saved to {destination}";
             }
-            else if (ev == "progress")
+            Results.Add(new RawImageRow
             {
-                if (root.TryGetProperty("scanned", out var scanned)) ScannedText.Text = scanned.GetInt32().ToString("N0");
-                if (root.TryGetProperty("exif_read", out var exif)) ExifText.Text = exif.GetInt32().ToString("N0");
-                if (root.TryGetProperty("organized", out var organized)) OrganizedText.Text = organized.GetInt32().ToString("N0");
-                if (root.TryGetProperty("status", out var status)) StatusText.Text = status.GetString() ?? "";
-            }
-            else if (ev == "plan")
-            {
-                var path = root.TryGetProperty("path", out var p) ? p.GetString() ?? "" : "";
-                var items = root.TryGetProperty("items", out var i) ? i.GetInt32() : 0;
-                var dryRun = root.TryGetProperty("dry_run", out var d) && d.GetBoolean();
-                StatusText.Text = dryRun
-                    ? $"Dry-run plan written for {items:N0} RAW files: {path}"
-                    : $"Moved {items:N0} RAW files. Plan: {path}";
-            }
+                Filename = filename,
+                Camera = camera,
+                DateTaken = dateTaken,
+                Iso = iso,
+                FocalLength = focalLength,
+                Status = status,
+            });
+        }
+        else if (ev == "progress")
+        {
+            if (root.TryGetProperty("scanned", out var scanned)) ScannedText.Text = scanned.GetInt32().ToString("N0");
+            if (root.TryGetProperty("exif_read", out var exif)) ExifText.Text = exif.GetInt32().ToString("N0");
+            if (root.TryGetProperty("organized", out var organized)) OrganizedText.Text = organized.GetInt32().ToString("N0");
+            if (root.TryGetProperty("status", out var status)) StatusText.Text = status.GetString() ?? "";
+        }
+        else if (ev == "plan")
+        {
+            var path = root.TryGetProperty("path", out var p) ? p.GetString() ?? "" : "";
+            var items = root.TryGetProperty("items", out var i) ? i.GetInt32() : 0;
+            var dryRun = root.TryGetProperty("dry_run", out var d) && d.GetBoolean();
+            StatusText.Text = dryRun
+                ? $"Dry-run plan written for {items:N0} RAW files: {path}"
+                : $"Moved {items:N0} RAW files. Plan: {path}";
+        }
     }
+
+    private static string GetText(JsonElement root, string property, string fallback = "") =>
+        root.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.String
+            ? value.GetString() ?? fallback
+            : fallback;
 
     private void SetRunning(bool running)
     {
         FolderTextBox.IsEnabled = !running;
         BrowseButton.IsEnabled = !running;
+        ConvertButton.IsEnabled = !running;
         ModeCombo.IsEnabled = !running;
         ScanButton.IsEnabled = !running;
         CancelButton.IsEnabled = running;

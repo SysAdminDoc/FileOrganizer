@@ -147,6 +147,14 @@ SPECS: tuple[CapabilitySpec, ...] = (
     CapabilitySpec("raw", "raw_validation", (Requirement("rawpy", "rawpy", "rawpy"),),
                    "Open and validate RAW camera files",
                    "Install rawpy in the configured Python environment.", True),
+    CapabilitySpec("raw", "raw_format_detection",
+                   (Requirement("ExifTool", binary="exiftool"),),
+                   "Identify the camera RAW container independently of its filename suffix",
+                   "Install ExifTool 12.15 or newer and put it on PATH; suffix fallback remains available."),
+    CapabilitySpec("raw", "dng_conversion",
+                   (Requirement("ImageMagick", binary="magick"),),
+                   "Transcode supported camera RAW files into DNG without deleting originals",
+                   "Install ImageMagick with RAW delegate support and put magick on PATH."),
     CapabilitySpec("raw", "raw_exif_fallback", (Requirement("exifread", "exifread", "ExifRead"),),
                    "Supplement RAW metadata without full pixel decoding",
                    "Install the pinned requirements file."),
@@ -230,6 +238,10 @@ def _binary_path(binary: str) -> str | None:
             return override
     if binary == "llama-qwen2vl-cli":
         override = os.environ.get("FILEORGANIZER_LLAMA_CLI", "").strip()
+        if override and Path(override).is_file():
+            return override
+    if binary in {"magick", "magick.exe"}:
+        override = os.environ.get("FILEORGANIZER_IMAGE_MAGICK", "").strip()
         if override and Path(override).is_file():
             return override
     for candidate in binary.split("|"):

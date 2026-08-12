@@ -57,6 +57,14 @@ def test_clean_environment_reports_unavailable_not_no_findings(monkeypatch):
     assert all("not detected" in row["detail"].lower() or row["detail"] for row in optional)
 
 
+def test_imagemagick_capability_honors_explicit_binary_override(monkeypatch, tmp_path):
+    binary = tmp_path / "magick-custom.exe"
+    binary.write_bytes(b"stub")
+    monkeypatch.setenv("FILEORGANIZER_IMAGE_MAGICK", str(binary))
+
+    assert capabilities._binary_path("magick") == str(binary)
+
+
 def test_online_capability_remains_not_checked_when_local_dependencies_exist(monkeypatch):
     monkeypatch.setattr(
         capabilities,

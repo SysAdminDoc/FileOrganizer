@@ -221,7 +221,7 @@ PROFILE_CATEGORIES = {
         ("Photos - Art & Abstract", ["art photo", "abstract photo", "macro photo", "long exposure", "black and white", "monochrome"]),
         ("Photos - Product & Commercial", ["product photo", "catalog photo", "ecommerce", "flat lay", "styled"]),
         ("Photos - Documents & Scans", ["document scan", "receipt scan", "whiteboard photo", "screenshot", "screen capture"]),
-        ("Photos - RAW Files", ["raw photo", "cr2", "cr3", "nef", "arw", "dng", "orf"]),
+        ("Photos - RAW Files", ["raw photo", "cr2", "cr3", "crw", "nef", "nrw", "arw", "dng", "orf", "rw2", "raf", "pef", "rwl", "x3f", "3fr", "dcr", "kdc", "mrw", "raw", "iiq", "fff", "mef", "mos", "cap"]),
         ("Photos - Edited & Processed", ["edited photo", "processed", "retouched", "filtered", "enhanced"]),
         ("Photos - Panoramas", ["panorama", "pano", "360 photo", "wide angle"]),
         ("Photos - Blurry & Low Quality", ["blurry", "out of focus", "low quality", "noise", "motion blur"]),

@@ -39,8 +39,10 @@ from fileorganizer.sidecar_protocol import SidecarEmitter
 _PROTOCOL = SidecarEmitter("photos")
 
 PHOTO_EXTS = (".jpg", ".jpeg", ".png", ".tif", ".tiff", ".heic", ".heif",
-              ".cr2", ".cr3", ".nef", ".arw", ".dng", ".orf", ".rw2", ".raf",
-              ".srw", ".bmp", ".webp")
+              ".dng", ".cr2", ".cr3", ".crw", ".nef", ".nrw", ".arw", ".srw",
+              ".orf", ".rw2", ".raf", ".pef", ".rwl", ".x3f", ".3fr", ".dcr",
+              ".kdc", ".mrw", ".raw", ".iiq", ".fff", ".mef", ".mos", ".cap",
+              ".bmp", ".webp")
 
 
 def _emit(obj: dict) -> None:

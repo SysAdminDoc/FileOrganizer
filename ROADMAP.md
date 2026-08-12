@@ -4,26 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-79: DNG + RAW camera format unified handling**
-Consolidate raw image handling (Canon CR3, Sony ARW, Nikon NEF, Pentax RAF, Fuji RAF) under DNG
-(Adobe Digital Negative, open-spec raw interchange format) as a canonical archive format. Workflow:
-(1) Detect raw file via ExifTool (`exiftool -FileType <file>`);
-(2) If RAW, offer "Save as DNG" button in FileOrganizer UI (uses `dcraw` or `ImageMagick` convert backend
-to transcode — optional dependency);
-(3) Store DNG in archive subfolder with sidecar XMP (NEXT-61: IPTC 2025.1 AI metadata);
-(4) Enable raw-format-agnostic organization (e.g., "All camera originals → /archives/raw_originals/").
-**DNG adoption projected 30% by 2026** for archival workflows. This pairs with NEXT-63 (AVIF + JPEG XL
-modern formats). **Note**: transcoding is optional; if dcraw not installed, skip gracefully and store
-originals as-is.
-
-- [ ] **Impact**: 3 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: optional `dcraw` or ImageMagick
-
-- [ ] Source: [S156] Adobe Digital Negative (DNG) spec https://www.adobe.io/content/dam/udp/assets/open/standards/TIFF_DNG/DNG_1_7_1_spec.pdf
-   (TIFF-based; EXIF + XMP preservation; open specification);
-   [S157] ExifTool DNG support https://exiftool.org (full r/w; maker note transcoding);
-   [S158] dcraw raw image decoder https://www.cybercom.net/~dcoffin/dcraw/ (Canon/Sony/Nikon/Fuji/Pentax
-   support; public-domain license)
-
 **NEXT-81: Windows Authenticode code signing with Sectigo certificate**
 Implement code signing for FileOrganizer.exe using Authenticode (Microsoft's signing standard). Obtain an
 EV (Extended Validation) certificate from Sectigo or GlobalSign (~$300–400/year). Sign the binary in CI/CD:
