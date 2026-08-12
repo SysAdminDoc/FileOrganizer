@@ -1830,6 +1830,21 @@ class ScanFilesWorker(QThread):
                     except Exception:
                         pass
 
+                # A previously cached generic image may gain AI-art metadata
+                # routing after an app upgrade; re-check only cached items so
+                # the normal fast path remains unchanged for fresh scans.
+                if cached and not is_folder:
+                    try:
+                        cached_plugin = PluginManager.run_classifiers(fpath_str, item_meta)
+                        if cached_plugin and cached_plugin[1] > conf:
+                            cat, conf = cached_plugin
+                            method = 'plugin'
+                            self.log.emit(
+                                f"    [PLUGIN] Classified → {cat} ({conf}%)"
+                            )
+                    except Exception:
+                        pass
+
                 # Store in cache for next scan
                 if not is_folder and fsize > 0:
                     cache.store(fpath_str, fmtime, fsize, cat, conf, method, item_meta)
@@ -2488,10 +2503,23 @@ class ScanFilesLLMWorker(QThread):
             v_ocr = item_meta.pop('_cached_vision_ocr', '')
             v_sname = item_meta.pop('_cached_vision_sname', '')
             c_sname = item_meta.pop('_cached_content_sname', '')
+            cached_category = cached['category']
+            cached_confidence = cached['confidence']
+            cached_method = cached['method']
+            try:
+                cached_plugin = PluginManager.run_classifiers(
+                    str(bd['item_path']), item_meta
+                )
+                if cached_plugin and cached_plugin[1] > cached_confidence:
+                    cached_category, cached_confidence = cached_plugin
+                    cached_method = 'plugin'
+                    detail = 'ai_art_generation_metadata'
+            except Exception:
+                pass
             result = {
                 'name': bd['name'], 'full_src': str(bd['item_path']),
-                'category': cached['category'], 'confidence': cached['confidence'],
-                'method': cached['method'], 'detail': detail, 'size': bd['fsize'],
+                'category': cached_category, 'confidence': cached_confidence,
+                'method': cached_method, 'detail': detail, 'size': bd['fsize'],
                 'is_folder': bd['is_folder'], 'is_duplicate': bd['is_dup'],
                 'dup_group': bd['dup_group'], 'dup_detail': bd['dup_detail'],
                 'dup_is_original': bd['dup_is_original'], 'metadata': item_meta,
@@ -2502,7 +2530,7 @@ class ScanFilesLLMWorker(QThread):
                 result['vision_suggested_name'] = v_sname
             elif c_sname:
                 result['vision_suggested_name'] = c_sname
-            self.log.emit(f"  {bd['name']}  →  {cached['category']}  ({cached['confidence']}%) [{cached['method']}]")
+            self.log.emit(f"  {bd['name']}  →  {cached_category}  ({cached_confidence}%) [{cached_method}]")
             self.result_ready.emit(result)
 
         def _extract_and_emit(bd, cat, conf, method, reason, vision_data=None, content_data=None):
@@ -2521,6 +2549,24 @@ class ScanFilesLLMWorker(QThread):
                     summary = MetadataExtractor.format_summary(item_meta)
                     if summary:
                         self.log.emit(f"    [META] {summary}")
+
+            # Built-in ComfyUI/A1111 routing is metadata-only and only matches
+            # images carrying generation evidence, so ordinary photographs
+            # continue through the configured LLM/rule path unchanged.
+            if not bd['is_folder']:
+                try:
+                    ai_art_result = PluginManager.run_classifiers(
+                        str(bd['item_path']), item_meta
+                    )
+                    if ai_art_result and ai_art_result[1] > conf:
+                        cat, conf = ai_art_result
+                        method = 'plugin'
+                        reason = 'ai_art_generation_metadata'
+                        self.log.emit(
+                            f"    [PLUGIN] Classified → {cat} ({conf}%)"
+                        )
+                except Exception:
+                    pass
 
             # ── Photo organization metadata ──────────────────────────────────
             _photo_s_ext = load_photo_settings()

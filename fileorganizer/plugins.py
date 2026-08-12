@@ -9,6 +9,7 @@ from fileorganizer.config import (
     _APP_DATA_DIR, _PROFILES_DIR, _PRESETS_DIR, _CSV_LOG_FILE,
 )
 from fileorganizer.path_safety import validate_path, validate_storage_name
+from fileorganizer.ai_art import AI_ART_PRESET
 
 
 def _safe_json_path(directory: str, name: str) -> str:
@@ -115,6 +116,7 @@ class CategoryPresetManager:
             {"name": "Icons", "color": "#fbbf24", "rename_template": "", "extensions": ["ico","icns","svg","png"]},
             {"name": "Color Palettes", "color": "#f472b6", "rename_template": "", "extensions": ["ase","aco","gpl","clr"]},
         ],
+        "AI Art — ComfyUI / A1111": AI_ART_PRESET,
     }
 
     @staticmethod
@@ -227,6 +229,13 @@ class PluginManager:
                         return result
                 except Exception:
                     pass
+        try:
+            from fileorganizer.ai_art import classify_ai_art
+            built_in = classify_ai_art(filepath, metadata)
+            if built_in:
+                return built_in
+        except Exception:
+            pass
         return None
 
     @classmethod

@@ -463,6 +463,16 @@ filters, ranks matches with BM25, and displays citation-ready local paths and
 move-time AI descriptions. Use **Reindex** after changes made outside the app;
 the index never leaves the local app-data directory.
 
+### ComfyUI / Automatic1111 outputs
+
+The built-in **Category Presets → AI Art — ComfyUI / A1111** preset adds
+Landscape, Portrait, Square, and Other destinations for Stable Diffusion and
+Flux renders. The scanner also recognizes A1111 `parameters` chunks and
+ComfyUI `prompt`/workflow metadata without executing workflow JSON. It keeps
+bounded prompt, checkpoint/model hash, sampler, seed, steps, CFG, and image
+dimensions as local evidence; ordinary photos without generation metadata are
+not routed into the AI-art categories.
+
 ### Ollama models
 
 | Model | Size | Speed | Accuracy | Install |
