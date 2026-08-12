@@ -252,6 +252,9 @@ Python process tree.
   that group asset fingerprints across categories. Add or remove selected assets
   without moving them; memberships live in `asset_bundles.db` and resolve again
   after an asset is moved within the library.
+- **Audio waveform preview** — selecting an asset folder in Browse shows a
+  bounded cached waveform for its first audio file. WAV/AIFF decode through the
+  standard library; `soundfile` or `ffmpeg` extends support to compressed formats.
 - **Shell Cleanup and Duplicates pages** — read-only review screens that do
   not mutate files. Use the Python desktop Cleanup Tools or Duplicate Finder
   for confirmation, Trash/quarantine, hard-link, move, and undo actions.
