@@ -372,6 +372,7 @@ _DESIGN_EXTS = frozenset([
     '.aep', '.psd', '.ai', '.eps', '.mogrt', '.prproj',
     '.rar', '.zip', '.7z', '.mov', '.mp4', '.lut', '.cube',
     '.otf', '.ttf', '.woff', '.jsxbin', '.jsx', '.aex',
+    '.gltf', '.glb', '.drc', '.usd', '.usda', '.usdc', '.usdz',
 ])
 
 def peek_inside_zip(zip_path: str) -> tuple[str, list[str]]:
@@ -386,6 +387,7 @@ def peek_inside_zip(zip_path: str) -> tuple[str, list[str]]:
         '.brushset', '.procreate',
         '.mogrt', '.mlt',
         '.c4d', '.blend', '.fbx', '.obj',
+        '.gltf', '.glb', '.drc', '.usd', '.usda', '.usdc', '.usdz',
         '.jsxbin', '.jsx',
     }
 
@@ -690,12 +692,15 @@ RULES:
 11. "Mockup" / "Mock-Up" / "Mock Up" in name → appropriate Mockups subcategory
 12. Font packs (.otf/.ttf/.woff in files) → "Fonts & Typography"
 13. Stock footage/video loops → appropriate "Stock Footage -" subcategory
-14. Use "_Review" only when genuinely uncertain (confidence < 50%)
-15. Do NOT invent category names outside the list above.
-16. For folders matching `XXXXXXXXX-INTRO-HD.NET` (numeric ID only, no title):
+14. glTF/GLB/USD/USDZ/Draco files are 3D model assets → "3D - Models & Objects".
+    Use metadata evidence such as rigged/unrigged, LOD count, texture count, or
+    KHR_draco_mesh_compression when choosing the clean name and confidence.
+15. Use "_Review" only when genuinely uncertain (confidence < 50%)
+16. Do NOT invent category names outside the list above.
+17. For folders matching `XXXXXXXXX-INTRO-HD.NET` (numeric ID only, no title):
     - If "contains:" hint reveals an informative name → classify normally using that name
     - If "contains:" hint is still just the numeric ID → "After Effects - Other" (confidence 65)
-17. If 'Legacy category:' is present, treat it as a STRONG HINT — the new category should usually
+18. If 'Legacy category:' is present, treat it as a STRONG HINT — the new category should usually
     be in the same domain (e.g. "Posters" → "Print - Flyers & Posters",
     "Backgrounds" → "Photoshop - Patterns & Textures", "Cards" → "Print - Business Cards & Stationery").
 

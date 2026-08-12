@@ -44,6 +44,8 @@ DESIGN_EXTENSIONS = {
     '.ttf', '.otf', '.woff', '.woff2',
     # Color grading
     '.lut', '.cube', '.3dl', '.look',
+    # 3D model / scene formats
+    '.gltf', '.glb', '.drc', '.usd', '.usda', '.usdc', '.usdz',
     # Images (common in design packs)
     '.png', '.jpg', '.jpeg', '.tiff', '.tif',
     # Documents

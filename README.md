@@ -11,7 +11,7 @@
 > Hybrid file organizer for Windows. A C# / .NET 8 / WinUI 3 desktop shell
 > drives a Python core that handles AI classification (DeepSeek, GitHub
 > Models, Ollama), six cleanup scanners, progressive hash + perceptual
-> dedup, and EXIF-aware photo workflows.
+> dedup, EXIF-aware photo workflows, and explicit 3D asset metadata routing.
 
 ![Screenshot](screenshot.png)
 
@@ -490,6 +490,11 @@ PSD/font/audio/video/AEP files through the right extractor. High-confidence
 metadata hints carry raw metadata into batch results before marketplace lookup,
 embeddings, or LLM routing run; lower-confidence video routing signals remain
 available to the provider prompt.
+3D Stage-1 routing parses glTF 2.0 JSON and GLB JSON chunks, detects Draco
+compression, enumerates USDZ layers safely, and optionally captures bounded
+`usdcat` output for USD skeleton evidence. It records a `3d_model`
+sub-taxonomy with rigging, LOD, and texture counts without requiring a 3D
+runtime.
 Image metadata also records dominant palette swatches for asset DB color
 filtering.
 Font metadata also records variable-axis ranges and COLRv1 color-font flags.

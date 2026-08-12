@@ -71,7 +71,8 @@ RULES: list[tuple[str, tuple[str, ...]]] = [
 
     ("Data",             (".json", ".xml", ".yaml", ".yml", ".toml", ".ini", ".cfg")),
     ("Disk Images",      (".iso", ".img", ".vhd", ".vmdk", ".dmg")),
-    ("3D Models",        (".obj", ".stl", ".fbx", ".blend", ".dae", ".3ds", ".gltf", ".glb")),
+    ("3D Models",        (".obj", ".stl", ".fbx", ".blend", ".dae", ".3ds", ".gltf", ".glb",
+                          ".drc", ".usd", ".usda", ".usdc", ".usdz")),
     ("Torrents",         (".torrent",)),
 ]
 

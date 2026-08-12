@@ -4,25 +4,6 @@ Actionable work only. Historical and completed roadmap material is archived in C
 
 ## Actionable Items
 
-**NEXT-77: 3D asset format support — glTF 2.0 + Draco + USDZ**
-Add classification and metadata extraction for 3D asset formats: **glTF 2.0** (JSON + binary geometry),
-**Draco** (google/draco mesh compression), **USDZ** (Pixar USD wrapped in ZIP). Implement:
-(1) Extract glTF metadata via JSON parser (copyright, generator, extensions list);
-(2) Detect Draco compression via KHR_draco_mesh_compression extension presence;
-(3) Extract USDZ layers via unzip + **usdcat** CLI (Pixar-provided tool, part of USD 26.05);
-(4) Classify 3D files separately (new `3d_model` taxonomy category with sub-taxonomy: rigged/unrigged,
-LOD count, texture count).
-Use `pyquatize` or manual JSON parsing for glTF; `subprocess` invocation for **usdcat** (requires Pixar
-USD 26.05 installed — optional dependency, skip gracefully). This pairs with NEXT-69 (CLIP can't classify
-3D formats; need explicit detection). **Leapfrog**: no OSS file organizer supports 3D asset organization.
-
-- [ ] **Impact**: 3 | **Effort**: 3 | **Tier**: NEXT | **Depends on**: NEXT-39 (optional USD 26.05 runtime) | **Unblocks**: later 3D specialist tier
-
-- [ ] Source: [S150] KhronosGroup/glTF:specification/2.0 (JSON schema for glTF; Draco extension; ~150 KB per asset typical);
-   [S151] google/draco v1.5.7 (5–10× mesh compression; attribute preservation; Wasm/JS/C++ decoders);
-   [S152] Pixar USD 26.05 (May 2026) release — usdcat CLI for inspection; USDZ ZIP layer enumeration;
-   [S153] glTF 2.0 in Blender 4.1+ (native export with Draco option; round-trip fidelity tested)
-
 **NEXT-79: DNG + RAW camera format unified handling**
 Consolidate raw image handling (Canon CR3, Sony ARW, Nikon NEF, Pentax RAF, Fuji RAF) under DNG
 (Adobe Digital Negative, open-spec raw interchange format) as a canonical archive format. Workflow:

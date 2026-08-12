@@ -2,6 +2,14 @@
 
 All notable changes to FileOrganizer will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Added content-aware 3D asset routing for glTF 2.0, GLB, Draco, USD, and USDZ
+  files, including bounded metadata for generators, copyright, extensions,
+  rigging, LODs, textures, and optional `usdcat` layer inspection.
+
 ## [v8.5.20] - 2026-08-11
 
 ### Added
