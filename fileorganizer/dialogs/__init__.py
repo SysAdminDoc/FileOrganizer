@@ -32,6 +32,7 @@ from fileorganizer.dialogs.marketplace import (
     LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel, ReviewPanel
 )
 from fileorganizer.dialogs.rule_chain_editor import RuleChainEditorDialog
+from fileorganizer.dialogs.analytics import AnalyticsDashboardDialog
 
 __all__ = [
     'OllamaSettingsDialog', 'PhotoSettingsDialog', 'FaceManagerDialog', 'ModelManagerDialog',
@@ -52,4 +53,5 @@ __all__ = [
     'ThemePickerDialog', 'ProtectedPathsDialog',
     'LibraryAuditorPanel', 'ArchiveNormalizerPanel', 'CatalogManagerPanel', 'ReviewPanel',
     'RuleChainEditorDialog',
+    'AnalyticsDashboardDialog',
 ]

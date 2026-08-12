@@ -79,7 +79,7 @@ from fileorganizer.dialogs import (
     BrowsePanel,
     ProtectedPathsDialog, ThemePickerDialog, WatchHistoryDialog,
     LibraryAuditorPanel, ArchiveNormalizerPanel, CatalogManagerPanel, ReviewPanel,
-    RuleChainEditorDialog,
+    RuleChainEditorDialog, AnalyticsDashboardDialog,
 )
 from fileorganizer.widgets import (
     CategoryBarChart, FlowLayout, ThumbnailLoader, ThumbnailCard,
@@ -605,6 +605,7 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
         menu_cleanup.addAction("Cross-Library Dedup...", self._open_cross_library_dedup)
         menu_cleanup.addAction("Version-Aware Dedup...", self._open_version_dedup)
         menu_cleanup.addAction("Move History...", self._show_undo_timeline)
+        menu_cleanup.addAction("Analytics Dashboard...", self._open_analytics_dashboard)
         menu_cleanup.addAction("Browse Library...", self._open_browse)
         menu_cleanup.addAction("Cleanup Tools...", self._open_cleanup_tools)
         menu_cleanup.addSeparator()
@@ -3746,6 +3747,10 @@ class FileOrganizer(ScanMixin, ApplyMixin, QMainWindow):
     def _open_browse(self):
         """Navigate to the organized-library Browse tree."""
         self._on_sidebar_tool('browse')
+
+    def _open_analytics_dashboard(self):
+        """Show local-only organization and classification aggregates."""
+        AnalyticsDashboardDialog(self).exec()
 
     def _open_cleanup_tab(self, tab_index: int = None, *, mode: str = None):
         """Navigate to inline cleanup or duplicate panel."""

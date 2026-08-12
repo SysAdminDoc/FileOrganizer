@@ -56,6 +56,9 @@ All notable changes to FileOrganizer will be documented in this file.
 - Added bounded archive payload quarantine: design-looking archives containing
   executable or script members are routed to `_Quarantine/<archive-stem>/`
   without extracting or executing untrusted content.
+- Added a local-only Tools → Analytics Dashboard with category/file-type totals,
+  duplicate-review rates, correction-free model trends, confusion pairs, and
+  archive storage totals derived from existing SQLite stores.
 
 ## [v8.5.20] - 2026-08-11
 
