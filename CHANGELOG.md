@@ -3674,7 +3674,7 @@ for relevance; "directly portable" means the file can be copied with minor adapt
    https://pyinstaller.org/en/stable/common-issues-and-support.html
    (Platform-specific binaries; code signing integration; multi-platform distribution patterns)
 - [S169] FileOrganizer CI/CD release workflow --
-   C:\Users\--\repos\FileOrganizer\.github\workflows\release.yml
+   C:\repos\FileOrganizer\.github\workflows\release.yml
    (Current single-platform pattern; to be extended for multi-platform matrix in NEXT-83)
 - [S170] Homebrew Cask documentation --
    https://docs.brew.sh/Cask-Cookbook
