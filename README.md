@@ -8,6 +8,16 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![AI](https://img.shields.io/badge/AI-DeepSeek%20%7C%20GitHub%20Models%20%7C%20Ollama-e879f9)
 
+<p align="center">
+  <a href="https://ko-fi.com/X8K126YVER">
+    <img height="42" src="https://storage.ko-fi.com/cdn/kofi2.png?v=3" alt="Buy me a coffee on Ko-fi" />
+  </a>
+</p>
+
+<p align="center">
+  <sub><em>If this project helps you, a coffee helps me keep working on it.</em></sub>
+</p>
+
 > Hybrid file organizer for Windows. A C# / .NET 8 / WinUI 3 desktop shell
 > drives a Python core that handles AI classification (DeepSeek, GitHub
 > Models, Ollama), six cleanup scanners, progressive hash + perceptual
